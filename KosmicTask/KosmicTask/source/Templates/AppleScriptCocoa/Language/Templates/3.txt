@@ -1,0 +1,34 @@
+--
+-- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+--
+-- Credits:
+--
+-- Notes: 
+--
+
+-- Cocoa system framework class
+property ABAddressBook : class "ABAddressBook"
+
+-- Cocoa enumerations and constants
+property kABFirstNameProperty : my kABFirstNameProperty
+
+script KosmicTask
+	property parent : class "NSObject"
+	
+	(*
+	 
+	task entry point
+	
+	*)
+	on KosmicTask()
+		
+		-- access the framework class
+		set thePerson to ABAddressBook's sharedAddressBook's |me|
+		set myName to thePerson's valueForProperty_(kABFirstNameProperty)
+		
+		-- return result
+		return myName
+		
+	end KosmicTask
+	
+end script

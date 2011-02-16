@@ -1,0 +1,28 @@
+<?php
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $numArgs = $_SERVER['argc'] - 1;
+#
+# task arguments are accessed as:
+# $_SERVER['argv'][1] .. $_SERVER['argv'][$numArgs]
+#
+
+$numArgs = $_SERVER['argc'] - 1;
+$args = $_SERVER['argv'];
+
+print "$numArgs command-line arguments.\n";
+
+for($i = 1; $i < sizeof($args); ++$i)
+{
+   print $args[$i]."\n";
+}
+
+
+?>
+		

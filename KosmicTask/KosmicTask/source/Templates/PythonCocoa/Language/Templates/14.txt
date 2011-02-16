@@ -1,0 +1,45 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# PyObjC documentation (including framework API notes)
+# http://pyobjc.sourceforge.net/documentation/
+#
+import Foundation
+
+# KosmicTask controller
+taskController = Foundation.NSClassFromString("KosmicTaskController")
+
+class KosmicTask (Foundation.NSObject):
+    	
+	#
+	# task entry point
+	#
+	def kosmictask(self):
+
+		# create NSArray instance
+		array = Foundation.NSArray.arrayWithObjects_("item 1", "item 2", None)
+		
+		# create our CSS styling string
+		styling = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
+
+		# create our result dictionary
+		result = Foundation.NSMutableDictionary.new()
+		
+		# add array and key
+		result.setObject_forKey_(array, "kosmicData")
+
+		# add styling string and key
+		result.setObject_forKey_(styling, "kosmicStyle")
+		
+		# return object
+		return result
+		

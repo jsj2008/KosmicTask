@@ -1,0 +1,272 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf290
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 TrebuchetMS;\f2\fnil\fcharset0 Menlo-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red102\green102\blue102;\red0\green0\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b\fs36 \cf2 Mugginsoft\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0\fs24 \cf0 \
+
+\fs28 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Usage\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 Lua Cocoa tasks access the Cocoa framework via the LuaCocoa bridge. \
+\
+LuaCocoa provides a bridge between the 
+\f1\fs30 Lua and Objective-C programming languages. \
+\
+
+\f0\fs28 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Calling the Task Run Function
+\b0 \
+\
+KosmicTask Lua Cocoa powered tasks are initiated by calling the 
+\b\fs24 Run Function
+\b0\fs28  defined in the task Settings. In the following example the task 
+\b\fs24 Run Function
+\b0\fs28  is set to 
+\f2\fs22 \cf3 kosmicTask
+\f0\fs28 \cf0 .\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 function kosmicTask()\
+	return "Hello, kosmos!"\
+end\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Result Objects
+\b0 \
+\
+Tasks written in Lua Cocoa can return native Lua objects or Cocoa objects as task results. The LuaCocoa bridge ensures that all objects are coerced as required.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 function kosmicTask()\
+	-- return a NSArray instance\
+	return NSArray:arrayWithArray_(\{"item 1", "item 2"\})\
+end\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Result File Handling\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+KosmicTask supports the returning of file contents within task results. \
+\
+KosmicTask automatically looks for a 
+\f2\fs22 \cf3 kosmicFile
+\f0\fs28 \cf0  record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.\
+\
+For Lua Cocoa powered tasks files are returned as results using the following syntax:\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 local result = \{\}\
+result.kosmicFile = path\
+\
+return result
+\f0\fs28 \cf0 \
+\
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.\
+\
+Lua Cocoa powered tasks can create temporary files by calling the KosmicTaskController 
+\f2\fs22 \cf3 resultFileWithName_
+\f0\fs28 \cf0  function.\
+\
+
+\f2\fs22 \cf3 LuaCocoa.import("Foundation")\
+\
+function kosmicTask()\
+\
+	-- get the kosmicTaskController class\
+	local taskController = NSClassFromString("KosmicTaskController")\
+	\
+	-- get our image file result path\
+ 	-- this file will be automatically deleted when the task ends.\
+	local path = taskController:resultFileWithName_('capture.png')\
+	path = tostring(path) -- get a native lua string\
+	\
+	-- execute\
+	os.execute("screencapture -t png " .. path)\
+	\
+	-- return file content in dictionary\
+	local result = \{\}\
+	result.kosmicFile = path\
+	result.kosmicInfo = "file returned"\
+	\
+	return result\
+end
+\f0\fs28 \cf0 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 NSObject Subclassing\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+Lua objects can be subclassed directly from Cocoa's NSObject \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 -- create class definition\
+personClass = LuaCocoa.CreateClass("Person", NSObject)\
+\
+-- method: initWithFirstName_lastName_ \
+personClass["name"] = \
+\{\
+	function(self)\
+		return "me"\
+	end,\
+	"-@@:@@" \
+\
+\}\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 Obj-C instance variables are declared and accessed using the followng syntax:\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 self.__ivars.var1 = "I am an instance variable var1"\
+self.__ivars.var2 = "I am an instance variable var2"\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 \
+For details of the Lua colon syntax that is used to access NSObject methods see {\field{\*\fldinst{HYPERLINK "http://www.lua.org/pil/16.html"}}{\fldrslt http://www.lua.org/pil/16.html}}\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Runloop Management
+\b0 \
+\
+When an Lua Cocoa task is run the script runner is transformed into a fully fledged application complete with a run loop (an instance of NSRunLoop). This enables the task to utilise all the features of the Cocoa framework, many of which depend upon the existence of a run loop in order to perform correctly. \
+\
+By default however the LuaCocoa task will exit its run loop whenever the task entry point exits unless it is requested to do otherwise. This is the case in the example above.\
+\
+In order for the task to continue executing it is necessary to tell the task controller object (KosmicTaskController ) to keep the task running after the script entry point function has returned. KosmicTaskController is a predefined class that can be accessed within the task script by using the statement 
+\f2\fs22 \cf3 taskController = NSClassFromString("KosmicTaskController")
+\f0\fs28 \cf0 .\
+\
+To keep the task running call the KosmicTaskController 
+\f2\fs22 \cf3 keepTaskRunning
+\f0\fs28 \cf0  static method. The task will then continue to process input events on its runloop until the KosmicTaskController 
+\f2\fs22 \cf3 stopTask_
+\f0\fs28 \cf0  static method is called. The task will then end and return its result to the client.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 -- get the kosmicTaskController class\
+taskController = NSClassFromString("KosmicTaskController")\
+\
+-- create class definition\
+KosmicTask = LuaCocoa.CreateClass("KosmicTask", NSObject)\
+\
+\
+-- method: start\
+KosmicTask["start"] = \
+\{\
+	function(self)\
+	\
+		local selector = LuaCocoa.toselector("timerFired:")\
+	\
+		-- schedule the timer\
+		self.__ivars.timer = NSTimer:scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(1, self, selector, nil, true)\
+		self.__ivars.count = 0\
+		\
+		-- keep the task running after the entry point function exits\
+		KosmicTaskController:keepTaskRunning()\
+		\
+		return\
+	end,\
+	"-v@:"\
+\}\
+\
+-- method: timerFired:\
+KosmicTask["timerFired_"] = \
+\{\
+	function(self, timer)\
+	\
+		self.__ivars.count = self.__ivars.count + 1\
+		\
+		-- stop task and return result\
+		if self.__ivars.count == 5 then\
+		\
+			-- invalidate the timer\
+			timer:invalidate()\
+\
+			KosmicTaskController:stopTask_("timer expired " .. self.__ivars.count .. " times")\
+		end\
+		\
+		return \
+	end,\
+	"-v@:@"\
+\}\
+\
+-- task entry point\
+function kosmicTask()\
+\
+	-- allocate our task object\
+	task = KosmicTask:alloc():init()\
+	\
+	-- start the task\
+	task:start()\
+end
+\f0\fs28 \cf0 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 System Framework Access
+\b0 \
+\
+Lua Cocoa tasks can access system framework classes using the 
+\f2\fs22 \cf3 LuaCocoa.import
+\f0\fs28 \cf0  function.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 LuaCocoa.import("AddressBook")\
+\
+function kosmicTask()\
+	\
+	local person = ABAddressBook:sharedAddressBook():me()\
+	\
+	return person:valueForProperty_(kABFirstNameProperty)\
+end\
+\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\b\fs28 \cf0 Syntax Checking
+\b0 \
+\
+Syntax checking is provided by luac.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\fs24 \cf0 v1.0 December 2010
+\f2\fs22 \cf3 \
+}

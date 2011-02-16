@@ -1,0 +1,25 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+function kosmicTask() 
+{
+
+	// build planets array
+	var planets = new Array("Mercury", "Venus", "Earth");
+	planets.push("Mars");
+	planets.push("Jupiter");
+	planets.push("Saturn");
+	planets.push("Uranus");
+	planets.push("Neptune");
+	
+	// return native object as YAML
+	return KosmicTaskController.objectAsString(planets);
+}

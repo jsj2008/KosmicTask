@@ -1,0 +1,28 @@
+"
+
+Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+"
+[
+	" get our kosmicTaskController "
+	taskController := KosmicTaskController.
+ 	
+ 	" form our image file result path"
+ 	" this file will be automatically deleted when the task ends."
+	path := taskController resultFileWithName: 'capture.png'.
+	
+	" capture screen shot to file "
+	task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/screenCapture' arguments:{'-t', 'png', path}.
+	task waitUntilExit.
+
+	" form result dictionary "
+	result := #{'kosmicFile' -> path}.
+			
+	result.
+] 

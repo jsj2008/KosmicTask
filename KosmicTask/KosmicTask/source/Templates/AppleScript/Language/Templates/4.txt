@@ -1,0 +1,30 @@
+--
+-- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+--
+-- Credits:
+--
+-- Notes:  
+--
+
+(*
+ 
+kosmicTask
+
+*)
+on KosmicTask()
+	
+	try
+		
+		-- compute task result
+		set myResult to {"item 1", "item 2"}
+		
+		-- return result record
+		return {kosmicData:myResult}
+		
+	on error errorMessage number errorNumber
+
+		return {kosmicError:errorMessage}
+
+	end try
+
+end KosmicTask

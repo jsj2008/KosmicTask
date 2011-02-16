@@ -1,0 +1,33 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+#include <stdio.h>
+
+int main() 
+{
+	char *item1 = "item 1";
+	char *item2 = "item 2";
+	char *key1 = "key 1";
+	char *key2 = "key 2";
+	
+	char dictionary[100];
+	
+	// CINT does not support snprint
+	sprintf(dictionary, "{%s: %s, %s: %s}", key1, item1, key2, item2);
+	
+	// css
+	char *css = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;";
+	 
+	// return a YAML inline format dictionary
+	printf("--- {kosmicData: %s , kosmicStyle: '%s'}", dictionary, css);
+	
+    return 0;
+}

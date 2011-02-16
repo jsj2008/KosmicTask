@@ -1,0 +1,43 @@
+"
+
+Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+"
+[
+	" get our kosmicTaskController "
+	taskController := KosmicTaskController.
+ 
+ 	" define our paths array "
+ 	paths := {}.
+ 	
+ 	" loop "
+ 	0 to: 5 do:
+ 	[ :count |
+ 	
+ 		" form our image file result path"
+ 		" this file will be automatically deleted when the task ends."
+		path := taskController resultFileWithName: 'capture.png'.
+	
+		" capture screen shot to file "
+		task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/screenCapture' arguments:{'-t', 'png', path}.
+		task waitUntilExit.
+		
+		" sleep this thread "
+		future := NSDate dateWithTimeIntervalSinceNow: 1 .
+        NSThread sleepUntilDate:future.
+        
+		" insert path into array "
+		paths insert: path at: count.  
+	].
+
+	" form result dictionary "
+	result := #{'kosmicFile' -> paths}.
+			
+	result.
+] 

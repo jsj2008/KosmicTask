@@ -1,0 +1,26 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# numArgs = len(sys.argv) - 1
+#
+# task arguments are accessed as:
+# sys.argv[1] .. sys.argv[numArgs]
+#
+from mugginsoft import KosmicTaskController
+
+# build array of planets
+planets = ["Mercury", "Venus", "Earth"]
+
+planets.append("Mars")
+planets.append("Jupiter")
+planets.append("Saturn")
+planets.append("Uranus")
+planets.append("Neptune")
+
+# print native object as YAML
+KosmicTaskController.printObject(planets)

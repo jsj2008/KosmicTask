@@ -1,0 +1,27 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+#include <stdio.h>
+
+int main() 
+{
+	// define items
+	char *item1 = "item 1";
+	char *item2 = "item 2";
+	
+	// css
+	char *css = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;";
+	
+	// return array as data in a YAML inline format dictionary
+	printf("--- {kosmicData: [%s, %s], kosmicStyle: '%s'}", item1, item2, css);
+	
+    return 0;
+}

@@ -1,0 +1,29 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+class kosmicTask
+{ 
+	public static void main(String args[])
+    {
+    	// inline dictionary
+    	String items1 = "item 1";
+    	String items2 = "item 1";
+    	String items =  String.format("{key1: %s, key2: %s}", items1, items2);
+    	    	
+    	// CSS format string
+    	String css = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;";
+    	
+    	// return a YAML inline format dictionary with dictionary as the data
+    	String result = String.format("--- {kosmicData: %s , kosmicStyle: '%s'}", items, css);
+    	
+		System.out.println(result);
+	}
+}

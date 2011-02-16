@@ -1,0 +1,44 @@
+--[[
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+]]
+
+LuaCocoa.import("Foundation")
+
+function kosmicTask()
+
+	-- get the kosmicTaskController class
+	local taskController = NSClassFromString("KosmicTaskController")
+	
+	-- allocate our paths table
+	local paths = {}
+	
+	for i=1,5 do
+		-- get our image file result path
+	 	-- this file will be automatically deleted when the task ends.
+		local path = taskController:resultFileWithName_('capture.png')
+		path = tostring(path) -- get a native lua string
+		
+		-- execute
+		os.execute("screencapture -t png " .. path)
+		
+		-- sleep this thread
+		os.execute("sleep 1")
+		
+		paths[i] = path
+	end
+	
+	-- return file contenst in dictionary
+	local result = {}
+	result.kosmicFile = paths
+	result.kosmicInfo = #paths .. " files returned"
+	
+	return result
+end

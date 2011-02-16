@@ -1,0 +1,33 @@
+--
+-- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+--
+-- Credits:
+--
+-- Notes:  
+--
+
+(*
+ 
+kosmicTask
+
+*)
+on KosmicTask()
+	
+	try
+		
+		-- compute task result
+		set myResult to {key1:"item 1", key2:"item 2"}
+		
+		-- set style string
+		set myStyle to "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
+			
+		-- return result record
+		return {kosmicData:myResult, KosmicStyle:myStyle}
+		
+	on error errorMessage number errorNumber
+
+		return {kosmicError:errorMessage}
+
+	end try
+
+end KosmicTask

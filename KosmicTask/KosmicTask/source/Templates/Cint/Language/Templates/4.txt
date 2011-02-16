@@ -1,0 +1,23 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits: 
+
+Notes:
+
+*/
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    printf("argument count is %d\n", argc - 1);
+    
+    for (int x = 0; x < argc - 1; x++) {
+        printf("%s\n",argv[x]);
+    }
+    
+    return 0;
+}

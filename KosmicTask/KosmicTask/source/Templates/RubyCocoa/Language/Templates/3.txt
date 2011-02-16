@@ -1,0 +1,28 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# RubyCocoa documentation
+# http://rubycocoa.sourceforge.net/Documentation
+#
+# Tips and tools
+# http://www.rubyinside.com/the-ultimate-list-of-rubycocoa-tutorials-tips-and-tools-728.html
+#
+require 'appscript'
+
+def kosmictask()
+	
+	# get application
+	app = Appscript.app('Finder')
+
+	# query application
+	return app.name.get
+end

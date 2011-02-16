@@ -1,0 +1,252 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf290
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 TrebuchetMS;\f2\fnil\fcharset0 Menlo-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red102\green102\blue102;\red0\green0\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b\fs36 \cf2 Mugginsoft\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0\fs24 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b\fs28 \cf0 Usage\
+\
+Usage\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 Ruby Cocoa tasks access the Cocoa framework via the RubyCocoa bridge. \
+\
+RubyCocoa provides a bridge between the 
+\f1\fs30 Ruby and Objective-C programming languages. 
+\f0\fs28 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 \
+Calling the Task Run Function
+\b0 \
+\
+The entry point for Ruby Cocoa task can be a simple named function. The name of this function is configured using the 
+\b\fs24 Run Function
+\b0\fs28  task setting. Alternatively the entry point may consist of a named function within a named class. The class name is configured using the 
+\b\fs24 Run Class
+\b0\fs28  task setting.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 require 'osx/cocoa'\
+\
+class KosmicTask < OSX::NSObject\
+		\
+	#\
+	# task entry point\
+	#\
+	def kosmictask()\
+		return "Hello, kosmos!"\
+	end\
+end
+\f0\fs28 \cf0 \
+\
+ When the task is executed the run class is instantiated and the run function is called.\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Result Objects
+\b0 \
+\
+Tasks written in Ruby Cocoa can return native Ruby objects or Cocoa objects as task results. The RubyCocoa bridge ensures that all objects are coerced as required.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 require 'osx/cocoa'\
+\
+def kosmictask()\
+	result =  OSX::NSString.stringWithString_("Hello, kosmos!")\
+	\
+	return result\
+end
+\f0\fs28 \cf0 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Result File Handling\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+KosmicTask supports the returning of file contents within task results. \
+\
+KosmicTask automatically looks for a 
+\f2\fs22 \cf3 kosmicFile
+\f0\fs28 \cf0  record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.\
+\
+For Ruby Cocoa powered tasks files are returned as results using the following syntax:\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 \
+result = Hash.new()\
+result["kosmicFile"] = path\
+return result
+\f0\fs28 \cf0 \
+\
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.\
+\
+Ruby Cocoa powered tasks can create temporary files by calling the KosmicTaskController 
+\f2\fs22 \cf3 resultFileWithName_
+\f0\fs28 \cf0  function.\
+\
+
+\f2\fs22 \cf3 require 'osx/cocoa'\
+\
+# KosmicTask controller\
+$taskController = OSX.NSClassFromString("KosmicTaskController")\
+\
+def kosmictask()\
+\
+	# create path to temp result file from taskController.\
+	# this file will be automatically deleted when the task ends.\
+	#\
+	# an alternative would be:\
+	# f = Tempfile.new('kosmictask')\
+    # f.close\
+    # path = f.path + "capture.png"\
+    #\
+    path = $taskController.resultFileWithName_("capture.png");\
+    \
+    # capture sceen shot to file\
+    system "screencapture -t png " + path\
+    \
+	# create our result hash\
+	result = Hash.new()\
+	\
+	# add keyed file path\
+	result["kosmicFile"] = path\
+\
+	# add keyed info\
+	result["kosmicInfo"] = "file returned"\
+		\
+	return result\
+end\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 NSObject Subclassing\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+Ruby objects can be subclassed directly from Cocoa's NSObject \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 require 'osx/cocoa'\
+\
+class KosmicTask < OSX::NSObject\
+		\
+	#\
+	# task entry point\
+	#\
+	def kosmictask()\
+		return "Hello, kosmos!"\
+	end\
+end
+\f0\fs28 \cf0 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Runloop Management
+\b0 \
+\
+When an Ruby Cocoa task is run the script runner is transformed into a fully fledged application complete with a run loop (an instance of NSRunLoop). This enables the task to utilise all the features of the Cocoa framework, many of which depend upon the existence of a run loop in order to perform correctly. As a result of its application based nature a task written in RubyCocoa will probably take longer to launch and consume more system resources than a regular Ruby task.\
+\
+By default however the RubyCocoa task will exit its run loop whenever the task entry point exits unless it is requested to do otherwise. This is the case in the example above.\
+\
+In order for the task to continue executing it is necessary to tell the task controller object (KosmicTaskController ) to keep the task running after the script entry point function has returned. KosmicTaskController is a predefined class that can be accessed within the task script by using the statement 
+\f2\fs22 \cf3 $taskController = OSX.NSClassFromString("KosmicTaskController")
+\f0\fs28 \cf0 .\
+\
+To keep the task running call the KosmicTaskController 
+\f2\fs22 \cf3 keepTaskRunning
+\f0\fs28 \cf0  static method. The task will then continue to process input events on its runloop until the KosmicTaskController 
+\f2\fs22 \cf3 stopTask_
+\f0\fs28 \cf0  static method is called. The task will then end and return its result to the client.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 require 'osx/cocoa'\
+\
+# KosmicTask controller\
+$taskController = OSX.NSClassFromString("KosmicTaskController")\
+\
+class KosmicTask < OSX::NSObject\
+		\
+	#\
+	# task entry point\
+	#\
+	def kosmictask()\
+	\
+		OSX::NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(2, self, :timerFired, nil, true)\
+	\
+		# keep task running\
+		$taskController.keepTaskRunning()\
+	end\
+	\
+	#\
+	# task timer expired\
+	#\
+	def timerFired(timer)\
+		\
+		timer.invalidate()\
+		\
+		# stop the task\
+		$taskController.stopTask_("timer expired")\
+	end\
+end
+\f0\fs28 \cf0 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 System Framework Access
+\b0 \
+\
+Ruby Cocoa tasks can access system frameworks using the statement 
+\f2\fs22 \cf3 OSX.require_framework "theFramework"
+\f0\fs28 \cf0 .\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf3 require 'osx/cocoa'\
+\
+OSX.require_framework "AddressBook"\
+\
+def kosmictask()\
+\
+	person = OSX::ABAddressBook.sharedAddressBook().me()\
+	firstName = person.valueForProperty_(OSX::KABFirstNameProperty)\
+\
+	return firstName\
+end
+\f0\fs28 \cf0 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Ruby appscript\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+See the Ruby Usage document. \
+\
+
+\fs24 v1.0 November 2010}

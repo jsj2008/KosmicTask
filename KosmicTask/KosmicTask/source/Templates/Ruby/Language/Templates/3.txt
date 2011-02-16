@@ -1,0 +1,25 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Ruby Apple Event automation using rb-appscript
+#
+# the number of task arguments is:
+# numArgs = ARGV.length
+#
+# task arguments are accessed as:
+# ARGV[0] .. ARGV[numArgs]
+#
+# Links:
+#
+
+require 'appscript'
+
+# get application - for more information see the Ruby Usage document
+app = Appscript.app('Finder')
+
+# query application
+puts app.name.get

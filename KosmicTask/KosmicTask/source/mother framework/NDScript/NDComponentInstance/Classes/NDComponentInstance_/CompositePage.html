@@ -1,0 +1,600 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
+<html>
+<head>
+<title>NDComponentInstance </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="HeaderDoc">
+<style type="text/css"><!--.keyword {background:#ffffff; color:#761550;}.template {background:#ffffff; color:#761550;}.number {background: #ffffff; color:#0000ff;}.function {background:#ffffff; color:#000000;}.string {background: #ffffff; color:#891315;}.preprocessor {background:#ffffff; color:#236e25}.comment {background:#ffffff; color:#236e25}.char {background: #ffffff; color:#0000ff;}.var {background:#ffffff; color:#000000;}.type {background:#ffffff; color:#761550;}.param {background:#ffffff; color:#000000;}a:link {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #0000ff;}a:visited {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #0000ff;}a:visited:hover {text-decoration: underline; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #ff6600;}a:active {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #ff6600;}a:hover {text-decoration: underline; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #ff6600;}h4 {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: tiny; font-weight: bold;}body {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: 10pt;}--></style>
+</head>
+<body bgcolor="#ffffff">
+<a name="top"></a><a name="//apple_ref/doc/class/NDComponentInstance" title="NDComponentInstance "></a><hr>
+<table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h1><a name="NDComponentInstance">NDComponentInstance </a></h1>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract --> A class to represent a component instance.
+<!-- end abstract --></p>
+<p><b>Conforms&nbsp;to:</b> <!-- a logicalPath="//apple_ref/occ/cl/NDScriptDataSendEvent" -->NDScriptDataSendEvent<!-- /a -->, <!-- a logicalPath="//apple_ref/occ/cl/NDScriptDataActive" -->NDScriptDataActive<!-- /a -->, <!-- a logicalPath="//apple_ref/occ/cl/NDScriptDataAppleEventResumeHandler" -->NDScriptDataAppleEventResumeHandler<!-- /a -->, <!-- a logicalPath="//apple_ref/occ/cl/NSCopying" -->NSCopying<!-- /a --><br><b>Superclass:</b> <!-- a logicalPath="//apple_ref/occ/cl/NSObject" -->NSObject<!-- /a --><br><b>Declared In:</b> <a href="../../index.html" target="_top">NDComponentInstance </a><br></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion --> A component instance is a connection to a component (osa component) used to compile and execute AppleScripts. This class is to be used with <tt>NDScriptData</tt>.
+ <!-- end discussion --></p>
+<p></p>
+<hr>
+<br><h2>Methods</h2>
+<a name="HeaderDoc_methods"></a><dl>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/activeTarget" target="_top">-activeTarget </a></tt></dt>
+<dd>returns the active target as set by the method <tt>setActiveTarget:</tt>
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/appleEventResumeHandler" target="_top">-appleEventResumeHandler </a></tt></dt>
+<dd>
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/appleEventSendCurrentProcessOnly" target="_top">-appleEventSendCurrentProcessOnly </a></tt></dt>
+<dd>Are AppleEvents sent to the send target for the current process only.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/appleEventSendTarget" target="_top">-appleEventSendTarget </a></tt></dt>
+<dd>returns the object that handles any AppleEvents
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/closeSharedComponentInstance" target="_top">+closeSharedComponentInstance </a></tt></dt>
+<dd>Close the shared component instance.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/componentInstance" target="_top">+componentInstance </a></tt></dt>
+<dd>Allocates and initializes a <tt>NDComponentInstance</tt>
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/componentInstanceWithComponent:" target="_top">+componentInstanceWithComponent: </a></tt></dt>
+<dd>Allocates and initializes a <tt>NDComponentInstance</tt>
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/error" target="_top">-error </a></tt></dt>
+<dd>Get AppleScript Errors.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/findNextComponent" target="_top">+findNextComponent </a></tt></dt>
+<dd>Finds the next OSA component.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/init" target="_top">-init </a></tt></dt>
+<dd>Intializes a <tt>NDComponentInstance</tt>.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/initWithComponent:" target="_top">-initWithComponent: </a></tt></dt>
+<dd>Intialize a <tt>NDComponentInstance</tt>.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/isEqualToComponentInstance:" target="_top">-isEqualToComponentInstance: </a></tt></dt>
+<dd>Test if two components are equivalent.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/name" target="_top">-name </a></tt></dt>
+<dd>Get component name.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setActiveTarget:" target="_top">-setActiveTarget: </a></tt></dt>
+<dd>sets the object which is periodicly sent the message <tt>appleScriptActive:</tt>.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setAppleEventResumeHandler:" target="_top">-setAppleEventResumeHandler: </a></tt></dt>
+<dd>
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setAppleEventSendTarget:" target="_top">-setAppleEventSendTarget: </a></tt></dt>
+<dd>sets the object that any handles any AppleEvent the script atempts to send.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setAppleEventSendTarget:currentProcessOnly:" target="_top">-setAppleEventSendTarget:currentProcessOnly: </a></tt></dt>
+<dd>sets the object that any handles any AppleEvent the script atempts to send.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setDefaultTarget:" target="_top">-setDefaultTarget: </a></tt></dt>
+<dd>sets the default target for any AppleEvents.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setDefaultTargetAsCreator:" target="_top">-setDefaultTargetAsCreator: </a></tt></dt>
+<dd>sets the default target, specified by creator code, for any AppleEvents
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setExecuteAppleEventInMainThread:" target="_top">-setExecuteAppleEventInMainThread: </a></tt></dt>
+<dd>Set all AppleEvents targeted to the current process through the main thread, this is neccessary when running scripts within a thread that require user GUI interaction. This function throws an exception if it fails.
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setFinderAsDefaultTarget" target="_top">-setFinderAsDefaultTarget </a></tt></dt>
+<dd>sets the default target as Finder for any AppleEvents
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/doc/title:instm/NDComponentInstance/setFinderAsDefaultTarget." target="_top">-setFinderAsDefaultTarget. </a></tt></dt>
+<dd>sets the default target as Finder for any AppleEvents
+</dd>
+<dt><tt><a href="CompositePage.html#//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/sharedComponentInstance" target="_top">+sharedComponentInstance </a></tt></dt>
+<dd>Returns the shared component instance.
+</dd>
+</dl>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/activeTarget;  name=NDComponentInstance::activeTarget --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/activeTarget"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="activeTarget">activeTarget </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->returns the active target as set by the method <tt>setActiveTarget:</tt>
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->&lt;<span class="param">NDScriptDataActive</span>&gt;)<span class="var">activeTarget</span>; </pre>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->See the method <tt>setActiveTarget:</tt> for a discussion.
+ <!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/appleEventResumeHandler;  name=NDComponentInstance::appleEventResumeHandler --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/appleEventResumeHandler"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="appleEventResumeHandler">appleEventResumeHandler </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->&lt;<span class="param">NDScriptDataAppleEventResumeHandler</span>&gt;)<span class="var">appleEventResumeHandler</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/appleEventSendCurrentProcessOnly;  name=NDComponentInstance::appleEventSendCurrentProcessOnly --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/appleEventSendCurrentProcessOnly"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="appleEventSendCurrentProcessOnly">appleEventSendCurrentProcessOnly </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Are AppleEvents sent to the send target for the current process only.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/econst/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/clconst/BOOL //apple_ref/occ/intf/BOOL" --><span class="type">BOOL</span><!-- /a -->)<span class="var">appleEventSendCurrentProcessOnly</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->If <tt>YES</tt> then only AppleEvents for the current process are sent to the AppleEvent send target, otherwise all AppleEvents are sent to the send target.
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->As set in the method <tt>setAppleEventSendTarget:currentProcessOnly:</tt>
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/appleEventSendTarget;  name=NDComponentInstance::appleEventSendTarget --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/appleEventSendTarget"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="appleEventSendTarget">appleEventSendTarget </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->returns the object that handles any AppleEvents
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->&lt;<span class="param">NDScriptDataSendEvent</span>&gt;)<span class="var">appleEventSendTarget</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->the AppleEvent send target.
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->See the method <tt>setAppleEventSendTarget: </tt>for a discussion.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=clm;  uid=//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/closeSharedComponentInstance;  name=NDComponentInstance::closeSharedComponentInstance --><a name="//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/closeSharedComponentInstance"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="closeSharedComponentInstance">closeSharedComponentInstance </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Close the shared component instance.
+<!-- end abstract --></p>
+<p></p>
+<pre>+ (<!-- a logicalPath="//apple_ref/occ/cl/void //apple_ref/occ/tdef/void //apple_ref/occ/tag/void //apple_ref/occ/econst/void //apple_ref/occ/struct/void //apple_ref/occ/clconst/void //apple_ref/occ/intf/void" --><span class="type">void</span><!-- /a -->)<span class="var">closeSharedComponentInstance</span>; </pre>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->This can be called before you application closes or when it has finished with the shared component instance.
+ <!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=clm;  uid=//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/componentInstance;  name=NDComponentInstance::componentInstance --><a name="//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/componentInstance"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="componentInstance">componentInstance </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Allocates and initializes a <tt>NDComponentInstance</tt>
+<!-- end abstract --></p>
+<p></p>
+<pre>+ (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->)<span class="var">componentInstance</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->A <tt>NDComponentInstance</tt>
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->Returns a <tt>NDComponentInstance</tt> with a connection to the default OSA Apple component.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=clm;  uid=//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/componentInstanceWithComponent:;  name=NDComponentInstance::componentInstanceWithComponent: --><a name="//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/componentInstanceWithComponent:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="componentInstanceWithComponent:">componentInstanceWithComponent: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Allocates and initializes a <tt>NDComponentInstance</tt>
+<!-- end abstract --></p>
+<p></p>
+<pre>+ (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/instm/componentInstanceWithComponent //apple_ref/occ/clm/componentInstanceWithComponent //apple_ref/occ/intfcm/componentInstanceWithComponent //apple_ref/occ/intfm/componentInstanceWithComponent //apple_ref/occ/func/componentInstanceWithComponent //apple_ref/occ/ftmplt/componentInstanceWithComponent //apple_ref/occ/defn/componentInstanceWithComponent //apple_ref/occ/macro/componentInstanceWithComponent" --><span class="function">componentInstanceWithComponent</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/Component //apple_ref/occ/tdef/Component //apple_ref/occ/tag/Component //apple_ref/occ/econst/Component //apple_ref/occ/struct/Component //apple_ref/occ/clconst/Component //apple_ref/occ/intf/Component" --><span class="type">Component</span><!-- /a -->)<span class="var">component</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>component </code></dt>
+<dd>A component, if <tt>NULL</tt> then the default AppleScript component is used..</dd>
+</dl>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->A <tt>NDComponentInstance</tt>
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->Returns a <tt>NDComponentInstance</tt> with a connection to the supplied component.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/error;  name=NDComponentInstance::error --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/error"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="error">error </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Get AppleScript Errors.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/NSDictionary //apple_ref/occ/tdef/NSDictionary //apple_ref/occ/tag/NSDictionary //apple_ref/occ/econst/NSDictionary //apple_ref/occ/struct/NSDictionary //apple_ref/occ/clconst/NSDictionary //apple_ref/occ/intf/NSDictionary" --><span class="type">NSDictionary</span><!-- /a --> <span class="type">*</span>)<span class="var">error</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->A <tt>NSDictionary</tt> containing error information
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->You can use <tt>error</tt> to get information about errors that occured durring execution or compilation. The returned error info dictionary may contain entries that use any combination of the following keys, including no entries at all. The dictionary returns all of the same keys as within the error dictionary returned with some of Apples <tt>NSAppleScript</tt> methods.
+</p>
+<blockquote><blockquote>
+<table border="1" width="90%">
+<thead><tr>
+<th>Constant</th>
+<th>Description</th>
+</tr></thead>
+<tr>
+<td align="center"><tt>NSAppleScriptErrorMessage</tt></td>
+<td>An <tt>NSString</tt> that supplies a detailed description of the error condition.</td>
+</tr>
+<tr>
+<td align="center"><tt>NSAppleScriptErrorNumber</tt></td>
+<td>An <tt>NSNumber</tt> that specifies the error number.</td>
+</tr>
+<tr>
+<td align="center"><tt>NSAppleScriptErrorAppName</tt></td>
+<td>An <tt>NSString</tt> that specifies the name of the application that generated the error.</td>
+</tr>
+<tr>
+<td align="center"><tt>NSAppleScriptErrorBriefMessage</tt></td>
+<td>An <tt>NSString</tt> that provides a brief description of the error.</td>
+</tr>
+<tr>
+<td align="center"><tt>NSAppleScriptErrorRange</tt></td>
+<td>An <tt>NSValue</tt> that specifies a range.</td>
+</tr>
+<tr>
+<td align="center"><tt>NDAppleScriptOffendingObject</tt></td>
+<td>An <tt>NSAppleEventDescriptor</tt> that specifies an offending object.</td>
+</tr>
+<tr>
+<td align="center"><tt>NDAppleScriptPartialResult</tt></td>
+<td>An object that represent a partial result</td>
+</tr>
+</table>
+</blockquote></blockquote>
+<!-- end discussion --><p></p>
+<hr>
+<!-- headerDoc=clm;  uid=//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/findNextComponent;  name=NDComponentInstance::findNextComponent --><a name="//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/findNextComponent"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="findNextComponent">findNextComponent </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Finds the next OSA component.
+<!-- end abstract --></p>
+<p></p>
+<pre>+ (<!-- a logicalPath="//apple_ref/occ/cl/Component //apple_ref/occ/tdef/Component //apple_ref/occ/tag/Component //apple_ref/occ/econst/Component //apple_ref/occ/struct/Component //apple_ref/occ/clconst/Component //apple_ref/occ/intf/Component" --><span class="type">Component</span><!-- /a -->)<span class="var">findNextComponent</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->Returns a OSA component.
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->Can be used by init methods that take a component parameter so that a script can be connected to it own OSA component. This is useful if you want to execute AppleScripts within separate threads as each OSA component is not thread safe.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/init;  name=NDComponentInstance::init --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/init"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="init">init </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Intializes a <tt>NDComponentInstance</tt>.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->)<span class="var">init</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->The initialized <tt>NDComponentInstance</tt>
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->The receiver opens a connection with the default AppleScript component.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/initWithComponent:;  name=NDComponentInstance::initWithComponent: --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/initWithComponent:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="initWithComponent:">initWithComponent: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Intialize a <tt>NDComponentInstance</tt>.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/instm/initWithComponent //apple_ref/occ/clm/initWithComponent //apple_ref/occ/intfcm/initWithComponent //apple_ref/occ/intfm/initWithComponent //apple_ref/occ/func/initWithComponent //apple_ref/occ/ftmplt/initWithComponent //apple_ref/occ/defn/initWithComponent //apple_ref/occ/macro/initWithComponent" --><span class="function">initWithComponent</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/Component //apple_ref/occ/tdef/Component //apple_ref/occ/tag/Component //apple_ref/occ/econst/Component //apple_ref/occ/struct/Component //apple_ref/occ/clconst/Component //apple_ref/occ/intf/Component" --><span class="type">Component</span><!-- /a -->)<span class="var">component</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>component </code></dt>
+<dd>A component, if <tt>NULL</tt> then the default AppleScript component is used..</dd>
+</dl>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->The initialized <tt>NDComponentInstance</tt>
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->The receiver opens a connection with the supplied component.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/isEqualToComponentInstance:;  name=NDComponentInstance::isEqualToComponentInstance: --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/isEqualToComponentInstance:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="isEqualToComponentInstance:">isEqualToComponentInstance: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Test if two components are equivalent.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/econst/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/clconst/BOOL //apple_ref/occ/intf/BOOL" --><span class="type">BOOL</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/instm/isEqualToComponentInstance //apple_ref/occ/clm/isEqualToComponentInstance //apple_ref/occ/intfcm/isEqualToComponentInstance //apple_ref/occ/intfm/isEqualToComponentInstance //apple_ref/occ/func/isEqualToComponentInstance //apple_ref/occ/ftmplt/isEqualToComponentInstance //apple_ref/occ/defn/isEqualToComponentInstance //apple_ref/occ/macro/isEqualToComponentInstance" --><span class="function">isEqualToComponentInstance</span><!-- /a -->:(<a href="../../../../NDScript/NDComponentInstance/Classes/NDComponentInstance_/index.html#//apple_ref/occ/cl/NDComponentInstance" logicalPath="//apple_ref/occ/cl/NDComponentInstance" target="_top"><span class="type">NDComponentInstance</span></a> <span class="type">*</span>)<span class="var">componentInstance</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>componentInstance </code></dt>
+<dd>The component instance to compare with.</dd>
+</dl>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->Returns <tt>YES</tt> if the <tt>NDComponentInstance</tt> <tt><i>componentInstance</i></tt> is equivalent to the receiver.
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->Returns <tt>YES</tt> if the reciever referes to the same <tt>ComponentInstance</tt> as <tt>componentInstance</tt>
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/name;  name=NDComponentInstance::name --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/name"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="name">name </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Get component name.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/NSString //apple_ref/occ/tdef/NSString //apple_ref/occ/tag/NSString //apple_ref/occ/econst/NSString //apple_ref/occ/struct/NSString //apple_ref/occ/clconst/NSString //apple_ref/occ/intf/NSString" --><span class="type">NSString</span><!-- /a --> <span class="type">*</span>)<span class="var">name</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->Returns a <tt>NSString</tt> for the components name or <tt>nil</tt>.
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->Returns the name of the recieves component if available; otherwise <tt>nil</tt> is returned.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setActiveTarget:;  name=NDComponentInstance::setActiveTarget: --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setActiveTarget:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="setActiveTarget:">setActiveTarget: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->sets the object which is periodicly sent the message <tt>appleScriptActive:</tt>.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/void //apple_ref/occ/tdef/void //apple_ref/occ/tag/void //apple_ref/occ/econst/void //apple_ref/occ/struct/void //apple_ref/occ/clconst/void //apple_ref/occ/intf/void" --><span class="type">void</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/instm/setActiveTarget //apple_ref/occ/clm/setActiveTarget //apple_ref/occ/intfcm/setActiveTarget //apple_ref/occ/intfm/setActiveTarget //apple_ref/occ/func/setActiveTarget //apple_ref/occ/ftmplt/setActiveTarget //apple_ref/occ/defn/setActiveTarget //apple_ref/occ/macro/setActiveTarget" --><span class="function">setActiveTarget</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->&lt;<span class="param">NDScriptDataActive</span>&gt;)<span class="var">target</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>target </code></dt>
+<dd>An object that implements the protocol <tt>NDScriptDataActive</tt>.</dd>
+</dl>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->will the script is running it will periodocly give up time for you to do some other processing.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setAppleEventResumeHandler:;  name=NDComponentInstance::setAppleEventResumeHandler: --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setAppleEventResumeHandler:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="setAppleEventResumeHandler:">setAppleEventResumeHandler: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/void //apple_ref/occ/tdef/void //apple_ref/occ/tag/void //apple_ref/occ/econst/void //apple_ref/occ/struct/void //apple_ref/occ/clconst/void //apple_ref/occ/intf/void" --><span class="type">void</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/instm/setAppleEventResumeHandler //apple_ref/occ/clm/setAppleEventResumeHandler //apple_ref/occ/intfcm/setAppleEventResumeHandler //apple_ref/occ/intfm/setAppleEventResumeHandler //apple_ref/occ/func/setAppleEventResumeHandler //apple_ref/occ/ftmplt/setAppleEventResumeHandler //apple_ref/occ/defn/setAppleEventResumeHandler //apple_ref/occ/macro/setAppleEventResumeHandler" --><span class="function">setAppleEventResumeHandler</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->&lt;<span class="param">NDScriptDataAppleEventResumeHandler</span>&gt;)<span class="var">handler</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>handler </code></dt>
+<dd></dd>
+</dl>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setAppleEventSendTarget:;  name=NDComponentInstance::setAppleEventSendTarget: --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setAppleEventSendTarget:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="setAppleEventSendTarget:">setAppleEventSendTarget: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->sets the object that any handles any AppleEvent the script atempts to send.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/void //apple_ref/occ/tdef/void //apple_ref/occ/tag/void //apple_ref/occ/econst/void //apple_ref/occ/struct/void //apple_ref/occ/clconst/void //apple_ref/occ/intf/void" --><span class="type">void</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/instm/setAppleEventSendTarget //apple_ref/occ/clm/setAppleEventSendTarget //apple_ref/occ/intfcm/setAppleEventSendTarget //apple_ref/occ/intfm/setAppleEventSendTarget //apple_ref/occ/func/setAppleEventSendTarget //apple_ref/occ/ftmplt/setAppleEventSendTarget //apple_ref/occ/defn/setAppleEventSendTarget //apple_ref/occ/macro/setAppleEventSendTarget" --><span class="function">setAppleEventSendTarget</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->&lt;<span class="param">NDScriptDataSendEvent</span>&gt;)<span class="var">target</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>target </code></dt>
+<dd>An object that implements the protocol <tt>NDScriptDataSendEvent</tt>.</dd>
+</dl>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->If the send target is set any AppleEvents are sent to the send target to be processed, otherwise <tt>NDComponentInstance</tt> will handle the event itself by utilising the OSA default send procedure. One use of this is when executing a script in thread any AppleEvents that require user interaction sent to the current procees need to be sent from the main thread. This method retains the target so if the target retains the <tt>NDScriptData</tt> that is used by the component you will have to set the target to target to nil to release the component and hence close the compoent instance. If you don't do this, not only will you have a memory leak you will use up component instances.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setAppleEventSendTarget:currentProcessOnly:;  name=NDComponentInstance::setAppleEventSendTarget:currentProcessOnly: --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setAppleEventSendTarget:currentProcessOnly:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="setAppleEventSendTarget:currentProcessOnly:">setAppleEventSendTarget:currentProcessOnly: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->sets the object that any handles any AppleEvent the script atempts to send.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/void //apple_ref/occ/tdef/void //apple_ref/occ/tag/void //apple_ref/occ/econst/void //apple_ref/occ/struct/void //apple_ref/occ/clconst/void //apple_ref/occ/intf/void" --><span class="type">void</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/instm/setAppleEventSendTarget //apple_ref/occ/clm/setAppleEventSendTarget //apple_ref/occ/intfcm/setAppleEventSendTarget //apple_ref/occ/intfm/setAppleEventSendTarget //apple_ref/occ/func/setAppleEventSendTarget //apple_ref/occ/ftmplt/setAppleEventSendTarget //apple_ref/occ/defn/setAppleEventSendTarget //apple_ref/occ/macro/setAppleEventSendTarget" --><span class="function">setAppleEventSendTarget</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->&lt;<span class="param">NDScriptDataSendEvent</span>&gt;)<span class="param">target</span> 
+        <!-- a logicalPath="//apple_ref/occ/instm/currentProcessOnly //apple_ref/occ/clm/currentProcessOnly //apple_ref/occ/intfcm/currentProcessOnly //apple_ref/occ/intfm/currentProcessOnly //apple_ref/occ/func/currentProcessOnly //apple_ref/occ/ftmplt/currentProcessOnly //apple_ref/occ/defn/currentProcessOnly //apple_ref/occ/macro/currentProcessOnly" --><span class="function">currentProcessOnly</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/econst/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/clconst/BOOL //apple_ref/occ/intf/BOOL" --><span class="type">BOOL</span><!-- /a -->)<span class="var">flag</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>target </code></dt>
+<dd>An object that implements the protocol <tt>NDScriptDataSendEvent</tt>.</dd>
+<dt><code>flag </code></dt>
+<dd>If <tt>YES</tt> then only AppleEvents for the current process are sent to the AppleEvent send target, otherwise all AppleEvents are sent to the send target.</dd>
+</dl>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->If the send target is set any AppleEvents are sent to the send target to be processed, otherwise <tt>NDComponentInstance</tt> will handle the event itself by utilising the OSA default send procedure. One use of this is when executing a script in thread any AppleEvents that require user interaction sent to the current procees need to be sent from the main thread. This method retains the target so if the target retains the <tt>NDScriptData</tt> that is used by the component you will have to set the target to target to nil to release the component and hence close the compoent instance. If you don't do this, not only will you have a memory leak you will use up component instances.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setDefaultTarget:;  name=NDComponentInstance::setDefaultTarget: --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setDefaultTarget:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="setDefaultTarget:">setDefaultTarget: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->sets the default target for any AppleEvents.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/void //apple_ref/occ/tdef/void //apple_ref/occ/tag/void //apple_ref/occ/econst/void //apple_ref/occ/struct/void //apple_ref/occ/clconst/void //apple_ref/occ/intf/void" --><span class="type">void</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/instm/setDefaultTarget //apple_ref/occ/clm/setDefaultTarget //apple_ref/occ/intfcm/setDefaultTarget //apple_ref/occ/intfm/setDefaultTarget //apple_ref/occ/func/setDefaultTarget //apple_ref/occ/ftmplt/setDefaultTarget //apple_ref/occ/defn/setDefaultTarget //apple_ref/occ/macro/setDefaultTarget" --><span class="function">setDefaultTarget</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/NSAppleEventDescriptor //apple_ref/occ/tdef/NSAppleEventDescriptor //apple_ref/occ/tag/NSAppleEventDescriptor //apple_ref/occ/econst/NSAppleEventDescriptor //apple_ref/occ/struct/NSAppleEventDescriptor //apple_ref/occ/clconst/NSAppleEventDescriptor //apple_ref/occ/intf/NSAppleEventDescriptor" --><span class="type">NSAppleEventDescriptor</span><!-- /a --> <span class="type">*</span>)<span class="var">defaultTarget</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>defaultTarget </code></dt>
+<dd>an <tt>NSAppleEventDescriptor</tt> containing the target descriptor</dd>
+</dl>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->any AppleEvents not enclosed in a tell statement by default go to the current
+process (your application). With this method you can provide a different default target.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setDefaultTargetAsCreator:;  name=NDComponentInstance::setDefaultTargetAsCreator: --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setDefaultTargetAsCreator:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="setDefaultTargetAsCreator:">setDefaultTargetAsCreator: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->sets the default target, specified by creator code, for any AppleEvents
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/void //apple_ref/occ/tdef/void //apple_ref/occ/tag/void //apple_ref/occ/econst/void //apple_ref/occ/struct/void //apple_ref/occ/clconst/void //apple_ref/occ/intf/void" --><span class="type">void</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/instm/setDefaultTargetAsCreator //apple_ref/occ/clm/setDefaultTargetAsCreator //apple_ref/occ/intfcm/setDefaultTargetAsCreator //apple_ref/occ/intfm/setDefaultTargetAsCreator //apple_ref/occ/func/setDefaultTargetAsCreator //apple_ref/occ/ftmplt/setDefaultTargetAsCreator //apple_ref/occ/defn/setDefaultTargetAsCreator //apple_ref/occ/macro/setDefaultTargetAsCreator" --><span class="function">setDefaultTargetAsCreator</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/OSType //apple_ref/occ/tdef/OSType //apple_ref/occ/tag/OSType //apple_ref/occ/econst/OSType //apple_ref/occ/struct/OSType //apple_ref/occ/clconst/OSType //apple_ref/occ/intf/OSType" --><span class="type">OSType</span><!-- /a -->)<span class="var">creator</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>creator </code></dt>
+<dd>an <tt>OSType</tt> creator code of the processes application.</dd>
+</dl>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->same as setDefaultTarget: but passing the creator code of an application to specify the
+target process.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setExecuteAppleEventInMainThread:;  name=NDComponentInstance::setExecuteAppleEventInMainThread: --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setExecuteAppleEventInMainThread:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="setExecuteAppleEventInMainThread:">setExecuteAppleEventInMainThread: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Set all AppleEvents targeted to the current process through the main thread, this is neccessary when running scripts within a thread that require user GUI interaction. This function throws an exception if it fails.
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/void //apple_ref/occ/tdef/void //apple_ref/occ/tag/void //apple_ref/occ/econst/void //apple_ref/occ/struct/void //apple_ref/occ/clconst/void //apple_ref/occ/intf/void" --><span class="type">void</span><!-- /a -->)<!-- a logicalPath="//apple_ref/occ/instm/setExecuteAppleEventInMainThread //apple_ref/occ/clm/setExecuteAppleEventInMainThread //apple_ref/occ/intfcm/setExecuteAppleEventInMainThread //apple_ref/occ/intfm/setExecuteAppleEventInMainThread //apple_ref/occ/func/setExecuteAppleEventInMainThread //apple_ref/occ/ftmplt/setExecuteAppleEventInMainThread //apple_ref/occ/defn/setExecuteAppleEventInMainThread //apple_ref/occ/macro/setExecuteAppleEventInMainThread" --><span class="function">setExecuteAppleEventInMainThread</span><!-- /a -->:(<!-- a logicalPath="//apple_ref/occ/cl/BOOL //apple_ref/occ/tdef/BOOL //apple_ref/occ/tag/BOOL //apple_ref/occ/econst/BOOL //apple_ref/occ/struct/BOOL //apple_ref/occ/clconst/BOOL //apple_ref/occ/intf/BOOL" --><span class="type">BOOL</span><!-- /a -->)<span class="var">flag</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>flag </code></dt>
+<dd>YES to set execution in main thread on.</dd>
+</dl>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setFinderAsDefaultTarget;  name=NDComponentInstance::setFinderAsDefaultTarget --><a name="//apple_ref/doc/compositePage/occ/instm/NDComponentInstance/setFinderAsDefaultTarget"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="setFinderAsDefaultTarget">setFinderAsDefaultTarget </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->sets the default target as Finder for any AppleEvents
+<!-- end abstract --></p>
+<p></p>
+<b>See Also:</b><blockquote><dl>
+<dt>
+<a href="../../../../NDScript/NDComponentInstance/Classes/NDComponentInstance_/index.html?Methods/Methods.html#//apple_ref/doc/title:instm/NDComponentInstance/setFinderAsDefaultTarget." logicalPath="//apple_ref/doc/title:instm/NDComponentInstance/setFinderAsDefaultTarget." target="_top">setFinderAsDefaultTarget.</a>
+</dt>
+<dd></dd>
+</dl></blockquote>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/void //apple_ref/occ/tdef/void //apple_ref/occ/tag/void //apple_ref/occ/econst/void //apple_ref/occ/struct/void //apple_ref/occ/clconst/void //apple_ref/occ/intf/void" --><span class="type">void</span><!-- /a -->)<span class="var">setFinderAsDefaultTarget</span>; </pre>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->passes the Finders creator code to <tt>setDefaultTargetAsCreator:</tt>.
+ <!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=title:instm;  uid=//apple_ref/doc/compositePage/doc/title:instm/NDComponentInstance/setFinderAsDefaultTarget.;  name=NDComponentInstance::setFinderAsDefaultTarget. --><a name="//apple_ref/doc/compositePage/doc/title:instm/NDComponentInstance/setFinderAsDefaultTarget."></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="setFinderAsDefaultTarget.">setFinderAsDefaultTarget. </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->sets the default target as Finder for any AppleEvents
+<!-- end abstract --></p>
+<p></p>
+<b>See Also:</b><blockquote><dl>
+<dt>
+<a href="../../../../NDScript/NDComponentInstance/Classes/NDComponentInstance_/index.html?Methods/Methods.html#//apple_ref/occ/instm/NDComponentInstance/setFinderAsDefaultTarget" logicalPath="//apple_ref/occ/instm/NDComponentInstance/setFinderAsDefaultTarget" target="_top">setFinderAsDefaultTarget</a>
+</dt>
+<dd></dd>
+</dl></blockquote>
+<pre>- (<!-- a logicalPath="//apple_ref/occ/cl/void //apple_ref/occ/tdef/void //apple_ref/occ/tag/void //apple_ref/occ/econst/void //apple_ref/occ/struct/void //apple_ref/occ/clconst/void //apple_ref/occ/intf/void" --><span class="type">void</span><!-- /a -->)<span class="var">setFinderAsDefaultTarget</span>; </pre>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->passes the Finders creator code to <tt>setDefaultTargetAsCreator:</tt>.
+ <!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=clm;  uid=//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/sharedComponentInstance;  name=NDComponentInstance::sharedComponentInstance --><a name="//apple_ref/doc/compositePage/occ/clm/NDComponentInstance/sharedComponentInstance"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="sharedComponentInstance">sharedComponentInstance </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Returns the shared component instance.
+<!-- end abstract --></p>
+<p></p>
+<pre>+ (<!-- a logicalPath="//apple_ref/occ/cl/id //apple_ref/occ/tdef/id //apple_ref/occ/tag/id //apple_ref/occ/econst/id //apple_ref/occ/struct/id //apple_ref/occ/clconst/id //apple_ref/occ/intf/id" --><span class="type">id</span><!-- /a -->)<span class="var">sharedComponentInstance</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->Returns <tt>NDComponentInstance</tt> component.
+ 
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->This is the single component all <tt>NDScriptData</tt>s use if you do not give it a <tt>NDComponentInstance</tt>. The shared component instance has a connection with the default OSA Apple component.
+<!-- end discussion --></p>
+<p></p>
+<p>Last Updated: Sunday, August 30, 2009
+</p>
+</body>
+</html>

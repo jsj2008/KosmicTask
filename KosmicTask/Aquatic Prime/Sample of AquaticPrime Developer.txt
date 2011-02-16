@@ -1,0 +1,488 @@
+Sampling process 1857 for 3 seconds with 1 millisecond of run time between samples
+Sampling completed, processing symbols...
+Analysis of sampling AquaticPrime Developer (pid 1857) every 1 millisecond
+Call graph:
+    2219 Thread_12047   DispatchQueue_1: com.apple.main-thread  (serial)
+      2219 start
+        2219 main
+          2219 NSApplicationMain
+            2219 +[NSBundle(NSNibLoading) loadNibNamed:owner:]
+              2219 +[NSBundle(NSNibLoading) _loadNibFile:nameTable:withZone:ownerBundle:]
+                2219 loadNib
+                  2219 -[NSIBObjectData nibInstantiateWithOwner:topLevelObjects:]
+                    2219 -[NSSet makeObjectsPerformSelector:]
+                      2219 -[MainController awakeFromNib]
+                        2219 -[NSWindow makeKeyAndOrderFront:]
+                          2219 -[NSWindow orderWindow:relativeTo:]
+                            2219 -[NSWindow _reallyDoOrderWindow:relativeTo:findKey:forCounter:force:isModal:]
+                              2219 -[NSView displayIfNeeded]
+                                2219 -[NSView _displayRectIgnoringOpacity:isVisibleRect:rectIsVisibleRectForView:]
+                                  2219 -[NSThemeFrame _recursiveDisplayRectIfNeededIgnoringOpacity:isVisibleRect:rectIsVisibleRectForView:topView:]
+                                    2219 -[NSView _recursiveDisplayRectIfNeededIgnoringOpacity:isVisibleRect:rectIsVisibleRectForView:topView:]
+                                      2219 -[NSView _recursiveDisplayAllDirtyWithLockFocus:visRect:]
+                                        2219 -[NSView _recursiveDisplayAllDirtyWithLockFocus:visRect:]
+                                          2219 -[NSView _recursiveDisplayAllDirtyWithLockFocus:visRect:]
+                                            2219 -[NSView _recursiveDisplayAllDirtyWithLockFocus:visRect:]
+                                              2219 -[NSView _recursiveDisplayAllDirtyWithLockFocus:visRect:]
+                                                2219 -[NSView _drawRect:clip:]
+                                                  2219 -[NSTableView drawRect:]
+                                                    2211 -[OAGradientTableView highlightSelectionInClipRect:]
+                                                      398 CGContextClipToRect
+                                                        396 CGGStateClipToRect
+                                                          169 maybeCopyClipState
+                                                            151 CGClipStackCreateMutableCopy
+                                                              133 calloc
+                                                                127 malloc_zone_calloc
+                                                                  106 szone_malloc_should_clear
+                                                                    50 tiny_malloc_from_free_list
+                                                                      49 tiny_malloc_from_free_list
+                                                                      1 tiny_free_list_add_ptr
+                                                                    39 szone_malloc_should_clear
+                                                                    14 __bzero
+                                                                    3 __cpu_number
+                                                                  13 __spin_lock
+                                                                  3 malloc_zone_calloc
+                                                                  2 dyld_stub__spin_lock
+                                                                  1 dyld_stub__spin_unlock
+                                                                  1 dyld_stub_memset
+                                                                  1 szone_calloc
+                                                                6 calloc
+                                                              17 CGClipStackCreateMutableCopy
+                                                              1 dyld_stub_malloc_zone_calloc
+                                                            10 maybeCopyClipState
+                                                            5 CGClipStackRelease
+                                                            3 dyld_stub_calloc
+                                                          105 CGClipStackAddRect
+                                                            35 CGClipStackAddRect
+                                                            28 CGRectIntersection
+                                                            18 CGRectContainsRect
+                                                            9 fmin$fenv_access_off
+                                                            8 fmax$fenv_access_off
+                                                            5 dyld_stub_fmax
+                                                            2 dyld_stub_fmin
+                                                          40 CGRectIntegral
+                                                            27 CGRectIntegral
+                                                            7 floor$fenv_access_off
+                                                            6 ceil
+                                                          23 CGGStateClipToRect
+                                                          21 CGRectIntersection
+                                                          20 CGRectApplyAffineTransform
+                                                          5 fmax$fenv_access_off
+                                                          3 CGAffineTransformIsRectilinear
+                                                          3 CGGStateGetShouldAntialias
+                                                          2 dyld_stub_fmin
+                                                          2 fmin$fenv_access_off
+                                                          1 CGGStateGetCTM
+                                                          1 dyld_stub_ceil
+                                                          1 dyld_stub_floor
+                                                        2 CGContextClipToRect
+                                                      367 CGContextRestoreGState
+                                                        358 CGGStackRestore
+                                                          232 CGGStateRelease
+                                                            105 szone_free_definite_size
+                                                              72 szone_free_definite_size
+                                                              23 tiny_free_list_remove_ptr
+                                                              10 tiny_free_list_add_ptr
+                                                            28 free
+                                                              18 szone_size
+                                                              10 free
+                                                            18 __spin_lock
+                                                            16 _CFRelease
+                                                              10 _CFRelease
+                                                              6 OSAtomicCompareAndSwapIntBarrier
+                                                            9 CGClipStackRelease
+                                                              6 CGClipStackRelease
+                                                              3 free
+                                                            8 CFRelease
+                                                            8 OSAtomicCompareAndSwapIntBarrier
+                                                              8 __compare_and_swap32
+                                                            8 text_state_release
+                                                            7 CGGStateRelease
+                                                            6 strokeStateRelease
+                                                            5 deviceStateRelease
+                                                            3 renderingStateRelease
+                                                            2 CGGStateClipRelease
+                                                            2 CGGStateDeviceRelease
+                                                            2 CGGStateTextRelease
+                                                            1 CGGStateRenderingRelease
+                                                            1 CGGStateStrokeRelease
+                                                            1 OSSpinLockUnlock
+                                                            1 __compare_and_swap32
+                                                            1 dyld_stub_free
+                                                          56 szone_free_definite_size
+                                                            38 szone_free_definite_size
+                                                            16 tiny_free_list_add_ptr
+                                                            1 _spin_lock
+                                                            1 tiny_free_list_remove_ptr
+                                                          27 free
+                                                            20 szone_size
+                                                            7 free
+                                                          19 x_list_remove_head_
+                                                            16 x_mem_dealloc_bucket
+                                                              14 x_mem_dealloc_bucket
+                                                              2 pthread_getspecific
+                                                            2 x_list_remove_head_
+                                                            1 x_list_free_1_
+                                                          11 __spin_lock
+                                                          9 CGGStackRestore
+                                                          2 dyld_stub__spin_lock
+                                                          1 CFRelease
+                                                          1 x_list_free_1_
+                                                        5 CGContextRestoreGState
+                                                        1 CGGStateRelease
+                                                        1 dyld_stub__spin_unlock
+                                                        1 free
+                                                        1 gs_list_get_gstate
+                                                      294 CGContextDrawShading
+                                                        280 ripc_DrawShading
+                                                          262 ripc_GetRenderingState
+                                                            226 ripc_GetClipState
+                                                              88 ripc_GetClipState
+                                                              40 malloc_zone_malloc
+                                                                18 __spin_lock
+                                                                13 szone_malloc_should_clear
+                                                                7 malloc_zone_malloc
+                                                                1 dyld_stub__spin_lock
+                                                                1 dyld_stub__spin_unlock
+                                                              35 szone_free
+                                                                33 szone_free
+                                                                2 tiny_free_list_add_ptr
+                                                              21 ripd_Geometry
+                                                                14 CGSDeviceGetGeometry
+                                                                7 ripd_Geometry
+                                                              11 __spin_lock
+                                                              11 ripc_GetClipStackData
+                                                              7 RIPLayerReplace
+                                                              3 CGRectIsInfinite
+                                                              3 malloc_zone_free
+                                                              2 CGRenderingStateGetAllowsAntialiasing
+                                                              2 dyld_stub_CGSDeviceGetGeometry
+                                                              1 CGClipStackGetCount
+                                                              1 OSSpinLockUnlock
+                                                              1 dyld_stub_CGClipStackGetRect
+                                                            26 ripc_GetRenderingState
+                                                            3 CGGStateGetClipStack
+                                                            3 dyld_stub_CGClipStackGetCount
+                                                            2 dyld_stub_CGRenderingStateGetAllowsAntialiasing
+                                                            1 CGGStateGetSoftMask
+                                                            1 malloc_zone_free
+                                                          15 ripc_DrawShading
+                                                          3 CGContextDelegateGetInfo
+                                                        8 CGContextDelegateDrawShading
+                                                        6 CGContextDrawShading
+                                                      271 CGShadingCreateAxial
+                                                        266 CGShadingCreateAxial2
+                                                          221 CGShadingCreateEmpty
+                                                            137 CGTypeCreateInstanceWithAllocator
+                                                              115 _CFRuntimeCreateInstance
+                                                                64 malloc_zone_malloc
+                                                                  44 szone_malloc_should_clear
+                                                                    36 tiny_malloc_from_free_list
+                                                                      23 tiny_malloc_from_free_list
+                                                                      13 tiny_free_list_add_ptr
+                                                                    8 szone_malloc_should_clear
+                                                                  15 __spin_lock
+                                                                  3 malloc_zone_malloc
+                                                                  1 dyld_stub__spin_lock
+                                                                  1 dyld_stub__spin_unlock
+                                                                20 _CFRuntimeCreateInstance
+                                                                13 CFAllocatorAllocate
+                                                                11 __bzero
+                                                                4 __CFAllocatorSystemAllocate
+                                                                2 memset
+                                                                1 pthread_getspecific
+                                                              12 __bzero
+                                                              6 CGTypeCreateInstanceWithAllocator
+                                                              2 dyld_stub_malloc_zone_malloc
+                                                              2 dyld_stub_pthread_getspecific
+                                                            35 CGColorSpaceRetain
+                                                              14 OSAtomicCompareAndSwapIntBarrier
+                                                                14 __compare_and_swap32
+                                                              9 CGColorSpaceRetain
+                                                              4 CFRetain
+                                                              4 _CFRetain
+                                                                2 OSAtomicCompareAndSwapIntBarrier
+                                                                2 _CFRetain
+                                                              3 __compare_and_swap32
+                                                              1 dyld_stub_OSAtomicCompareAndSwap32Barrier
+                                                            34 CGShadingCreateEmpty
+                                                            6 CGTypeRegisterWithCallbacks
+                                                            4 dyld_stub_memset
+                                                            1 CFRetain
+                                                            1 CGShadingGetTypeID
+                                                            1 CGTypeCreateInstance
+                                                            1 dyld_stub_CFRetain
+                                                            1 dyld_stub__CFRuntimeCreateInstance
+                                                          29 CGFunctionRetain
+                                                            15 OSAtomicCompareAndSwapIntBarrier
+                                                              15 __compare_and_swap32
+                                                            7 _CFRetain
+                                                              5 _CFRetain
+                                                              2 OSAtomicCompareAndSwapIntBarrier
+                                                            3 CFRetain
+                                                            3 CGFunctionRetain
+                                                            1 __compare_and_swap32
+                                                          13 CGShadingCreateAxial2
+                                                          1 CFRetain
+                                                          1 CGTypeCreateInstance
+                                                          1 dyld_stub_CFRetain
+                                                        5 CGShadingCreateAxial
+                                                      250 _CFRelease
+                                                        84 shadingFinalize
+                                                          31 _CFRelease
+                                                            20 _CFRelease
+                                                            11 OSAtomicCompareAndSwapIntBarrier
+                                                          23 OSAtomicCompareAndSwapIntBarrier
+                                                            23 __compare_and_swap32
+                                                          10 CGColorSpaceRelease
+                                                          9 shadingFinalize
+                                                          7 CFRelease
+                                                          3 get_notification_center
+                                                          1 dyld_stub_OSAtomicCompareAndSwap32Barrier
+                                                        28 _CFRelease
+                                                        28 szone_free
+                                                          27 szone_free
+                                                          1 _spin_lock
+                                                        26 objc_removeAssociatedObjects
+                                                          14 objc_removeAssociatedObjects
+                                                          12 _class_instancesHaveAssociatedObjects
+                                                        23 CFAllocatorDeallocate
+                                                        17 object_getClass
+                                                        11 free
+                                                        10 __CFAllocatorSystemDeallocate
+                                                        7 __spin_lock
+                                                        6 OSAtomicCompareAndSwapIntBarrier
+                                                        6 malloc_zone_free
+                                                        2 dyld_stub_CFRelease
+                                                        1 CFRelease
+                                                        1 dyld_stub__spin_lock
+                                                      222 CGContextSaveGState
+                                                        216 CGGStackSave
+                                                          189 CGGStateCreateCopy
+                                                            116 calloc
+                                                              108 malloc_zone_calloc
+                                                                63 szone_malloc_should_clear
+                                                                  29 szone_malloc_should_clear
+                                                                  28 __bzero
+                                                                  3 memset
+                                                                  2 tiny_malloc_from_free_list
+                                                                  1 __cpu_number
+                                                                25 malloc_zone_calloc
+                                                                12 __spin_lock
+                                                                7 szone_calloc
+                                                                1 dyld_stub__spin_lock
+                                                              8 calloc
+                                                            24 CGColorRetain
+                                                              8 _CFRetain
+                                                                4 OSAtomicCompareAndSwapIntBarrier
+                                                                4 _CFRetain
+                                                              6 CFRetain
+                                                              4 CGColorRetain
+                                                              3 OSAtomicCompareAndSwapIntBarrier
+                                                                3 __compare_and_swap32
+                                                              2 __compare_and_swap32
+                                                              1 dyld_stub_OSAtomicCompareAndSwap32Barrier
+                                                            19 CGGStateClipCopy
+                                                              15 CGGStateClipCopy
+                                                              4 CGClipStackRetain
+                                                            15 CGGStateCreateCopy
+                                                            8 CGGStateTextCopy
+                                                              6 CGGStateTextCopy
+                                                              2 text_state_release
+                                                            4 CGGStateDeviceCopy
+                                                            1 CGGStateRenderingCopy
+                                                            1 CGGStateStrokeCopy
+                                                            1 dyld_stub_CFRetain
+                                                          11 x_list_prepend_
+                                                            9 x_mem_alloc_bucket
+                                                            2 x_list_prepend_
+                                                          7 CGGStackSave
+                                                          7 gs_list_get_gstate
+                                                          2 dyld_stub_calloc
+                                                        6 CGContextSaveGState
+                                                      126 -[NSDynamicSystemColor set]
+                                                        52 -[NSCalibratedRGBColor set]
+                                                          14 CGGStateSetFillColor
+                                                            8 CGGStateSetFillColor
+                                                            6 CGColorEqualToColor
+                                                          12 objc_msgSend
+                                                          6 -[NSCGSContext graphicsPort]
+                                                          6 allowTransparencyWhenPrinting
+                                                          5 -[NSCalibratedRGBColor set]
+                                                          5 CGContextSetFillColorWithColor
+                                                          4 +[NSGraphicsContext currentContext]
+                                                            2 dyld_stub_pthread_getspecific
+                                                            1 +[NSGraphicsContext currentContext]
+                                                            1 __NSAppKitGetThreadSpecificData
+                                                        27 objc_msgSend
+                                                        19 -[NSDynamicSystemColor set]
+                                                        16 CGGStateSetStrokeColor
+                                                          11 CGGStateSetStrokeColor
+                                                          5 CGColorEqualToColor
+                                                        11 +[NSGraphicsContext currentContextDrawingToScreen]
+                                                          6 +[NSGraphicsContext currentContext]
+                                                            3 +[NSGraphicsContext currentContext]
+                                                            2 __NSAppKitGetThreadSpecificData
+                                                              1 __NSAppKitGetThreadSpecificData
+                                                              1 pthread_getspecific
+                                                            1 dyld_stub_pthread_getspecific
+                                                          3 objc_msgSend
+                                                          2 +[NSGraphicsContext currentContextDrawingToScreen]
+                                                        1 dyld_stub_objc_msgSend
+                                                      72 objc_msgSend
+                                                      62 -[OAGradientTableView highlightSelectionInClipRect:]
+                                                      18 -[NSTableView rectOfRow:]
+                                                        11 objc_msgSend
+                                                        5 -[NSTableView rectOfRow:]
+                                                        2 -[NSTableView numberOfRows]
+                                                      18 NSDivideRect
+                                                      18 objc_msgSend_stret
+                                                      12 -[NSIndexSet _indexClosestToIndex:equalAllowed:following:]
+                                                      11 +[NSGraphicsContext currentContext]
+                                                        8 +[NSGraphicsContext currentContext]
+                                                        2 dyld_stub_pthread_getspecific
+                                                        1 __NSAppKitGetThreadSpecificData
+                                                      11 NSRectFill
+                                                      11 OSAtomicCompareAndSwapIntBarrier
+                                                        11 __compare_and_swap32
+                                                      9 CFRelease
+                                                      7 CGPointMake
+                                                      7 objc_msgSend_fixedup
+                                                      6 NSUnionRect
+                                                      6 objc_msgSend_stret_fixedup
+                                                      4 CGShadingRelease
+                                                      3 dyld_stub_objc_msgSend
+                                                      2 __CFAllocatorSystemDeallocate
+                                                      1 -[NSCGSContext graphicsPort]
+                                                      1 -[NSIndexSet indexGreaterThanIndex:]
+                                                      1 CGContextSetStrokeColorWithColor
+                                                      1 dyld_stub_CGContextSetStrokeColorWithColor
+                                                      1 malloc_zone_free
+                                                      1 szone_free
+                                                    3 CGPointMake
+                                                    2 dyld_stub_CGContextClipToRect
+                                                    1 CGShadingRelease
+                                                    1 dyld_stub_CFRelease
+                                                    1 dyld_stub_CGContextDrawShading
+    2219 Thread_12055   DispatchQueue_2: com.apple.libdispatch-manager  (serial)
+      2219 start_wqthread
+        2219 _pthread_wqthread
+          2219 _dispatch_worker_thread2
+            2219 _dispatch_queue_invoke
+              2219 _dispatch_mgr_invoke
+                2219 kevent
+
+Total number in stack (recursive counted multiple, when >=5):
+        12       OSAtomicCompareAndSwapIntBarrier
+        10       __compare_and_swap32
+        8       __spin_lock
+        6       dyld_stub__spin_lock
+        5       -[NSView _recursiveDisplayAllDirtyWithLockFocus:visRect:]
+        5       CFRelease
+        5       CFRetain
+        5       free
+        5       objc_msgSend
+        5       tiny_free_list_add_ptr
+
+Sort by top of stack, same collapsed (when >= 5):
+        kevent        2219
+        objc_msgSend        125
+        szone_free_definite_size        110
+        __spin_lock        105
+        szone_malloc_should_clear        89
+        ripc_GetClipState        88
+        __compare_and_swap32        81
+        tiny_malloc_from_free_list        74
+        __bzero        65
+        -[OAGradientTableView highlightSelectionInClipRect:]        62
+        szone_free        61
+        _CFRelease        58
+        CGRectIntersection        49
+        tiny_free_list_add_ptr        42
+        szone_size        38
+        CGClipStackAddRect        35
+        CGShadingCreateEmpty        34
+        free        32
+        OSAtomicCompareAndSwapIntBarrier        31
+        malloc_zone_calloc        28
+        CGRectIntegral        27
+        CFRelease        26
+        ripc_GetRenderingState        26
+        tiny_free_list_remove_ptr        24
+        CFAllocatorDeallocate        23
+        CGGStateClipToRect        23
+        CGRectApplyAffineTransform        20
+        _CFRuntimeCreateInstance        20
+        -[NSDynamicSystemColor set]        19
+        CGRectContainsRect        18
+        NSDivideRect        18
+        objc_msgSend_stret        18
+        CGClipStackCreateMutableCopy        17
+        object_getClass        17
+        CFRetain        15
+        CGGStateClipCopy        15
+        CGGStateCreateCopy        15
+        ripc_DrawShading        15
+        CGSDeviceGetGeometry        14
+        calloc        14
+        objc_removeAssociatedObjects        14
+        x_mem_dealloc_bucket        14
+        CFAllocatorAllocate        13
+        CGShadingCreateAxial2        13
+        fmax$fenv_access_off        13
+        +[NSGraphicsContext currentContext]        12
+        -[NSIndexSet _indexClosestToIndex:equalAllowed:following:]        12
+        __CFAllocatorSystemDeallocate        12
+        _class_instancesHaveAssociatedObjects        12
+        CGClipStackRelease        11
+        CGColorEqualToColor        11
+        CGGStateSetStrokeColor        11
+        NSRectFill        11
+        _CFRetain        11
+        fmin$fenv_access_off        11
+        malloc_zone_free        11
+        ripc_GetClipStackData        11
+        CGColorSpaceRelease        10
+        CGPointMake        10
+        malloc_zone_malloc        10
+        maybeCopyClipState        10
+        text_state_release        10
+        CGColorSpaceRetain        9
+        CGGStackRestore        9
+        shadingFinalize        9
+        x_mem_alloc_bucket        9
+        CGContextDelegateDrawShading        8
+        CGGStateRelease        8
+        CGGStateSetFillColor        8
+        dyld_stub__spin_lock        8
+        gs_list_get_gstate        8
+        szone_calloc        8
+        -[NSCGSContext graphicsPort]        7
+        CGGStackSave        7
+        RIPLayerReplace        7
+        dyld_stub_pthread_getspecific        7
+        floor$fenv_access_off        7
+        objc_msgSend_fixedup        7
+        ripd_Geometry        7
+        CGContextDrawShading        6
+        CGContextSaveGState        6
+        CGGStateTextCopy        6
+        CGTypeCreateInstanceWithAllocator        6
+        CGTypeRegisterWithCallbacks        6
+        NSUnionRect        6
+        allowTransparencyWhenPrinting        6
+        ceil        6
+        objc_msgSend_stret_fixedup        6
+        strokeStateRelease        6
+        -[NSCalibratedRGBColor set]        5
+        -[NSTableView rectOfRow:]        5
+        CGContextRestoreGState        5
+        CGContextSetFillColorWithColor        5
+        CGShadingCreateAxial        5
+        CGShadingRelease        5
+        deviceStateRelease        5
+        dyld_stub_calloc        5
+        dyld_stub_fmax        5
+        dyld_stub_memset        5
+        memset        5
+Sample analysis of process 1857 written to file /dev/stdout

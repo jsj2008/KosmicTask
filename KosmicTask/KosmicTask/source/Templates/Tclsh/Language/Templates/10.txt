@@ -1,0 +1,66 @@
+#
+# Created by[huddle create { author }} on[huddle create % now | date_format "dd MMM yyyy HHmmss" %}
+#
+# Credits
+#
+# Notes 
+#
+# the number of task arguments is
+# $argc
+#
+# task arguments are accessed as
+# [lindex $argv 0] .. [lindex $argv [expr $argc - 1]]
+# 
+package require KosmicTaskController
+
+# a huddle is used here but a dictionary may also be used
+
+# Mercury
+set satellites [huddle list "none"]
+set Mercury [huddle create name "Mercury" radius -1 satellites $satellites]
+
+# Venus
+set satellites [huddle list "none"]
+set Venus [huddle create name "Venus" radius 6052 satellites $satellites]
+
+# Earth
+set satellites [huddle list "moon"]
+set Earth [huddle create name "Earth" radius 6371 satellites $satellites]	
+
+# Mars
+set satellites [huddle list "Phobos" "Deimos"]
+set Mars [huddle create name "Mars" radius 3396 satellites $satellites]
+
+# Jupiter
+set satellites [huddle list "Io" "Europa" "Ganymede" "Callisto" "(+59 smaller non Galiliean moons)"]
+set Jupiter [huddle create name "Jupiter" radius 71492 satellites $satellites]	
+	
+# Saturn
+set satellites [huddle list "Mimas" "Enceladus" "Tethys" "Dione" "Rhea" "Titan" "Iaptus" "(+55 smaller moons)"]
+set Saturn [huddle create name "Saturn" radius 60268 satellites $satellites]	
+
+# Uranus
+set satellites [huddle list "Miranda" "Ariel" "Umbriel" "Titania" "Oberon" " (+22 smaller moons)"]
+set Uranus [huddle create name "Uranus" radius 25559 satellites $satellites]	
+
+# Neptune
+set satellites [huddle list "Triton" "Nereid" "Naiad" "Thalassa" "Despina" "Galatea" "Larissa" "Proteus" "Halimede" "Psamathe" "Sao" "Laomedeia" "Neso"]
+set Neptune [huddle create name "Neptune" radius -1 satellites $satellites]
+
+# fix radius properties
+huddle set Mercury radius 2440
+huddle set Neptune radius 24764
+	
+# build a huddle list of planets
+set planets [huddle list]
+huddle append planets $Mercury
+huddle append planets $Venus
+huddle append planets $Earth
+huddle append planets $Mars
+huddle append planets $Jupiter
+huddle append planets $Saturn
+huddle append planets $Uranus
+huddle append planets $Neptune
+
+# print native object as YAML
+::KosmicTaskController::printObject $planets

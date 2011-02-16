@@ -1,0 +1,26 @@
+--[[
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+]]
+function kosmicTask()
+
+	-- form array
+	local array = {'item 1', 'item 2'}
+	
+	-- define CSS styling string
+	local styling = 'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'
+	
+	-- form result dictionary
+	local result = {}
+	result.kosmicData = array
+	result.kosmicStyle = styling
+	
+	return result
+end

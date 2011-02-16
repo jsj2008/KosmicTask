@@ -1,0 +1,24 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# numArgs = len(sys.argv) - 1
+#
+# task arguments are accessed as:
+# sys.argv[1] .. sys.argv[numArgs]
+#
+
+# inline dictionary
+items = "{key1: item 1, key2: item 2}"
+
+# css
+css = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
+
+# return a YAML inline format dictionary with dictionary as data
+result = "--- {kosmicData: %s, kosmicStyle: '%s'}" % (items, css)
+
+print result

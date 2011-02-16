@@ -1,0 +1,44 @@
+"
+
+Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+"
+[
+	" define our class"
+	KosmicTask : NSObject
+	{ 	
+		" instance variables "
+		timer
+		
+   		" start "
+   		- start
+   		{
+       		" schedule the timer "
+       		" note that the target is a block and the selector is a block in compact form "
+       		" #value is equivalent to [:a | a value] "
+			timer := NSTimer scheduledTimerWithTimeInterval: 2 target:[self timerFired:timer] selector: #value  userInfo: nil repeats: false.
+						
+			" use kosmicTaskController to keep our task alive"
+			KosmicTaskController keepTaskRunning.
+   		}
+   		
+   		" timer fired "
+   		- (void)timerFired:(NSTimer *)aTimer
+   		{
+   			" stop our task and return result "
+   			KosmicTaskController stopTask: 'timer expired'.
+   		}
+	}.
+
+	" create new class instance "
+	task := KosmicTask new.
+
+	" call our entry point "
+	task start.
+]

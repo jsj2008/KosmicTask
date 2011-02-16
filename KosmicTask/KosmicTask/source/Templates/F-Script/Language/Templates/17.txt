@@ -1,0 +1,45 @@
+"
+
+Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+"
+[
+	" define the person class"
+	Person : NSObject
+	{
+		" define instance variables "
+   		firstName lastName
+ 
+ 		" init method "
+   		- initWithFirstName:first lastName:last
+   		{
+      		self := super init.
+      		self ~~ nil ifTrue:
+      		[
+         		firstName := first.
+         		lastName := last
+      		].
+      		
+      		" return self "
+      		^ self
+   		}
+
+		" description method "
+   		- description
+   		{
+      		^ 'I am ' ++ firstName ++ ' ' ++ lastName.
+   		}
+	}.
+
+	" create new class instance "
+	me := Person alloc initWithFirstName:'Kosmic' lastName:'Stuff'.
+
+	" we can return a class instance and KosmicTask will coerce it using - description"
+	me.
+]	

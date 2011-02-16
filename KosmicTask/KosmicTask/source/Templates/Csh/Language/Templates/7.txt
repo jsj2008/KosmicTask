@@ -1,0 +1,39 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $#argv
+#
+# task arguments are accessed as:
+# $1 .. $n
+# 
+
+# capture screen image to file
+# files created in the current directory will be deleted when the task ends
+set file="capture.png"
+
+# capture screen
+screencapture -t png $file
+
+set type = 1
+
+# YAML document header
+echo "---"
+
+# select format type (result is the same)
+if ( $type == 1 ) then 
+
+	# return a YAML inline format dictionary
+	echo "{kosmicFile: $file, kosmicInfo: file returned}"
+
+else
+
+	# return a YAML block format dictionary
+	echo "kosmicFile: $file"
+	echo "kosmicInfo: file returned"
+
+endif

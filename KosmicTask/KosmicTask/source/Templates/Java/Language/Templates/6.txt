@@ -1,0 +1,24 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+class kosmicTask
+{ 
+	public static void main(String args[])
+    {
+    	String items1 = "item 1";
+    	String items2 = "item 1";
+  
+    	// return a YAML inline format dictionary
+    	String items =  String.format("--- {key1: %s, key2: %s}", items1, items2);
+    	
+		System.out.println(items);
+	}
+}

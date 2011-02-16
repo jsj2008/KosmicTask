@@ -1,0 +1,27 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Ruby Apple Event automation using rb-appscript
+#
+# the number of task arguments is:
+# numArgs = ARGV.length
+#
+# task arguments are accessed as:
+# ARGV[0] .. ARGV[numArgs]
+#
+# Links:
+#
+#
+require 'osx/cocoa'
+include OSX
+OSX.require_framework 'ScriptingBridge'
+
+# get application reference - see the Ruby Usage document for more info
+app = OSX::SBApplication.applicationWithBundleIdentifier_("com.apple.finder")
+
+# query application
+puts app.name

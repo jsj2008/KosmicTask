@@ -1,0 +1,68 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# numArgs = ARGV.length
+#
+# task arguments are accessed as:
+# ARGV[0] .. ARGV[numArgs]
+#
+require "KosmicTaskController"
+
+name = "name"
+radius = "radius"
+moons = "satellites"
+	
+# Mercury
+satellites = Array["none"]
+Mercury  = Hash[name => "Mercury", radius => -1, moons => satellites]	
+
+# Venus
+satellites = Array["none"]
+Venus  = Hash[name => "Venus", radius  => 6052, moons => satellites]
+
+# Earth
+satellites = Array["moon"]
+Earth  = Hash[name => "Earth", radius => 6371, moons => satellites]	
+
+# Mars
+satellites = Array["Phobos", "Deimos"]
+Mars  = Hash[name => "Mars", radius => 3396, moons => satellites]
+
+# Jupiter
+satellites = Array["Io", "Europa", "Ganymede", "Callisto", "(+59 smaller non Galiliean moons)"]
+Jupiter  = Hash[name => "Jupiter", radius => 71492, moons => satellites]	
+	
+# Saturn
+satellites = Array["Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iaptus", "(+55 smaller moons)"]
+Saturn  = Hash[name => "Saturn", radius => 60268, moons => satellites]	
+
+# Uranus
+satellites = Array["Miranda", "Ariel", "Umbriel", "Titania", "Oberon", " (+22 smaller moons)"]
+Uranus  = Hash[name => "Uranus", radius => 25559, moons => satellites]	
+
+# Neptune
+satellites = Array["Triton", "Nereid", "Naiad", "Thalassa", "Despina", "Galatea", "Larissa", "Proteus", "Halimede", "Psamathe", "Sao", "Laomedeia", "Neso"]
+Neptune  = Hash[name => "Neptune", radius => -1, moons => satellites]	
+	
+# fix radius properties
+Mercury[radius] = 2440
+Neptune[radius] = 24764
+
+# build the planets
+Planets = []
+Planets.push(Mercury)
+Planets.push(Venus)
+Planets.push(Earth)
+Planets.push(Mars)
+Planets.push(Jupiter)
+Planets.push(Saturn)
+Planets.push(Uranus)
+Planets.push(Neptune)
+
+# print native object as YAML
+KosmicTaskController.printObject(Planets)

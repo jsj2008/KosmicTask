@@ -1,0 +1,32 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $#argv
+#
+# task arguments are accessed as:
+# $1 .. $n
+# 
+
+set type = 1
+
+echo "---"
+
+# select format type (result is the same)
+if ( $type == 1 ) then 
+
+	# return a YAML inline format array
+	set array="[item 1, item 2]"
+	echo "$array"
+
+else
+
+	# return a YAML block format array
+	echo "- item 1"
+	echo "- item 2"
+
+endif

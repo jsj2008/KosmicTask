@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
+<html>
+<head>
+<title>Methods</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="HeaderDoc">
+<style type="text/css"><!--.keyword {background:#ffffff; color:#761550;}.template {background:#ffffff; color:#761550;}.number {background: #ffffff; color:#0000ff;}.function {background:#ffffff; color:#000000;}.string {background: #ffffff; color:#891315;}.preprocessor {background:#ffffff; color:#236e25}.comment {background:#ffffff; color:#236e25}.char {background: #ffffff; color:#0000ff;}.var {background:#ffffff; color:#000000;}.type {background:#ffffff; color:#761550;}.param {background:#ffffff; color:#000000;}a:link {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #0000ff;}a:visited {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #0000ff;}a:visited:hover {text-decoration: underline; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #ff6600;}a:active {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #ff6600;}a:hover {text-decoration: underline; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #ff6600;}h4 {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: tiny; font-weight: bold;}body {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: 10pt;}--></style>
+</head>
+<body bgcolor="#ffffff">
+<a name="top"></a><a name="HeaderDoc_methods"></a><dl>
+<dt><tt><a href="Methods.html#//apple_ref/occ/clm/NSAppleEventDescriptor(NDScriptDataValueExtension)/descriptorWithScriptData:" target="doc">+descriptorWithScriptData: </a></tt></dt>
+<dd>Create a AppleEvent decsriptor with script data.
+</dd>
+<dt><tt><a href="Methods.html#//apple_ref/occ/instm/NSAppleEventDescriptor(NDScriptDataValueExtension)/scriptDataValue" target="doc">-scriptDataValue </a></tt></dt>
+<dd>Category method for <tt>NSAppleEventDescriptor (NDScriptContextValueExtension)</tt>, converts any script data within a AppleEvent descriptor into an <tt>NDScriptContext</tt>
+</dd>
+</dl>
+<hr>
+<!-- headerDoc=clm;  uid=//apple_ref/occ/clm/NSAppleEventDescriptor(NDScriptDataValueExtension)/descriptorWithScriptData:;  name=NSAppleEventDescriptor(NDScriptDataValueExtension)::descriptorWithScriptData: --><a name="//apple_ref/occ/clm/NSAppleEventDescriptor(NDScriptDataValueExtension)/descriptorWithScriptData:"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="descriptorWithScriptData:">descriptorWithScriptData: </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Create a AppleEvent decsriptor with script data.
+<!-- end abstract --></p>
+<p></p>
+<pre>+ (<!-- a logicalPath="//apple_ref/occ/cl/NSAppleEventDescriptor //apple_ref/occ/tdef/NSAppleEventDescriptor //apple_ref/occ/tag/NSAppleEventDescriptor //apple_ref/occ/econst/NSAppleEventDescriptor //apple_ref/occ/struct/NSAppleEventDescriptor //apple_ref/occ/clconst/NSAppleEventDescriptor //apple_ref/occ/intf/NSAppleEventDescriptor" --><span class="type">NSAppleEventDescriptor</span><!-- /a --> <span class="type">*</span>)<!-- a logicalPath="//apple_ref/occ/instm/descriptorWithScriptData //apple_ref/occ/clm/descriptorWithScriptData //apple_ref/occ/intfcm/descriptorWithScriptData //apple_ref/occ/intfm/descriptorWithScriptData //apple_ref/occ/func/descriptorWithScriptData //apple_ref/occ/ftmplt/descriptorWithScriptData //apple_ref/occ/defn/descriptorWithScriptData //apple_ref/occ/macro/descriptorWithScriptData" --><span class="function">descriptorWithScriptData</span><!-- /a -->:(<a href="../../../../../NDScript/NDScriptData/Classes/NDScriptData_/index.html#//apple_ref/occ/cl/NDScriptData" logicalPath="//apple_ref/occ/cl/NDScriptData" target="_top"><span class="type">NDScriptData</span></a> <span class="type">*</span>)<span class="var">scriptData</span>; </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>scriptData </code></dt>
+<dd>The script data to create the AppleEvent descriptor.</dd>
+</dl>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->A new <tt>NSAppleEventDescriptor</tt>, or <tt>nil</tt> if the method fails.
+
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->To pass script data in AppleEvents it first has to be converted to a AppleEvent descriptor, converting script data to Cocoa type also requires converting the data to a AppleEvent descriptor first, this function does this but you can also just as easily use the method <tt>-[NDScriptData appleEventDescriptorValue]</tt>.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=instm;  uid=//apple_ref/occ/instm/NSAppleEventDescriptor(NDScriptDataValueExtension)/scriptDataValue;  name=NSAppleEventDescriptor(NDScriptDataValueExtension)::scriptDataValue --><a name="//apple_ref/occ/instm/NSAppleEventDescriptor(NDScriptDataValueExtension)/scriptDataValue"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="scriptDataValue">scriptDataValue </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Category method for <tt>NSAppleEventDescriptor (NDScriptContextValueExtension)</tt>, converts any script data within a AppleEvent descriptor into an <tt>NDScriptContext</tt>
+<!-- end abstract --></p>
+<p></p>
+<pre>- (<a href="../../../../../NDScript/NDScriptData/Classes/NDScriptData_/index.html#//apple_ref/occ/cl/NDScriptData" logicalPath="//apple_ref/occ/cl/NDScriptData" target="_top"><span class="type">NDScriptData</span></a> <span class="type">*</span>)<span class="var">scriptDataValue</span>;</pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->a <tt>NDScriptContext</tt> object for the AppleScript contained within the AppleEvent descriptor.
+
+<!-- end return value --></p>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->If an AppleScript return a AppleScript as it&rsquo;s result, this method can be used to convert the result <tt>NSAppleEventDescriptor</tt> into a <tt>NDScriptContext</tt>. The <tt>NSAppleEventDescriptor</tt> method objectValue will use this method if available.
+<!-- end discussion --></p>
+<p></p>
+<p>Last Updated: Sunday, August 30, 2009
+</p>
+</body>
+</html>

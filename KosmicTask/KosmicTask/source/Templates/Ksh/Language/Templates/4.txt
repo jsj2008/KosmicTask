@@ -1,0 +1,23 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $#
+#
+# task arguments are accessed as:
+# $1 .. $n
+# 
+
+# a YAML inline format array
+ARRAY="[item 1, item 2]"
+
+# css
+STYLE="'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'"
+
+# return a YAML inline format dictionary with array as data
+echo "---"
+echo "{kosmicData: $ARRAY , kosmicStyle: $STYLE}"

@@ -1,0 +1,32 @@
+--
+-- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+--
+-- Credits:
+--
+-- Notes:  
+--
+
+(*
+ 
+kosmicTask
+
+*)
+on KosmicTask()
+	
+	try
+		
+		-- target application
+		tell application "Finder"
+			set myResult to name
+		end tell
+		
+		-- return result record
+		return {kosmicData:myResult}
+		
+	on error errorMessage number errorNumber
+
+		return {kosmicError:errorMessage}
+
+	end try
+
+end KosmicTask

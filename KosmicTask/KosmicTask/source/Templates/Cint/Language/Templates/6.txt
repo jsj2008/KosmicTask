@@ -1,0 +1,22 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+#include <stdio.h>
+
+int main() 
+{
+	char *item1 = "item 1";
+	char *item2 = "item 2";
+	
+	// return a YAML inline format array
+	printf("--- [%s, %s]", item1, item2);
+    return 0;
+}

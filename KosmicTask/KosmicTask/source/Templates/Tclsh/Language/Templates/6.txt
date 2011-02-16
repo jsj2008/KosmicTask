@@ -1,0 +1,27 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $argc
+#
+# task arguments are accessed as:
+# [lindex $argv 0] .. [lindex $argv [expr $argc - 1]]
+# 
+
+# an inline dictionary
+set item1 "item 1"
+set item2 "item 2"
+set items "{key1: $item1, key2: $item2}"
+
+# css
+set css "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
+
+# return a YAML inline format dictionary with dictionary as data
+set result "{kosmicData: $items, kosmicStyle: '$css'}"
+
+puts "---"
+puts $result

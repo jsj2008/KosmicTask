@@ -1,0 +1,103 @@
+--- cint-5.18.00/cint/src/init.cxx	2010-08-17 13:02:16.000000000 +0100
++++ cint/cint/src/init.cxx	2010-08-23 21:26:49.000000000 +0100
+@@ -568,6 +568,8 @@
+    static char clnull[1] = "";
+    struct G__dictposition stubbegin;
+    char* icom = 0;
++		int prohibitinteraction = 0;
++
+    /*****************************************************************
+     * Setting STDIOs.  May need to modify here.
+     *  init.c, end.c, scrupto.c, pause.c
+@@ -690,9 +692,17 @@
+     * Get command options
+     *************************************************************/
+    char magicchars[100];
+-   strcpy(magicchars,".:a:b:c:d:ef:gij:kl:mn:pq:rstu:vw:x:y:z:AB:CD:EF:G:H:I:J:L:KM:N:O:P:QRSTU:VW:X:Y:Z:-:@+:");
++		strcpy(magicchars,".:a:b:c:d:ef:gij:kl:mn:o:pq:rstu:vw:x:y:z:AB:CD:EF:G:H:I:J:L:KM:N:O:P:QRSTU:VW:X:Y:Z:-:@+:");
+    while ((c = getopt(argc, argv, magicchars)) != EOF) {
+       switch (c) {
++					
++					// option : 1 - Interaction with user prohibited
++				case 'o':
++					if ('1' == optarg[0]) {
++						prohibitinteraction = 1;
++					}
++					break;
++					
+ #ifndef G__OLDIMPLEMENTATION2226
+          case '+':
+             G__setmemtestbreak(atoi(optarg) / 10000, atoi(optarg) % 10000);
+@@ -1039,6 +1049,12 @@
+             icom = optarg;
+             break;
+          default:
++					
++					if (prohibitinteraction ==1) {
++						G__more(G__sout, "invalid commandline option\n");
++						return EXIT_FAILURE;
++					}
++					
+ #ifndef G__SMALLOBJECT
+             G__more_pause((FILE*)NULL, 0);
+             fprintf(G__sout, usage, progname);
+@@ -1080,6 +1096,7 @@
+             G__more(G__sout, "* -M [newdelmask] : operator new/delete mask for precompiled interface method\n");
+             G__more(G__sout, "* -n [linkname] : Specify precompiled interface method filename\n");
+             G__more(G__sout, "* -N [DLL_name] : Specify DLL interface method name\n");
++					G__more(G__sout, "  -o [1]: option : [1] Interaction with user prohibited\n");
+             G__more(G__sout, "  -O [0~4] : Loop compiler on(1~5) off(0). Default on(4)\n");
+             G__more(G__sout, "  -p : use preprocessor prior to interpretation\n");
+             G__more(G__sout, "  -q [security] : Set security level(default 0)\n");
+@@ -1099,6 +1116,7 @@
+             G__more(G__sout, "  -Y [0|1]: ignore std namespace (default=1:ignore)\n");
+             G__more(G__sout, "  -Z [0|1]: automatic loading of standard header files with DLL\n");
+             G__more(G__sout, "  --'command': Execute interactive command and terminate Cint\n");
++
+             G__more(G__sout, "suboptions\n");
+             G__more(G__sout, "  +V : turn on class title comment mode for following source fies\n");
+             G__more(G__sout, "  -V : turn off class title comment mode for following source fies\n");
+@@ -1523,14 +1541,18 @@
+             alarm(G__TIMEOUT);
+          }
+ #endif
+-         if (G__catchexception != 2) G__pause();
++				
++				if (prohibitinteraction == 0  && G__catchexception != 2) G__pause();
++				
+ #ifdef SIGALRM
+          if (G__RETURN_EXIT1 == G__return) {
+             alarm(0);
+             G__fprinterr(G__serr, "Time out cancelled\n");
+          }
+ #endif
+-         if (G__catchexception != 2) G__pause();
++				
++				if (prohibitinteraction == 0  && G__catchexception != 2) G__pause();
++				
+       }
+       if (G__stepover) {
+          G__step = 0;
+@@ -1560,7 +1582,22 @@
+       return EXIT_SUCCESS;
+    }
+ #endif
++		
++		/*****************************************
++		 * If no main() and probibit interaction, 
++		 * Print out message and quit
++		 *****************************************/
++		else if (prohibitinteraction == 1) {
++			if (!G__quiet) {
++				fprintf(G__sout, "No main() function found in given source file..\n");
++			}
++			G__return = G__RETURN_NON;
++			G__scratch_all();
++			return EXIT_FAILURE;		
++		}
++		
+    else {
++			
+       /*************************************
+        * If no main() ,
+        * Print out message and

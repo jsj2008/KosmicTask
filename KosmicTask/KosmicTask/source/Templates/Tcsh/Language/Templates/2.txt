@@ -1,0 +1,22 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $#argv
+#
+# task arguments are accessed as:
+# $1 .. $n
+# 
+set numArgs=$#argv 
+echo "$numArgs command-line arguments."
+
+# $argv contains all command line arguments
+foreach arg ($argv)
+
+	# send result to stdout
+    echo $arg
+end

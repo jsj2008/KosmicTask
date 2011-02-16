@@ -1,0 +1,507 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		D815A2950849F7D800F91923 /* BaseTestClass.m in Sources */ = {isa = PBXBuildFile; fileRef = D815A2820849F7D800F91923 /* BaseTestClass.m */; };
+		D815A2960849F7D800F91923 /* ProcedureCalling.m in Sources */ = {isa = PBXBuildFile; fileRef = D815A2840849F7D800F91923 /* ProcedureCalling.m */; };
+		D815A2970849F7D800F91923 /* ReturningTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = D815A2860849F7D800F91923 /* ReturningTypes.m */; };
+		D815A2980849F7D800F91923 /* ScriptDataPassing.m in Sources */ = {isa = PBXBuildFile; fileRef = D815A2880849F7D800F91923 /* ScriptDataPassing.m */; };
+		D815A2990849F7D800F91923 /* ScriptHandlerPassing.m in Sources */ = {isa = PBXBuildFile; fileRef = D815A28A0849F7D800F91923 /* ScriptHandlerPassing.m */; };
+		D815A29A0849F7D800F91923 /* ScriptObjectSpecifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = D815A28C0849F7D800F91923 /* ScriptObjectSpecifiers.m */; };
+		D815A29B0849F7D800F91923 /* SendAppleEventTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D815A28E0849F7D800F91923 /* SendAppleEventTest.m */; };
+		D815A29C0849F7D800F91923 /* SendAppleEventToQuitApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = D815A2900849F7D800F91923 /* SendAppleEventToQuitApplication.m */; };
+		D815A29D0849F7D800F91923 /* SendAppleEventToSelf.m in Sources */ = {isa = PBXBuildFile; fileRef = D815A2920849F7D800F91923 /* SendAppleEventToSelf.m */; };
+		D815A29E0849F7D800F91923 /* SettingParent.m in Sources */ = {isa = PBXBuildFile; fileRef = D815A2940849F7D800F91923 /* SettingParent.m */; };
+		D815A2A00849F7EA00F91923 /* TestClasses.plist in Resources */ = {isa = PBXBuildFile; fileRef = D815A29F0849F7EA00F91923 /* TestClasses.plist */; };
+		D8875F7608420C6100994F27 /* NSString+NDCarbonUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D8875F6308420C6100994F27 /* NSString+NDCarbonUtilities.m */; };
+		D8875F7708420C6100994F27 /* NSValue+NDFourCharCode.m in Sources */ = {isa = PBXBuildFile; fileRef = D8875F6508420C6100994F27 /* NSValue+NDFourCharCode.m */; };
+		D8875F7808420C6100994F27 /* NSURL+NDCarbonUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D8875F6708420C6100994F27 /* NSURL+NDCarbonUtilities.m */; };
+		D8875F7908420C6100994F27 /* NDProgrammerUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D8875F6808420C6100994F27 /* NDProgrammerUtilities.m */; };
+		D8875F7A08420C6100994F27 /* NDComponentInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = D8875F6A08420C6100994F27 /* NDComponentInstance.m */; };
+		D8875F7B08420C6100994F27 /* NSString+NDUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D8875F6E08420C6100994F27 /* NSString+NDUtilities.m */; };
+		D8875F7C08420C6100994F27 /* IntegerMath.c in Sources */ = {isa = PBXBuildFile; fileRef = D8875F6F08420C6100994F27 /* IntegerMath.c */; };
+		D8875F7D08420C6100994F27 /* NSAppleEventDescriptor+NDScriptData.m in Sources */ = {isa = PBXBuildFile; fileRef = D8875F7008420C6100994F27 /* NSAppleEventDescriptor+NDScriptData.m */; };
+		D8875F7E08420C6100994F27 /* NDScriptData.m in Sources */ = {isa = PBXBuildFile; fileRef = D8875F7308420C6100994F27 /* NDScriptData.m */; };
+		D8B6DA91084B1CCD0097CD5E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8B6DA90084B1CCD0097CD5E /* Carbon.framework */; };
+		D8F6373B0841F616003A6448 /* ApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D8F637360841F616003A6448 /* ApplicationDelegate.m */; };
+		D8F6373C0841F616003A6448 /* LoggingObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D8F637380841F616003A6448 /* LoggingObject.m */; };
+		D8F6373D0841F616003A6448 /* NSApplication+AppleScript.m in Sources */ = {isa = PBXBuildFile; fileRef = D8F6373A0841F616003A6448 /* NSApplication+AppleScript.m */; };
+		D8F638640842006E003A6448 /* NDScriptTestReceiver.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D8F638620842006E003A6448 /* NDScriptTestReceiver.scriptSuite */; };
+		D8F638650842006E003A6448 /* NDScriptTestReceiver.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = D8F638630842006E003A6448 /* NDScriptTestReceiver.scriptTerminology */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildStyle section */
+		4A9504CCFFE6A4B311CA0CBA /* Development */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PREBINDING = NO;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		4A9504CDFFE6A4B311CA0CBA /* Deployment */ = {
+			isa = PBXBuildStyle;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PREBINDING = NO;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+/* End PBXBuildStyle section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* NDScriptTestReceiver_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NDScriptTestReceiver_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* NDScriptTestReceiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NDScriptTestReceiver.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D815A2810849F7D800F91923 /* BaseTestClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTestClass.h; sourceTree = "<group>"; };
+		D815A2820849F7D800F91923 /* BaseTestClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTestClass.m; sourceTree = "<group>"; };
+		D815A2830849F7D800F91923 /* ProcedureCalling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProcedureCalling.h; sourceTree = "<group>"; };
+		D815A2840849F7D800F91923 /* ProcedureCalling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcedureCalling.m; sourceTree = "<group>"; };
+		D815A2850849F7D800F91923 /* ReturningTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReturningTypes.h; sourceTree = "<group>"; };
+		D815A2860849F7D800F91923 /* ReturningTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReturningTypes.m; sourceTree = "<group>"; };
+		D815A2870849F7D800F91923 /* ScriptDataPassing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptDataPassing.h; sourceTree = "<group>"; };
+		D815A2880849F7D800F91923 /* ScriptDataPassing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptDataPassing.m; sourceTree = "<group>"; };
+		D815A2890849F7D800F91923 /* ScriptHandlerPassing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptHandlerPassing.h; sourceTree = "<group>"; };
+		D815A28A0849F7D800F91923 /* ScriptHandlerPassing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptHandlerPassing.m; sourceTree = "<group>"; };
+		D815A28B0849F7D800F91923 /* ScriptObjectSpecifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptObjectSpecifiers.h; sourceTree = "<group>"; };
+		D815A28C0849F7D800F91923 /* ScriptObjectSpecifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScriptObjectSpecifiers.m; sourceTree = "<group>"; };
+		D815A28D0849F7D800F91923 /* SendAppleEventTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendAppleEventTest.h; sourceTree = "<group>"; };
+		D815A28E0849F7D800F91923 /* SendAppleEventTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendAppleEventTest.m; sourceTree = "<group>"; };
+		D815A28F0849F7D800F91923 /* SendAppleEventToQuitApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendAppleEventToQuitApplication.h; sourceTree = "<group>"; };
+		D815A2900849F7D800F91923 /* SendAppleEventToQuitApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendAppleEventToQuitApplication.m; sourceTree = "<group>"; };
+		D815A2910849F7D800F91923 /* SendAppleEventToSelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendAppleEventToSelf.h; sourceTree = "<group>"; };
+		D815A2920849F7D800F91923 /* SendAppleEventToSelf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendAppleEventToSelf.m; sourceTree = "<group>"; };
+		D815A2930849F7D800F91923 /* SettingParent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingParent.h; sourceTree = "<group>"; };
+		D815A2940849F7D800F91923 /* SettingParent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingParent.m; sourceTree = "<group>"; };
+		D815A29F0849F7EA00F91923 /* TestClasses.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestClasses.plist; sourceTree = "<group>"; };
+		D8875F6208420C6100994F27 /* NSString+NDUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+NDUtilities.h"; path = "../../../Project Independent Classes/Foundation Kit/NSString+NDUtilities.h"; sourceTree = SOURCE_ROOT; };
+		D8875F6308420C6100994F27 /* NSString+NDCarbonUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+NDCarbonUtilities.m"; path = "../../../Project Independent Classes/Foundation Kit/NSString+NDCarbonUtilities.m"; sourceTree = SOURCE_ROOT; };
+		D8875F6408420C6100994F27 /* NSString+NDCarbonUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+NDCarbonUtilities.h"; path = "../../../Project Independent Classes/Foundation Kit/NSString+NDCarbonUtilities.h"; sourceTree = SOURCE_ROOT; };
+		D8875F6508420C6100994F27 /* NSValue+NDFourCharCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSValue+NDFourCharCode.m"; path = "../../../Project Independent Classes/Foundation Kit/NSValue+NDFourCharCode.m"; sourceTree = SOURCE_ROOT; };
+		D8875F6608420C6100994F27 /* NSValue+NDFourCharCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSValue+NDFourCharCode.h"; path = "../../../Project Independent Classes/Foundation Kit/NSValue+NDFourCharCode.h"; sourceTree = SOURCE_ROOT; };
+		D8875F6708420C6100994F27 /* NSURL+NDCarbonUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+NDCarbonUtilities.m"; path = "../../../Project Independent Classes/Foundation Kit/NSURL+NDCarbonUtilities.m"; sourceTree = SOURCE_ROOT; };
+		D8875F6808420C6100994F27 /* NDProgrammerUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NDProgrammerUtilities.m; path = "../../../Project Independent Classes/NDProgrammerUtilities.m"; sourceTree = SOURCE_ROOT; };
+		D8875F6908420C6100994F27 /* NDProgrammerUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NDProgrammerUtilities.h; path = "../../../Project Independent Classes/NDProgrammerUtilities.h"; sourceTree = SOURCE_ROOT; };
+		D8875F6A08420C6100994F27 /* NDComponentInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NDComponentInstance.m; path = "../../../Project Independent Classes/Foundation Kit/NDComponentInstance.m"; sourceTree = SOURCE_ROOT; };
+		D8875F6B08420C6100994F27 /* NDComponentInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NDComponentInstance.h; path = "../../../Project Independent Classes/Foundation Kit/NDComponentInstance.h"; sourceTree = SOURCE_ROOT; };
+		D8875F6C08420C6100994F27 /* IntegerMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntegerMath.h; path = "../../../Project Independent Classes/C functions/IntegerMath.h"; sourceTree = SOURCE_ROOT; };
+		D8875F6D08420C6100994F27 /* NSURL+NDCarbonUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+NDCarbonUtilities.h"; path = "../../../Project Independent Classes/Foundation Kit/NSURL+NDCarbonUtilities.h"; sourceTree = SOURCE_ROOT; };
+		D8875F6E08420C6100994F27 /* NSString+NDUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+NDUtilities.m"; path = "../../../Project Independent Classes/Foundation Kit/NSString+NDUtilities.m"; sourceTree = SOURCE_ROOT; };
+		D8875F6F08420C6100994F27 /* IntegerMath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = IntegerMath.c; path = "../../../Project Independent Classes/C functions/IntegerMath.c"; sourceTree = SOURCE_ROOT; };
+		D8875F7008420C6100994F27 /* NSAppleEventDescriptor+NDScriptData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAppleEventDescriptor+NDScriptData.m"; path = "../../../Project Independent Classes/Foundation Kit/NSAppleEventDescriptor+NDScriptData.m"; sourceTree = SOURCE_ROOT; };
+		D8875F7108420C6100994F27 /* NSAppleEventDescriptor+NDScriptData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAppleEventDescriptor+NDScriptData.h"; path = "../../../Project Independent Classes/Foundation Kit/NSAppleEventDescriptor+NDScriptData.h"; sourceTree = SOURCE_ROOT; };
+		D8875F7208420C6100994F27 /* NDScriptData_Protocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NDScriptData_Protocols.h; path = "../../../Project Independent Classes/Foundation Kit/NDScriptData_Protocols.h"; sourceTree = SOURCE_ROOT; };
+		D8875F7308420C6100994F27 /* NDScriptData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NDScriptData.m; path = "../../../Project Independent Classes/Foundation Kit/NDScriptData.m"; sourceTree = SOURCE_ROOT; };
+		D8875F7408420C6100994F27 /* NDScriptData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NDScriptData.h; path = "../../../Project Independent Classes/Foundation Kit/NDScriptData.h"; sourceTree = SOURCE_ROOT; };
+		D8875F7508420C6100994F27 /* NDScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NDScript.h; path = "../../../Project Independent Classes/Foundation Kit/NDScript.h"; sourceTree = SOURCE_ROOT; };
+		D8B6DA90084B1CCD0097CD5E /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		D8F637350841F616003A6448 /* ApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationDelegate.h; sourceTree = "<group>"; };
+		D8F637360841F616003A6448 /* ApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationDelegate.m; sourceTree = "<group>"; };
+		D8F637370841F616003A6448 /* LoggingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingObject.h; sourceTree = "<group>"; };
+		D8F637380841F616003A6448 /* LoggingObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggingObject.m; sourceTree = "<group>"; };
+		D8F637390841F616003A6448 /* NSApplication+AppleScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSApplication+AppleScript.h"; sourceTree = "<group>"; };
+		D8F6373A0841F616003A6448 /* NSApplication+AppleScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSApplication+AppleScript.m"; sourceTree = "<group>"; };
+		D8F638620842006E003A6448 /* NDScriptTestReceiver.scriptSuite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = NDScriptTestReceiver.scriptSuite; sourceTree = "<group>"; };
+		D8F638630842006E003A6448 /* NDScriptTestReceiver.scriptTerminology */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = NDScriptTestReceiver.scriptTerminology; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				D8B6DA91084B1CCD0097CD5E /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D8875F6208420C6100994F27 /* NSString+NDUtilities.h */,
+				D8875F6308420C6100994F27 /* NSString+NDCarbonUtilities.m */,
+				D8875F6408420C6100994F27 /* NSString+NDCarbonUtilities.h */,
+				D8875F6508420C6100994F27 /* NSValue+NDFourCharCode.m */,
+				D8875F6608420C6100994F27 /* NSValue+NDFourCharCode.h */,
+				D8875F6708420C6100994F27 /* NSURL+NDCarbonUtilities.m */,
+				D8875F6808420C6100994F27 /* NDProgrammerUtilities.m */,
+				D8875F6908420C6100994F27 /* NDProgrammerUtilities.h */,
+				D8875F6A08420C6100994F27 /* NDComponentInstance.m */,
+				D8875F6B08420C6100994F27 /* NDComponentInstance.h */,
+				D8875F6C08420C6100994F27 /* IntegerMath.h */,
+				D8875F6D08420C6100994F27 /* NSURL+NDCarbonUtilities.h */,
+				D8875F6E08420C6100994F27 /* NSString+NDUtilities.m */,
+				D8875F6F08420C6100994F27 /* IntegerMath.c */,
+				D8875F7008420C6100994F27 /* NSAppleEventDescriptor+NDScriptData.m */,
+				D8875F7108420C6100994F27 /* NSAppleEventDescriptor+NDScriptData.h */,
+				D8875F7208420C6100994F27 /* NDScriptData_Protocols.h */,
+				D8875F7308420C6100994F27 /* NDScriptData.m */,
+				D8875F7408420C6100994F27 /* NDScriptData.h */,
+				D8875F7508420C6100994F27 /* NDScript.h */,
+			);
+			name = Classes;
+			path = ../Classes;
+			sourceTree = SOURCE_ROOT;
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8B6DA90084B1CCD0097CD5E /* Carbon.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* NDScriptTestReceiver.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* NDScriptTestReceiver */ = {
+			isa = PBXGroup;
+			children = (
+				D815A2800849F7D800F91923 /* Tests */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				D8F637340841F616003A6448 /* Other Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = NDScriptTestReceiver;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* NDScriptTestReceiver_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D815A29F0849F7EA00F91923 /* TestClasses.plist */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				D8F638620842006E003A6448 /* NDScriptTestReceiver.scriptSuite */,
+				D8F638630842006E003A6448 /* NDScriptTestReceiver.scriptTerminology */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D815A2800849F7D800F91923 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D815A2810849F7D800F91923 /* BaseTestClass.h */,
+				D815A2820849F7D800F91923 /* BaseTestClass.m */,
+				D815A2830849F7D800F91923 /* ProcedureCalling.h */,
+				D815A2840849F7D800F91923 /* ProcedureCalling.m */,
+				D815A2850849F7D800F91923 /* ReturningTypes.h */,
+				D815A2860849F7D800F91923 /* ReturningTypes.m */,
+				D815A2870849F7D800F91923 /* ScriptDataPassing.h */,
+				D815A2880849F7D800F91923 /* ScriptDataPassing.m */,
+				D815A2890849F7D800F91923 /* ScriptHandlerPassing.h */,
+				D815A28A0849F7D800F91923 /* ScriptHandlerPassing.m */,
+				D815A28B0849F7D800F91923 /* ScriptObjectSpecifiers.h */,
+				D815A28C0849F7D800F91923 /* ScriptObjectSpecifiers.m */,
+				D815A28D0849F7D800F91923 /* SendAppleEventTest.h */,
+				D815A28E0849F7D800F91923 /* SendAppleEventTest.m */,
+				D815A28F0849F7D800F91923 /* SendAppleEventToQuitApplication.h */,
+				D815A2900849F7D800F91923 /* SendAppleEventToQuitApplication.m */,
+				D815A2910849F7D800F91923 /* SendAppleEventToSelf.h */,
+				D815A2920849F7D800F91923 /* SendAppleEventToSelf.m */,
+				D815A2930849F7D800F91923 /* SettingParent.h */,
+				D815A2940849F7D800F91923 /* SettingParent.m */,
+			);
+			name = Tests;
+			path = ../Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		D8F637340841F616003A6448 /* Other Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D8F637350841F616003A6448 /* ApplicationDelegate.h */,
+				D8F637360841F616003A6448 /* ApplicationDelegate.m */,
+				D8F637370841F616003A6448 /* LoggingObject.h */,
+				D8F637380841F616003A6448 /* LoggingObject.m */,
+				D8F637390841F616003A6448 /* NSApplication+AppleScript.h */,
+				D8F6373A0841F616003A6448 /* NSApplication+AppleScript.m */,
+			);
+			name = "Other Classes";
+			path = "/Users/nathan/Developer/Projects/NDScriptTest/Other Classes";
+			sourceTree = "<absolute>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* NDScriptTestReceiver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D8200DF80859ABA60043AEB9 /* Build configuration list for PBXNativeTarget "NDScriptTestReceiver" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = NDScriptTestReceiver_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = NDScriptTestReceiver;
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
+			);
+			name = NDScriptTestReceiver;
+			productInstallPath = "$(HOME)/Applications";
+			productName = NDScriptTestReceiver;
+			productReference = 8D1107320486CEB800E47090 /* NDScriptTestReceiver.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = D8200DFC0859ABA60043AEB9 /* Build configuration list for PBXProject "NDScriptTestReceiver" */;
+			buildSettings = {
+			};
+			buildStyles = (
+				4A9504CCFFE6A4B311CA0CBA /* Development */,
+				4A9504CDFFE6A4B311CA0CBA /* Deployment */,
+			);
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* NDScriptTestReceiver */;
+			projectDirPath = "";
+			targets = (
+				8D1107260486CEB800E47090 /* NDScriptTestReceiver */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				D8F638640842006E003A6448 /* NDScriptTestReceiver.scriptSuite in Resources */,
+				D8F638650842006E003A6448 /* NDScriptTestReceiver.scriptTerminology in Resources */,
+				D815A2A00849F7EA00F91923 /* TestClasses.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				D8F6373B0841F616003A6448 /* ApplicationDelegate.m in Sources */,
+				D8F6373C0841F616003A6448 /* LoggingObject.m in Sources */,
+				D8F6373D0841F616003A6448 /* NSApplication+AppleScript.m in Sources */,
+				D8875F7608420C6100994F27 /* NSString+NDCarbonUtilities.m in Sources */,
+				D8875F7708420C6100994F27 /* NSValue+NDFourCharCode.m in Sources */,
+				D8875F7808420C6100994F27 /* NSURL+NDCarbonUtilities.m in Sources */,
+				D8875F7908420C6100994F27 /* NDProgrammerUtilities.m in Sources */,
+				D8875F7A08420C6100994F27 /* NDComponentInstance.m in Sources */,
+				D8875F7B08420C6100994F27 /* NSString+NDUtilities.m in Sources */,
+				D8875F7C08420C6100994F27 /* IntegerMath.c in Sources */,
+				D8875F7D08420C6100994F27 /* NSAppleEventDescriptor+NDScriptData.m in Sources */,
+				D8875F7E08420C6100994F27 /* NDScriptData.m in Sources */,
+				D815A2950849F7D800F91923 /* BaseTestClass.m in Sources */,
+				D815A2960849F7D800F91923 /* ProcedureCalling.m in Sources */,
+				D815A2970849F7D800F91923 /* ReturningTypes.m in Sources */,
+				D815A2980849F7D800F91923 /* ScriptDataPassing.m in Sources */,
+				D815A2990849F7D800F91923 /* ScriptHandlerPassing.m in Sources */,
+				D815A29A0849F7D800F91923 /* ScriptObjectSpecifiers.m in Sources */,
+				D815A29B0849F7D800F91923 /* SendAppleEventTest.m in Sources */,
+				D815A29C0849F7D800F91923 /* SendAppleEventToQuitApplication.m in Sources */,
+				D815A29D0849F7D800F91923 /* SendAppleEventToSelf.m in Sources */,
+				D815A29E0849F7D800F91923 /* SettingParent.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29B97319FDCFA39411CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D8200DF90859ABA60043AEB9 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = NDScriptTestReceiver_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = NDScriptTestReceiver;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		D8200DFA0859ABA60043AEB9 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = NDScriptTestReceiver_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = NO;
+				PRODUCT_NAME = NDScriptTestReceiver;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		D8200DFB0859ABA60043AEB9 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = NDScriptTestReceiver_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = NDScriptTestReceiver;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Default;
+		};
+		D8200DFD0859ABA60043AEB9 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Development;
+		};
+		D8200DFE0859ABA60043AEB9 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Deployment;
+		};
+		D8200DFF0859ABA60043AEB9 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D8200DF80859ABA60043AEB9 /* Build configuration list for PBXNativeTarget "NDScriptTestReceiver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8200DF90859ABA60043AEB9 /* Development */,
+				D8200DFA0859ABA60043AEB9 /* Deployment */,
+				D8200DFB0859ABA60043AEB9 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		D8200DFC0859ABA60043AEB9 /* Build configuration list for PBXProject "NDScriptTestReceiver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8200DFD0859ABA60043AEB9 /* Development */,
+				D8200DFE0859ABA60043AEB9 /* Deployment */,
+				D8200DFF0859ABA60043AEB9 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

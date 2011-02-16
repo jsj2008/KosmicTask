@@ -1,0 +1,55 @@
+--
+-- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+--
+-- Credits:
+--
+-- Notes: 
+--
+
+-- KosmicTask controller
+property taskController : class "KosmicTaskController"
+
+script KosmicTask
+	property parent : class "NSObject"
+	
+	-- script properties
+	property myResult : missing value
+	
+	(*
+	 
+	task entry point
+	
+	*)
+	on KosmicTask()
+		
+		try
+			
+			set paths to {}
+			
+			repeat 5 times
+			
+				-- get result file path from taskController.
+				-- the file will be automatically deleted when the task ends.
+				set picPosixPath to (taskController's resultFileWithName_("capture.png")) as string
+			
+				-- do screen capture via shell
+				do shell script "screencapture -t png " & quoted form of picPosixPath
+
+				set end of paths to picPosixPath
+			
+				delay 0.5
+			
+			end repeat
+			
+			-- return result
+			return {kosmicFile:paths, kosmicInfo:"file returned"}
+			
+		on error errorMessage number errorNumber
+			
+			return {kosmicError:errorMessage}
+			
+		end try
+		
+	end KosmicTask
+	
+end script

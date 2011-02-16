@@ -1,0 +1,41 @@
+<?php
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $numArgs = $_SERVER['argc'] - 1;
+#
+# task arguments are accessed as:
+# $_SERVER['argv'][1] .. $_SERVER['argv'][$numArgs]
+#
+
+# capture screen image to file
+# files created in the current directory will be deleted when the task ends
+$FILES="";
+
+for ($i = 1; $i <= 5; $i++) {
+	
+	if ($i > 1) {
+		$FILES = "$FILES, ";
+	}
+	
+	# filename
+	$FILE = "capture-$i.png";
+	
+	# capture screen
+	system("screencapture -t png $FILE");
+
+	# add to files list
+	$FILES = "$FILES $FILE";
+	
+	sleep(1);
+}
+
+# return a YAML inline format dictionary with an array of filenames
+print "--- {kosmicFile: [$FILES], kosmicInfo: file returned}";
+
+?>

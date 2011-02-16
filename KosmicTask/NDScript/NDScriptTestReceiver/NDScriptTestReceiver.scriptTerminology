@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Classes</key>
+	<dict>
+		<key>LoggingEntry</key>
+		<dict>
+			<key>Attributes</key>
+			<dict>
+				<key>message</key>
+				<dict>
+					<key>Name</key>
+					<string>message</string>
+				</dict>
+				<key>type</key>
+				<dict>
+					<key>Name</key>
+					<string>type</string>
+				</dict>
+			</dict>
+			<key>Name</key>
+			<string>entry</string>
+			<key>PluralName</key>
+			<string>entries</string>
+		</dict>
+		<key>LoggingObject</key>
+		<dict>
+			<key>Attributes</key>
+			<dict>
+				<key>contents</key>
+				<dict>
+					<key>Description</key>
+					<string>Complete Log</string>
+					<key>Name</key>
+					<string>contents</string>
+				</dict>
+				<key>scriptDescriptor</key>
+				<dict>
+					<key>Description</key>
+					<string>Attached Script</string>
+					<key>Name</key>
+					<string>script</string>
+				</dict>
+			</dict>
+			<key>Description</key>
+			<string>Object for logging output</string>
+			<key>Name</key>
+			<string>log out</string>
+			<key>PluralName</key>
+			<string>log outs</string>
+		</dict>
+		<key>NSApplication</key>
+		<dict>
+			<key>Attributes</key>
+			<dict>
+				<key>loggingObject</key>
+				<dict>
+					<key>Description</key>
+					<string>Logging Object instance</string>
+					<key>Name</key>
+					<string>logging</string>
+				</dict>
+			</dict>
+			<key>Name</key>
+			<string>application</string>
+			<key>PluralName</key>
+			<string>applications</string>
+		</dict>
+	</dict>
+	<key>Commands</key>
+	<dict>
+		<key>Display</key>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>Message</key>
+				<dict>
+					<key>Description</key>
+					<string>Test to log</string>
+					<key>Name</key>
+					<string>message</string>
+				</dict>
+			</dict>
+			<key>Description</key>
+			<string>Display message</string>
+			<key>Name</key>
+			<string>display</string>
+		</dict>
+	</dict>
+	<key>Enumerations</key>
+	<dict>
+		<key>LogType</key>
+		<dict>
+			<key>errorType</key>
+			<dict>
+				<key>Name</key>
+				<string>error</string>
+			</dict>
+			<key>logType</key>
+			<dict>
+				<key>Name</key>
+				<string>log</string>
+			</dict>
+			<key>scriptType</key>
+			<dict>
+				<key>Name</key>
+				<string>script</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>Name</key>
+	<string>NDScriptTestReceiver</string>
+</dict>
+</plist>

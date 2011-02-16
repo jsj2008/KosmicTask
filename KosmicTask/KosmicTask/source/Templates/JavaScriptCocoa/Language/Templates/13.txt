@@ -1,0 +1,25 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+
+// load the AddressBook framework
+loadFramework("AddressBook")
+	
+function kosmicTask() 
+{
+	// access the me object in the shared address book
+	var person = ABAddressBook.sharedAddressBook.me
+	
+	// get the first name property
+	result = person.valueForProperty(kABFirstNameProperty)
+	
+	return result
+}

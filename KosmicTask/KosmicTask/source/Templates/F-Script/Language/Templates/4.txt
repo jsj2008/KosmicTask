@@ -1,0 +1,23 @@
+"
+
+Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+"
+[
+	"load the ScriptingBridge framework"
+	(NSBundle bundleWithPath:'/System/Library/Frameworks/ScriptingBridge.framework') load.
+
+	" use the ScriptingBridge framework to access the application "
+	Finder := SBApplication applicationWithBundleIdentifier:'com.apple.finder'.
+	
+	" get application properties "
+	result := Finder desktop files name.
+	
+	result.
+]

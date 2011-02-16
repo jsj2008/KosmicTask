@@ -1,0 +1,26 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+#include <stdio.h>
+
+int main() 
+{
+	char *key1 = "key 1";
+	char *key2 = "key 2";
+
+	char *item1 = "item 1";
+	char *item2 = "item 2";
+	
+	// return a YAML inline format dictionary
+	printf("--- {%s: %s, %s: %s}", key1, item1, key2, item2);
+	
+    return 0;
+}

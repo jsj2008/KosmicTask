@@ -1,0 +1,347 @@
+/* 
+   MGSLanguageProcess.strings
+   KosmicTask
+
+   Created by Jonathan on 17/09/2010.
+   Copyright 2010 mugginsoft.com. All rights reserved.
+ */
+ /*
+ 
+ BUILD
+ 
+ */
+ 
+ /* can build */
+"MGSCanBuildName" = "Can Build";
+"MGSCanBuildInfo" =
+"A separate build stage may be invoked for this language type.
+
+Building prepares a task for execution. 
+What actually occurs though during a build is variable.
+
+For interpreted languages a build usually equates to some form of syntax check or static analysis.
+For compiled languages a build equates to compilation, whether that be to native code or an intermediate format.
+
+Some interpreted languages may have no syntax check capability and thus no distinct build stage.
+Errors in the script syntax will be reported when the script is executed.";
+
+/* Build Process Type */
+"MGSBuildProcessTypeName" = "Build Process Type";
+"MGSBuildProcessTypeInfo" = 
+"The process type for the build stage.
+
+The build for 'In process' types runs as part of the KosmicTask process. 
+External process types rely on a separate external build component.
+In either case the build process may be supplied as part of the operating system or as part of KosmicTask.";
+
+/* Separate Syntax Checker */
+"MGSSeparateSyntaxCheckerName" = "Separate Syntax Checker";
+"MGSSeparateSyntaxCheckerInfo" = 
+"YES if a separate syntax checker is used to verify language syntax.
+
+Compiled languages will include a syntax check as part of compilation while many interpreted languages have a syntax check feature.
+Some languages, however, may have no, or very poor, built in syntax checking. In these cases a separate external tool may be used to verify the syntax.";
+
+/* Build Accepts Options */
+"MGSBuildAcceptsOptionsName" = "Build Accepts Options";
+"MGSBuildAcceptsOptionsInfo" = 
+"Build can accept additional options. See the 'Build Options' setting.
+
+These additional options affect the results of the build request.
+Valid options are dependent on the language type. See the specific language documentation for details.
+For external build processes these options will generally be documented as command line options.";
+
+/* External Build Path */
+"MGSExternalBuildPathName" = "External Build Path";
+"MGSExternalBuildPathInfo" = 
+"The path to the external build process. This process will be invoked when the task is built.
+
+For compiled languages this will be the path to the compiler.
+For interpreted languages it will most likely be the path to the interpreter.
+
+This setting may be changed to call a different build process for this language.
+This is most likely to be desirable when multiple versions of a language are installed and a specific version is to be targeted.";
+
+/* Build Options */
+"MGSBuildOptionsName" = "Build Options";
+"MGSBuildOptionsInfo" = 
+"Options to be passed to the build.
+
+Consult the specific language documentation for details.
+For external build processes these options will generally be documented as command line options.";
+
+/* Can Ignore Warnings */
+"MGSCanIgnoreWarningsName" = "Can Ignore Warnings";
+"MGSCanIgnoreWarningsInfo" =
+"Build warnings can be ignored.
+
+If warnings are generated the user may choose to ignore them and attempt to execute the task.
+
+In the case of compiled languages errors that result in compilation failure cannot be ignored.
+";
+
+/*
+
+EXECUTE 
+
+*/
+
+/* Executor Process Type */
+"MGSExecutorProcessTypeName" = "Executable Process Type";
+"MGSExecutorProcessTypeInfo" = 
+"The process type for the executable.
+
+The executable for 'In process' types runs as part of the KosmicTask process. 
+External process types rely on a separate external executable component.
+In either case the executable process may be supplied as part of the operating system or as part of KosmicTask.";
+
+/* Executable Format */
+"MGSExecutableFormatName" = "Executable Format";
+"MGSExecutableFormatInfo" = 
+"Format of the executable data.
+
+The task definition file will contain the script source required to execute the task.
+Interpreted languages will generally execute the script source.
+Compiled languages will execute a compiled form of the script source. This compiled code will also be stored within the task definition file.";
+
+/* Executor Accepts Options */
+"MGSExecutorAcceptsOptionsName" = "Executable Accepts Options";
+"MGSExecutorAcceptsOptionsInfo" = 
+"Executable can accept additional options. See the 'Executable Options' setting.
+
+These additional options affect the execute request.
+Valid options are dependent on the language type. See the specific language documentation for details.
+For external executable processes these options will generally be documented as command line options.";
+
+/* External Executable Path */
+"MGSExternalExecutablePathName" = "External Executable Path";
+"MGSExternalExecutablePathInfo" = "The path to the external executable process. This process will be invoked when the task is run.
+
+This setting may be changed to call a different executable process for this language.
+This is most likely to be desirable when multiple versions of a language are installed and a specific version is to be targeted.";
+
+/* Executor Options */
+"MGSExecutorOptionsName" = "Executable Options";
+"MGSExecutorOptionsInfo" = "Options to be passed to the executable.
+
+Consult the specific language documentation for details.
+For external executable processes these options will generally be documented as command line options.";
+
+/*
+
+LANGUAGE
+
+*/
+
+/* Language type */
+"MGSLanguageTypeName" = "Language Translation Type";
+"MGSLanguageTypeInfo" =
+"Languages are broadly classified as either 'interpreted' or 'compiled'.
+
+Interpreted languages generally execute the script source.
+Compiled languages execute previously compiled code.
+
+Tasks written in compiled languages will have the compiled script code saved into the task definition file.";
+
+/* Is OSA Language */
+"MGSIsOSALanguageName" = "Is OSA Language";
+"MGSIsOSALanguageInfo" = 
+"Language is implemented as part of the OS X Open Scripting Architecture.
+
+AppleScript is by far the most commonly encountered OSA language.";
+
+/* Script Type */
+"MGSScriptTypeName" = "Language Name";
+"MGSScriptTypeInfo" = "The unique language identifier for this language.";
+
+/* Script Type Family*/
+"MGSScriptTypeFamilyName" = "Language Family";
+"MGSScriptTypeFamilyInfo" = "A unique identifier for a related family of languages.";
+
+/* Task Runner Process Name */
+"MGSTaskRunnerProcessNameName" = "Task Runner Process Name";
+"MGSTaskRunnerProcessNameInfo" = 
+"Task runner process name.
+
+Each language is supported by a sympathetically named task runner process.
+The task runner is responsible for processing both build and execute requests.
+This task runner process insulates the task from the KosmicTaskServer component.
+
+'In process' build or execute requests run in process within the context of the task runner.
+'External process' build or execute requests will generally result in a further process being spawned by the task runner.
+
+The task runner processes may be viewed in the system Activity Monitor during task builds and executions.";
+
+/* Valid for OS Version */
+"MGSValidForOSVersionName" = "Valid for OS Version";
+"MGSValidForOSVersionInfo" = 
+"Determine if the language is supported on this version of OS X.
+
+Some languages may not be compatible with some operating system versions.";
+
+/* Supplied by OS X */
+"MGSSuppliedByOSXName" = "Supplied by OS X";
+"MGSSuppliedByOSXInfo" = "Language is installed and supplied as part of OS X.
+
+A wide range of in process and external process languages are included as part of the OS X operating system.";
+
+/* Supplied by KosmicTask */
+"MGSSuppliedByKosmicTaskName" = "Supplied by KosmicTask";
+"MGSSuppliedByKosmicTaskInfo" = "Language is installed and supplied as part of KosmicTask.
+
+Languages that do not ship as part of the OS X operating system may be supplied as an integral part of KosmicTask.
+KosmicTask is able to support a wide range of third party languages via its plugin architecture.
+In general the language's supporting components are included as part of the language's plugin bundle.
+
+Languages may operate in process or as external processes.
+Languages may be interpreted or compiled and a wide range of operating configurations is supported.";
+
+/* Source file extensions */
+"MGSSourceFileExtensionsName" = "Source File Extensions";
+"MGSSourceFileExtensionsInfo" =
+"Source file extensions that will be identified as containing source code for this language.";
+
+/*
+
+CALLING INTERFACE
+
+*/
+
+/* Supports Direct Parameters */
+"MGSSupportsDirectParametersName" = "Accepts Direct Parameters";
+"MGSSupportsDirectParametersInfo" =
+"Direct parameters are passed directly to the task rather than through a named script function.
+
+This form of parameter passing is typically used for interfacing to languages typically invoked from the command line.
+
+If direct parameters are not supported then a script or class function may generally be defined to act as a task entry point and accept the task arguments.";
+
+/* Supports Script Functions */
+"MGSSupportsScriptFunctionsName" = "Supports Script Functions";
+"MGSSupportsScriptFunctionsInfo" =
+"Script functions are named functions that act as entry points into the task.
+
+Task parameters can be passed to a script function.";
+
+/* Supports Classes */
+"MGSSupportsClassesName" = "Supports Classes";
+"MGSSupportsClassesInfo" =
+"If classes are supported then a named class may be used as an entry point into the task.
+
+In addition to the class name a function name will also generally be required.";
+
+/* Supports Class Functions */
+"MGSSupportsClassFunctionsName" = "Supports Class Functions";
+"MGSSupportsClassFunctionsInfo" =
+"Class functions are named member or static class functions that may be used as an entry point into the task via a named class.
+
+Task parameters can be passed to a class function.";
+
+/* Default Script Function Name */
+"MGSDefaultScriptFunctionName" = "Default Run Function";
+"MGSDefaultScriptFunctionInfo" =
+"The default script run function name.";
+
+/* Default Class Name */
+"MGSDefaultClassName" = "Default Run Class";
+"MGSDefaultClassInfo" =
+"The default script run class name.";
+
+/* Default Class Function Name */
+"MGSDefaultClassFunctionName" = "Default Class Run Function";
+"MGSDefaultClassFunctionInfo" =
+"The default script class Run Function name.";
+
+/* Required Script Function Name */
+"MGSRequiredScriptFunctionName" = "Required Run Function";
+"MGSRequiredScriptFunctionInfo" =
+"The required Run Function name.
+
+The required script function name must be used as the entry point for the task.";
+
+/* Required Class Name */
+"MGSRequiredClassName" = "Required Run Class";
+"MGSRequiredClassInfo" =
+"The required Run Class name.
+
+The required class name must be used as the entry point for the task.";
+
+/* Required Class Function Name */
+"MGSRequiredClassFunctionName" = "Required Class Run Function";
+"MGSRequiredClassFunctionInfo" =
+"The required Class Run Function name.
+
+The required class run function must be used as the entry point for the task.";
+
+/* Required Class Function is Static */
+"MGSRequiredClassFunctionIsStaticName" = "Required Class Function is Static";
+"MGSRequiredClassFunctionIsStaticInfo" =
+"The required class function to be called is a static function.";
+
+/* On Run Task */
+"MGSOnRunTaskName" = "On Run Task";
+"MGSOnRunTaskInfo" =
+"Determine how the script is to be called when the task is run.
+
+The options are (not all languages may support all the options):
+
+1. Call script : call the script and optionally pass in any task inputs.
+2. Call Run Function : call a named script function and optionally pass in any task inputs.
+3. Call Run Function on Run Class: call a named class function and optionally pass in any task inputs.
+";
+
+/* Run Function */
+"MGSRunFunctionName" = "Run Function";
+"MGSRunFunctionInfo" =
+"Function to be called when the task is run.
+
+If a run class is defined then the function will be called on the run class.
+";
+
+/* Run Class */
+"MGSRunClassName" = "Run Class";
+"MGSRunClassInfo" =
+"Class to be called when the task is run.
+
+In some case, eg: Java, a build error will occur if the Run Class name does not match the public class name.
+";
+
+/*
+
+Bridging
+
+*/
+
+/* Is Cocoa Bridge */
+"MGSIsCocoaBridgeName" = "Cocoa Bridge";
+"MGSIsCocoaBridgeInfo" = 
+"If the language is a Cocoa bridge then scripts may access the Cocoa framework. In addition native language objects can be returned as task results. 
+
+If the language is not a Cocoa bridge then all objects returned as KosmicTask results will be interpreted as strings.
+";
+
+/*
+
+Result representation
+
+*/
+
+/* Native Objects as Results */
+"MGSNativeObjectsAsResultsName" = "Native Objects as Results";
+"MGSNativeObjectsAsResultsInfo" =
+"If Yes then native objects (strings, arrays, dictionaries, etc) can be returned as task results. KosmicTask will recognise the object types and preserve their type information within the client. This enables results to be appropriately formatted and transformed. 
+
+In general all Cocoa bridged languages will support this feature though non bridging languages may too. For example, AppleScript is able to pass native objects as results. AppleScript runs in process and results generated by AppleScript powered tasks can be directly coerced by KosmicTask. 
+
+If the language does not support this feature then all KosmicTask results must be passed as strings.
+
+However, KosmicTask can interpret results formatted using YAML. The use of YAML, although more cumbersome than using a Cocoa bridge, allows structured results to be returned. These results can also be appropriately formatted and transformed. In some cases built in support may be available for translating between native types and their equivalent YAML representation.
+";
+
+/* Native Objects as Yaml support */
+"MGSNativeObjectsAsYamlSupportName" = "Support for Native Objects as YAML";
+"MGSNativeObjectsAsYamlSupportInfo" =
+"If Yes then built in support exists to return native objects (strings, arrays, dictionaries, etc) as YAML. This is typically made available using an accessible KosmicTaskController class which implements methods such as printObject() or objectsAsString().
+
+If the language does not support this feature YAML representations can still be returned as results but the YAML representation will have to be explicitly constructed.
+";

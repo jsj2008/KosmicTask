@@ -1,0 +1,47 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# RubyCocoa documentation
+# http://rubycocoa.sourceforge.net/Documentation
+#
+# Tips and tools
+# http://www.rubyinside.com/the-ultimate-list-of-rubycocoa-tutorials-tips-and-tools-728.html
+#
+require 'osx/cocoa'
+
+# KosmicTask controller
+$taskController = OSX.NSClassFromString("KosmicTaskController")
+
+class KosmicTask < OSX::NSObject
+		
+	#
+	# task entry point
+	#
+	def kosmictask()
+	
+		OSX::NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(2, self, :timerFired, nil, true)
+	
+		# keep task running
+		$taskController.keepTaskRunning()
+	end
+	
+	#
+	# task timer expired
+	#
+	def timerFired(timer)
+		
+		timer.invalidate()
+		
+		# stop the task
+		$taskController.stopTask_("timer expired")
+	end
+end

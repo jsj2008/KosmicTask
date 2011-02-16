@@ -1,0 +1,31 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# PyObjC documentation (including framework API notes)
+# http://pyobjc.sourceforge.net/documentation/
+#
+
+def kosmictask():
+
+	# form our list
+	aList = ['item 1', 'item 2']
+
+	# create our CSS styling string
+	styling = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
+
+	# form our result dictionary
+	result = {}
+	result["kosmicData"] = aList
+	result["kosmicStyle"] = styling
+	
+	# return object
+	return result	

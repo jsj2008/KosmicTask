@@ -1,0 +1,24 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# numArgs = ARGV.length
+#
+# task arguments are accessed as:
+# ARGV[0] .. ARGV[numArgs]
+#
+
+# inline array
+items = "[item 1, item 2]"
+
+# css
+css = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
+
+# return a YAML inline format dictionary with array as data
+result = "--- {kosmicData: %s, kosmicStyle: '%s'}" % [items, css]
+
+puts result

@@ -1,0 +1,19 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $#argv
+#
+# task arguments are accessed as:
+# $1 .. $n
+# 
+
+# return a YAML inline format array
+set array="[item 1, item 2]"
+echo "---"
+echo "$array"
+

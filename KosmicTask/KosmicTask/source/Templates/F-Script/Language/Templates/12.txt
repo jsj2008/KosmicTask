@@ -1,0 +1,23 @@
+"
+
+Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+"
+[
+	"form our dictionary"
+	dict := NSDictionary dictionaryWithObjects:{'item 1', 'item 2'} forKeys: {'key 1', 'key 2'}.
+	
+	"create our CSS styling string"
+	styling := 'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'.
+
+	"form our result dictionary"
+	result := NSDictionary dictionaryWithObjects:{dict, styling} forKeys: {'kosmicData', 'kosmicStyle'}.
+
+	result
+]

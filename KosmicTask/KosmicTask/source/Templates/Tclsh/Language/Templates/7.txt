@@ -1,0 +1,25 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $argc
+#
+# task arguments are accessed as:
+# [lindex $argv 0] .. [lindex $argv [expr $argc - 1]]
+# 
+
+# file created in task current directory will be automatically deleted
+set file "capture.png"
+ 
+# capture sceen shot to file
+exec screencapture -t png $file
+    
+# return a YAML inline format dictionary with filename
+set result "{kosmicFile: $file, kosmicInfo: file returned}"
+
+puts "---"
+puts $result

@@ -1,0 +1,39 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# numArgs = len(sys.argv) - 1
+#
+# task arguments are accessed as:
+# sys.argv[1] .. sys.argv[numArgs]
+#
+import os
+import time
+
+# capture screen image to file
+# files created in the current directory will be deleted when the task ends
+files = ""
+
+for i in range(5): 
+	
+	if i > 0:
+		files += ", "
+	
+	# filename
+	file = "capture-" + str(i+1) + ".png";
+	
+	# capture screen
+	os.system("screencapture -t png " + file)
+
+	# add to files list
+	files = files + file
+	
+	time.sleep(1)
+
+
+# return a YAML inline format dictionary with array of filenames
+print "--- {kosmicFile: [%s], kosmicInfo: file returned}" % files

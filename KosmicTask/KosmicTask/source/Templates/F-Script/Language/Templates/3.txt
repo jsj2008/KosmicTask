@@ -1,0 +1,21 @@
+"
+
+Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+"
+[
+	
+	" define another block "
+	c := ['task result'].
+	
+	" execute the block "
+	result := c value.
+	
+	result.
+]

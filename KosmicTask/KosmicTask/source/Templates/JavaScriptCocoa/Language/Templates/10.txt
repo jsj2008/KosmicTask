@@ -1,0 +1,45 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+
+//
+// Objective-J, JSTalk - like syntax
+// This uses a preprocessor to convert ObjC-like messaging to Javascript functions
+//
+	
+// define the Person class
+class Person < NSObject
+{
+    // init method
+    - (void)initWithFirstName:(NSString *)firstName lastName:(NSString *)lastName
+    {
+  		this.firstName = firstName
+  		this.lastName = lastName     
+        return this          
+    }
+    
+    // description method
+    - (NSString *)description
+    {
+        return this.firstName + " " + this.lastName
+    }
+}
+
+// task entry point
+function kosmicTask() 
+{
+	// create class instance
+	var me = Person.instance
+	me.initWithFirstName_lastName("Kosmic", "Stuff")
+	
+	// return description
+	return me.description
+}

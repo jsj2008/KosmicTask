@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="KosmicTaskHelper Dictionary">
+  <suite name="KosmicTask Helper Suite" code="KTap" description="Commands and classes for KosmicTaskHelper Scripting">
+    <classes>
+      <class name="application" code="capp" description="" inherits="NSCoreSuite.NSApplication">
+        <cocoa class="NSApplication"/>
+          <properties>
+            <property name="tempfile" code="KTtf" type="string" access="ro" description="Temporary file path">
+              <cocoa method="tempFilePath"/>
+            </property>
+          </properties>
+        </class>
+      </classes>
+  </suite>
+</dictionary>

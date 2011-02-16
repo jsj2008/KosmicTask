@@ -1,0 +1,65 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+function kosmicTask() 
+{
+
+	// Mercury
+	var satellites = new Array("none");
+	var Mercury  = {name: "Mercury", radius: -1, satellites: satellites};	// Javascript literal associative array
+
+	// Venus
+	satellites = new Array("none");
+	var Venus  = {name: "Venus", radius: 6052, satellites: satellites};	// same format as YAML inline dictionary string
+
+	// Earth
+	satellites = new Array("moon");
+	var Earth  = {name: "Earth", radius: 6371, satellites: satellites};	
+
+	// Mars
+	satellites = new Array("Phobos", "Deimos");
+	var Mars  = {name: "Mars", radius: 3396, satellites: satellites};
+
+	// Jupiter
+	satellites = new Array("Io", "Europa", "Ganymede", "Callisto", "(+59 smaller non Galiliean moons)");
+	var Jupiter  = {name: "Jupiter", radius: 71492, satellites: satellites};	
+	
+	// Saturn
+	satellites = new Array("Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iaptus", "(+55 smaller moons)");
+	var Saturn  = {name: "Saturn", radius: 60268, satellites: satellites};	
+
+	// Uranus
+	satellites = new Array("Miranda", "Ariel", "Umbriel", "Titania", "Oberon", " (+22 smaller moons)");
+	var Uranus  = {name: "Uranus", radius: 25559, satellites: satellites};	
+
+	// Neptune
+	satellites = new Array("Triton", "Nereid", "Naiad", "Thalassa", "Despina", "Galatea", "Larissa", "Proteus", "Halimede", "Psamathe", "Sao", "Laomedeia", "Neso");
+	var Neptune  = {name: "Neptune", radius: -1, satellites: satellites};	
+	
+	// fix radius properties
+	Mercury.radius = 2440;
+	Neptune.radius = 24764;
+	
+	// build array of planets
+	var planets = new Array();
+	
+	planets.push(Mercury);
+	planets.push(Venus);
+	planets.push(Earth);
+	planets.push(Mars);
+	planets.push(Jupiter);
+	planets.push(Saturn);
+	planets.push(Uranus);
+	planets.push(Neptune);
+	
+	// return native object as YAML
+	return KosmicTaskController.objectAsString(planets);
+}

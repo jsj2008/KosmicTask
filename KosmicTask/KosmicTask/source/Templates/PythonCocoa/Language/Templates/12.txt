@@ -1,0 +1,53 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# PyObjC documentation (including framework API notes)
+# http://pyobjc.sourceforge.net/documentation/
+#
+import os
+import Foundation
+import time
+
+# KosmicTask controller
+taskController = Foundation.NSClassFromString("KosmicTaskController")
+
+def kosmictask():
+
+	paths = []
+	
+	count = 0
+	while count < 5:
+		# create path to temp result file from taskController.
+		# this file will be automatically deleted when the task ends.
+		#
+		# an alternative would be:
+		# fileno, path = tempfile.mkstemp(suffix='.png', prefix='kosmictask')
+		# os.close(fileno)
+   		#
+		path = taskController.resultFileWithName_('capture.png');
+    
+		# capture sceen shot to file
+		os.system("screencapture -t png " + path)
+
+		# append the current path
+		paths.append(path)	
+
+		time.sleep(0.5)		
+		count = count + 1
+		
+	# form our result dictionary
+	result = {}
+	result["kosmicFile"] = paths
+	result["kosmicInfo"] = "file returned"
+	
+	# return object
+	return result

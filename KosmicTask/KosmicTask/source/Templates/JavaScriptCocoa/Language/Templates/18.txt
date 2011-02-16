@@ -1,0 +1,45 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+// define class
+class KosmicTask < NSObject
+{
+    // start method
+    - (void)start
+    {
+    	var selector = @selector(timerFired:)
+  		this.timer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(1, this, selector, nil, true)
+  		this.count = 0
+  		
+  		// keep the task running after the entry point function exits
+  		KosmicTaskController.keepTaskRunning      
+    }
+    
+    // callback method
+    - (void)timerFired:(NSTimer *)timer
+    {
+        this.count++
+        if (this.count == 5) {
+        	timer.invalidate
+        	KosmicTaskController.stopTask("timer expired " + this.count + " times")
+        }
+    }
+}
+
+// task entry point
+function kosmicTask() 
+{
+	// allocate a task object
+	var task = KosmicTask.instance
+	
+	// start the task
+	task.start
+}

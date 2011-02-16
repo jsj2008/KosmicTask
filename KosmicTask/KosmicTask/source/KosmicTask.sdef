@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="KosmicTask">
+	<!--
+    STANDARD SUITE
+  -->
+	<suite name="Standard Suite" code="core" description="Common classes and commands for all applications.">
+		<cocoa name="NSCoreSuite"/>
+		<class name="application" code="capp" description="The application&apos;s top-level scripting object.">
+			<cocoa class="NSApplication"/>
+			<property name="name" code="pnam" description="The name of the application." type="text" access="r"/>
+			<property name="frontmost" code="pisf" description="Is this the frontmost (active) application?" type="boolean" access="r">
+				<cocoa key="isActive"/>
+			</property>
+			<property name="version" code="vers" description="The version of the application." type="text" access="r"/>
+		</class>
+	</suite>
+	<suite name="KosmicTask Suite" code="KTkt" description="Classes and commands for this application.">
+		<class name="application" code="capp" description="The application&apos;s top-level scripting object.">
+			<cocoa class="NSApplication"/>
+			<responds-to command="result file">
+				<cocoa method=""/>
+			</responds-to>
+		</class>
+		<command name="result file" code="KTktRsfl" description="A file suitable for returning a result. The file will be automatically deleted when the task ends. May also be used for temporay data storage for the lifetime of the task.">
+			<cocoa class="MGSResultFileScriptCommand"/>
+			<parameter name="with name" code="KTwp" description="Result file name." type="text" optional="yes">
+				<cocoa key="file name"/>
+			</parameter>
+			<result description="File object" type="file"/>
+		</command>
+	</suite>
+</dictionary>

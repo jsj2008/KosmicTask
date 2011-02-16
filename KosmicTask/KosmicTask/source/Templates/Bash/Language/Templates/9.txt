@@ -1,0 +1,23 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $#
+#
+# task arguments are accessed as:
+# $1 .. $n
+# 
+
+for i in {1..10}
+do
+
+	# run task as a subprocess
+	sleep 30 &
+done	
+
+# wait for all subprocesses to end
+wait

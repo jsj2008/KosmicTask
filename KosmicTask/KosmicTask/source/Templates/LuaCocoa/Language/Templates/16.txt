@@ -1,0 +1,70 @@
+--[[
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+]]
+
+LuaCocoa.import("Foundation")
+
+-- get the kosmicTaskController class
+taskController = NSClassFromString("KosmicTaskController")
+
+-- create class definition
+KosmicTask = LuaCocoa.CreateClass("KosmicTask", NSObject)
+
+
+-- method: start
+KosmicTask["start"] = 
+{
+	function(self)
+	
+		local selector = LuaCocoa.toselector("timerFired:")
+	
+		-- schedule the timer and create instance variables
+		self.__ivars.timer = NSTimer:scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(1, self, selector, nil, true)
+		self.__ivars.count = 0
+		
+		-- keep the task running after the entry point function exits
+		taskController:keepTaskRunning()
+		
+		return
+	end,
+	"-v@:"
+}
+
+-- method: timerFired:
+KosmicTask["timerFired_"] = 
+{
+	function(self, timer)
+	
+		self.__ivars.count = self.__ivars.count + 1
+		
+		-- stop task and return result
+		if self.__ivars.count == 5 then
+		
+			-- invalidate the timer
+			timer:invalidate()
+
+			taskController:stopTask_("timer expired " .. self.__ivars.count .. " times")
+		end
+		
+		return 
+	end,
+	"-v@:@"
+}
+
+-- task entry point
+function kosmicTask()
+
+	-- allocate our task object
+	task = KosmicTask:alloc():init()
+	
+	-- start the task
+	task:start()
+end

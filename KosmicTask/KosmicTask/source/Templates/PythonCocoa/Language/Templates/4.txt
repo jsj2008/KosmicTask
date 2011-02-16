@@ -1,0 +1,34 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Python Apple Event automation using py appscript
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# PyObjC documentation (including framework API notes)
+# http://pyobjc.sourceforge.net/documentation/
+#
+# Python appscript documentation can be found here:
+# http://appscript.sourceforge.net/py-appscript/doc/appscript-manual/index.html
+#
+import AppKit
+
+# import our system framework by name
+import AddressBook
+
+def kosmictask(a , b):
+	
+	AppKit.NSLog("task parameters are %@ and %@", a, b)
+	
+	person = AddressBook.ABAddressBook.sharedAddressBook().me()
+	firstName = person.valueForProperty_(AddressBook.kABFirstNameProperty)
+	
+	# return object
+	return firstName

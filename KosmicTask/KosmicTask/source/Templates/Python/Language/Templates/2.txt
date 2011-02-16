@@ -1,0 +1,21 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# numArgs = len(sys.argv) - 1
+#
+# task arguments are accessed as:
+# sys.argv[1] .. sys.argv[numArgs]
+#
+import sys
+numArgs = len(sys.argv) - 1
+
+print "%s command-line arguments" % (numArgs)
+
+del sys.argv[0]
+for arg in sys.argv:
+   print arg

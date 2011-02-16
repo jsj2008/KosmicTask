@@ -1,0 +1,38 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# numArgs = ARGV.length
+#
+# task arguments are accessed as:
+# ARGV[0] .. ARGV[numArgs]
+#
+
+files = ""
+
+for i in (1..5)
+
+	if i > 1
+		files += ", "
+	end if
+	
+	# file created in task current directory will be automatically deleted
+	file = "capture-#{i}.png"
+   
+   	# capture sceen shot to file
+    system "screencapture -t png " + file
+       
+    files += file
+    
+    sleep 1.0
+end
+
+# return a YAML inline format dictionary with array of filenames
+result = "{kosmicFile: [" + files + "] , kosmicInfo: file returned}"
+
+puts "---"
+puts result

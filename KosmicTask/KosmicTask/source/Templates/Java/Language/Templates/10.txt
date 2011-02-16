@@ -1,0 +1,35 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+
+import java.util.ArrayList;
+import com.mugginsoft.KosmicTaskController;
+
+class kosmicTask
+{ 
+	public static void main(String args[])
+    {
+    	// build dynamic array of planets
+    	ArrayList<String> planets = new ArrayList<String>();
+    	
+    	planets.add("Mercury");
+    	planets.add("Venus");
+    	planets.add("Earth");
+    	planets.add("Mars");
+    	planets.add("Jupiter");
+    	planets.add("Saturn");
+    	planets.add("Uranus");
+    	planets.add("Neptune");
+    
+    	// print native object as YAML
+		KosmicTaskController.printObject(planets);
+	}
+}

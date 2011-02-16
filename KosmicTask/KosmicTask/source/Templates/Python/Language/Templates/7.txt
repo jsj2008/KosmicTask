@@ -1,0 +1,16 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# numArgs = len(sys.argv) - 1
+#
+# task arguments are accessed as:
+# sys.argv[1] .. sys.argv[numArgs]
+#
+
+# return a YAML inline format dictionary
+print "--- {key1: item 1, key2: item 2}"

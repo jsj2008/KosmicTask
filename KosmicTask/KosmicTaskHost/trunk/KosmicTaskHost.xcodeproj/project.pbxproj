@@ -1,0 +1,1152 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ABA8E42D1188DA6F00414A7D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		ABA8E42E1188DAA900414A7D /* MGSAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB36FF4E1188625D00F1E894 /* MGSAppController.m */; };
+		ABA8F1291188DB0100414A7D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		ABA8F12A1188DB0100414A7D /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC3FB030ED20C27004AC079 /* AppleScriptObjC.framework */; };
+		ABA8F12B1188DB0100414A7D /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C5B117B0D7D0085B76C /* AGL.framework */; };
+		ABA8F12C1188DB0100414A7D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C5D117B0D7D0085B76C /* Accelerate.framework */; };
+		ABA8F12D1188DB0100414A7D /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C5F117B0D7D0085B76C /* AddressBook.framework */; };
+		ABA8F12E1188DB0100414A7D /* AppKitScripting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C63117B0D7D0085B76C /* AppKitScripting.framework */; };
+		ABA8F12F1188DB0100414A7D /* AppleScriptKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C65117B0D7D0085B76C /* AppleScriptKit.framework */; };
+		ABA8F1301188DB0100414A7D /* AppleShareClientCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C69117B0D7D0085B76C /* AppleShareClientCore.framework */; };
+		ABA8F1311188DB0100414A7D /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C6B117B0D7D0085B76C /* ApplicationServices.framework */; };
+		ABA8F1321188DB0100414A7D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C6D117B0D7D0085B76C /* AudioToolbox.framework */; };
+		ABA8F1331188DB0100414A7D /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C6F117B0D7D0085B76C /* AudioUnit.framework */; };
+		ABA8F1341188DB0100414A7D /* Automator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C71117B0D7D0085B76C /* Automator.framework */; };
+		ABA8F1351188DB0100414A7D /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C73117B0D7D0085B76C /* CalendarStore.framework */; };
+		ABA8F1361188DB0100414A7D /* Collaboration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C79117B0D7D0085B76C /* Collaboration.framework */; };
+		ABA8F1371188DB0100414A7D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C7B117B0D7D0085B76C /* CoreAudio.framework */; };
+		ABA8F1381188DB0100414A7D /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C7D117B0D7D0085B76C /* CoreAudioKit.framework */; };
+		ABA8F1391188DB0100414A7D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C7F117B0D7D0085B76C /* CoreData.framework */; };
+		ABA8F13A1188DB0100414A7D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C81117B0D7D0085B76C /* CoreFoundation.framework */; };
+		ABA8F13B1188DB0100414A7D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C83117B0D7D0085B76C /* CoreLocation.framework */; };
+		ABA8F13C1188DB0100414A7D /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C85117B0D7D0085B76C /* CoreMIDI.framework */; };
+		ABA8F13D1188DB0100414A7D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C87117B0D7D0085B76C /* CoreServices.framework */; };
+		ABA8F13E1188DB0100414A7D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C89117B0D7D0085B76C /* CoreVideo.framework */; };
+		ABA8F13F1188DB0100414A7D /* CoreWLAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C8B117B0D7D0085B76C /* CoreWLAN.framework */; };
+		ABA8F1401188DB0100414A7D /* DVComponentGlue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C8D117B0D7D0085B76C /* DVComponentGlue.framework */; };
+		ABA8F1411188DB0100414A7D /* DVDPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C8F117B0D7D0085B76C /* DVDPlayback.framework */; };
+		ABA8F1421188DB0100414A7D /* DirectoryService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C91117B0D7D0085B76C /* DirectoryService.framework */; };
+		ABA8F1431188DB0100414A7D /* DiscRecording.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C93117B0D7D0085B76C /* DiscRecording.framework */; };
+		ABA8F1441188DB0100414A7D /* DiscRecordingUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C95117B0D7D0085B76C /* DiscRecordingUI.framework */; };
+		ABA8F1451188DB0100414A7D /* DiskArbitration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C97117B0D7D0085B76C /* DiskArbitration.framework */; };
+		ABA8F1461188DB0100414A7D /* DrawSprocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C99117B0D7D0085B76C /* DrawSprocket.framework */; };
+		ABA8F1471188DB0100414A7D /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C9B117B0D7D0085B76C /* ExceptionHandling.framework */; };
+		ABA8F1481188DB0100414A7D /* FWAUserLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C9D117B0D7D0085B76C /* FWAUserLib.framework */; };
+		ABA8F1491188DB0100414A7D /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C9F117B0D7D0085B76C /* ForceFeedback.framework */; };
+		ABA8F14A1188DB0100414A7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA1117B0D7D0085B76C /* Foundation.framework */; };
+		ABA8F14B1188DB0100414A7D /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA3117B0D7D0085B76C /* GLUT.framework */; };
+		ABA8F14C1188DB0100414A7D /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA7117B0D7D0085B76C /* IOBluetooth.framework */; };
+		ABA8F14D1188DB0100414A7D /* IOBluetoothUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA9117B0D7D0085B76C /* IOBluetoothUI.framework */; };
+		ABA8F14E1188DB0100414A7D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CAB117B0D7D0085B76C /* IOKit.framework */; };
+		ABA8F14F1188DB0100414A7D /* ImageCaptureCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CAF117B0D7D0085B76C /* ImageCaptureCore.framework */; };
+		ABA8F1501188DB0100414A7D /* InputMethodKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CB1117B0D7D0085B76C /* InputMethodKit.framework */; };
+		ABA8F1511188DB0100414A7D /* InstantMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CB5117B0D7D0085B76C /* InstantMessage.framework */; };
+		ABA8F1521188DB0100414A7D /* Kerberos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CBD117B0D7D0085B76C /* Kerberos.framework */; };
+		ABA8F1531188DB0100414A7D /* Message.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CC3117B0D7E0085B76C /* Message.framework */; };
+		ABA8F1541188DB0100414A7D /* NetFS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CC5117B0D7E0085B76C /* NetFS.framework */; };
+		ABA8F1551188DB0100414A7D /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CC9117B0D7E0085B76C /* OpenAL.framework */; };
+		ABA8F1561188DB0100414A7D /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CCB117B0D7E0085B76C /* OpenCL.framework */; };
+		ABA8F1571188DB0100414A7D /* OpenDirectory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CCD117B0D7E0085B76C /* OpenDirectory.framework */; };
+		ABA8F1581188DB0100414A7D /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CCF117B0D7E0085B76C /* OpenGL.framework */; };
+		ABA8F1591188DB0100414A7D /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CD3117B0D7E0085B76C /* PreferencePanes.framework */; };
+		ABA8F15A1188DB0100414A7D /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CD5117B0D7E0085B76C /* PubSub.framework */; };
+		ABA8F15B1188DB0100414A7D /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CDB117B0D7E0085B76C /* QTKit.framework */; };
+		ABA8F15C1188DB0100414A7D /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CDD117B0D7E0085B76C /* Quartz.framework */; };
+		ABA8F15D1188DB0100414A7D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CDF117B0D7E0085B76C /* QuartzCore.framework */; };
+		ABA8F15E1188DB0100414A7D /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CE1117B0D7E0085B76C /* QuickLook.framework */; };
+		ABA8F15F1188DB0100414A7D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CE3117B0D7E0085B76C /* QuickTime.framework */; };
+		ABA8F1601188DB0100414A7D /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CE9117B0D7E0085B76C /* ScreenSaver.framework */; };
+		ABA8F1611188DB0100414A7D /* Scripting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CEB117B0D7E0085B76C /* Scripting.framework */; };
+		ABA8F1621188DB0100414A7D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CED117B0D7E0085B76C /* ScriptingBridge.framework */; };
+		ABA8F1631188DB0100414A7D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CEF117B0D7E0085B76C /* Security.framework */; };
+		ABA8F1641188DB0100414A7D /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF1117B0D7E0085B76C /* SecurityFoundation.framework */; };
+		ABA8F1651188DB0100414A7D /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF3117B0D7E0085B76C /* SecurityInterface.framework */; };
+		ABA8F1661188DB0100414A7D /* ServerNotification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF5117B0D7E0085B76C /* ServerNotification.framework */; };
+		ABA8F1671188DB0100414A7D /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF7117B0D7E0085B76C /* ServiceManagement.framework */; };
+		ABA8F1681188DB0100414A7D /* SyncServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF9117B0D7E0085B76C /* SyncServices.framework */; };
+		ABA8F1691188DB0100414A7D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CFB117B0D7E0085B76C /* SystemConfiguration.framework */; };
+		ABA8F16A1188DB0100414A7D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852D03117B0D7E0085B76C /* WebKit.framework */; };
+		ABA8F16B1188DB0100414A7D /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3901188BF6600414A7D /* Python.framework */; };
+		ABA8F16C1188DB0200414A7D /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3921188BF6600414A7D /* Python.framework */; };
+		ABA8F16D1188DB0200414A7D /* Ruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3961188BF8200414A7D /* Ruby.framework */; };
+		ABA8F16E1188DB0200414A7D /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3981188BF8200414A7D /* RubyCocoa.framework */; };
+		ABA8F16F1188DB3E00414A7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		ABA8F1701188DB6F00414A7D /* AppleScript_main.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA8E3F01188D79300414A7D /* AppleScript_main.m */; };
+		ABA8F1711188DB9100414A7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		ABA8F1721188DB9100414A7D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		ABA8F1731188DBD300414A7D /* MGSAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB36FF4E1188625D00F1E894 /* MGSAppController.m */; };
+		ABA8F1741188DBE200414A7D /* Python_main.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA8E3F51188D7E800414A7D /* Python_main.m */; };
+		ABA8F1751188DC4E00414A7D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		ABA8F1761188DC4E00414A7D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		ABA8F1771188DC5300414A7D /* MGSAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB36FF4E1188625D00F1E894 /* MGSAppController.m */; };
+		ABA8F1781188DC7200414A7D /* RubyCocoa_main.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA8E3F21188D7C800414A7D /* RubyCocoa_main.m */; };
+		ABA8F1971188DCA800414A7D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		ABA8F1981188DCA800414A7D /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC3FB030ED20C27004AC079 /* AppleScriptObjC.framework */; };
+		ABA8F1991188DCA800414A7D /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C5B117B0D7D0085B76C /* AGL.framework */; };
+		ABA8F19A1188DCA800414A7D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C5D117B0D7D0085B76C /* Accelerate.framework */; };
+		ABA8F19B1188DCA800414A7D /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C5F117B0D7D0085B76C /* AddressBook.framework */; };
+		ABA8F19C1188DCA800414A7D /* AppKitScripting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C63117B0D7D0085B76C /* AppKitScripting.framework */; };
+		ABA8F19D1188DCA800414A7D /* AppleScriptKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C65117B0D7D0085B76C /* AppleScriptKit.framework */; };
+		ABA8F19E1188DCA800414A7D /* AppleShareClientCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C69117B0D7D0085B76C /* AppleShareClientCore.framework */; };
+		ABA8F19F1188DCA800414A7D /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C6B117B0D7D0085B76C /* ApplicationServices.framework */; };
+		ABA8F1A01188DCA800414A7D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C6D117B0D7D0085B76C /* AudioToolbox.framework */; };
+		ABA8F1A11188DCA800414A7D /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C6F117B0D7D0085B76C /* AudioUnit.framework */; };
+		ABA8F1A21188DCA800414A7D /* Automator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C71117B0D7D0085B76C /* Automator.framework */; };
+		ABA8F1A31188DCA800414A7D /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C73117B0D7D0085B76C /* CalendarStore.framework */; };
+		ABA8F1A41188DCA800414A7D /* Collaboration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C79117B0D7D0085B76C /* Collaboration.framework */; };
+		ABA8F1A51188DCA800414A7D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C7B117B0D7D0085B76C /* CoreAudio.framework */; };
+		ABA8F1A61188DCA800414A7D /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C7D117B0D7D0085B76C /* CoreAudioKit.framework */; };
+		ABA8F1A71188DCA800414A7D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C7F117B0D7D0085B76C /* CoreData.framework */; };
+		ABA8F1A81188DCA800414A7D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C81117B0D7D0085B76C /* CoreFoundation.framework */; };
+		ABA8F1A91188DCA800414A7D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C83117B0D7D0085B76C /* CoreLocation.framework */; };
+		ABA8F1AA1188DCA800414A7D /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C85117B0D7D0085B76C /* CoreMIDI.framework */; };
+		ABA8F1AB1188DCA800414A7D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C87117B0D7D0085B76C /* CoreServices.framework */; };
+		ABA8F1AC1188DCA800414A7D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C89117B0D7D0085B76C /* CoreVideo.framework */; };
+		ABA8F1AD1188DCA800414A7D /* CoreWLAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C8B117B0D7D0085B76C /* CoreWLAN.framework */; };
+		ABA8F1AE1188DCA800414A7D /* DVComponentGlue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C8D117B0D7D0085B76C /* DVComponentGlue.framework */; };
+		ABA8F1AF1188DCA800414A7D /* DVDPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C8F117B0D7D0085B76C /* DVDPlayback.framework */; };
+		ABA8F1B01188DCA800414A7D /* DirectoryService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C91117B0D7D0085B76C /* DirectoryService.framework */; };
+		ABA8F1B11188DCA800414A7D /* DiscRecording.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C93117B0D7D0085B76C /* DiscRecording.framework */; };
+		ABA8F1B21188DCA800414A7D /* DiscRecordingUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C95117B0D7D0085B76C /* DiscRecordingUI.framework */; };
+		ABA8F1B31188DCA800414A7D /* DiskArbitration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C97117B0D7D0085B76C /* DiskArbitration.framework */; };
+		ABA8F1B41188DCA800414A7D /* DrawSprocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C99117B0D7D0085B76C /* DrawSprocket.framework */; };
+		ABA8F1B51188DCA800414A7D /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C9B117B0D7D0085B76C /* ExceptionHandling.framework */; };
+		ABA8F1B61188DCA800414A7D /* FWAUserLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C9D117B0D7D0085B76C /* FWAUserLib.framework */; };
+		ABA8F1B71188DCA800414A7D /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C9F117B0D7D0085B76C /* ForceFeedback.framework */; };
+		ABA8F1B81188DCA800414A7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA1117B0D7D0085B76C /* Foundation.framework */; };
+		ABA8F1B91188DCA800414A7D /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA3117B0D7D0085B76C /* GLUT.framework */; };
+		ABA8F1BA1188DCA800414A7D /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA7117B0D7D0085B76C /* IOBluetooth.framework */; };
+		ABA8F1BB1188DCA800414A7D /* IOBluetoothUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA9117B0D7D0085B76C /* IOBluetoothUI.framework */; };
+		ABA8F1BC1188DCA800414A7D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CAB117B0D7D0085B76C /* IOKit.framework */; };
+		ABA8F1BD1188DCA800414A7D /* ImageCaptureCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CAF117B0D7D0085B76C /* ImageCaptureCore.framework */; };
+		ABA8F1BE1188DCA800414A7D /* InputMethodKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CB1117B0D7D0085B76C /* InputMethodKit.framework */; };
+		ABA8F1BF1188DCA800414A7D /* InstantMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CB5117B0D7D0085B76C /* InstantMessage.framework */; };
+		ABA8F1C01188DCA800414A7D /* Kerberos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CBD117B0D7D0085B76C /* Kerberos.framework */; };
+		ABA8F1C11188DCA800414A7D /* Message.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CC3117B0D7E0085B76C /* Message.framework */; };
+		ABA8F1C21188DCA800414A7D /* NetFS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CC5117B0D7E0085B76C /* NetFS.framework */; };
+		ABA8F1C31188DCA800414A7D /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CC9117B0D7E0085B76C /* OpenAL.framework */; };
+		ABA8F1C41188DCA800414A7D /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CCB117B0D7E0085B76C /* OpenCL.framework */; };
+		ABA8F1C51188DCA800414A7D /* OpenDirectory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CCD117B0D7E0085B76C /* OpenDirectory.framework */; };
+		ABA8F1C61188DCA800414A7D /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CCF117B0D7E0085B76C /* OpenGL.framework */; };
+		ABA8F1C71188DCA800414A7D /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CD3117B0D7E0085B76C /* PreferencePanes.framework */; };
+		ABA8F1C81188DCA800414A7D /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CD5117B0D7E0085B76C /* PubSub.framework */; };
+		ABA8F1C91188DCA800414A7D /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CDB117B0D7E0085B76C /* QTKit.framework */; };
+		ABA8F1CA1188DCA800414A7D /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CDD117B0D7E0085B76C /* Quartz.framework */; };
+		ABA8F1CB1188DCA800414A7D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CDF117B0D7E0085B76C /* QuartzCore.framework */; };
+		ABA8F1CC1188DCA800414A7D /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CE1117B0D7E0085B76C /* QuickLook.framework */; };
+		ABA8F1CD1188DCA800414A7D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CE3117B0D7E0085B76C /* QuickTime.framework */; };
+		ABA8F1CE1188DCA800414A7D /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CE9117B0D7E0085B76C /* ScreenSaver.framework */; };
+		ABA8F1CF1188DCA800414A7D /* Scripting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CEB117B0D7E0085B76C /* Scripting.framework */; };
+		ABA8F1D01188DCA800414A7D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CED117B0D7E0085B76C /* ScriptingBridge.framework */; };
+		ABA8F1D11188DCA800414A7D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CEF117B0D7E0085B76C /* Security.framework */; };
+		ABA8F1D21188DCA800414A7D /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF1117B0D7E0085B76C /* SecurityFoundation.framework */; };
+		ABA8F1D31188DCA800414A7D /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF3117B0D7E0085B76C /* SecurityInterface.framework */; };
+		ABA8F1D41188DCA800414A7D /* ServerNotification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF5117B0D7E0085B76C /* ServerNotification.framework */; };
+		ABA8F1D51188DCA800414A7D /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF7117B0D7E0085B76C /* ServiceManagement.framework */; };
+		ABA8F1D61188DCA800414A7D /* SyncServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF9117B0D7E0085B76C /* SyncServices.framework */; };
+		ABA8F1D71188DCA800414A7D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CFB117B0D7E0085B76C /* SystemConfiguration.framework */; };
+		ABA8F1D81188DCA800414A7D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852D03117B0D7E0085B76C /* WebKit.framework */; };
+		ABA8F1D91188DCA800414A7D /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3901188BF6600414A7D /* Python.framework */; };
+		ABA8F1DA1188DCA800414A7D /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3921188BF6600414A7D /* Python.framework */; };
+		ABA8F1DB1188DCA800414A7D /* Ruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3961188BF8200414A7D /* Ruby.framework */; };
+		ABA8F1DC1188DCA800414A7D /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3981188BF8200414A7D /* RubyCocoa.framework */; };
+		ABA8F1DD1188DCBD00414A7D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		ABA8F1DE1188DCBD00414A7D /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC3FB030ED20C27004AC079 /* AppleScriptObjC.framework */; };
+		ABA8F1DF1188DCBD00414A7D /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C5B117B0D7D0085B76C /* AGL.framework */; };
+		ABA8F1E01188DCBD00414A7D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C5D117B0D7D0085B76C /* Accelerate.framework */; };
+		ABA8F1E11188DCBD00414A7D /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C5F117B0D7D0085B76C /* AddressBook.framework */; };
+		ABA8F1E21188DCBD00414A7D /* AppKitScripting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C63117B0D7D0085B76C /* AppKitScripting.framework */; };
+		ABA8F1E31188DCBD00414A7D /* AppleScriptKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C65117B0D7D0085B76C /* AppleScriptKit.framework */; };
+		ABA8F1E41188DCBD00414A7D /* AppleShareClientCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C69117B0D7D0085B76C /* AppleShareClientCore.framework */; };
+		ABA8F1E51188DCBD00414A7D /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C6B117B0D7D0085B76C /* ApplicationServices.framework */; };
+		ABA8F1E61188DCBD00414A7D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C6D117B0D7D0085B76C /* AudioToolbox.framework */; };
+		ABA8F1E71188DCBD00414A7D /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C6F117B0D7D0085B76C /* AudioUnit.framework */; };
+		ABA8F1E81188DCBD00414A7D /* Automator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C71117B0D7D0085B76C /* Automator.framework */; };
+		ABA8F1E91188DCBD00414A7D /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C73117B0D7D0085B76C /* CalendarStore.framework */; };
+		ABA8F1EA1188DCBD00414A7D /* Collaboration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C79117B0D7D0085B76C /* Collaboration.framework */; };
+		ABA8F1EB1188DCBD00414A7D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C7B117B0D7D0085B76C /* CoreAudio.framework */; };
+		ABA8F1EC1188DCBD00414A7D /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C7D117B0D7D0085B76C /* CoreAudioKit.framework */; };
+		ABA8F1ED1188DCBD00414A7D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C7F117B0D7D0085B76C /* CoreData.framework */; };
+		ABA8F1EE1188DCBD00414A7D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C81117B0D7D0085B76C /* CoreFoundation.framework */; };
+		ABA8F1EF1188DCBD00414A7D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C83117B0D7D0085B76C /* CoreLocation.framework */; };
+		ABA8F1F01188DCBD00414A7D /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C85117B0D7D0085B76C /* CoreMIDI.framework */; };
+		ABA8F1F11188DCBD00414A7D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C87117B0D7D0085B76C /* CoreServices.framework */; };
+		ABA8F1F21188DCBD00414A7D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C89117B0D7D0085B76C /* CoreVideo.framework */; };
+		ABA8F1F31188DCBD00414A7D /* CoreWLAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C8B117B0D7D0085B76C /* CoreWLAN.framework */; };
+		ABA8F1F41188DCBD00414A7D /* DVComponentGlue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C8D117B0D7D0085B76C /* DVComponentGlue.framework */; };
+		ABA8F1F51188DCBD00414A7D /* DVDPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C8F117B0D7D0085B76C /* DVDPlayback.framework */; };
+		ABA8F1F61188DCBD00414A7D /* DirectoryService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C91117B0D7D0085B76C /* DirectoryService.framework */; };
+		ABA8F1F71188DCBD00414A7D /* DiscRecording.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C93117B0D7D0085B76C /* DiscRecording.framework */; };
+		ABA8F1F81188DCBD00414A7D /* DiscRecordingUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C95117B0D7D0085B76C /* DiscRecordingUI.framework */; };
+		ABA8F1F91188DCBD00414A7D /* DiskArbitration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C97117B0D7D0085B76C /* DiskArbitration.framework */; };
+		ABA8F1FA1188DCBD00414A7D /* DrawSprocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C99117B0D7D0085B76C /* DrawSprocket.framework */; };
+		ABA8F1FB1188DCBD00414A7D /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C9B117B0D7D0085B76C /* ExceptionHandling.framework */; };
+		ABA8F1FC1188DCBD00414A7D /* FWAUserLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C9D117B0D7D0085B76C /* FWAUserLib.framework */; };
+		ABA8F1FD1188DCBD00414A7D /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852C9F117B0D7D0085B76C /* ForceFeedback.framework */; };
+		ABA8F1FE1188DCBD00414A7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA1117B0D7D0085B76C /* Foundation.framework */; };
+		ABA8F1FF1188DCBD00414A7D /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA3117B0D7D0085B76C /* GLUT.framework */; };
+		ABA8F2001188DCBD00414A7D /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA7117B0D7D0085B76C /* IOBluetooth.framework */; };
+		ABA8F2011188DCBD00414A7D /* IOBluetoothUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CA9117B0D7D0085B76C /* IOBluetoothUI.framework */; };
+		ABA8F2021188DCBD00414A7D /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CAB117B0D7D0085B76C /* IOKit.framework */; };
+		ABA8F2031188DCBD00414A7D /* ImageCaptureCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CAF117B0D7D0085B76C /* ImageCaptureCore.framework */; };
+		ABA8F2041188DCBD00414A7D /* InputMethodKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CB1117B0D7D0085B76C /* InputMethodKit.framework */; };
+		ABA8F2051188DCBD00414A7D /* InstantMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CB5117B0D7D0085B76C /* InstantMessage.framework */; };
+		ABA8F2061188DCBD00414A7D /* Kerberos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CBD117B0D7D0085B76C /* Kerberos.framework */; };
+		ABA8F2071188DCBD00414A7D /* Message.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CC3117B0D7E0085B76C /* Message.framework */; };
+		ABA8F2081188DCBD00414A7D /* NetFS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CC5117B0D7E0085B76C /* NetFS.framework */; };
+		ABA8F2091188DCBD00414A7D /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CC9117B0D7E0085B76C /* OpenAL.framework */; };
+		ABA8F20A1188DCBD00414A7D /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CCB117B0D7E0085B76C /* OpenCL.framework */; };
+		ABA8F20B1188DCBD00414A7D /* OpenDirectory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CCD117B0D7E0085B76C /* OpenDirectory.framework */; };
+		ABA8F20C1188DCBD00414A7D /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CCF117B0D7E0085B76C /* OpenGL.framework */; };
+		ABA8F20D1188DCBD00414A7D /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CD3117B0D7E0085B76C /* PreferencePanes.framework */; };
+		ABA8F20E1188DCBD00414A7D /* PubSub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CD5117B0D7E0085B76C /* PubSub.framework */; };
+		ABA8F20F1188DCBD00414A7D /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CDB117B0D7E0085B76C /* QTKit.framework */; };
+		ABA8F2101188DCBD00414A7D /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CDD117B0D7E0085B76C /* Quartz.framework */; };
+		ABA8F2111188DCBD00414A7D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CDF117B0D7E0085B76C /* QuartzCore.framework */; };
+		ABA8F2121188DCBD00414A7D /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CE1117B0D7E0085B76C /* QuickLook.framework */; };
+		ABA8F2131188DCBD00414A7D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CE3117B0D7E0085B76C /* QuickTime.framework */; };
+		ABA8F2141188DCBD00414A7D /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CE9117B0D7E0085B76C /* ScreenSaver.framework */; };
+		ABA8F2151188DCBD00414A7D /* Scripting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CEB117B0D7E0085B76C /* Scripting.framework */; };
+		ABA8F2161188DCBD00414A7D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CED117B0D7E0085B76C /* ScriptingBridge.framework */; };
+		ABA8F2171188DCBD00414A7D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CEF117B0D7E0085B76C /* Security.framework */; };
+		ABA8F2181188DCBD00414A7D /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF1117B0D7E0085B76C /* SecurityFoundation.framework */; };
+		ABA8F2191188DCBD00414A7D /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF3117B0D7E0085B76C /* SecurityInterface.framework */; };
+		ABA8F21A1188DCBD00414A7D /* ServerNotification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF5117B0D7E0085B76C /* ServerNotification.framework */; };
+		ABA8F21B1188DCBD00414A7D /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF7117B0D7E0085B76C /* ServiceManagement.framework */; };
+		ABA8F21C1188DCBD00414A7D /* SyncServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CF9117B0D7E0085B76C /* SyncServices.framework */; };
+		ABA8F21D1188DCBD00414A7D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852CFB117B0D7E0085B76C /* SystemConfiguration.framework */; };
+		ABA8F21E1188DCBD00414A7D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB852D03117B0D7E0085B76C /* WebKit.framework */; };
+		ABA8F21F1188DCBD00414A7D /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3901188BF6600414A7D /* Python.framework */; };
+		ABA8F2201188DCBD00414A7D /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3921188BF6600414A7D /* Python.framework */; };
+		ABA8F2211188DCBD00414A7D /* Ruby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3961188BF8200414A7D /* Ruby.framework */; };
+		ABA8F2221188DCBD00414A7D /* RubyCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA8E3981188BF8200414A7D /* RubyCocoa.framework */; };
+		ABA8F22C1188DD4B00414A7D /* STEPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA8E3A11188C05300414A7D /* STEPluginManager.m */; };
+		ABA8F22D1188DD5400414A7D /* STEPluginExecutor.py in Resources */ = {isa = PBXBuildFile; fileRef = ABA8E3A21188C05300414A7D /* STEPluginExecutor.py */; };
+		ABA8F2321188DE1200414A7D /* rubycocoa_main.rb in Resources */ = {isa = PBXBuildFile; fileRef = ABA8E3CF1188D12200414A7D /* rubycocoa_main.rb */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* cocoa_applescript_test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocoa_applescript_test_Prefix.pch; sourceTree = "<group>"; };
+		3B92A9F80F6ED2CB0023785B /* cocoa_applescript_testAppDelegate.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = cocoa_applescript_testAppDelegate.applescript; sourceTree = "<group>"; };
+		3BC3FB030ED20C27004AC079 /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = /System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = "<absolute>"; };
+		8D1107310486CEB800E47090 /* cocoa_applescript_test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "cocoa_applescript_test-Info.plist"; sourceTree = "<group>"; };
+		AB36FF4D1188625D00F1E894 /* MGSAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSAppController.h; sourceTree = "<group>"; };
+		AB36FF4E1188625D00F1E894 /* MGSAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSAppController.m; sourceTree = "<group>"; };
+		AB852C5B117B0D7D0085B76C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
+		AB852C5D117B0D7D0085B76C /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		AB852C5F117B0D7D0085B76C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		AB852C63117B0D7D0085B76C /* AppKitScripting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKitScripting.framework; path = System/Library/Frameworks/AppKitScripting.framework; sourceTree = SDKROOT; };
+		AB852C65117B0D7D0085B76C /* AppleScriptKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptKit.framework; path = System/Library/Frameworks/AppleScriptKit.framework; sourceTree = SDKROOT; };
+		AB852C69117B0D7D0085B76C /* AppleShareClientCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleShareClientCore.framework; path = System/Library/Frameworks/AppleShareClientCore.framework; sourceTree = SDKROOT; };
+		AB852C6B117B0D7D0085B76C /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		AB852C6D117B0D7D0085B76C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		AB852C6F117B0D7D0085B76C /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		AB852C71117B0D7D0085B76C /* Automator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Automator.framework; path = System/Library/Frameworks/Automator.framework; sourceTree = SDKROOT; };
+		AB852C73117B0D7D0085B76C /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = System/Library/Frameworks/CalendarStore.framework; sourceTree = SDKROOT; };
+		AB852C79117B0D7D0085B76C /* Collaboration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Collaboration.framework; path = System/Library/Frameworks/Collaboration.framework; sourceTree = SDKROOT; };
+		AB852C7B117B0D7D0085B76C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		AB852C7D117B0D7D0085B76C /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		AB852C7F117B0D7D0085B76C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		AB852C81117B0D7D0085B76C /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		AB852C83117B0D7D0085B76C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		AB852C85117B0D7D0085B76C /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		AB852C87117B0D7D0085B76C /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		AB852C89117B0D7D0085B76C /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		AB852C8B117B0D7D0085B76C /* CoreWLAN.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreWLAN.framework; path = System/Library/Frameworks/CoreWLAN.framework; sourceTree = SDKROOT; };
+		AB852C8D117B0D7D0085B76C /* DVComponentGlue.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVComponentGlue.framework; path = System/Library/Frameworks/DVComponentGlue.framework; sourceTree = SDKROOT; };
+		AB852C8F117B0D7D0085B76C /* DVDPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVDPlayback.framework; path = System/Library/Frameworks/DVDPlayback.framework; sourceTree = SDKROOT; };
+		AB852C91117B0D7D0085B76C /* DirectoryService.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DirectoryService.framework; path = System/Library/Frameworks/DirectoryService.framework; sourceTree = SDKROOT; };
+		AB852C93117B0D7D0085B76C /* DiscRecording.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscRecording.framework; path = System/Library/Frameworks/DiscRecording.framework; sourceTree = SDKROOT; };
+		AB852C95117B0D7D0085B76C /* DiscRecordingUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscRecordingUI.framework; path = System/Library/Frameworks/DiscRecordingUI.framework; sourceTree = SDKROOT; };
+		AB852C97117B0D7D0085B76C /* DiskArbitration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiskArbitration.framework; path = System/Library/Frameworks/DiskArbitration.framework; sourceTree = SDKROOT; };
+		AB852C99117B0D7D0085B76C /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
+		AB852C9B117B0D7D0085B76C /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = System/Library/Frameworks/ExceptionHandling.framework; sourceTree = SDKROOT; };
+		AB852C9D117B0D7D0085B76C /* FWAUserLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FWAUserLib.framework; path = System/Library/Frameworks/FWAUserLib.framework; sourceTree = SDKROOT; };
+		AB852C9F117B0D7D0085B76C /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = System/Library/Frameworks/ForceFeedback.framework; sourceTree = SDKROOT; };
+		AB852CA1117B0D7D0085B76C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AB852CA3117B0D7D0085B76C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		AB852CA7117B0D7D0085B76C /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
+		AB852CA9117B0D7D0085B76C /* IOBluetoothUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetoothUI.framework; path = System/Library/Frameworks/IOBluetoothUI.framework; sourceTree = SDKROOT; };
+		AB852CAB117B0D7D0085B76C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		AB852CAF117B0D7D0085B76C /* ImageCaptureCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageCaptureCore.framework; path = System/Library/Frameworks/ImageCaptureCore.framework; sourceTree = SDKROOT; };
+		AB852CB1117B0D7D0085B76C /* InputMethodKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputMethodKit.framework; path = System/Library/Frameworks/InputMethodKit.framework; sourceTree = SDKROOT; };
+		AB852CB5117B0D7D0085B76C /* InstantMessage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantMessage.framework; path = System/Library/Frameworks/InstantMessage.framework; sourceTree = SDKROOT; };
+		AB852CBD117B0D7D0085B76C /* Kerberos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kerberos.framework; path = System/Library/Frameworks/Kerberos.framework; sourceTree = SDKROOT; };
+		AB852CC3117B0D7E0085B76C /* Message.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Message.framework; path = System/Library/Frameworks/Message.framework; sourceTree = SDKROOT; };
+		AB852CC5117B0D7E0085B76C /* NetFS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetFS.framework; path = System/Library/Frameworks/NetFS.framework; sourceTree = SDKROOT; };
+		AB852CC9117B0D7E0085B76C /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		AB852CCB117B0D7E0085B76C /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
+		AB852CCD117B0D7E0085B76C /* OpenDirectory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenDirectory.framework; path = System/Library/Frameworks/OpenDirectory.framework; sourceTree = SDKROOT; };
+		AB852CCF117B0D7E0085B76C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		AB852CD3117B0D7E0085B76C /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = System/Library/Frameworks/PreferencePanes.framework; sourceTree = SDKROOT; };
+		AB852CD5117B0D7E0085B76C /* PubSub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PubSub.framework; path = System/Library/Frameworks/PubSub.framework; sourceTree = SDKROOT; };
+		AB852CDB117B0D7E0085B76C /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
+		AB852CDD117B0D7E0085B76C /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		AB852CDF117B0D7E0085B76C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AB852CE1117B0D7E0085B76C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		AB852CE3117B0D7E0085B76C /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		AB852CE9117B0D7E0085B76C /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = System/Library/Frameworks/ScreenSaver.framework; sourceTree = SDKROOT; };
+		AB852CEB117B0D7E0085B76C /* Scripting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Scripting.framework; path = System/Library/Frameworks/Scripting.framework; sourceTree = SDKROOT; };
+		AB852CED117B0D7E0085B76C /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		AB852CEF117B0D7E0085B76C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		AB852CF1117B0D7E0085B76C /* SecurityFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityFoundation.framework; path = System/Library/Frameworks/SecurityFoundation.framework; sourceTree = SDKROOT; };
+		AB852CF3117B0D7E0085B76C /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
+		AB852CF5117B0D7E0085B76C /* ServerNotification.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServerNotification.framework; path = System/Library/Frameworks/ServerNotification.framework; sourceTree = SDKROOT; };
+		AB852CF7117B0D7E0085B76C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		AB852CF9117B0D7E0085B76C /* SyncServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SyncServices.framework; path = System/Library/Frameworks/SyncServices.framework; sourceTree = SDKROOT; };
+		AB852CFB117B0D7E0085B76C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		AB852D03117B0D7E0085B76C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		ABA8E3901188BF6600414A7D /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = Library/Frameworks/Python.framework; sourceTree = SDKROOT; };
+		ABA8E3921188BF6600414A7D /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = System/Library/Frameworks/Python.framework; sourceTree = SDKROOT; };
+		ABA8E3961188BF8200414A7D /* Ruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ruby.framework; path = System/Library/Frameworks/Ruby.framework; sourceTree = SDKROOT; };
+		ABA8E3981188BF8200414A7D /* RubyCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RubyCocoa.framework; path = System/Library/Frameworks/RubyCocoa.framework; sourceTree = SDKROOT; };
+		ABA8E3A01188C05300414A7D /* STEPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STEPluginManager.h; sourceTree = "<group>"; };
+		ABA8E3A11188C05300414A7D /* STEPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STEPluginManager.m; sourceTree = "<group>"; };
+		ABA8E3A21188C05300414A7D /* STEPluginExecutor.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = STEPluginExecutor.py; sourceTree = "<group>"; };
+		ABA8E3CF1188D12200414A7D /* rubycocoa_main.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = rubycocoa_main.rb; sourceTree = "<group>"; };
+		ABA8E3D11188D1D800414A7D /* macruby_main.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = macruby_main.rb; sourceTree = "<group>"; };
+		ABA8E3F01188D79300414A7D /* AppleScript_main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleScript_main.m; sourceTree = "<group>"; };
+		ABA8E3F21188D7C800414A7D /* RubyCocoa_main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RubyCocoa_main.m; sourceTree = "<group>"; };
+		ABA8E3F51188D7E800414A7D /* Python_main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Python_main.m; sourceTree = "<group>"; };
+		ABA8E3F61188D80400414A7D /* MacRuby_main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacRuby_main.m; sourceTree = "<group>"; };
+		ABA8E4091188D9AC00414A7D /* KosmicTaskAppleScriptHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KosmicTaskAppleScriptHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABA8E40B1188D9AC00414A7D /* KosmicTaskAppleScriptHost-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KosmicTaskAppleScriptHost-Info.plist"; sourceTree = "<group>"; };
+		ABA8E4161188D9DC00414A7D /* KosmicTaskPythonHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KosmicTaskPythonHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABA8E4181188D9DC00414A7D /* KosmicTaskPythonHost-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KosmicTaskPythonHost-Info.plist"; sourceTree = "<group>"; };
+		ABA8E4241188DA2000414A7D /* KosmicTaskRubyCocoaHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KosmicTaskRubyCocoaHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABA8E4261188DA2000414A7D /* KosmicTaskRubyCocoaHost-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KosmicTaskRubyCocoaHost-Info.plist"; sourceTree = "<group>"; };
+		ABD27BDB117A4E4A00C7337A /* untitled.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = untitled.applescript; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ABA8E4141188D9DC00414A7D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABA8F1971188DCA800414A7D /* Cocoa.framework in Frameworks */,
+				ABA8F1981188DCA800414A7D /* AppleScriptObjC.framework in Frameworks */,
+				ABA8F1991188DCA800414A7D /* AGL.framework in Frameworks */,
+				ABA8F19A1188DCA800414A7D /* Accelerate.framework in Frameworks */,
+				ABA8F19B1188DCA800414A7D /* AddressBook.framework in Frameworks */,
+				ABA8F19C1188DCA800414A7D /* AppKitScripting.framework in Frameworks */,
+				ABA8F19D1188DCA800414A7D /* AppleScriptKit.framework in Frameworks */,
+				ABA8F19E1188DCA800414A7D /* AppleShareClientCore.framework in Frameworks */,
+				ABA8F19F1188DCA800414A7D /* ApplicationServices.framework in Frameworks */,
+				ABA8F1A01188DCA800414A7D /* AudioToolbox.framework in Frameworks */,
+				ABA8F1A11188DCA800414A7D /* AudioUnit.framework in Frameworks */,
+				ABA8F1A21188DCA800414A7D /* Automator.framework in Frameworks */,
+				ABA8F1A31188DCA800414A7D /* CalendarStore.framework in Frameworks */,
+				ABA8F1A41188DCA800414A7D /* Collaboration.framework in Frameworks */,
+				ABA8F1A51188DCA800414A7D /* CoreAudio.framework in Frameworks */,
+				ABA8F1A61188DCA800414A7D /* CoreAudioKit.framework in Frameworks */,
+				ABA8F1A71188DCA800414A7D /* CoreData.framework in Frameworks */,
+				ABA8F1A81188DCA800414A7D /* CoreFoundation.framework in Frameworks */,
+				ABA8F1A91188DCA800414A7D /* CoreLocation.framework in Frameworks */,
+				ABA8F1AA1188DCA800414A7D /* CoreMIDI.framework in Frameworks */,
+				ABA8F1AB1188DCA800414A7D /* CoreServices.framework in Frameworks */,
+				ABA8F1AC1188DCA800414A7D /* CoreVideo.framework in Frameworks */,
+				ABA8F1AD1188DCA800414A7D /* CoreWLAN.framework in Frameworks */,
+				ABA8F1AE1188DCA800414A7D /* DVComponentGlue.framework in Frameworks */,
+				ABA8F1AF1188DCA800414A7D /* DVDPlayback.framework in Frameworks */,
+				ABA8F1B01188DCA800414A7D /* DirectoryService.framework in Frameworks */,
+				ABA8F1B11188DCA800414A7D /* DiscRecording.framework in Frameworks */,
+				ABA8F1B21188DCA800414A7D /* DiscRecordingUI.framework in Frameworks */,
+				ABA8F1B31188DCA800414A7D /* DiskArbitration.framework in Frameworks */,
+				ABA8F1B41188DCA800414A7D /* DrawSprocket.framework in Frameworks */,
+				ABA8F1B51188DCA800414A7D /* ExceptionHandling.framework in Frameworks */,
+				ABA8F1B61188DCA800414A7D /* FWAUserLib.framework in Frameworks */,
+				ABA8F1B71188DCA800414A7D /* ForceFeedback.framework in Frameworks */,
+				ABA8F1B81188DCA800414A7D /* Foundation.framework in Frameworks */,
+				ABA8F1B91188DCA800414A7D /* GLUT.framework in Frameworks */,
+				ABA8F1BA1188DCA800414A7D /* IOBluetooth.framework in Frameworks */,
+				ABA8F1BB1188DCA800414A7D /* IOBluetoothUI.framework in Frameworks */,
+				ABA8F1BC1188DCA800414A7D /* IOKit.framework in Frameworks */,
+				ABA8F1BD1188DCA800414A7D /* ImageCaptureCore.framework in Frameworks */,
+				ABA8F1BE1188DCA800414A7D /* InputMethodKit.framework in Frameworks */,
+				ABA8F1BF1188DCA800414A7D /* InstantMessage.framework in Frameworks */,
+				ABA8F1C01188DCA800414A7D /* Kerberos.framework in Frameworks */,
+				ABA8F1C11188DCA800414A7D /* Message.framework in Frameworks */,
+				ABA8F1C21188DCA800414A7D /* NetFS.framework in Frameworks */,
+				ABA8F1C31188DCA800414A7D /* OpenAL.framework in Frameworks */,
+				ABA8F1C41188DCA800414A7D /* OpenCL.framework in Frameworks */,
+				ABA8F1C51188DCA800414A7D /* OpenDirectory.framework in Frameworks */,
+				ABA8F1C61188DCA800414A7D /* OpenGL.framework in Frameworks */,
+				ABA8F1C71188DCA800414A7D /* PreferencePanes.framework in Frameworks */,
+				ABA8F1C81188DCA800414A7D /* PubSub.framework in Frameworks */,
+				ABA8F1C91188DCA800414A7D /* QTKit.framework in Frameworks */,
+				ABA8F1CA1188DCA800414A7D /* Quartz.framework in Frameworks */,
+				ABA8F1CB1188DCA800414A7D /* QuartzCore.framework in Frameworks */,
+				ABA8F1CC1188DCA800414A7D /* QuickLook.framework in Frameworks */,
+				ABA8F1CD1188DCA800414A7D /* QuickTime.framework in Frameworks */,
+				ABA8F1CE1188DCA800414A7D /* ScreenSaver.framework in Frameworks */,
+				ABA8F1CF1188DCA800414A7D /* Scripting.framework in Frameworks */,
+				ABA8F1D01188DCA800414A7D /* ScriptingBridge.framework in Frameworks */,
+				ABA8F1D11188DCA800414A7D /* Security.framework in Frameworks */,
+				ABA8F1D21188DCA800414A7D /* SecurityFoundation.framework in Frameworks */,
+				ABA8F1D31188DCA800414A7D /* SecurityInterface.framework in Frameworks */,
+				ABA8F1D41188DCA800414A7D /* ServerNotification.framework in Frameworks */,
+				ABA8F1D51188DCA800414A7D /* ServiceManagement.framework in Frameworks */,
+				ABA8F1D61188DCA800414A7D /* SyncServices.framework in Frameworks */,
+				ABA8F1D71188DCA800414A7D /* SystemConfiguration.framework in Frameworks */,
+				ABA8F1D81188DCA800414A7D /* WebKit.framework in Frameworks */,
+				ABA8F1D91188DCA800414A7D /* Python.framework in Frameworks */,
+				ABA8F1DA1188DCA800414A7D /* Python.framework in Frameworks */,
+				ABA8F1DB1188DCA800414A7D /* Ruby.framework in Frameworks */,
+				ABA8F1DC1188DCA800414A7D /* RubyCocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8E4221188DA2000414A7D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABA8F1DD1188DCBD00414A7D /* Cocoa.framework in Frameworks */,
+				ABA8F1DE1188DCBD00414A7D /* AppleScriptObjC.framework in Frameworks */,
+				ABA8F1DF1188DCBD00414A7D /* AGL.framework in Frameworks */,
+				ABA8F1E01188DCBD00414A7D /* Accelerate.framework in Frameworks */,
+				ABA8F1E11188DCBD00414A7D /* AddressBook.framework in Frameworks */,
+				ABA8F1E21188DCBD00414A7D /* AppKitScripting.framework in Frameworks */,
+				ABA8F1E31188DCBD00414A7D /* AppleScriptKit.framework in Frameworks */,
+				ABA8F1E41188DCBD00414A7D /* AppleShareClientCore.framework in Frameworks */,
+				ABA8F1E51188DCBD00414A7D /* ApplicationServices.framework in Frameworks */,
+				ABA8F1E61188DCBD00414A7D /* AudioToolbox.framework in Frameworks */,
+				ABA8F1E71188DCBD00414A7D /* AudioUnit.framework in Frameworks */,
+				ABA8F1E81188DCBD00414A7D /* Automator.framework in Frameworks */,
+				ABA8F1E91188DCBD00414A7D /* CalendarStore.framework in Frameworks */,
+				ABA8F1EA1188DCBD00414A7D /* Collaboration.framework in Frameworks */,
+				ABA8F1EB1188DCBD00414A7D /* CoreAudio.framework in Frameworks */,
+				ABA8F1EC1188DCBD00414A7D /* CoreAudioKit.framework in Frameworks */,
+				ABA8F1ED1188DCBD00414A7D /* CoreData.framework in Frameworks */,
+				ABA8F1EE1188DCBD00414A7D /* CoreFoundation.framework in Frameworks */,
+				ABA8F1EF1188DCBD00414A7D /* CoreLocation.framework in Frameworks */,
+				ABA8F1F01188DCBD00414A7D /* CoreMIDI.framework in Frameworks */,
+				ABA8F1F11188DCBD00414A7D /* CoreServices.framework in Frameworks */,
+				ABA8F1F21188DCBD00414A7D /* CoreVideo.framework in Frameworks */,
+				ABA8F1F31188DCBD00414A7D /* CoreWLAN.framework in Frameworks */,
+				ABA8F1F41188DCBD00414A7D /* DVComponentGlue.framework in Frameworks */,
+				ABA8F1F51188DCBD00414A7D /* DVDPlayback.framework in Frameworks */,
+				ABA8F1F61188DCBD00414A7D /* DirectoryService.framework in Frameworks */,
+				ABA8F1F71188DCBD00414A7D /* DiscRecording.framework in Frameworks */,
+				ABA8F1F81188DCBD00414A7D /* DiscRecordingUI.framework in Frameworks */,
+				ABA8F1F91188DCBD00414A7D /* DiskArbitration.framework in Frameworks */,
+				ABA8F1FA1188DCBD00414A7D /* DrawSprocket.framework in Frameworks */,
+				ABA8F1FB1188DCBD00414A7D /* ExceptionHandling.framework in Frameworks */,
+				ABA8F1FC1188DCBD00414A7D /* FWAUserLib.framework in Frameworks */,
+				ABA8F1FD1188DCBD00414A7D /* ForceFeedback.framework in Frameworks */,
+				ABA8F1FE1188DCBD00414A7D /* Foundation.framework in Frameworks */,
+				ABA8F1FF1188DCBD00414A7D /* GLUT.framework in Frameworks */,
+				ABA8F2001188DCBD00414A7D /* IOBluetooth.framework in Frameworks */,
+				ABA8F2011188DCBD00414A7D /* IOBluetoothUI.framework in Frameworks */,
+				ABA8F2021188DCBD00414A7D /* IOKit.framework in Frameworks */,
+				ABA8F2031188DCBD00414A7D /* ImageCaptureCore.framework in Frameworks */,
+				ABA8F2041188DCBD00414A7D /* InputMethodKit.framework in Frameworks */,
+				ABA8F2051188DCBD00414A7D /* InstantMessage.framework in Frameworks */,
+				ABA8F2061188DCBD00414A7D /* Kerberos.framework in Frameworks */,
+				ABA8F2071188DCBD00414A7D /* Message.framework in Frameworks */,
+				ABA8F2081188DCBD00414A7D /* NetFS.framework in Frameworks */,
+				ABA8F2091188DCBD00414A7D /* OpenAL.framework in Frameworks */,
+				ABA8F20A1188DCBD00414A7D /* OpenCL.framework in Frameworks */,
+				ABA8F20B1188DCBD00414A7D /* OpenDirectory.framework in Frameworks */,
+				ABA8F20C1188DCBD00414A7D /* OpenGL.framework in Frameworks */,
+				ABA8F20D1188DCBD00414A7D /* PreferencePanes.framework in Frameworks */,
+				ABA8F20E1188DCBD00414A7D /* PubSub.framework in Frameworks */,
+				ABA8F20F1188DCBD00414A7D /* QTKit.framework in Frameworks */,
+				ABA8F2101188DCBD00414A7D /* Quartz.framework in Frameworks */,
+				ABA8F2111188DCBD00414A7D /* QuartzCore.framework in Frameworks */,
+				ABA8F2121188DCBD00414A7D /* QuickLook.framework in Frameworks */,
+				ABA8F2131188DCBD00414A7D /* QuickTime.framework in Frameworks */,
+				ABA8F2141188DCBD00414A7D /* ScreenSaver.framework in Frameworks */,
+				ABA8F2151188DCBD00414A7D /* Scripting.framework in Frameworks */,
+				ABA8F2161188DCBD00414A7D /* ScriptingBridge.framework in Frameworks */,
+				ABA8F2171188DCBD00414A7D /* Security.framework in Frameworks */,
+				ABA8F2181188DCBD00414A7D /* SecurityFoundation.framework in Frameworks */,
+				ABA8F2191188DCBD00414A7D /* SecurityInterface.framework in Frameworks */,
+				ABA8F21A1188DCBD00414A7D /* ServerNotification.framework in Frameworks */,
+				ABA8F21B1188DCBD00414A7D /* ServiceManagement.framework in Frameworks */,
+				ABA8F21C1188DCBD00414A7D /* SyncServices.framework in Frameworks */,
+				ABA8F21D1188DCBD00414A7D /* SystemConfiguration.framework in Frameworks */,
+				ABA8F21E1188DCBD00414A7D /* WebKit.framework in Frameworks */,
+				ABA8F21F1188DCBD00414A7D /* Python.framework in Frameworks */,
+				ABA8F2201188DCBD00414A7D /* Python.framework in Frameworks */,
+				ABA8F2211188DCBD00414A7D /* Ruby.framework in Frameworks */,
+				ABA8F2221188DCBD00414A7D /* RubyCocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8E4301188DAED00414A7D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABA8F1291188DB0100414A7D /* Cocoa.framework in Frameworks */,
+				ABA8F12A1188DB0100414A7D /* AppleScriptObjC.framework in Frameworks */,
+				ABA8F12B1188DB0100414A7D /* AGL.framework in Frameworks */,
+				ABA8F12C1188DB0100414A7D /* Accelerate.framework in Frameworks */,
+				ABA8F12D1188DB0100414A7D /* AddressBook.framework in Frameworks */,
+				ABA8F12E1188DB0100414A7D /* AppKitScripting.framework in Frameworks */,
+				ABA8F12F1188DB0100414A7D /* AppleScriptKit.framework in Frameworks */,
+				ABA8F1301188DB0100414A7D /* AppleShareClientCore.framework in Frameworks */,
+				ABA8F1311188DB0100414A7D /* ApplicationServices.framework in Frameworks */,
+				ABA8F1321188DB0100414A7D /* AudioToolbox.framework in Frameworks */,
+				ABA8F1331188DB0100414A7D /* AudioUnit.framework in Frameworks */,
+				ABA8F1341188DB0100414A7D /* Automator.framework in Frameworks */,
+				ABA8F1351188DB0100414A7D /* CalendarStore.framework in Frameworks */,
+				ABA8F1361188DB0100414A7D /* Collaboration.framework in Frameworks */,
+				ABA8F1371188DB0100414A7D /* CoreAudio.framework in Frameworks */,
+				ABA8F1381188DB0100414A7D /* CoreAudioKit.framework in Frameworks */,
+				ABA8F1391188DB0100414A7D /* CoreData.framework in Frameworks */,
+				ABA8F13A1188DB0100414A7D /* CoreFoundation.framework in Frameworks */,
+				ABA8F13B1188DB0100414A7D /* CoreLocation.framework in Frameworks */,
+				ABA8F13C1188DB0100414A7D /* CoreMIDI.framework in Frameworks */,
+				ABA8F13D1188DB0100414A7D /* CoreServices.framework in Frameworks */,
+				ABA8F13E1188DB0100414A7D /* CoreVideo.framework in Frameworks */,
+				ABA8F13F1188DB0100414A7D /* CoreWLAN.framework in Frameworks */,
+				ABA8F1401188DB0100414A7D /* DVComponentGlue.framework in Frameworks */,
+				ABA8F1411188DB0100414A7D /* DVDPlayback.framework in Frameworks */,
+				ABA8F1421188DB0100414A7D /* DirectoryService.framework in Frameworks */,
+				ABA8F1431188DB0100414A7D /* DiscRecording.framework in Frameworks */,
+				ABA8F1441188DB0100414A7D /* DiscRecordingUI.framework in Frameworks */,
+				ABA8F1451188DB0100414A7D /* DiskArbitration.framework in Frameworks */,
+				ABA8F1461188DB0100414A7D /* DrawSprocket.framework in Frameworks */,
+				ABA8F1471188DB0100414A7D /* ExceptionHandling.framework in Frameworks */,
+				ABA8F1481188DB0100414A7D /* FWAUserLib.framework in Frameworks */,
+				ABA8F1491188DB0100414A7D /* ForceFeedback.framework in Frameworks */,
+				ABA8F14A1188DB0100414A7D /* Foundation.framework in Frameworks */,
+				ABA8F14B1188DB0100414A7D /* GLUT.framework in Frameworks */,
+				ABA8F14C1188DB0100414A7D /* IOBluetooth.framework in Frameworks */,
+				ABA8F14D1188DB0100414A7D /* IOBluetoothUI.framework in Frameworks */,
+				ABA8F14E1188DB0100414A7D /* IOKit.framework in Frameworks */,
+				ABA8F14F1188DB0100414A7D /* ImageCaptureCore.framework in Frameworks */,
+				ABA8F1501188DB0100414A7D /* InputMethodKit.framework in Frameworks */,
+				ABA8F1511188DB0100414A7D /* InstantMessage.framework in Frameworks */,
+				ABA8F1521188DB0100414A7D /* Kerberos.framework in Frameworks */,
+				ABA8F1531188DB0100414A7D /* Message.framework in Frameworks */,
+				ABA8F1541188DB0100414A7D /* NetFS.framework in Frameworks */,
+				ABA8F1551188DB0100414A7D /* OpenAL.framework in Frameworks */,
+				ABA8F1561188DB0100414A7D /* OpenCL.framework in Frameworks */,
+				ABA8F1571188DB0100414A7D /* OpenDirectory.framework in Frameworks */,
+				ABA8F1581188DB0100414A7D /* OpenGL.framework in Frameworks */,
+				ABA8F1591188DB0100414A7D /* PreferencePanes.framework in Frameworks */,
+				ABA8F15A1188DB0100414A7D /* PubSub.framework in Frameworks */,
+				ABA8F15B1188DB0100414A7D /* QTKit.framework in Frameworks */,
+				ABA8F15C1188DB0100414A7D /* Quartz.framework in Frameworks */,
+				ABA8F15D1188DB0100414A7D /* QuartzCore.framework in Frameworks */,
+				ABA8F15E1188DB0100414A7D /* QuickLook.framework in Frameworks */,
+				ABA8F15F1188DB0100414A7D /* QuickTime.framework in Frameworks */,
+				ABA8F1601188DB0100414A7D /* ScreenSaver.framework in Frameworks */,
+				ABA8F1611188DB0100414A7D /* Scripting.framework in Frameworks */,
+				ABA8F1621188DB0100414A7D /* ScriptingBridge.framework in Frameworks */,
+				ABA8F1631188DB0100414A7D /* Security.framework in Frameworks */,
+				ABA8F1641188DB0100414A7D /* SecurityFoundation.framework in Frameworks */,
+				ABA8F1651188DB0100414A7D /* SecurityInterface.framework in Frameworks */,
+				ABA8F1661188DB0100414A7D /* ServerNotification.framework in Frameworks */,
+				ABA8F1671188DB0100414A7D /* ServiceManagement.framework in Frameworks */,
+				ABA8F1681188DB0100414A7D /* SyncServices.framework in Frameworks */,
+				ABA8F1691188DB0100414A7D /* SystemConfiguration.framework in Frameworks */,
+				ABA8F16A1188DB0100414A7D /* WebKit.framework in Frameworks */,
+				ABA8F16B1188DB0100414A7D /* Python.framework in Frameworks */,
+				ABA8F16C1188DB0200414A7D /* Python.framework in Frameworks */,
+				ABA8F16D1188DB0200414A7D /* Ruby.framework in Frameworks */,
+				ABA8F16E1188DB0200414A7D /* RubyCocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				ABA8F5911188E0AA00414A7D /* MacRuby Host */,
+				ABA8F5901188E09C00414A7D /* RubyCocoa Host */,
+				ABA8F58F1188E06000414A7D /* AppleScript Cocoa Host */,
+				ABA8F58E1188E04500414A7D /* scratch */,
+				ABA8F58D1188E03200414A7D /* Python Host */,
+				AB36FF4D1188625D00F1E894 /* MGSAppController.h */,
+				AB36FF4E1188625D00F1E894 /* MGSAppController.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+				3BC3FB030ED20C27004AC079 /* AppleScriptObjC.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABA8E4091188D9AC00414A7D /* KosmicTaskAppleScriptHost.app */,
+				ABA8E4161188D9DC00414A7D /* KosmicTaskPythonHost.app */,
+				ABA8E4241188DA2000414A7D /* KosmicTaskRubyCocoaHost.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* cocoa-applescript test */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				AB852C5B117B0D7D0085B76C /* AGL.framework */,
+				AB852C5D117B0D7D0085B76C /* Accelerate.framework */,
+				AB852C5F117B0D7D0085B76C /* AddressBook.framework */,
+				AB852C63117B0D7D0085B76C /* AppKitScripting.framework */,
+				AB852C65117B0D7D0085B76C /* AppleScriptKit.framework */,
+				AB852C69117B0D7D0085B76C /* AppleShareClientCore.framework */,
+				AB852C6B117B0D7D0085B76C /* ApplicationServices.framework */,
+				AB852C6D117B0D7D0085B76C /* AudioToolbox.framework */,
+				AB852C6F117B0D7D0085B76C /* AudioUnit.framework */,
+				AB852C71117B0D7D0085B76C /* Automator.framework */,
+				AB852C73117B0D7D0085B76C /* CalendarStore.framework */,
+				AB852C79117B0D7D0085B76C /* Collaboration.framework */,
+				AB852C7B117B0D7D0085B76C /* CoreAudio.framework */,
+				AB852C7D117B0D7D0085B76C /* CoreAudioKit.framework */,
+				AB852C7F117B0D7D0085B76C /* CoreData.framework */,
+				AB852C81117B0D7D0085B76C /* CoreFoundation.framework */,
+				AB852C83117B0D7D0085B76C /* CoreLocation.framework */,
+				AB852C85117B0D7D0085B76C /* CoreMIDI.framework */,
+				AB852C87117B0D7D0085B76C /* CoreServices.framework */,
+				AB852C89117B0D7D0085B76C /* CoreVideo.framework */,
+				AB852C8B117B0D7D0085B76C /* CoreWLAN.framework */,
+				AB852C8D117B0D7D0085B76C /* DVComponentGlue.framework */,
+				AB852C8F117B0D7D0085B76C /* DVDPlayback.framework */,
+				AB852C91117B0D7D0085B76C /* DirectoryService.framework */,
+				AB852C93117B0D7D0085B76C /* DiscRecording.framework */,
+				AB852C95117B0D7D0085B76C /* DiscRecordingUI.framework */,
+				AB852C97117B0D7D0085B76C /* DiskArbitration.framework */,
+				AB852C99117B0D7D0085B76C /* DrawSprocket.framework */,
+				AB852C9B117B0D7D0085B76C /* ExceptionHandling.framework */,
+				AB852C9D117B0D7D0085B76C /* FWAUserLib.framework */,
+				AB852C9F117B0D7D0085B76C /* ForceFeedback.framework */,
+				AB852CA1117B0D7D0085B76C /* Foundation.framework */,
+				AB852CA3117B0D7D0085B76C /* GLUT.framework */,
+				AB852CA7117B0D7D0085B76C /* IOBluetooth.framework */,
+				AB852CA9117B0D7D0085B76C /* IOBluetoothUI.framework */,
+				AB852CAB117B0D7D0085B76C /* IOKit.framework */,
+				AB852CAF117B0D7D0085B76C /* ImageCaptureCore.framework */,
+				AB852CB1117B0D7D0085B76C /* InputMethodKit.framework */,
+				AB852CB5117B0D7D0085B76C /* InstantMessage.framework */,
+				AB852CBD117B0D7D0085B76C /* Kerberos.framework */,
+				AB852CC3117B0D7E0085B76C /* Message.framework */,
+				AB852CC5117B0D7E0085B76C /* NetFS.framework */,
+				AB852CC9117B0D7E0085B76C /* OpenAL.framework */,
+				AB852CCB117B0D7E0085B76C /* OpenCL.framework */,
+				AB852CCD117B0D7E0085B76C /* OpenDirectory.framework */,
+				AB852CCF117B0D7E0085B76C /* OpenGL.framework */,
+				AB852CD3117B0D7E0085B76C /* PreferencePanes.framework */,
+				AB852CD5117B0D7E0085B76C /* PubSub.framework */,
+				AB852CDB117B0D7E0085B76C /* QTKit.framework */,
+				AB852CDD117B0D7E0085B76C /* Quartz.framework */,
+				AB852CDF117B0D7E0085B76C /* QuartzCore.framework */,
+				AB852CE1117B0D7E0085B76C /* QuickLook.framework */,
+				AB852CE3117B0D7E0085B76C /* QuickTime.framework */,
+				AB852CE9117B0D7E0085B76C /* ScreenSaver.framework */,
+				AB852CEB117B0D7E0085B76C /* Scripting.framework */,
+				AB852CED117B0D7E0085B76C /* ScriptingBridge.framework */,
+				AB852CEF117B0D7E0085B76C /* Security.framework */,
+				AB852CF1117B0D7E0085B76C /* SecurityFoundation.framework */,
+				AB852CF3117B0D7E0085B76C /* SecurityInterface.framework */,
+				AB852CF5117B0D7E0085B76C /* ServerNotification.framework */,
+				AB852CF7117B0D7E0085B76C /* ServiceManagement.framework */,
+				AB852CF9117B0D7E0085B76C /* SyncServices.framework */,
+				AB852CFB117B0D7E0085B76C /* SystemConfiguration.framework */,
+				AB852D03117B0D7E0085B76C /* WebKit.framework */,
+				ABA8E3901188BF6600414A7D /* Python.framework */,
+				ABA8E3921188BF6600414A7D /* Python.framework */,
+				ABA8E3961188BF8200414A7D /* Ruby.framework */,
+				ABA8E3981188BF8200414A7D /* RubyCocoa.framework */,
+				ABA8E40B1188D9AC00414A7D /* KosmicTaskAppleScriptHost-Info.plist */,
+				ABA8E4181188D9DC00414A7D /* KosmicTaskPythonHost-Info.plist */,
+				ABA8E4261188DA2000414A7D /* KosmicTaskRubyCocoaHost-Info.plist */,
+			);
+			name = "cocoa-applescript test";
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* cocoa_applescript_test_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+				ABA8E3F01188D79300414A7D /* AppleScript_main.m */,
+				ABA8E3F21188D7C800414A7D /* RubyCocoa_main.m */,
+				ABA8E3F51188D7E800414A7D /* Python_main.m */,
+				ABA8E3F61188D80400414A7D /* MacRuby_main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* cocoa_applescript_test-Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ABA8F58D1188E03200414A7D /* Python Host */ = {
+			isa = PBXGroup;
+			children = (
+				ABA8E3A01188C05300414A7D /* STEPluginManager.h */,
+				ABA8E3A11188C05300414A7D /* STEPluginManager.m */,
+				ABA8E3A21188C05300414A7D /* STEPluginExecutor.py */,
+			);
+			name = "Python Host";
+			sourceTree = "<group>";
+		};
+		ABA8F58E1188E04500414A7D /* scratch */ = {
+			isa = PBXGroup;
+			children = (
+				3B92A9F80F6ED2CB0023785B /* cocoa_applescript_testAppDelegate.applescript */,
+			);
+			name = scratch;
+			sourceTree = "<group>";
+		};
+		ABA8F58F1188E06000414A7D /* AppleScript Cocoa Host */ = {
+			isa = PBXGroup;
+			children = (
+				ABD27BDB117A4E4A00C7337A /* untitled.applescript */,
+			);
+			name = "AppleScript Cocoa Host";
+			sourceTree = "<group>";
+		};
+		ABA8F5901188E09C00414A7D /* RubyCocoa Host */ = {
+			isa = PBXGroup;
+			children = (
+				ABA8E3CF1188D12200414A7D /* rubycocoa_main.rb */,
+			);
+			name = "RubyCocoa Host";
+			sourceTree = "<group>";
+		};
+		ABA8F5911188E0AA00414A7D /* MacRuby Host */ = {
+			isa = PBXGroup;
+			children = (
+				ABA8E3D11188D1D800414A7D /* macruby_main.rb */,
+			);
+			name = "MacRuby Host";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ABA8E4081188D9AC00414A7D /* KosmicTaskAppleScriptHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABA8E40E1188D9AE00414A7D /* Build configuration list for PBXNativeTarget "KosmicTaskAppleScriptHost" */;
+			buildPhases = (
+				ABA8E4051188D9AC00414A7D /* Resources */,
+				ABA8E4061188D9AC00414A7D /* Sources */,
+				ABA8E4301188DAED00414A7D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KosmicTaskAppleScriptHost;
+			productName = KosmicTaskAppleScriptHost;
+			productReference = ABA8E4091188D9AC00414A7D /* KosmicTaskAppleScriptHost.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ABA8E4151188D9DC00414A7D /* KosmicTaskPythonHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABA8E41B1188D9DE00414A7D /* Build configuration list for PBXNativeTarget "KosmicTaskPythonHost" */;
+			buildPhases = (
+				ABA8E4121188D9DC00414A7D /* Resources */,
+				ABA8E4131188D9DC00414A7D /* Sources */,
+				ABA8E4141188D9DC00414A7D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KosmicTaskPythonHost;
+			productName = KosmicTaskPythonHost;
+			productReference = ABA8E4161188D9DC00414A7D /* KosmicTaskPythonHost.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ABA8E4231188DA2000414A7D /* KosmicTaskRubyCocoaHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABA8E4291188DA2200414A7D /* Build configuration list for PBXNativeTarget "KosmicTaskRubyCocoaHost" */;
+			buildPhases = (
+				ABA8E4201188DA2000414A7D /* Resources */,
+				ABA8E4211188DA2000414A7D /* Sources */,
+				ABA8E4221188DA2000414A7D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KosmicTaskRubyCocoaHost;
+			productName = KosmicTaskRubyCocoaHost;
+			productReference = ABA8E4241188DA2000414A7D /* KosmicTaskRubyCocoaHost.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "KosmicTaskHost" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* cocoa-applescript test */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ABA8E4081188D9AC00414A7D /* KosmicTaskAppleScriptHost */,
+				ABA8E4151188D9DC00414A7D /* KosmicTaskPythonHost */,
+				ABA8E4231188DA2000414A7D /* KosmicTaskRubyCocoaHost */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ABA8E4051188D9AC00414A7D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABA8F16F1188DB3E00414A7D /* InfoPlist.strings in Resources */,
+				ABA8E42D1188DA6F00414A7D /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8E4121188D9DC00414A7D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABA8F1711188DB9100414A7D /* InfoPlist.strings in Resources */,
+				ABA8F1721188DB9100414A7D /* MainMenu.xib in Resources */,
+				ABA8F22D1188DD5400414A7D /* STEPluginExecutor.py in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8E4201188DA2000414A7D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABA8F1751188DC4E00414A7D /* InfoPlist.strings in Resources */,
+				ABA8F1761188DC4E00414A7D /* MainMenu.xib in Resources */,
+				ABA8F2321188DE1200414A7D /* rubycocoa_main.rb in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ABA8E4061188D9AC00414A7D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABA8F1701188DB6F00414A7D /* AppleScript_main.m in Sources */,
+				ABA8E42E1188DAA900414A7D /* MGSAppController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8E4131188D9DC00414A7D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABA8F1741188DBE200414A7D /* Python_main.m in Sources */,
+				ABA8F1731188DBD300414A7D /* MGSAppController.m in Sources */,
+				ABA8F22C1188DD4B00414A7D /* STEPluginManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABA8E4211188DA2000414A7D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABA8F1771188DC5300414A7D /* MGSAppController.m in Sources */,
+				ABA8F1781188DC7200414A7D /* RubyCocoa_main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD58150DA1D0A300B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ABA8E40C1188D9AD00414A7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "KosmicTaskAppleScriptHost-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KosmicTaskAppleScriptHost;
+			};
+			name = Debug;
+		};
+		ABA8E40D1188D9AD00414A7D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "KosmicTaskAppleScriptHost-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KosmicTaskAppleScriptHost;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		ABA8E4191188D9DE00414A7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "KosmicTaskPythonHost-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KosmicTaskPythonHost;
+			};
+			name = Debug;
+		};
+		ABA8E41A1188D9DE00414A7D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "KosmicTaskPythonHost-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KosmicTaskPythonHost;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		ABA8E4271188DA2100414A7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "KosmicTaskRubyCocoaHost-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KosmicTaskRubyCocoaHost;
+			};
+			name = Debug;
+		};
+		ABA8E4281188DA2100414A7D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "KosmicTaskRubyCocoaHost-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KosmicTaskRubyCocoaHost;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ABA8E40E1188D9AE00414A7D /* Build configuration list for PBXNativeTarget "KosmicTaskAppleScriptHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABA8E40C1188D9AD00414A7D /* Debug */,
+				ABA8E40D1188D9AD00414A7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABA8E41B1188D9DE00414A7D /* Build configuration list for PBXNativeTarget "KosmicTaskPythonHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABA8E4191188D9DE00414A7D /* Debug */,
+				ABA8E41A1188D9DE00414A7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABA8E4291188DA2200414A7D /* Build configuration list for PBXNativeTarget "KosmicTaskRubyCocoaHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABA8E4271188DA2100414A7D /* Debug */,
+				ABA8E4281188DA2100414A7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "KosmicTaskHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

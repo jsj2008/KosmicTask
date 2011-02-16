@@ -1,0 +1,102 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf290
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 Times-Roman;\f2\fmodern\fcharset0 Courier;
+\f3\fmodern\fcharset0 Courier-Oblique;\f4\fmodern\fcharset0 Courier-Bold;}
+{\colortbl;\red255\green255\blue255;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww18800\viewh15620\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 see http://world.std.com/~swmcd/steven/perl/module_mechanics.html#TOC24.5\
+\
+basically we build the module as normal\
+install into a named rather than system folder\
+copy theatre folder into our bundle\
+use the PERL5LIB env variable to point to the module\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f1\fs32 \cf0 To build a Perl module, you issue four commands from the module directory:
+\f2\fs26 \
+  	perl Makefile.PL\
+  	make\
+  	make test\
+  	make install\
+\
+\pard\pardeftab720\sa380\ql\qnatural
+
+\f1\b\fs48 \cf0 Installing in non-standard places\
+\pard\pardeftab720\ql\qnatural
+
+\b0\fs32 \cf0 On many systems, 
+\f2\fs26 /usr/local/lib/perl5/site_perl
+\f1\fs32  is owned by root with 0755 permissions. This means that you must 
+\f2\fs26 su
+\f1\fs32  to root in order to install a module there. If you lack root on your system, you can\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	\'95	}ask your system administrator to install the module for you\
+{\listtext	\'95	}install the module somewhere else\
+\pard\pardeftab720\sa360\ql\qnatural
+
+\b\fs38 \cf0 Somewhere else\
+\pard\pardeftab720\ql\qnatural
+
+\b0\fs32 \cf0 Here's how to install a Perl module in a non-standard place.\
+First, select a directory to hold your Perl modules and scripts. It doesn't strictly matter where the directory is located, but it must be somewhere that\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls2\ilvl0\cf0 {\listtext	\'95	}you have write access\
+{\listtext	\'95	}won't go away\
+\pard\pardeftab720\ql\qnatural
+\cf0 Your home directory is probably a good choice; 
+\f2\fs26 /usr/tmp
+\f1\fs32  is probably not. We'll write
+\f2\fs26 \
+        /home/
+\f3\i uid
+\f2\i0 \
+  \
+
+\f1\fs32 for your home directory.\
+Then go back to the development directory and type\
+
+\f2\fs26         .../development/Foo-Bar>perl Makefile.PL INSTALL_BASE=/home/
+\f3\i uid
+\f2\i0 \
+        .../development/Foo-Bar>make install\
+  \
+
+\f1\fs32 This will build the module and install it under your private directory, as follows:
+\f2\fs26 \
+        /home/
+\f3\i uid
+\f2\i0 /lib/perl5/     # modules\
+        /home/
+\f3\i uid
+\f2\i0 /bin/           # scripts\
+        /home/
+\f3\i uid
+\f2\i0 /man/           # man pages\
+  \
+\pard\pardeftab720\sa360\ql\qnatural
+
+\f4\b\fs30 \cf0 PERL5LIB
+\f1\fs38 \
+\pard\pardeftab720\ql\qnatural
+
+\b0\fs32 \cf0 Perl doesn't know to look for modules in your private directory; you have to tell it. There are several ways to do this. Perhaps the most appropriate in this context is to set the 
+\f2\fs26 PERL5LIB
+\f1\fs32  environment variable. In Bourne shells, run
+\f2\fs26 \
+        export PERL5LIB=/home/
+\f3\i uid
+\f2\i0 /lib/perl5\
+  \
+
+\f1\fs32 and Perl will add your directory to the front of 
+\f2\fs26 @INC
+\f1\fs32 .
+\f0\fs24 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\cf0 \
+}

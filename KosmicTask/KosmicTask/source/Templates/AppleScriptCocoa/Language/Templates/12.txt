@@ -1,0 +1,44 @@
+--
+-- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+--
+-- Credits:
+--
+-- Notes: 
+--
+
+-- Cocoa classes
+property NSArray : class "NSArray"
+
+-- KosmicTask controller
+property taskController : class "KosmicTaskController"
+
+script KosmicTask
+	property parent : class "NSObject"
+	
+	-- script properties
+	property myResult : missing value 
+	
+	(*
+	 
+	task entry point
+	
+	*)
+	on KosmicTask()
+		
+		try
+			
+			-- create an NSArray instance
+			set myResult to NSArray's arrayWithObjects_("item 1", "item 2", missing value)
+			
+			-- myResult is complete, task will end
+			return {kosmicData:myResult}
+			
+		on error errorMessage number errorNumber
+
+			return {kosmicError:errorMessage}
+
+		end try
+
+	end KosmicTask
+		
+end script

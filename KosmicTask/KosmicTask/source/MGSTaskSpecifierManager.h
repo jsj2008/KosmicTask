@@ -1,0 +1,44 @@
+//
+//  MGSTaskSpecifierManager.h
+//  Mother
+//
+//  Created by Jonathan on 18/01/2008.
+//  Copyright 2008 Mugginsoft. All rights reserved.
+//
+
+#import <Cocoa/Cocoa.h>
+
+@class MGSTaskSpecifierManager;
+@class MGSNetClient;
+@class MGSTaskSpecifier;
+@class MGSResult;
+
+@protocol MGSTaskSpecifierManager
+@optional
+- (void)actionSpecifierAdded:(id)action;
+- (void)actionSpecifierWillBeAdded;
+@end
+
+
+// let NSObjectController take the strain
+@interface MGSTaskSpecifierManager : NSArrayController {
+	MGSTaskSpecifierManager *_history;	// action history
+	BOOL _keepHistory;	// keep a history for this object
+	BOOL _isHistory;	// this object is a history
+	NSInteger _maxHistoryCount;
+	id _delegate;
+}
+
+@property BOOL keepHistory;
+
++ (id)sharedController;
+- (id) initAsHistory;
+- (BOOL)saveToPath:(NSString *)path;
+- (BOOL)loadFromPath:(NSString *)path;
+- (NSString *)historyPath;
+- (void)addCompletedActionCopy:(MGSTaskSpecifier *)anAction withResult:(MGSResult *)result;
+- (void)removeAllObjects;
+
+@property (readonly) MGSTaskSpecifierManager *history;
+@property id delegate;
+@end

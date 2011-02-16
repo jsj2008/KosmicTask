@@ -1,0 +1,57 @@
+--
+-- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+--
+-- Credits:
+--
+-- Notes: 
+--
+
+-- Cocoa classes
+property NSArray : class "NSArray"
+property NSMutableDictionary : class "NSMutableDictionary"
+
+-- KosmicTask controller
+property taskController : class "KosmicTaskController"
+
+script KosmicTask
+	property parent : class "NSObject"
+	
+	-- script properties
+	property myResult : missing value 
+	
+	(*
+	 
+	task entry point
+	
+	*)
+	on KosmicTask()
+		
+		try
+			
+			-- create an NSArray instance
+			set myArray to NSArray's arrayWithObjects_("item 1", "item 2", missing value)
+
+			-- create our CSS styling string
+			set myStyling to "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
+
+			-- create our result dictionary
+			set myResult to NSMutableDictionary's new()
+		
+			-- add array and key
+			myResult's setObject_forKey_(myArray, "kosmicData")
+
+			-- add styling string and key
+			myResult's setObject_forKey_(myStyling, "kosmicStyle")
+			
+			-- myResult is complete, task will end
+			return {kosmicData:myResult}
+			
+		on error errorMessage number errorNumber
+
+			return {kosmicError:errorMessage}
+
+		end try
+
+	end KosmicTask
+		
+end script

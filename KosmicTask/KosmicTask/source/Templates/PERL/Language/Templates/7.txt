@@ -1,0 +1,25 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $numArgs = $#ARGV + 1;
+#
+# task arguments are accessed as:
+# $ARGV[0] .. $ARGV[$numArgs]
+# 
+
+use warnings;
+
+# capture screen image to file
+# files created in the current directory will be deleted when the task ends
+$FILE="capture.png";
+
+# capture screen
+`screencapture -t png $FILE`;
+
+# return a YAML inline format dictionary with filename
+print "--- {kosmicFile: $FILE, kosmicInfo: file returned}";

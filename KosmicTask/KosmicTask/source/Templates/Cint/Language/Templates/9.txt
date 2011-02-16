@@ -1,0 +1,40 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits: 
+
+Notes:
+
+*/
+#include <iostream>
+#include <string>
+#include <strstream>
+
+using namespace std;
+
+class KosmicTask {  
+	public:           
+  	
+  	KosmicTask() { 
+  		
+  		// items
+  		string item1("item 1");
+		string item2("item 2");
+		
+		// keys
+  		string key1("key 1");
+		string key2("key 2");
+		
+		// return a YAML inline format dictionary
+		printf("--- {%s: %s, %s: %s}", key1.c_str(), item1.c_str(), key2.c_str(), item2.c_str());
+  	}   
+
+};
+ 
+int main(int argc, char *argv[]) 
+{
+	KosmicTask kosmic;
+}

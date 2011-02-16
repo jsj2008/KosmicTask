@@ -1,0 +1,22 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+function kosmicTask() 
+{
+	// JavaScript cannot access the file system but we may return a file
+	// if it already exists.
+	file = "'~/somefile.txt'";
+	
+	// return an inline dictionary
+	result = "--- {kosmicFile: " + file + " , kosmicInfo: File returned}";
+	
+	return result;
+}

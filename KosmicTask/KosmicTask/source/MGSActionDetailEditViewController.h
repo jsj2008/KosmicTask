@@ -1,0 +1,66 @@
+//
+//  MGSActionDetailEditViewController.h
+//  Mother
+//
+//  Created by Jonathan on 03/03/2008.
+//  Copyright 2008 Mugginsoft. All rights reserved.
+//
+
+#import <Cocoa/Cocoa.h>
+@class MGSTaskSpecifier;
+
+
+@interface MGSActionDetailEditViewController : NSViewController {
+	IBOutlet NSView *infoView;
+	IBOutlet NSView *actionDetailView;
+	IBOutlet NSScrollView *scrollView;
+	IBOutlet NSPopUpButton *scriptType;
+	IBOutlet NSTextField *name;
+	IBOutlet NSComboBox *group;
+	IBOutlet NSButton *published;
+	IBOutlet NSTextField *description;
+	IBOutlet NSTextView *longDescription;
+	IBOutlet NSTextField *author;
+	IBOutlet NSTextField *authorNote;
+	IBOutlet NSDatePicker *created;
+	IBOutlet NSDatePicker *modified;
+	IBOutlet NSButton *modifiedAuto;
+
+	IBOutlet NSTextField *definitionCapsule;
+	IBOutlet NSTextField *descriptionCapsule;
+	IBOutlet NSTextField *optionsCapsule;
+	IBOutlet NSTextField *infoCapsule;
+	
+	// version number
+	IBOutlet NSTextField *versionMajorText;
+	IBOutlet NSStepper *versionMajorStepper;
+	IBOutlet NSTextField *versionMinorText;
+	IBOutlet NSStepper *versionMinorStepper;
+	IBOutlet NSTextField *versionRevisionText;
+	IBOutlet NSStepper *versionRevisionStepper;
+	IBOutlet NSButton *versionRevisionAuto;
+	
+	// options
+	IBOutlet NSStepper *timeoutStepper;
+	IBOutlet NSTextField *timeout;
+	IBOutlet NSButton *useTimeoutButton;
+	BOOL _useTimeout;
+	IBOutlet NSPopUpButton *userInteractionMode;
+	
+	MGSTaskSpecifier *_action;
+}
+
+- (void)setAction:(MGSTaskSpecifier *)anAction;
+
+- (IBAction)toggleFontPanel:(id)sender;
+- (IBAction)toggleColorPanel:(id)sender;
+- (IBAction)refreshCreatedDate:(id)sender;
+- (IBAction)refreshModifiedDate:(id)sender;
+- (IBAction)defaultScriptType:(id)sender;
+
+@property MGSTaskSpecifier *action;
+@property NSTextField *nameTextField;
+@property BOOL useTimeout;
+@property (readonly) NSView *infoView;
+
+@end

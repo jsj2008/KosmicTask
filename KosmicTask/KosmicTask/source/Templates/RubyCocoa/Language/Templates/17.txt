@@ -1,0 +1,60 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# RubyCocoa documentation
+# http://rubycocoa.sourceforge.net/Documentation
+#
+# Tips and tools
+# http://www.rubyinside.com/the-ultimate-list-of-rubycocoa-tutorials-tips-and-tools-728.html
+#
+require 'osx/cocoa'
+
+# KosmicTask controller
+$taskController = OSX.NSClassFromString("KosmicTaskController")
+
+def kosmictask()
+
+	# paths array
+	paths = Array.new()
+	
+	for i in (1..5)
+		# create path to temp result file from taskController.
+		# this file will be automatically deleted when the task ends.
+		#
+		# an alternative would be:
+		# f = Tempfile.new('kosmictask')
+    	# f.close
+    	# path = f.path + ".png"
+    	#
+    	path = $taskController.resultFileWithName_("capture.png");
+    
+   		# capture sceen shot to file
+    	system "screencapture -t png " + path
+    
+    	# push path onto end of our array
+    	paths.push(path)
+    	
+    	sleep 1.0
+    end
+    
+	# create our result hash
+	result = Hash.new()
+	
+	# add keyed array of file paths
+	result["kosmicFile"] = paths;
+
+	# add keyed info
+	result["kosmicInfo"] = "file returned"
+		
+	return result
+end
+		

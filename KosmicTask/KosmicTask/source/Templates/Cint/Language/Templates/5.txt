@@ -1,0 +1,31 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits: 
+
+Notes:
+
+*/
+#include <iostream.h>
+
+class KosmicTask {  
+	public:           
+  	
+  	KosmicTask(int argc, char *argv[]) { 
+
+    	cout << "argument count is" << argc - 1 << endl;
+    
+   	 	for (int x = 0; x < argc - 1; x++) {
+        	cout << argv[x] << endl;
+    	}  	
+    }   
+
+};
+ 
+int main(int argc, char *argv[]) 
+{
+	KosmicTask kosmic(argc, argv);
+}

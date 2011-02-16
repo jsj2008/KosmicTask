@@ -1,0 +1,13 @@
+//
+//  beta-expiring.xcconfig
+//  KosmicQuitter
+//
+//  Created by Jonathan on 21/01/2009.
+//  Copyright 2009 mugginsoft.com. All rights reserved.
+//
+	
+// macros
+GCC_PREPROCESSOR_DEFINITIONS = EXPIREAFTERDAYS=42 MUGGINSOFT_BETA=1
+DEPLOYMENT_POSTPROCESSING = YES
+DEBUG_INFORMATION_FORMAT = dwarf
+STRIP_INSTALLED_PRODUCT = NO

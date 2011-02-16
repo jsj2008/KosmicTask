@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<schema version="1.0" xmlns="http://www.apple.com/metadata"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://www.apple.com/metadata file:///System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Resources/MetadataSchema.xsd">
+    <attributes>
+		<attribute name="com_mugginsoft_kosmictask_script" multivalued="false" type="CFString"/>
+	</attributes>
+      <types>
+        <type name="com.mugginsoft.kosmictask.document">  
+            <allattrs> 
+				com_mugginsoft_kosmictask_script
+				kMDItemTextContent
+				kMDItemTitle
+				kMDItemKeywords
+				kMDItemAuthors
+				kMDItemDescription
+            </allattrs>
+            <displayattrs>
+				kMDItemTitle
+				kMDItemKeywords
+				kMDItemDescription
+            </displayattrs>
+        </type>
+	</types>
+</schema>
+

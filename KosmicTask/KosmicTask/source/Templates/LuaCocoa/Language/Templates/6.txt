@@ -1,0 +1,41 @@
+--[[
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+]]
+
+-- create class definitition
+personClass = LuaCocoa.CreateClass("Person", NSObject)
+
+-- method: initWithFirstName_lastName_ 
+personClass["initWithFirstName_lastName_"] = 
+{
+	function(self, firstName, lastName)
+		-- assign firstName, lastName as ivars
+		self.__ivars.firstName = firstName
+		self.__ivars.lastName = lastName
+		return self
+	end,
+	"-@@:@@" -- [+/-][return type][id - self?][: method][method arg encodings]...
+
+}
+
+-- method description: 
+personClass["description"] = 
+{
+	function(self)
+		return "I am " .. self.__ivars.firstName .. " " .. self.__ivars.lastName
+	end,
+	"-@@:" -- for type encoding see http://developer.apple.com/library/ios/#documentation/cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
+}
+
+function kosmicTask()
+	local person = personClass:alloc():initWithFirstName_lastName_("Kosmic", "Stuff")
+	return person:description()
+end

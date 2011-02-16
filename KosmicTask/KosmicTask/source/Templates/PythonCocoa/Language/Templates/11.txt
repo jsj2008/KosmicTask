@@ -1,0 +1,21 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Python Apple Event automation using py appscript
+#
+# Links:
+#
+#
+import ScriptingBridge
+
+def kosmictask():
+		
+	# get application - for more information see the Python Usage document
+	app = ScriptingBridge.SBApplication.applicationWithBundleIdentifier_("com.apple.finder")
+
+	# query application
+	return app.name()

@@ -1,0 +1,45 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits: 
+
+Notes:
+
+*/
+#include <iostream>
+#include <string>
+#include <strstream>
+
+using namespace std;
+
+class KosmicTask {  
+	public:           
+  	
+  	KosmicTask() { 
+  		
+  		// string seprarators
+  		string start("'");
+  		string mid("' , '");
+  		string end("'");
+  		
+  		// items
+  		string item1("item 1");
+		string item2("item 2");
+		
+		// form array format result
+		ostringstream result;
+		result << "[" << item1 << ", " << item2 << "]";
+		
+		// return a YAML inline format array
+  		cout << "--- " << result.str(); 
+  	}   
+
+};
+ 
+int main(int argc, char *argv[]) 
+{
+	KosmicTask kosmic;
+}

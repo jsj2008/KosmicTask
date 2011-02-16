@@ -1,0 +1,29 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+#include <stdio.h>
+
+int main() 
+{
+	// capture screen image to file
+	// files created in the current directory will be deleted when the task ends
+	char *file = "capture.png";
+	char command[100];
+	sprintf(command, "screencapture -t png %s", file);
+	
+	// execute command
+	system(command);
+	
+	// return a YAML inline format dictionary
+	printf("--- {kosmicFile: %s, kosmicInfo: file returned}", file);
+	
+    return 0;
+}

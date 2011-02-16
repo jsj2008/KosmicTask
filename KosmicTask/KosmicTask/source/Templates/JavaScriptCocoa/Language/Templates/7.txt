@@ -1,0 +1,28 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+function kosmicTask() 
+{
+	
+ 	// form our image file result path
+ 	// this file will be automatically deleted when the task ends.
+	var path = KosmicTaskController.resultFileWithName('capture.png');
+	
+	// capture screen shot to file
+	var task = NSTask.launchedTaskWithLaunchPath_arguments('/usr/sbin/screenCapture', ['-t', 'png', path]);
+	task.waitUntilExit;
+
+	// form result dictionary 
+	var result = {kosmicFile: path};
+			
+	return result
+
+}

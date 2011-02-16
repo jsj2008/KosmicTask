@@ -1,0 +1,39 @@
+--
+-- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+--
+-- Credits:
+--
+-- Notes:  
+--
+
+(*
+ 
+kosmicTask
+
+*)
+on KosmicTask()
+	
+	try
+		
+		-- get a result file object from KosmicTask.
+		-- the file will be automatically deleted when the task ends.
+		tell application "KosmicTask"
+			set resultFile to result file with name "capture.png"
+		end tell
+		
+		-- the shell script below will expect a POSIX path
+		set picPosixPath to POSIX path of file resultFile
+		
+		-- do screen capture via shell
+		do shell script "screencapture -t png " & quoted form of picPosixPath
+		
+		-- feedback
+		return {kosmicFile:resultFile, kosmicInfo:"file returned"}
+		
+	on error errorMessage number errorNumber
+		
+		return {kosmicError:errorMessage}
+		
+	end try
+	
+end KosmicTask

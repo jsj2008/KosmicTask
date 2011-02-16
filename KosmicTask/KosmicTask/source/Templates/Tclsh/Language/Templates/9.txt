@@ -1,0 +1,26 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $argc
+#
+# task arguments are accessed as:
+# [lindex $argv 0] .. [lindex $argv [expr $argc - 1]]
+# 
+
+package require KosmicTaskController
+
+# build list of planets
+set planets [list "Mercury" "Venus" "Earth"]
+lappend planets "Mars"
+lappend planets "Jupiter"
+lappend planets "Saturn"
+lappend planets "Uranus"
+lappend planets "Neptune"
+
+# print native object as YAML
+::KosmicTaskController::printObject $planets

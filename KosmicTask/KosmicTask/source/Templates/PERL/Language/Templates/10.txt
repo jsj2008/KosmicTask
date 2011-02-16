@@ -1,0 +1,62 @@
+#
+# Created by {{ author }} on {% now | date_format => "dd MMM yyyy HH =>mm =>ss" %}
+#
+# Credits =>
+#
+# Notes => 
+#
+# the number of task arguments is =>
+# $numArgs = $#ARGV + 1;
+#
+# task arguments are accessed as =>
+# $ARGV[0] .. $ARGV[$numArgs]
+# 
+use warnings;
+
+use KosmicTaskController;
+
+# Mercury
+$satellites = ["none"];
+$Mercury  = {name => "Mercury", radius => 2440, satellites => $satellites};
+
+# Venus
+$satellites = ["none"];
+$Venus  = {name => "Venus", radius => 6052, satellites => $satellites};
+
+# Earth
+$satellites = ["moon"];
+$Earth  = {name => "Earth", radius => 6371, satellites => $satellites};	
+
+# Mars
+$satellites = ["Phobos", "Deimos"];
+$Mars  = {name => "Mars", radius => 3396, satellites => $satellites};
+
+# Jupiter
+$satellites = ["Io", "Europa", "Ganymede", "Callisto", "(+59 smaller non Galiliean moons)"];
+$Jupiter  = {name => "Jupiter", radius => 71492, satellites => $satellites};	
+	
+# Saturn
+$satellites = ["Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iaptus", "(+55 smaller moons)"];
+$Saturn  = {name => "Saturn", radius => 60268, satellites => $satellites};	
+
+# Uranus
+$satellites = ["Miranda", "Ariel", "Umbriel", "Titania", "Oberon", " (+22 smaller moons)"];
+$Uranus  = {name => "Uranus", radius => 25559, satellites => $satellites};	
+
+# Neptune
+$satellites = ["Triton", "Nereid", "Naiad", "Thalassa", "Despina", "Galatea", "Larissa", "Proteus", "Halimede", "Psamathe", "Sao", "Laomedeia", "Neso"];
+$Neptune  = {name => "Neptune", radius => 24764, satellites => $satellites};	
+	
+# define planets array
+@planets = ();
+push(@planets, $Mercury);
+push(@planets, $Venus);
+push(@planets, $Earth);
+push(@planets, $Mars);
+push(@planets, $Jupiter);
+push(@planets, $Saturn);
+push(@planets, $Uranus);
+push(@planets, $Neptune);
+
+# print native object as YAML
+KosmicTaskController->printObject(\@planets);

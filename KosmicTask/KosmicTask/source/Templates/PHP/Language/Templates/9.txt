@@ -1,0 +1,30 @@
+<?php
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $numArgs = $_SERVER['argc'] - 1;
+#
+# task arguments are accessed as:
+# $_SERVER['argv'][1] .. $_SERVER['argv'][$numArgs]
+#
+
+require_once "KosmicTaskController.php";
+
+# build array
+$planets[] = "Mercury";
+$planets[] = "Venus";
+$planets[] = "Earth";
+$planets[] = "Mars";
+$planets[] = "Jupiter";
+$planets[] = "Saturn";
+$planets[] = "Uranus";
+$planets[] = "Neptune";
+
+# print native object as YAML
+KosmicTaskController::printObject($planets);
+

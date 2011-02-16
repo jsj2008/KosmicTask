@@ -1,0 +1,263 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf290
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;\f2\fswiss\fcharset0 ArialMT;
+}
+{\colortbl;\red255\green255\blue255;\red102\green102\blue102;\red0\green0\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\b\fs36 \cf2 Mugginsoft\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0\fs24 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b\fs28 \cf0 Usage\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+F-script is F-Script is an open-source scripting layer dedicated to Cocoa.\
+\
+F-script provides one of the most direct and intuitive methods of scripting the Cocoa framework.
+\b \
+\
+\
+\
+Calling the Task Run Function\
+\
+
+\b0 The KosmicTask F-script implementation does not provide a means of calling a named entry point function.\
+ \
+When an F-Script powered task is run the top level code block is evaluated and any task parameters are passed into it. The task ends when the top level code block is exited.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f1\fs22 \cf3 [:a :b |\
+	\
+	" concatenate our parameters "\
+	result := 'task parameters are ' ++ a ++ ' and ' ++ b.\
+	\
+	" return our result "\
+	result.\
+]
+\f0\fs28 \cf0 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f2 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Result Objects\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 F-Script powered tasks can return native objects such as arrays and dictionaries as task results. F-Script provides a distinct syntax for specifying literal arrays and dictionaries.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f1\fs22 \cf3 [	\
+	" form our array "\
+	result := \{'item 1', 'item 2'\}.\
+	\
+	result.\
+]
+\f0\fs28 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 The task result object returned to the client is the value obtained from evaluating the last statement in the top level code block. Thus, in the above example, an array is returned as it is the value that results from evaluating the 
+\f1\fs22 \cf3 result
+\f0\fs28 \cf0  variable.
+\b \
+\
+\
+\
+Result File Handling\
+
+\b0 \
+KosmicTask supports the returning of file contents within task results. \
+\
+KosmicTask automatically looks for a 
+\f1\fs22 \cf3 kosmicFile
+\f0\fs28 \cf0  record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.\
+\
+For F-Script Cocoa powered tasks files are returned as results using the following syntax:\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f1\fs22 \cf3 return \{kosmicFile:posixFilePath\}
+\f0\fs28 \cf0 \
+\
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.\
+\
+F-Script powered tasks can create temporary files by calling the KosmicTaskController 
+\f1\fs22 \cf3 resultFileWithName:
+\f0\fs28 \cf0  method.\
+\
+
+\f1\fs22 \cf3 [\
+	" get our kosmicTaskController "\
+	taskController := KosmicTaskController.\
+ 	\
+ 	" form our image file result path"\
+ 	" this file will be automatically deleted when the task ends."\
+	path := taskController resultFileWithName: 'capture.png'.\
+	\
+	" capture screen shot to file "\
+	task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/screenCapture' arguments:\{'-t', 'png', path\}.\
+	task waitUntilExit.\
+\
+	" form result dictionary "\
+	result := #\{'kosmicFile' -> path\}.\
+			\
+	result.\
+] 
+\f0\fs28 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\ql\qnatural\pardirnatural
+
+\f1\fs22 \cf3 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\b\fs28 \cf0 \
+\
+NSObject Subclassing
+\f2\b0 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0\b \cf0 \
+
+\b0 F-Script provides a distinct syntax for defining new Cocoa derived classes.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f1\fs22 \cf3 [	\
+	" define the person class"\
+	Person : NSObject\
+	\{\
+		" define instance variables "\
+   		firstName lastName\
+ \
+ 		" init method "\
+   		- initWithFirstName:first lastName:last\
+   		\{\
+      		self := super init.\
+      		self ~~ nil ifTrue:\
+      		[\
+         		firstName := first.\
+         		lastName := last\
+      		].\
+      		\
+      		" return self "\
+      		^ self\
+   		\}\
+\
+		" description method "\
+   		- description\
+   		\{\
+      		^ 'I am ' ++ firstName ++ ' ' ++ lastName.\
+   		\}\
+	\}.\
+\
+	" create new class instance "\
+	me := Person alloc initWithFirstName:'Kosmic' lastName:'Stuff'.\
+\
+	" we can return a class instance and KosmicTask will coerce it using - description"\
+	me.\
+		\
+]\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Runloop Management\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 When an F-Script Cocoa task is run the script runner is transformed into a fully fledged application complete with a run loop (an instance of NSRunLoop). This enables the task to utilise all the features of the Cocoa framework, many of which depend upon the existence of a run loop in order to perform correctly. \
+\
+In order for the task to continue executing once its top level code block has exited it is necessary to tell the task controller object (KosmicTaskController ) to keep the task alive . KosmicTaskController is a predefined static class that can be simply accessed by name within the task script.\
+\
+To keep the task running call the KosmicTaskController 
+\f1\fs22 \cf3 keepTaskRunning
+\f0\fs28 \cf0  method. The task will then continue to process input events on its runloop until the KosmicTaskController 
+\f1\fs22 \cf3 stopTask:
+\f0\fs28 \cf0  method is called. The task will then end and return its result to the client.
+\b \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f1\b0\fs22 \cf3 [\
+	" define our class"\
+	KosmicTask : NSObject\
+	\{ 	\
+		" instance variables "\
+		timer\
+		\
+   		" task entry point "\
+   		- start\
+   		\{\
+       		" schedule the timer "\
+       		" note that the target is a block and the selector is a block in compact form "\
+       		" #value is equivalent to [:a | a value] "\
+			timer := NSTimer scheduledTimerWithTimeInterval: 2 target:[self timerFired:timer] selector: #value  userInfo: nil repeats: false.\
+						\
+			" use kosmicTaskController to keep our task alive"\
+			KosmicTaskController keepTaskRunning.\
+   		\}\
+   		\
+   		" timer fired "\
+   		- (void)timerFired:(NSTimer *)aTimer\
+   		\{\
+   			" stop our task and return result "\
+   			KosmicTaskController stopTask: 'timer expired'.\
+   		\}\
+	\}.\
+\
+	" create new class instance "\
+	task := KosmicTask new.\
+\
+	" call our entry point "\
+	task start.\
+]
+\f0\b\fs28 \cf0 \
+\
+\
+System Framework Access\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+F-Script provides direct access to system framework classes and constants via the Cocoa NSBundle class.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f1\fs22 \cf3 [\
+	"load the addressbook framework"\
+	(NSBundle bundleWithPath:'/System/Library/Frameworks/AddressBook.framework') load.\
+\
+	" access the me object in the shared address book "\
+	person := ABAddressBook sharedAddressBook me.\
+	\
+	" get the first name property "\
+	firstName := person valueForProperty:kABFirstNameProperty.\
+]
+\f0\fs28 \cf0 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Calling Cocoa methods with variable argument lists\
+\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f2\b0 \cf0 F-Script cannot dispatch Objective-C methods that take a variable number of arguments.\
+This means that we cannot use the equivalent of Objective-C constructs such as:\
+[NSString stringWithFormat:@" %@ ", something, nil];\
+[NSDictionary dictionaryWithObjectsForKeys: object1, key1, nil];
+\fs24 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 ref {\field{\*\fldinst{HYPERLINK "http://groups.google.com/group/f-script/browse_thread/thread/685ce8addbfb8853"}}{\fldrslt http://groups.google.com/group/f-script/browse_thread/thread/685ce8addbfb8853}}\
+\
+
+\fs24 v1.0 November 2010}

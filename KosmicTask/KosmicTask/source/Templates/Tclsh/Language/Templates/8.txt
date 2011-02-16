@@ -1,0 +1,39 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $argc
+#
+# task arguments are accessed as:
+# [lindex $argv 0] .. [lindex $argv [expr $argc - 1]]
+# 
+
+set files ""
+
+for { set i 1 } { $i <= 5 } { incr i } {
+	
+	if {$i > 1} {
+		append files ", "
+	}
+	
+	# file created in task current directory will be automatically deleted
+	set file "capture-$i.png"
+ 
+	# capture sceen shot to file
+	exec screencapture -t png $file
+
+	append files "$file"
+	
+	# sleep 1 second
+	after 1000
+}
+
+# return a YAML inline format dictionary with a properly escaped array of filenames
+set result "{kosmicFile: \[$files] , kosmicInfo: file returned}"
+
+puts "---"
+puts $result

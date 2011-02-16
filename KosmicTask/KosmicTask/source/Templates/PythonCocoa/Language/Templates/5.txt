@@ -1,0 +1,48 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# PyObjC documentation (including framework API notes)
+# http://pyobjc.sourceforge.net/documentation/
+#
+import AppKit
+import Foundation
+
+# KosmicTask controller
+taskController = Foundation.NSClassFromString("KosmicTaskController")
+
+class KosmicTask (Foundation.NSObject):
+    	
+	#
+	# task entry point
+	#
+	def kosmictask(self):
+
+		# schedule the timer
+		AppKit.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(2, self, "timerFired:", "", 1)
+
+		# keep the task running
+		taskController.keepTaskRunning()
+	
+		return
+		
+	#
+	# task timer expired
+	#
+	def timerFired_(self,timer):
+		
+		# invalidate the timer
+		timer.invalidate()
+		
+		# stop task and return result
+		taskController.stopTask_("timer expired")
+	
+		return

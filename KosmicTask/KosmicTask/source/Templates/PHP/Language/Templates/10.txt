@@ -1,0 +1,69 @@
+<?php
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $numArgs = $_SERVER['argc'] - 1;
+#
+# task arguments are accessed as:
+# $_SERVER['argv'][1] .. $_SERVER['argv'][$numArgs]
+#
+
+require_once "KosmicTaskController.php";
+
+$name = 'name';
+$radius = 'radius';
+$satellites = 'satellites';
+
+# Mercury
+$moons = array("none");
+$Mercury  = array($name => "Mercury", $radius => -1, $satellites => $moons);
+
+# Venus
+$moons = array("none");
+$Venus  = array($name => "Venus", $radius => 6052, $satellites => $moons);
+
+# Earth
+$moons = array("moon");
+$Earth  = array($name => "Earth", $radius => 6371, $satellites => $moons);	
+
+# Mars
+$moons = array("Phobos", "Deimos");
+$Mars  = array($name => "Mars", $radius => 3396, $satellites => $moons);
+
+# Jupiter
+$moons = array("Io", "Europa", "Ganymede", "Callisto", "(+59 smaller non Galiliean moons)");
+$Jupiter  = array($name => "Jupiter", $radius => 71492, $satellites => $moons);	
+	
+# Saturn
+$moons = array("Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iaptus", "(+55 smaller moons)");
+$Saturn  = array($name => "Saturn", $radius => 60268, $satellites => $moons);	
+
+# Uranus
+$moons = array("Miranda", "Ariel", "Umbriel", "Titania", "Oberon", " (+22 smaller moons)");
+$Uranus  = array($name => "Uranus", $radius => 25559, $satellites => $moons);	
+
+# Neptune
+$moons = array("Triton", "Nereid", "Naiad", "Thalassa", "Despina", "Galatea", "Larissa", "Proteus", "Halimede", "Psamathe", "Sao", "Laomedeia", "Neso");
+$Neptune  = array($name => "Neptune", $radius => -1, $satellites => $moons);	
+
+// fix radius properties
+$Mercury[$radius] = 2440;
+$Neptune[$radius] = 24764;
+
+# define planets array
+$planets[] = $Mercury;
+$planets[] = $Venus;
+$planets[] = $Earth;
+$planets[] = $Mars;
+$planets[] = $Jupiter;
+$planets[] = $Saturn;
+$planets[] = $Uranus;
+$planets[] = $Neptune;
+
+# print native object as YAML
+KosmicTaskController::printObject($planets);

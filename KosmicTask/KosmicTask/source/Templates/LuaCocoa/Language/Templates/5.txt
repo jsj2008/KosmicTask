@@ -1,0 +1,30 @@
+--[[
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+]]
+
+LuaCocoa.import("ScriptingBridge")
+
+function kosmicTask()
+
+	-- use the ScriptingBridge framework to access the application
+	local finder_application = SBApplication:applicationWithBundleIdentifier_("com.apple.finder")
+	
+	-- get application properties
+	local files = finder_application:desktop():files()
+	local result = {}
+	
+	for i=1,#files do
+		result[i] = files[i]:name()
+	end
+	
+	return result
+	
+end

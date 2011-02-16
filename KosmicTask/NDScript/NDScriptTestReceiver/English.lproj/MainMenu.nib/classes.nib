@@ -1,0 +1,33 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                clearLogs = id; 
+                deselectAll = id; 
+                repeatChanged = id; 
+                runTests = id; 
+                selectAll = id; 
+                selectedTestChanged = id; 
+            }; 
+            CLASS = ApplicationDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                clearButton = NSButtonCell; 
+                deselectAllButton = NSButtonCell; 
+                errorCountField = NSTextField; 
+                logTextView = NSTextView; 
+                numberOfScriptLoggingField = NSTextField; 
+                repeatButton = NSButton; 
+                repeatValueField = NSTextField; 
+                runButton = NSButtonCell; 
+                runningTestCountField = NSTextField; 
+                runningTestNameField = NSTextField; 
+                selectAllButton = NSButtonCell; 
+                testCheckBoxMatrix = NSMatrix; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

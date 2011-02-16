@@ -1,0 +1,30 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+
+// load the ScriptingBridge framework
+loadFramework("ScriptingBridge")
+	
+function kosmicTask() 
+{
+	// use the ScriptingBridge framework to access the application
+	var Finder = SBApplication.applicationWithBundleIdentifier('com.apple.finder')
+	
+	// get application properties 
+	var files = Finder.desktop.files
+	
+	// build result
+	var result = []
+	for (i=0; i < files.count; i++) {
+		result.push(files[i].name)
+	}
+	return result
+}

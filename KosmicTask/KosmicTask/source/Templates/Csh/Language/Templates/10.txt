@@ -1,0 +1,85 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $#argv
+#
+# task arguments are accessed as:
+# $1 .. $n
+# 
+
+# return a YAML block format array of dictionaries
+echo "---"
+echo "- name: Mercury"
+echo "  radius : 2440"
+echo "  satellites:"
+echo "    - none" 
+
+echo "- name: Venus"
+echo "  radius: 6052"
+echo "  satellites:"
+echo "    - none" 
+
+echo "- name: Earth"
+echo "  radius: 6371"
+echo "  satellites:"
+echo "    - Moon" 
+
+echo "- name: Mars"
+echo "  radius: 3396"
+echo "  satellites:"
+echo "    - Phobos" 
+echo "    - Deimos" 
+
+echo "- name: Jupiter"
+echo "  radius: 71492"
+echo "  satellites:"
+echo "    - Io" 
+echo "    - Europa" 
+echo "    - Ganymede" 
+echo "    - Callisto" 
+echo "    - (+59 smaller non Galiliean moons)"
+ 
+echo "- name: Saturn"
+echo "  radius: 60268"
+echo "  satellites:"
+echo "    - Mimas" 
+echo "    - Enceladus" 
+echo "    - Tethys" 
+echo "    - Dione" 
+echo "    - Rhea" 
+echo "    - Titan" 
+echo "    - Iaptus" 
+echo "    - (+55 smaller moons)"
+
+echo "- name: Uranus"
+echo "  radius: 25559"
+echo "  satellites:"
+echo "    - Miranda" 
+echo "    - Ariel" 
+echo "    - Umbriel" 
+echo "    - Titania" 
+echo "    - Oberon" 
+echo "    - (+22 smaller moons)" 
+
+echo "- name: Neptune"
+echo "  radius: 24764"
+echo "  satellites:"
+echo "    - Triton" 
+echo "    - Nereid" 
+echo "    - Naiad" 
+echo "    - Thalassa" 
+echo "    - Despina" 
+echo "    - Galatea" 
+echo "    - Larissa" 
+echo "    - Proteus" 
+echo "    - Halimede"
+echo "    - Psamathe"
+echo "    - Sao"
+echo "    - Laomedeia"
+echo "    - Neso"
+

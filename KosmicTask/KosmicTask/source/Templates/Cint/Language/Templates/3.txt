@@ -1,0 +1,53 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/ 
+#include <iostream.h>
+
+class Worker {  
+	public:           
+  	
+  	PrintMe() { 
+  		cout << "Hello, kosmos!";
+  	}   
+
+};
+
+class Worker1 {  
+	public:           
+  	
+  	PrintMe() { 
+  		cout << "\nHello again, kosmos!";
+  	}   
+
+};
+
+class KosmicTask {  
+	public:           
+  	
+  	KosmicTask() { 
+  		
+  		// dynamic
+  		Worker *object = new Worker();
+  		object->PrintMe(); 
+  		
+  		// static
+  		Worker1 object1;
+  		object1.PrintMe(); 
+  	}   
+
+};
+ 
+ 
+int main(int argc, char *argv[]) 
+{
+	KosmicTask kosmic;
+}
+

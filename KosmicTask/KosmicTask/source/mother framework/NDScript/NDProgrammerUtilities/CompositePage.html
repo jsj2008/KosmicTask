@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
+<html>
+<head>
+<title>NDProgrammerUtilities </title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="HeaderDoc">
+<style type="text/css"><!--.keyword {background:#ffffff; color:#761550;}.template {background:#ffffff; color:#761550;}.number {background: #ffffff; color:#0000ff;}.function {background:#ffffff; color:#000000;}.string {background: #ffffff; color:#891315;}.preprocessor {background:#ffffff; color:#236e25}.comment {background:#ffffff; color:#236e25}.char {background: #ffffff; color:#0000ff;}.var {background:#ffffff; color:#000000;}.type {background:#ffffff; color:#761550;}.param {background:#ffffff; color:#000000;}a:link {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #0000ff;}a:visited {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #0000ff;}a:visited:hover {text-decoration: underline; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #ff6600;}a:active {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #ff6600;}a:hover {text-decoration: underline; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: small; color: #ff6600;}h4 {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: tiny; font-weight: bold;}body {text-decoration: none; font-family: lucida grande, geneva, helvetica, arial, sans-serif; font-size: 10pt;}--></style>
+</head>
+<body bgcolor="#ffffff">
+<a name="top"></a><a name="//apple_ref/doc/header/NDProgrammerUtilities.h" title="NDProgrammerUtilities "></a><hr>
+<table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h1><a name="NDProgrammerUtilities">NDProgrammerUtilities </a></h1>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract -->Collection of function to help with developement and testing.
+<!-- end abstract --></p>
+<p></p>
+<dl>
+<b>Includes:</b> <!-- a logicalPath="//apple_ref/doc/header/Carbon.h" -->&lt;Carbon/Carbon.h&gt;<!-- /a -->,
+<!-- a logicalPath="//apple_ref/doc/header/Cocoa.h" -->&lt;Cocoa/Cocoa.h&gt;<!-- /a --><br>
+</dl>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->These function will by default display a message when an error condition occurs, this can be disabled by defining the macro varible <tt>NDTurnLoggingOff</tt>. Errors condition can be made to throw an <tt>NSInternalInconsistencyException</tt> by defining the macro varible <tt>NDAssertLogging</tt>.
+<!-- end discussion --></p>
+<p></p>
+<hr>
+<br><h2>#defines</h2>
+<hr>
+<!-- headerDoc=macro;  uid=//apple_ref/doc/compositePage/c/macro/NDLogFalse;  name=NDLogFalse --><a name="//apple_ref/doc/compositePage/c/macro/NDLogFalse"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="NDLogFalse">NDLogFalse </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract --><!-- end abstract --></p>
+<p></p>
+<pre><span class="">#define</span><span class="preprocessor"> </span><a href="../../NDScript/NDProgrammerUtilities/index.html?PDefines/PDefines.html#//apple_ref/c/macro/NDLogFalse" logicalPath="//apple_ref/c/cl/NDLogFalse //apple_ref/c/tdef/NDLogFalse //apple_ref/c/tag/NDLogFalse //apple_ref/c/econst/NDLogFalse //apple_ref/c/struct/NDLogFalse //apple_ref/c/data/NDLogFalse //apple_ref/c/clconst/NDLogFalse //apple_ref/c/intf/NDLogFalse //apple_ref/c/instm/NDLogFalse //apple_ref/c/clm/NDLogFalse //apple_ref/c/intfcm/NDLogFalse //apple_ref/c/intfm/NDLogFalse //apple_ref/c/func/NDLogFalse //apple_ref/c/ftmplt/NDLogFalse //apple_ref/c/defn/NDLogFalse //apple_ref/c/macro/NDLogFalse" target="_top"><span class="preprocessor">NDLogFalse</span></a><span class="preprocessor">(</span><span class="preprocessor"> </span><!-- a logicalPath="//apple_ref/c/cl/CONDITION_ //apple_ref/c/tdef/CONDITION_ //apple_ref/c/tag/CONDITION_ //apple_ref/c/econst/CONDITION_ //apple_ref/c/struct/CONDITION_ //apple_ref/c/data/CONDITION_ //apple_ref/c/clconst/CONDITION_ //apple_ref/c/intf/CONDITION_ //apple_ref/c/instm/CONDITION_ //apple_ref/c/clm/CONDITION_ //apple_ref/c/intfcm/CONDITION_ //apple_ref/c/intfm/CONDITION_ //apple_ref/c/func/CONDITION_ //apple_ref/c/ftmplt/CONDITION_ //apple_ref/c/defn/CONDITION_ //apple_ref/c/macro/CONDITION_ //apple_ref/doc/com/intfm/CONDITION_" --><span class="preprocessor">CONDITION_</span><!-- /a --><span class="preprocessor"> </span><span class="preprocessor">)</span><span class="preprocessor"> </span><span class="ignore"></span><span class="ignore"></span> </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>CONDITION_ </code></dt>
+<dd>An expression that can is evaluated as <tt>YES</tt> or <tt>NO</tt>, evaluated only once. The macro varible <tt>NDTurnLoggingOff</tt> can be defined to turn off this message. The <tt>NSInternalInconsistencyException</tt> can be thrown instead by defining the macro varible <tt>NDAssertLogging</tt>.</dd>
+</dl>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->if <tt><i>CONDITION_</i></tt> evaluates to <tt>YES</tt> then <tt>NDLogFalseBody</tt> returns <tt>YES</tt> otherwise it return <tt>NO</tt>.
+<!-- end return value --></p>
+<p></p>
+<hr>
+<!-- headerDoc=macro;  uid=//apple_ref/doc/compositePage/c/macro/NDLogFalseBody;  name=NDLogFalseBody --><a name="//apple_ref/doc/compositePage/c/macro/NDLogFalseBody"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="NDLogFalseBody">NDLogFalseBody </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract --><!-- end abstract --></p>
+<p></p>
+<pre><span class="">#define</span><span class="preprocessor"> </span><a href="../../NDScript/NDProgrammerUtilities/index.html?PDefines/PDefines.html#//apple_ref/c/macro/NDLogFalse" logicalPath="//apple_ref/c/cl/NDLogFalse //apple_ref/c/tdef/NDLogFalse //apple_ref/c/tag/NDLogFalse //apple_ref/c/econst/NDLogFalse //apple_ref/c/struct/NDLogFalse //apple_ref/c/data/NDLogFalse //apple_ref/c/clconst/NDLogFalse //apple_ref/c/intf/NDLogFalse //apple_ref/c/instm/NDLogFalse //apple_ref/c/clm/NDLogFalse //apple_ref/c/intfcm/NDLogFalse //apple_ref/c/intfm/NDLogFalse //apple_ref/c/func/NDLogFalse //apple_ref/c/ftmplt/NDLogFalse //apple_ref/c/defn/NDLogFalse //apple_ref/c/macro/NDLogFalse" target="_top"><span class="preprocessor">NDLogFalse</span></a><span class="preprocessor">(</span><span class="preprocessor"> </span><!-- a logicalPath="//apple_ref/c/cl/CONDITION_ //apple_ref/c/tdef/CONDITION_ //apple_ref/c/tag/CONDITION_ //apple_ref/c/econst/CONDITION_ //apple_ref/c/struct/CONDITION_ //apple_ref/c/data/CONDITION_ //apple_ref/c/clconst/CONDITION_ //apple_ref/c/intf/CONDITION_ //apple_ref/c/instm/CONDITION_ //apple_ref/c/clm/CONDITION_ //apple_ref/c/intfcm/CONDITION_ //apple_ref/c/intfm/CONDITION_ //apple_ref/c/func/CONDITION_ //apple_ref/c/ftmplt/CONDITION_ //apple_ref/c/defn/CONDITION_ //apple_ref/c/macro/CONDITION_ //apple_ref/doc/com/intfm/CONDITION_" --><span class="preprocessor">CONDITION_</span><!-- /a --><span class="preprocessor"> </span><span class="preprocessor">)</span><span class="preprocessor"> </span><span class="ignore"></span><span class="ignore"></span> </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>CONDITION_ </code></dt>
+<dd>An expression that can is evaluated as <tt>YES</tt> or <tt>NO</tt>, evaluated only once. The macro varible <tt>NDTurnLoggingOff</tt> can be defined to turn off this message. The <tt>NSInternalInconsistencyException</tt> can be thrown instead by defining the macro varible <tt>NDAssertLogging</tt>.</dd>
+</dl>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->if <tt><i>CONDITION_</i></tt> evaluates to <tt>YES</tt> then <tt>NDLogFalseBody</tt> returns <tt>YES</tt> otherwise it return <tt>NO</tt>.
+<!-- end return value --></p>
+<p></p>
+<hr>
+<!-- headerDoc=macro;  uid=//apple_ref/doc/compositePage/c/macro/NDLogOSStatus;  name=NDLogOSStatus --><a name="//apple_ref/doc/compositePage/c/macro/NDLogOSStatus"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="NDLogOSStatus">NDLogOSStatus </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract --><!-- end abstract --></p>
+<p></p>
+<pre><span class="">#define</span><span class="preprocessor"> </span><a href="../../NDScript/NDProgrammerUtilities/index.html?PDefines/PDefines.html#//apple_ref/c/macro/NDLogOSStatus" logicalPath="//apple_ref/c/cl/NDLogOSStatus //apple_ref/c/tdef/NDLogOSStatus //apple_ref/c/tag/NDLogOSStatus //apple_ref/c/econst/NDLogOSStatus //apple_ref/c/struct/NDLogOSStatus //apple_ref/c/data/NDLogOSStatus //apple_ref/c/clconst/NDLogOSStatus //apple_ref/c/intf/NDLogOSStatus //apple_ref/c/instm/NDLogOSStatus //apple_ref/c/clm/NDLogOSStatus //apple_ref/c/intfcm/NDLogOSStatus //apple_ref/c/intfm/NDLogOSStatus //apple_ref/c/func/NDLogOSStatus //apple_ref/c/ftmplt/NDLogOSStatus //apple_ref/c/defn/NDLogOSStatus //apple_ref/c/macro/NDLogOSStatus" target="_top"><span class="preprocessor">NDLogOSStatus</span></a><span class="preprocessor">(</span><span class="preprocessor"> </span><!-- a logicalPath="//apple_ref/c/cl/OS_ERROR_ //apple_ref/c/tdef/OS_ERROR_ //apple_ref/c/tag/OS_ERROR_ //apple_ref/c/econst/OS_ERROR_ //apple_ref/c/struct/OS_ERROR_ //apple_ref/c/data/OS_ERROR_ //apple_ref/c/clconst/OS_ERROR_ //apple_ref/c/intf/OS_ERROR_ //apple_ref/c/instm/OS_ERROR_ //apple_ref/c/clm/OS_ERROR_ //apple_ref/c/intfcm/OS_ERROR_ //apple_ref/c/intfm/OS_ERROR_ //apple_ref/c/func/OS_ERROR_ //apple_ref/c/ftmplt/OS_ERROR_ //apple_ref/c/defn/OS_ERROR_ //apple_ref/c/macro/OS_ERROR_ //apple_ref/doc/com/intfm/OS_ERROR_" --><span class="preprocessor">OS_ERROR_</span><!-- /a --><span class="preprocessor"> </span><span class="preprocessor">)</span><span class="preprocessor"> </span><span class="ignore"></span><span class="ignore"></span><span class="ignore"></span><span class="ignore"></span><span class="ignore"></span><span class="ignore"></span><span class="ignore"></span> </pre>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Parameters</font></h5>
+<dl>
+<dt><code>OS_ERROR_ </code></dt>
+<dd>An expression that returns a <tt>OSStatus</tt>, evaluated only once. The macro varible <tt>NDTurnLoggingOff</tt> can be defined to turn off this message. The <tt>NSInternalInconsistencyException</tt> can be thrown instead by defining the macro varible <tt>NDAssertLogging</tt>.</dd>
+</dl>
+<h5 class="tight"><font face="Lucida Grande,Helvetica,Arial">Return Value</font></h5>
+<p><!-- begin return value -->if <tt><i>OS_ERROR_</i></tt> evaluates to <tt>noErr</tt> then <tt>NDLogOSStatus</tt> returns <tt>YES</tt> otherwise it return <tt>NO</tt>.
+<!-- end return value --></p>
+<p></p>
+<hr>
+<!-- headerDoc=macro;  uid=//apple_ref/doc/compositePage/c/macro/NDSoftParamAssert;  name=NDSoftParamAssert --><a name="//apple_ref/doc/compositePage/c/macro/NDSoftParamAssert"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="NDSoftParamAssert">NDSoftParamAssert </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract --><!-- end abstract --></p>
+<p></p>
+<pre><span class="">#define</span><span class="preprocessor"> </span><a href="../../NDScript/NDProgrammerUtilities/index.html?PDefines/PDefines.html#//apple_ref/c/macro/NDSoftParamAssert" logicalPath="//apple_ref/c/cl/NDSoftParamAssert //apple_ref/c/tdef/NDSoftParamAssert //apple_ref/c/tag/NDSoftParamAssert //apple_ref/c/econst/NDSoftParamAssert //apple_ref/c/struct/NDSoftParamAssert //apple_ref/c/data/NDSoftParamAssert //apple_ref/c/clconst/NDSoftParamAssert //apple_ref/c/intf/NDSoftParamAssert //apple_ref/c/instm/NDSoftParamAssert //apple_ref/c/clm/NDSoftParamAssert //apple_ref/c/intfcm/NDSoftParamAssert //apple_ref/c/intfm/NDSoftParamAssert //apple_ref/c/func/NDSoftParamAssert //apple_ref/c/ftmplt/NDSoftParamAssert //apple_ref/c/defn/NDSoftParamAssert //apple_ref/c/macro/NDSoftParamAssert" target="_top"><span class="preprocessor">NDSoftParamAssert</span></a><span class="preprocessor">(</span><span class="preprocessor"> </span><!-- a logicalPath="//apple_ref/c/cl/CONDITION_ //apple_ref/c/tdef/CONDITION_ //apple_ref/c/tag/CONDITION_ //apple_ref/c/econst/CONDITION_ //apple_ref/c/struct/CONDITION_ //apple_ref/c/data/CONDITION_ //apple_ref/c/clconst/CONDITION_ //apple_ref/c/intf/CONDITION_ //apple_ref/c/instm/CONDITION_ //apple_ref/c/clm/CONDITION_ //apple_ref/c/intfcm/CONDITION_ //apple_ref/c/intfm/CONDITION_ //apple_ref/c/func/CONDITION_ //apple_ref/c/ftmplt/CONDITION_ //apple_ref/c/defn/CONDITION_ //apple_ref/c/macro/CONDITION_ //apple_ref/doc/com/intfm/CONDITION_" --><span class="preprocessor">CONDITION_</span><!-- /a --><span class="preprocessor">,</span><span class="preprocessor"> </span><span class="preprocessor">.</span><span class="preprocessor">.</span><span class="preprocessor">.</span><span class="preprocessor"> </span><span class="preprocessor">)</span><span class="preprocessor"> </span><!-- a logicalPath="//apple_ref/c/cl/if //apple_ref/c/tdef/if //apple_ref/c/tag/if //apple_ref/c/econst/if //apple_ref/c/struct/if //apple_ref/c/data/if //apple_ref/c/clconst/if //apple_ref/c/intf/if //apple_ref/c/instm/if //apple_ref/c/clm/if //apple_ref/c/intfcm/if //apple_ref/c/intfm/if //apple_ref/c/func/if //apple_ref/c/ftmplt/if //apple_ref/c/defn/if //apple_ref/c/macro/if //apple_ref/doc/com/intfm/if" --><span class="preprocessor">if</span><!-- /a --><span class="preprocessor">(</span><span class="preprocessor"> </span><span class="preprocessor">!</span><span class="preprocessor">(</span><!-- a logicalPath="//apple_ref/c/cl/CONDITION_ //apple_ref/c/tdef/CONDITION_ //apple_ref/c/tag/CONDITION_ //apple_ref/c/econst/CONDITION_ //apple_ref/c/struct/CONDITION_ //apple_ref/c/data/CONDITION_ //apple_ref/c/clconst/CONDITION_ //apple_ref/c/intf/CONDITION_ //apple_ref/c/instm/CONDITION_ //apple_ref/c/clm/CONDITION_ //apple_ref/c/intfcm/CONDITION_ //apple_ref/c/intfm/CONDITION_ //apple_ref/c/func/CONDITION_ //apple_ref/c/ftmplt/CONDITION_ //apple_ref/c/defn/CONDITION_ //apple_ref/c/macro/CONDITION_ //apple_ref/doc/com/intfm/CONDITION_" --><span class="preprocessor">CONDITION_</span><!-- /a --><span class="preprocessor">)</span><span class="preprocessor"> </span><span class="preprocessor">)</span><span class="preprocessor"> </span><!-- a logicalPath="//apple_ref/c/cl/return //apple_ref/c/tdef/return //apple_ref/c/tag/return //apple_ref/c/econst/return //apple_ref/c/struct/return //apple_ref/c/data/return //apple_ref/c/clconst/return //apple_ref/c/intf/return //apple_ref/c/instm/return //apple_ref/c/clm/return //apple_ref/c/intfcm/return //apple_ref/c/intfm/return //apple_ref/c/func/return //apple_ref/c/ftmplt/return //apple_ref/c/defn/return //apple_ref/c/macro/return //apple_ref/doc/com/intfm/return" --><span class="preprocessor">return</span><!-- /a --><span class="preprocessor"> </span><!-- a logicalPath="//apple_ref/c/cl/__VA_ARGS__ //apple_ref/c/tdef/__VA_ARGS__ //apple_ref/c/tag/__VA_ARGS__ //apple_ref/c/econst/__VA_ARGS__ //apple_ref/c/struct/__VA_ARGS__ //apple_ref/c/data/__VA_ARGS__ //apple_ref/c/clconst/__VA_ARGS__ //apple_ref/c/intf/__VA_ARGS__ //apple_ref/c/instm/__VA_ARGS__ //apple_ref/c/clm/__VA_ARGS__ //apple_ref/c/intfcm/__VA_ARGS__ //apple_ref/c/intfm/__VA_ARGS__ //apple_ref/c/func/__VA_ARGS__ //apple_ref/c/ftmplt/__VA_ARGS__ //apple_ref/c/defn/__VA_ARGS__ //apple_ref/c/macro/__VA_ARGS__ //apple_ref/doc/com/intfm/__VA_ARGS__" --><span class="preprocessor">__VA_ARGS__</span><!-- /a --><span class="preprocessor">;</span> </pre>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->
+ <!-- end discussion --></p>
+<p></p>
+<hr>
+<!-- headerDoc=macro;  uid=//apple_ref/doc/compositePage/c/macro/NDUntestedMethod;  name=NDUntestedMethod --><a name="//apple_ref/doc/compositePage/c/macro/NDUntestedMethod"></a><table border="0" cellpadding="2" cellspacing="2" width="300"><tr><td valign="top" height="12" colspan="5">
+<h3><a name="NDUntestedMethod">NDUntestedMethod </a></h3>
+</td></tr></table>
+<hr>
+<p><!-- begin abstract --><!-- end abstract --></p>
+<p></p>
+<pre><span class="">#define</span><span class="preprocessor"> </span><a href="../../NDScript/NDProgrammerUtilities/index.html?PDefines/PDefines.html#//apple_ref/c/macro/NDUntestedMethod" logicalPath="//apple_ref/c/cl/NDUntestedMethod //apple_ref/c/tdef/NDUntestedMethod //apple_ref/c/tag/NDUntestedMethod //apple_ref/c/econst/NDUntestedMethod //apple_ref/c/struct/NDUntestedMethod //apple_ref/c/data/NDUntestedMethod //apple_ref/c/clconst/NDUntestedMethod //apple_ref/c/intf/NDUntestedMethod //apple_ref/c/instm/NDUntestedMethod //apple_ref/c/clm/NDUntestedMethod //apple_ref/c/intfcm/NDUntestedMethod //apple_ref/c/intfm/NDUntestedMethod //apple_ref/c/func/NDUntestedMethod //apple_ref/c/ftmplt/NDUntestedMethod //apple_ref/c/defn/NDUntestedMethod //apple_ref/c/macro/NDUntestedMethod" target="_top"><span class="preprocessor">NDUntestedMethod</span></a><span class="preprocessor">(</span><span class="preprocessor"> </span><span class="preprocessor">)</span> </pre>
+<h5 class="tight">
+<font face="Lucida Grande,Helvetica,Arial">Discussion</font>
+</h5>
+<p><!-- begin discussion -->
+ <!-- end discussion --></p>
+<p></p>
+<p></p>
+<p>&copy; 2004 Nathan Day. All rights reserved.
+ Last Updated: Sunday, August 30, 2009
+</p>
+</body>
+</html>

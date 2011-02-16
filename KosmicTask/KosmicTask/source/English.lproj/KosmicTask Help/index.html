@@ -1,0 +1,1024 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<title>KosmicTask Help</title>
+		<meta name="AppleTitle" content="KosmicTask Help" />
+		<meta name="AppleIcon" content="KosmicTask Help/gfx/task16x16.png" />
+		<meta name="robots" content="anchors" />
+		<link href="css/help.css" rel="stylesheet" media="all" />
+		<link href="css/style.css" rel="stylesheet" media="all" />
+	</head>
+
+	<body>
+		<div id="frame">
+		<div class="help">
+
+		<p>Additional help may be available online <a href="http://www.mugginsoft.com/kosmictask/help">here</a>.</p>
+
+		<!-- help code starts -->
+		
+<h2>KosmicTask Help v1.0.1</h2>
+	<ul>
+		<li><a href="#about">About KosmicTask</a></li>
+		<li><a href="#main">Main Window Layout</a>
+		<ul>
+			<li><a href="#main-browser">Browser Pane</a></li>
+			<li><a href="#main-task">Task Pane</a></li>
+			<li><a href="#main-detail">Detail Pane</a></li>
+			<li><a href="#main-sidebar">Sidebar</a></li>
+		</ul></li>
+		<li><a href="#using">Getting Started</a>
+		<ul>
+			<li><a href="#using-task">Running a Task</a></li>
+			<li><a href="#using-viewing">Viewing Results</a></li>
+			<li><a href="#using-results">Saving Results</a></li>
+			<li><a href="#using-publishing">Publishing a Task</a></li>
+		</ul></li>
+        	<li><a href="#working-with-tasks">Working with Tasks and Results</a></li>
+		<li><a href="#networking">Networking and Communications</a></li>
+		<li><a href="#managing">Managing Tasks</a></li>	
+        	<li><a href="#how-tasks-work">How Task Scripting Works</a></li>
+		<li><a href="#creating">Creating and Editing Tasks</a></li>
+		<li><a href="#prefs-etc">Preferences, Feedback and the Console</a></li>
+        	<li><a href="#licensing">Licensing</a></li>
+	</ul>
+
+	<h2 id="about" class="section">About KosmicTask</h2>
+
+	<p>KosmicTask is an automation provider. Using KosmicTask you can create, edit and publish automation tasks that can be accessed either locally or remotely. And because KosmicTask uses AppleScript to power its tasks any existing scripts can be quickly and easily incorporated into KosmicTask and made available from a central location.</p>
+
+	<p>KosmicTask provides the following basic functionality:</p>
+	<ol>
+		<li>A central repository of AppleScript powered tasks.</li>
+		<li>A publishing idiom that allows for public and trusted user access to tasks.</li>
+		<li>Secure network communication via SSL.</li>
+		<li>Bonjour support for automatic discovery over local networks.</li>
+		<li>Support for task sharing over the Internet.</li>
+		<li>A multi-tabbed iTunes like interface.</li>
+		<li>A comprehensive history of task requests and results.</li>
+		<li>Local and remote task editing and configuration.</li>
+		<li>Integrated file transfer capabilities.</li>
+		<li>Flexible representation of task results.</li>
+		<li>Full local and remote search capabilities.</li>
+		<li>Run task server at login functionality.</li>
+		<li>Integrated error console.</li>
+	</ol>
+
+	<h2 id="main" class="section">Main Window Layout</h2>
+
+	<p>The main KosmicTask window contains the toolbar and four distinct panes.</p>
+
+	<p><img src="gfx/mainwindow-layout.png" alt="window layout"></p>
+	
+	<h3  id="main-browser">Browser Pane - Top</h3>
+
+	<p>The browser mode control at the top of the pane determines the browser contents.</p>
+
+	<dl>
+		<dt><img src="gfx/hide16x16.png" alt="hide">Browser hide</dt>
+		<dd>Hides the browser pane.</dd>
+
+		<dt><img src="gfx/task16x16.png" alt="task">Task browser</dt>
+		<dd>Displays a list of available tasks</dd>
+
+		<dt>Search result browser.</dt>
+		<dd>Displays a list of search results.</dd>
+
+		<dt><img src="gfx/sharing16x16.png"  alt="sharing">Sharing information browser</dt>
+		<dd>Displays network sharing information.</dd>
+
+	</dl>
+
+	<h3 id="main-task">Task Pane - Middle</h3>
+
+	<p>The task pane displays the current task and results.</p>
+
+	<dl>
+		<dt>Tabs</dt>
+		<dd>Each task has its own tab containing a task view. The task view displays task input on the left and results on the right. 
+			<ul>
+				<li>To create a new tab click the + button. To close click x.</li>
+				<li>To open a particular task in a new tab <strong>command-click</strong> the task in the browser.</li>
+				<li>To open a task in a new window use <strong>alt-click</strong>. Alternatively use the task browser context menu.</li>
+				<li>Drag the tabs to reorder.</li>
+			</ul>
+		</dd>
+
+		<dt>Task Navigation Bar</dt>
+		<dd>Provides navigation functionality within the task tab.</dd>
+
+		<dt>Task View - Left</dt>
+		<dd>Displays the detail of the currently selected task along with any inputs.</dd>
+
+		<dt>Result View - Right</dt>
+		<dd>Displays the results of task execution. If no task has been executed then the view will display "ready". When a task is executing the view will display "running".</dd>
+
+		<dt>Task Status - Lower</dt>
+		<dd>Displays the current execution status of the task. While a task is running it will display the elapsed time and network/file transfer activity. If an error occurs during task execution it will be reported here.</dd>
+
+	</dl>
+	
+	<h3 id="main-detail">Detail Pane - Bottom</h3>
+
+	<p>The detail mode buttons below the pane determine the browser contents.</p>
+
+	<dl>
+		<dt><img src="gfx/hide16x16.png"  alt="hide">Hide</dt>
+		<dd>Hides the detail panel.</dd>
+
+		<dt><img src="gfx/clock16x16.png"  alt="history">Task History</dt>
+		<dd>Displays a history list of all past task execution requests. The history also retains the values of any task inputs.</dd>
+
+		<dt><img src="gfx/braces16x16.png"  alt="script">Task Script</dt>
+		<dd>Displays the script associated with the selected task. The script will only be visible to trusted users.</dd>
+
+	</dl>
+
+	<h3 id="main-sidebar">Sidebar - Left</h3>
+
+	<p>The sidebar displays a list of available instances of KosmicTask. You may hide or reveal the view using the <strong>Sidebar</strong> toolbar button.</p>
+
+	<dl>
+		<dt><img src="gfx/home16x16.png"  alt="home">Home</dt>
+		<dd>Represents the instance of KosmicTask on your local machine. It should always be available.</dd>
+
+		<dt><img src="gfx/computer16x16.png"  alt="remote">Shared</dt>
+		<dd>Lists the instances of KosmicTask available on the network. Local network instances will be discovered automatically. You may also connect manually to external networks.</dd>
+
+	</dl>
+
+	<h2 id="using" class="section">Getting Started</h2>
+
+	<p>KosmicTask uses a publishing idiom to control who has access to particular tasks. When a new task is created it is initially accessible only to trusted users. To make a task available to all users it must be published.</p>
+
+	<p id = "configuration-modes">KosmicTask operates in three different modes, selectable via the task mode control in the tool bar. </p> 
+
+	<dl>
+		<dt><img src="gfx/task16x16.png"  alt="public">Public Task Mode</dt>
+		<dd>Allows access to published tasks. By default all instances of KosmicTask, both local and remote, can access public tasks. This is the default task mode.</dd>
+
+		<dt><img src="gfx/user16x16.png"  alt="trusted">Trusted User Task Mode</dt>
+		<dd>In order to access all tasks, on either a local or remote instance of KosmicTask, select the trusted user task mode. KosmicTask prompts for a valid username and password and on successful authentication provides access to all tasks.</dd> 
+
+		<dt><img src="gfx/config16x16.png"  alt="config">Configuration Mode</dt>
+		<dd>In order to create, edit, delete, publish and unpublish tasks select the configuration task mode. As in the case of the trusted user mode you will be required to authenticate.</dd>
+
+	</dl>
+
+	<h3 id="using-task">Running a Task</h3>
+
+	<ul>
+		<li>Select a task from the browser.</li>
+		<li>If the task has inputs they will be displayed below the task name in the left task view. Enter any required values.</li>
+		<li>Click the run toolbar button or select menu item <strong>Task - Run</strong> (command-R).</li>
+		<li>The task will execute and the results will be displayed in the right task pane.</li>
+	</ul>
+
+	<p>The task may be paused or stopped prematurely as required.</p>	
+
+	<h3 id="using-results">Viewing Task Results</h3>
+
+	<p>The results for a task will be displayed in the right hand task view. Results may be displayed in a number of different formats using the navigation bar format controls:</p>
+
+	<dl>
+		<dt>Document</dt>
+		<dd>Displays results as a document. A popup control enables formatting as text, XML, or plist.</dd>
+
+		<dt>Icon</dt>
+		<dd> Displays a representative image of file results. A QuickLook preview will often be available.</dd>
+
+		<dt>List</dt>
+		<dd> Displays results as a hierarchical list.</dd>
+
+		<dt>Script</dt>
+		<dd>Displays results as returned by the script.</dd>
+
+	</dl>
+
+	<p>It may not be possible to display some or all of a particular result set in every format. KosmicTask will display whatever portion of the results are compatible with the selected format.</p>
+
+	<h3 id="using-saving">Saving Task Results</h3>
+
+	<p>Results may be saved to disk or sent directly to another application. Select the gear icon in the bottom left corner below the results view. Alternatively right (or ctrl-left) click in the results view to display the results menu.</p>
+
+	<dl>
+		<dt>Save Result</dt>
+		<dd>Save the result text as plain text, PDF, RTF, property list or XML.</dd>
+
+		<dt>Save Result Files</dt>
+		<dd>Save any files returned by the task.</dd>
+
+		<dt>Send Result To</dt>
+		<dd>Send the result text to either Excel, Mail, Pages, TextEdit or Word.</dd>
+	
+	</dl>
+
+	<p>These results processing features are implemented as a series of extensible plug-ins.</p>
+
+	<h3 id="using-publishing">Publishing a Task</h3>
+
+	<p>You may publish a task to make it visible to all users or un-publish it to restrict access only to trusted users who can authenticate.</p>
+	
+	<ul>
+		<li>Select the configuration task mode and enter password and user name if required.</li>
+		<li>In the task browser check the checkbox next to a task name to publish it.</li>
+		<li>Clear the checkbox to un-publish a task.</li>
+		<li>You may publish/un-publish groups of tasks using the Group table checkboxes.</li>
+		<li>Leave configuration mode by selecting either public or trusted user mode. You will be prompted to either save or discard your configuration changes.</li>
+	</ul>
+
+	<h2 id="working-with-tasks" class="section">Working with Tasks and Results</h2>
+
+	<p>KosmicTask provides flexible management of your tasks and results with the aim of providing an efficient workflow that makes it easy to manage multiple tasks and numerous result sets. Features are provided to enable the results of one task to be easily retrieved as input for another.</p>
+
+	<h3>Tasks</h3>
+
+	<p>A task runs within a tabbed instance of the task pane. You may run multiple tasks at once, either locally or remotely, and each task will run in its own tabbed task pane. Each tab also maintains a history of the tasks that were run within it and the results that were returned.</p>
+	
+	<p>When a task is selected in the task browser it will replace the task in the current task view except in the following cases:</p>
+
+	<dl>
+		<dt>Task already exists in another view</dt>
+		<dd>The existing task will be selected.</dd>
+
+		<dt>Current task view is running a task</dt>
+		<dd>A new task view will be created.</dd>
+
+		<dt>Current task view is pinned</dt>
+		<dd>Pinning prevents a task from being replaced. A new task view will be created.</dd>
+	</dl>
+
+	<p>The above behaviour may be modified using the task browser context menu. Alternatively use <strong>command-click</strong> to open the task in a new tab and <strong>option-click</strong> to open in a separate task window. A task window is merely a detached instance of a task view. You may also detach a task view as a separate window using the task navigation bar.</p>
+
+	<h3>Results</h3>
+
+	<p>Many tasks will produce displayable results though some may not. In these cases an informational message will be displayed.</p>
+
+	<p> KosmicTask includes an integrated file transfer capability that it makes it easy to return the contents of a file as a result.</p>
+
+	<p>Results may consist of two types of data: <strong>textual data</strong> and <strong>file data</strong></p>
+	
+	<dl>
+		<dt>Text result type</dt>
+		<dd>The task returns data that can de displayed as text. The script may have returned a string, number, alias, list or record. KosmicTask will attempt to display all the available data as text.</dd>
+
+		<dt>File result type</dt>
+		<dd>The task returns data that is to be interpreted as the contents of a file. KosmicTask will display an icon representing the file contents in its icon view and use QuickLook to display the actual contents if possible.</dd>
+
+	</dl>
+
+	<p>A script may return a result that contains both textual data and file data. In addition the script may return multiple instances of file data representing multiple files and file types.</p>
+
+	<h3>Navigation Bars</h3>
+
+	<p>The navigation bars appears along the top of each task view. There is one for the input view and one for the results view.</p>
+
+	<h4>Input View Navigation Bar</h4>
+
+	<img src="gfx/input-function-bar.png"  alt="input bar">
+
+	<dl>
+		<dt>Pin task</dt>
+		<dd>Keep task permanently in view. Task cannot be replaced by another.</dd>
+
+		<dt>Detach task view as window</dt>
+		<dd>Detach the task view tab (inputs and results) and display as a window.</dd>
+
+		<dt>Task name and list</dt>
+		<dd>Name of the currently displayed task. Click to display list of all tasks that have been run in the view. Select <strong>ready</strong> to clear existing results.</dd>
+
+		<dt>Prev/next task</dt>
+		<dd>Select previous/next task in task name list.</dd>
+
+		<dt>Match results to task</dt>
+		<dd>Match displayed results to current task. Result list will be displayed in red if results do not match.</dd>
+
+		<dt>Task number and count</dt>
+		<dd>The current position of the task within the task list and the total number of tasks run.</dd>
+
+		<dt>Drag thumb</dt>
+		<dd>Task split view drag thumb.</dd>
+	</dl>
+
+	<h4>Results View Navigation Bar</h4>
+
+	<img src="gfx/results-function-bar.png"  alt="results bar">
+
+	<dl>
+		<dt>Pin results to task</dt>
+		<dd>When pinned the task and results always correspond. Un-pin to allow independent display of tab tasks and results. This is useful when using the results of one task as input to another.</dd>
+
+		<dt>Detach results as window</dt>
+		<dd>Detach a copy of the task results view and display as a window</dd>
+
+		<dt>Task results name list</dt>
+		<dd>Name of the currently displayed task results. Click to display list of all results that have been obtained in the view. Select ready to clear.</dd>
+
+		<dt>Prev/next results</dt>
+		<dd>Select previous/next results in the list.</dd>
+
+		<dt>Match task to results</dt>
+		<dd>Match displayed task to current results. Results list will be displayed in red if displayed task does not match displayed results.</dd>
+
+		<dt>Results number and count</dt>
+		<dd>The current position of the results within the results list and the total number of results obtained.</dd>
+
+		<dt>Document</dt>
+		<dd>Format results as a text document.</dd>
+
+		<dt>Icon</dt>
+		<dd>Format results as icon or image. Only applies to files returned within the results. If a QuickLook preview of the files contents is available then it will be displayed. Otherwise a generic icon will be used.</dd>
+
+		<dt>List</dt>
+		<dd>Format results as a hierarchical list.</dd>
+
+		<dt>Script</dt>
+		<dd>Format results as they were returned by the script. This is useful if you want to incorporate the results directly into another script.</dd>
+
+	</dl>
+
+	<h3>Task Status View</h3>
+
+	<p>The task status view displays the progress of the task's execution. Each task will progress through several stages:</p>
+
+	<p><img src="gfx/task-status.png"  alt="status"></p>
+
+	<dl>
+		<dt>Ready</dt>
+		<dd>The task has yet to be run.</dd>
+
+		<dt>Started</dt>
+		<dd>The task has been requested to run.</dd>
+
+		<dt>Sending...</dt>
+		<dd>The task request is being sent along with its input data. If the input contains file data then the contents of the file(s) are sent. Transfer progress is displayed.</dd>
+
+		<dt>Sent</dt>
+		<dd>The task request was successfully sent and acknowledged.</dd>
+
+		<dt>Running..</dt>
+		<dd>The task is currently running.</dd>
+
+		<dt>Run (complete)</dt>
+		<dd>The task has finished running and will send back its results.</dd>
+
+		<dt>Receiving...</dt>
+		<dd>The task response is being received along with any results data. If the results contain file data then the contents of the file(s) are sent. Transfer progress is displayed.</dd>
+
+		<dt>Received</dt>
+		<dd>The task results have been received.</dd>
+
+		<dt>Processing..</dt>
+		<dd>The task results are being processed.</dd>
+
+		<dt>Processed</dt>
+		<dd>The task results have been processed.</dd>
+
+		<dt>Finished</dt>
+		<dd>The task has finished without errors.</dd>
+
+	</dl>
+
+	<p>If an error is encountered then a warning status alert will be displayed and the task will be stopped. To find out more about the error condition open the <a href="#console">console</a> using menu item <strong>Window - Console</strong> (or Command-L).</p>
+
+	<h3>Task History View</h3>
+
+	<p>The task history displays a list of all the tasks that have been requested on both local and remote machines.</p>
+
+	<ul>
+		<li>To run a previous task select it from the history list.</li>
+		<li>If the task has inputs they will also be retrieved from the history.</li>
+		<li>Results are not saved into the history.</li>
+		<li>Tasks that were requested on machines that are not currently available will display a greyed out icon</li>
+	</ul>
+
+	<h3>Task Script View</h3>
+
+	<p>The task script view displays the actual script text that will be executed for a given task.</p>
+
+	<ul>
+		<li>Script text will only be displayed for trusted users. Enter <a href="#configuration-modes">trusted user task mode</a> in order to enable script viewing.</li>
+		<li>Scripts are read only. To modify the script enter <a href="#configuration-modes">configuration task mode</a> and select <strong>edit</strong> from the toolbar.</li>
+	</ul>
+
+	<h3>Searching</h3>
+
+	<p>Spotlight powered task searching is available for both local and remote instances of KosmicTask. Enter a search term into the Search toolbar control and press <strong>Enter</strong> to begin the search. The browser pane will display the task search results view. To run a task select it from the search results.</p>
+
+	<p><img src="gfx/searching.png"  alt="searching"></p>
+
+	<p>Search view options:</p>
+
+	<dl>
+		<dt>This Mac</dt>
+		<dd>Search the local machine only.</dd>
+
+		<dt>Machine 1, Machine 2, ...</dt>
+		<dd>Search a named remote machine.</dd>
+
+		<dt>Shared</dt>
+		<dd>Search all remote machines.</dd>
+
+		<dt>Contents</dt>
+		<dd>Search all the contents of the task.</dd>
+
+		<dt>Script</dt>
+		<dd>Search for script keywords only in the task.</dd>
+
+	</dl>
+	
+	<p>The search facility depends upon Spotlight being enabled on all machines. Searching on Internet connected machines is fully supported.</p>
+
+	<p>The returned search results always correspond to the prevailing task mode. So only publicly available task matches will be returned when public task mode is selected. If more matches are available in trusted user mode then a <strong>+</strong> will be appended to the reported number of search results found. So <strong>0 Found +</strong> means that 0 public task matches were found but that some matches were found for trusted user mode.</p>
+
+	<h2 id="networking" class="section">Networking and Communications</h2>
+
+	<p>Tasks are utilised and managed on remote instances of KosmicTask in the same way as local tasks. The sidebar lists:</p>
+
+	<ol>
+		<li>All the currently reachable instances of KosmicTask.</li>
+		<li>The current task mode (displays task mode icon except for public mode which is left blank).</li>
+		<li>The number of available tasks (colour coded to the task mode).</li>
+		<li>Connectivity problems. Alert symbol displayed. See the application <a href="#console">console log</a> for detail.</li>
+	</ol>
+
+	<h3 id="connections">Managing Connections</h3>
+
+	<p>Bonjour is used to achieve automatic discovery of local network instances of KosmicTask. Should you wish to connect to a local instance that does not have Bonjour configured or to a remote IP or Internet based instance then click the + button at the foot of the sidebar.</p>
+
+	<p><img src="gfx/manual-connection.png"  alt="connection"></p>
+
+ 	<dl>
+
+		<dt>Connect to</dt>
+		<dd>Domain name or IP address to connect to. Connection will only succeed if the target machine is accessible at the port specified below and is running a copy of KosmicTask.</dd>
+
+		<dt>Port number</dt>
+		<dd>KosmicTask defaults to using registered TCP port number 7742.</dd>
+
+		<dt>Display name</dt>
+		<dd>Friendly name for IP connections.</dd>
+
+		<dt>Secure connection (SSL)</dt>
+		<dd>The connection uses secure transport. Selection must match setting on connection target machine.</dd>
+
+		<dt>Reconnect on start-up</dt>
+		<dd>The manual connection will be reinstated on start-up  if the connection is added to the favourites list.</dd>
+
+		<dt>Favorite Kosmic Task Locations</dt>
+		<dd>A persistent list of favorite locations.</dd>
+
+	</dl>
+
+	<p>To disconnect from a manually established connection click the - button at the foot of the sidebar</p>
+
+	<h3 id="internet-sharing">Internet Sharing</h3>
+
+	<p>An integrated port mapper is included to facilitate easy access to KosmicTask from the Internet. By default Internet sharing is disabled. The current Internet sharing status is displayed in the bottom right hand corner of the application window.</p>
+
+	<p>When enabling Internet sharing you should be aware that all public scripts will be available to any user who connects via the Internet. If in doubt about this un-publish all of your tasks so that users are forced to authenticate. Always ensure that SSL encryption is selected when enabling Internet sharing (see application Preferences - Security).</p>
+
+	<p>To enable Internet sharing click the Internet status display or select the <strong>Internet</strong> tab in the preferences panel at <strong>KosmicTask - Preferences</strong>. Note that the automatic sharing facility requires a UPnP or NAT-PMP compliant router. In the absence of this a manual router configuration will be required in order to accept incoming external requests.</p>
+
+	<p><img src="gfx/internet-sharing.png"  alt="internet"></p>
+
+	<dl>
+
+		<dt>Allow other users to connect via the Internet</dt>
+		<dd>Enable external users to connect via the Internet. Click <strong>Start</strong> to begin sharing and <strong>Stop</strong> to end. If the operation is successful the sharing indicator will turn green. Otherwise an error condition will be reported.</dd>	
+
+		<dt>External port number</dt>
+		<dd>The TCP port number on which the router should accept external connections. By default all instances of KosmicTask use this port for local and remote network communication.</dd>
+
+		<dt>External IP address</dt>
+		<dd>The external IP address of your router. Remote KosmicTask users wishing to connect should enter this IP address into the <strong>Connect to</strong> field of the <a href = "#connections">connections panel</a>.</dd>
+
+		<dt>Gateway name</dt>
+		<dd>Router/gateway name as reported by router.</dd>
+
+		<dt>Automatically start Internet sharing</dt>
+		<dd>Internet sharing will start automatically whenever KosmicTask is launched. Defaults to off</dd>
+
+	</dl>
+
+	<h4>Manual Router Configuration</h4>
+
+	Consult your router documentation to determine how to open an external port (7742) and direct it to the local IP of your machine on port 7742. Should you need to obtain your local network IP address you can consult <strong>System Preferences-Network</strong> (select the connected interface - Airport, Built-in Ethernet etc).
+
+
+	<h3 id="security">Security</h3>
+
+	<p>By default all communications to and from KosmicTask are encrypted using SSL (TLS v1) to ensure privacy. This applies to local, remote and Internet based communication. If the application is being used in a single user or trusted environment then the encryption can be disabled if performance/network throughput has to be maximised. A closed padlock icon in the top right of the application windows indicates that a secure connection is currently in use.</p>
+
+	<p><strong>Note: </strong>A KosmicTask hosted script has the capability to obtain data from many application and operating system sources. This data may be of a personal or sensitive nature. It is therefore important that the SSL encryption remains enabled so that data transmitted over public networks cannot be observed. Only disable the encryption if you are using KosmicTask in a private or secure network environment.</p>
+
+	<p>Security settings can be found on the <strong>Preferences - Security</strong> tab.</p>
+ 
+	<p><img src="gfx/preferences-security.png" alt="security"></p>
+
+	<dl>
+
+		<dt>Disclose your username to other KosmicTask users</dt>
+		<dd>By default your user name will not be visible to other KosmicTask users in the sharing information browser view.  You may optionally disclose your user name only to local users or to all users. When logging in to remote instances of KosmicTask a valid user name and password combination may be required.</dd>
+
+		<dt>Keep your information secure</dt>
+		<dd>SSL encryption is enabled by default and is the recommended configuration.</dd>
+
+		<dt>Show SSL Certificate</dt>
+		<dd>SSL encryption requires a digital certificate in order to establish a secure connection and to maintain the integrity of that connection. By default KosmicTask will generate a suitable self signed root certificate and store it in the Keychain for future use. The fact that the certificate reports "This root certificate is not trusted" is not indicative of an error or problem. It merely highlights the fact that the certificate is a self signed root and was not issued by a root authority such as Thawte, VeriSign or Comodo. KosmicTask uses the certificate solely to enable encryption not to establish a trust relationship.</dd>
+
+	</dl>
+
+	<h4>Password Security</h4>
+
+	<p>All entered user passwords, for either the local or remote instances of KosmicTask, may be saved into the system Keychain for secure storage and easy retrieval. KosmicTask relies upon SSL encryption being enabled in order to maintain password security over the network. If you disable the default encryption then your password may be retrievable from the network data stream.</p>
+
+	<h2 id="managing" class="section">Managing Tasks</h2>
+
+	<p>Enter <a href="#configuration-modes">configuration mode</a> in order to create, edit and manage tasks. You may configure and manage both local and remote instances of KosmicTask in the same manner.</p>
+
+	<p>Configuration mode functionality:</p>
+
+	<ul>
+		<li><a href="#using-publishing">Publish a task</a></li>
+		<li><a href="#using-publishing">Un-publish a task</a></li>
+		<li>Create a task</li>
+		<li>Edit, compile and test a task</li>
+		<li>Duplicate a task</li>
+		<li>Delete a task</li>
+		<li>Manage task groups</li>
+		<li>Assign task ratings</li>
+		<li>Assign task labels</li>
+	</ul>
+
+	<h3>Task Types</h3>
+
+	<p>There are two types of tasks:</p>
+
+	<dl>
+		<dt><img src="gfx/config16x16.png"  alt="config">Applications Tasks</dt>
+		<dd>Tasks provided by default and intended to serve as example material and as templates for user tasks. Application tasks cannot be directly edited or deleted. Duplicate an application task to create an editable user copy.</dd>
+
+		<dt><img src="gfx/user16x16.png"  alt="user">User Tasks</dt>
+		<dd>User defined and created tasks.</dd>
+
+	</dl>
+
+	<p>The task type icon precedes the task name in the task browser.</p>
+
+	<h3>Task Operations</h3>
+
+	<p></p>
+	<dl>
+		<dt>Create a task</dt>
+		<dd>Select <strong>New</strong> from the tool bar or menu item <strong>File - New</strong> (command-N). The <a href="#task-edit-window-layout">task edit window</a> will open.</dd>
+
+		<dt>Edit a task</dt>
+		<dd>Select <strong>Edit</strong> from the tool bar or menu item <strong>File - Edit...</strong> (command-E). The task edit window will open. A duplication prompt sheet will be displayed if an application task is selected for editing.</dd>
+
+		<dt>Duplicate a task</dt>
+		<dd>Select <strong>Duplicate</strong> from the tool bar or menu item <strong>File - Duplicate</strong> (command-D). The Task edit window will open containing a mutable copy of the selected task.</dd>
+
+		<dt>Delete a task</dt>
+		<dd>Select <strong>Delete</strong> from the tool bar or menu item <strong>File - Duplicate</strong> (command-delete). </dd>
+
+	</dl>
+
+	<h3>Task Names and Groups</h3>
+
+	<p>Tasks may be assigned to groups for easy management and browsing. To assign or modify the icon associated with a group right click on the group name and select <strong>Group Icon...</strong> from the context menu. Groups may be published and unpublished as a whole.</p>
+
+	<p>Each task requires a name but there is no requirement that this name be unique throughout the application. When a task is duplicated an identifying tag is appended to the task name. The duplicated task name can be modified as required.</p>
+	
+	<h3>Task Ratings and Labels</h3>
+
+	<p>Tasks may be rated and labelled to assist with classification and identification. Right click in the task browser to display the context menu.</p>
+
+	<dl>
+		<dt>Rating</dt>
+		<dd>A value from none to 5 stars.</dd>
+
+		<dt>Label</dt>
+		<dd>A finder style coloured label.</dd>
+	</dl>
+
+	<h2 id="how-tasks-work" class="section">How Task Scripting Works</h2>
+
+	<p>KosmicTask subdivides the process of creating and editing tasks into three different stages.</p>
+
+	<ol>
+		<li>Defining the task's configuration and parameters.</li>
+		<li>Editing and compiling the task.</li>
+		<li>Testing the task.</li>
+	</ol>
+	
+	<p>Once you have finished defining, editing and testing your task you will be prompted to save it, at which point it will be added to the task browser list. You can create, edit, compile and test tasks on both the local and remote machines.</p>
+
+	<h3>Defining the Task</h3>
+
+	<p>Create or edit an existing task. The <a href="#task-edit-window-layout">task edit window</a> will open.</p>
+	
+	<p><strong>Task Detail</strong>: the left hand view.</p>
+
+	<p>Your task needs to have a name and it needs to belong to a group. Note that the task name does not have to be unique. You may also enter a short and long description for your task. This information will be visible to the user when the task is run. You may also enter additional information about the task's author.</p>
+
+	<p><strong>Script Detail</strong>: the right hand view.</p>
+
+	<p>Each task has an associated script. When the task is run a routine (or handler) within the script is called. KosmicTask supports 4 handler definitions:</p>
+
+	<dl>
+
+		<dt>run script</dt>
+		<dd>Calls the implicit run handler or explicit run handler of the form <strong>on run</strong>. This definition does not support parameters.</dd>
+	
+		<dt>run script with parameters</dt>
+		<dd>Calls the explicit run handler of the form <strong>on run{}</strong>. This definition supports optional parameters. Note the use of { }.</dd>
+	
+		<dt>call default handler</dt>
+		<dd>Calls the default application handler of the form <strong>on kosmicTask()</strong>. This definition supports optional parameters.</dd>
+	
+		<dt>call user defined handler</dt>
+		<dd>Calls a user defined handler. This definition supports optional parameters.</dd>
+	
+	</dl>
+	
+	<p>Simple scripts, such as the following, may make use of the implicit run handler when no script parameters are required. In this case no actual entry handler is defined within the script and execution begins at the outermost statement.</p>
+
+	<div class="applescript">
+
+	<span class="kw1">display dialog</span> <span class="st0">&quot;Implicit run handler called&quot;</span>
+
+	</div>
+
+	<p>You may alternatively define an explicit run handler with optional arguments:</p>
+
+	<div class="applescript">
+
+	<span class="kw3">on</span> <span class="kw1">run</span><span class="br0">&#123;</span><span class="br0">&#125;</span><br />
+	<span class="kw1">&nbsp; &nbsp; display dialog</span> <span class="st0">&quot;Explicit run handler called&quot;</span><br />
+	<span class="kw3">end</span> <span class="kw1">run</span>
+
+	</div>
+
+	<p>KosmicTask defaults to using a handler named <strong>kosmicTask</strong>. The use of this handler makes it explicit within the script where KosmicTask execution will begin.</p>
+	
+	<div class="applescript">
+
+	<span class="kw3">on</span> kosmicTask<span class="br0">&#40;</span><span class="br0">&#41;</span><br />
+	<span class="kw1">&nbsp; &nbsp; display dialog</span> <span class="st0">&quot;Default run handler called&quot;</span><br />
+	<span class="kw3">end</span> kosmicTask
+
+	</div>
+
+	<p>Lastly you may define a custom handler.</p>
+	
+	<div class="applescript">
+
+	<span class="kw3">on</span> myHandler<span class="br0">&#40;</span><span class="br0">&#41;</span><br />
+	<span class="kw1">&nbsp; &nbsp; display dialog</span> <span class="st0">&quot;Custom run handler called&quot;</span><br />
+	<span class="kw3">end</span> myHandler
+
+	</div>
+
+	<p>Some tasks do not require any additional user input. For example, a task to empty the trash may not need any additional input information. But a task that is going to merge two images together certainly will.</p>
+
+	<p>To add or remove input parameters to your task select the + and - buttons.</p>
+
+	<p>Each input requires a name and a description. Again, this information is used to provide feedback to the user when the task is run.</p>
+
+	<p>Each input also requires a type. KosmicTask provides support for the following input parameter types:</p>
+
+	<ol>
+		<li>Text - sends text to your task.</li>
+		<li> Number - sends a number to your task.</li>
+		<li> Date - sends a date to your task.</li>
+		<li> List - select an item from a list and send it to your task.</li>
+		<li> File contents - select a file and send its content to your task.</li>
+	</ol>
+		
+	<p>You may add as many inputs of whatever type to your task as you required. Each input can be generally configured with an initial value. KosmicTask implements these inputs as loadable bundles so that different input types can be added as required.</p>
+
+	<p>Once the task handler and parameters have been defined enter your script in the Edit Task Script view. In order for the script to be callable by the task it must contain the handler routine that you previously defined.</p>
+	
+	<p>Once you have edited you script text click the compile button. You should be aware that you can readily edit and compile your scripts from another networked machine. In such a case your script is sent over the network, compiled and the result returned. You do not need to target the remote machine in your script as the script will be executed remotely. Once the script is complete and compiles correctly you can test it in the Run Task view.</p>
+
+	<p>Note that although you can run and test your task in the Run Task view like any other script it has not yet been saved and will not display in the task browser. To save the task select menu item <strong>File - Save</strong> (command-S) or close the edit window.</p>
+	
+	<h3>Task Results</h3>
+
+	<p>Your task script may return one of the following AppleScript data types and KosmicTask will display it appropriately.</p>
+
+	<ul>
+		<li>Boolean</li>
+		<li>Integer</li>
+		<li>Real</li>
+		<li>Date</li>
+		<li>String</li>
+		<li>File</li>
+		<li>List</li>
+		<li>Record</li>
+	</ul>
+
+	<p>If you need to return more than one value use either a list or record.</p>
+
+	<div class="applescript">
+
+	<span class="kw3">return</span> <span class="br0">&#123;</span>message:<span class="st0">&quot;done&quot;</span>, time:<span class="nu0">1.5</span><span class="br0">&#125;</span>
+
+	</div>
+
+	<h3>Returning the Contents of a File</h3>
+
+	<p>In some situations you may wish to return the actual contents of a file rather than a string data containing a file path name. This can be achieved by returning a record type containing an item named <strong>kosmicFile</strong>. So if you have a file whose path is stored as myFilePath you can simply return the contents of that file with:</p>
+
+	<div class="applescript">
+
+	<span class="kw3">return</span> <span class="br0">&#123;</span> kosmicFile:myFilePath<span class="br0">&#125;</span>
+	
+	</div>
+
+
+	<p>If you want to return the contents of more than one file simply return a list of file paths:</p>
+
+	<div class="applescript">
+
+	<span class="kw3">return</span> <span class="br0">&#123;</span> kosmicFile:<span class="br0">&#123;</span>myFilePath, anotherFilePath<span class="br0">&#125;</span><span class="br0">&#125;</span>
+
+	</div>
+
+	<p>If you want to return value data along with the file contents then simple define other record items:</p>
+
+	<div class="applescript">
+
+	<span class="kw3">return</span> <span class="br0">&#123;</span> kosmicFile:<span class="br0">&#123;</span>myFilePath, anotherFilePath<span class="br0">&#125;</span>, info:<span class="st0">&quot;2 files&quot;</span><span class="br0">&#125;</span>
+
+	</div>
+
+	<h3>Styling Results</h3>
+
+	<p>KosmicTask supports the styling of results using standard CSS properties and values. We identify the data to be styled using the <strong>kosmicData</strong> record name and define the CSS styling string using the <strong>kosmicStyle</strong> record name.</p>
+
+	<div class="applescript">
+
+	<span class="kw3">return</span> <span class="br0">&#123;</span>kosmicData:<span class="st0">&quot;Make me big and red&quot;</span>, kosmicStyle:<span class="st0">&quot;color:red;font-size:120%&quot;</span><span class="br0">&#125;</span>
+
+	</div>
+
+	<p>Which will result in:</p>
+	<div class="applescript" style="color:red;font-size:120%;">Make me big and red</div>
+
+	<p>Styling can be applied to all data types. In the case of lists and records the styling will cascade down to any enclosed types unless it is overridden by another <strong>kosmicStyle</strong> item.</p>
+
+	<div class="applescript">
+<span class="kw3">set</span> theRebel <span class="kw3">to</span> <span class="br0">&#123;</span>kosmicData:<span class="st0">&quot;Not me, I want to be red&quot;</span>, kosmicStyle:<span class="st0">&quot;color:red&quot;</span><span class="br0">&#125;</span><br /><br />
+
+<span class="kw3">set</span> myResult <span class="kw3">to</span> <span class="br0">&#123;</span><span class="st0">&quot;I want to be blue&quot;</span>, <span class="st0">&quot;Me too&quot;</span>, <span class="st0">&quot;True blue&quot;</span>, theRebel<span class="br0">&#125;</span><br /><br />
+
+ <span class="kw3">return</span> <span class="br0">&#123;</span>kosmicData:myResult, kosmicStyle:<span class="st0">&quot;color:blue&quot;</span><span class="br0">&#125;</span>
+	</div>
+
+	<p>Which will result in:</p>
+
+
+	<div class="applescript" style="color:blue;">
+		I want to be blue<br />
+		Me too<br />
+		True blue<br />
+		<span style="color:red;">Not me, I want to be red</span>
+	</div>
+
+	<p>To view all tasks that use styling enter "kosmicStyle" into the application search field.</p>
+
+	<h4>CSS Styling Properties</h4>
+
+	<p>The following CSS properties and values are supported within <strong>kosmicStyle</strong> named value strings:</p>
+
+	<dl>
+		<dt>color, background-color
+			<dd>named colors (white, black, aqua, blue, gray, green, fuchsia, lime, maroon, navy, olive, purple, red, silver, teal, yellow)	
+			<dd>color hex eg: #FFFFFF
+			<dd>color rgb eg: rgb(255,255,255)
+
+		<dt>font-size, line-height
+			<dd> pt, px, em, %	
+
+		<dt>font-weight
+			<dd> normal, bold
+	
+		<dt>font-style
+			<dd> normal, italic
+
+		<dt>text-decoration
+			<dd> none, underline
+
+	</dl>
+	<h2 id="creating" class="section">Creating and Editing Tasks</h2>
+
+	<p id="task-edit-window-layout">Task edit window layout:</p>	
+
+	<p><img src="gfx/editwindow-config-layout.png"  alt="edit window layout"></p>
+
+	The task edit window supports three different views as selected by the edit workflow control.
+	<dl>
+		<dt>Configure Task</dt>
+		<dd>Configure the task detail and define the script handler and any required input parameters.</dd>
+
+		<dt>Edit Task Script</dt>
+		<dd>Edit and compile the task script.</dd>
+
+		<dt>Run Task</dt>
+		<dd>Run and test the task.</dd>
+	</dl>
+	
+	<h3>Configure Task Detail</h3>
+
+	<p>Configure task definition and descriptive information.</p>
+
+	<dl>
+		<dt>Definition</dt>			
+		<dd>
+			<ul>
+				<li><strong>Name</strong>: the task name as displayed in the task browser.</li> 
+				<li><strong>Type</strong>: the script type. Currently AppleScript only.</li>
+				<li><strong>Group</strong>: the task's container group. Select an existing group or enter a new group name.</li>	
+			</ul>
+		</dd>
+
+		<dt>Description</dt>			
+		<dd>
+			<ul>
+				<li><strong>Short Description</strong>: short description as displayed in task view.</li> 
+				<li><strong>Long Description</strong>: long description. Supports attributed text. Images may be dragged and dropped. Useful for more complex tasks were comprehensive instruction needs to be provided to the user.</li>	
+			</ul>
+		</dd>
+
+		<dt>Info</dt>			
+		<dd>
+			<ul>
+				<li><strong>Author</strong>: Task author.</li> 
+				<li><strong>Note</strong>: Author note. Original script source, references etc.</li>	
+				<li><strong>Created</strong>: Task created date.</li>	
+				<li><strong>Modified</strong>: Task modified date.</li>	
+				<li><strong>Version</strong>: Task version. Can increment automatically with each save.</li>	
+			</ul>
+		</dd>
+
+		<dt>Options</dt>			
+		<dd>
+			<ul>
+				<li><strong>Task must complete in specified time</strong>: Set task timeout. If task does not complete in specified time it will be automatically terminated.</li> 
+			</ul>
+		</dd>
+
+	</dl>
+
+	<h3>Configure Script Detail</h3>
+	
+	<p>Configure script handler and optional parameters.</p>
+
+	<dl>
+		<dt>Script Handler</dt>			
+		<dd>
+			<ul>
+				<li><strong>On run task</strong>: the name of the script subroutine or handler to be called when the task is run.</li> 
+				<li><strong>Script handler name</strong>: the name selected above.</li>
+				<li><strong>Script parameters</strong>: the number of parameters to be passed  to the script.</li>	
+				<li><strong>Copy</strong>: copy the script name and parameter list. This can be pasted directly into the script.</li>
+			</ul>
+		</dd>
+
+		<dt>Script Parameters</dt>			
+		<dd>A list of defined parameters, types and defaults. Use the <strong>+</strong> and <strong>-</strong> buttons to add and remove parameters. Parameters may also be deleted using the <strong>x</strong> button in the parameter title bar.</dd>
+	</dl>
+
+	<h3>Edit Task Script</h3>
+
+	<p>Edit task script window layout:</p>
+
+	<p><img src="gfx/editwindow-edit-layout.png"  alt="edit window edit layout"></p>
+
+	<dl>
+		<dt>Compile</dt>			
+		<dd>Compile the script. Scripts for remote machines will be dispatched for compilation on the remote machine.</dd>
+
+		<dt>Dictionary</dt>			
+		<dd>Display dictionaries for applications on the local machine. Dictionaries for remote machines are not available.</dd>
+	</dl>
+
+	<h3>Run Task</h3>
+
+	<p>A task view in which to run and test the task.</p>
+
+	<h2 id="prefs-etc" class="section">Preferences, Feedback and the Console</h2>
+	
+	<p>To display the preferences panel select the application menu item <strong>KosmicTask - Preferences...</strong></p>
+
+	<h4>General</h4>
+
+	<dl>
+		<dt>Publish my tasks when I log in</dt>
+		<dd>The KosmicTask server agent will start as soon as you log in so that your tasks become available over the network. The main KosmicTask application and window will not start.</dd>
+
+		<dt>Check for application updates at startup</dt>
+		<dd>The application will check for updates at startup. If an update is found you will be prompted to install it. You may check for updates manually using the application menu item <strong>KosmicTask - Check for Updates...</strong></dd>
+
+	</dl>
+
+	<h4>Tabs</h4>
+
+	<dl>
+		<dt>Command-click opens a task in a new tab</dt>
+		<dd>Enables click opening of tasks in new tabs.</dd>
+
+		<dt>Alt-click opens a task in a new tab</dt>
+		<dd>Enables click opening of tasks in new windows.</dd>
+
+		<dt>Confirm when closing multiple tabs</dt>
+		<dd>Enable confirmation message.</dd>
+	</dl>
+
+	<h4>Security</h4>
+
+	<p>The security tab is described <a href="#security">here.</a></p>
+
+	<h4>Internet</h4>
+
+	<p>The Internet tab is described <a href="#internet-sharing">here.</a></p>
+
+	<h3 id="feedback">Feedback and Support</h3>
+
+	<p>We welcome all feedback and comments with regard to KosmicTask. Good or bad, we would like to know!</p>
+
+	<p>To display the feedback panel select the blue feedback icon in the top right hand corner of the title bar or select the application menu item <strong>KosmicTask - Feedback and support...</strong></p>
+
+	<p>Using the feedback panel you can:</p>
+
+	<ul>
+		<li>Ask a support question.</li>
+		<li>Send us an application feature request.</li>
+		<li>Send us a bug report.</li>
+		</ul>
+
+	<p>You may optionally include your email address if you require a reply. The feedback is sent directly to Mugginsoft and does not utilise email.</p>
+
+	<h3 id="console">The Console</h3>
+
+	<p>To display the console window select menu item <strong>Window - Console</strong> or keyboard shortcut <strong>command-L</strong>.</p>  
+
+	<p><img src="gfx/console.png"  alt="console"></p>
+
+	<dl>
+		<dt>Errors</dt>
+		<dd>Displays a list of application errors including the error source and code. More information on a particular error may be available in the log.</dd>
+
+		<dt>Log</dt>
+		<dd>Displays a real time log of informational, diagnostic and error messages relating to KosmicTask.</dd>
+
+		<dt>Clear</dt>
+		<dd>Clears both the error list and the log.</dd>
+
+		<dt>Send</dt>
+		<dd>Sends the contents of the console window to Mugginsoft support via email. Use this facility to report bugs and problems. Alternatively copy and paste the log contents into the <a href="#feedback">feedback panel</a>.</dd>
+
+	</dl>
+
+	<h2 id="licensing" class="section">Licensing</h2>
+
+	<p>To display the Licences panel click application menu item <strong>KosmicTask - Licences...</strong></p>
+
+	<p>KosmicTask ships with a default trial licence file that provides limited functionality for application appraisal purposes. A full licence must be installed to enable all application features.</p>
+
+	<dl>
+		<dt>Available Licences</dt>
+		<dd>Lists the currently installed licences.</dd>
+	
+		<dt>Licence Details</dt>
+		<dd>Lists the information contained within the licence.</dd>
+
+		<dt>Buy Licences...</dt>
+		<dd>Buy licences from the Mugginsoft website.</dd>
+	
+		<dt>Remove Licence</dt>
+		<dd>Remove selected licence. If all full licences are removed the application will revert to trial functionality.</dd>
+	
+		<dt>Add Licence...</dt>
+		<dd>Select a licence file to install it. KosmicTask licence files end with the extension .ktlic. Aternatively, you may install a licence by double clicking the licence file in the finder.</dd>	
+
+	</dl>
+	
+	<div style="float:right; text-align:right; font-size:90%;">
+		<p><strong>Notes</strong></p>
+		<p>Updated 13th April 2010</p>
+		<p>Code syntax highlighting generated using <a href="http://qbnz.com/highlighter">GeSHi</a></p>
+	</div>		
+		
+		<!-- help code ends -->
+		
+		</div> <!-- help -->
+		</div> <!-- frame -->
+	</body>
+
+</html>

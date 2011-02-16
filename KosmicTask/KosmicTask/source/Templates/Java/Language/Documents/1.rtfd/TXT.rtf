@@ -1,0 +1,167 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf290
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red102\green102\blue102;\red0\green0\blue255;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\b\fs36 \cf2 Mugginsoft\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0\fs24 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b\fs28 \cf0 Usage\
+\
+\pard\pardeftab720\sl380\sa120\ql\qnatural
+
+\b0 \cf0 Java is a general-purpose, concurrent, class-based, object-oriented language.\
+\
+KosmicTask Java tasks are pre-compiled to byte-code. When the task is executed the byte-code is retrieved and passed to the Java virtual machine.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Calling the Task Run Function
+\b0 \
+\
+KosmicTask Java task execution begins by calling the static 
+\f1\fs22 \cf3 main
+\f0\fs28 \cf0  function on the class identified by the 
+\b Run Class
+\b0  setting. In the following example the task 
+\b Run Class
+\b0  setting must be set to 
+\f1\fs22 \cf3 kosmicTask
+\f0\fs28 \cf0  in order for the main function to be found and called. Any arguments passed to the task will be forwarded to the designated run class main function.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f1\fs22 \cf3 class kosmicTask\
+\{ \
+	public static void main(String args[])\
+    \{\
+    	// send result to stdout\
+		System.out.println("Hello, kosmos!");\
+	\}\
+\}\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Result Objects
+\b0 \
+\
+Java returns results to the client by printing to stdout.\
+\
+To return structured data, including the contents of files, Java powered tasks should format result data using YAML. KosmicTask supports both the YAML inline and block formats.\
+\
+Tasks may either print YAML directly to stdout or make use of the provided 
+\f1\fs22 \cf3 KosmicTaskController
+\f0\fs28 \cf0  class. This class provides a convenience method that prints native Java objects such as 
+\f1\fs22 \cf3 ArrayList
+\f0\fs28 \cf0  and 
+\f1\fs22 \cf3 HashMap
+\f0\fs28 \cf0  directly to stdout in the required YAML format.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f1\fs22 \cf3 import java.util.ArrayList;\
+import com.mugginsoft.KosmicTaskController;\
+\
+class kosmicTask\
+\{ \
+	public static void main(String args[])\
+    \{\
+    	// build dynamic array of planets\
+    	ArrayList<String> planets = new ArrayList<String>();\
+    	\
+    	planets.add("Mercury");\
+    	planets.add("Venus");\
+    	planets.add("Earth");\
+    	planets.add("Mars");\
+    	planets.add("Jupiter");\
+    	planets.add("Saturn");\
+    	planets.add("Uranus");\
+    	planets.add("Neptune");\
+    \
+    	// print native object as YAML\
+		KosmicTaskController.printObject(planets);\
+	\}\
+\}
+\f0\fs28 \cf0 \
+\
+KosmicTaskController coerces the Java objects to YAML using the 
+\f1\fs22 \CocoaLigature0 org.yaml.snakeyaml 
+\f0\fs28 package. This is shipped as part of KosmicTask.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 \CocoaLigature1 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Result File Handling\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 \
+KosmicTask supports the returning of file contents within task results. \
+\
+KosmicTask automatically looks for a 
+\f1\fs22 \cf3 kosmicFile
+\f0\fs28 \cf0  record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.\
+\
+For Java powered tasks files are returned as results using the following YAML dictionary syntax:\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f1\fs22 \cf3 String filename = "filename.png";\
+String result = String.format("--- \{kosmicFile: %s\}", filename);\
+System.out.println(result);\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs28 \cf0 \
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.\
+\
+Java powered tasks can create temporary files simply by creating files in the current working directory.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f1\fs22 \cf3 import java.io.*;\
+class kosmicTask\
+\{ \
+	public static void main(String args[])\
+    \{\
+    	try \{\
+    		String filename = "filename.png";\
+    		\
+    		// execute command\
+    		// files created in the current directory will be deleted when the task ends\
+    		String cmd = String.format("screencapture -t png %s", filename);\
+    		Runtime.getRuntime().exec(cmd);\
+    	\
+    		// return a YAML inline format dictionary with filename\
+    		String result = String.format("--- \{kosmicFile: %s , kosmicInfo: file returned\}", filename);\
+\
+			System.out.println(result);\
+		\} catch (IOException e) \{\
+			\
+			System.out.println("exception: " + e.getMessage());\
+		\}\
+		\
+	\}\
+\}
+\f0\fs28 \cf0 \
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b \cf0 Multiple Class Definitions
+\b0 \
+\
+Java classes, even if they are defined within a single source file, are compiled into separate class files.\
+\
+KosmicTask identifies all class files produced as a result of compilation and collates them. So, in theory, a task can contain any number of class definitions.\
+\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\fs24 \cf0 v1.0 November 2010}

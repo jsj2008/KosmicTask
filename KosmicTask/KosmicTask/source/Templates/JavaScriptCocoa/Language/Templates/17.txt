@@ -1,0 +1,25 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+function kosmicTask() 
+{
+	// form NSDictionary
+	var theDictionary = NSDictionary.dictionaryWithObjects_forKeys(["item 1", "item 2"], ["key 1", "key 2"])
+	
+	// create our CSS styling string
+	var styling = 'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'
+
+	// form result dictionary
+	result = NSDictionary.dictionaryWithObjects_forKeys([theDictionary, styling], ['kosmicData', 'kosmicStyle'])
+	
+	return result
+
+}

@@ -1,0 +1,22 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# the number of task arguments is:
+# $#
+#
+# task arguments are accessed as:
+# $1 .. $n
+# 
+numArgs=$#
+echo "$numArgs command-line arguments."
+
+# "$@" expands to all command line arguments
+for var in "$@"
+do
+	# send result to stdout 
+    echo "$var"
+done

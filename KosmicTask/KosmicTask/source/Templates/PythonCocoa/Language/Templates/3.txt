@@ -1,0 +1,21 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Python Apple Event automation using py appscript
+#
+# Links:
+#
+#
+import appscript
+
+def kosmictask():
+		
+	# get application - for more information see the Python Usage document
+	app = appscript.app('Finder')
+
+	# query application
+	return app.name()

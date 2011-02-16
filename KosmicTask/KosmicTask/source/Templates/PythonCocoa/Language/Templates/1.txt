@@ -1,0 +1,30 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# PyObjC documentation (including framework API notes)
+# http://pyobjc.sourceforge.net/documentation/
+#
+import AppKit
+
+def kosmictask():
+
+	try:
+	
+		# call Cocoa
+		result = AppKit.NSString.stringWithString_("Hello, kosmos!")
+	
+		# return object
+		return {'KosmicData':result}
+	except:
+		return {'KosmicError':"Unexpected error"}
+
+	

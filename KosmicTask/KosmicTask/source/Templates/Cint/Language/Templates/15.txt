@@ -1,0 +1,45 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+#include <stdio.h>
+#include <unistd.h>
+
+int main() 
+{
+	char files[1000];
+	for (int i = 1; i <= 5; i++) {
+		
+		if (i > 1) {
+			strcat(files, ", ");
+		}
+		
+		// capture screen image to file
+		// files created in the current directory will be deleted when the task ends
+		char file[100];
+		sprintf(file, "capture-%i.png", i);
+	
+		char command[100];
+		sprintf(command, "screencapture -t png %s", file);
+	
+		// execute command
+		system(command);
+		
+		strcat(files, file);
+		
+		sleep(1);
+	
+	}
+	
+	// return a YAML inline format dictionary with array of filenames
+	printf("--- {kosmicFile: [%s] , kosmicInfo: file returned}", files);
+	
+    return 0;
+}

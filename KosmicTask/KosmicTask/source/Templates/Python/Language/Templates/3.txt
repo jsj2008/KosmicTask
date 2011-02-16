@@ -1,0 +1,24 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Python Apple Event automation using py-appscript
+#
+# the number of task arguments is:
+# numArgs = len(sys.argv) - 1
+#
+# task arguments are accessed as:
+# sys.argv[1] .. sys.argv[numArgs]
+#
+# Links:
+#
+import appscript
+
+# get application - for more information see the Python Usage document
+app = appscript.app('Finder')
+
+# query application
+print app.name()

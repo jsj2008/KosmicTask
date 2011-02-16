@@ -1,0 +1,96 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+
+import java.util.HashMap;
+import java.util.ArrayList;
+import com.mugginsoft.KosmicTaskController;
+
+class kosmicTask
+{ 
+	public static void main(String args[])
+    {
+    	String name = "name";
+    	String radius = "radius";
+    	String satellites = "satellites";
+    	
+    	// Mercury
+    	HashMap<String, Object> Mercury = new HashMap<String, Object>();
+    	String moonsMercury[] = {"none"};
+    	Mercury.put(name, "Mercury");
+    	Mercury.put(radius, -1);
+    	Mercury.put(satellites, moonsMercury);
+
+    	// Venus
+    	HashMap<String, Object> Venus = new HashMap<String, Object>();
+    	String moonsVenus[] = {"none"};
+    	Venus.put(name, "Venus");
+    	Venus.put(radius, 6052);
+    	Venus.put(satellites, moonsVenus);
+
+    	// Earth
+    	HashMap<String, Object> Earth = new HashMap<String, Object>();
+    	String moonsEarth[] = {"moon"};
+    	Earth.put(name, "Earth");
+    	Earth.put(radius, 6371);
+    	Earth.put(satellites, moonsEarth);
+
+    	// Mars
+    	HashMap<String, Object> Mars = new HashMap<String, Object>();
+    	String moonsMars[] = {"Phobos", "Deimos"};
+    	Mars.put(name, "Mars");
+    	Mars.put(radius, 6371);
+    	Mars.put(satellites, moonsMars);
+
+    	// Jupiter
+    	HashMap<String, Object> Jupiter = new HashMap<String, Object>();
+    	String moonsJupiter[] = {"Io", "Europa", "Ganymede", "Callisto", "(+59 smaller non Galiliean moons)"};
+    	Jupiter.put(name, "Jupiter");
+    	Jupiter.put(radius, 71492);
+    	Jupiter.put(satellites, moonsJupiter);
+
+    	// Saturn
+    	HashMap<String, Object> Saturn = new HashMap<String, Object>();
+    	String moonsSaturn[] = {"Mimas", "Enceladus", "Tethys", "Dione", "Rhea", "Titan", "Iaptus", "(+55 smaller moons)"};
+    	Saturn.put(name, "Saturn");
+    	Saturn.put(radius, 60268);
+    	Saturn.put(satellites, moonsSaturn);
+
+    	// Uranus
+    	HashMap<String, Object> Uranus = new HashMap<String, Object>();
+    	String moonsUranus[] = {"Miranda", "Ariel", "Umbriel", "Titania", "Oberon", " (+22 smaller moons)"};
+    	Uranus.put(name, "Uranus");
+    	Uranus.put(radius, 25559);
+    	Uranus.put(satellites, moonsUranus);
+
+    	// Neptune
+    	HashMap<String, Object> Neptune = new HashMap<String, Object>();
+    	String moonsNeptune[] = {"Triton", "Nereid", "Naiad", "Thalassa", "Despina", "Galatea", "Larissa", "Proteus", "Halimede", "Psamathe", "Sao", "Laomedeia", "Neso"};
+    	Neptune.put(name, "Neptune");
+    	Neptune.put(radius, -1);
+    	Neptune.put(satellites, moonsNeptune);
+
+    	// build dynamic array of planets
+    	ArrayList<HashMap> planets = new ArrayList<HashMap>();
+    	
+    	planets.add(Mercury);
+    	planets.add(Venus);
+    	planets.add(Earth);
+    	planets.add(Mars);
+    	planets.add(Jupiter);
+    	planets.add(Saturn);
+    	planets.add(Uranus);
+    	planets.add(Neptune);
+    
+    	// print native object as YAML
+		KosmicTaskController.printObject(planets);
+	}
+}

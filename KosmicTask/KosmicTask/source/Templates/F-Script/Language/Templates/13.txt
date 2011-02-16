@@ -1,0 +1,23 @@
+"
+
+Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+"
+[
+	"load the addressbook framework"
+	(NSBundle bundleWithPath:'/System/Library/Frameworks/AddressBook.framework') load.
+
+	" access the me object in the shared address book "
+	person := ABAddressBook sharedAddressBook me.
+	
+	" get the first name property "
+	firstName := person valueForProperty:kABFirstNameProperty.
+	
+	firstName
+]

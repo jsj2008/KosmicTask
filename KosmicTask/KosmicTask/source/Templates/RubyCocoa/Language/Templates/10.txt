@@ -1,0 +1,40 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# RubyCocoa documentation
+# http://rubycocoa.sourceforge.net/Documentation
+#
+# Tips and tools
+# http://www.rubyinside.com/the-ultimate-list-of-rubycocoa-tutorials-tips-and-tools-728.html
+#
+require 'osx/cocoa'
+
+def kosmictask()
+
+	# form our dictionary
+	dict =  OSX::NSDictionary.dictionaryWithObjectsAndKeys("object 1", "key 1", "object 2", "key 2", nil)
+	
+	# create our CSS styling string
+	styling = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
+
+	# create our result dictionary
+	result =  OSX::NSMutableDictionary.dictionaryWithCapacity(5)
+
+	# add styling dictionary and key
+	result.setObject_forKey_(styling, "kosmicStyle")
+
+	# add data dictionary and key
+	result.setObject_forKey_(dict, "kosmicData")
+
+	return result
+end
+		

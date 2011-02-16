@@ -1,0 +1,24 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+function kosmicTask() 
+{
+	// an inline array
+	var items = ["item 1", "item 2"];
+	
+	// css
+	var css = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;";
+	
+	// return a native dictionary
+	var result = {kosmicData: items, kosmicStyle: css};
+	
+	return result;
+}

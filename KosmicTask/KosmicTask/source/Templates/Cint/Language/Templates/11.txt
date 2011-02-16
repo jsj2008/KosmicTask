@@ -1,0 +1,38 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits: 
+
+Notes:
+
+*/
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class KosmicTask {  
+	public:           
+  	
+  	KosmicTask() { 
+  		
+  		// items
+  		string item1("item 1");
+		string item2("item 2");
+		
+		// css
+		string css("color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;");
+	 
+	 	// return a YAML inline format dictionary with array as data
+		printf("--- {kosmicData: [%s, %s] , kosmicStyle: '%s'}", item1.c_str(), item2.c_str(), css.c_str());
+  	}   
+
+};
+ 
+int main(int argc, char *argv[]) 
+{
+	KosmicTask kosmic;
+}

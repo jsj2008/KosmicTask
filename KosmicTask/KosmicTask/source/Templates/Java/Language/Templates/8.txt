@@ -1,0 +1,35 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+import java.io.*;
+class kosmicTask
+{ 
+	public static void main(String args[])
+    {
+    	try {
+    		String filename = "filename.png";
+    		
+    		// execute command
+    		// files created in the current directory will be deleted when the task ends
+    		String cmd = String.format("screencapture -t png %s", filename);
+    		Runtime.getRuntime().exec(cmd);
+    	
+    		// return a YAML inline format dictionary with filename
+    		String result = String.format("--- {kosmicFile: %s , kosmicInfo: file returned}", filename);
+
+			System.out.println(result);
+		} catch (IOException e) {
+			
+			System.out.println("exception: " + e.getMessage());
+		}
+		
+	}
+}

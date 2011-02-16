@@ -1,0 +1,23 @@
+"
+
+Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+"
+[
+	"form our array"
+	array := {'item 1', 'item 2'}.
+	
+	"create our CSS styling string"
+	styling := 'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'.
+
+	"form our result dictionary"
+	result := #{'kosmicData' -> array, 'kosmicStyle' -> styling}.
+	
+	result
+]

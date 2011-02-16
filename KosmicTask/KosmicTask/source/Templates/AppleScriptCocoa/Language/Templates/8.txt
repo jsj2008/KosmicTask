@@ -1,0 +1,41 @@
+--
+-- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+--
+-- Credits:
+--
+-- Notes: 
+--
+
+-- KosmicTask controller
+property taskController : class "KosmicTaskController"
+
+script KosmicTask
+	property parent : class "NSObject"
+	
+	-- script properties
+	property myResult : missing value 
+	
+	(*
+	 
+	task entry point
+	
+	*)
+	on KosmicTask()
+		
+		try
+			
+			-- return a record
+			set myResult to {key1:"item 1", key2:"item 2"}
+			
+			-- myResult is complete, task will end
+			return {kosmicData:myResult}
+			
+		on error errorMessage number errorNumber
+
+			return {kosmicError:errorMessage}
+
+		end try
+
+	end KosmicTask
+		
+end script

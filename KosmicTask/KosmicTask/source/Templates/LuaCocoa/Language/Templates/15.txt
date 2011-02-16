@@ -1,0 +1,20 @@
+--[[
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+]]
+
+LuaCocoa.import("AddressBook")
+
+function kosmicTask()
+	
+	local person = ABAddressBook:sharedAddressBook():me()
+	
+	return person:valueForProperty_(kABFirstNameProperty)
+end
