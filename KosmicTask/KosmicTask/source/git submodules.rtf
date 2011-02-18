@@ -1,18 +1,22 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf290
 {\fonttbl\f0\fnil\fcharset0 Monaco;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
 
-\f0\fs20 \cf2 These modules exist as git submodules and should not be edited directly without first checking out a branch.\
+\f0\fs20 \cf0 These modules exist as git submodules and should not be edited directly without first checking out a branch.\
 \
 to add a submodule\
 \
-git \cf0 submodule  \cf2 add path/to/git/repo repo\
+git submodule  add path/to/git/repo repo\
 git submodule init\
 git submodule update\
 \
 This basically creates a link to the other repo and imports the current commit.\
 However it is not on a branch and should not not be modified directly.\
+\
+Note that I have cloned the rpo locally and then taken a submodule from that.\
+It is probably better to just direct the submoudle to the original github repo in the first place.\
+This has been done for F-script.\
 \
 For mode info see:\
 \

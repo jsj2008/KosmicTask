@@ -37,7 +37,9 @@
 #import "NSURL+NDCarbonUtilities.h"
 #import <OSAKit/OSAKit.h>
 #import "MGSLanguagePlugin.h"
+#ifdef MGS_PARSE_RESULT_AS_FSCRIPT
 #import <FScript/FScript.h>
+#endif
 #import "MGSTempStorage.h"
 #import <YAMLKit/YAMLKit.h>
 #import "MGSNetNegotiator.h"
