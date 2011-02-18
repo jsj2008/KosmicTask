@@ -70,6 +70,9 @@
 		AB08ED940E154BE1004D44F8 /* MGSFilledView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB08ED930E154BE1004D44F8 /* MGSFilledView.m */; };
 		AB0B0EC2122EE52600E1B450 /* NSOutlineView_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0B0EC0122EE52600E1B450 /* NSOutlineView_Mugginsoft.m */; };
 		AB0C8378120493E700050097 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA1DE8F1204916A000B3F00 /* FScript.framework */; };
+		AB0DBFF6130C8C80000F4673 /* MGSFragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F6631130C845F00342F11 /* MGSFragaria.framework */; };
+		AB0DC00B130C8C9C000F4673 /* MGSFragaria.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F6631130C845F00342F11 /* MGSFragaria.framework */; };
+		AB0DC030130C8ECB000F4673 /* JSCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F6E24130C85B900342F11 /* JSCocoa.framework */; };
 		AB0EE2270EF13CE5008EA368 /* TaskPublishedTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB0EE2260EF13CE5008EA368 /* TaskPublishedTemplate.tif */; };
 		AB1089B410F632CC00882FC7 /* NSEvent_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1089B310F632CC00882FC7 /* NSEvent_Mugginsoft.m */; };
 		AB12468D0D8168A40077786C /* OSAKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA858C40D5CAE910077F640 /* OSAKit.framework */; };
@@ -422,8 +425,6 @@
 		AB5B78311167CD00002A3E6A /* NSArray_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5B78301167CD00002A3E6A /* NSArray_Mugginsoft.m */; };
 		AB5C52751272192F0036DC92 /* MGSOpenSourceFileAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5C52741272192F0036DC92 /* MGSOpenSourceFileAccessoryViewController.m */; };
 		AB5C52771272199F0036DC92 /* OpenSourceFileAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB5C52761272199F0036DC92 /* OpenSourceFileAccessoryView.xib */; };
-		AB5C66571289645300526B27 /* MGSFragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5C65EB128963EC00526B27 /* MGSFragaria.framework */; };
-		AB5C665C1289648B00526B27 /* MGSFragaria.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB5C65EB128963EC00526B27 /* MGSFragaria.framework */; };
 		AB5CD949118AEC4B00C545CD /* taskmain.m in Sources */ = {isa = PBXBuildFile; fileRef = 09372FDE0D0C301E00A9FAED /* taskmain.m */; };
 		AB5CD94C118AEC4B00C545CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
 		AB5CD94D118AEC4B00C545CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -526,9 +527,6 @@
 		AB7812E20D58875B00C19FAB /* MGSTimeIntervalTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7812E10D58875B00C19FAB /* MGSTimeIntervalTransformer.m */; };
 		AB79FA6D120F365A004EAA08 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA1DE8F1204916A000B3F00 /* FScript.framework */; };
 		AB79FA84120F370F004EAA08 /* FScript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABA1DE8F1204916A000B3F00 /* FScript.framework */; };
-		AB7AE3AF12898E6200E38EAC /* YAMLKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB7AE36312898E1E00E38EAC /* YAMLKit.framework */; };
-		AB7AE3C012898E8600E38EAC /* YAMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7AE36312898E1E00E38EAC /* YAMLKit.framework */; };
-		AB7AE43312898F2B00E38EAC /* YAMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7AE36312898E1E00E38EAC /* YAMLKit.framework */; };
 		AB7C472F0DA2DEAD0008F562 /* ConnectToServer.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB7C472D0DA2DEAD0008F562 /* ConnectToServer.xib */; };
 		AB7C47320DA2DEE90008F562 /* MGSAddServerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C47310DA2DEE90008F562 /* MGSAddServerWindowController.m */; };
 		AB805ACE0E9804DC0079688F /* CircleArrows16.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB805ACD0E9804DC0079688F /* CircleArrows16.tif */; };
@@ -1071,12 +1069,10 @@
 		ABBA121E12B28B16005F12A5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		ABBA121F12B28B16005F12A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
 		ABBA122012B28B16005F12A5 /* MGSKosmicTaskRunner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB27AD051189E86A00132977 /* MGSKosmicTaskRunner.framework */; };
-		ABBA127512B28B9C005F12A5 /* JSCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3180A112B2881F001E821B /* JSCocoa.framework */; };
 		ABBA127B12B28BD7005F12A5 /* KosmicTaskJavaScriptCocoaRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = ABBA122512B28B16005F12A5 /* KosmicTaskJavaScriptCocoaRunner */; };
 		ABBA127F12B28C78005F12A5 /* MGSJavaScriptCocoaRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBA127E12B28C77005F12A5 /* MGSJavaScriptCocoaRunner.m */; };
 		ABBA128112B28CF4005F12A5 /* MGSJSCocoaLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB31811612B2890D001E821B /* MGSJSCocoaLanguage.m */; };
 		ABBA128212B28D69005F12A5 /* LuaCocoa.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB1BD78212AFFE2900B7733A /* LuaCocoa.framework */; };
-		ABBA128412B28D87005F12A5 /* JSCocoa.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB3180A112B2881F001E821B /* JSCocoa.framework */; };
 		ABBA131312B28EB5005F12A5 /* Language Plugin JSCocoa.lang-plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = AB3180C712B2884D001E821B /* Language Plugin JSCocoa.lang-plugin */; };
 		ABBA133E12B28F64005F12A5 /* MGSJSCocoaLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB31811612B2890D001E821B /* MGSJSCocoaLanguage.m */; };
 		ABBAD11C0E2E309A00049696 /* Resume.png in Resources */ = {isa = PBXBuildFile; fileRef = ABBAD1190E2E309A00049696 /* Resume.png */; };
@@ -1241,6 +1237,7 @@
 		ABEB970D0DD04D22004CC0E9 /* MGSResultViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEB970C0DD04D22004CC0E9 /* MGSResultViewHandler.m */; };
 		ABEBB7CA128AE987005089D7 /* MGSJavaLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEBB7C9128AE987005089D7 /* MGSJavaLanguage.m */; };
 		ABEC2ADB0D81BB7600507EFE /* Book24.png in Resources */ = {isa = PBXBuildFile; fileRef = ABEC2ADA0D81BB7600507EFE /* Book24.png */; };
+		ABEC6B69130C8AF20082698A /* YAMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F6E8A130C862500342F11 /* YAMLKit.framework */; };
 		ABED1B160D97CBFC00A9D464 /* MGSConfigurationAccessWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = ABED1B140D97CBFC00A9D464 /* MGSConfigurationAccessWindowController.h */; };
 		ABED1B4A0D97D8A500A9D464 /* MGSConfigurationAccessWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABED1B150D97CBFC00A9D464 /* MGSConfigurationAccessWindowController.m */; };
 		ABED1B4B0D97D8C900A9D464 /* ConfigurationAccessWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABED1B110D97CBB800A9D464 /* ConfigurationAccessWindow.xib */; };
@@ -1418,6 +1415,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 09C09E250CDC7D710048BC79;
 			remoteInfo = MGSMother;
+		};
+		AB0DBF9D130C8C53000F4673 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AB69B62A118B745700903D1D;
+			remoteInfo = MGSFragaria;
+		};
+		AB0DC016130C8E9B000F4673 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = JSCocoa;
 		};
 		AB12954C120F3C6F003E7B3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1657,13 +1668,6 @@
 			remoteGlobalIDString = AB27AD041189E86A00132977;
 			remoteInfo = MGSKosmicTaskRunner;
 		};
-		AB3180A012B2881F001E821B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = JSCocoa;
-		};
 		AB3180B112B2884D001E821B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -1698,6 +1702,97 @@
 			proxyType = 1;
 			remoteGlobalIDString = AB36006211886FD600F1E894;
 			remoteInfo = "Language Plugin Python";
+		};
+		AB3F662C130C845F00342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AB648E2A11FB385700AEF7BD;
+			remoteInfo = "Fragaria Document Based App";
+		};
+		AB3F662E130C845F00342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = Fragaria;
+		};
+		AB3F6630130C845F00342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AB69B62B118B745700903D1D;
+			remoteInfo = MGSFragaria;
+		};
+		AB3F6E23130C85B900342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = JSCocoa;
+		};
+		AB3F6E89130C862500342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = YAMLKit;
+		};
+		AB3F6E8B130C862500342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD312F560F09A0A40004C345;
+			remoteInfo = "Run Tests";
+		};
+		AB3F6EC7130C867700342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = ParseKit;
+		};
+		AB3F6EC9130C867700342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D389F1CE0F1965E600558235;
+			remoteInfo = JSParseKit;
+		};
+		AB3F6ECB130C867700342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D3FDC5830FFC4BFC00F1F797;
+			remoteInfo = ParseKitMobile;
+		};
+		AB3F6ECD130C867700342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D3C7D87A0A411FBF005DD154;
+			remoteInfo = Tests;
+		};
+		AB3F6ECF130C867700342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D33494100E2963FD00406085;
+			remoteInfo = DemoApp;
+		};
+		AB3F6ED1130C867700342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D34185040E520D3F0081B0DC;
+			remoteInfo = DebugApp;
+		};
+		AB3F6ED3130C867700342F11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D389F2030F196A7500558235;
+			remoteInfo = JSDemoApp;
 		};
 		AB450CCE11BFC6B700550A4E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1838,34 +1933,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = AB5625E0118DB10F0012487B;
 			remoteInfo = KosmicTaskTclshRunner;
-		};
-		AB5C65E6128963EC00526B27 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AB648E2A11FB385700AEF7BD;
-			remoteInfo = "Fragaria Document Based App";
-		};
-		AB5C65E8128963EC00526B27 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D1107320486CEB800E47090;
-			remoteInfo = Fragaria;
-		};
-		AB5C65EA128963EC00526B27 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AB69B62B118B745700903D1D;
-			remoteInfo = MGSFragaria;
-		};
-		AB5C66321289641800526B27 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AB69B62A118B745700903D1D;
-			remoteInfo = MGSFragaria;
 		};
 		AB5CD947118AEC4B00C545CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2125,34 +2192,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 612279D90DB5470200AB99EA;
 			remoteInfo = "Sparkle Unit Tests";
-		};
-		AB7AE36212898E1E00E38EAC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = YAMLKit;
-		};
-		AB7AE36412898E1E00E38EAC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CD312F560F09A0A40004C345;
-			remoteInfo = "Run Tests";
-		};
-		AB7AE3AC12898E4200E38EAC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = YAMLKit;
-		};
-		AB7AE40D12898F1300E38EAC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = YAMLKit;
 		};
 		AB92318C11A695E70093EDE3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2469,13 +2508,6 @@
 			remoteGlobalIDString = AB27AD041189E86A00132977;
 			remoteInfo = MGSKosmicTaskRunner;
 		};
-		ABBA127012B28B7D005F12A5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = JSCocoa;
-		};
 		ABBA127812B28BBF005F12A5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2496,55 +2528,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = "spotlight importer";
-		};
-		ABD644C9128C4AE00061E567 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = ParseKit;
-		};
-		ABD644CB128C4AE00061E567 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D389F1CE0F1965E600558235;
-			remoteInfo = JSParseKit;
-		};
-		ABD644CD128C4AE00061E567 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D3FDC5830FFC4BFC00F1F797;
-			remoteInfo = ParseKitMobile;
-		};
-		ABD644CF128C4AE00061E567 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D3C7D87A0A411FBF005DD154;
-			remoteInfo = Tests;
-		};
-		ABD644D1128C4AE00061E567 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D33494100E2963FD00406085;
-			remoteInfo = DemoApp;
-		};
-		ABD644D3128C4AE00061E567 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D34185040E520D3F0081B0DC;
-			remoteInfo = DebugApp;
-		};
-		ABD644D5128C4AE00061E567 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D389F2030F196A7500558235;
-			remoteInfo = JSDemoApp;
 		};
 		ABD6689E0DE6034C00097C1B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2608,6 +2591,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = ABE330D7118626EA0070EF32;
 			remoteInfo = "Language Plugin AppleScript Cocoa";
+		};
+		ABEC6B65130C8ACB0082698A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = YAMLKit;
 		};
 		ABF0D2E7120CB34B006ABDB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2685,8 +2675,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AB7AE3AF12898E6200E38EAC /* YAMLKit.framework in Copy Frameworks */,
-				AB5C665C1289648B00526B27 /* MGSFragaria.framework in Copy Frameworks */,
+				AB0DC00B130C8C9C000F4673 /* MGSFragaria.framework in Copy Frameworks */,
 				AB79FA84120F370F004EAA08 /* FScript.framework in Copy Frameworks */,
 				ABFE709011AEF0960097EDE4 /* MGSTemplateEngine.framework in Copy Frameworks */,
 				AB27AE801189EA1900132977 /* MGSKosmicTaskRunner.framework in Copy Frameworks */,
@@ -2881,7 +2870,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				ABBA128412B28D87005F12A5 /* JSCocoa.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3256,6 +3244,8 @@
 		AB08ED930E154BE1004D44F8 /* MGSFilledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFilledView.m; sourceTree = "<group>"; };
 		AB0B0EBF122EE52600E1B450 /* NSOutlineView_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSOutlineView_Mugginsoft.h; path = "../../../Mugginsoft-shared-source/NSOutlineView_Mugginsoft.h"; sourceTree = SOURCE_ROOT; };
 		AB0B0EC0122EE52600E1B450 /* NSOutlineView_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSOutlineView_Mugginsoft.m; path = "../../../Mugginsoft-shared-source/NSOutlineView_Mugginsoft.m"; sourceTree = SOURCE_ROOT; };
+		AB0DC00F130C8CEF000F4673 /* git submodules.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "git submodules.rtf"; sourceTree = "<group>"; };
+		AB0DC012130C8DF5000F4673 /* Hg submodule.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Hg submodule.rtf"; sourceTree = "<group>"; };
 		AB0EE2260EF13CE5008EA368 /* TaskPublishedTemplate.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TaskPublishedTemplate.tif; sourceTree = "<group>"; };
 		AB1089B210F632CC00882FC7 /* NSEvent_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEvent_Mugginsoft.h; sourceTree = "<group>"; };
 		AB1089B310F632CC00882FC7 /* NSEvent_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSEvent_Mugginsoft.m; sourceTree = "<group>"; };
@@ -3379,7 +3369,7 @@
 		AB3167C5128D43D60037EF1C /* SenTestSuiteRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SenTestSuiteRun.h; path = Library/Frameworks/SenTestingKit.framework/Versions/A/Headers/SenTestSuiteRun.h; sourceTree = DEVELOPER_DIR; };
 		AB3167D6128D463B0037EF1C /* KosmicTask_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KosmicTask_test.h; sourceTree = "<group>"; };
 		AB3167D7128D463B0037EF1C /* KosmicTask_test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KosmicTask_test.m; sourceTree = "<group>"; };
-		AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSCocoa.xcodeproj; path = ../../../../../github/jscocoa/JSCocoa/JSCocoa.xcodeproj; sourceTree = SOURCE_ROOT; };
+		AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSCocoa.xcodeproj; path = ../../../jscocoa/JSCocoa/JSCocoa.xcodeproj; sourceTree = SOURCE_ROOT; };
 		AB3180C712B2884D001E821B /* Language Plugin JSCocoa.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin JSCocoa.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB31810C12B2884D001E821B /* Language Plugin JSCocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Language Plugin JSCocoa-Info.plist"; sourceTree = "<group>"; };
 		AB31811512B2890D001E821B /* MGSJSCocoaLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSJSCocoaLanguage.h; sourceTree = "<group>"; };
@@ -3637,7 +3627,7 @@
 		AB5C52731272192F0036DC92 /* MGSOpenSourceFileAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSOpenSourceFileAccessoryViewController.h; sourceTree = "<group>"; };
 		AB5C52741272192F0036DC92 /* MGSOpenSourceFileAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSOpenSourceFileAccessoryViewController.m; sourceTree = "<group>"; };
 		AB5C52761272199F0036DC92 /* OpenSourceFileAccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OpenSourceFileAccessoryView.xib; sourceTree = "<group>"; };
-		AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Fragaria.xcodeproj; path = ../../../../../github/Mugginsoft/Fragaria/Fragaria.xcodeproj; sourceTree = SOURCE_ROOT; };
+		AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Fragaria.xcodeproj; path = ../../../Fragaria/Fragaria.xcodeproj; sourceTree = SOURCE_ROOT; };
 		AB5CD942118AEBE100C545CD /* MGSPythonObjCScriptRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPythonObjCScriptRunner.h; sourceTree = "<group>"; };
 		AB5CD943118AEBE100C545CD /* MGSPythonObjCScriptRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSPythonObjCScriptRunner.m; sourceTree = "<group>"; };
 		AB5CD954118AEC4B00C545CD /* KosmicTaskPythonObjCRunner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KosmicTaskPythonObjCRunner; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3750,7 +3740,7 @@
 		AB776F7D130C6BFB000973D4 /* Sparkle.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Sparkle.xcodeproj; path = "../../../Sparkle 1.5b6/Extras/Source Code/Sparkle.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		AB7812E00D58875B00C19FAB /* MGSTimeIntervalTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTimeIntervalTransformer.h; sourceTree = "<group>"; };
 		AB7812E10D58875B00C19FAB /* MGSTimeIntervalTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSTimeIntervalTransformer.m; sourceTree = "<group>"; };
-		AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YAMLKit.xcodeproj; path = ../../../../../github/Mugginsoft/yamlkit/YAMLKit.xcodeproj; sourceTree = SOURCE_ROOT; };
+		AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YAMLKit.xcodeproj; path = ../../../yamlkit/YAMLKit.xcodeproj; sourceTree = SOURCE_ROOT; };
 		AB7C472E0DA2DEAD0008F562 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ConnectToServer.xib; sourceTree = "<group>"; };
 		AB7C47300DA2DEE90008F562 /* MGSAddServerWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSAddServerWindowController.h; sourceTree = "<group>"; };
 		AB7C47310DA2DEE90008F562 /* MGSAddServerWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSAddServerWindowController.m; sourceTree = "<group>"; };
@@ -4507,7 +4497,7 @@
 		ABD170420DCC9B6C00E57FF3 /* MGSActionWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSActionWindowController.m; sourceTree = "<group>"; };
 		ABD3A7FB0D4FD36A000C58D0 /* Warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Warning.png; sourceTree = "<group>"; };
 		ABD48C741196FB0500C3645A /* appscript-0.21.1-py2.6-macosx-10.6-universal.egg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "appscript-0.21.1-py2.6-macosx-10.6-universal.egg"; path = "../../../Python/py-appscript/install/appscript-0.21.1-py2.6-macosx-10.6-universal.egg"; sourceTree = "<group>"; };
-		ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ParseKit.xcodeproj; path = ../../../../../github/parsekit/ParseKit.xcodeproj; sourceTree = SOURCE_ROOT; };
+		ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ParseKit.xcodeproj; path = ../../../parsekit/ParseKit.xcodeproj; sourceTree = SOURCE_ROOT; };
 		ABD668910DE6027C00097C1B /* Numbers.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = Numbers.app; path = "/Applications/iWork '08/Numbers.app"; sourceTree = "<absolute>"; };
 		ABD668920DE6027C00097C1B /* Pages.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = Pages.app; path = "/Applications/iWork '08/Pages.app"; sourceTree = "<absolute>"; };
 		ABD668940DE602B400097C1B /* MGSNumbersSendPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNumbersSendPlugin.h; sourceTree = "<group>"; };
@@ -4710,7 +4700,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB7AE43312898F2B00E38EAC /* YAMLKit.framework in Frameworks */,
+				ABEC6B69130C8AF20082698A /* YAMLKit.framework in Frameworks */,
 				AB79FA6D120F365A004EAA08 /* FScript.framework in Frameworks */,
 				ABA22FD50E51BB2D00B539A2 /* AppKit.framework in Frameworks */,
 				AB9F1AD40D9C07AE00F0DF68 /* Security.framework in Frameworks */,
@@ -4747,8 +4737,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB7AE3C012898E8600E38EAC /* YAMLKit.framework in Frameworks */,
-				AB5C66571289645300526B27 /* MGSFragaria.framework in Frameworks */,
+				AB0DBFF6130C8C80000F4673 /* MGSFragaria.framework in Frameworks */,
 				ABFE708311AEF0510097EDE4 /* MGSTemplateEngine.framework in Frameworks */,
 				ABCDAE3C10C5CD9F00C9BC25 /* Sparkle.framework in Frameworks */,
 				ABAC5E0E10358201003A7231 /* OpenFeedback.framework in Frameworks */,
@@ -5350,7 +5339,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABBA127512B28B9C005F12A5 /* JSCocoa.framework in Frameworks */,
+				AB0DC030130C8ECB000F4673 /* JSCocoa.framework in Frameworks */,
 				ABBA121D12B28B16005F12A5 /* Carbon.framework in Frameworks */,
 				ABBA121E12B28B16005F12A5 /* Cocoa.framework in Frameworks */,
 				ABBA121F12B28B16005F12A5 /* Foundation.framework in Frameworks */,
@@ -6001,13 +5990,9 @@
 		29B97314FDCFA39411CA2CEA /* mother */ = {
 			isa = PBXGroup;
 			children = (
+				AB3F6FE5130C86DF00342F11 /* HG submodule project */,
 				AB3F5EEF130C7C5300342F11 /* MGSPythonScriptManager.m */,
-				AB777ED1130C7087000973D4 /* New Group */,
-				AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */,
-				AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */,
-				ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */,
-				AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */,
-				AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */,
+				AB777ED1130C7087000973D4 /* Git submodule projects - do not edit directly */,
 				ABA1DE831204916A000B3F00 /* FScript.xcodeproj */,
 				AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */,
 				ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */,
@@ -6495,14 +6480,6 @@
 			name = "sen headers";
 			sourceTree = "<group>";
 		};
-		AB31809D12B2881F001E821B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AB3180A112B2881F001E821B /* JSCocoa.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		AB35E7CC11CABA1D00EE90E1 /* Resource browser */ = {
 			isa = PBXGroup;
 			children = (
@@ -6558,6 +6535,56 @@
 				AB3C6C76104A9EF600ED6CFE /* AEMCodecs_Mugginsoft.m */,
 			);
 			name = appscript;
+			sourceTree = "<group>";
+		};
+		AB3F6627130C845F00342F11 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB3F662D130C845F00342F11 /* Fragaria Document Based App.app */,
+				AB3F662F130C845F00342F11 /* Fragaria.app */,
+				AB3F6631130C845F00342F11 /* MGSFragaria.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB3F6E20130C85B900342F11 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB3F6E24130C85B900342F11 /* JSCocoa.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB3F6E85130C862500342F11 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB3F6E8A130C862500342F11 /* YAMLKit.framework */,
+				AB3F6E8C130C862500342F11 /* Run Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB3F6EBE130C867700342F11 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB3F6EC8130C867700342F11 /* ParseKit.framework */,
+				AB3F6ECA130C867700342F11 /* JSParseKit.framework */,
+				AB3F6ECC130C867700342F11 /* libparsekit.a */,
+				AB3F6ECE130C867700342F11 /* Tests.octest */,
+				AB3F6ED0130C867700342F11 /* DemoApp.app */,
+				AB3F6ED2130C867700342F11 /* DebugApp.app */,
+				AB3F6ED4130C867700342F11 /* JSDemoApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB3F6FE5130C86DF00342F11 /* HG submodule project */ = {
+			isa = PBXGroup;
+			children = (
+				AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */,
+				AB0DC012130C8DF5000F4673 /* Hg submodule.rtf */,
+			);
+			name = "HG submodule project";
 			sourceTree = "<group>";
 		};
 		AB406A52119AE163006E3552 /* NSString+SymlinksAndAliases */ = {
@@ -6708,16 +6735,6 @@
 			children = (
 			);
 			name = "Language Resources";
-			sourceTree = "<group>";
-		};
-		AB5C65DC128963EC00526B27 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AB5C65E7128963EC00526B27 /* Fragaria Document Based App.app */,
-				AB5C65E9128963EC00526B27 /* Fragaria.app */,
-				AB5C65EB128963EC00526B27 /* MGSFragaria.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		AB5CD941118AEBAD00C545CD /* PythonObjC runner */ = {
@@ -6941,11 +6958,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AB777ED1130C7087000973D4 /* New Group */ = {
+		AB777ED1130C7087000973D4 /* Git submodule projects - do not edit directly */ = {
 			isa = PBXGroup;
 			children = (
+				ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */,
+				AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */,
+				AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */,
+				AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */,
+				AB0DC00F130C8CEF000F4673 /* git submodules.rtf */,
 			);
-			name = "New Group";
+			name = "Git submodule projects - do not edit directly";
 			sourceTree = "<group>";
 		};
 		AB7812DF0D58873100C19FAB /* Value transformers
@@ -6964,15 +6986,6 @@
 				AB34188C1276E769007965BA /* MGSLanguageSettingsTransformer.m */,
 			);
 			name = "Value transformers\n";
-			sourceTree = "<group>";
-		};
-		AB7AE35B12898E1E00E38EAC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AB7AE36312898E1E00E38EAC /* YAMLKit.framework */,
-				AB7AE36512898E1E00E38EAC /* Run Tests.octest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		AB85C1AE0D3BFDAC00C1205B /* Categories */ = {
@@ -8256,20 +8269,6 @@
 			name = "Compile action sheet";
 			sourceTree = "<group>";
 		};
-		ABD644BA128C4ADF0061E567 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ABD644CA128C4AE00061E567 /* ParseKit.framework */,
-				ABD644CC128C4AE00061E567 /* JSParseKit.framework */,
-				ABD644CE128C4AE00061E567 /* libparsekit.a */,
-				ABD644D0128C4AE00061E567 /* Tests.octest */,
-				ABD644D2128C4AE00061E567 /* DemoApp.app */,
-				ABD644D4128C4AE00061E567 /* DebugApp.app */,
-				ABD644D6128C4AE00061E567 /* JSDemoApp.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		ABD668110DE5FDAB00097C1B /* Word */ = {
 			isa = PBXGroup;
 			children = (
@@ -8571,7 +8570,7 @@
 			dependencies = (
 				09A68AEB0CDC8B3E0022898B /* PBXTargetDependency */,
 				AB12954D120F3C6F003E7B3B /* PBXTargetDependency */,
-				AB7AE40E12898F1300E38EAC /* PBXTargetDependency */,
+				ABEC6B66130C8ACB0082698A /* PBXTargetDependency */,
 			);
 			name = KosmicTaskServer;
 			productName = motherd;
@@ -8664,11 +8663,10 @@
 				AB6676D41205BBD6006763E2 /* PBXTargetDependency */,
 				AB66786E1205BFE5006763E2 /* PBXTargetDependency */,
 				ABA1F036120D787C0079E65B /* PBXTargetDependency */,
-				AB5C66331289641800526B27 /* PBXTargetDependency */,
-				AB7AE3AD12898E4200E38EAC /* PBXTargetDependency */,
 				AB19174812AFDFDB00710031 /* PBXTargetDependency */,
 				ABBA12CB12B28DC3005F12A5 /* PBXTargetDependency */,
 				AB7604DA12BABEDD00542363 /* PBXTargetDependency */,
+				AB0DBF9E130C8C53000F4673 /* PBXTargetDependency */,
 			);
 			name = KosmicTask;
 			productInstallPath = "$(HOME)/Applications";
@@ -9688,7 +9686,7 @@
 			);
 			dependencies = (
 				ABBA121212B28B16005F12A5 /* PBXTargetDependency */,
-				ABBA127112B28B7D005F12A5 /* PBXTargetDependency */,
+				AB0DC017130C8E9B000F4673 /* PBXTargetDependency */,
 			);
 			name = KosmicTaskJavaScriptCocoaRunner;
 			productName = KosmicTaskShellScriptRunner;
@@ -9825,7 +9823,7 @@
 					ProjectRef = ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */;
 				},
 				{
-					ProductGroup = AB5C65DC128963EC00526B27 /* Products */;
+					ProductGroup = AB3F6627130C845F00342F11 /* Products */;
 					ProjectRef = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
 				},
 				{
@@ -9833,7 +9831,7 @@
 					ProjectRef = ABA1DE831204916A000B3F00 /* FScript.xcodeproj */;
 				},
 				{
-					ProductGroup = AB31809D12B2881F001E821B /* Products */;
+					ProductGroup = AB3F6E20130C85B900342F11 /* Products */;
 					ProjectRef = AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */;
 				},
 				{
@@ -9861,7 +9859,7 @@
 					ProjectRef = ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */;
 				},
 				{
-					ProductGroup = ABD644BA128C4ADF0061E567 /* Products */;
+					ProductGroup = AB3F6EBE130C867700342F11 /* Products */;
 					ProjectRef = ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */;
 				},
 				{
@@ -9877,7 +9875,7 @@
 					ProjectRef = AB776F7D130C6BFB000973D4 /* Sparkle.xcodeproj */;
 				},
 				{
-					ProductGroup = AB7AE35B12898E1E00E38EAC /* Products */;
+					ProductGroup = AB3F6E85130C862500342F11 /* Products */;
 					ProjectRef = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
 				},
 			);
@@ -9994,11 +9992,95 @@
 			remoteRef = AB1BD78B12AFFE2900B7733A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AB3180A112B2881F001E821B /* JSCocoa.framework */ = {
+		AB3F662D130C845F00342F11 /* Fragaria Document Based App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Fragaria Document Based App.app";
+			remoteRef = AB3F662C130C845F00342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F662F130C845F00342F11 /* Fragaria.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Fragaria.app;
+			remoteRef = AB3F662E130C845F00342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6631130C845F00342F11 /* MGSFragaria.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MGSFragaria.framework;
+			remoteRef = AB3F6630130C845F00342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6E24130C85B900342F11 /* JSCocoa.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = JSCocoa.framework;
-			remoteRef = AB3180A012B2881F001E821B /* PBXContainerItemProxy */;
+			remoteRef = AB3F6E23130C85B900342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6E8A130C862500342F11 /* YAMLKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = YAMLKit.framework;
+			remoteRef = AB3F6E89130C862500342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6E8C130C862500342F11 /* Run Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Run Tests.octest";
+			remoteRef = AB3F6E8B130C862500342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6EC8130C867700342F11 /* ParseKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ParseKit.framework;
+			remoteRef = AB3F6EC7130C867700342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6ECA130C867700342F11 /* JSParseKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = JSParseKit.framework;
+			remoteRef = AB3F6EC9130C867700342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6ECC130C867700342F11 /* libparsekit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libparsekit.a;
+			remoteRef = AB3F6ECB130C867700342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6ECE130C867700342F11 /* Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Tests.octest;
+			remoteRef = AB3F6ECD130C867700342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6ED0130C867700342F11 /* DemoApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DemoApp.app;
+			remoteRef = AB3F6ECF130C867700342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6ED2130C867700342F11 /* DebugApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DebugApp.app;
+			remoteRef = AB3F6ED1130C867700342F11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB3F6ED4130C867700342F11 /* JSDemoApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = JSDemoApp.app;
+			remoteRef = AB3F6ED3130C867700342F11 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AB450CCF11BFC6B700550A4E /* KosmicTaskHelper.app */ = {
@@ -10006,27 +10088,6 @@
 			fileType = wrapper.application;
 			path = KosmicTaskHelper.app;
 			remoteRef = AB450CCE11BFC6B700550A4E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB5C65E7128963EC00526B27 /* Fragaria Document Based App.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Fragaria Document Based App.app";
-			remoteRef = AB5C65E6128963EC00526B27 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB5C65E9128963EC00526B27 /* Fragaria.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = Fragaria.app;
-			remoteRef = AB5C65E8128963EC00526B27 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB5C65EB128963EC00526B27 /* MGSFragaria.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MGSFragaria.framework;
-			remoteRef = AB5C65EA128963EC00526B27 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AB72CE480E703C5500E6711C /* TCMPortMapper.framework */ = {
@@ -10083,20 +10144,6 @@
 			fileType = wrapper.cfbundle;
 			path = "Sparkle Unit Tests.octest";
 			remoteRef = AB776F8D130C6BFB000973D4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB7AE36312898E1E00E38EAC /* YAMLKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = YAMLKit.framework;
-			remoteRef = AB7AE36212898E1E00E38EAC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB7AE36512898E1E00E38EAC /* Run Tests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Run Tests.octest";
-			remoteRef = AB7AE36412898E1E00E38EAC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AB92318D11A695E70093EDE3 /* KosmicTask.qlgenerator */ = {
@@ -10167,55 +10214,6 @@
 			fileType = wrapper.cfbundle;
 			path = KosmicTask.mdimporter;
 			remoteRef = ABBDFDE310C532CB000E51A3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD644CA128C4AE00061E567 /* ParseKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ParseKit.framework;
-			remoteRef = ABD644C9128C4AE00061E567 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD644CC128C4AE00061E567 /* JSParseKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = JSParseKit.framework;
-			remoteRef = ABD644CB128C4AE00061E567 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD644CE128C4AE00061E567 /* libparsekit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libparsekit.a;
-			remoteRef = ABD644CD128C4AE00061E567 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD644D0128C4AE00061E567 /* Tests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Tests.octest;
-			remoteRef = ABD644CF128C4AE00061E567 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD644D2128C4AE00061E567 /* DemoApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = DemoApp.app;
-			remoteRef = ABD644D1128C4AE00061E567 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD644D4128C4AE00061E567 /* DebugApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = DebugApp.app;
-			remoteRef = ABD644D3128C4AE00061E567 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD644D6128C4AE00061E567 /* JSDemoApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = JSDemoApp.app;
-			remoteRef = ABD644D5128C4AE00061E567 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ABE014F00D3EB94A00899F73 /* PSMTabBarControl.palette */ = {
@@ -11933,6 +11931,16 @@
 			target = 09C09E250CDC7D710048BC79 /* MGSKosmicTask */;
 			targetProxy = 09A68AEC0CDC8B7A0022898B /* PBXContainerItemProxy */;
 		};
+		AB0DBF9E130C8C53000F4673 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MGSFragaria;
+			targetProxy = AB0DBF9D130C8C53000F4673 /* PBXContainerItemProxy */;
+		};
+		AB0DC017130C8E9B000F4673 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JSCocoa;
+			targetProxy = AB0DC016130C8E9B000F4673 /* PBXContainerItemProxy */;
+		};
 		AB12954D120F3C6F003E7B3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FScriptFramework;
@@ -12194,11 +12202,6 @@
 			target = AB5625E0118DB10F0012487B /* KosmicTaskTclshRunner */;
 			targetProxy = AB562717118DB37D0012487B /* PBXContainerItemProxy */;
 		};
-		AB5C66331289641800526B27 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MGSFragaria;
-			targetProxy = AB5C66321289641800526B27 /* PBXContainerItemProxy */;
-		};
 		AB5CD946118AEC4B00C545CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AB27AD041189E86A00132977 /* MGSKosmicTaskRunner */;
@@ -12343,16 +12346,6 @@
 			isa = PBXTargetDependency;
 			target = AB316709128D402C0037EF1C /* Test KosmicTask App */;
 			targetProxy = AB7604D912BABEDD00542363 /* PBXContainerItemProxy */;
-		};
-		AB7AE3AD12898E4200E38EAC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = YAMLKit;
-			targetProxy = AB7AE3AC12898E4200E38EAC /* PBXContainerItemProxy */;
-		};
-		AB7AE40E12898F1300E38EAC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = YAMLKit;
-			targetProxy = AB7AE40D12898F1300E38EAC /* PBXContainerItemProxy */;
 		};
 		AB92320311A696140093EDE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -12534,11 +12527,6 @@
 			target = AB27AD041189E86A00132977 /* MGSKosmicTaskRunner */;
 			targetProxy = ABBA121312B28B16005F12A5 /* PBXContainerItemProxy */;
 		};
-		ABBA127112B28B7D005F12A5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JSCocoa;
-			targetProxy = ABBA127012B28B7D005F12A5 /* PBXContainerItemProxy */;
-		};
 		ABBA127912B28BBF005F12A5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = ABBA121112B28B16005F12A5 /* KosmicTaskJavaScriptCocoaRunner */;
@@ -12578,6 +12566,11 @@
 			isa = PBXTargetDependency;
 			target = ABE330D7118626EA0070EF32 /* Language Plugin AppleScript Cocoa */;
 			targetProxy = ABE3310A118627660070EF32 /* PBXContainerItemProxy */;
+		};
+		ABEC6B66130C8ACB0082698A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = YAMLKit;
+			targetProxy = ABEC6B65130C8ACB0082698A /* PBXContainerItemProxy */;
 		};
 		ABF0D2E8120CB34B006ABDB2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
