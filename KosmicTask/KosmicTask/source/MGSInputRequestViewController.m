@@ -70,8 +70,8 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	//_keepActionDisplayed = [[NSUserDefaults standardUserDefaults] boolForKey:MGSNewTabKeepTaskDisplayed];
 	_keepActionDisplayed = NO;
 	
-	[lockButton setHidden:YES];
-	[detachButton setHidden:YES];
+	[lockButton setHidden:NO];
+	[detachButton setHidden:NO];
 
 	_actionController = [[MGSTaskSpecifierManager alloc] init];
 
