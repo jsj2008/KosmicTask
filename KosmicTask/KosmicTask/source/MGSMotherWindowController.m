@@ -197,7 +197,7 @@ const char MGSContextStartupComplete;
 	// load the sidebar views
 	// Note: there is a splitview in the nib.
 	// the bottom panel is an activity viewer.
-	// this will not be implamneted till v2.0 so swap splitview with sidebar for now
+	// this will not be implemented till v2.0 so swap splitview with sidebar for now
 	_sidebarViewController = [[MGSSidebarViewController alloc] initWithNibName:@"SidebarView" bundle:nil];
 	[[_sidebarViewController view] setFrame:[leftSplitView frame]];
 	[leftView replaceSubview:leftSplitView with:[_sidebarViewController view]];
@@ -213,6 +213,19 @@ const char MGSContextStartupComplete;
 	// this is added above the existing content subviews
 	_waitViewController = [[MGSWaitViewController alloc] initWithNibName:@"WaitView" bundle:nil];
 	[[_waitViewController view] setFrame:[[[self window] contentView] frame]];
+	
+	// there is an intermittent drawing issue involving MGSActionActivityView which is loaded 
+	// further down in the view hierarchy .
+	// it uses an NSimage cache and on occassion, even though the topmost sibling view is opaque,
+	// its drawing output is seen.
+	//
+	//  so we take so steps to prevent this.
+	//
+	for (NSView *subview in [[[self window] contentView] subviews]) {
+		//NSRect frame = [subview frame];
+		//[subview setFrameOrigin:NSMakePoint(100000, frame.origin.y)];
+		[subview setHidden:YES];
+	}
 	[[[self window] contentView] addSubview:[_waitViewController view]];
 	
 	// array of edit window controllers
@@ -502,6 +515,8 @@ const char MGSContextStartupComplete;
 		
 		// we cannot capture the _contentSubview contents as it is behind the wait view
 		[_contentSubview removeFromSuperview];
+		[_contentSubview setHidden:NO];	// the subview is hidden because of drawing issues with MGSActionActivityView
+		[_contentSubview display];
 		
 		// capture the offscreen _contentSubview as an image view.
 		// this gives better animation than trying to animate the 

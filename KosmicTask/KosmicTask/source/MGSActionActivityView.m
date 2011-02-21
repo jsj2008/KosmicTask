@@ -303,7 +303,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (void)drawRect:(NSRect)rect 
 {	
-	//MLog(DEBUGLOG, @"%@: draw rect", [self className]);
+	//MLog(DEBUGLOG, @"%@: draw rect", [self className]);	
 	
 	if (_useImageCache) {
 		
