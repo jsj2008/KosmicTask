@@ -808,11 +808,16 @@ static BOOL permitExecution = YES;
 			 if a connection problem occurs, or the connection is slow or delayed
 			 then we should be able to stop the request.
 			 
-			 TODO:
-			 
-			 increase the MGSNetRequest -status resolution to include a resolving status.
 			 */
 		case MGSRequestProgressReady:
+			
+			/*
+			 
+			 we could check the netRequest.status here but any could problems could
+			 manifest themselves during the negotiate phase and this would have to be taken into
+			 account by referencing self.netRequest.prevRequest
+			 
+			 */
 			break;
 			
 		default:;

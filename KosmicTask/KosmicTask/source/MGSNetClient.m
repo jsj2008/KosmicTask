@@ -627,6 +627,9 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 		return;
 	}
 
+	// resolving request
+	netRequest.status = kMGSStatusResolving;
+	
 	// queue our request
 	[_pendingRequests addObject:netRequest];
 

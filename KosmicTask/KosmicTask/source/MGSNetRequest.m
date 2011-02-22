@@ -457,7 +457,7 @@ static NSThread *networkThread = nil;
 	if ([self isSocketConnected]) {
 		[self disconnect];
 	}
-	_status = _status = kMGSStatusNotConnected;
+	_status = kMGSStatusNotConnected;
 	_responseMessage = [[MGSNetMessage alloc] init];
 	
 	if (self.prevRequest) {

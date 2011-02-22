@@ -18,9 +18,10 @@ typedef enum _eMGSRequestStatus {
 	
 	kMGSStatusNotConnected = 0,
 	
-	kMGSStatusConnecting = 1,
-	kMGSStatusConnected = 2,
-	kMGSStatusDisconnected = 3,
+	kMGSStatusResolving = 1,
+	kMGSStatusConnecting = 2,
+	kMGSStatusConnected = 3,
+	kMGSStatusDisconnected = 4,
 	
 	// message exchange status
 	

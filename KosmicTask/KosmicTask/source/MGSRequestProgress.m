@@ -91,6 +91,7 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
 			break;
 			
 		case kMGSStatusNotConnected:
+		case kMGSStatusResolving:
 		case kMGSStatusConnecting:
 		case kMGSStatusConnected:
 			
