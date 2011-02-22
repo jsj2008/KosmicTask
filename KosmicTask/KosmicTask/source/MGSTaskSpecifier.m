@@ -794,12 +794,26 @@ static BOOL permitExecution = YES;
 			
 			// cannot terminate at these times
 		case MGSRequestProgressNull:
-		case MGSRequestProgressReady:
 		case MGSRequestProgressReplyReceived:
 		case MGSRequestProgressCompleteWithNoErrors:
 		case MGSRequestProgressCompleteWithErrors:
 		case MGSRequestProgressCannotConnect:
 			return NO;
+		
+			/*
+			 
+			 the request progress is not as fine grained as MGSNetRequest -status.
+			 
+			 the progress will remain at ready during resolving and connecting.
+			 if a connection problem occurs, or the connection is slow or delayed
+			 then we should be able to stop the request.
+			 
+			 TODO:
+			 
+			 increase the MGSNetRequest -status resolution to include a resolving status.
+			 */
+		case MGSRequestProgressReady:
+			break;
 			
 		default:;
 			break;
