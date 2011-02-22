@@ -44,10 +44,13 @@ static BOOL isForegroundApplication = NO;
 - (void) mgs_fileHandleDataAvailable:(NSNotification*)notification
 {
     NSFileHandle *fileHandle = [notification object];
-    
-    [self appendData:[fileHandle availableData]];
-    
-    [fileHandle waitForDataInBackgroundAndNotify];
+    NSData *data = [fileHandle availableData];
+	
+	// an empty data block is returned on EOF
+	if ([data length] > 0) {
+		[self appendData:data];    
+		[fileHandle waitForDataInBackgroundAndNotify];
+	}
 }
 
 @end

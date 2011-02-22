@@ -30,9 +30,12 @@
 {
     NSFileHandle *fileHandle = [notification object];
     
-    [self appendData:[fileHandle availableData]];
-    
-    [fileHandle waitForDataInBackgroundAndNotify];
+	// an empty data block is returned on EOF
+	NSData *data = [fileHandle availableData];
+	if ([data length] > 0) {
+		[self appendData:data];
+		[fileHandle waitForDataInBackgroundAndNotify];
+	}
 }
 
 @end
