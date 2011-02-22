@@ -841,13 +841,10 @@ static MGSClientRequestManager *_sharedController = nil;
 		// ERROR in request
 
 		// The request contains a top level error.
-		// This means there is something structural wrong with the message.
+		// This means there is something structural wrong with the message or a network/socket error has occurred.
 		// However, the request owners still need a reply.
 		//
-		// So we should assume that the caller has dealt with the top level error.
-		// This method should try and continue as well as it can taking the top level
-		// error into account if possible.
-		
+	
 	}
 		
 	//=================================================================
@@ -894,11 +891,25 @@ static MGSClientRequestManager *_sharedController = nil;
 	//====================================================
 	// a negotiate request
 	if ([requestCommand isEqualToString:MGSNetMessageCommandNegotiate]) {
-	
-		return;
+
+		/*
+		 
+		 if a network or socket error occurs it can manifest itself here.
+		 
+		 set the error on the next request (which will have initiated the
+		 sending of the negotiate request) and call theis method again
+		 
+		 */
+		if (netRequest.error && netRequest.nextRequest) {
+			netRequest.nextRequest.error = netRequest.error;
+			[self parseReplyMessage:netRequest.nextRequest];
+		}
 		
+		return;
+	}
+	
 	// a heartbeat request
-	} else if ([requestCommand isEqualToString:MGSNetMessageCommandHeartbeat]) {
+	if ([requestCommand isEqualToString:MGSNetMessageCommandHeartbeat]) {
 		
 		if ([requestMessage isNegotiateMessage]) {
 			return;
@@ -914,7 +925,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	// an authentication request
 	else if ([requestCommand isEqualToString:MGSNetMessageCommandAuthenticate]) {
 	
-		// a negotiate reuest message will be found here if command based negotiation is enabled
+		// a negotiate request message will be found here if command based negotiation is enabled
 		if ([requestMessage isNegotiateMessage]) {
 			return;
 		}

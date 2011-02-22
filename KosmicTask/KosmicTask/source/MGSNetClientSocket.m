@@ -259,7 +259,7 @@
 		//MLog(DEBUGLOG, @"Client socket will disconnect. No error.");
 		
 		// The final desired status of our request is kMGSStatusReplyPayloadReceived.
-		// If we disconnect before this state has been reached then our rrequest has failed.
+		// If we disconnect before this state has been reached then our request has failed.
 		if (self.netRequest.status != kMGSStatusMessageReceived) {
 			MGSError *mgsError = [MGSError domain:MGSErrorDomainMotherNetwork code:MGSErrorCodeSocketDisconnectError];
 			[self delegateReplyWithErrors:mgsError];			
