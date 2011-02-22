@@ -221,10 +221,13 @@ const char MGSContextStartupComplete;
 	//
 	//  so we take so steps to prevent this.
 	//
+	_hiddenViews = [NSMutableArray arrayWithCapacity:5];
 	for (NSView *subview in [[[self window] contentView] subviews]) {
-		//NSRect frame = [subview frame];
-		//[subview setFrameOrigin:NSMakePoint(100000, frame.origin.y)];
 		[subview setHidden:YES];
+		
+		// we cache the views here because they may get swapped out of the
+		// content view and we need to subsequently unhide them
+		[_hiddenViews addObject:subview];
 	}
 	[[[self window] contentView] addSubview:[_waitViewController view]];
 	
@@ -515,7 +518,12 @@ const char MGSContextStartupComplete;
 		
 		// we cannot capture the _contentSubview contents as it is behind the wait view
 		[_contentSubview removeFromSuperview];
-		[_contentSubview setHidden:NO];	// the subview is hidden because of drawing issues with MGSActionActivityView
+
+		// unhide what was hidden
+		for (NSView *subview in _hiddenViews) {
+			[subview setHidden:NO];
+		}
+		
 		[_contentSubview display];
 		
 		// capture the offscreen _contentSubview as an image view.
@@ -539,9 +547,13 @@ const char MGSContextStartupComplete;
 		// replace the image view with the content subview
 		[contentView replaceSubview:imageView withViewFrameAsOld:_contentSubview];		 
 	} else {
+		
+		for (NSView *subview in _hiddenViews) {
+			[subview setHidden:NO];
+		}
 		[[_waitViewController view] removeFromSuperview];
 	}
-	
+	_hiddenViews = nil;
 	_waitViewController = nil;
 	
 }

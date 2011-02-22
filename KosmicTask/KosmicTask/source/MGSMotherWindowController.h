@@ -58,7 +58,9 @@
 	NSMutableDictionary *_actionsPendingEdit;
 	BOOL _suppressApplicationTaskEditAlertSheet;
 	MGSActionDeleteWindowController *_deleteController;
-	NSView *_dummyView;															
+	NSView *_dummyView;	
+																
+	NSMutableArray *_hiddenViews;
 }
 
 
