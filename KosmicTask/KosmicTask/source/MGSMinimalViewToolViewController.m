@@ -15,6 +15,7 @@
 // class extension
 @interface MGSMinimalViewToolViewController()
 - (void)viewConfigDidChange:(NSNotification *)notification;
+- (void)updateSegmentedControl;
 @end
 
 @implementation MGSMinimalViewToolViewController
@@ -37,6 +38,23 @@
 {
 	NSAssert(window, @"window is nil");
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewConfigDidChange:) name:MGSNoteViewConfigDidChange object:window];
+
+	[self updateSegmentedControl];
+}
+
+/*
+ 
+ - updateSegmentedControl
+ 
+ */
+- (void)updateSegmentedControl
+{
+	NSString *imageName = @"ToggleViewTemplateUp";
+	if ([segmentedButtons isSelectedForSegment:SEG_MINIMAL]) {
+		imageName = @"ToggleViewTemplate";
+	} 
+	NSImage *image = [NSImage imageNamed:imageName];
+	[segmentedButtons setImage:image forSegment:SEG_MINIMAL];
 }
 
 /*
@@ -120,13 +138,15 @@
 					return;
 			}
 			[segmentedButtons setSelected:selected forSegment:idx];
-			
+
 			break;
 			
 		default:
 			break;
 			
 	}
+	
+	[self updateSegmentedControl];
 }
 
 @end

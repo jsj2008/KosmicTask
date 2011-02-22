@@ -17,4 +17,5 @@
 - (void)segmentClick:(int)selectedSegment;
 - (void)initialiseForWindow:(NSWindow *)window;
 
+
 @end
