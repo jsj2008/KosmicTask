@@ -47,6 +47,8 @@ const char MGSNetClientRunModeContext;
 #define TAB_HISTORY 0
 #define TAB_SCRIPT 1
 
+static char MGSSeletedDetailViewSegmentContext;
+
 // class extension
 @interface MGSMainViewController()
 - (void)viewConfigDidChange:(NSNotification *)notification;
@@ -176,6 +178,9 @@ const char MGSNetClientRunModeContext;
 	// initialise task detail selection
 	NSInteger taskDetailMode = [[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskDetailMode];
 	[self selectDetailSegment:taskDetailMode];
+	
+	// add observers
+	[detailSegmentedControl addObserver:self forKeyPath:@"selectedSegment" options:0 context:&MGSSeletedDetailViewSegmentContext];
 	
 }
 
@@ -457,6 +462,17 @@ const char MGSNetClientRunModeContext;
 		// update view state to match client runmode
 		[self setRunMode:runMode];
 
+	} else if (context == &MGSSeletedDetailViewSegmentContext) {
+	
+		/*
+		NSSegmentedControl *segControl = object;
+		NSString *imageName = @"ToggleViewTemplate";
+		if ([segControl selectedSegment] == TASK_DETAIL_CLOSE_SEGMENT_INDEX) {
+			imageName = @"ToggleViewTemplateUp";
+		} 
+		NSImage *image = [NSImage imageNamed:imageName];
+		[segControl setImage:image forSegment:TASK_DETAIL_CLOSE_SEGMENT_INDEX];
+		 */
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
