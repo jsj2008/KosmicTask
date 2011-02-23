@@ -453,7 +453,10 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 {
 	MGSRequestViewController *requestViewController = [self selectedRequestViewController];
 	NSAssert(requestViewController, @"request view controller is nil");
-	[requestViewController executeScript:self];	
+	
+	if ([requestViewController actionSpecifier]) {
+		[requestViewController executeScript:self];	
+	}
 }
 
 /*

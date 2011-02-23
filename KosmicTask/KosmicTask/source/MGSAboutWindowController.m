@@ -71,9 +71,11 @@
 								codeSign.resultString];
 
 	// validate application code siging
-	[codeSign validatePath:[[NSBundle mainBundle] pathForCustomAuxiliaryExecutable:MGSMotherServerScriptTaskName]];
-	self.taskCodeSignatureStatus = [NSString stringWithFormat: NSLocalizedString(@"Script task code signature: %@", @"About window code signature text"), 
-								codeSign.resultString];
+	if (NO) {
+		[codeSign validatePath:[[NSBundle mainBundle] pathForCustomAuxiliaryExecutable:MGSMotherServerScriptTaskName]];
+		self.taskCodeSignatureStatus = [NSString stringWithFormat: NSLocalizedString(@"Script task code signature: %@", @"About window code signature text"), 
+									codeSign.resultString];
+	}
 	
 }
 
