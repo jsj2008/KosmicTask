@@ -554,6 +554,7 @@ char MGSScriptDictContext;
 	// get script group node
 	nodeKey = [script keyWithString:MGSNodeKeyPrefixScriptGroup];
 	scriptNode = [clientNodeCache objectForKey:nodeKey];
+	BOOL isNewTask = NO;
 	
 	// if node esists we are saving edits to an existing script
 	if (scriptNode) {
@@ -581,6 +582,7 @@ char MGSScriptDictContext;
 	
 	} else {
 		// we are saving edits to a new script 
+		isNewTask = YES;
 		
 		// update the client script count
 		MGSScriptManager *groupScriptManager = [scriptManager groupWithName:[scriptManager groupNameAll]];
@@ -624,6 +626,16 @@ char MGSScriptDictContext;
 		[[groupNode mutableChildNodes] addObject:scriptNode];
 //#warning this may cause loss of expansion state
 		[groupNode sortNameRecursively:NO];
+		
+		// select new task
+		if (isNewTask) {
+			
+			//_postNetClientSelectionNotifications = NO;
+			//outlineView.allowScrollRowVisible = NO;
+			[clientTreeController dm_setSelectedObjects:[NSArray arrayWithObject:scriptNode]];
+			//outlineView.allowScrollRowVisible = YES;
+			//_postNetClientSelectionNotifications = YES;
+		}
 	}
 }
 
@@ -881,6 +893,7 @@ char MGSScriptDictContext;
 		 NSOutlineView - scrollRowToVisible:
 		 
 		 so far the only workaround is to conditionally override -scrollRowToVisible.
+		 
 		 */
 		_postNetClientSelectionNotifications = NO;
 		outlineView.allowScrollRowVisible = NO;
