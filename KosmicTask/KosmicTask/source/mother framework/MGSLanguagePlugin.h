@@ -11,7 +11,7 @@
 #import "MGSScript.h"
 #import "MGSScriptCode.h"
 #import "MGSScriptParameter.h"
-#import "MGSScriptParameterHandler.h"
+#import "MGSScriptParameterManager.h"
 #import "mlog.h"
 #import "MGSNetRequest.h"
 #import "MGSNetMessage.h"

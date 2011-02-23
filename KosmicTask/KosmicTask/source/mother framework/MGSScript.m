@@ -9,7 +9,7 @@
 #import "MGSMother.h"
 #import "MGSScript.h"
 #import "MGSScriptPlist.h"
-#import "MGSScriptParameterHandler.h"
+#import "MGSScriptParameterManager.h"
 #import "NSString_Mugginsoft.h"
 #import "NSApplication_Mugginsoft.h"
 #import "MGSScriptCode.h"
@@ -66,7 +66,7 @@ const char MGSLangSettingsOnRunContext;
 
 @implementation MGSScript
 
-@synthesize parameterHandler = _parameterHandler;
+@synthesize parameterHandler = _parameterManager;
 @synthesize modelDataKVCModified = _modelDataKVCModified;
 @synthesize scriptCode = _scriptCode;
 @synthesize templateName, languagePropertyManager;
@@ -1200,6 +1200,10 @@ errorExit:;
 	NSMutableArray *representationKeys = nil;
 	BOOL conform = [[options objectForKey:@"conform"] boolValue];
 	
+	if ([self representation] == representation) {
+		return YES;
+	}
+	
 	// negotiate rpresentation
 	if (representation == MGSScriptRepresentationNegotiate) {
 		
@@ -1207,10 +1211,6 @@ errorExit:;
 		// as used by the various commands
 		switch ([self representation]) {
 				
-				// we are here already
-			case MGSScriptRepresentationNegotiate:
-				break;
-
 				//
 			case MGSScriptRepresentationComplete:
 			case MGSScriptRepresentationDisplay:
@@ -1241,10 +1241,6 @@ errorExit:;
 			case MGSScriptRepresentationComplete:
 				
 				switch (representation) {
-						
-						// we are here already
-					case MGSScriptRepresentationComplete:
-						break;
 						
 						// a representation suitable for the client to display.
 						// a display representation can be used to generate an execute request.
@@ -1300,7 +1296,11 @@ errorExit:;
 						if ([self scheduleSave]) {
 							success = NO;
 						} else if (conform) {
-							representationKeys = [self keysForRepresentation:MGSScriptRepresentationExecute];
+							success = [_parameterManager conformToRepresentation:MGSScriptParameterRepresentationExecute options:options];
+
+							if (success) {
+								representationKeys = [self keysForRepresentation:MGSScriptRepresentationExecute];
+							}
 						}
 						break;
 						
@@ -1314,16 +1314,14 @@ errorExit:;
 			// display representation
 			case MGSScriptRepresentationDisplay:
 				switch (representation) {
-						
-						// we are here already
-					case MGSScriptRepresentationDisplay:
-						break;
-					
+											
 						// a representation that the server can execute.
 						// as the current representation is display we can assume
 						// that the script code resides on the server.
 					case MGSScriptRepresentationExecute:
-						if (conform) {
+						success = [_parameterManager conformToRepresentation:MGSScriptParameterRepresentationExecute options:options];
+
+						if (success && conform) {
 							representationKeys = [self keysForRepresentation:MGSScriptRepresentationExecute];
 						}
 						break;
@@ -1343,7 +1341,7 @@ errorExit:;
 	
 	if (conform) {
 		
-		// if we have represntation keys then use them
+		// if we have representation keys then use them
 		if (representationKeys) {
 			success = [self representationWithKeys:representationKeys options:nil];
 		}
@@ -2339,6 +2337,7 @@ errorExit:;
 	// remove the representation keys
 	[saveScript removeObjectForKey:MGSScriptKeyRepresentation];	// recreated when script validated on load
 	[[saveScript scriptCode] removeObjectForKey:MGSScriptKeyRepresentation];
+	[[saveScript parameterHandler] removeRepresentation];
 	
 	// get property list representation
 	NSData *xmlData = [saveScript propertyListData];
@@ -2444,7 +2443,7 @@ errorExit:;
  */
 - (MGSNetAttachments *)attachmentsWithError:(MGSError **)mgsError
 {
-	NSUInteger count = [_parameterHandler count];
+	NSUInteger count = [_parameterManager count];
 	
 	if (count == 0) {
 		return nil;
@@ -2458,7 +2457,7 @@ errorExit:;
 	//
 	for (NSUInteger i = 0; i < count; i++) {
 		
-		MGSScriptParameter *parameter = [_parameterHandler itemAtIndex:i];
+		MGSScriptParameter *parameter = [_parameterManager itemAtIndex:i];
 		if ([parameter sendAsAttachment]) {
 			
 			// lazy
@@ -2506,13 +2505,13 @@ errorExit:;
 {
 	NSString *name = [self name];
 	
-	NSInteger count = [_parameterHandler count];
+	NSInteger count = [_parameterManager count];
 	
 	if (count == 0) {
 		return name;
 	}
 	
-	return [NSString stringWithFormat:@"%@ (%@)", name, [_parameterHandler shortStringValue]];
+	return [NSString stringWithFormat:@"%@ (%@)", name, [_parameterManager shortStringValue]];
 }
 
 #pragma mark -
@@ -2641,9 +2640,9 @@ errorExit:;
 - (void)createParameterHandler
 {
 	// create parameter handler from script dict
-	_parameterHandler = [[MGSScriptParameterHandler alloc] init];
+	_parameterManager = [[MGSScriptParameterManager alloc] init];
 	// this just points into the existing dict
-	[_parameterHandler setHandlerFromDict:[self dict]];
+	[_parameterManager setHandlerFromDict:[self dict]];
 }
 
 - (void)createCodeHandler

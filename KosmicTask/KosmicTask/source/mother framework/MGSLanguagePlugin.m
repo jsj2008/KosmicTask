@@ -533,12 +533,14 @@ static NSOperationQueue *operationQueue = nil;
 		}
 		NSDictionary *params = (NSDictionary *)item;
 		
-		// get parameter value, if missing use default
+		// get parameter value
 		NSString *parameterValue = [params objectForKey:MGSScriptKeyValue];
-		if (!parameterValue) {
+		
+		// use default, except default exists in the ClassInfo dict
+		/*if (!parameterValue) {
 			parameterValue = [params objectForKey:MGSScriptKeyDefault];
 			MLog(DEBUGLOG, @"Using default parameter value.");
-		} 
+		} */
 		
 		// validate
 		if (!parameterValue) {

@@ -10,7 +10,7 @@
 #import "MGSImageAndTextCell.h"
 #import "MGSTaskSpecifier.h"
 #import "MGSScript.h"
-#import "MGSScriptParameterHandler.h"
+#import "MGSScriptParameterManager.h"
 #import "MGSActionView.h"
 #import "NSImage+Negative.h"
 #import "MGSTextPanelViewController.h"
@@ -212,7 +212,7 @@
 - (void)updateBanner
 {
 	MGSScript *script = [_task script];
-	MGSScriptParameterHandler *parameterHandler = [script parameterHandler];
+	MGSScriptParameterManager *parameterHandler = [script parameterHandler];
 
 	// number of parameters
 	NSInteger parameterCount = [parameterHandler count];

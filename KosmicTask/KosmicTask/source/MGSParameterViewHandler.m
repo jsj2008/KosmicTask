@@ -12,7 +12,7 @@
 //
 #import "MGSParameterViewHandler.h"
 #import "MGSRoundedView.h"
-#import "MGSScriptParameterHandler.h"
+#import "MGSScriptParameterManager.h"
 #import "MGSScriptParameter.h"
 #import "NSView_Mugginsoft.h"
 #import "NSSplitView_Mugginsoft.h"
@@ -136,7 +136,7 @@
  set script parameter handler
  
  */
--(void)setScriptParameterHandler:(MGSScriptParameterHandler *)aScriptParameterHandler
+-(void)setScriptParameterHandler:(MGSScriptParameterManager *)aScriptParameterHandler
 {
 	NSAssert(aScriptParameterHandler, @"script parameter handler is null");
 	_scriptParameterHandler = aScriptParameterHandler;

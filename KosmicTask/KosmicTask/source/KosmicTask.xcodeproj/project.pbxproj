@@ -1208,8 +1208,8 @@
 		ABE3E9090D355D8700842E00 /* MGSFactoryArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE3E9070D355D8700842E00 /* MGSFactoryArrayController.m */; };
 		ABE3E97F0D356ED800842E00 /* MGSScriptParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = ABE3E97D0D356ED800842E00 /* MGSScriptParameter.h */; };
 		ABE3E9800D356ED800842E00 /* MGSScriptParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE3E97E0D356ED800842E00 /* MGSScriptParameter.m */; };
-		ABE3E9850D356FFA00842E00 /* MGSScriptParameterHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ABE3E9830D356FFA00842E00 /* MGSScriptParameterHandler.h */; };
-		ABE3E9860D356FFA00842E00 /* MGSScriptParameterHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE3E9840D356FFA00842E00 /* MGSScriptParameterHandler.m */; };
+		ABE3E9850D356FFA00842E00 /* MGSScriptParameterManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ABE3E9830D356FFA00842E00 /* MGSScriptParameterManager.h */; };
+		ABE3E9860D356FFA00842E00 /* MGSScriptParameterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE3E9840D356FFA00842E00 /* MGSScriptParameterManager.m */; };
 		ABE496740E71C993004F04E8 /* MGSInternetSharing.h in Headers */ = {isa = PBXBuildFile; fileRef = ABE496720E71C993004F04E8 /* MGSInternetSharing.h */; };
 		ABE496750E71C993004F04E8 /* MGSInternetSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE496730E71C993004F04E8 /* MGSInternetSharing.m */; };
 		ABE6D19E10EE2CC200D18452 /* MGSToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE6D19D10EE2CC200D18452 /* MGSToolbarItem.m */; };
@@ -4556,8 +4556,8 @@
 		ABE3E9070D355D8700842E00 /* MGSFactoryArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFactoryArrayController.m; sourceTree = "<group>"; };
 		ABE3E97D0D356ED800842E00 /* MGSScriptParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptParameter.h; sourceTree = "<group>"; };
 		ABE3E97E0D356ED800842E00 /* MGSScriptParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSScriptParameter.m; sourceTree = "<group>"; };
-		ABE3E9830D356FFA00842E00 /* MGSScriptParameterHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptParameterHandler.h; sourceTree = "<group>"; };
-		ABE3E9840D356FFA00842E00 /* MGSScriptParameterHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSScriptParameterHandler.m; sourceTree = "<group>"; };
+		ABE3E9830D356FFA00842E00 /* MGSScriptParameterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptParameterManager.h; sourceTree = "<group>"; };
+		ABE3E9840D356FFA00842E00 /* MGSScriptParameterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSScriptParameterManager.m; sourceTree = "<group>"; };
 		ABE496720E71C993004F04E8 /* MGSInternetSharing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSInternetSharing.h; sourceTree = "<group>"; };
 		ABE496730E71C993004F04E8 /* MGSInternetSharing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSInternetSharing.m; sourceTree = "<group>"; };
 		ABE6D19C10EE2CC200D18452 /* MGSToolbarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSToolbarItem.h; sourceTree = "<group>"; };
@@ -5784,8 +5784,8 @@
 				ABD90BC80D33B3A400601C00 /* MGSScript.m */,
 				ABE3E97D0D356ED800842E00 /* MGSScriptParameter.h */,
 				ABE3E97E0D356ED800842E00 /* MGSScriptParameter.m */,
-				ABE3E9830D356FFA00842E00 /* MGSScriptParameterHandler.h */,
-				ABE3E9840D356FFA00842E00 /* MGSScriptParameterHandler.m */,
+				ABE3E9830D356FFA00842E00 /* MGSScriptParameterManager.h */,
+				ABE3E9840D356FFA00842E00 /* MGSScriptParameterManager.m */,
 				AB9E82300D86E72F007601C4 /* MGSScriptCode.h */,
 				AB9E82310D86E72F007601C4 /* MGSScriptCode.m */,
 				AB9029D90D44A4170077ADE4 /* MGSPath.h */,
@@ -8424,7 +8424,7 @@
 				ABE201080D355A5700A8EDF3 /* MGSDictionary.h in Headers */,
 				ABE3E9080D355D8700842E00 /* MGSFactoryArrayController.h in Headers */,
 				ABE3E97F0D356ED800842E00 /* MGSScriptParameter.h in Headers */,
-				ABE3E9850D356FFA00842E00 /* MGSScriptParameterHandler.h in Headers */,
+				ABE3E9850D356FFA00842E00 /* MGSScriptParameterManager.h in Headers */,
 				AB7130480D39621300D4FB8D /* NSView_Mugginsoft.h in Headers */,
 				AB9029DB0D44A4170077ADE4 /* MGSPath.h in Headers */,
 				ABB749330D525C6F004F8A2C /* MGSBonjour.h in Headers */,
@@ -11007,7 +11007,7 @@
 				ABE201090D355A5700A8EDF3 /* MGSDictionary.m in Sources */,
 				ABE3E9090D355D8700842E00 /* MGSFactoryArrayController.m in Sources */,
 				ABE3E9800D356ED800842E00 /* MGSScriptParameter.m in Sources */,
-				ABE3E9860D356FFA00842E00 /* MGSScriptParameterHandler.m in Sources */,
+				ABE3E9860D356FFA00842E00 /* MGSScriptParameterManager.m in Sources */,
 				AB9029DC0D44A4170077ADE4 /* MGSPath.m in Sources */,
 				ABB749340D525C6F004F8A2C /* MGSBonjour.m in Sources */,
 				AB9E82440D86EB15007601C4 /* MGSScriptCode.m in Sources */,

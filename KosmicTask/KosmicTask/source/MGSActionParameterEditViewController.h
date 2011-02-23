@@ -10,7 +10,7 @@
 
 @class MGSTaskSpecifier;
 @class MGSParameterViewHandler;
-@class MGSScriptParameterHandler;
+@class MGSScriptParameterManager;
 @class MGSEmptyParameterViewController;
 @class MGSParameterSplitView;
 
@@ -26,7 +26,7 @@
 	IBOutlet NSButton *_copyHandlerTemplateButton;				// copy handler template button
 	
 	MGSTaskSpecifier *_action;
-	MGSScriptParameterHandler *_parameterHandler;
+	MGSScriptParameterManager *_parameterHandler;
 	
 	NSInteger _inputCount;
 }

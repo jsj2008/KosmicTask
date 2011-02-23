@@ -30,7 +30,7 @@ typedef enum _MGSScriptRepresentation {
 	MGSScriptRepresentationNegotiate = 8,	// preview representation - sufficient keys to negotiate the script
 } MGSScriptRepresentation;
 
-@class MGSScriptParameterHandler;
+@class MGSScriptParameterManager;
 @class MGSScriptCode;
 @class MGSError;
 @class MGSNetRequest;
@@ -48,7 +48,7 @@ typedef enum _MGSScriptRepresentation {
 	// This object is to be treated strictly as a dictionary wrapper.
 	// Don't modify this object, modify the dicitonary.
 	//
-	MGSScriptParameterHandler *_parameterHandler;
+	MGSScriptParameterManager *_parameterManager;
 	MGSScriptCode *_scriptCode;
 	
 	NSString *templateName;
@@ -230,7 +230,7 @@ typedef enum _MGSScriptRepresentation {
 - (NSString *)keyWithString:(NSString *)aString;
 - (id)clone;
 
-@property (readonly) MGSScriptParameterHandler *parameterHandler;
+@property (readonly) MGSScriptParameterManager *parameterHandler;
 @property (assign) MGSScriptCode *scriptCode;
 @property BOOL modelDataKVCModified;
 @property (copy) NSString *templateName;

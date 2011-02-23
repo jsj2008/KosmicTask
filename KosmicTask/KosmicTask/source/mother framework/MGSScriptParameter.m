@@ -6,7 +6,7 @@
 //  Copyright 2008 Mugginsoft. All rights reserved.
 //
 
-
+#import "MGSMother.h"
 #import "MGSScriptParameter.h"
 #import "MGSScriptPlist.h"
 #import "MGSParameterPluginController.h"
@@ -38,7 +38,9 @@
 	// set will create a copy of our object by default.
 	// and that copy will be immutable.
 	[parameter assignObject:[NSMutableDictionary dictionaryWithCapacity:2] forKey:MGSScriptKeyClassInfo];
-	 
+	
+	[parameter setRepresentation:MGSScriptParameterRepresentationStandard];
+
 	return parameter;
 }
 
@@ -49,8 +51,10 @@
  */
 - (id)init
 {
-	[super init];
-	_modelDataModified = NO;
+	self = [super init];
+	if (self) {
+		_modelDataModified = NO;
+	}
 	return self;
 }
 
@@ -128,9 +132,10 @@
  
  type info
  
- we do not provide a setted here as our overridden default implementation of 
+ we do not provide a setter here as our overridden default implementation of 
  -setObject:forKey: automatically copies the object and currently
   a copied NSMutableDictionary is an instance of NSDictionary
+ 
  */
 - (NSMutableDictionary *)typeInfo
 {
@@ -222,4 +227,123 @@
 	return aCopy;
 }
 
+#pragma mark -
+#pragma mark Representation
+
+/*
+ 
+ - removeRepresentation
+ 
+ */
+- (void)removeRepresentation
+{
+	[self setObject:nil forKey:MGSScriptKeyRepresentation];
+}
+
+/*
+ 
+ - setRepresentation:
+ 
+ */
+- (void)setRepresentation:(MGSScriptParameterRepresentation)value
+{
+	switch (value) {
+		case MGSScriptParameterRepresentationUndefined:
+		case MGSScriptParameterRepresentationStandard:
+		case MGSScriptParameterRepresentationExecute:
+			break;
+			
+		default:
+			NSAssert(NO, @"invalid script representation");
+	}
+	
+	[self setInteger:value forKey:MGSScriptKeyRepresentation];
+}
+
+/*
+ 
+ - representation
+ 
+ */
+- (MGSScriptParameterRepresentation)representation
+{
+	return [self integerForKey:MGSScriptKeyRepresentation];
+}
+
+/*
+ 
+ - conformToRepresentation:
+ 
+ */
+- (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation
+{
+	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+							 [NSNumber numberWithBool:YES], @"conform",
+							 nil];
+	
+	return [self conformToRepresentation:representation options:options];
+}
+
+/*
+ 
+ - conformToRepresentation:options:
+ 
+ */
+- (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation options:(NSDictionary *)options
+{
+	BOOL success = YES;
+	BOOL conform = [[options objectForKey:@"conform"] boolValue];
+	
+	if ([self representation] == representation) {
+		return YES;
+	}
+	
+	// we can only conform to a representation that contains fewer
+	// dictionary keys then we have presently
+	switch ([self representation]) {
+			
+			// standard representation
+		case MGSScriptParameterRepresentationStandard:
+			
+			switch (representation) {
+										
+					/*
+					 
+					 build an execute representation.
+					 
+					 */
+				case MGSScriptParameterRepresentationExecute:
+					if (conform) {
+						[self setTypeName:nil];
+						[self setDescription:nil];
+						[self setObject:nil forKey:MGSScriptKeyClassInfo];
+					}
+					break;
+										
+				default:
+					success =  NO;
+					break;
+			}
+			
+			break;
+			
+
+		default:
+			success =  NO;
+			break;
+			
+	}
+	
+	if (conform) {
+		
+		if (success) {
+			[self setRepresentation:representation];
+		} else {
+			MLogInfo(@"cannot conform to representation");
+		}
+	}
+	
+	
+	return success;
+}
 @end

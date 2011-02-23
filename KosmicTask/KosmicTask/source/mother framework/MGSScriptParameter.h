@@ -9,6 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSDictionary.h"
 
+typedef enum _MGSScriptParameterRepresentation {
+	MGSScriptParameterRepresentationUndefined = 0,		// undefined representation
+	MGSScriptParameterRepresentationStandard = 1,		// standard representation
+	MGSScriptParameterRepresentationExecute = 2,			// execute representation 
+} MGSScriptParameterRepresentation;
+
+
 @interface MGSScriptParameter : MGSDictionary {
 	BOOL _modelDataModified;
 }
@@ -37,6 +44,12 @@
 // attachment index
 - (NSInteger)attachmentIndex;
 - (void)setAttachmentIndex:(NSInteger)value;
+
+- (void)setRepresentation:(MGSScriptParameterRepresentation)value;
+- (MGSScriptParameterRepresentation)representation;
+- (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation;
+- (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation options:(NSDictionary *)options;
+- (void)removeRepresentation;
 
 @property BOOL modelDataModified;
 @end

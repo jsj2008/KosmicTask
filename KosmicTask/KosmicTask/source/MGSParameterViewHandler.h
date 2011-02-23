@@ -10,7 +10,7 @@
 #import "MGSParameterViewController.h"
 #import "MGSActionViewController.h"
 
-@class MGSScriptParameterHandler;
+@class MGSScriptParameterManager;
 @class MGSParameterEndViewController;
 @class MGSParameterSplitView;
 
@@ -31,7 +31,7 @@
 	BOOL _nibLoaded;
 	NSMutableArray *_viewControllers;
 	//NSMutableArray *_viewControllerCache;
-	MGSScriptParameterHandler * _scriptParameterHandler;
+	MGSScriptParameterManager * _scriptParameterHandler;
 	MGSParameterMode _mode;
 	MGSParameterEndViewController *_endViewController;
 	id _delegate;
@@ -43,7 +43,7 @@
 - (MGSParameterViewController *)addParameter;
 - (void)removeLastParameter;
 - (void)highlightParameter:(MGSParameterViewController *)controller;
-- (void)setScriptParameterHandler:(MGSScriptParameterHandler *)aScriptParameterHandler;
+- (void)setScriptParameterHandler:(MGSScriptParameterManager *)aScriptParameterHandler;
 - (BOOL)validateParameters:(MGSParameterViewController **)parameterViewController;
 - (void)highlightParameterAtIndex:(NSUInteger)index;
 - (void)resetToDefaultValue;
