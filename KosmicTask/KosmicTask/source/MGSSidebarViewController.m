@@ -628,13 +628,8 @@ char MGSScriptDictContext;
 		[groupNode sortNameRecursively:NO];
 		
 		// select new task
-		if (isNewTask) {
-			
-			//_postNetClientSelectionNotifications = NO;
-			//outlineView.allowScrollRowVisible = NO;
+		if (isNewTask) {			
 			[clientTreeController dm_setSelectedObjects:[NSArray arrayWithObject:scriptNode]];
-			//outlineView.allowScrollRowVisible = YES;
-			//_postNetClientSelectionNotifications = YES;
 		}
 	}
 }
@@ -671,8 +666,6 @@ char MGSScriptDictContext;
 	if ([[groupNode childNodes] count] == 0) {
 		[self removeNodeWithKey:nodeKey netClient:netClient];
 	}
-	
-	
 }
 
 /*

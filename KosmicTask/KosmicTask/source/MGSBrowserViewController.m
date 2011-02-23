@@ -797,6 +797,7 @@ errorExit:;
 									 [script UUID], MGSNoteClientScriptUUIDKey,
 									 nil];
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteScriptScheduledForDelete object:netClient userInfo:userInfo];
+
 	
 }
 

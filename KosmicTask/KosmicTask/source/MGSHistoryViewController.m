@@ -121,12 +121,13 @@
 			return;
 		}
 		
-		// call delegate with new action
-		if (_delegate && [_delegate respondsToSelector:@selector(historyExecuteSelectedAction:)]) {
+		// in general I think that running tasks on double click is a bad idea.
+		// its too easy to trigger a task unintentionally.
+		BOOL runOnDoubleClick = NO;		
+		if (runOnDoubleClick && _delegate && [_delegate respondsToSelector:@selector(historyExecuteSelectedAction:)]) {
 			[_delegate historyExecuteSelectedAction:self];
 		}			
 	}
-
 }
 
 #pragma mark - NSTableView delegate methods
