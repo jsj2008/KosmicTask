@@ -9,7 +9,7 @@
 #import "MGSPythonScriptRunner.h"
 #import "MGSPythonLanguage.h"
 
-#define APPSCRIPT_EGG_10_6 @"Python/appscript-0.21.1-py2.6-macosx-10.6-universal.egg"
+#define APPSCRIPT_EGG_10_6 @"Python/appscript-1.0.0-py2.6-macosx-10.6-universal.egg"
 
 @implementation MGSPythonScriptRunner
 
@@ -104,7 +104,7 @@
 	 sudo easy_install appscript
 	 
 	 this will download the sources and build the egg into
-	 /Library/Python/2.6/site-packages/appscript-0.21.1-py2.6-macosx-10.6-universal.egg
+	 /Library/Python/2.6/site-packages/appscript-x.xx.x-py2.6-macosx-10.6-universal.egg
 	 
 	 we can extract it from there and include in our project.
 	 note that the installation builds the C based AE bridge that is loaded into the

@@ -189,7 +189,6 @@
 		AB2A4604119C02FD00A0D67F /* MGSPythonScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = AB27B048118A0F1600132977 /* MGSPythonScriptRunner.m */; };
 		AB2A468D119C094B00A0D67F /* MGSRubyScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5CDAA7118AF2DD00C545CD /* MGSRubyScriptRunner.m */; };
 		AB2A469B119C0A2500A0D67F /* pyflakes in Copy Python resources */ = {isa = PBXBuildFile; fileRef = AB408CD111917A0F00A8037A /* pyflakes */; };
-		AB2A469C119C0A2500A0D67F /* appscript-0.21.1-py2.6-macosx-10.6-universal.egg in Copy Python resources */ = {isa = PBXBuildFile; fileRef = ABD48C741196FB0500C3645A /* appscript-0.21.1-py2.6-macosx-10.6-universal.egg */; };
 		AB2CD02F122013CA005E2379 /* perl5 in Copy Perl resources */ = {isa = PBXBuildFile; fileRef = AB2CD01012201370005E2379 /* perl5 */; };
 		AB2D050B0CDE8171006632AF /* MGSMotherServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2D050A0CDE8171006632AF /* MGSMotherServer.m */; };
 		AB2D9B02128AFEE8005B0484 /* MGSAppleScriptLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2D9B01128AFEE8005B0484 /* MGSAppleScriptLanguage.m */; };
@@ -962,6 +961,8 @@
 		ABADEFDA104D34CE007A5319 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
 		ABADF025104D361A007A5319 /* Appscript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAB188A1048671D00AA3E9A /* Appscript.framework */; };
 		ABADF08D104D374E007A5319 /* NDScript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABADEE02104D32A9007A5319 /* NDScript.framework */; };
+		ABAE0B79131558CC000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg in Copy Python Resources */ = {isa = PBXBuildFile; fileRef = ABAE0B78131558BC000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg */; };
+		ABAE0B7A131558E9000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg in Copy Python resources */ = {isa = PBXBuildFile; fileRef = ABAE0B78131558BC000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg */; };
 		ABAE66B40D6F110600A0FC53 /* MGSScriptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAE66B30D6F110600A0FC53 /* MGSScriptViewController.m */; };
 		ABAE66B70D6F117700A0FC53 /* ScriptView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAE66B50D6F117700A0FC53 /* ScriptView.xib */; };
 		ABAE677F0E1A920F0003003D /* MGSParameterEndView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAE677E0E1A920F0003003D /* MGSParameterEndView.m */; };
@@ -1151,7 +1152,6 @@
 		ABD170430DCC9B6C00E57FF3 /* MGSActionWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD170420DCC9B6C00E57FF3 /* MGSActionWindowController.m */; };
 		ABD3A7FC0D4FD36A000C58D0 /* Warning.png in Resources */ = {isa = PBXBuildFile; fileRef = ABD3A7FB0D4FD36A000C58D0 /* Warning.png */; };
 		ABD41F101204A94B006F52AE /* KosmicTaskF-ScriptRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB92D0BB12047C100025EAEF /* KosmicTaskF-ScriptRunner */; };
-		ABD48C751196FB0500C3645A /* appscript-0.21.1-py2.6-macosx-10.6-universal.egg in Copy Python Resources */ = {isa = PBXBuildFile; fileRef = ABD48C741196FB0500C3645A /* appscript-0.21.1-py2.6-macosx-10.6-universal.egg */; };
 		ABD668A30DE6034C00097C1B /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
 		ABD668A40DE6034C00097C1B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		ABD668A50DE6034C00097C1B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9DC2980DE5BF3600B85F5E /* ScriptingBridge.framework */; };
@@ -2730,10 +2730,10 @@
 			dstPath = Python;
 			dstSubfolderSpec = 7;
 			files = (
+				ABAE0B79131558CC000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg in Copy Python Resources */,
 				AB024304122429D500035457 /* mugginsoft.py in Copy Python Resources */,
 				ABF3D4221220366B00442B67 /* yaml in Copy Python Resources */,
 				AB408CEF11917A4900A8037A /* pyflakes in Copy Python Resources */,
-				ABD48C751196FB0500C3645A /* appscript-0.21.1-py2.6-macosx-10.6-universal.egg in Copy Python Resources */,
 			);
 			name = "Copy Python Resources";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2744,8 +2744,8 @@
 			dstPath = Python;
 			dstSubfolderSpec = 7;
 			files = (
+				ABAE0B7A131558E9000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg in Copy Python resources */,
 				AB2A469B119C0A2500A0D67F /* pyflakes in Copy Python resources */,
-				AB2A469C119C0A2500A0D67F /* appscript-0.21.1-py2.6-macosx-10.6-universal.egg in Copy Python resources */,
 			);
 			name = "Copy Python resources";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4244,6 +4244,7 @@
 		ABAD86C80ED0DADA00003FA4 /* FVColorMenuView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = FVColorMenuView.nib; sourceTree = "<group>"; };
 		ABADEE02104D32A9007A5319 /* NDScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NDScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABADEE03104D32A9007A5319 /* NDScript-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NDScript-Info.plist"; sourceTree = "<group>"; };
+		ABAE0B78131558BC000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "appscript-1.0.0-py2.6-macosx-10.6-universal.egg"; path = "../../Python/py-appscript/install/appscript-1.0.0-py2.6-macosx-10.6-universal.egg"; sourceTree = SOURCE_ROOT; };
 		ABAE66B20D6F110600A0FC53 /* MGSScriptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptViewController.h; sourceTree = "<group>"; };
 		ABAE66B30D6F110600A0FC53 /* MGSScriptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSScriptViewController.m; sourceTree = "<group>"; };
 		ABAE66B60D6F117700A0FC53 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ScriptView.xib; sourceTree = "<group>"; };
@@ -6424,6 +6425,7 @@
 		AB2CD14B12203118005E2379 /* Python */ = {
 			isa = PBXGroup;
 			children = (
+				ABAE0B78131558BC000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg */,
 				AB024301122429C100035457 /* mugginsoft.py */,
 				AB408CD111917A0F00A8037A /* pyflakes */,
 				ABD48C741196FB0500C3645A /* appscript-0.21.1-py2.6-macosx-10.6-universal.egg */,
