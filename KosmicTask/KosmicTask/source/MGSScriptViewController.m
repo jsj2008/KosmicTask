@@ -759,19 +759,19 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 {
 	_requestID = NO_REQUEST_OUTSTANDING;
 
-	// clear the textview while we wait for source
-	[self setString:@""];
-
-	if (_taskSpec == nil) {
-		return;
-	}
-	
 	// check if we have the source already
 	NSString *source = [[[_taskSpec script] scriptCode] source];
 	if (source) {
 		return;
 	}
 	
+	// clear the textview while we wait for source
+	[self setString:@""];
+
+	if (_taskSpec == nil) {
+		return;
+	}
+		
 	// we must have at least a display representation before we request the source.
 	// eg: we don't want to request the source for a preview representation as it will
 	// only get replaced by a display rep which will then request its own source.
