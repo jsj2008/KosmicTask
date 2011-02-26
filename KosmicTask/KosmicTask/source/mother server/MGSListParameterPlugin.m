@@ -15,29 +15,28 @@ NSString *MGSSelectedObjectsContext = @"SelectedObjects";
 NSString *MGSArrangedObjectsContext = @"ArrangedObjects";
 
 @implementation MGSListParameterPlugin
-/*
- 
- create edit view controller with delegate
- 
- */
-- (MGSParameterSubEditViewController *)createEditViewControllerWithDelegate:(id)aDelegate
-{
-	#pragma unused(aDelegate)
-	
-	return [self createViewController:[MGSListParameterEditViewController class]];
-}
 
 /*
  
- create input view controller with delegate
+ - editViewControllerClass
  
  */
-- (MGSParameterSubInputViewController *)createInputViewControllerWithDelegate:(id)aDelegate
+- (id)editViewControllerClass
 {
-	#pragma unused(aDelegate)
-	
-	return [self createViewController:[MGSListParameterInputViewController class]];
+	return [MGSListParameterEditViewController class];
 }
+
+
+/*
+ 
+ - inputViewControllerClass
+ 
+ */
+- (id)inputViewControllerClass
+{
+	return [MGSListParameterInputViewController class];
+}
+
 
 /* 
  

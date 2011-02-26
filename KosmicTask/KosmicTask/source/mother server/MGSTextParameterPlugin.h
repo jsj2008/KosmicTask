@@ -9,7 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSParameterPlugin.h"
 
+typedef enum _MGSTextParameterInputStyle {
+	kMGSTextParameterInputStyleSingleLine = 0,
+	kMGSParameterInputStyleMultiLine = 1
+} MGSTextParameterInputStyle;
+
 extern NSString *MGSKeyAllowEmptyInput;
+extern NSString *MGSKeyInputStyle;
 
 @interface MGSTextParameterPlugin : MGSParameterPlugin {
 

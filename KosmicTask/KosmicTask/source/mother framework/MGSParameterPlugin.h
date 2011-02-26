@@ -13,7 +13,7 @@
 
 extern NSString *MGSParameterPluginDefaultClassName;
 
-@class MGSParameterSubViewController;
+@class MGSParameterPluginViewController;
 
 @protocol MGSParameterPlugin
 
@@ -30,6 +30,7 @@ extern NSString *MGSParameterPluginDefaultClassName;
 
 }
 
-- (id)createViewController:(Class)controllerClass;
-
+- (id)createViewController:(Class)controllerClass delegate:(id)delegate;
+- (id)editViewControllerClass;
+- (id)inputViewControllerClass;
 @end

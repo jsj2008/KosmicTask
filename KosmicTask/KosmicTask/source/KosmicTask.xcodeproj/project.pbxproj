@@ -893,8 +893,8 @@
 		ABAA51840D7998F400C497E9 /* MGSActionEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAA51830D7998F400C497E9 /* MGSActionEditViewController.m */; };
 		ABAA51880D7999C100C497E9 /* ActionEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAA51860D7999C100C497E9 /* ActionEditView.xib */; };
 		ABAAC2850E090D11007609C7 /* NSTextField_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAAC2840E090D11007609C7 /* NSTextField_Mugginsoft.m */; };
-		ABAAC5060E09633A007609C7 /* MGSParameterSubViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = ABAAC5040E09633A007609C7 /* MGSParameterSubViewController.h */; };
-		ABAAC5070E09633A007609C7 /* MGSParameterSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAAC5050E09633A007609C7 /* MGSParameterSubViewController.m */; };
+		ABAAC5060E09633A007609C7 /* MGSParameterPluginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = ABAAC5040E09633A007609C7 /* MGSParameterPluginViewController.h */; };
+		ABAAC5070E09633A007609C7 /* MGSParameterPluginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAAC5050E09633A007609C7 /* MGSParameterPluginViewController.m */; };
 		ABAACDAB0D9E7E56000CC419 /* MGSServerPreferencesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAACDAA0D9E7E56000CC419 /* MGSServerPreferencesRequest.m */; };
 		ABAACDB80D9E85E0000CC419 /* MGSServerRequestProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAACDB70D9E85E0000CC419 /* MGSServerRequestProcessor.m */; };
 		ABAAD6570D78037100E67A03 /* MGSActionDeleteWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAAD6560D78037100E67A03 /* MGSActionDeleteWindowController.m */; };
@@ -4191,8 +4191,8 @@
 		ABAA51870D7999C100C497E9 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ActionEditView.xib; sourceTree = "<group>"; };
 		ABAAC2830E090D11007609C7 /* NSTextField_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTextField_Mugginsoft.h; sourceTree = "<group>"; };
 		ABAAC2840E090D11007609C7 /* NSTextField_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTextField_Mugginsoft.m; sourceTree = "<group>"; };
-		ABAAC5040E09633A007609C7 /* MGSParameterSubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterSubViewController.h; sourceTree = "<group>"; };
-		ABAAC5050E09633A007609C7 /* MGSParameterSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterSubViewController.m; sourceTree = "<group>"; };
+		ABAAC5040E09633A007609C7 /* MGSParameterPluginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterPluginViewController.h; sourceTree = "<group>"; };
+		ABAAC5050E09633A007609C7 /* MGSParameterPluginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterPluginViewController.m; sourceTree = "<group>"; };
 		ABAACDA90D9E7E56000CC419 /* MGSServerPreferencesRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSServerPreferencesRequest.h; sourceTree = "<group>"; };
 		ABAACDAA0D9E7E56000CC419 /* MGSServerPreferencesRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSServerPreferencesRequest.m; sourceTree = "<group>"; };
 		ABAACDB60D9E85E0000CC419 /* MGSServerRequestProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSServerRequestProcessor.h; sourceTree = "<group>"; };
@@ -8175,8 +8175,8 @@
 				ABA2B5570DEC15EC00D55B7D /* MGSViewController.m */,
 				ABA089310DFA7DB10099755E /* MGSParameterSubInputViewController.h */,
 				ABA089320DFA7DB10099755E /* MGSParameterSubInputViewController.m */,
-				ABAAC5040E09633A007609C7 /* MGSParameterSubViewController.h */,
-				ABAAC5050E09633A007609C7 /* MGSParameterSubViewController.m */,
+				ABAAC5040E09633A007609C7 /* MGSParameterPluginViewController.h */,
+				ABAAC5050E09633A007609C7 /* MGSParameterPluginViewController.m */,
 			);
 			name = "View controllers";
 			sourceTree = "<group>";
@@ -8455,7 +8455,7 @@
 				ABDA82A50DF1F0ED009B823F /* MGSUser.h in Headers */,
 				ABAFC6950DF9A5B200349FC3 /* MGSParameterPlugin.h in Headers */,
 				ABA089330DFA7DB10099755E /* MGSParameterSubInputViewController.h in Headers */,
-				ABAAC5060E09633A007609C7 /* MGSParameterSubViewController.h in Headers */,
+				ABAAC5060E09633A007609C7 /* MGSParameterPluginViewController.h in Headers */,
 				ABB10D4D0E26240800A93854 /* NSMutableDictionary_Mugginsoft.h in Headers */,
 				ABB1109F0E266DAE00A93854 /* MGSArrayController.h in Headers */,
 				AB6C96390E485D45005AE567 /* AsyncSocket.h in Headers */,
@@ -11048,7 +11048,7 @@
 				ABAFC8C20DF9C9D600349FC3 /* MGSNumberInputViewController.m in Sources */,
 				ABA089340DFA7DB10099755E /* MGSParameterSubInputViewController.m in Sources */,
 				AB9D70F00DFBF5A9004A117C /* NSImage+QuickLook.m in Sources */,
-				ABAAC5070E09633A007609C7 /* MGSParameterSubViewController.m in Sources */,
+				ABAAC5070E09633A007609C7 /* MGSParameterPluginViewController.m in Sources */,
 				ABB10D270E2622C500A93854 /* NSDictionary_Mugginsoft.m in Sources */,
 				ABB10D4E0E26240800A93854 /* NSMutableDictionary_Mugginsoft.m in Sources */,
 				ABB110A00E266DAE00A93854 /* MGSArrayController.m in Sources */,

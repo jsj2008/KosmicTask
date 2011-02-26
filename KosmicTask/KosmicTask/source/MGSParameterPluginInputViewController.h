@@ -8,17 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class MGSParameterSubViewController;
+#import "MGSParameterPluginViewController.h"
 
-@interface MGSParameterPluginInputViewController : NSViewController {
+@interface MGSParameterPluginInputViewController : NSViewController <MGSParameterPluginViewControllerDelegate> {
 	IBOutlet NSView *pluginView;
-	MGSParameterSubViewController *_subViewController;
+	MGSParameterPluginViewController *_parameterPluginViewController;
 	IBOutlet NSButton *resetButton;
 	BOOL _resetEnabled;
+	id delegate;
 }
 @property NSView *pluginView;
-@property MGSParameterSubViewController *subViewController;
+@property MGSParameterPluginViewController *parameterPluginViewController;
 @property (readonly) BOOL resetEnabled;
+@property id delegate;
 
 - (IBAction)resetToDefaultValue:(id)sender;
 

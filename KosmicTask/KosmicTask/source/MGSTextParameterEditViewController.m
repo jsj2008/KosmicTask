@@ -6,13 +6,13 @@
 //  Copyright 2008 Mugginsoft. All rights reserved.
 //
 
-#import "MGSTextParameterPlugin.h"
 #import "MGSTextParameterEditViewController.h"
 
 @implementation MGSTextParameterEditViewController
 
 @synthesize defaultText = _defaultText;
 @synthesize allowEmptyInput = _allowEmptyInput;
+@synthesize inputStyle;
 
 /*
  
@@ -21,7 +21,9 @@
  */
 - (id)init
 {
-	if ([super initWithNibName:@"TextParameterEditView"]) {
+	self = [super initWithNibName:@"TextParameterEditView"];
+	if (self) {
+		inputStyle = kMGSParameterInputStyleMultiLine;
 	}
 	return self;
 }
@@ -40,6 +42,7 @@
 	// bind it
 	[textView bind:NSValueBinding toObject:self withKeyPath:@"defaultText" options:nil];
 	[allowEmptyInputCheckbox bind:NSValueBinding toObject:self withKeyPath:@"allowEmptyInput" options:nil];
+	[initialInputSizePopUpButton bind:NSSelectedIndexBinding toObject:self withKeyPath:@"inputStyle" options:nil];
 }
 
 
@@ -63,6 +66,7 @@
 {
 	[self setDefaultValue:self.defaultText];
 	[self.plist setObject:[NSNumber numberWithBool:self.allowEmptyInput] forKey:MGSKeyAllowEmptyInput];
+	[self.plist setObject:[NSNumber numberWithInteger:self.inputStyle] forKey:MGSKeyInputStyle];
 }
 
 /*
@@ -74,6 +78,7 @@
 {
 	self.defaultText = [self.plist objectForKey:MGSScriptKeyDefault withDefault:@""];
 	self.allowEmptyInput = [[self.plist objectForKey:MGSKeyAllowEmptyInput withDefault:[NSNumber numberWithBool:NSOffState]] boolValue];
+	self.inputStyle = [[self.plist objectForKey:MGSKeyInputStyle withDefault:[NSNumber numberWithInteger:kMGSParameterInputStyleMultiLine]] integerValue];
 }
 
 @end

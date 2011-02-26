@@ -18,26 +18,23 @@ NSString *MGSKeyFileExtensions = @"FileExtensions";
 
 /*
  
- create edit view controller with delegate
+ - editViewControllerClass
  
  */
-- (MGSParameterSubEditViewController *)createEditViewControllerWithDelegate:(id)aDelegate
+- (id)editViewControllerClass
 {
-	#pragma unused(aDelegate)
-	
-	return [self createViewController:[MGSFileParameterEditViewController class]];
+	return [MGSFileParameterEditViewController class];
 }
+
 
 /*
  
- create input view controller with delegate
+ - inputViewControllerClass
  
  */
-- (MGSParameterSubInputViewController *)createInputViewControllerWithDelegate:(id)aDelegate
+- (id)inputViewControllerClass
 {
-	#pragma unused(aDelegate)
-	
-	return [self createViewController:[MGSFileParameterInputViewController class]];
+	return [MGSFileParameterInputViewController class];
 }
 
 /* 

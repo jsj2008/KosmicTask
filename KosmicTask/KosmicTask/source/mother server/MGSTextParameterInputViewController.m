@@ -5,12 +5,12 @@
 //  Created by Jonathan on 07/06/2008.
 //  Copyright 2008 Mugginsoft. All rights reserved.
 //
-#import "MGSTextParameterPlugin.h"
 #import "MGSTextParameterInputViewController.h"
 
 @implementation MGSTextParameterInputViewController
 
 @synthesize allowEmptyInput = _allowEmptyInput;
+@synthesize inputStyle;
 
 /*
  
@@ -19,7 +19,8 @@
  */
 - (id)init
 {
-	if ([super initWithNibName:@"TextParameterInputView"]) {
+	self = [super initWithNibName:@"TextParameterInputView"];
+	if (self) {
 	}
 	return self;
 }
@@ -35,7 +36,6 @@
 	[super awakeFromNib];
 	
 	// bind it
-	[textView bind:NSValueBinding toObject:self withKeyPath:@"parameterValue" options:nil];
 }
 
 /*
@@ -45,7 +45,44 @@
  */
 - (void)initialiseFromPlist
 {
+	
+	/*
+	 
+	 when the nib is loaded this may be called with self.plist == nil;
+	 
+	 */
 	self.allowEmptyInput = [[self.plist objectForKey:MGSKeyAllowEmptyInput withDefault:[NSNumber numberWithBool:NSOffState]] boolValue];
+	self.inputStyle = [[self.plist objectForKey:MGSKeyInputStyle withDefault:[NSNumber numberWithInteger:kMGSParameterInputStyleMultiLine]] integerValue];
+
+	NSView *textControlView = nil;
+	NSView *subView = nil;
+	switch (self.inputStyle) {
+		case kMGSParameterInputStyleMultiLine:
+			textControlView = textView;
+			subView = multiLineView;
+			break;
+			
+		case kMGSTextParameterInputStyleSingleLine:
+			textControlView = textField;
+			subView = singleLineView;
+			break;
+			
+		default:
+			NSAssert(NO, @"invalid input style");
+			break;
+	}
+	
+	[textControlView bind:NSValueBinding toObject:self withKeyPath:@"parameterValue" options:nil];
+	
+	/*
+	 
+	 update subview within parameter view
+	 
+	 */
+	//if (self.plist) {
+		BOOL resize = self.plist ? YES : NO;
+		[self updateSubview:subView resize:resize];
+	//}
 }
 
 /*
@@ -55,7 +92,20 @@
  */
 - (BOOL)canDragHeight
 {
-	return YES;
+	switch (self.inputStyle) {
+		case kMGSParameterInputStyleMultiLine:
+			return YES;
+			break;
+			
+		case kMGSTextParameterInputStyleSingleLine:
+			break;
+			
+		default:
+			NSAssert(NO, @"invalid input style");
+			break;
+	}
+	
+	return NO;
 }
 
 /*

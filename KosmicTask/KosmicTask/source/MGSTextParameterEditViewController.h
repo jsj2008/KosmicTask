@@ -8,15 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSParameterSubEditViewController.h"
+#import "MGSTextParameterPlugin.h"
 
 @interface MGSTextParameterEditViewController : MGSParameterSubEditViewController {
 	IBOutlet NSTextView *textView;
 	IBOutlet NSButton *allowEmptyInputCheckbox;
 	NSString *_defaultText;
 	BOOL _allowEmptyInput;
+	IBOutlet NSPopUpButton *initialInputSizePopUpButton;
+	MGSTextParameterInputStyle inputStyle;
 }
 
 @property (copy) NSString *defaultText;
 @property BOOL allowEmptyInput;
+@property MGSTextParameterInputStyle inputStyle;
 
 @end

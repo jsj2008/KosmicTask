@@ -8,12 +8,18 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSParameterSubInputViewController.h"
+#import "MGSTextParameterPlugin.h"
 
 @interface MGSTextParameterInputViewController : MGSParameterSubInputViewController {
 	IBOutlet NSTextView *textView;
+	IBOutlet NSTextField *textField;
 	BOOL _allowEmptyInput;
+	MGSTextParameterInputStyle inputStyle;
+	IBOutlet NSView *singleLineView;
+	IBOutlet NSView *multiLineView;
 }
 
 @property BOOL allowEmptyInput;
+@property MGSTextParameterInputStyle inputStyle;
 
 @end

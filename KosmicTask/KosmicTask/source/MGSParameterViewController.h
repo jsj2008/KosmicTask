@@ -113,5 +113,6 @@ typedef enum _MGSParameterType {
 - (void)mouseDown:(NSEvent *)theEvent;
 - (MGSParameterView *)parameterView;
 - (void)resetToDefaultValue;
+- (void)subview:(NSView *)view wantsNewSize:(NSSize)newSize;
 
 @end

@@ -12,32 +12,30 @@
 
 
 NSString *MGSKeyAllowEmptyInput = @"AllowEmptyInput";
+NSString *MGSKeyInputStyle = @"InputStyle";
+
 
 @implementation MGSTextParameterPlugin
 
 /*
  
- create edit view controller with delegate
+ - editViewControllerClass
  
  */
--(MGSParameterSubEditViewController *)createEditViewControllerWithDelegate:(id)aDelegate
+- (id)editViewControllerClass
 {
-	#pragma unused(aDelegate)
-	
-	return [self createViewController:[MGSTextParameterEditViewController class]];
+	return [MGSTextParameterEditViewController class];
 }
 
 
 /*
  
- create input view controller with delegate
+ - inputViewControllerClass
  
  */
-- (MGSParameterSubInputViewController *)createInputViewControllerWithDelegate:(id)aDelegate
+- (id)inputViewControllerClass
 {
-	#pragma unused(aDelegate)
-	
-	return [self createViewController:[MGSTextParameterInputViewController class]];
+	return [MGSTextParameterInputViewController class];
 }
 
 /*

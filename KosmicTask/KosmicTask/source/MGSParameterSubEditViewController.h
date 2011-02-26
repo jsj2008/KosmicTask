@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MGSParameterSubViewController.h"
+#import "MGSParameterPluginViewController.h"
 
-@interface MGSParameterSubEditViewController : MGSParameterSubViewController {
+@interface MGSParameterSubEditViewController : MGSParameterPluginViewController {
 
 }
 

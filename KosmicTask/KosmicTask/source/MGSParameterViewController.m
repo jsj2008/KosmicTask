@@ -60,6 +60,8 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 // class extension
 @interface MGSParameterViewController()
 - (void)updateModel:(NSNotification *)notification;
+- (void)subViewDidResize:(NSView *)aSubview oldSize:(NSSize)oldSize;
+- (void)subview:(NSView *)view wantsNewSize:(NSSize)newSize;
 @end
 
 @interface MGSParameterViewController (Private)
@@ -569,6 +571,87 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	}
 }
 
+
+#pragma mark -
+#pragma mark Subview resizing
+/*
+ 
+ - subview:wantsNewSize:
+ 
+ */
+- (void)subview:(NSView *)view wantsNewSize:(NSSize)newSize
+{
+	NSSize oldSize = view.frame.size;
+	CGFloat heightDelta = newSize.height - oldSize.height;
+
+	if (([view autoresizingMask] & NSViewHeightSizable)) {
+		NSSize size = self.view.frame.size;
+		size.height += heightDelta;
+		[self setFrameSize:size];
+	} else {
+		[view setFrameSize:newSize];
+		[self subViewDidResize:view oldSize:oldSize];
+	}
+	
+	self.minHeight += heightDelta;
+	_middleLayoutSize = [self.middleView frame].size;
+	self.minMiddleHeight = _middleLayoutSize.height;
+	self.maxMiddleHeight = _middleLayoutSize.height * 5;
+	
+	// max height
+	self.maxHeight += 3 * heightDelta;
+	
+}
+
+/*
+ 
+ - subViewDidResize:oldSize:
+ 
+ */
+- (void)subViewDidResize:(NSView *)aSubview oldSize:(NSSize)oldSize
+{
+	// calc change in subview height
+	CGFloat subviewFrameHeight = [aSubview frame].size.height;
+	CGFloat deltaY = subviewFrameHeight - oldSize.height;
+	if (fabs(deltaY) < 0.1) {
+		return;
+	}
+
+	NSRect bannerViewFrame = [self.bannerView frame];
+	NSRect topViewFrame = [self.topView frame];
+	NSRect middleViewFrame = [self.middleView frame];
+	BOOL updateBannerView = NO;
+	BOOL updateTopView = NO;
+	BOOL updateMiddleView = NO;
+	
+	// calc new origins for frames
+	if (![aSubview isDescendantOf:self.bannerView]) {
+		bannerViewFrame.origin.y += deltaY;
+		updateBannerView = YES;
+	}
+	if (![aSubview isDescendantOf:self.topView] && updateBannerView) {
+		topViewFrame.origin.y += deltaY;
+		updateTopView = YES;
+	}
+	if (![aSubview isDescendantOf:self.middleView] && updateTopView) {
+		middleViewFrame.origin.y += deltaY;
+		updateMiddleView = YES;
+	} 
+	
+	// resize the view
+	NSSize viewSize = [[self view] frame].size;
+	viewSize.height += deltaY;
+	[self setFrameSize:viewSize];
+	
+	// restore view frames
+	if (updateBannerView) [self.bannerView setFrame:bannerViewFrame];	
+	if (updateTopView)[self.topView setFrame:topViewFrame];	
+	if (updateMiddleView) [self.middleView setFrame:middleViewFrame];
+	
+	[self updateFooterPosition];
+	
+	[[self view] setNeedsDisplay:YES];
+}
 #pragma mark -
 #pragma mark MGSDescriptionViewController delegate methods
 /*
@@ -578,37 +661,10 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
  */
 - (void)descriptionViewDidResize:(MGSDescriptionViewController *)controller oldSize:(NSSize)oldSize
 {
-	NSRect bannerViewFrame = [self.bannerView frame];
-	NSRect topViewFrame = [self.topView frame];
-	NSRect middleViewFrame = [self.middleView frame];
-	//NSRect bottomViewFrame = [bottomView frame];
-	
-	// calc change in description view height
-	NSRect descriptionViewFrame = [[controller view] frame];
-	CGFloat deltaY = descriptionViewFrame.size.height - oldSize.height;
-	
-	// calc new origins for frames
-	bannerViewFrame.origin.y += deltaY;
-	topViewFrame.origin.y += deltaY;
-	middleViewFrame.origin.y += deltaY;
-	
-	// resize the view
-	NSSize viewSize = [[self view] frame].size;
-	viewSize.height += deltaY;
-	[self setFrameSize:viewSize];
-
-	// restore view frames
-	[self.bannerView setFrame:bannerViewFrame];
-
-	[self.topView setFrame:topViewFrame];
-	
-	[self.middleView setFrame:middleViewFrame];
-	
-	[self updateFooterPosition];
-
-	[[self view] setNeedsDisplay:YES];
-	
+	[self subViewDidResize:controller.view oldSize:oldSize];
 }
+
+
 @end
 
 #pragma mark -
@@ -718,7 +774,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	self.maxMiddleHeight = _middleLayoutSize.height * 3;
 	self.maxBottomHeight = _bottomLayoutSize.height * 5;
 
-	_layoutHasOccurred = YES;
+	_layoutHasOccurred = YES;	
 }
 
 /*
@@ -745,44 +801,60 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		return;
 	}
 	
-	NSView *newMiddleView;
+	NSView *newMiddleView = nil;
 	
 	//
 	// attempt to create edit view
 	//
 	NSViewController *typeViewController;
-	if (MGSParameterModeEdit == _mode && [plugin respondsToSelector:@selector(createEditViewControllerWithDelegate:)]) {
+	if (MGSParameterModeEdit == _mode && [plugin respondsToSelector:@selector(createViewController:delegate:)]) {
 		
 		// instantiate edit view controller and associated view
-		_typeEditViewController = [plugin createEditViewControllerWithDelegate:self];
+		_typeEditViewController = [plugin createViewController:[plugin editViewControllerClass] delegate:self];
 		typeViewController = _typeEditViewController;
 		newMiddleView = [typeViewController view];
 		
-		// generally can drag in edit view
+		// plist will not be loaded yet so defaults will be returned
 		self.canDragHeight = [_typeEditViewController canDragHeight];	// generally YES
 		self.canDragMiddleView = [_typeEditViewController canDragMiddleView]; // depends on view functionality
 		
-	} else if (MGSParameterModeInput == _mode && [plugin respondsToSelector:@selector(createInputViewControllerWithDelegate:)]) {
+	} else if (MGSParameterModeInput == _mode && [plugin respondsToSelector:@selector(createViewController:delegate:)]) {
 
 		// instantiate input view controller and associated view
-		_typeInputViewController = [plugin createInputViewControllerWithDelegate:self];	
+		_typeInputViewController = [plugin createViewController:[plugin inputViewControllerClass] delegate:nil];
 		typeViewController = _typeInputViewController;
 		
 		// observe the input view controller
 		[_typeInputViewController addObserver:self forKeyPath:@"parameterValue" options:0 context:MGSParameterValueContext];
 		[_typeInputViewController addObserver:self forKeyPath:@"sendAsAttachment" options:0 context:MGSParameterSendAsAttachmentContext];
 		
+		// load the view
+		[typeViewController view];
+		
 		// size of type view in nib.
 		// want to maintaiin this size
 		NSSize initialTypeViewSize = [[typeViewController view] frame].size;
+
 		
-		// may be able to drag height.
+		// plist will not be loaded yet so defaults will be returned
 		self.canDragHeight = [_typeInputViewController canDragHeight];	// depends on view functionality
 		self.canDragMiddleView = [_typeInputViewController canDragMiddleView];	// generally NO
 
 		// input plugin view wrapper
 		// the wrapper will provide additional standard controls for the input plugin 
 		_pluginInputViewController = [[MGSParameterPluginInputViewController alloc] init];
+		_pluginInputViewController.delegate = self;
+		_typeInputViewController.delegate = _pluginInputViewController;
+		
+		/*
+		 
+		 the middle view is NOT our loaded plugin view.
+		 the middle view contains a wrapper that, in turn, contains the plugin view.
+		 
+		 note that the middleview will autoexpand vertically so that if the plugin view
+		 wants to change its size it will have to request a change in the parameterview height.
+		 
+		 */
 		newMiddleView = [_pluginInputViewController view];
 		NSView *pluginViewPlaceHolder = [_pluginInputViewController pluginView];
 		
@@ -790,7 +862,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		CGFloat middleViewHeightDelta = [newMiddleView frame].size.height - [pluginViewPlaceHolder frame].size.height;
 		[newMiddleView replaceSubview:pluginViewPlaceHolder withViewFrameAsOld:[typeViewController view]];
 		_pluginInputViewController.pluginView = [typeViewController view];
-		_pluginInputViewController.subViewController = _typeInputViewController;
+		_pluginInputViewController.parameterPluginViewController = _typeInputViewController;
 		[_pluginInputViewController addObserver:self forKeyPath:@"resetEnabled" options:NSKeyValueObservingOptionNew context:MGSResetEnabledContext];
 		
 		// size the wrapper so that the embedded type view plugin is present at the same
@@ -832,7 +904,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	self.minHeight += heightDelta;
 	_middleLayoutSize = [self.middleView frame].size;
 	self.minMiddleHeight = _middleLayoutSize.height;
-	self.maxMiddleHeight = _middleLayoutSize.height * 3;
+	self.maxMiddleHeight = _middleLayoutSize.height * 5;
 	
 	// max height
 	self.maxHeight += 3 * heightDelta;
@@ -873,8 +945,17 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	NSMutableDictionary *pluginPlist = [_scriptParameter typeInfo];
 	if (MGSParameterModeInput == _mode) {
 		[_typeInputViewController setParameterPlist:pluginPlist];
+		
+		self.canDragHeight = [_typeInputViewController canDragHeight];	// depends on view functionality
+		self.canDragMiddleView = [_typeInputViewController canDragMiddleView];	// generally NO
+		
 	} else if (MGSParameterModeEdit == _mode) {
 		[_typeEditViewController setParameterPlist:pluginPlist];
+		
+		// generally can drag in edit view
+		self.canDragHeight = [_typeEditViewController canDragHeight];	// generally YES
+		self.canDragMiddleView = [_typeEditViewController canDragMiddleView]; // depends on view functionality
+		
 	} else {
 		NSAssert(NO, @"invalid mode");
 	}
