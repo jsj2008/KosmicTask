@@ -79,6 +79,8 @@ const char MGSContextResetEnabled;
 	// observe reset button enabled state
 	[resetButton addObserver:self forKeyPath:@"enabled" 
 				options:NSKeyValueObservingOptionNew context:(void *)&MGSContextResetEnabled];
+	
+	[label bind:NSValueBinding toObject:_parameterPluginViewController withKeyPath:@"label" options:nil];
 }
 
 /*

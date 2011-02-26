@@ -67,10 +67,21 @@
  */
 - (void)initialiseFromPlist
 {
-	self.minValue = [[self.plist objectForKey:MGSKeyNumberMinValue withDefault:[NSNumber numberWithDouble:0]] doubleValue];
-	self.maxValue = [[self.plist objectForKey:MGSKeyNumberMaxValue withDefault:[NSNumber numberWithDouble:100]] doubleValue];
+	NSNumber *minNumber = [self.plist objectForKey:MGSKeyNumberMinValue withDefault:[NSNumber numberWithDouble:0]];
+	NSNumber *maxNumber = [self.plist objectForKey:MGSKeyNumberMaxValue withDefault:[NSNumber numberWithDouble:100]];
+	
+	self.minValue = [minNumber doubleValue];
+	self.maxValue = [maxNumber doubleValue];
 	self.wholeNumber = [[self.plist objectForKey:MGSKeyNumberRequireInteger withDefault:[NSNumber numberWithBool:YES]] boolValue];
 	self.incrementValue = [[self.plist objectForKey:MGSKeyNumberIncrementValue withDefault:[NSNumber numberWithDouble:1]] doubleValue];
+
+	NSString *fmt = nil;
+	if (self.wholeNumber) {
+		fmt = NSLocalizedString(@"A whole number between %@ and %@", @"label text");
+	} else {
+		fmt = NSLocalizedString(@"A number between %@ and %@", @"label text");
+	}
+	self.label = [NSString stringWithFormat:fmt, minNumber, maxNumber];
 }
 
 /*

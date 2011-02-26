@@ -28,6 +28,7 @@
 @synthesize validationString = _validationString;
 @synthesize defaultValueSelected = _defaultValueSelected;
 @synthesize delegate;
+@synthesize label;
 
 /*
  

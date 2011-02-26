@@ -54,6 +54,12 @@
 	self.allowEmptyInput = [[self.plist objectForKey:MGSKeyAllowEmptyInput withDefault:[NSNumber numberWithBool:NSOffState]] boolValue];
 	self.inputStyle = [[self.plist objectForKey:MGSKeyInputStyle withDefault:[NSNumber numberWithInteger:kMGSParameterInputStyleMultiLine]] integerValue];
 
+	if (self.allowEmptyInput) {
+		self.label = NSLocalizedString(@"Input is optional", @"label text");
+	} else {
+		self.label = NSLocalizedString(@"Input is required", @"label text");
+	}
+	
 	NSView *textControlView = nil;
 	NSView *subView = nil;
 	switch (self.inputStyle) {

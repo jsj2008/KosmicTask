@@ -16,6 +16,7 @@
 	IBOutlet NSButton *resetButton;
 	BOOL _resetEnabled;
 	id delegate;
+	IBOutlet NSTextField *label;
 }
 @property NSView *pluginView;
 @property MGSParameterPluginViewController *parameterPluginViewController;

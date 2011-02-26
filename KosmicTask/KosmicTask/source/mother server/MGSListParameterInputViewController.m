@@ -84,6 +84,8 @@
 	}
 	
 	[self resetToDefaultValue];
+	
+	self.label = NSLocalizedString(@"Select an item from the list", @"label text");
 }
 
 /*

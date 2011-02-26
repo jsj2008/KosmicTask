@@ -78,6 +78,8 @@
 	self.useFileExtensions = [[self.plist objectForKey:MGSKeyUseFileExtensions withDefault:[NSNumber numberWithBool:NSOffState]] boolValue];
 	self.fileExtensions = [self.plist objectForKey:MGSKeyFileExtensions withDefault:@""];
 	
+	self.label = NSLocalizedString(@"Input is required", @"label text");
+	
 	NSString *allowedFileTypes = self.fileExtensions;
 	if ([allowedFileTypes length] == 0 || !self.useFileExtensions) {
 		allowedFileTypes = NSLocalizedString(@"all", @"all file types allowed");
