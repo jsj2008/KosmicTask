@@ -153,7 +153,6 @@ NSString *MGSIncrementValueContext = @"IncrementValue";
  */
 - (void)initialiseFromPlist
 {
-	NSLog(@"plist = %@", self.plist);
 	self.minIncrement = 0;
 	self.minValue = [[self.plist objectForKey:MGSKeyNumberMinValue withDefault:[NSNumber numberWithDouble:0]] doubleValue];
 	self.maxValue = [[self.plist objectForKey:MGSKeyNumberMaxValue withDefault:[NSNumber numberWithDouble:10]] doubleValue];
