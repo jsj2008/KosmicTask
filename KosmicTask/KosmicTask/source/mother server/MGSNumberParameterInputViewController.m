@@ -95,6 +95,8 @@ char MGSSliderValueContext;
 	
 	NSString *fmt = NSLocalizedString(@"A value between %@ and %@", @"label text");
 	self.label = [NSString stringWithFormat:fmt, [_minValueTextField stringValue], [_maxValueTextField stringValue]];
+	
+	[_valueSlider setAltIncrementValue:self.incrementValue];
 }
 - (void)setParameterValue:(id)value
 {
