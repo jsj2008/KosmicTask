@@ -14,6 +14,8 @@ NSString *MGSKeyNumberMinValue = @"MinValue";
 NSString *MGSKeyNumberMaxValue = @"MaxValue";
 NSString *MGSKeyNumberIncrementValue = @"IncrementValue";
 NSString *MGSKeyNumberRequireInteger = @"RequireInteger";
+NSString *MGSKeyNumberStyle = @"Style";
+NSString *MGSKeyNumberDecimalPlaces = @"DecimalPlaces";
 
 @implementation MGSNumberParameterPlugin
 

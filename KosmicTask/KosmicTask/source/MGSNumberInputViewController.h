@@ -9,6 +9,14 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSViewController.h"
 
+typedef enum _MGSNumberInputViewNotation {
+	kMGSNumberInputViewDecimalNotation = 0,
+	kMGSNumberInputViewScientificENotation = 1,
+	kMGSNumberInputViewCurrencyNotation = 2,
+	kMGSNumberInputViewPercentNotation = 3,
+} MGSNumberInputViewNotation;
+
+
 @interface MGSNumberInputViewController : NSViewController {
 	IBOutlet NSTextField *textField;
 	IBOutlet NSStepper *stepper;
@@ -17,7 +25,8 @@
 	double _increment;
 	double _minValue;
 	double _maxValue;
-	BOOL _integralValue;
+	NSInteger _decimalPlaces;
+	MGSNumberInputViewNotation _notation;
 	
 	BOOL _updateObservedObject;
 	NSMutableDictionary *_bindings;
@@ -30,8 +39,11 @@
 @property double maxValue;
 @property NSTextField *textField;
 @property NSStepper *stepper;
-@property BOOL integralValue;
+@property MGSNumberInputViewNotation notation;
+@property NSInteger decimalPlaces;
 
 - (NSNumber *)numberValue;
 - (void)setNumberValue:(NSNumber *)number;
+- (NSNumberFormatter *)formatter;
+- (NSNumber *)formattedNumberValue;
 @end

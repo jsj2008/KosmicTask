@@ -12,12 +12,16 @@
 #import "MGSNumberParameterPlugin.h"
 #import "MGSKeyValueBinding.h"
 
+char MGSSliderValueContext;
+
 @implementation MGSNumberParameterInputViewController
 
 @synthesize minValue = _minValue;
 @synthesize maxValue = _maxValue;
-@synthesize wholeNumber = _wholeNumber;
 @synthesize incrementValue = _incrementValue;
+@synthesize notation = _notation;
+@synthesize decimalPlaces = _decimalPlaces;
+@synthesize sliderValue = _sliderValue;
 
 /*
  
@@ -27,6 +31,7 @@
 - (id)init
 {
 	if ([super initWithNibName:@"NumberParameterInputView"]) {
+		_updateSliderValue = YES;
 	}
 	return self;
 }
@@ -41,7 +46,7 @@
 	[super awakeFromNib];
 
 	// bind it
-	[_valueSlider bind:NSValueBinding toObject:self withKeyPath:@"parameterValue" options:
+	[_valueSlider bind:NSValueBinding toObject:self withKeyPath:@"sliderValue" options:
 			[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSValidatesImmediatelyBindingOption, nil]];
 	[_valueSlider bind:NSMinValueBinding toObject:self withKeyPath:@"minValue" options:nil];
 	[_valueSlider bind:NSMaxValueBinding toObject:self withKeyPath:@"maxValue" options:nil];
@@ -54,10 +59,16 @@
 	
 	// bind the input view
 	[_numberInputViewController bind:NSValueBinding toObject:self withKeyPath:@"parameterValue" options:nil];
-	[_numberInputViewController bind:MGSIntegralValueBinding toObject:self withKeyPath:@"wholeNumber" options:nil];
 	[_numberInputViewController bind:MGSIncrementValueBinding toObject:self withKeyPath:@"incrementValue" options:nil];
 	[_numberInputViewController bind:NSMinValueBinding toObject:self withKeyPath:@"minValue" options:nil];
 	[_numberInputViewController bind:NSMaxValueBinding toObject:self withKeyPath:@"maxValue" options:nil];
+	[_numberInputViewController bind:MGSNotationBinding toObject:self withKeyPath:@"notation" options:nil];
+	[_numberInputViewController bind:MGSDecimalPlacesBinding toObject:self withKeyPath:@"decimalPlaces" options:nil];
+
+	[_minValueTextField setFormatter:[[_numberInputViewController formatter] copy]];
+	[_maxValueTextField setFormatter:[[_numberInputViewController formatter] copy]];
+	
+	[self addObserver:self forKeyPath:@"sliderValue" options:0 context:&MGSSliderValueContext];
 }
 
 /*
@@ -72,30 +83,42 @@
 	
 	self.minValue = [minNumber doubleValue];
 	self.maxValue = [maxNumber doubleValue];
-	self.wholeNumber = [[self.plist objectForKey:MGSKeyNumberRequireInteger withDefault:[NSNumber numberWithBool:YES]] boolValue];
+	
 	self.incrementValue = [[self.plist objectForKey:MGSKeyNumberIncrementValue withDefault:[NSNumber numberWithDouble:1]] doubleValue];
+	self.notation = [[self.plist objectForKey:MGSKeyNumberStyle withDefault:[NSNumber numberWithInteger:kMGSNumberInputViewDecimalNotation]] integerValue];
+	self.decimalPlaces = [[self.plist objectForKey:MGSKeyNumberDecimalPlaces withDefault:[NSNumber numberWithInteger:2]] integerValue];
 
-	NSString *fmt = nil;
-	if (self.wholeNumber) {
-		fmt = NSLocalizedString(@"A whole number between %@ and %@", @"label text");
-	} else {
-		fmt = NSLocalizedString(@"A number between %@ and %@", @"label text");
-	}
-	self.label = [NSString stringWithFormat:fmt, minNumber, maxNumber];
-}
-
-/*
- 
- parameter value
- 
- */
-- (id)parameterValue
-{
-	id value = [super parameterValue];
-	if (self.wholeNumber) {
-		value = [NSNumber numberWithInteger:[value integerValue]];
+	if ([self.plist objectForKey:MGSKeyNumberRequireInteger]) {
+		BOOL wholeNumber = [[self.plist objectForKey:MGSKeyNumberRequireInteger withDefault:[NSNumber numberWithBool:YES]] boolValue];
+		self.decimalPlaces = wholeNumber ? 0 : 2;
 	}
 	
-	return value;
+	NSString *fmt = NSLocalizedString(@"A value between %@ and %@", @"label text");
+	self.label = [NSString stringWithFormat:fmt, [_minValueTextField stringValue], [_maxValueTextField stringValue]];
+}
+- (void)setParameterValue:(id)value
+{
+	[super setParameterValue:value];
+	if (_updateSliderValue) {
+		self.sliderValue = [[self parameterValue] doubleValue];
+	}
+}
+/*
+ 
+ KVO 
+ 
+ */
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	if (context == &MGSSliderValueContext) {
+		NSString *stringValue = [_numberInputViewController.formatter stringFromNumber:[NSNumber numberWithDouble:self.sliderValue]];
+		NSNumber *number = [_numberInputViewController.formatter numberFromString:stringValue];
+		_updateSliderValue = NO;
+		self.parameterValue = number;	
+		_updateSliderValue = YES;
+
+	} else {
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	}
 }
 @end

@@ -9,11 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSParameterPlugin.h"
 
-
 extern NSString *MGSKeyNumberMinValue;
 extern NSString *MGSKeyNumberMaxValue;
 extern NSString *MGSKeyNumberIncrementValue;
 extern NSString *MGSKeyNumberRequireInteger;
+extern NSString *MGSKeyNumberStyle;
+extern NSString *MGSKeyNumberDecimalPlaces;
 
 @interface MGSNumberParameterPlugin : MGSParameterPlugin {
 

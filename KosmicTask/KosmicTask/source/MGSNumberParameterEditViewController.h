@@ -8,18 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSParameterSubEditViewController.h"
+#import "MGSNumberInputViewController.h"
 
 @class MGSNumberInputViewController;
 
 @interface MGSNumberParameterEditViewController : MGSParameterSubEditViewController {
-	IBOutlet NSButton *wholeNumberCheckbox;
+	IBOutlet NSPopUpButton *stylePopupButton;
+	IBOutlet NSPopUpButton *decimalPlacesPopupButton;
 	IBOutlet NSView *initialValueInputView;
 	IBOutlet NSView *minValueInputView;
 	IBOutlet NSView *maxValueInputView;
 	IBOutlet NSView *incrementValueInputView;
 	
-	BOOL _wholeNumber;
-
+	MGSNumberInputViewNotation _notation;
+	
 	MGSNumberInputViewController *_initialValueInput;
 	MGSNumberInputViewController *_minValueInput;
 	MGSNumberInputViewController *_maxValueInput;
@@ -29,12 +31,22 @@
 	double _minValue;
 	double _maxValue;
 	double _incrementValue;	
+	double _representationMax;
+	double _representationMin;
+	double _minIncrement;
+	double _maxIncrement;
+	NSInteger _decimalPlaces;
 }
 
-@property BOOL wholeNumber;
 @property double initialValue;
 @property double minValue;
 @property double maxValue;
 @property double incrementValue;	
+@property double representationMax;
+@property double representationMin;
+@property double minIncrement;
+@property double maxIncrement;
+@property MGSNumberInputViewNotation notation;
+@property NSInteger decimalPlaces;
 
 @end

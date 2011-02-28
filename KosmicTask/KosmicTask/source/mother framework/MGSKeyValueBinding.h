@@ -11,8 +11,9 @@
 extern NSString *MGSObservableObject;
 extern NSString *MGSObservableKeyPath;
 extern NSString *MGSIncrementValueBinding;
-extern NSString *MGSIntegralValueBinding;
 extern NSString *MGSResetEnabledBinding;
+extern NSString *MGSNotationBinding;
+extern NSString *MGSDecimalPlacesBinding;
 
 @interface MGSKeyValueBinding : NSObject {
 

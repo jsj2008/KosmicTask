@@ -14,6 +14,11 @@
 const char MGSValueBindingContext;
 const char MGSIncrementValueBindingContext;
 
+// class extension
+@interface MGSNumberInputViewController()
+
+@end
+
 @implementation MGSNumberInputViewController
 
 @synthesize value = _value;
@@ -22,7 +27,8 @@ const char MGSIncrementValueBindingContext;
 @synthesize maxValue = _maxValue;
 @synthesize textField;
 @synthesize stepper;
-@synthesize integralValue = _integralValue;
+@synthesize notation = _notation;
+@synthesize decimalPlaces = _decimalPlaces;
 
 /*
  
@@ -37,7 +43,7 @@ const char MGSIncrementValueBindingContext;
 		self.increment = 1.0;
 		self.minValue = -DBL_MAX;
 		self.maxValue = DBL_MAX;
-		self.integralValue = YES;
+		self.decimalPlaces = 2;
 		
 		_updateObservedObject = YES;
 		_bindings = [NSMutableDictionary dictionaryWithCapacity:5];
@@ -57,14 +63,19 @@ const char MGSIncrementValueBindingContext;
 	// There doesn't seem to be an easy way to bind the stepper and get it to call -commitEditing on the
 	// view controller (without this the textField binding is not updated correctly).
 	// To avoid this problem continuously update the binding.
+	//[textField bind:NSValueBinding toObject:self withKeyPath:@"value" options:
+	//	[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], 
+	//	 NSContinuouslyUpdatesValueBindingOption, [NSNumber numberWithBool:YES], NSValidatesImmediatelyBindingOption, nil]];
 	[textField bind:NSValueBinding toObject:self withKeyPath:@"value" options:
-		[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], 
-		 NSContinuouslyUpdatesValueBindingOption, [NSNumber numberWithBool:YES], NSValidatesImmediatelyBindingOption, nil]];
+	 [NSDictionary dictionaryWithObjectsAndKeys:nil]];
 	
 	// note: no increment binding for stepper
 	[stepper bind:NSValueBinding toObject:self withKeyPath:@"value" options:nil];
 	[stepper bind:NSMinValueBinding toObject:self withKeyPath:@"minValue" options:nil];
 	[stepper bind:NSMaxValueBinding toObject:self withKeyPath:@"maxValue" options:nil];
+	
+	[self.formatter setExponentSymbol:@"e"];
+
 }
 
 
@@ -214,11 +225,14 @@ const char MGSIncrementValueBindingContext;
 		context = NSMinValueBinding;
 	} else if ([binding isEqualToString:NSMaxValueBinding]) {
 		context = NSMaxValueBinding;
-	} else if ([binding isEqualToString:MGSIntegralValueBinding]) {
-		context = MGSIntegralValueBinding;
+	} else if ([binding isEqualToString:MGSNotationBinding]) {
+		context = MGSNotationBinding;
+	} else if ([binding isEqualToString:MGSDecimalPlacesBinding]) {
+		context = MGSDecimalPlacesBinding;
 	} else {
 		return;
 	}
+	
 	
 	// retain observed object and keypath
 	[_bindings setObject:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -233,6 +247,18 @@ const char MGSIncrementValueBindingContext;
 						  context:context];
 }
 
+/*
+ 
+ - unbind:
+ 
+ */
+- (void)unbind:(NSString *)binding
+{
+	NSDictionary *bindDict = [_bindings objectForKey:binding];
+	[[bindDict objectForKey:MGSObservableObject] removeObserver:self forKeyPath:[bindDict objectForKey:MGSObservableKeyPath]];
+
+	[_bindings removeObjectForKey:binding];
+}
 /*
  
  set nil value for key
@@ -272,7 +298,7 @@ const char MGSIncrementValueBindingContext;
 - (void)setMinValue:(double)newValue
 {
 	_minValue = newValue;
-	[[[textField cell] formatter] setMinimum:[NSNumber numberWithDouble:newValue]];
+	[self.formatter setMinimum:[NSNumber numberWithDouble:newValue]];
 	
 	// get value binding
 	NSDictionary *binding = [_bindings objectForKey:NSMinValueBinding];
@@ -291,7 +317,7 @@ const char MGSIncrementValueBindingContext;
 - (void)setMaxValue:(double)newValue
 {
 	_maxValue = newValue;
-	[[[textField cell] formatter] setMaximum:[NSNumber numberWithDouble:newValue]];
+	[self.formatter setMaximum:[NSNumber numberWithDouble:newValue]];
 	
 	// get value binding
 	NSDictionary *binding = [_bindings objectForKey:NSMaxValueBinding];
@@ -302,39 +328,16 @@ const char MGSIncrementValueBindingContext;
 	}
 }
 
+
 /*
  
- set integral value
+ - formatter
  
  */
-- (void)setIntegralValue:(BOOL)aBool
+- (NSNumberFormatter *)formatter
 {
-	_integralValue = aBool;
-	
-	if (_integralValue) {
-		// transformer doesn't seem necessary. formatter seems enough.
-		/*MGSIntegerTransformer *integerTransformer = [[MGSIntegerTransformer alloc] init];
-		[textField unbind:NSValueBinding];
-		[textField bind:NSValueBinding toObject:self withKeyPath:@"value" options:
-		 [NSDictionary dictionaryWithObjectsAndKeys:
-		  [NSNumber numberWithBool:YES], NSContinuouslyUpdatesValueBindingOption, 
-		  [NSNumber numberWithBool:YES], NSValidatesImmediatelyBindingOption, 
-		  integerTransformer, NSValueTransformerBindingOption,
-		  nil]];*/
-	} else {
-	}
-	
-	[[[textField cell] formatter] setMaximumFractionDigits:_integralValue ? 0 : 3];
-	
-	// get value binding
-	NSDictionary *binding = [_bindings objectForKey:MGSIntegralValueBinding];
-	
-	// inform observed object that value has changed
-	if (binding && _updateObservedObject) {
-		[[binding objectForKey:MGSObservableObject] setValue:[NSNumber numberWithBool:_integralValue] forKeyPath:[binding objectForKey:MGSObservableKeyPath]];
-	}
+	return [[textField cell] formatter];
 }
-
 
 /*
  
@@ -369,12 +372,14 @@ const char MGSIncrementValueBindingContext;
         }
 	} else if (context == MGSIncrementValueBinding) {
 		keySelf = @"increment";
-	} else if (context == MGSIntegralValueBinding) {
-		keySelf = @"integralValue";
 	} else if (context == NSMinValueBinding) {
 		keySelf = @"minValue";
 	} else if (context == NSMaxValueBinding) {
 		keySelf = @"maxValue";
+	} else if (context == MGSNotationBinding) {
+		keySelf = @"notation";
+	} else if (context == MGSDecimalPlacesBinding) {
+		keySelf = @"decimalPlaces";
     } else {
 		return;
 	}
@@ -413,4 +418,77 @@ const char MGSIncrementValueBindingContext;
 	
 	[super finalize];
 }
+
+/*
+ 
+ - setDecimalPlaces:
+ 
+ */
+- (void)setDecimalPlaces:(NSInteger)value
+{
+	_decimalPlaces = value;
+	[self.formatter setMaximumFractionDigits:_decimalPlaces];
+	[self.formatter setMinimumFractionDigits:_decimalPlaces];
+	
+	switch (_notation) {
+			
+		case kMGSNumberInputViewScientificENotation:
+			[self.formatter setMaximumSignificantDigits:_decimalPlaces+1];
+			[self.formatter setMinimumSignificantDigits:_decimalPlaces+1];
+			break;
+			
+		case kMGSNumberInputViewDecimalNotation:
+		default:
+			break;
+	}
+	
+	[textField setNeedsDisplay];
+}
+
+/*
+ 
+ - setNotation:
+ 
+ */
+- (void)setNotation:(MGSNumberInputViewNotation)value
+{
+	_notation = value;
+	
+	switch (_notation) {
+		case kMGSNumberInputViewCurrencyNotation:
+			[self.formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+			[self.formatter setUsesSignificantDigits:NO];
+			break;
+
+		case kMGSNumberInputViewPercentNotation:
+			[self.formatter setNumberStyle:NSNumberFormatterPercentStyle];
+			[self.formatter setUsesSignificantDigits:NO];
+			break;
+			
+		case kMGSNumberInputViewScientificENotation:
+			[self.formatter setNumberStyle:NSNumberFormatterScientificStyle];
+			[self.formatter setMaximumSignificantDigits:_decimalPlaces+1];
+			[self.formatter setMinimumSignificantDigits:_decimalPlaces+1];
+			[self.formatter setUsesSignificantDigits:YES];
+			break;
+			
+		case kMGSNumberInputViewDecimalNotation:
+			[self.formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+			[self.formatter setUsesSignificantDigits:NO];
+		default:
+			break;
+	}
+	[textField setNeedsDisplay];
+}
+
+/*
+ 
+ - formattedNumberValue
+ 
+ */
+- (NSNumber *)formattedNumberValue
+{
+	return [self.formatter numberFromString:[textField stringValue]];
+}
+
 @end

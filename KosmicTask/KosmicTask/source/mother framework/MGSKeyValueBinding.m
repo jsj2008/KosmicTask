@@ -12,7 +12,8 @@ NSString *MGSObservableObject = @"observableObject";
 NSString *MGSObservableKeyPath = @"observableKeyPath";
 
 NSString *MGSIncrementValueBinding = @"incrementValue";
-NSString *MGSIntegralValueBinding = @"integralValue";
+NSString *MGSNotationBinding = @"scientificNotationFormat";
+NSString *MGSDecimalPlacesBinding = @"decimalPlaces";
 NSString *MGSResetEnabledBinding = @"resetEnabled";
 
 

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSParameterSubInputViewController.h"
 
-@class MGSNumberInputViewController;
+#import "MGSNumberInputViewController.h"
 
 @interface MGSNumberParameterInputViewController : MGSParameterSubInputViewController {
 	IBOutlet NSView *valueInputView;
@@ -19,16 +19,20 @@
 	
 	MGSNumberInputViewController *_numberInputViewController;
 	
-	BOOL _wholeNumber;
 	double _minValue;
 	double _maxValue;
 	double _incrementValue;	
+	MGSNumberInputViewNotation _notation;
+	NSInteger _decimalPlaces;
+	double _sliderValue;
+	BOOL _updateSliderValue;
 }
 
 
 @property double minValue;
 @property double maxValue;
-@property BOOL wholeNumber;
 @property double incrementValue;
-
+@property MGSNumberInputViewNotation notation;
+@property NSInteger decimalPlaces;
+@property double sliderValue;
 @end
