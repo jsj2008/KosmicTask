@@ -38,7 +38,7 @@
 #import "MGSMother.h"
 #import "MGSParameterViewController.h"
 #import "MGSParameterView.h"
-#import "MGSParameterViewHandler.h"
+#import "MGSParameterViewManager.h"
 //#import "MGSScriptParameter.h"
 #import "MGSParameterSubEditViewController.h"
 #import "MGSParameterSubInputViewController.h"

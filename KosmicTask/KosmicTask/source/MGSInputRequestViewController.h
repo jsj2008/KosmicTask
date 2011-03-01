@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class MGSParameterViewHandler;
+@class MGSParameterViewManager;
 @class MGSActionViewController;
 @class MGSScript;
 @class MGSTaskSpecifier;
@@ -26,7 +26,7 @@ extern NSString *MGSIsProcessingContext;
 @interface MGSInputRequestViewController : NSViewController {
 	//IBOutlet NSView *view;
 	IBOutlet NSScrollView *scrollView;
-	IBOutlet MGSParameterViewHandler *_parameterViewHandler;
+	IBOutlet MGSParameterViewManager *_parameterViewManager;
 	IBOutlet MGSActionViewController *_actionViewController;
 	IBOutlet NSImageView *_splitDragView;
 	IBOutlet MGSParameterSplitView* _parameterSplitView;

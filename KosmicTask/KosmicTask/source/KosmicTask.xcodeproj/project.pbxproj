@@ -300,7 +300,7 @@
 		AB4535A90EB65770006493E7 /* MGSCodeSigning.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE145870EB62D0C0079A482 /* MGSCodeSigning.m */; };
 		AB456B2F0DE2D74400F8A8AE /* Export Plugin PDF.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = AB4D190D0DE2D49400D0E517 /* Export Plugin PDF.plugin */; };
 		AB456B310DE2D75A00F8A8AE /* MGSPDFExportPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA247870DE2CE4E00BD2A66 /* MGSPDFExportPlugin.m */; };
-		AB46542A0D31033D00DCA1FA /* MGSParameterViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4654290D31033D00DCA1FA /* MGSParameterViewHandler.m */; };
+		AB46542A0D31033D00DCA1FA /* MGSParameterViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4654290D31033D00DCA1FA /* MGSParameterViewManager.m */; };
 		AB4654460D313D6E00DCA1FA /* MGSRoundedView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4654450D313D6E00DCA1FA /* MGSRoundedView.m */; };
 		AB4654B30D316D3D00DCA1FA /* MGSActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4654B20D316D3D00DCA1FA /* MGSActionViewController.m */; };
 		AB473EE30D90167700CB6816 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB473EE20D90167700CB6816 /* Carbon.framework */; };
@@ -3507,8 +3507,8 @@
 		AB426836125BCB2300C0D649 /* MGSTcshLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSTcshLanguage.h; path = ../MGSTcshLanguage.h; sourceTree = "<group>"; };
 		AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KosmicTaskHelper.xcodeproj; path = ../../KosmicTaskHelper/KosmicTaskHelper.xcodeproj; sourceTree = SOURCE_ROOT; };
 		AB450DC611C0146F00550A4E /* KosmicTask.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.sdef; path = KosmicTask.sdef; sourceTree = "<group>"; };
-		AB4654280D31033D00DCA1FA /* MGSParameterViewHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterViewHandler.h; sourceTree = "<group>"; };
-		AB4654290D31033D00DCA1FA /* MGSParameterViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterViewHandler.m; sourceTree = "<group>"; };
+		AB4654280D31033D00DCA1FA /* MGSParameterViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterViewManager.h; sourceTree = "<group>"; };
+		AB4654290D31033D00DCA1FA /* MGSParameterViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterViewManager.m; sourceTree = "<group>"; };
 		AB4654440D313D6E00DCA1FA /* MGSRoundedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSRoundedView.h; sourceTree = "<group>"; };
 		AB4654450D313D6E00DCA1FA /* MGSRoundedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSRoundedView.m; sourceTree = "<group>"; };
 		AB4654B10D316D3D00DCA1FA /* MGSActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSActionViewController.h; sourceTree = "<group>"; };
@@ -8074,8 +8074,8 @@
 		ABAFC5840DF966D600349FC3 /* Parameter view controllers */ = {
 			isa = PBXGroup;
 			children = (
-				AB4654280D31033D00DCA1FA /* MGSParameterViewHandler.h */,
-				AB4654290D31033D00DCA1FA /* MGSParameterViewHandler.m */,
+				AB4654280D31033D00DCA1FA /* MGSParameterViewManager.h */,
+				AB4654290D31033D00DCA1FA /* MGSParameterViewManager.m */,
 				ABB160AC0E0FF133002AB48D /* MGSRoundedPanelViewController.h */,
 				ABB160AD0E0FF133002AB48D /* MGSRoundedPanelViewController.m */,
 				ABD7B0AF0D2FF66600419EBD /* MGSParameterViewController.h */,
@@ -11144,7 +11144,7 @@
 				AB8F0D630D30225F00F3631C /* MGSParameterView.m in Sources */,
 				AB8F0D7E0D3027DB00F3631C /* MGSInputRequestViewController.m in Sources */,
 				AB8F0D840D30283D00F3631C /* MGSOutputRequestViewController.m in Sources */,
-				AB46542A0D31033D00DCA1FA /* MGSParameterViewHandler.m in Sources */,
+				AB46542A0D31033D00DCA1FA /* MGSParameterViewManager.m in Sources */,
 				AB4654460D313D6E00DCA1FA /* MGSRoundedView.m in Sources */,
 				AB4654B30D316D3D00DCA1FA /* MGSActionViewController.m in Sources */,
 				ABB4B6AC0D32538B00CFF824 /* MGSTextField.m in Sources */,

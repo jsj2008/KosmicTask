@@ -1,5 +1,5 @@
 //
-//  MGSParameterViewHandler.h
+//  MGSParameterViewManager.h
 //  Mother
 //
 //  Created by Jonathan on 06/01/2008.
@@ -15,7 +15,7 @@
 @class MGSParameterSplitView;
 
 
-@protocol MGSParameterViewHandler
+@protocol MGSParameterViewManager
 
 @required
 //- (void)parameterView:(MGSParameterViewController *)viewController resizeViewWithNewSize:(NSSize)newSize;
@@ -25,7 +25,7 @@
 
 @end
 
-@interface MGSParameterViewHandler : NSObject <MGSActionViewController, MGSParameterViewController> {
+@interface MGSParameterViewManager : NSObject <MGSActionViewController, MGSParameterViewController> {
 	IBOutlet MGSParameterSplitView *splitView;
 	NSView *_splitSubView2;
 	BOOL _nibLoaded;

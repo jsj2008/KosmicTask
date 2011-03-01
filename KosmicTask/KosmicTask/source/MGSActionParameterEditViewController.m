@@ -15,7 +15,7 @@
 #import "MGSScript.h"
 #import "MGSScriptPlist.h"
 #import "MGSScriptParameter.h"
-#import "MGSParameterViewHandler.h"
+#import "MGSParameterViewManager.h"
 #import "MGSEmptyParameterViewController.h"
 #import "NSView_Mugginsoft.h"
 #import "MGSParameterSplitView.h"
@@ -213,7 +213,7 @@ NSString *MGSInputCountContext = @"InputContext";
 	return;
 }
 
-#pragma mark MGSParameterViewHandler delegate methods
+#pragma mark MGSParameterViewManager delegate methods
 /*
  
  parameter view did close

@@ -36,6 +36,8 @@
 #import "MGSActionDeleteWindowController.h"
 #import "MGSPreferences.h"
 #import "MGSWaitViewController.h"
+#import "MGSBrowserViewControlStrip.h"
+#import "MGSParameterViewController.h"
 
 static NSString *MGSRequestDuplicateAction = @"MGSRequestDuplicateAction";
 static NSString *MGSRequestEditAction = @"MGSRequestEditAction";
@@ -66,6 +68,8 @@ static NSString *MGSRequestEditAction = @"MGSRequestEditAction";
 - (void)applicationTaskEditWarningAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)validatedConnectionLimitAlertDidEnd:(NSAlert *)alert returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)deleteSelectedAction:(NSNotification *)notification;
+- (void)prepareTaskTabCache;
+- (BOOL)isTaskTabMaximized;
 @end
 
 @implementation MGSMotherWindowController
@@ -191,7 +195,6 @@ const char MGSContextStartupComplete;
 	[windowSplitView setDelegate:self];
 	[windowSplitView replaceSubview:windowMainView withViewSizedAsOld:[mainViewController view]];
 	windowMainView = [mainViewController view];	
-	[mainViewController loadUserDefaults];
 	
 	//
 	// load the sidebar views
@@ -266,8 +269,8 @@ const char MGSContextStartupComplete;
 
 	_actionsPendingEdit = [NSMutableDictionary dictionaryWithCapacity:2];
 	
+	[self prepareTaskTabCache];
 }
-
 
 
 /*
@@ -309,6 +312,41 @@ const char MGSContextStartupComplete;
 						  [NSNumber numberWithInteger:viewState], MGSNoteViewStateKey,
 						  nil];
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteViewConfigChangeRequest object:self userInfo:dict];
+}
+
+#pragma mark -
+#pragma mark Task tabs
+
+/*
+ 
+ - prepareTaskTabCache
+ 
+ */
+- (void)prepareTaskTabCache
+{
+	if ([self isTaskTabMaximized]) {
+		_maximizedTaskTabUserDefaultsCache = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+											  [NSNumber numberWithBool:YES], MGSMainSidebarVisible,
+											  [NSNumber numberWithInteger:BROWSER_TASK_SEGMENT_INDEX], MGSTaskBrowserMode,
+											  [NSNumber numberWithInteger:TASK_DETAIL_HISTORY_SEGMENT_INDEX], MGSTaskDetailMode,
+											  nil];		
+	}
+}
+
+/*
+ 
+ - isTaskTabMaximized
+ 
+ */
+- (BOOL)isTaskTabMaximized
+{
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:MGSMainSidebarVisible] == NO &&
+		[[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskBrowserMode] == BROWSER_CLOSE_SEGMENT_INDEX &&
+		[[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskDetailMode] == TASK_DETAIL_CLOSE_SEGMENT_INDEX) {
+		return YES;
+	}
+	
+	return NO;
 }
 
 #pragma mark -
@@ -673,9 +711,29 @@ const char MGSContextStartupComplete;
 				NSAssert(NO, @"invalid menu tag");
 		}	
 		[menuItem setTitle: title];
+	} else if (theAction == @selector(maximizeTaskTab:)) {
+		return _maximizedTaskTabUserDefaultsCache ? NO : YES;
+	} else if (theAction == @selector(minimizeTaskTab:)) {
+		return _maximizedTaskTabUserDefaultsCache ? YES : NO;
 	}
 	
 	return YES;
+}
+
+#pragma mark -
+#pragma mark Actions
+
+/*
+ 
+ - subviewDoubleClick:
+ 
+ */
+- (IBAction)subviewDoubleClick:(id)sender
+{
+	if ([sender isKindOfClass:[MGSParameterViewController class]] ||
+		[sender isKindOfClass:[MGSRequestTabViewController class]]) {
+		[self toggleTaskTabMaximization:self];
+	}
 }
 
 /*
@@ -778,6 +836,90 @@ const char MGSContextStartupComplete;
 						  nil];
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteViewConfigChangeRequest object:self userInfo:dict];
 	
+}
+
+/*
+ 
+ - maximizeTaskTab:
+ 
+ */
+- (IBAction)maximizeTaskTab:(id)sender
+{
+#pragma unused(sender)
+
+	if (_maximizedTaskTabUserDefaultsCache) {
+		return;
+	}
+	
+	// save existing default state
+	_maximizedTaskTabUserDefaultsCache = [NSMutableDictionary dictionaryWithCapacity:3];
+	NSArray *keys = [NSArray arrayWithObjects:MGSMainSidebarVisible, MGSTaskBrowserMode, MGSTaskDetailMode,
+					 nil];
+	for (NSString *key in keys) {
+		[_maximizedTaskTabUserDefaultsCache setObject:[[NSUserDefaults standardUserDefaults] objectForKey:key]
+										forKey:key];
+	}	
+	
+	[[NSUserDefaults standardUserDefaults] setBool:NO forKey:MGSMainSidebarVisible];
+	[[NSUserDefaults standardUserDefaults] setInteger:BROWSER_CLOSE_SEGMENT_INDEX forKey:MGSTaskBrowserMode];
+	[[NSUserDefaults standardUserDefaults] setInteger:TASK_DETAIL_CLOSE_SEGMENT_INDEX forKey:MGSTaskDetailMode];
+	[mainViewController	saveUserDefaults];
+	
+	/*
+	 
+	 because we are persisting the view state in user defaults it might have been better to observed
+	 the user defaults and trigger view loading thus.
+	 
+	 however, it would perhaps be too invaise to retrofit this behaviour
+	 
+	 */
+	[self loadUserDefaults];
+	[mainViewController loadUserDefaults];
+	
+}
+
+/*
+ 
+ - minimizeTaskTab:
+ 
+ */
+- (IBAction)minimizeTaskTab:(id)sender
+{
+#pragma unused(sender)
+	
+	if ([[_maximizedTaskTabUserDefaultsCache objectForKey:MGSMainSidebarVisible] boolValue]) {
+		[[NSUserDefaults standardUserDefaults] setBool:YES forKey:MGSMainSidebarVisible];
+	}
+	NSInteger mode = [[_maximizedTaskTabUserDefaultsCache objectForKey:MGSTaskBrowserMode] integerValue];
+	if (mode != BROWSER_CLOSE_SEGMENT_INDEX) {
+		[[NSUserDefaults standardUserDefaults] setInteger:mode forKey:MGSTaskBrowserMode];
+	}
+	mode = [[_maximizedTaskTabUserDefaultsCache objectForKey:MGSTaskDetailMode] integerValue];
+	if (mode != TASK_DETAIL_CLOSE_SEGMENT_INDEX) {
+		[[NSUserDefaults standardUserDefaults] setInteger:mode forKey:MGSTaskDetailMode];
+	}
+	
+
+	_maximizedTaskTabUserDefaultsCache = nil;	
+	
+	[self loadUserDefaults];
+	[mainViewController loadUserDefaults];
+}
+
+/*
+ 
+ - toggleTaskTabMaximization:
+ 
+ */
+- (IBAction)toggleTaskTabMaximization:(id)sender
+{
+#pragma unused(sender)
+	
+	if (_maximizedTaskTabUserDefaultsCache) {
+		[self minimizeTaskTab:self];
+	} else {
+		[self maximizeTaskTab:self];
+	}
 }
 
 #pragma mark -

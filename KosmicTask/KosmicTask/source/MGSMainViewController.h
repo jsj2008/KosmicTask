@@ -78,4 +78,6 @@
 - (BOOL)detailViewIsHidden;
 
 - (void)loadUserDefaults;
+- (void)saveUserDefaults;
+
 @end

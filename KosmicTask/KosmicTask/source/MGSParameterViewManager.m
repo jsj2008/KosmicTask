@@ -10,7 +10,7 @@
 //
 // This class could really be called MGSParameterSplitViewController
 //
-#import "MGSParameterViewHandler.h"
+#import "MGSParameterViewManager.h"
 #import "MGSRoundedView.h"
 #import "MGSScriptParameterManager.h"
 #import "MGSScriptParameter.h"
@@ -21,10 +21,10 @@
 #import "MGSParameterView.h"
 #import "MGSScript.h"
 #import "MGSTaskSpecifier.h"
+#import "MGSNotifications.h"
+#import "MGSMotherWindowController.h"
 
-
-
-@interface MGSParameterViewHandler(Private)
+@interface MGSParameterViewManager(Private)
 - (MGSParameterViewController *)createView;
 - (void)destroyViews;
 - (void)createViews;
@@ -39,7 +39,7 @@
 - (void)addSplitViewSubview:(NSView *)view positioned:(NSWindowOrderingMode)place relativeTo:(NSView *)otherView;
 @end
 
-@implementation MGSParameterViewHandler
+@implementation MGSParameterViewManager
 
 @synthesize mode = _mode;
 @synthesize delegate = _delegate;
@@ -206,16 +206,43 @@
  */
 - (void)controllerViewClicked:(MGSRoundedPanelViewController *)controller
 {
-	// controller is already highlighted
-	if (controller.isHighlighted) {
-		return;
+	BOOL showMenu = NO;
+	
+	NSEvent *event = [NSApp currentEvent];
+	switch ([event type]) {
+		case NSLeftMouseDown:					
+			
+			// double clicking triggering max/min tab may interefere with running task on double click 
+			if ([event clickCount] == 2 && NO) {
+				[NSApp sendAction:@selector(subviewDoubleClick:) to:nil from:controller];
+				return;
+			}
+			
+			if (([event modifierFlags] & NSControlKeyMask)) {
+				showMenu = YES;
+			}
+
+			// controller is already highlighted
+			if (controller.isHighlighted) {
+				break;
+			}
+			
+			// dehighlight all views
+			[self setHighlightForAllViews:NO];
+			
+			// highlight the view
+			[controller setIsHighlighted:YES];
+			
+			break;
+				
+		case NSRightMouseDown:
+			showMenu = YES;
+			break;
 	}
 	
-	// dehighlight all views
-	[self setHighlightForAllViews:NO];
-	
-	// highlight the view
-	[controller setIsHighlighted:YES];
+	if (showMenu) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:MGSShowTaskTabContextMenu object:event userInfo:nil];
+	}
 }
 
 /*
@@ -323,7 +350,7 @@
 }
 @end
 
-@implementation MGSParameterViewHandler(Private)
+@implementation MGSParameterViewManager(Private)
 
 /*
  
@@ -696,7 +723,7 @@
 @end
 
 #pragma mark NSSplitView delegate messages
-@implementation MGSParameterViewHandler(SplitViewDelegate)
+@implementation MGSParameterViewManager(SplitViewDelegate)
 
 /*
  

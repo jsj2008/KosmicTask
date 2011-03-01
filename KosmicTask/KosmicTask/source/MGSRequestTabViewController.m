@@ -24,6 +24,8 @@
 #import "MGSRequestTabScrollView.h"
 #import "MGSMemoryManagement.h"
 #import "MGSPreferences.h"
+#import "MGSNotifications.h"
+#import "MGSMotherWindowController.h"
 
 NSString *MGSDefaultTabStyle = @"PSMTabBarControl.Style";
 NSString *MGSDefaultTabOrientation =  @"PSMTabBarControl.Orientation";
@@ -39,6 +41,11 @@ NSString *MGSDefaultTabHideForSingleTab =  @"PSMTabBarControl.HideForSingleTab";
 NSString *MGSDefaultTabShowAddTabButton =  @"PSMTabBarControl.ShowAddTabButton";
 NSString *MGSDefaultTabSizeToFit =  @"PSMTabBarControl.SizeToFit";
 NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.AutomaticallyAnimates";
+
+// class extension
+@interface MGSRequestTabViewController()
+- (void)showTaskTabContextMenu:(NSNotification *)note;
+@end
 
 @interface MGSRequestTabViewController (PRIVATE)
 - (void)configureTabBarInitially;
@@ -93,9 +100,31 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 	
 	[self configureTabBarInitially];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTaskTabContextMenu:) name:MGSShowTaskTabContextMenu object:nil];
+	
+	
 	self.minViewHeight = 350;
 }
 
+/*
+ 
+ - showTaskTabContextMenu:
+ 
+ */
+- (void)showTaskTabContextMenu:(NSNotification *)note
+{
+	NSEvent *event = note.object;
+	if (![event isKindOfClass:[NSEvent class]]) {
+		return;
+	}
+	
+	if ([event window] != [self.view window]) {
+		return;
+	}
+	
+	//NSPoint *localPoint = [self.view convertPoint:[event locationInWindow] fromView:nil];
+	[NSMenu popUpContextMenu:tabContextMenu withEvent:event forView:self.view]; 
+}
 
 /*
  
@@ -761,6 +790,22 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 
 #pragma mark -
 #pragma mark ---- delegate ----
+
+- (void)tabView:(NSTabView *)aTabView tabViewItem:(NSTabViewItem *)tabViewItem event:(NSEvent *)event
+{
+#pragma unused(aTabView)
+#pragma unused(tabViewItem)
+	
+	switch ([event type]) {
+		case NSLeftMouseUp:
+			if ([event clickCount] == 2) {
+				[NSApp sendAction:@selector(subviewDoubleClick:) to:nil from:self];
+			}
+			break;
+			
+	}
+}
+
 /*
  
  tabview did select tabview item
@@ -860,10 +905,14 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 
 - (NSMenu *)tabView:(NSTabView *)aTabView menuForTabViewItem:(NSTabViewItem *)tabViewItem
 {
-	#pragma unused(aTabView)
+#pragma unused(aTabView)
+#pragma unused(tabViewItem)
 	
-    MLog(DEBUGLOG, @"menuForTabViewItem: %@", [tabViewItem label]);
-	return nil;
+	if ([tabView selectedTabViewItem] != tabViewItem) {
+		[tabView selectTabViewItem:tabViewItem];
+	}
+	
+	return tabContextMenu;
 }
 
 - (BOOL)tabView:(NSTabView*)aTabView shouldDragTabViewItem:(NSTabViewItem *)tabViewItem fromTabBar:(PSMTabBarControl *)tabBarControl

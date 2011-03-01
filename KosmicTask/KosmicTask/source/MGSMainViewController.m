@@ -171,13 +171,8 @@ static char MGSSeletedDetailViewSegmentContext;
 	// bind
 	[internetSharingButton bind:NSImageBinding toObject:[MGSInternetSharingClient sharedInstance] withKeyPath:@"statusImage" options:nil];
 
-	// initialise task browser selection
-	NSInteger taskBrowserMode = [[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskBrowserMode];
-	[_browserViewControlStrip selectSegment:taskBrowserMode];
-	
-	// initialise task detail selection
-	NSInteger taskDetailMode = [[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskDetailMode];
-	[self selectDetailSegment:taskDetailMode];
+	// load user defaults
+	[self loadUserDefaults];
 	
 	// add observers
 	[detailSegmentedControl addObserver:self forKeyPath:@"selectedSegment" options:0 context:&MGSSeletedDetailViewSegmentContext];
@@ -1205,6 +1200,14 @@ static char MGSSeletedDetailViewSegmentContext;
  */
 - (void)loadUserDefaults
 {
+	// initialise task browser selection
+	NSInteger taskBrowserMode = [[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskBrowserMode];
+	[_browserViewControlStrip selectSegment:taskBrowserMode];
+	
+	// initialise task detail selection
+	NSInteger taskDetailMode = [[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskDetailMode];
+	[self selectDetailSegment:taskDetailMode];
+
 	
 	// initialise browser height
 	CGFloat browserHeight = [[NSUserDefaults standardUserDefaults] floatForKey:MGSTaskBrowserHeight];
@@ -1235,7 +1238,7 @@ static char MGSSeletedDetailViewSegmentContext;
 				position -= taskDetailHeight;
 				position -= [mainSplitView dividerThickness];
 				
-				// this will apply constrants as imposed by the delegate
+				// this will apply constraints as imposed by the delegate
 				[mainSplitView setPosition:position ofDividerAtIndex:idx];
 			}
 		}

@@ -93,13 +93,21 @@
 {
 
 	// look for mouse down
-	if ([event type] == NSLeftMouseDown) {
+	if ([event type] == NSLeftMouseDown || [event type] == NSRightMouseDown) {
 		
 		// look for deepest subview
 		NSView *deepView = [[self contentView] hitTest:[event locationInWindow]];
 		if (deepView) {
 			for (NSView *aClickView in _clickViews) {
 				if ([deepView isDescendantOf:aClickView]) {
+					
+					/* don't process events for first responder views as they generally display
+						a context menu and we don't want to oberride that
+					 */
+					if ([event type] == NSRightMouseDown && [deepView acceptsFirstResponder]) {
+						break;
+					}
+					
 					[(id)aClickView subviewClicked:deepView];
 					break;
 				}

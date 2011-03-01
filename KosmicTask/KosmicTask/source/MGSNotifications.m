@@ -73,6 +73,9 @@ NSString *MGSNoteResumeSelectedTask = @"MGSResumeSelectedTask";
 NSString *MGSNoteSearchFilterChanged = @"MGSSearchFilterChanged";
 NSString *MGSNoteMainBrowserModeChanged = @"MGSMainBrowserModeChanged";
 
+// context menu
+NSString *MGSShowTaskTabContextMenu = @"MGSShowTaskTabContextMenu";
+
 // parameter subview
 NSString *MGSNoteActionInputModified = @"MGSActionInputModified";
 

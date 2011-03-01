@@ -203,6 +203,9 @@ enum {
 //Contextual menu method
 - (NSMenu *)tabView:(NSTabView *)aTabView menuForTabViewItem:(NSTabViewItem *)tabViewItem;
 
+//Event method
+- (void)tabView:(NSTabView *)aTabView tabViewItem:(NSTabViewItem *)tabViewItem event:(NSEvent *)event;
+
 //Drag and drop methods
 - (BOOL)tabView:(NSTabView *)aTabView shouldDragTabViewItem:(NSTabViewItem *)tabViewItem fromTabBar:(PSMTabBarControl *)tabBarControl;
 - (BOOL)tabView:(NSTabView *)aTabView shouldDropTabViewItem:(NSTabViewItem *)tabViewItem inTabBar:(PSMTabBarControl *)tabBarControl;

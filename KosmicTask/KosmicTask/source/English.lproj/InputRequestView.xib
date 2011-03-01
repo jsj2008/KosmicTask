@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10D573</string>
-		<string key="IBDocument.InterfaceBuilderVersion">762</string>
+		<string key="IBDocument.InterfaceBuilderVersion">788</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">460.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">762</string>
+			<string key="NS.object.0">788</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -417,7 +417,7 @@
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomObject" id="561257856">
-				<string key="NSClassName">MGSParameterViewHandler</string>
+				<string key="NSClassName">MGSParameterViewManager</string>
 			</object>
 			<object class="NSUserDefaultsController" id="1062114242">
 				<bool key="NSSharedInstance">YES</bool>
@@ -441,14 +441,6 @@
 						<reference key="destination" ref="561257856"/>
 					</object>
 					<int key="connectionID">127</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">_parameterViewHandler</string>
-						<reference key="source" ref="1059831280"/>
-						<reference key="destination" ref="561257856"/>
-					</object>
-					<int key="connectionID">138</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -569,6 +561,14 @@
 						<reference key="destination" ref="282533151"/>
 					</object>
 					<int key="connectionID">216</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_parameterViewManager</string>
+						<reference key="source" ref="1059831280"/>
+						<reference key="destination" ref="561257856"/>
+					</object>
+					<int key="connectionID">217</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -996,7 +996,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">216</int>
+			<int key="maxID">217</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1007,6 +1007,13 @@
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">executeScript:</string>
 						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">executeScript:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">executeScript:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
@@ -1027,6 +1034,13 @@
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">leftBannerImageView</string>
 						<string key="NS.object.0">NSImageView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">leftBannerImageView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">leftBannerImageView</string>
+							<string key="candidateClassName">NSImageView</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -1063,6 +1077,40 @@
 							<string>id</string>
 						</object>
 					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>detachActionAsWindow:</string>
+							<string>executeScript:</string>
+							<string>showNextAction:</string>
+							<string>showPreviousAction:</string>
+							<string>syncPartnerSelectedIndex:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">detachActionAsWindow:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">executeScript:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showNextAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showPreviousAction:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">syncPartnerSelectedIndex:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
@@ -1070,7 +1118,7 @@
 							<string>_actionPopup</string>
 							<string>_actionViewController</string>
 							<string>_parameterSplitView</string>
-							<string>_parameterViewHandler</string>
+							<string>_parameterViewManager</string>
 							<string>_splitDragView</string>
 							<string>detachButton</string>
 							<string>lockButton</string>
@@ -1085,7 +1133,7 @@
 							<string>NSPopUpButton</string>
 							<string>MGSActionViewController</string>
 							<string>MGSParameterSplitView</string>
-							<string>MGSParameterViewHandler</string>
+							<string>MGSParameterViewManager</string>
 							<string>NSImageView</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
@@ -1094,6 +1142,75 @@
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>_actionPopup</string>
+							<string>_actionViewController</string>
+							<string>_parameterSplitView</string>
+							<string>_parameterViewManager</string>
+							<string>_splitDragView</string>
+							<string>detachButton</string>
+							<string>lockButton</string>
+							<string>positionTextField</string>
+							<string>scrollView</string>
+							<string>showNextAction</string>
+							<string>showPrevAction</string>
+							<string>syncActionButton</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_actionPopup</string>
+								<string key="candidateClassName">NSPopUpButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_actionViewController</string>
+								<string key="candidateClassName">MGSActionViewController</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_parameterSplitView</string>
+								<string key="candidateClassName">MGSParameterSplitView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_parameterViewManager</string>
+								<string key="candidateClassName">MGSParameterViewManager</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">_splitDragView</string>
+								<string key="candidateClassName">NSImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">detachButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">lockButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">positionTextField</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">scrollView</string>
+								<string key="candidateClassName">NSScrollView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">showNextAction</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">showPrevAction</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">syncActionButton</string>
+								<string key="candidateClassName">NSButton</string>
+							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -1110,15 +1227,22 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">MGSParameterViewHandler</string>
+					<string key="className">MGSParameterViewManager</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">splitView</string>
 						<string key="NS.object.0">MGSParameterSplitView</string>
 					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">splitView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">splitView</string>
+							<string key="candidateClassName">MGSParameterSplitView</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">MGSParameterViewHandler.h</string>
+						<string key="majorKey">IBUserSource</string>
+						<string key="minorKey"/>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1127,6 +1251,13 @@
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">delegate</string>
 						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -1159,6 +1290,55 @@
 							<string>NSImageView</string>
 							<string>NSView</string>
 							<string>NSView</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>bannerLeftLabel</string>
+							<string>bannerRightLabel</string>
+							<string>bannerView</string>
+							<string>bottomView</string>
+							<string>dragThumb</string>
+							<string>middleDragThumb</string>
+							<string>middleView</string>
+							<string>topView</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bannerLeftLabel</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bannerRightLabel</string>
+								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bannerView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">bottomView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">dragThumb</string>
+								<string key="candidateClassName">NSImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">middleDragThumb</string>
+								<string key="candidateClassName">NSImageView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">middleView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">topView</string>
+								<string key="candidateClassName">NSView</string>
+							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

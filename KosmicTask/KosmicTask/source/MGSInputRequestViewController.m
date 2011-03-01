@@ -8,7 +8,7 @@
 #import "MGSMother.h"
 #import "MGSInputRequestViewController.h"
 #import "MGSRequestViewController.h"
-#import "MGSParameterViewHandler.h"
+#import "MGSParameterViewManager.h"
 #import "MGSActionViewController.h"
 #import "MGSScript.h"
 #import "MGSTaskSpecifier.h"
@@ -118,7 +118,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	[_actionController addObserver:self forKeyPath:@"selectionIndex" options:NSKeyValueObservingOptionNew context:MGSActionSelectionIndexContext]; 
 	
 	// set the parameter view handler to input mode
-	[_parameterViewHandler setMode:MGSParameterModeInput];
+	[_parameterViewManager setMode:MGSParameterModeInput];
 	
 	// notification observers
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initialiseAction:) name:MGSNoteInitialiseAction object:nil];
@@ -208,7 +208,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 		self.isProcessing = _action.isProcessing;
 			
 		// hightlight action view
-		[_parameterViewHandler highlightActionView];
+		[_parameterViewManager highlightActionView];
 	
 	} 
 }
@@ -313,7 +313,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 		// _parameterViewHandler will co-ordinate the creation of the
 		// required parameter views.
 		// _parameterViewHandler will display the action view above the parameters
-		_parameterViewHandler.actionViewController = _actionViewController;
+		_parameterViewManager.actionViewController = _actionViewController;
 		
 		// setting NSKeyValueObservingOptionInitial causes view enabling override bug
 		[_action addObserver:self forKeyPath:@"isProcessing" options:0 context:MGSIsProcessingContext];
@@ -321,7 +321,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 		[self markAsReadyIfNoResults];
 		
 		// hightlight action view
-		[_parameterViewHandler highlightActionView];
+		[_parameterViewManager highlightActionView];
 
 	}
 }
@@ -427,7 +427,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
  */
 - (void)resetToDefaultValue
 {
-	[_parameterViewHandler resetToDefaultValue];
+	[_parameterViewManager resetToDefaultValue];
 }
 
 #pragma mark Can do operation
@@ -443,17 +443,17 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	// An NSButton does not accept first responder and hence the NSTextField
 	// does not update. Hence, the controller must implement the NSEditorRegistration
 	// protocol to track such cases.
-	if (![_parameterViewHandler commitPendingEdits]) {
+	if (![_parameterViewManager commitPendingEdits]) {
 		MLog(DEBUGLOG, @"Could not commit pending edits");
 		return NO;
 	}
 	
 	// validate the parameters
 	MGSParameterViewController *viewController;
-	if (![_parameterViewHandler validateParameters:&viewController]) {
+	if (![_parameterViewManager validateParameters:&viewController]) {
 		
 		// highlight the invalid parameter
-		[_parameterViewHandler highlightParameter:viewController];
+		[_parameterViewManager highlightParameter:viewController];
 		
 		// scroll view visible
 		[[viewController view] scrollRectToVisible:[[viewController view] bounds]];

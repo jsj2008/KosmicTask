@@ -32,8 +32,11 @@ typedef enum {
     IBOutlet    NSTextField         *tabField;
     IBOutlet    NSDrawer            *drawer;
     IBOutlet    MGSRequestTabScrollView *requestTabScrollView;
+	
+	// for mproved source see https://github.com/dergraf83/PSMTabBarControl
     IBOutlet    PSMTabBarControl    *tabBar;
- 
+	IBOutlet	NSMenu				*tabContextMenu;
+	
 	// these outlets correspond to the config drawer
     IBOutlet    NSButton            *isProcessingButton;
     IBOutlet    NSButton            *isEditedButton;

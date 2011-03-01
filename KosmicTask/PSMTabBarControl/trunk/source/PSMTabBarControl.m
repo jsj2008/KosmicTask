@@ -20,6 +20,12 @@
 
 #include <bitstring.h>
 
+// class extension
+@interface PSMTabBarControl()
+- (NSTabViewItem *)tabViewItemForEvent:(NSEvent *)event;
+- (void)processEvent:(NSEvent *)event;
+@end
+
 @interface PSMTabBarControl (Private)
 
     // constructor/destructor
@@ -1244,6 +1250,8 @@
         }
         [self setNeedsDisplay:YES];
     }
+	
+	[self processEvent:theEvent];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
@@ -1357,17 +1365,34 @@
 		
 		_closeClicked = NO;
 	}
+	
+	[self processEvent:theEvent];
+}
+
+- (void)processEvent:(NSEvent *)event
+{
+	NSTabViewItem *item = [self tabViewItemForEvent:event];
+	if (item && [[self delegate] respondsToSelector:@selector(tabView:tabViewItem:event:)]) {
+		[delegate tabView:tabView tabViewItem:item event:event];
+	}
 }
 
 - (NSMenu *)menuForEvent:(NSEvent *)event
 {
 	NSMenu *menu = nil;
-	NSTabViewItem *item = [[self cellForPoint:[self convertPoint:[event locationInWindow] fromView:nil] cellFrame:nil] representedObject];
+	NSTabViewItem *item = [self tabViewItemForEvent:event];
 	
 	if (item && [[self delegate] respondsToSelector:@selector(tabView:menuForTabViewItem:)]) {
 		menu = [[self delegate] tabView:tabView menuForTabViewItem:item];
 	}
 	return menu;
+}
+
+- (NSTabViewItem *)tabViewItemForEvent:(NSEvent *)event
+{
+	NSTabViewItem *item = [[self cellForPoint:[self convertPoint:[event locationInWindow] fromView:nil] cellFrame:nil] representedObject];
+
+	return item;
 }
 
 #pragma mark -

@@ -466,10 +466,27 @@ const char MGSIncrementValueBindingContext;
 			break;
 			
 		case kMGSNumberInputViewScientificENotation:
+			/*
+			 
+			 1.234 = 1.234e0 = 0.11234e1
+			 
+			 */
 			[self.formatter setNumberStyle:NSNumberFormatterScientificStyle];
 			[self.formatter setMaximumSignificantDigits:_decimalPlaces+1];
 			[self.formatter setMinimumSignificantDigits:_decimalPlaces+1];
 			[self.formatter setUsesSignificantDigits:YES];
+			
+			/*
+			 
+			demo that floating point fractions may not be exact
+
+			 NSLog(@"%.40f", 0.1);
+			> 0.1000000000000000055511151231257827021182
+			NSLog(@"%.40f", 0.5);			 
+			> 0.5000000000000000000000000000000000000000
+			 
+			 */
+			
 			break;
 			
 		case kMGSNumberInputViewDecimalNotation:

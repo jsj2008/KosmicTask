@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class MGSTaskSpecifier;
-@class MGSParameterViewHandler;
+@class MGSParameterViewManager;
 @class MGSScriptParameterManager;
 @class MGSEmptyParameterViewController;
 @class MGSParameterSplitView;
@@ -18,7 +18,7 @@
 	
 	IBOutlet NSTextField *inputCountText;						// number of inputs
 	IBOutlet NSSegmentedControl *inputSegmentedControl;			// input segment control
-	IBOutlet MGSParameterViewHandler *parameterViewHandler;		// parameter view handler
+	IBOutlet MGSParameterViewManager *parameterViewHandler;		// parameter view handler
 	IBOutlet MGSEmptyParameterViewController *emptyParameterViewController;	// view to be displayed when zero parameters are defined
 	IBOutlet NSView *parameterView;								// view containing parameters
 	IBOutlet NSScrollView *parameterScrollView;					// parameter scrollview

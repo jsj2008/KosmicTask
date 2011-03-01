@@ -61,6 +61,7 @@
 	NSView *_dummyView;	
 																
 	NSMutableArray *_hiddenViews;
+	NSMutableDictionary *_maximizedTaskTabUserDefaultsCache; 
 }
 
 
@@ -84,6 +85,10 @@
 - (IBAction)findTask:(id)sender;
 - (IBAction)selectNextTaskTab:(id)sender;
 - (IBAction)selectPrevTaskTab:(id)sender;
+- (IBAction)maximizeTaskTab:(id)sender;
+- (IBAction)minimizeTaskTab:(id)sender;
+- (IBAction)subviewDoubleClick:(id)sender;
+- (IBAction)toggleTaskTabMaximization:(id)sender;
 
 // menu actions
 - (IBAction)viewMenuShowSelected:(id)sender;
