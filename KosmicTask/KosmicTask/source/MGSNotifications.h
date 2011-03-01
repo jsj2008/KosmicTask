@@ -38,6 +38,7 @@ extern NSString *MGSNoteShowDictionary;
 extern NSString *MGSNoteShouldAuthenticateAccess;	// should authenticate  access
 extern NSString *MGSNoteAuthenticateAccessSucceeded;	// authenticate access succeeded
 extern NSString *MGSNoteOpenTaskInWindow;	// open action in window
+extern NSString *MGSNoteOpenTaskInNewTab;
 extern NSString *MGSNoteExecuteSelectedTask;
 extern NSString *MGSNoteStopSelectedTask;
 extern NSString *MGSNoteResumeSelectedTask;

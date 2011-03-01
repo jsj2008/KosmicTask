@@ -84,7 +84,7 @@ NSString *MGSTableColumnIdentifierRating = @"rating";
 - (void)reloadActionTableData;
 - (void)reloadMachineTableData;
 - (void)dispatchSelectedAction;
-- (void)dispatchActionAtRowIndex:(NSInteger) rowIndex displayType:(MGSTaskDisplayType)actionDisplayType;
+- (void)dispatchTaskSpecAtRowIndex:(NSInteger) rowIndex displayType:(MGSTaskDisplayType)actionDisplayType;
 - (MGSTaskSpecifier *)actionCopyAtRowIndex:(NSInteger)rowIndex;
 - (MGSTaskSpecifier *)actionCopyWithUUID:(NSString *)UUID;
 - (void)actionSelected;
@@ -310,7 +310,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;
 	//[actionTable setAction:@selector(tableViewSingleClick:)];
 	[actionTable setDoubleAction:@selector(tableViewDoubleClick:)];
 	
-	// set action table context menusmenus
+	// set action table context menus menus
 	NSMenuItem *labelMenu = [[actionTable menu] itemWithTag:100];	// label menu
 	FVColorMenuView *menuView = [FVColorMenuView menuView];
 	[menuView setTarget:self];
@@ -674,7 +674,7 @@ errorExit:;
 {
 	#pragma unused(sender)
 	
-	[self dispatchActionAtRowIndex:[actionTable clickedRow] displayType:MGSTaskDisplayInNewTab];	
+	[self dispatchTaskSpecAtRowIndex:[actionTable clickedRow] displayType:MGSTaskDisplayInNewTab];	
 }
 /*
  
@@ -684,7 +684,7 @@ errorExit:;
 - (IBAction)openTaskInNewWindow:(id)sender
 {
 	#pragma unused(sender)
-	[self dispatchActionAtRowIndex:[actionTable clickedRow] displayType:MGSTaskDisplayInNewWindow];	
+	[self dispatchTaskSpecAtRowIndex:[actionTable clickedRow] displayType:MGSTaskDisplayInNewWindow];	
 }
 
 
@@ -1488,14 +1488,14 @@ errorExit:
 		}
 	}
 	
-	// create an action specifier
-	MGSTaskSpecifier *action = [[MGSTaskSpecifierManager sharedController] newObject];
-	action.netClient = netClient;
-	action.scriptIndex = scriptIndex;
+	// create a task specifier
+	MGSTaskSpecifier *taskSpec = [[MGSTaskSpecifierManager sharedController] newObject];
+	taskSpec.netClient = netClient;
+	taskSpec.scriptIndex = scriptIndex;
 	if (script) {
-		action.script = [script mutableDeepCopy];
+		taskSpec.script = [script mutableDeepCopy];
 	} 
-	return action;
+	return taskSpec;
 }
 
 /*
@@ -2224,7 +2224,7 @@ errorExit:
 		}
 	}
 	
-	[self dispatchActionAtRowIndex:[actionTable selectedRow] displayType:actionDisplayType];
+	[self dispatchTaskSpecAtRowIndex:[actionTable selectedRow] displayType:actionDisplayType];
 	
 }
 
@@ -2233,7 +2233,7 @@ errorExit:
  dispatch action at row index
  
  */
-- (void)dispatchActionAtRowIndex:(NSInteger)rowIndex displayType:(MGSTaskDisplayType)actionDisplayType
+- (void)dispatchTaskSpecAtRowIndex:(NSInteger)rowIndex displayType:(MGSTaskDisplayType)actionDisplayType
 {
 	if (!_allowActionDispatch) {
 		return;

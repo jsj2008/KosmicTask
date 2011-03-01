@@ -28,6 +28,7 @@
 #import "MGSOutlineViewNode.h"
 #import "MGSNetRequest+KosmicTask.h"
 
+
 const char MGSNetClientRunModeContext;
 
 // defaults
@@ -354,6 +355,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	
 	return nil;
 }
+
 
 #pragma mark -
 #pragma mark KVO

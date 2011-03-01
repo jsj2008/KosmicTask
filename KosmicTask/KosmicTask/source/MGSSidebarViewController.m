@@ -22,6 +22,7 @@
 #import "NSTreeController-DMExtensions.h"
 #import "MGSTaskSpecifier.h"
 #import "MGSSidebarOutlineView.h"
+#import "MGSTaskSpecifierManager.h"
 #include <sys/time.h>
 
 #define HOME_NODE_INDEX 0
@@ -39,6 +40,7 @@ char MGSScriptDictContext;
 // class extension
 @interface MGSSidebarViewController()
 
+- (void)dispatchTaskSpecAtRowIndex:(NSInteger)rowIndex displayType:(MGSTaskDisplayType)taskDisplayType;
 - (void)netClientAvailable:(NSNotification *)notification;
 - (void)netClientUnavailable:(NSNotification *)notification;
 - (void)netClientSelected:(NSNotification *)notification;
@@ -445,7 +447,121 @@ char MGSScriptDictContext;
 	// remove from parent
 	[node removeFromParent];
 }
+#pragma mark -
+#pragma mark Menu handling
+/*
+ 
+ validate menu item
+ 
+ */
+- (BOOL)validateMenuItem:(NSMenuItem *)anItem
+{
+    SEL action = [anItem action];
+    NSInteger clickedRow = [outlineView clickedRow];
+	if (clickedRow == -1) {
+		return NO;
+	}
 
+	// get node
+	NSTreeNode *node = [outlineView itemAtRow:clickedRow];
+	MGSOutlineViewNode *myNode = [node representedObject];
+	
+	// open task in new window
+    if (action == @selector(openTaskInNewWindow:)) {
+		
+		return myNode.type == MGSNodeTypeScript ? YES : NO;
+	}
+	
+	// open task in new tab
+    if (action == @selector(openTaskInNewTab:)) {
+		
+		return myNode.type == MGSNodeTypeScript ? YES : NO;
+	}
+	
+	return YES;
+}
+
+#pragma mark -
+#pragma mark Node actions
+/*
+ 
+ open task in new tab
+ 
+ */
+- (IBAction)openTaskInNewTab:(id)sender
+{
+#pragma unused(sender)
+	
+	[self dispatchTaskSpecAtRowIndex:[outlineView clickedRow] displayType:MGSTaskDisplayInNewTab];	
+}
+/*
+ 
+ open task in new window
+ 
+ */
+- (IBAction)openTaskInNewWindow:(id)sender
+{
+#pragma unused(sender)
+	[self dispatchTaskSpecAtRowIndex:[outlineView clickedRow] displayType:MGSTaskDisplayInNewWindow];	
+}
+
+/*
+ 
+ - dispatchTaskSpecAtRowIndex:displayType:
+ 
+ */
+- (void)dispatchTaskSpecAtRowIndex:(NSInteger)rowIndex displayType:(MGSTaskDisplayType)taskDisplayType
+{
+	if (rowIndex == -1) {
+		return;
+	}
+	
+	// get node
+	NSTreeNode *node = [outlineView itemAtRow:rowIndex];
+	MGSOutlineViewNode *myNode = [node representedObject];
+	if (myNode.type != MGSNodeTypeScript) {
+		return;
+	}
+	
+	// get selected script
+	MGSScript *script = [myNode representedObject];
+	NSAssert(script && [script isKindOfClass:[MGSScript class]], @"script missing");
+	
+	// get script net client
+	MGSNetClient *netClient = nil;
+	MGSOutlineViewNode *clientNode = [myNode ancestorNodeWithRepresentedClass:[MGSNetClient class]];
+	if (clientNode) {
+		netClient = [clientNode representedObject];
+	}
+	if (!netClient) {
+		return;
+	}
+	
+	// create new task spec
+	MGSTaskSpecifier *taskSpec = [[MGSTaskSpecifierManager sharedController] 
+								  newTaskSpecForNetClient:netClient 
+													script:script];	
+	taskSpec.displayType = taskDisplayType;
+	
+	// display action accordingly
+	switch (taskSpec.displayType) {
+			
+			// display task in new tab
+		case MGSTaskDisplayInNewTab:
+			[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteOpenTaskInNewTab object:taskSpec];
+			break;
+			
+			// display task in new window
+		case MGSTaskDisplayInNewWindow:
+			[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteOpenTaskInWindow object:taskSpec];
+			return;
+			break;
+			
+			// try and find matching tab for task?
+		default:
+			break;
+	}
+}
 
 #pragma mark -
 #pragma mark Node cache

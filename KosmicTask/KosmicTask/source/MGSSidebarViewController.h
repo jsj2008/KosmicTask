@@ -33,4 +33,8 @@
 @property (assign) NSMutableArray *clientTree;
 @property (readonly) MGSNetClient *selectedNetClient;
 @property (readonly) id selectedObject;
+
+- (IBAction)openTaskInNewTab:(id)sender;
+- (IBAction)openTaskInNewWindow:(id)sender;
+
 @end

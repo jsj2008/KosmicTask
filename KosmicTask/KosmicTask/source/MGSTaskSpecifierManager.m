@@ -17,6 +17,7 @@
 #import "MGSTaskSpecifier.h"
 #import "MGSPath.h"
 #import "MGSNetClient.h"
+#import "MGSScript.h"
 #import "MGSResult.h"
 #import "MGSPreferences.h"
 
@@ -72,6 +73,20 @@ static MGSTaskSpecifierManager *_sharedController = nil;
 	self = [self init];
 	_isHistory = YES;
 	return self;
+}
+
+/*
+ 
+ - newTaskSpecForNetClient:script:
+ 
+ */
+- (id)newTaskSpecForNetClient:(MGSNetClient *)netClient script:(MGSScript *)script
+{
+	MGSTaskSpecifier *taskSpec = [[MGSTaskSpecifierManager sharedController] newObject];
+	taskSpec.netClient = netClient;
+	taskSpec.script = [script mutableDeepCopy];
+	
+	return taskSpec;
 }
 
 #pragma mark KVO 

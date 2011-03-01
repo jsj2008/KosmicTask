@@ -60,6 +60,7 @@ static char MGSSeletedDetailViewSegmentContext;
 - (void)resumeSelectedAction:(NSNotification *)notification;
 - (void)selectDetailSegment:(NSInteger)idx;
 - (void)saveUserDefaults;
+- (void)openTaskInNewTab:(NSNotification *)notification;
 @end
 
 @interface MGSMainViewController(private)
@@ -98,6 +99,7 @@ static char MGSSeletedDetailViewSegmentContext;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(terminateSelectedAction:) name:MGSNoteStopSelectedTask object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(suspendSelectedAction:) name:MGSNoteSuspendSelectedTask object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resumeSelectedAction:) name:MGSNoteResumeSelectedTask object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openTaskInNewTab:) name:MGSNoteOpenTaskInNewTab object:nil];
 
 	// set the browser tab style
 	[browserTabView setTabViewType:NSNoTabsNoBorder];
@@ -406,6 +408,22 @@ static char MGSSeletedDetailViewSegmentContext;
 	
 	[_requestTabViewController resumeSelectedAction];
 }
+
+/*
+ 
+ open task in new tab
+ 
+ */
+- (void)openTaskInNewTab:(NSNotification *)notification
+{		
+	NSAssert([[notification object] isKindOfClass:[MGSTaskSpecifier class]], @"expected MGSTaskSpecifier as notification object");
+	MGSTaskSpecifier *taskSpec = [notification object];
+
+	// create new tab with action spec
+	[_requestTabViewController addTabWithActionSpecifier:taskSpec];
+	[_requestTabViewController applyUserDefaultsToSelectedTab];	
+}
+
 
 /*
  
@@ -956,38 +974,34 @@ static char MGSSeletedDetailViewSegmentContext;
  or whenever a user selection needs to be simulated
  
  */
-- (void)browser:(MGSBrowserViewController *)browser userSelectedAction:(MGSTaskSpecifier *)action
+- (void)browser:(MGSBrowserViewController *)browser userSelectedAction:(MGSTaskSpecifier *)taskSpec
 {
 	#pragma unused(browser)
 	
-	NSAssert(action, @"action is nil");
+	NSAssert(taskSpec, @"task specifier is nil");
 	
 	// display action accordingly
-	switch ([action displayType]) {
+	switch ([taskSpec displayType]) {
 			
 		// display action in new tab
 		case MGSTaskDisplayInNewTab:
-			
-			// create new tab with action spec
-			[_requestTabViewController addTabWithActionSpecifier:action];
-			
-			[_requestTabViewController applyUserDefaultsToSelectedTab];
-			
+			[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteOpenTaskInNewTab object:taskSpec];			
 			break;
 			
 		// display action in new window
 		case MGSTaskDisplayInNewWindow:
-			[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteOpenTaskInWindow object:action];
+			[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteOpenTaskInWindow object:taskSpec];
 			return;
 			break;
 			
 		// try and find matching tab for action
 		default:
-			[_requestTabViewController selectTabForActionSpecifier:action];
+			[_requestTabViewController selectTabForActionSpecifier:taskSpec];
 			break;
 	}
 	
 }
+
 
 /*
  

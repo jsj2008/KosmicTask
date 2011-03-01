@@ -55,6 +55,7 @@ NSString *MGSNoteDeleteSelectedTask = @"MGSDeleteSelectedTask";
 NSString *MGSNoteScriptScheduledForDelete = @"MGSNoteScriptScheduledForDelete";
 NSString *MGSNoteEditSelectedTask = @"MGSEditSelectedTask";
 NSString *MGSNoteOpenTaskInWindow = @"MGSOpenTaskInWindow";
+NSString *MGSNoteOpenTaskInNewTab = @"MGSOpenTaskInNewTab";
 NSString *MGSNoteDuplicateSelectedTask = @"MGSDuplicateSelectedTask";
 NSString *MGSNoteWillUndoConfigurationChanges = @"MGSNoteWillUndoConfigurationChanges";
 

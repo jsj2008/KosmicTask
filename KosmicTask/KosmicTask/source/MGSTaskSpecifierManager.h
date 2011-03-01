@@ -12,6 +12,7 @@
 @class MGSNetClient;
 @class MGSTaskSpecifier;
 @class MGSResult;
+@class MGSScript;
 
 @protocol MGSTaskSpecifierManager
 @optional
@@ -38,6 +39,7 @@
 - (NSString *)historyPath;
 - (void)addCompletedActionCopy:(MGSTaskSpecifier *)anAction withResult:(MGSResult *)result;
 - (void)removeAllObjects;
+- (id)newTaskSpecForNetClient:(MGSNetClient *)netClient script:(MGSScript *)script;
 
 @property (readonly) MGSTaskSpecifierManager *history;
 @property id delegate;
