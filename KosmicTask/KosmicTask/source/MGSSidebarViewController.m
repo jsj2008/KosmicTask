@@ -1070,6 +1070,19 @@ char MGSScriptDictContext;
 			
 			NSString *groupName = [userInfo objectForKey:MGSNoteClientGroupKey];
 			NSAssert(groupName, @"group name is missing");
+			NSString *groupKeyPrefix = MGSNodeKeyPrefixScriptGroup;
+			/*
+			 
+			 even though we know the group we may want to persist with selecting the script
+			 in the all group
+			 
+			 */
+			MGSOutlineViewNode *selectedGroupNode = self.selectedObjectGroupNode;
+			BOOL currentSelectionInAllGroup= [selectedGroupNode.name isEqualToString:[MGSClientScriptManager groupNameAll]];
+			if (currentSelectionInAllGroup) {
+				groupName = [MGSClientScriptManager groupNameAll];
+				groupKeyPrefix = MGSNodeKeyPrefixScriptGroupAll;
+			}
 			
 			nodeKey = [self nodeKeyForGroup:groupName];
 			MGSOutlineViewNode *groupNode = [self nodeWithKey:nodeKey netClient:netClient];
@@ -1092,7 +1105,7 @@ char MGSScriptDictContext;
 				if (script) {
 					
 					// select script within its group
-					nodeKey = [script keyWithString:MGSNodeKeyPrefixScriptGroup];
+					nodeKey = [script keyWithString:groupKeyPrefix];
 					MGSOutlineViewNode *scriptNode = [self nodeWithKey:nodeKey netClient:netClient];
 					if (scriptNode) {
 						nodeToSelect = scriptNode;
