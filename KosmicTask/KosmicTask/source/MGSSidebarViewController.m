@@ -953,7 +953,11 @@ char MGSScriptDictContext;
 	// explanation unknown
 	if (rootNode == _homeNode) {
 		[self performSelector:@selector(expandNode:) withObject:clientNode afterDelay:0];
-		[self performSelector:@selector(selectNode:) withObject:clientNode afterDelay:0];
+		if ([[clientNode childNodes] count] > 0) {
+			[self performSelector:@selector(selectNode:) withObject:[[clientNode childNodes] objectAtIndex:0] afterDelay:0];
+		} else {
+			[self performSelector:@selector(selectNode:) withObject:clientNode afterDelay:0];
+		}
 	}
 	
 }
