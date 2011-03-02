@@ -173,17 +173,19 @@
 	<key>Description</key>
 	<string>Send new mail message</string>
 	<key>FileVersion</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>Group</key>
 	<string>Mail</string>
 	<key>Identifier</key>
 	<string>com.mugginsoft.kosmictask</string>
 	<key>Modified</key>
-	<date>2010-04-09T16:13:53Z</date>
+	<date>2011-03-02T21:27:32Z</date>
 	<key>ModifiedAuto</key>
 	<true/>
 	<key>Name</key>
 	<string>Send new message</string>
+	<key>OnRun</key>
+	<integer>2</integer>
 	<key>Origin</key>
 	<string>Mugginsoft</string>
 	<key>Parameters</key>
@@ -195,6 +197,8 @@
 				<false/>
 				<key>Default</key>
 				<string></string>
+				<key>InputStyle</key>
+				<integer>0</integer>
 			</dict>
 			<key>ClassName</key>
 			<string>MGSTextParameterPlugin</string>
@@ -210,6 +214,8 @@
 				<false/>
 				<key>Default</key>
 				<string></string>
+				<key>InputStyle</key>
+				<integer>0</integer>
 			</dict>
 			<key>ClassName</key>
 			<string>MGSTextParameterPlugin</string>
@@ -225,6 +231,8 @@
 				<false/>
 				<key>Default</key>
 				<string></string>
+				<key>InputStyle</key>
+				<integer>0</integer>
 			</dict>
 			<key>ClassName</key>
 			<string>MGSTextParameterPlugin</string>
@@ -240,6 +248,8 @@
 				<false/>
 				<key>Default</key>
 				<string></string>
+				<key>InputStyle</key>
+				<integer>1</integer>
 			</dict>
 			<key>ClassName</key>
 			<string>MGSTextParameterPlugin</string>
@@ -251,20 +261,18 @@
 	</array>
 	<key>ScriptType</key>
 	<string>AppleScript</string>
-	<key>Status</key>
-	<integer>2</integer>
 	<key>Subroutine</key>
 	<string>kosmicTask</string>
 	<key>Timeout</key>
 	<real>0.0</real>
 	<key>VersionID</key>
-	<integer>14</integer>
+	<integer>16</integer>
 	<key>VersionMajor</key>
 	<integer>1</integer>
 	<key>VersionMinor</key>
 	<integer>0</integer>
 	<key>VersionRevision</key>
-	<integer>10</integer>
+	<integer>11</integer>
 	<key>VersionRevisionAuto</key>
 	<true/>
 </dict>
