@@ -1118,6 +1118,8 @@
 		ABC4835412845B5E00C99CEA /* TaskRunAlt.tif in Resources */ = {isa = PBXBuildFile; fileRef = ABC4835212845B5D00C99CEA /* TaskRunAlt.tif */; };
 		ABC4D3DC119ED4FC0059D28A /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC4D3DB119ED4FC0059D28A /* AppleScriptObjC.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		ABC4D52E119F26770059D28A /* MGSAppleScriptExecutor.applescript in Sources */ = {isa = PBXBuildFile; fileRef = ABC4D42A119ED8A30059D28A /* MGSAppleScriptExecutor.applescript */; };
+		ABC5BC70131E674E0020003D /* NSIndexPath+Mugginsoft.h in Headers */ = {isa = PBXBuildFile; fileRef = ABC5BC6E131E674E0020003D /* NSIndexPath+Mugginsoft.h */; };
+		ABC5BC71131E674E0020003D /* NSIndexPath+Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5BC6F131E674E0020003D /* NSIndexPath+Mugginsoft.m */; };
 		ABC65F840E71543900D0A72E /* DotYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC65F810E71543900D0A72E /* DotYellow.png */; };
 		ABC65F850E71543900D0A72E /* DotRed.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC65F820E71543900D0A72E /* DotRed.png */; };
 		ABC65F860E71543900D0A72E /* DotGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC65F830E71543900D0A72E /* DotGreen.png */; };
@@ -4450,6 +4452,8 @@
 		ABC565141072199000069BBF /* JAProcessInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAProcessInfo.m; sourceTree = "<group>"; };
 		ABC5774B0D4766DD005D3321 /* MGSImageAndTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSImageAndTextCell.h; sourceTree = "<group>"; };
 		ABC5774C0D4766DD005D3321 /* MGSImageAndTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSImageAndTextCell.m; sourceTree = "<group>"; };
+		ABC5BC6E131E674E0020003D /* NSIndexPath+Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSIndexPath+Mugginsoft.h"; path = "../../../Mugginsoft-shared-source/NSIndexPath+Mugginsoft/NSIndexPath+Mugginsoft.h"; sourceTree = SOURCE_ROOT; };
+		ABC5BC6F131E674E0020003D /* NSIndexPath+Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSIndexPath+Mugginsoft.m"; path = "../../../Mugginsoft-shared-source/NSIndexPath+Mugginsoft/NSIndexPath+Mugginsoft.m"; sourceTree = SOURCE_ROOT; };
 		ABC65E830E71282600D0A72E /* MGSDistributedNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSDistributedNotifications.h; sourceTree = "<group>"; };
 		ABC65E840E71282600D0A72E /* MGSDistributedNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSDistributedNotifications.m; sourceTree = "<group>"; };
 		ABC65F810E71543900D0A72E /* DotYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DotYellow.png; sourceTree = "<group>"; };
@@ -7010,6 +7014,8 @@
 		AB85C1AE0D3BFDAC00C1205B /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				ABC5BC6E131E674E0020003D /* NSIndexPath+Mugginsoft.h */,
+				ABC5BC6F131E674E0020003D /* NSIndexPath+Mugginsoft.m */,
 				AB9E3A930E141F0600716B7A /* PixelTypes.h */,
 				AB9E3A2D0E14191B00716B7A /* NSImage+Negative.h */,
 				AB9E3A2E0E14191B00716B7A /* NSImage+Negative.m */,
@@ -8506,6 +8512,7 @@
 				AB2489A112BFF5F200933E98 /* MGSNetNegotiator.h in Headers */,
 				AB2E6CA012C799790071052D /* MGSNetMessage+KosmicTask.h in Headers */,
 				AB2E6D7C12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h in Headers */,
+				ABC5BC70131E674E0020003D /* NSIndexPath+Mugginsoft.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11115,6 +11122,7 @@
 				AB2489A212BFF5F200933E98 /* MGSNetNegotiator.m in Sources */,
 				AB2E6CA112C799790071052D /* MGSNetMessage+KosmicTask.m in Sources */,
 				AB2E6D7D12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m in Sources */,
+				ABC5BC71131E674E0020003D /* NSIndexPath+Mugginsoft.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

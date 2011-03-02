@@ -23,6 +23,7 @@
 #import "MGSTaskSpecifier.h"
 #import "MGSSidebarOutlineView.h"
 #import "MGSTaskSpecifierManager.h"
+#import "NSIndexPath+Mugginsoft.h"
 #include <sys/time.h>
 
 #define HOME_NODE_INDEX 0
@@ -69,14 +70,17 @@ char MGSScriptDictContext;
 - (void)removeNodeWithKey:(id)key netClient:(MGSNetClient *)netClient;
 - (MGSOutlineViewNode *)nodeWithKey:(id)key netClient:(MGSNetClient *)netClient;
 - (void)cacheNode:(MGSOutlineViewNode *)node withKey:(id)key netClient:(MGSNetClient *)netClient;
+- (MGSOutlineViewNode *)selectedObjectGroupNode;
+
 @property MGSNetClient *selectedNetClient;
 @property id selectedObject;
+@property MGSOutlineViewNode *selectedObjectNode;
 @end
 
 @implementation MGSSidebarViewController
 
 @synthesize clientTree;
-@synthesize selectedNetClient, selectedObject;
+@synthesize selectedNetClient, selectedObject, selectedObjectNode;
 
 /*
  
@@ -240,6 +244,25 @@ char MGSScriptDictContext;
 	}
 }
 
+/*
+ 
+ - selectedObjectGroupNode
+ 
+ */
+- (MGSOutlineViewNode *)selectedObjectGroupNode
+{
+	MGSOutlineViewNode *selectedGroupNode = nil;
+	if (self.selectedObjectNode) {
+		if (self.selectedObjectNode.type == MGSNodeTypeScript) {
+			selectedGroupNode = (MGSOutlineViewNode *)[self.selectedObjectNode parentNode];
+		} else if (self.selectedObjectNode.type == MGSNodeTypeGroup) {
+			selectedGroupNode = self.selectedObjectNode;
+		}		
+	}
+	
+	return selectedGroupNode;
+}
+
 #pragma mark -
 #pragma mark Tree model
 
@@ -250,17 +273,61 @@ char MGSScriptDictContext;
  */
 - (void)buildClientTree:(MGSNetClient *)netClient atNode:(MGSOutlineViewNode *)clientNode
 {
-	/*get current scroll position
-	NSPoint currentScrollPosition = [[myScrollView contentView] bounds].origin;
+	BOOL manipulateController = YES;
+	BOOL useReplacementMethod = YES;
+	NSTreeNode *clientOutlineItem = [clientTreeController mgs_outlineItemForObject:clientNode];		
+	NSIndexPath *clientIndexPath = [clientOutlineItem indexPath];
 	
-	//reload OutlineView/ScrollView	
+	/*
+	 
+	 we want to remove child nodes as efficiently as possible.
+	 
+	 we can do this either by manipulating the model or the controller.
+	 
+	 */
+	if (manipulateController) {
+		
+		if (useReplacementMethod) {
+			
+			/*
+			 
+			  temporarily remove the node while we update it.
+			 
+			  this generates the fewest notifications
+			 
+			 */
+			[clientTreeController removeObjectAtArrangedObjectIndexPath:clientIndexPath];
+			[[clientNode mutableChildNodes] setArray:nil];
+		} else {
+			
+			/*
+			 
+			 manipulate the controller directly
+			 
+			 */
+			NSInteger i = [[clientOutlineItem mutableChildNodes] count] - 1;
+			NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:i+1];
+			
+			for (MGSOutlineViewNode *childNode in [[clientOutlineItem mutableChildNodes] copy]) {
+				[indexPaths addObject:[childNode indexPath]];
+			}
+			
+			// this raises lots of notifications too as it simply iterates
+			// over the paths individually
+			[clientTreeController removeObjectsAtArrangedObjectIndexPaths:indexPaths];
+		}
+		
+	} else {
+		// mutating the model directly requires that the controller rely on KVO
+		// observing of the content object.
+		// for batch operations like below this can lead to lots of selection updating.
+		//[[clientNode mutableChildNodes] setArray:[NSMutableArray arrayWithCapacity:1]];
+		[[clientNode mutableChildNodes] setArray:nil];
+		
+		// raises losts of notifications
+		//[[clientNode mutableChildNodes] removeAllObjects];
+	}
 	
-	//restore scroll position
-	[[myScrollView documentView] scrollPoint:currentScrollPosition];
-	*/
-	
-	[[clientNode mutableChildNodes] removeAllObjects];
-
 	// get the script manager for the client
 	MGSClientScriptManager *scriptManager = [netClient.taskController scriptManager];		
 	NSAssert(scriptManager, @"script controller is nil");
@@ -278,7 +345,7 @@ char MGSScriptDictContext;
 	NSMutableDictionary *clientNodeCache = [NSMutableDictionary dictionaryWithCapacity:300];
 	[outlineNodeCache setObject:clientNodeCache forKey:[netClient serviceName]];
 	
-	NSMutableArray *clientChildeNodes = [NSMutableArray arrayWithCapacity:100];
+	NSMutableArray *clientChildNodes = [NSMutableArray arrayWithCapacity:100];
 	
 	// build task group tree
 	NSArray *groupNames = [scriptManager groupNames];
@@ -304,7 +371,7 @@ char MGSScriptDictContext;
 		
 		// add the group node
 		//[[clientNode mutableChildNodes] addObject:groupNode];
-		[clientChildeNodes addObject:groupNode];
+		[clientChildNodes addObject:groupNode];
 		
 		// add tasks
 		for (int i = 0; i < [groupScriptManager count]; i ++) {
@@ -326,8 +393,33 @@ char MGSScriptDictContext;
 		
 		[groupNode sortNameRecursively:NO];
 	}
+
 	
-	[[clientNode mutableChildNodes] setArray:clientChildeNodes];
+	if (manipulateController) {
+		
+		if (useReplacementMethod) {
+			[[clientNode mutableChildNodes] addObjectsFromArray:clientChildNodes];
+			[clientTreeController insertObject:clientNode atArrangedObjectIndexPath:clientIndexPath];
+		} else {
+			
+			/* this is defective - the child nodes cannot find their client parent */
+			NSAssert(NO, @"defective code path");
+			NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:[clientChildNodes count]];
+			NSInteger idx = 0;
+			for (MGSOutlineViewNode *childNode in [clientChildNodes copy]) {
+				[indexPaths addObject:[clientIndexPath indexPathByAddingIndex:idx++]];
+			}
+			[clientTreeController insertObjects:clientChildNodes atArrangedObjectIndexPaths:indexPaths];
+		}
+		
+	} else {
+		
+		//
+		[[clientNode mutableChildNodes] addObjectsFromArray:clientChildNodes];
+		
+		// this causes the outline view selection to get updated as each item is added!
+		//[[clientNode mutableChildNodes] setArray:clientChildNodes];
+	}
 	
 }
 
@@ -634,6 +726,7 @@ char MGSScriptDictContext;
 	[self updateNodeForNetClient:netClient script:script];
 }
 
+
 /*
  
  - updateNodeForNetClient:script:
@@ -641,7 +734,14 @@ char MGSScriptDictContext;
  */
 - (void)updateNodeForNetClient:(MGSNetClient *)netClient script:(MGSScript *)script
 {
-
+	/*
+	 
+	 determine if current selection is in all group or named group
+	 
+	 */
+	MGSOutlineViewNode *selectedGroupNode = self.selectedObjectGroupNode;
+	BOOL currentSelectionInAllGroup= [selectedGroupNode.name isEqualToString:[MGSClientScriptManager groupNameAll]];
+	
 	MGSClientScriptManager *scriptManager = [netClient.taskController scriptManager];
 	NSMutableDictionary *clientNodeCache = [self nodeCacheForNetClient:netClient];
 
@@ -656,6 +756,7 @@ char MGSScriptDictContext;
 	 
 	 */
 	// get nodes
+	MGSOutlineViewNode *nodeToBeSelected = nil;
 	MGSOutlineViewNode *rootNode = [self rootNodeForNetClient:netClient];
 	MGSOutlineViewNode *clientNode = [rootNode descendantNodeWithRepresentedObject:netClient];
 	NSAssert(clientNode, @"net client node is nil");
@@ -707,6 +808,10 @@ char MGSScriptDictContext;
 		// create new node and add to the all group 
 		scriptNode = [self newScriptTreeNodeWithObject:script keyPrefix:MGSNodeKeyPrefixScriptGroupAll netClient:netClient];
 		
+		if (currentSelectionInAllGroup) {
+			nodeToBeSelected = scriptNode;
+		}
+		
 		// get all group node from node map
 		nodeKey = [self nodeKeyForGroup:[MGSClientScriptManager groupNameAll]];
 		MGSOutlineViewNode *allGroupNode = [clientNodeCache objectForKey:nodeKey];
@@ -744,8 +849,11 @@ char MGSScriptDictContext;
 		[groupNode sortNameRecursively:NO];
 		
 		// select new task
-		if (isNewTask) {			
-			[clientTreeController dm_setSelectedObjects:[NSArray arrayWithObject:scriptNode]];
+		if (isNewTask) {	
+			if (!nodeToBeSelected) {
+				nodeToBeSelected = scriptNode;
+			}
+			[clientTreeController dm_setSelectedObjects:[NSArray arrayWithObject:nodeToBeSelected]];
 		}
 	}
 }
@@ -1058,27 +1166,37 @@ char MGSScriptDictContext;
 		return;
 	}
 	
+	MGSOutlineViewNode *node = 0;
 	NSArray *selection = [clientTreeController selectedObjects];
-	NSAssert([selection count] == 1, @"more than one node selected");
+	if ([selection count] > 0) {
 	
-	MGSOutlineViewNode *node = [selection objectAtIndex:0]; 
+		node = [selection objectAtIndex:0]; 
 
-	/*
-	 
-	 root node selected
-	 
-	 no action is required
-	 
-	 this should not happen
-	 
-	 */
-	if (![node parentNode]) {
-		return;
+		/*
+		 
+		 root node selected
+		 
+		 no action is required
+		 
+		 this should not happen
+		 
+		 */
+		if (![node parentNode]) {
+			return;
+		}
 	}
 	
 	[self selectedNodeDidChange:node];
 }
 
+/*
+ 
+ */
+- (void)setSelectedObjectNode:(MGSOutlineViewNode *)node
+{
+	selectedObjectNode = node;
+	self.selectedObject = [node representedObject];
+}
 /*
  
  - selectedNodeDidChange:
@@ -1090,9 +1208,13 @@ char MGSScriptDictContext;
 	NSDictionary *userInfo = nil;
 	NSString *noteName = nil;
 		
-	self.selectedObject = [node representedObject];
-
+	self.selectedObjectNode = node;
+	
 	if (!_postNetClientSelectionNotifications) {
+		return;
+	}
+	
+	if (!self.selectedObjectNode) {
 		return;
 	}
 	

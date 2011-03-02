@@ -18,6 +18,7 @@
 	MGSOutlineViewNode *_sharedNode;
 	MGSNetClient *selectedNetClient;
 	id selectedObject;
+	MGSOutlineViewNode *selectedObjectNode;
 	
 	NSArray *_selectionIndexPaths;
 	NSTreeNode *_selectionGroupNode;
@@ -33,6 +34,7 @@
 @property (assign) NSMutableArray *clientTree;
 @property (readonly) MGSNetClient *selectedNetClient;
 @property (readonly) id selectedObject;
+@property (readonly) MGSOutlineViewNode *selectedObjectNode;
 
 - (IBAction)openTaskInNewTab:(id)sender;
 - (IBAction)openTaskInNewWindow:(id)sender;
