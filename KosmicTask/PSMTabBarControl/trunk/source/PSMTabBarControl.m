@@ -1329,8 +1329,9 @@
 		if (cell) {
 			NSPoint trackingStartPoint = [self convertPoint:[[self lastMouseDownEvent] locationInWindow] fromView:nil];
 			NSRect iconRect = [mouseDownCell closeButtonRectForFrame:mouseDownCellFrame];
-			
-			if ((NSMouseInRect(mousePt, iconRect,[self isFlipped])) && ![self disableTabClose] && ![cell isCloseButtonSuppressed] && [mouseDownCell closeButtonPressed]) {
+			BOOL mouseInCloseIconRect = NSMouseInRect(mousePt, iconRect,[self isFlipped]);
+													  
+			if (mouseInCloseIconRect && ![self disableTabClose] && ![cell isCloseButtonSuppressed] && [mouseDownCell closeButtonPressed]) {
 				if (([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) != 0) {
 					//If the user is holding Option, close all other tabs
 					NSEnumerator	*enumerator = [[[[self cells] copy] autorelease] objectEnumerator];
@@ -1361,12 +1362,16 @@
 				[mouseDownCell setCloseButtonPressed:NO];
 				[self performSelector:@selector(tabNothing:) withObject:cell];
 			}
+			
+			if (!mouseInCloseIconRect) {
+				[self processEvent:theEvent];
+			}
 		}
 		
 		_closeClicked = NO;
 	}
 	
-	[self processEvent:theEvent];
+
 }
 
 - (void)processEvent:(NSEvent *)event
