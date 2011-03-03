@@ -40,15 +40,16 @@ class MGSPythonScriptExecutor(NSObject):
 			
 			# without the mod reference this fails.
 			# also getattr(modKosmic, klass, None) has issues.
-			try:
-				taskObject = eval('modKosmic.' + klass + '.alloc().init()')
-				
-			# attribute error thrown if cannot instantiate
-			except AttributeError as x:
-				taskObject = None
-			except:
-				# raise again and let the outer block handle it
-				raise
+			if klass is not None and len(klass) > 0:
+				try:
+					taskObject = eval('modKosmic.' + klass + '.alloc().init()')
+					
+				# attribute error thrown if cannot instantiate
+				except AttributeError as x:
+					taskObject = None
+				except:
+					# raise again and let the outer block handle it
+					raise
 					
 			# get function from object
 			if taskObject is not None:
@@ -78,7 +79,7 @@ class MGSPythonScriptExecutor(NSObject):
 			# exception args are a tuple
 			args = e.args
 			if len(args) > 0:
-				theResult = 'error :' + e.args[0]
+				theResult = self.__class__.__name__ + ' error loading script:' + e.args[0]
 			else:
 				theResult = 'unknown error'
 			

@@ -115,7 +115,8 @@
 		
 		// try instance method
 		if ([executor respondsToSelector:sel]) {
-			
+#warning DEBUG
+			NSLog(@"Classname = %@ funcrioName = %@", className, functionName);
 			object = [executor loadModuleAtPath:scriptPath
 								   className:className
 								   functionName:functionName
@@ -131,7 +132,8 @@
 			
 		// try class method
 		} else if ([klass respondsToSelector:sel]) {
-			
+#warning DEBUG
+			NSLog(@"Classname = %@ funcrioName = %@", className, functionName);			
 			object = [klass loadModuleAtPath:scriptPath
 									className:className
 									  functionName:functionName
