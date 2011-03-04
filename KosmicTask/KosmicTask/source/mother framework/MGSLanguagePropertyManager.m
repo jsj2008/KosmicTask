@@ -885,7 +885,13 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 {
 	NSString *text = NSLocalizedString(@"unknown" , @"Unknown on run task value");
 	switch (value) {
-			
+		
+			/*
+			 
+			 note that thee string values below rather than eMGSOnRunTask are
+			 persisted in the template.plist
+			 
+			 */
 		case kMGSOnRunCallNone:
 			text = NSLocalizedString(@"None" , @"On run task value");
 			break;
