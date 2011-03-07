@@ -79,6 +79,7 @@
 - (void)addError:(NSString *)anError;
 - (NSString *)resourcesPath;
 - (NSString *)pathToResource:(NSString *)resourceName;
+- (NSString *)pathToExecutable:(NSString *)name;
 - (void)updateEnvironment:(NSMutableDictionary *)env pathkey:(NSString *)key paths:(NSArray *)paths;
 - (void)updateEnvironment:(NSMutableDictionary *)env pathkey:(NSString *)key paths:(NSArray *)paths separator:(NSString *)separator;
 - (NSMutableDictionary *) launchEnvironment;

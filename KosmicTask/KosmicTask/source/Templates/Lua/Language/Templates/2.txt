@@ -1,0 +1,15 @@
+--[[
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+]]
+print("Task arguments : ")
+for index,value in ipairs(arg) do
+	print(value)
+end

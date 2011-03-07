@@ -1,0 +1,21 @@
+--[[
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+]]
+-- form array
+local items = "{key1: item 1, key2: item 2}"
+	
+-- define CSS styling string
+local css = 'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'
+	
+-- form result dictionary
+local result = string.format("--- {kosmicData: %s, kosmicStyle: '%s'}", items, css)
+	
+print(result)

@@ -1095,6 +1095,7 @@
 		ABBF64220E9D65C3003E2434 /* Clip16.png in Resources */ = {isa = PBXBuildFile; fileRef = ABBF64210E9D65C3003E2434 /* Clip16.png */; };
 		ABBF64240E9D6677003E2434 /* BlueA16.png in Resources */ = {isa = PBXBuildFile; fileRef = ABBF64230E9D6677003E2434 /* BlueA16.png */; };
 		ABBF64450E9D6C1E003E2434 /* GrayA16.png in Resources */ = {isa = PBXBuildFile; fileRef = ABBF64440E9D6C1E003E2434 /* GrayA16.png */; };
+		ABC080EB13219C3C008A87FB /* release-notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = ABC080EA13219C3B008A87FB /* release-notes.txt */; };
 		ABC1021C0E6D48AB009DF330 /* MGSActionExecuteWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1021B0E6D48AB009DF330 /* MGSActionExecuteWindow.m */; };
 		ABC103080E6D5804009DF330 /* MGSActionWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC103070E6D5804009DF330 /* MGSActionWindow.m */; };
 		ABC1030C0E6D58F3009DF330 /* MGSActionExecuteWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1030B0E6D58F3009DF330 /* MGSActionExecuteWindowController.m */; };
@@ -1144,6 +1145,9 @@
 		ABCF1F290E41F86E00428EC1 /* TextPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABCF1F280E41F86E00428EC1 /* TextPanelView.xib */; };
 		ABCF9B440D2D9C9000E3A36D /* MGSError.h in Headers */ = {isa = PBXBuildFile; fileRef = ABCF9B420D2D9C9000E3A36D /* MGSError.h */; };
 		ABCF9B450D2D9C9000E3A36D /* MGSError.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCF9B430D2D9C9000E3A36D /* MGSError.m */; };
+		ABD054DF1325231A00A728B8 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = ABD054DE1325231A00A728B8 /* Language */; };
+		ABD0566F132526BC00A728B8 /* lua in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = ABD056221325267000A728B8 /* lua */; };
+		ABD05670132526BC00A728B8 /* luac in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = ABD056241325267000A728B8 /* luac */; };
 		ABD05CB00E7E98AA00AE32B5 /* MGSBuildTaskSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD05CAF0E7E98AA00AE32B5 /* MGSBuildTaskSheetController.m */; };
 		ABD05CDB0E7E9B3E00AE32B5 /* CompileActionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABD05CDA0E7E9B3E00AE32B5 /* CompileActionSheet.xib */; };
 		ABD05DAE0E7EC0FC00AE32B5 /* MGSServerRequestThreadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD05D9F0E7EBD6200AE32B5 /* MGSServerRequestThreadHelper.m */; };
@@ -1218,6 +1222,19 @@
 		ABE6D2BA10EE383B00D18452 /* MGSToolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE6D2B910EE383B00D18452 /* MGSToolViewController.m */; };
 		ABE6EED90E50996E00FCD92C /* MGSLCDDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE6EED80E50996E00FCD92C /* MGSLCDDisplayView.m */; };
 		ABE6EF060E50A38500FCD92C /* LCD display blue.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE6EF050E50A38500FCD92C /* LCD display blue.png */; };
+		ABE7815E132516D800663CBB /* taskmain.m in Sources */ = {isa = PBXBuildFile; fileRef = 09372FDE0D0C301E00A9FAED /* taskmain.m */; };
+		ABE78164132516D800663CBB /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB473EE20D90167700CB6816 /* Carbon.framework */; };
+		ABE78165132516D800663CBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		ABE78166132516D800663CBB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
+		ABE78167132516D800663CBB /* MGSKosmicTaskRunner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB27AD051189E86A00132977 /* MGSKosmicTaskRunner.framework */; };
+		ABE7824E132516FF00663CBB /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
+		ABE7824F132516FF00663CBB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		ABE7839A1325189000663CBB /* Language Plugin Lua.lang-plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = ABE78257132516FF00663CBB /* Language Plugin Lua.lang-plugin */; };
+		ABE783F9132518D200663CBB /* KosmicTaskLuaRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = ABE7816C132516D800663CBB /* KosmicTaskLuaRunner */; };
+		ABE7843F13251ACE00663CBB /* MGSLuaLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE7843E13251ACE00663CBB /* MGSLuaLanguage.m */; };
+		ABE7844013251ACE00663CBB /* MGSLuaLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE7843E13251ACE00663CBB /* MGSLuaLanguage.m */; };
+		ABE7848513251C4F00663CBB /* MGSLuaLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE7848413251C4F00663CBB /* MGSLuaLanguagePlugin.m */; };
+		ABE7851113251F7300663CBB /* MGSLuaScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE7851013251F7300663CBB /* MGSLuaScriptRunner.m */; };
 		ABE81AEA0D3621D900EF303E /* RequestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE81AE80D3621D900EF303E /* RequestView.xib */; };
 		ABE81B130D36248500EF303E /* BrowserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE81B020D36248500EF303E /* BrowserView.xib */; };
 		ABE81B150D36248500EF303E /* DebugPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE81B060D36248500EF303E /* DebugPanel.xib */; };
@@ -2518,6 +2535,48 @@
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = "spotlight importer";
 		};
+		ABD0561D1325267000A728B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Lua;
+		};
+		ABD0561F1325267000A728B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00760539109E987A0079B079;
+			remoteInfo = liblua;
+		};
+		ABD056211325267000A728B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00760660109E9C350079B079;
+			remoteInfo = lua;
+		};
+		ABD056231325267000A728B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00760671109E9C7F0079B079;
+			remoteInfo = luac;
+		};
+		ABD056831325272900A728B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0076065F109E9C350079B079;
+			remoteInfo = lua;
+		};
+		ABD056851325272900A728B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 00760670109E9C7F0079B079;
+			remoteInfo = luac;
+		};
 		ABD6689E0DE6034C00097C1B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2580,6 +2639,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = ABE330D7118626EA0070EF32;
 			remoteInfo = "Language Plugin AppleScript Cocoa";
+		};
+		ABE7815C132516D800663CBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB27AD041189E86A00132977;
+			remoteInfo = MGSKosmicTaskRunner;
+		};
+		ABE78243132516FF00663CBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09C09E250CDC7D710048BC79;
+			remoteInfo = MGSKosmicTask;
+		};
+		ABE782EF1325173C00663CBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABE7815A132516D800663CBB;
+			remoteInfo = KosmicTaskLuaRunner;
+		};
+		ABE782F51325175B00663CBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABE78241132516FF00663CBB;
+			remoteInfo = "Language Plugin Lua";
 		};
 		ABEC6B65130C8ACB0082698A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3047,6 +3134,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				ABE7839A1325189000663CBB /* Language Plugin Lua.lang-plugin in Copy Plugins */,
 				ABBA131312B28EB5005F12A5 /* Language Plugin JSCocoa.lang-plugin in Copy Plugins */,
 				AB19176612AFE02800710031 /* Language Plugin LuaCocoa.lang-plugin in Copy Plugins */,
 				ABA1EFF0120D78660079E65B /* Language Plugin CINT.lang-plugin in Copy Plugins */,
@@ -3117,6 +3205,29 @@
 				AB92321411A6963E0093EDE3 /* KosmicTask.qlgenerator in Copy QuickLook generator */,
 			);
 			name = "Copy QuickLook generator";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABD054ED1325248400A728B8 /* Copy Executables */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+			);
+			name = "Copy Executables";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABE78250132516FF00663CBB /* Copy auxiliary executables */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				ABD0566F132526BC00A728B8 /* lua in Copy auxiliary executables */,
+				ABD05670132526BC00A728B8 /* luac in Copy auxiliary executables */,
+				ABE783F9132518D200663CBB /* KosmicTaskLuaRunner in Copy auxiliary executables */,
+			);
+			name = "Copy auxiliary executables";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		ABFFCD8F120D5A09005CC65A /* Copy auxiliary executables */ = {
@@ -3545,7 +3656,7 @@
 		AB4CF5D11226BFDF00CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/AppleScript/Language; sourceTree = SOURCE_ROOT; };
 		AB4CF5EE1226C04300CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/AppleScriptCocoa/Language; sourceTree = SOURCE_ROOT; };
 		AB4CF6221226C08100CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Bash/Language; sourceTree = SOURCE_ROOT; };
-		AB4CF6431226C0A900CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Cint/Language; sourceTree = SOURCE_ROOT; };
+		AB4CF6431226C0A900CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Lua/Language; sourceTree = SOURCE_ROOT; };
 		AB4CF67D1226C0FD00CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Csh/Language; sourceTree = SOURCE_ROOT; };
 		AB4CF69C1226C13900CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = "Templates/F-Script/Language"; sourceTree = SOURCE_ROOT; };
 		AB4CF6C91226C16100CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Java/Language; sourceTree = SOURCE_ROOT; };
@@ -4419,6 +4530,7 @@
 		ABBF64210E9D65C3003E2434 /* Clip16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Clip16.png; sourceTree = "<group>"; };
 		ABBF64230E9D6677003E2434 /* BlueA16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueA16.png; sourceTree = "<group>"; };
 		ABBF64440E9D6C1E003E2434 /* GrayA16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GrayA16.png; sourceTree = "<group>"; };
+		ABC080EA13219C3B008A87FB /* release-notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "release-notes.txt"; sourceTree = "<group>"; };
 		ABC1021A0E6D48AB009DF330 /* MGSActionExecuteWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSActionExecuteWindow.h; sourceTree = "<group>"; };
 		ABC1021B0E6D48AB009DF330 /* MGSActionExecuteWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSActionExecuteWindow.m; sourceTree = "<group>"; };
 		ABC103060E6D5804009DF330 /* MGSActionWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSActionWindow.h; sourceTree = "<group>"; };
@@ -4475,6 +4587,8 @@
 		ABCF25AE0EE0A66F00FC0364 /* KosmicTask MDImporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "KosmicTask MDImporter.xcodeproj"; path = "../../KosmicTask MDImporter/trunk/KosmicTask MDImporter.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		ABCF9B420D2D9C9000E3A36D /* MGSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSError.h; sourceTree = "<group>"; };
 		ABCF9B430D2D9C9000E3A36D /* MGSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSError.m; sourceTree = "<group>"; };
+		ABD054DE1325231A00A728B8 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Lua/Language; sourceTree = SOURCE_ROOT; };
+		ABD056161325267000A728B8 /* lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua.xcodeproj; path = ../../../../../bitbucket/luacocoa/lua/Xcode/lua.xcodeproj; sourceTree = SOURCE_ROOT; };
 		ABD05CAE0E7E98AA00AE32B5 /* MGSBuildTaskSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBuildTaskSheetController.h; sourceTree = "<group>"; };
 		ABD05CAF0E7E98AA00AE32B5 /* MGSBuildTaskSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBuildTaskSheetController.m; sourceTree = "<group>"; };
 		ABD05CD80E7E9B2200AE32B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/CompileActionSheet.xib; sourceTree = "<group>"; };
@@ -4572,6 +4686,17 @@
 		ABE6EED70E50996E00FCD92C /* MGSLCDDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLCDDisplayView.h; sourceTree = "<group>"; };
 		ABE6EED80E50996E00FCD92C /* MGSLCDDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLCDDisplayView.m; sourceTree = "<group>"; };
 		ABE6EF050E50A38500FCD92C /* LCD display blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LCD display blue.png"; sourceTree = "<group>"; };
+		ABE7816C132516D800663CBB /* KosmicTaskLuaRunner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KosmicTaskLuaRunner; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABE7823D132516DB00663CBB /* KosmicTaskRunner copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KosmicTaskRunner copy.plist"; sourceTree = "<group>"; };
+		ABE78257132516FF00663CBB /* Language Plugin Lua.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin Lua.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABE782A0132516FF00663CBB /* Language Plugin CINT-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Language Plugin CINT-Info copy.plist"; sourceTree = "<group>"; };
+		ABE7843D13251ACE00663CBB /* MGSLuaLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLuaLanguage.h; sourceTree = "<group>"; };
+		ABE7843E13251ACE00663CBB /* MGSLuaLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLuaLanguage.m; sourceTree = "<group>"; };
+		ABE7848313251C4F00663CBB /* MGSLuaLanguagePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLuaLanguagePlugin.h; sourceTree = "<group>"; };
+		ABE7848413251C4F00663CBB /* MGSLuaLanguagePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLuaLanguagePlugin.m; sourceTree = "<group>"; };
+		ABE7850313251DF000663CBB /* Language Plugin Lua-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Language Plugin Lua-Info.plist"; sourceTree = "<group>"; };
+		ABE7850F13251F7300663CBB /* MGSLuaScriptRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLuaScriptRunner.h; sourceTree = "<group>"; };
+		ABE7851013251F7300663CBB /* MGSLuaScriptRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLuaScriptRunner.m; sourceTree = "<group>"; };
 		ABE81AE90D3621D900EF303E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/RequestView.xib; sourceTree = "<group>"; };
 		ABE81B030D36248500EF303E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/BrowserView.xib; sourceTree = "<group>"; };
 		ABE81B070D36248500EF303E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DebugPanel.xib; sourceTree = "<group>"; };
@@ -5378,6 +5503,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ABE78162132516D800663CBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABE78164132516D800663CBB /* Carbon.framework in Frameworks */,
+				ABE78165132516D800663CBB /* Cocoa.framework in Frameworks */,
+				ABE78166132516D800663CBB /* Foundation.framework in Frameworks */,
+				ABE78167132516D800663CBB /* MGSKosmicTaskRunner.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABE7824D132516FF00663CBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABE7824E132516FF00663CBB /* MGSKosmicTask.framework in Frameworks */,
+				ABE7824F132516FF00663CBB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABFFCD8C120D5A09005CC65A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -5482,6 +5627,7 @@
 		09372FD90D0C2F8900A9FAED /* Task runner */ = {
 			isa = PBXGroup;
 			children = (
+				ABE7850E13251EC900663CBB /* Lua */,
 				AB19168112AFDA1D00710031 /* LuaCocoa */,
 				AB426836125BCB2300C0D649 /* MGSTcshLanguage.h */,
 				AB426831125BC9D400C0D649 /* MGSPerlLanguage.h */,
@@ -5913,70 +6059,72 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* KosmicTask.app */,
-				0953D02B0CD941AD00519488 /* KosmicTaskServer */,
-				09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */,
-				091835EF0D0C34DF008604BD /* KosmicTaskAppleScriptRunner */,
-				AB9E8FD40DE1CA0C00501378 /* Export Plugin RTF.plugin */,
-				ABA247960DE2CEEB00BD2A66 /* Export Plugin Plain Text.plugin */,
 				AB4D190D0DE2D49400D0E517 /* Export Plugin PDF.plugin */,
+				ABA247960DE2CEEB00BD2A66 /* Export Plugin Plain Text.plugin */,
 				ABA301C70DE4B1BD002DB3F4 /* Export Plugin Plist.plugin */,
+				AB9E8FD40DE1CA0C00501378 /* Export Plugin RTF.plugin */,
 				ABA301E00DE4B245002DB3F4 /* Export Plugin XML.plugin */,
-				AB1512F10DE4BD17002280E3 /* Send Plugin Word.plugin */,
-				AB1513240DE4BD62002280E3 /* Send Plugin Excel.plugin */,
-				ABA2FD0C0DE4CA0C00589B2A /* Send Plugin TextEdit.plugin */,
-				AB9DC39F0DE5CDF200B85F5E /* Send Plugin Mail.plugin */,
-				ABD668AA0DE6034C00097C1B /* Send Plugin Numbers.plugin */,
-				ABD668D80DE6035000097C1B /* Send Plugin Pages.plugin */,
-				ABAFC6C60DF9B0DB00349FC3 /* Parameter Plugin Number.plugin */,
-				ABAFC7A80DF9C5B200349FC3 /* Parameter Plugin Text.plugin */,
+				8D1107320486CEB800E47090 /* KosmicTask.app */,
+				AB27B296118A18D400132977 /* KosmicTaskAppleScriptCocoaRunner */,
+				091835EF0D0C34DF008604BD /* KosmicTaskAppleScriptRunner */,
+				AB27AF551189F17400132977 /* KosmicTaskBashRunner */,
+				AB4A5D12120D775B006A66CC /* KosmicTaskCINTRunner */,
+				AB5624AF118DAFAD0012487B /* KosmicTaskCshRunner */,
+				AB92D0BB12047C100025EAEF /* KosmicTaskF-ScriptRunner */,
+				AB6677DA1205BEC0006763E2 /* KosmicTaskJavaRunner */,
+				ABBA122512B28B16005F12A5 /* KosmicTaskJavaScriptCocoaRunner */,
+				AB6675DB1205B9E2006763E2 /* KosmicTaskJavaScriptRunner */,
+				AB562550118DB1040012487B /* KosmicTaskKshRunner */,
+				AB19162D12AFD90300710031 /* KosmicTaskLuaCocoaRunner */,
+				AB69B188118AFE5F00903D1D /* KosmicTaskPerlRunner */,
+				AB69B359118B00FB00903D1D /* KosmicTaskPhpRunner */,
+				AB5CD954118AEC4B00C545CD /* KosmicTaskPythonObjCRunner */,
+				AB27B0B8118A104900132977 /* KosmicTaskPythonRunner */,
+				AB27B19D118A12B500132977 /* KosmicTaskRubyCocoaRunner */,
+				AB5CDB04118AF3EF00C545CD /* KosmicTaskRubyRunner */,
+				ABFFCDA9120D5A28005CC65A /* KosmicTaskScalaRunner */,
+				0953D02B0CD941AD00519488 /* KosmicTaskServer */,
+				AB5625EE118DB10F0012487B /* KosmicTaskTclshRunner */,
+				AB562502118DB0FF0012487B /* KosmicTaskTcshRunner */,
+				AB56259F118DB1090012487B /* KosmicTaskZshRunner */,
+				ABE330D8118626EA0070EF32 /* Language Plugin AppleScript Cocoa.lang-plugin */,
+				ABE3302F118624A90070EF32 /* Language Plugin AppleScript.lang-plugin */,
+				ABA8E2671188BA2E00414A7D /* Language Plugin Bash Shell.lang-plugin */,
+				AB1560B0118DA83300DC01C7 /* Language Plugin C Shell.lang-plugin */,
+				AB4A5CC4120D7753006A66CC /* Language Plugin CINT.lang-plugin */,
+				AB92D0A012047BD20025EAEF /* Language Plugin F-Script.lang-plugin */,
+				AB66778A1205BEB7006763E2 /* Language Plugin Java.lang-plugin */,
+				AB66758D1205B9DD006763E2 /* Language Plugin JavaScript.lang-plugin */,
+				AB3180C712B2884D001E821B /* Language Plugin JSCocoa.lang-plugin */,
+				AB156148118DA91300DC01C7 /* Language Plugin Korn Shell.lang-plugin */,
+				AB1914D012AFD8A500710031 /* Language Plugin LuaCocoa.lang-plugin */,
+				AB69B0B2118AFDAB00903D1D /* Language Plugin Perl.lang-plugin */,
+				AB69B2D9118B007500903D1D /* Language Plugin Php.lang-plugin */,
+				AB36006311886FD600F1E894 /* Language Plugin Python.lang-plugin */,
+				AB9CB749118AEA6D006F19F1 /* Language Plugin PythonObjC.lang-plugin */,
+				AB5CDABF118AF38200C545CD /* Language Plugin Ruby.lang-plugin */,
+				AB36002B11886EF700F1E894 /* Language Plugin RubyCocoa.lang-plugin */,
+				ABFFCD95120D5A09005CC65A /* Language Plugin Scala.lang-plugin */,
+				AB1561E3118DAA1E00DC01C7 /* Language Plugin Tcl Shell.lang-plugin */,
+				AB1560FD118DA87E00DC01C7 /* Language Plugin TENEX C Shell.lang-plugin */,
+				AB156198118DA9AC00DC01C7 /* Language Plugin Z Shell.lang-plugin */,
+				09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */,
+				AB27AD051189E86A00132977 /* MGSKosmicTaskRunner.framework */,
+				ABADEE02104D32A9007A5319 /* NDScript.framework */,
 				ABAFC7CF0DF9C5C200349FC3 /* Parameter Plugin Date.plugin */,
 				ABAFC7F60DF9C5C700349FC3 /* Parameter Plugin File.plugin */,
 				AB9B272C0DFC754E00CDA79A /* Parameter Plugin List.plugin */,
-				ABADEE02104D32A9007A5319 /* NDScript.framework */,
-				ABE3302F118624A90070EF32 /* Language Plugin AppleScript.lang-plugin */,
-				ABE330D8118626EA0070EF32 /* Language Plugin AppleScript Cocoa.lang-plugin */,
-				AB36002B11886EF700F1E894 /* Language Plugin RubyCocoa.lang-plugin */,
-				AB36006311886FD600F1E894 /* Language Plugin Python.lang-plugin */,
-				ABA8E2671188BA2E00414A7D /* Language Plugin Bash Shell.lang-plugin */,
-				AB9CB749118AEA6D006F19F1 /* Language Plugin PythonObjC.lang-plugin */,
-				AB5CDABF118AF38200C545CD /* Language Plugin Ruby.lang-plugin */,
-				AB69B0B2118AFDAB00903D1D /* Language Plugin Perl.lang-plugin */,
-				AB27AD051189E86A00132977 /* MGSKosmicTaskRunner.framework */,
-				AB27AF551189F17400132977 /* KosmicTaskBashRunner */,
-				AB27B0B8118A104900132977 /* KosmicTaskPythonRunner */,
-				AB27B19D118A12B500132977 /* KosmicTaskRubyCocoaRunner */,
-				AB27B296118A18D400132977 /* KosmicTaskAppleScriptCocoaRunner */,
-				AB5CD954118AEC4B00C545CD /* KosmicTaskPythonObjCRunner */,
-				AB5CDB04118AF3EF00C545CD /* KosmicTaskRubyRunner */,
-				AB69B188118AFE5F00903D1D /* KosmicTaskPerlRunner */,
-				AB69B2D9118B007500903D1D /* Language Plugin Php.lang-plugin */,
-				AB69B359118B00FB00903D1D /* KosmicTaskPhpRunner */,
-				AB1560B0118DA83300DC01C7 /* Language Plugin C Shell.lang-plugin */,
-				AB1560FD118DA87E00DC01C7 /* Language Plugin TENEX C Shell.lang-plugin */,
-				AB156148118DA91300DC01C7 /* Language Plugin Korn Shell.lang-plugin */,
-				AB156198118DA9AC00DC01C7 /* Language Plugin Z Shell.lang-plugin */,
-				AB1561E3118DAA1E00DC01C7 /* Language Plugin Tcl Shell.lang-plugin */,
-				AB5624AF118DAFAD0012487B /* KosmicTaskCshRunner */,
-				AB562502118DB0FF0012487B /* KosmicTaskTcshRunner */,
-				AB562550118DB1040012487B /* KosmicTaskKshRunner */,
-				AB56259F118DB1090012487B /* KosmicTaskZshRunner */,
-				AB5625EE118DB10F0012487B /* KosmicTaskTclshRunner */,
-				AB92D0A012047BD20025EAEF /* Language Plugin F-Script.lang-plugin */,
-				AB92D0BB12047C100025EAEF /* KosmicTaskF-ScriptRunner */,
-				AB66758D1205B9DD006763E2 /* Language Plugin JavaScript.lang-plugin */,
-				AB6675DB1205B9E2006763E2 /* KosmicTaskJavaScriptRunner */,
-				AB66778A1205BEB7006763E2 /* Language Plugin Java.lang-plugin */,
-				AB6677DA1205BEC0006763E2 /* KosmicTaskJavaRunner */,
-				ABFFCD95120D5A09005CC65A /* Language Plugin Scala.lang-plugin */,
-				ABFFCDA9120D5A28005CC65A /* KosmicTaskScalaRunner */,
-				AB4A5CC4120D7753006A66CC /* Language Plugin CINT.lang-plugin */,
-				AB4A5D12120D775B006A66CC /* KosmicTaskCINTRunner */,
+				ABAFC6C60DF9B0DB00349FC3 /* Parameter Plugin Number.plugin */,
+				ABAFC7A80DF9C5B200349FC3 /* Parameter Plugin Text.plugin */,
+				AB1513240DE4BD62002280E3 /* Send Plugin Excel.plugin */,
+				AB9DC39F0DE5CDF200B85F5E /* Send Plugin Mail.plugin */,
+				ABD668AA0DE6034C00097C1B /* Send Plugin Numbers.plugin */,
+				ABD668D80DE6035000097C1B /* Send Plugin Pages.plugin */,
+				ABA2FD0C0DE4CA0C00589B2A /* Send Plugin TextEdit.plugin */,
+				AB1512F10DE4BD17002280E3 /* Send Plugin Word.plugin */,
 				AB31670A128D402C0037EF1C /* Test KosmicTask App.octest */,
-				AB1914D012AFD8A500710031 /* Language Plugin LuaCocoa.lang-plugin */,
-				AB19162D12AFD90300710031 /* KosmicTaskLuaCocoaRunner */,
-				AB3180C712B2884D001E821B /* Language Plugin JSCocoa.lang-plugin */,
-				ABBA122512B28B16005F12A5 /* KosmicTaskJavaScriptCocoaRunner */,
+				ABE7816C132516D800663CBB /* KosmicTaskLuaRunner */,
+				ABE78257132516FF00663CBB /* Language Plugin Lua.lang-plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6027,6 +6175,7 @@
 				AB3167A4128D42280037EF1C /* SenTestingKit.framework */,
 				AB19167412AFD90300710031 /* KosmicTaskRunner-Info copy 3.plist */,
 				ABBA126A12B28B16005F12A5 /* KosmicTaskRunner copy.plist */,
+				ABE7823D132516DB00663CBB /* KosmicTaskRunner copy.plist */,
 			);
 			name = mother;
 			sourceTree = "<group>";
@@ -6109,6 +6258,7 @@
 				ABCF1F280E41F86E00428EC1 /* TextPanelView.xib */,
 				AB8C0B7F0D57156700904607 /* Toolbar.xib */,
 				AB92C8AC0D38D138007FB152 /* WaitView.xib */,
+				ABC080EA13219C3B008A87FB /* release-notes.txt */,
 			);
 			name = "Application resources";
 			sourceTree = "<group>";
@@ -6280,15 +6430,19 @@
 			name = LuaCocoa;
 			sourceTree = "<group>";
 		};
-		AB1916DB12AFDAF600710031 /* LuaCocoa */ = {
+		AB1916DB12AFDAF600710031 /* Lua */ = {
 			isa = PBXGroup;
 			children = (
 				AB19168212AFDA9C00710031 /* MGSLuaCocoaLanguage.h */,
 				AB19168312AFDA9C00710031 /* MGSLuaCocoaLanguage.m */,
 				AB19176812AFE09300710031 /* MGSLuaCocoaLanguagePlugin.h */,
 				AB19176912AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m */,
+				ABE7843D13251ACE00663CBB /* MGSLuaLanguage.h */,
+				ABE7843E13251ACE00663CBB /* MGSLuaLanguage.m */,
+				ABE7848313251C4F00663CBB /* MGSLuaLanguagePlugin.h */,
+				ABE7848413251C4F00663CBB /* MGSLuaLanguagePlugin.m */,
 			);
-			name = LuaCocoa;
+			name = Lua;
 			sourceTree = "<group>";
 		};
 		AB1BA93D0CF76EB500F35D8F /* Redundant source */ = {
@@ -6575,6 +6729,7 @@
 		AB3F6FE5130C86DF00342F11 /* HG submodule project */ = {
 			isa = PBXGroup;
 			children = (
+				ABD056161325267000A728B8 /* lua.xcodeproj */,
 				AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */,
 				AB0DC012130C8DF5000F4673 /* Hg submodule.rtf */,
 			);
@@ -7054,7 +7209,7 @@
 		AB89F44A118620880099785A /* Language */ = {
 			isa = PBXGroup;
 			children = (
-				AB1916DB12AFDAF600710031 /* LuaCocoa */,
+				AB1916DB12AFDAF600710031 /* Lua */,
 				ABA1F09E120D78940079E65B /* CINT */,
 				AB4A5B4B120D5B2F006A66CC /* Scala */,
 				AB6678911205C028006763E2 /* Java */,
@@ -7358,6 +7513,7 @@
 		AB98B0AA10C5423B00C214B3 /* info.plist */ = {
 			isa = PBXGroup;
 			children = (
+				ABE7850313251DF000663CBB /* Language Plugin Lua-Info.plist */,
 				AB66782B1205BFAA006763E2 /* Language Plugin Java-Info.plist */,
 				AB6676941205BBB4006763E2 /* Language Plugin JavaScript-Info.plist */,
 				AB92D3271204830F0025EAEF /* Language Plugin F-Script-Info.plist */,
@@ -7402,6 +7558,7 @@
 				AB4A5D01120D7753006A66CC /* Language Plugin CINT-Info.plist */,
 				AB1915C712AFD8A800710031 /* Language Plugin LuaCocoa-Info.plist */,
 				AB31810C12B2884D001E821B /* Language Plugin JSCocoa-Info.plist */,
+				ABE782A0132516FF00663CBB /* Language Plugin CINT-Info copy.plist */,
 			);
 			name = info.plist;
 			sourceTree = "<group>";
@@ -8273,6 +8430,17 @@
 			name = Versioning;
 			sourceTree = "<group>";
 		};
+		ABD056171325267000A728B8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABD0561E1325267000A728B8 /* lua.framework */,
+				ABD056201325267000A728B8 /* liblua.a */,
+				ABD056221325267000A728B8 /* lua */,
+				ABD056241325267000A728B8 /* luac */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		ABD05CAC0E7E988600AE32B5 /* Compile action sheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -8356,6 +8524,16 @@
 				ABE014F40D3EB94A00899F73 /* PSMTabBarControl.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		ABE7850E13251EC900663CBB /* Lua */ = {
+			isa = PBXGroup;
+			children = (
+				ABD054DE1325231A00A728B8 /* Language */,
+				ABE7850F13251F7300663CBB /* MGSLuaScriptRunner.h */,
+				ABE7851013251F7300663CBB /* MGSLuaScriptRunner.m */,
+			);
+			name = Lua;
 			sourceTree = "<group>";
 		};
 		ABEF5C3811C11FF800FC3C6C /* Scriptability */ = {
@@ -8680,6 +8858,7 @@
 				ABBA12CB12B28DC3005F12A5 /* PBXTargetDependency */,
 				AB7604DA12BABEDD00542363 /* PBXTargetDependency */,
 				AB0DBF9E130C8C53000F4673 /* PBXTargetDependency */,
+				ABE782F61325175B00663CBB /* PBXTargetDependency */,
 			);
 			name = KosmicTask;
 			productInstallPath = "$(HOME)/Applications";
@@ -9782,6 +9961,47 @@
 			productReference = ABE330D8118626EA0070EF32 /* Language Plugin AppleScript Cocoa.lang-plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		ABE7815A132516D800663CBB /* KosmicTaskLuaRunner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABE78168132516D800663CBB /* Build configuration list for PBXNativeTarget "KosmicTaskLuaRunner" */;
+			buildPhases = (
+				ABE7815D132516D800663CBB /* Sources */,
+				ABE78162132516D800663CBB /* Frameworks */,
+				ABD054ED1325248400A728B8 /* Copy Executables */,
+			);
+			buildRules = (
+			);
+			comments = "Normally I would leave the LuaCocoa project dependency in place but in this case the LuaCocoa project builds with a lot of warnings.\n\nSo the dependency has been removed.";
+			dependencies = (
+				ABE7815B132516D800663CBB /* PBXTargetDependency */,
+			);
+			name = KosmicTaskLuaRunner;
+			productName = KosmicTaskShellScriptRunner;
+			productReference = ABE7816C132516D800663CBB /* KosmicTaskLuaRunner */;
+			productType = "com.apple.product-type.tool";
+		};
+		ABE78241132516FF00663CBB /* Language Plugin Lua */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABE78253132516FF00663CBB /* Build configuration list for PBXNativeTarget "Language Plugin Lua" */;
+			buildPhases = (
+				ABE78246132516FF00663CBB /* Resources */,
+				ABE78248132516FF00663CBB /* Sources */,
+				ABE7824D132516FF00663CBB /* Frameworks */,
+				ABE78250132516FF00663CBB /* Copy auxiliary executables */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABE78242132516FF00663CBB /* PBXTargetDependency */,
+				ABE782F01325173C00663CBB /* PBXTargetDependency */,
+				ABD056841325272900A728B8 /* PBXTargetDependency */,
+				ABD056861325272900A728B8 /* PBXTargetDependency */,
+			);
+			name = "Language Plugin Lua";
+			productName = "Language Plugin Ruby";
+			productReference = ABE78257132516FF00663CBB /* Language Plugin Lua.lang-plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		ABFFCD81120D5A09005CC65A /* Language Plugin Scala */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABFFCD91120D5A09005CC65A /* Build configuration list for PBXNativeTarget "Language Plugin Scala" */;
@@ -9859,6 +10079,10 @@
 					ProjectRef = AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */;
 				},
 				{
+					ProductGroup = ABD056171325267000A728B8 /* Products */;
+					ProjectRef = ABD056161325267000A728B8 /* lua.xcodeproj */;
+				},
+				{
 					ProductGroup = AB1BD76312AFFE2900B7733A /* Products */;
 					ProjectRef = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
 				},
@@ -9910,6 +10134,7 @@
 				AB6675CB1205B9E2006763E2 /* KosmicTaskJavaScriptRunner */,
 				AB562542118DB1040012487B /* KosmicTaskKshRunner */,
 				AB1915CB12AFD90300710031 /* KosmicTaskLuaCocoaRunner */,
+				ABE7815A132516D800663CBB /* KosmicTaskLuaRunner */,
 				AB69B179118AFE5F00903D1D /* KosmicTaskPerlRunner */,
 				AB69B34A118B00FB00903D1D /* KosmicTaskPhpRunner */,
 				AB5CD945118AEC4B00C545CD /* KosmicTaskPythonObjCRunner */,
@@ -9931,6 +10156,7 @@
 				AB6675751205B9DD006763E2 /* Language Plugin JavaScript */,
 				AB3180AF12B2884D001E821B /* Language Plugin JSCocoa */,
 				AB156139118DA91300DC01C7 /* Language Plugin Korn Shell */,
+				ABE78241132516FF00663CBB /* Language Plugin Lua */,
 				AB1914B912AFD8A500710031 /* Language Plugin LuaCocoa */,
 				AB69B0A1118AFDAB00903D1D /* Language Plugin Perl */,
 				AB69B2C8118B007500903D1D /* Language Plugin Php */,
@@ -10228,6 +10454,34 @@
 			remoteRef = ABBDFDE310C532CB000E51A3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		ABD0561E1325267000A728B8 /* lua.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = lua.framework;
+			remoteRef = ABD0561D1325267000A728B8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABD056201325267000A728B8 /* liblua.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblua.a;
+			remoteRef = ABD0561F1325267000A728B8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABD056221325267000A728B8 /* lua */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = lua;
+			remoteRef = ABD056211325267000A728B8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABD056241325267000A728B8 /* luac */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = luac;
+			remoteRef = ABD056231325267000A728B8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		ABE014F00D3EB94A00899F73 /* PSMTabBarControl.palette */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -10496,6 +10750,7 @@
 				ABC4835312845B5E00C99CEA /* TaskRun.tif in Resources */,
 				ABC4835412845B5E00C99CEA /* TaskRunAlt.tif in Resources */,
 				ABD949171313C32F0065980E /* ToggleViewTemplateUp.tif in Resources */,
+				ABC080EB13219C3C008A87FB /* release-notes.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10775,6 +11030,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB4CF6191226C04300CB2E39 /* Language in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABE78246132516FF00663CBB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABD054DF1325231A00A728B8 /* Language in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11915,6 +12178,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ABE7815D132516D800663CBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABE7815E132516D800663CBB /* taskmain.m in Sources */,
+				ABE7844013251ACE00663CBB /* MGSLuaLanguage.m in Sources */,
+				ABE7851113251F7300663CBB /* MGSLuaScriptRunner.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABE78248132516FF00663CBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABE7843F13251ACE00663CBB /* MGSLuaLanguage.m in Sources */,
+				ABE7848513251C4F00663CBB /* MGSLuaLanguagePlugin.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABFFCD8A120D5A09005CC65A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -12541,6 +12823,16 @@
 			target = AB3180AF12B2884D001E821B /* Language Plugin JSCocoa */;
 			targetProxy = ABBA12CA12B28DC3005F12A5 /* PBXContainerItemProxy */;
 		};
+		ABD056841325272900A728B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = lua;
+			targetProxy = ABD056831325272900A728B8 /* PBXContainerItemProxy */;
+		};
+		ABD056861325272900A728B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = luac;
+			targetProxy = ABD056851325272900A728B8 /* PBXContainerItemProxy */;
+		};
 		ABD6689D0DE6034C00097C1B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 09C09E250CDC7D710048BC79 /* MGSKosmicTask */;
@@ -12570,6 +12862,26 @@
 			isa = PBXTargetDependency;
 			target = ABE330D7118626EA0070EF32 /* Language Plugin AppleScript Cocoa */;
 			targetProxy = ABE3310A118627660070EF32 /* PBXContainerItemProxy */;
+		};
+		ABE7815B132516D800663CBB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB27AD041189E86A00132977 /* MGSKosmicTaskRunner */;
+			targetProxy = ABE7815C132516D800663CBB /* PBXContainerItemProxy */;
+		};
+		ABE78242132516FF00663CBB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09C09E250CDC7D710048BC79 /* MGSKosmicTask */;
+			targetProxy = ABE78243132516FF00663CBB /* PBXContainerItemProxy */;
+		};
+		ABE782F01325173C00663CBB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABE7815A132516D800663CBB /* KosmicTaskLuaRunner */;
+			targetProxy = ABE782EF1325173C00663CBB /* PBXContainerItemProxy */;
+		};
+		ABE782F61325175B00663CBB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABE78241132516FF00663CBB /* Language Plugin Lua */;
+			targetProxy = ABE782F51325175B00663CBB /* PBXContainerItemProxy */;
 		};
 		ABEC6B66130C8ACB0082698A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -17202,6 +17514,188 @@
 			};
 			name = "Release Development";
 		};
+		ABE78169132516D800663CBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(NATIVE_ARCH)";
+				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Jonathan/Documents/Computing/bitbucket/luacocoa/**",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
+				INFOPLIST_FILE = KosmicTaskRunner.plist;
+				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks @loader_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"KosmicTaskRunner-Info.plist",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KosmicTaskLuaRunner;
+			};
+			name = Debug;
+		};
+		ABE7816A132516D800663CBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Jonathan/Documents/Computing/bitbucket/luacocoa/**",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
+				INFOPLIST_FILE = KosmicTaskRunner.plist;
+				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks @loader_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"KosmicTaskRunner-Info.plist",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KosmicTaskLuaRunner;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		ABE7816B132516D800663CBB /* Release Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Jonathan/Documents/Computing/bitbucket/luacocoa/**",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_GC = required;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
+				INFOPLIST_FILE = KosmicTaskRunner.plist;
+				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks @loader_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"KosmicTaskRunner-Info.plist",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KosmicTaskLuaRunner;
+			};
+			name = "Release Development";
+		};
+		ABE78254132516FF00663CBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = "Language Plugin Lua-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Language Plugin Lua";
+				WRAPPER_EXTENSION = "lang-plugin";
+			};
+			name = Debug;
+		};
+		ABE78255132516FF00663CBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = "Language Plugin Lua-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Language Plugin Lua";
+				WRAPPER_EXTENSION = "lang-plugin";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		ABE78256132516FF00663CBB /* Release Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = "Language Plugin CINT-Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Language Plugin CINT";
+				WRAPPER_EXTENSION = "lang-plugin";
+			};
+			name = "Release Development";
+		};
 		ABFFCD92120D5A09005CC65A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -18122,6 +18616,26 @@
 				ABE330DA118626EB0070EF32 /* Debug */,
 				ABE330DB118626EB0070EF32 /* Release */,
 				ABE330DC118626EB0070EF32 /* Release Development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABE78168132516D800663CBB /* Build configuration list for PBXNativeTarget "KosmicTaskLuaRunner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABE78169132516D800663CBB /* Debug */,
+				ABE7816A132516D800663CBB /* Release */,
+				ABE7816B132516D800663CBB /* Release Development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABE78253132516FF00663CBB /* Build configuration list for PBXNativeTarget "Language Plugin Lua" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABE78254132516FF00663CBB /* Debug */,
+				ABE78255132516FF00663CBB /* Release */,
+				ABE78256132516FF00663CBB /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

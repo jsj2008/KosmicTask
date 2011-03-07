@@ -196,6 +196,19 @@
 
 /*
  
+ show release notes
+ 
+ */
+- (IBAction)showReleaseNotes:(id)sender
+{
+#pragma unused(sender)
+	
+	NSString *path = [[NSBundle mainBundle] pathForResource:@"release-notes" ofType:@"txt"];
+	[[NSWorkspace sharedWorkspace] openFile:path];
+}
+
+/*
+ 
  show online help
  
  */
@@ -203,8 +216,24 @@
 {
 	#pragma unused(sender)
 	
-	// get store URL string from app info.plist
+	// get help URL string from app info.plist
 	NSString *urlString = [NSBundle mainBundleInfoObjectForKey:@"MGSHelpURL"];
+	if (!urlString) return;
+	
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];	
+}
+
+/*
+ 
+ show online support
+ 
+ */
+- (IBAction)onlineSupport:(id)sender
+{
+#pragma unused(sender)
+	
+	// get support URL string from app info.plist
+	NSString *urlString = [NSBundle mainBundleInfoObjectForKey:@"MGSSupportURL"];
 	if (!urlString) return;
 	
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];	

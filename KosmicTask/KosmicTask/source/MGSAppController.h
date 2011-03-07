@@ -63,7 +63,9 @@
 - (IBAction)orderFrontCustomAboutPanel: (id) sender;
 - (IBAction)showLicencesWindow:(id)sender;
 - (IBAction)showFeedbackWindow:(id)sender;
+- (IBAction)showReleaseNotes:(id)sender;
 - (IBAction)onlineHelp:(id)sender;
+- (IBAction)onlineSupport:(id)sender;
 - (IBAction)toggleRunState:(id)sender;
 - (IBAction)viewMenuModeSelected:(id)sender;
 - (IBAction)configureInternetSharing:(id)sender;

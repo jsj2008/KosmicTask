@@ -664,6 +664,19 @@ errorExit:
 	return [[self resourcesPath] stringByAppendingPathComponent:resourceName];
 }
 
+/*
+ 
+ - pathToExecutable:
+ 
+ */
+- (NSString *)pathToExecutable:(NSString *)name
+{	
+	NSString *path = [self executablePath];	// path to executable
+	path = [path stringByDeletingLastPathComponent];	// MAC OS
+
+	return [path stringByAppendingPathComponent:name];
+}
+
 #pragma mark -
 #pragma mark Task environment
 /*

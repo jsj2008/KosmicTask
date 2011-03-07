@@ -1,17 +1,16 @@
 //
-//  MGSLuaCocoaRunner.m
+//  MGSLuaScriptRunner.m
 //  KosmicTask
 //
-//  Created by Jonathan on 08/12/2010.
-//  Copyright 2010 mugginsoft.com. All rights reserved.
+//  Created by Jonathan on 07/03/2011.
+//  Copyright 2011 mugginsoft.com. All rights reserved.
 //
 
-#import "MGSLuaCocoaRunner.h"
-#import "MGSLuaScriptManager.h"
-#import "MGSLuaCocoaLanguage.h"
+#import "MGSLuaScriptRunner.h"
+#import "MGSLuaLanguage.h"
 
-@implementation MGSLuaCocoaRunner
 
+@implementation MGSLuaScriptRunner
 
 /*
  
@@ -37,19 +36,21 @@
  */
 - (Class)languageClass
 {
-	return [MGSLuaCocoaLanguage class];
+	return [MGSLuaLanguage class];
 }
+
+
+#pragma mark -
+#pragma mark Operations
 
 /*
  
- - execute
+ - launchPath
  
  */
-- (BOOL) execute
+- (NSString *)launchPath
 {
-	
-	// execute
-	return [self executeWithManager:[MGSLuaScriptManager sharedManager]];
+	return [self pathToExecutable:@"lua"];
 }
 
 /*
@@ -59,11 +60,7 @@
  */
 - (NSString *)buildPath
 {
-	NSString *path = [self executablePath];	// path to executable
-	path = [path stringByDeletingLastPathComponent]; 
-	path = [path stringByAppendingPathComponent:@"../Frameworks/LuaCocoa.framework/Versions/Current/Tools/luac"];
-	
-	return path;
+	return [self pathToExecutable:@"luac"];
 }
 
 /*
@@ -71,7 +68,7 @@
  - processBuildResult:
  
  */
-- (BOOL) processBuildResult:(NSString *)resultString
+- (BOOL)processBuildResult:(NSString *)resultString
 {
 #pragma unused(resultString)
 	
@@ -89,5 +86,6 @@
 	return (!self.error ? YES : NO);
 	
 }
+
 
 @end

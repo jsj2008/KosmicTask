@@ -962,7 +962,11 @@ errorExit:;
 	id onRunMode = [runClassProperty keyForOptionValue];
 	[self setOnRun:onRunMode];
 
-	NSAssert([self onRun], @"script onRun property is nil");
+	// an assertion raised here stops any new tasks from being created!
+	// so jsut log the condition here
+	if (![self onRun]) {
+		MLogInfo(@"script onRun property is nil - the script is not properly initialised.");
+	}
 	
 	// update script with property values
 	// absent script values cause settings to retain their default values

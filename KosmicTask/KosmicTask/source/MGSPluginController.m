@@ -162,7 +162,10 @@ static NSString *appSupportSubpath = @"Application Support/KosmicTask/PlugIns";
 		
 		// create bundle
         currBundle = [NSBundle bundleWithPath:currPath];
-        if(currBundle)
+		
+		// NSLog(@"bundleWithPath: %@", currPath);
+        
+		if(currBundle)
         {
 			currPrincipalClass = nil;
 			
