@@ -15,4 +15,9 @@ loaded using require("yaml"). This can be place on LUA_PATH.
 see package.loadfile info here
 http://www.lua.org/manual/5.1/manual.html
 
+Note that the original package included libYaml 0.1.2.
+This should be updated to 0.1.3.
+
+
+
 
