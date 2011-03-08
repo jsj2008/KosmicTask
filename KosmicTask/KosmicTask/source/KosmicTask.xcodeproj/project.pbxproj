@@ -144,6 +144,8 @@
 		AB2270181039C10600CF213D /* kosmictask_code_signing_rules.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB2270171039C10600CF213D /* kosmictask_code_signing_rules.plist */; };
 		AB2489A112BFF5F200933E98 /* MGSNetNegotiator.h in Headers */ = {isa = PBXBuildFile; fileRef = AB24899F12BFF5F200933E98 /* MGSNetNegotiator.h */; };
 		AB2489A212BFF5F200933E98 /* MGSNetNegotiator.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2489A012BFF5F200933E98 /* MGSNetNegotiator.m */; };
+		AB25B3981325999100D5B634 /* yaml.so in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB25B3951325995D00D5B634 /* yaml.so */; };
+		AB25B4451326660C00D5B634 /* KosmicTaskController.lua in Copy Lua Resources */ = {isa = PBXBuildFile; fileRef = AB25B444132665EC00D5B634 /* KosmicTaskController.lua */; };
 		AB264F260D9EE54800A22003 /* TabsPreference.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB264F250D9EE54800A22003 /* TabsPreference.tif */; };
 		AB26509E0D9F0A2300A22003 /* User16.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB26509D0D9F0A2300A22003 /* User16.tif */; };
 		AB2671260D85E31C0027D328 /* MGSApplesScriptDictWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2671250D85E31C0027D328 /* MGSApplesScriptDictWindowController.m */; };
@@ -2928,6 +2930,28 @@
 			name = "Copy auxiliary executables";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AB25B27A132597E700D5B634 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AB25B3981325999100D5B634 /* yaml.so in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB25B3EE1326653300D5B634 /* Copy Lua Resources */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Lua;
+			dstSubfolderSpec = 7;
+			files = (
+				AB25B4451326660C00D5B634 /* KosmicTaskController.lua in Copy Lua Resources */,
+			);
+			name = "Copy Lua Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AB2CD02C122013C5005E2379 /* Copy Perl resources */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3207,16 +3231,6 @@
 			name = "Copy QuickLook generator";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ABD054ED1325248400A728B8 /* Copy Executables */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 6;
-			files = (
-			);
-			name = "Copy Executables";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		ABE78250132516FF00663CBB /* Copy auxiliary executables */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3412,6 +3426,8 @@
 		AB2270171039C10600CF213D /* kosmictask_code_signing_rules.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = kosmictask_code_signing_rules.plist; sourceTree = "<group>"; };
 		AB24899F12BFF5F200933E98 /* MGSNetNegotiator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNetNegotiator.h; sourceTree = "<group>"; };
 		AB2489A012BFF5F200933E98 /* MGSNetNegotiator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNetNegotiator.m; sourceTree = "<group>"; };
+		AB25B3951325995D00D5B634 /* yaml.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = yaml.so; path = "../../Lua/yaml-0.2/yaml.so"; sourceTree = SOURCE_ROOT; };
+		AB25B444132665EC00D5B634 /* KosmicTaskController.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KosmicTaskController.lua; sourceTree = "<group>"; };
 		AB264F250D9EE54800A22003 /* TabsPreference.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TabsPreference.tif; sourceTree = "<group>"; };
 		AB26509D0D9F0A2300A22003 /* User16.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = User16.tif; sourceTree = "<group>"; };
 		AB2671240D85E31C0027D328 /* MGSApplesScriptDictWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSApplesScriptDictWindowController.h; sourceTree = "<group>"; };
@@ -6266,6 +6282,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB25B3951325995D00D5B634 /* yaml.so */,
 				ABB732F3105662670042B4D0 /* libcrypto linking copy */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
@@ -6482,6 +6499,14 @@
 				AB226F581039B9B000CF213D /* Trial.ktlic */,
 			);
 			name = Licence;
+			sourceTree = "<group>";
+		};
+		AB25B443132665BF00D5B634 /* Lua */ = {
+			isa = PBXGroup;
+			children = (
+				AB25B444132665EC00D5B634 /* KosmicTaskController.lua */,
+			);
+			name = Lua;
 			sourceTree = "<group>";
 		};
 		AB27AECF1189EB9300132977 /* Framework */ = {
@@ -6755,6 +6780,7 @@
 		AB408CAB1191794700A8037A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB25B443132665BF00D5B634 /* Lua */,
 				AB02438E12242D9A00035457 /* Scala */,
 				AB02438D12242D8A00035457 /* Javascript */,
 				AB02438C12242D7700035457 /* Tcl */,
@@ -9967,7 +9993,6 @@
 			buildPhases = (
 				ABE7815D132516D800663CBB /* Sources */,
 				ABE78162132516D800663CBB /* Frameworks */,
-				ABD054ED1325248400A728B8 /* Copy Executables */,
 			);
 			buildRules = (
 			);
@@ -9985,9 +10010,11 @@
 			buildConfigurationList = ABE78253132516FF00663CBB /* Build configuration list for PBXNativeTarget "Language Plugin Lua" */;
 			buildPhases = (
 				ABE78246132516FF00663CBB /* Resources */,
+				AB25B3EE1326653300D5B634 /* Copy Lua Resources */,
 				ABE78248132516FF00663CBB /* Sources */,
 				ABE7824D132516FF00663CBB /* Frameworks */,
 				ABE78250132516FF00663CBB /* Copy auxiliary executables */,
+				AB25B27A132597E700D5B634 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);

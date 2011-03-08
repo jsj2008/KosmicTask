@@ -65,6 +65,59 @@
 
 /*
  
+ - launchEnvironment
+ 
+ */
+- (NSMutableDictionary *)launchEnvironment
+{
+	/*
+	 
+	 yaml.so is in the frameworks folder
+	 
+	 Lua yaml was obtained from http://yaml.luaforge.net/
+	 
+	 Note that the makefile is poor and won't correctly build the yaml.so.
+	 I have patched it up.
+	 
+	 Note that the notes at the above url on how to use the package are quite wrong. The shared object must be loaded as follows. No Path searching takes place.
+	 
+	 path = "/full/path/to/yaml.so"
+	 f = assert(package.loadlib(path, "luaopen_yaml"))
+	 f()
+	 
+	 The above can be placed in a file called yaml.lua and that can be
+	 loaded using require("yaml"). This can be place on LUA_PATH.
+	 
+	 see package.loadfile info here
+	 http://www.lua.org/manual/5.1/manual.html
+	 
+	 */
+	// define path to lua modules
+	NSString *path = [self executablePath];	// path to executable
+	path = [path stringByDeletingLastPathComponent];	// MAC OS
+	NSString *luaPath = [path stringByAppendingPathComponent:@"../Resources/Lua/?.lua"];
+	NSArray *paths = [NSArray arrayWithObjects:
+					  luaPath,
+					  @";",
+					  nil];
+	NSMutableDictionary *env = [super launchEnvironment];
+	[self updateEnvironment:env pathkey:@"LUA_PATH" paths:paths separator:@";"];
+	
+	// define path to yaml shared library
+	path = [self executablePath];	// path to executable
+	path = [path stringByDeletingLastPathComponent];	// MAC OS
+	NSString *yamlPath = [path stringByAppendingPathComponent:@"../Frameworks/yaml.so"];
+	paths = [NSArray arrayWithObjects:
+					  yamlPath,
+					  nil];
+	[self updateEnvironment:env pathkey:@"LUA_YAML_LIB_PATH" paths:paths separator:@""];
+	
+	
+	return env;
+}
+
+/*
+ 
  - processBuildResult:
  
  */
