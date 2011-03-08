@@ -1,0 +1,24 @@
+--[[
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+]]
+require "KosmicTaskController"
+
+-- build table of planets
+planets = {"Mercury", "Venus", "Earth"}
+
+table.insert(planets, "Mars")
+table.insert(planets, "Jupiter")
+table.insert(planets, "Saturn")
+table.insert(planets, "Uranus")
+table.insert(planets, "Neptune")
+
+-- print native object as YAML
+KosmicTaskController.printObject(planets)

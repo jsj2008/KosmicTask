@@ -39,7 +39,7 @@
 		
 		// Result representation
 		self.initNativeObjectsAsResults = NO;
-		self.initNativeObjectsAsYamlSupport = NO;
+		self.initNativeObjectsAsYamlSupport = YES;
 		
 		self.initSourceFileExtensions = [NSArray arrayWithObjects: @"lua", nil];	
 		self.initScriptType = @"Lua";
