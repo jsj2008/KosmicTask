@@ -66,6 +66,10 @@
 - (IBAction)showReleaseNotes:(id)sender;
 - (IBAction)onlineHelp:(id)sender;
 - (IBAction)onlineSupport:(id)sender;
+- (IBAction)onlineForum:(id)sender;
+- (IBAction)showGuide:(id)sender;
+- (IBAction)showLicenceAgreement:(id)sender;
+
 - (IBAction)toggleRunState:(id)sender;
 - (IBAction)viewMenuModeSelected:(id)sender;
 - (IBAction)configureInternetSharing:(id)sender;

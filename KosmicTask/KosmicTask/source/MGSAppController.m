@@ -156,7 +156,8 @@
 	return;
 }
 
-#pragma mark Window handling
+#pragma mark -
+#pragma mark Action handling
 /*
  
  show preferences panel
@@ -196,7 +197,7 @@
 
 /*
  
- show release notes
+ - showReleaseNotes:
  
  */
 - (IBAction)showReleaseNotes:(id)sender
@@ -207,9 +208,36 @@
 	[[NSWorkspace sharedWorkspace] openFile:path];
 }
 
+
 /*
  
- show online help
+ - showGuide:
+ 
+ */
+- (IBAction)showGuide:(id)sender
+{
+#pragma unused(sender)
+	
+	NSString *path = [[NSBundle mainBundle] pathForResource:@"KosmicTask Guide" ofType:@"pdf"];
+	[[NSWorkspace sharedWorkspace] openFile:path];
+}
+
+/*
+ 
+ - showLicenceAgreement:
+ 
+ */
+- (IBAction)showLicenceAgreement:(id)sender
+{
+#pragma unused(sender)
+	
+	NSString *path = [[NSBundle mainBundle] pathForResource:@"KosmicTask EULA" ofType:@"pdf"];
+	[[NSWorkspace sharedWorkspace] openFile:path];
+}
+
+/*
+ 
+ - onlineHelp:
  
  */
 - (IBAction)onlineHelp:(id)sender
@@ -223,9 +251,10 @@
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];	
 }
 
+
 /*
  
- show online support
+ - onlineSupport:
  
  */
 - (IBAction)onlineSupport:(id)sender
@@ -239,6 +268,21 @@
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];	
 }
 
+/*
+ 
+ - onlineForum:
+ 
+ */
+- (IBAction)onlineForum:(id)sender
+{
+#pragma unused(sender)
+	
+	// get support URL string from app info.plist
+	NSString *urlString = [NSBundle mainBundleInfoObjectForKey:@"MGSForumURL"];
+	if (!urlString) return;
+	
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];	
+}
 /*
  
  show Configuration panel 
@@ -265,6 +309,8 @@
 	[[MGSPrefsWindowController sharedPrefsWindowController] showInternetPreferences];
 }
 
+#pragma mark -
+#pragma mark Window handling
 /*
  
  load the main application window

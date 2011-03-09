@@ -1732,6 +1732,14 @@
 									<reference key="NSOnImage" ref="145370858"/>
 									<reference key="NSMixedImage" ref="49544636"/>
 								</object>
+								<object class="NSMenuItem" id="324298484">
+									<reference key="NSMenu" ref="604944479"/>
+									<string key="NSTitle">KosmicTask Help Online</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="145370858"/>
+									<reference key="NSMixedImage" ref="49544636"/>
+								</object>
 								<object class="NSMenuItem" id="787108865">
 									<reference key="NSMenu" ref="604944479"/>
 									<bool key="NSIsDisabled">YES</bool>
@@ -1742,9 +1750,9 @@
 									<reference key="NSOnImage" ref="145370858"/>
 									<reference key="NSMixedImage" ref="49544636"/>
 								</object>
-								<object class="NSMenuItem" id="324298484">
+								<object class="NSMenuItem" id="487645659">
 									<reference key="NSMenu" ref="604944479"/>
-									<string key="NSTitle">Online Help</string>
+									<string key="NSTitle">KosmicTask Forum</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="145370858"/>
@@ -1752,7 +1760,7 @@
 								</object>
 								<object class="NSMenuItem" id="522723932">
 									<reference key="NSMenu" ref="604944479"/>
-									<string key="NSTitle">Online Support</string>
+									<string key="NSTitle">KosmicTask Support Website</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="145370858"/>
@@ -1768,9 +1776,35 @@
 									<reference key="NSOnImage" ref="145370858"/>
 									<reference key="NSMixedImage" ref="49544636"/>
 								</object>
+								<object class="NSMenuItem" id="879730514">
+									<reference key="NSMenu" ref="604944479"/>
+									<string key="NSTitle">KosmicTask Guide</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="145370858"/>
+									<reference key="NSMixedImage" ref="49544636"/>
+								</object>
 								<object class="NSMenuItem" id="619769246">
 									<reference key="NSMenu" ref="604944479"/>
 									<string key="NSTitle">Release Notes</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="145370858"/>
+									<reference key="NSMixedImage" ref="49544636"/>
+								</object>
+								<object class="NSMenuItem" id="293084772">
+									<reference key="NSMenu" ref="604944479"/>
+									<bool key="NSIsDisabled">YES</bool>
+									<bool key="NSIsSeparator">YES</bool>
+									<string key="NSTitle"/>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="145370858"/>
+									<reference key="NSMixedImage" ref="49544636"/>
+								</object>
+								<object class="NSMenuItem" id="220659794">
+									<reference key="NSMenu" ref="604944479"/>
+									<string key="NSTitle">Licence Agreement</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="145370858"/>
@@ -2616,6 +2650,30 @@
 					</object>
 					<int key="connectionID">599</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">onlineForum:</string>
+						<reference key="source" ref="613763616"/>
+						<reference key="destination" ref="487645659"/>
+					</object>
+					<int key="connectionID">604</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showGuide:</string>
+						<reference key="source" ref="613763616"/>
+						<reference key="destination" ref="879730514"/>
+					</object>
+					<int key="connectionID">605</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showLicenceAgreement:</string>
+						<reference key="source" ref="613763616"/>
+						<reference key="destination" ref="220659794"/>
+					</object>
+					<int key="connectionID">606</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -2857,10 +2915,14 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="666255006"/>
-							<reference ref="324298484"/>
 							<reference ref="787108865"/>
 							<reference ref="972440302"/>
 							<reference ref="522723932"/>
+							<reference ref="324298484"/>
+							<reference ref="487645659"/>
+							<reference ref="879730514"/>
+							<reference ref="293084772"/>
+							<reference ref="220659794"/>
 							<reference ref="619769246"/>
 						</object>
 						<reference key="parent" ref="288473068"/>
@@ -3945,6 +4007,26 @@
 						<reference key="object" ref="619769246"/>
 						<reference key="parent" ref="604944479"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">600</int>
+						<reference key="object" ref="487645659"/>
+						<reference key="parent" ref="604944479"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">601</int>
+						<reference key="object" ref="879730514"/>
+						<reference key="parent" ref="604944479"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">602</int>
+						<reference key="object" ref="293084772"/>
+						<reference key="parent" ref="604944479"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">603</int>
+						<reference key="object" ref="220659794"/>
+						<reference key="parent" ref="604944479"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -4228,6 +4310,10 @@
 					<string>594.IBPluginDependency</string>
 					<string>597.IBPluginDependency</string>
 					<string>598.IBPluginDependency</string>
+					<string>600.IBPluginDependency</string>
+					<string>601.IBPluginDependency</string>
+					<string>602.IBPluginDependency</string>
+					<string>603.IBPluginDependency</string>
 					<string>72.IBPluginDependency</string>
 					<string>72.ImportedFromIB2</string>
 					<string>73.IBPluginDependency</string>
@@ -4259,7 +4345,7 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{-716, 1150}, {188, 103}}</string>
+					<string>{{-716, 809}, {268, 173}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{342, 915}, {158, 23}}</string>
@@ -4314,7 +4400,7 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{-968, 349}, {251, 353}}</string>
+					<string>{{-968, 629}, {251, 353}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{303, 522}, {253, 223}}</string>
@@ -4348,16 +4434,16 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{-787, 1040}, {285, 213}}</string>
+					<string>{{-787, 769}, {285, 213}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{271, 835}, {197, 103}}</string>
-					<string>{{-1128, 1253}, {473, 20}}</string>
+					<string>{{-1128, 982}, {473, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{179, 745}, {416, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{-924, 419}, {224, 283}}</string>
+					<string>{{-924, 699}, {224, 283}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{347, 722}, {162, 23}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4420,14 +4506,14 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{-837, 539}, {188, 163}}</string>
+					<string>{{-837, 819}, {188, 163}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{-874, 629}, {263, 73}}</string>
+					<string>{{-874, 909}, {263, 73}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4508,7 +4594,7 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{-1116, 1000}, {255, 253}}</string>
+					<string>{{-1116, 729}, {255, 253}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{65, 715}, {232, 223}}</string>
@@ -4533,7 +4619,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<integer value="1"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4546,7 +4634,9 @@
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
-					<string>{{-1010, 349}, {201, 353}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<integer value="1"/>
+					<string>{{-1010, 629}, {201, 353}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>{{135, 735}, {183, 203}}</string>
@@ -4574,7 +4664,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">599</int>
+			<int key="maxID">606</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4843,6 +4933,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>configureInternetSharing:</string>
+							<string>onlineForum:</string>
 							<string>onlineHelp:</string>
 							<string>onlineSupport:</string>
 							<string>orderFrontCustomAboutPanel:</string>
@@ -4852,6 +4943,8 @@
 							<string>showConfigurationPanel:</string>
 							<string>showErrorWindow:</string>
 							<string>showFeedbackWindow:</string>
+							<string>showGuide:</string>
+							<string>showLicenceAgreement:</string>
 							<string>showLicencesWindow:</string>
 							<string>showPreferencesPanel:</string>
 							<string>showReleaseNotes:</string>
@@ -4862,6 +4955,9 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -4886,6 +4982,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>configureInternetSharing:</string>
+							<string>onlineForum:</string>
 							<string>onlineHelp:</string>
 							<string>onlineSupport:</string>
 							<string>orderFrontCustomAboutPanel:</string>
@@ -4895,6 +4992,8 @@
 							<string>showConfigurationPanel:</string>
 							<string>showErrorWindow:</string>
 							<string>showFeedbackWindow:</string>
+							<string>showGuide:</string>
+							<string>showLicenceAgreement:</string>
 							<string>showLicencesWindow:</string>
 							<string>showPreferencesPanel:</string>
 							<string>showReleaseNotes:</string>
@@ -4907,6 +5006,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">configureInternetSharing:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">onlineForum:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -4943,6 +5046,14 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">showFeedbackWindow:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showGuide:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showLicenceAgreement:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
