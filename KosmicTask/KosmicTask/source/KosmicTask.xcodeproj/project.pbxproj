@@ -337,7 +337,6 @@
 		AB4CF5ED1226BFDF00CB2E39 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = AB4CF5D11226BFDF00CB2E39 /* Language */; };
 		AB4CF6191226C04300CB2E39 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = AB4CF5EE1226C04300CB2E39 /* Language */; };
 		AB4CF6421226C08100CB2E39 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = AB4CF6221226C08100CB2E39 /* Language */; };
-		AB4CF6761226C0A900CB2E39 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = AB4CF6431226C0A900CB2E39 /* Language */; };
 		AB4CF69B1226C0FD00CB2E39 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = AB4CF67D1226C0FD00CB2E39 /* Language */; };
 		AB4CF6C81226C13900CB2E39 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = AB4CF69C1226C13900CB2E39 /* Language */; };
 		AB4CF6E91226C16100CB2E39 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = AB4CF6C91226C16100CB2E39 /* Language */; };
@@ -1267,6 +1266,7 @@
 		ABED1B4B0D97D8C900A9D464 /* ConfigurationAccessWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABED1B110D97CBB800A9D464 /* ConfigurationAccessWindow.xib */; };
 		ABEDB3220D3A869C00CAB070 /* MGSBrowserSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEDB3210D3A869C00CAB070 /* MGSBrowserSplitView.m */; };
 		ABEEC4651061922F00C42D48 /* MGSIntegerTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEEC4571061902300C42D48 /* MGSIntegerTransformer.m */; };
+		ABEEF7981328DA3F00009D20 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = ABEEF74E1328D9E200009D20 /* Language */; };
 		ABEF5C3B11C1201500FC3C6C /* MGSResultFileScriptCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = ABEF5C3A11C1201500FC3C6C /* MGSResultFileScriptCommand.m */; };
 		ABF0A7D210677CA600073B8F /* MGSMinimalViewToolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF0A7D110677CA600073B8F /* MGSMinimalViewToolViewController.m */; };
 		ABF0D1CA120C6A19006ABDB2 /* MGSFScriptManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF0D1C9120C6A19006ABDB2 /* MGSFScriptManager.m */; };
@@ -3674,7 +3674,6 @@
 		AB4CF5D11226BFDF00CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/AppleScript/Language; sourceTree = SOURCE_ROOT; };
 		AB4CF5EE1226C04300CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/AppleScriptCocoa/Language; sourceTree = SOURCE_ROOT; };
 		AB4CF6221226C08100CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Bash/Language; sourceTree = SOURCE_ROOT; };
-		AB4CF6431226C0A900CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Lua/Language; sourceTree = SOURCE_ROOT; };
 		AB4CF67D1226C0FD00CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Csh/Language; sourceTree = SOURCE_ROOT; };
 		AB4CF69C1226C13900CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = "Templates/F-Script/Language"; sourceTree = SOURCE_ROOT; };
 		AB4CF6C91226C16100CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Java/Language; sourceTree = SOURCE_ROOT; };
@@ -4759,6 +4758,7 @@
 		ABEDB3210D3A869C00CAB070 /* MGSBrowserSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBrowserSplitView.m; sourceTree = "<group>"; };
 		ABEEC4561061902300C42D48 /* MGSIntegerTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSIntegerTransformer.h; sourceTree = "<group>"; };
 		ABEEC4571061902300C42D48 /* MGSIntegerTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSIntegerTransformer.m; sourceTree = "<group>"; };
+		ABEEF74E1328D9E200009D20 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Cint/Language; sourceTree = SOURCE_ROOT; };
 		ABEF5C3911C1201500FC3C6C /* MGSResultFileScriptCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSResultFileScriptCommand.h; sourceTree = "<group>"; };
 		ABEF5C3A11C1201500FC3C6C /* MGSResultFileScriptCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSResultFileScriptCommand.m; sourceTree = "<group>"; };
 		ABF0A7D010677CA600073B8F /* MGSMinimalViewToolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSMinimalViewToolViewController.h; sourceTree = "<group>"; };
@@ -8198,7 +8198,7 @@
 		ABA1F0AD120D79920079E65B /* CINT */ = {
 			isa = PBXGroup;
 			children = (
-				AB4CF6431226C0A900CB2E39 /* Language */,
+				ABEEF74E1328D9E200009D20 /* Language */,
 				ABA1F0AE120D79AF0079E65B /* MGSCINTRunner.h */,
 				ABA1F0AF120D79AF0079E65B /* MGSCINTRunner.m */,
 			);
@@ -10896,7 +10896,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB4CF6761226C0A900CB2E39 /* Language in Resources */,
+				ABEEF7981328DA3F00009D20 /* Language in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13425,7 +13425,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 53;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -13442,7 +13442,7 @@
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 53;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -14088,7 +14088,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 53;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -14119,7 +14119,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 53;
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -14148,7 +14148,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 53;
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -15673,7 +15673,7 @@
 			buildSettings = {
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -15765,7 +15765,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 53;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -15800,7 +15800,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 53;
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -17137,7 +17137,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 53;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -17160,7 +17160,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 53;
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -17950,7 +17950,7 @@
 			buildSettings = {
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
@@ -17999,7 +17999,7 @@
 			buildSettings = {
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
