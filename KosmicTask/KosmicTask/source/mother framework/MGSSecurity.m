@@ -107,7 +107,16 @@ static BOOL useDefaultIdentity = NO;
 		// set up server side SSL 
 		// code from David Riggle at BusyMac
 		//==================================
-		SecKeychainRef keychainRef = nil;
+		
+		/*
+		 
+		 collector thread sometimes crashes when freeing SecKeychain object.
+		 thread 0 seen to be accessing keychain at same time.
+		 
+		 so just keep this keychain reference around.
+		 
+		 */
+		static __strong SecKeychainRef keychainRef = NULL;
 
 		
 		// get SSL identity
@@ -119,10 +128,13 @@ static BOOL useDefaultIdentity = NO;
 		 http://projects.mugginsoft.net/view.php?id=1018
 		 
 		 */
-		err = SecKeychainCopyDefault(&keychainRef);
+		if (keychainRef == NULL) { 
+			err = SecKeychainCopyDefault(&keychainRef);
+			if (err != noErr) return nil;
+		}
+	
+		// make it collectable but the strong ref above should prevent this.
 		CFMakeCollectable(keychainRef);
-		
-		if (err != noErr) return nil;
 		mySSLIdentity = [MGSSecurity findOrCreateSelfSignedIdentityInKeychain:keychainRef];
 		
 	}
