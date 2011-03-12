@@ -111,6 +111,14 @@ static BOOL useDefaultIdentity = NO;
 
 		
 		// get SSL identity
+		
+		/*
+		 
+		 Crash potential?
+		 
+		 http://projects.mugginsoft.net/view.php?id=1018
+		 
+		 */
 		err = SecKeychainCopyDefault(&keychainRef);
 		CFMakeCollectable(keychainRef);
 		
@@ -144,8 +152,10 @@ static BOOL useDefaultIdentity = NO;
 		err = SecIdentitySearchCopyNext(searchRef, &mySSLIdentity);
 		if (err == errSecItemNotFound && !createdIdentity) {
 			MLog(RELEASELOG, @"SSL identity not found, creating one");
+			
 			// identity not found; create our own
 			[MGSSecurity addSelfSignedCertToKeychain:keychain];
+			
 			// restart search
 			CFRelease(searchRef);
 			err = SecIdentitySearchCreate(keychain, CSSM_KEYUSE_DECRYPT, &searchRef);
