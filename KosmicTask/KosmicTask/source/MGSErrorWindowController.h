@@ -23,7 +23,6 @@
 }
 
 - (IBAction)segControlClick:(id)sender;
-- (IBAction)sendLog:(id)sender;
 - (IBAction)clearLog:(id)sender;
 
 - (void)addError:(MGSError *)error;

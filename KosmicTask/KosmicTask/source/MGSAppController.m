@@ -51,6 +51,7 @@
 #import "MGSTempStorage.h"
 #import "MGSBrowserViewControlStrip.h"
 #import "MGSMainViewCOntroller.h"
+#import "PLMailer.h"
 
 // class extension
 @interface MGSAppController()
@@ -308,6 +309,34 @@
 	
 	[[MGSPrefsWindowController sharedPrefsWindowController] showInternetPreferences];
 }
+
+/*
+ 
+ send log
+ 
+ */
+- (IBAction)sendLog:(id)sender
+{
+#pragma unused(sender)
+	
+	PLMailer *mailer = [[PLMailer alloc] init];
+	
+	NSString *email = [NSBundle mainBundleInfoObjectForKey:@"MGSSupportEmail"];
+	if (!email) {
+		email = @"support@mugginsoft.com";
+	}
+	[mailer setTo:email];
+	[mailer setSubject:@"KosmicTask log"];
+	
+	NSString *bodyLeader = @"Problem description:\n\n\n\nLog:\n\n";
+	NSMutableAttributedString *body = [[NSMutableAttributedString alloc] initWithString:bodyLeader];
+	NSString *logText = [[MLog sharedController] logFileText];
+	[body appendAttributedString:[[NSAttributedString alloc] initWithString:logText]];
+	[mailer setBody:body];
+	[mailer setType:PLMailerUrlType];
+	[mailer send:self];
+}
+
 
 #pragma mark -
 #pragma mark Window handling

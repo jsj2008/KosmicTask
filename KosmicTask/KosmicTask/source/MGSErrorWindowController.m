@@ -14,9 +14,6 @@
 #import "MGSPreferences.h"
 #import "NSTextView_Mugginsoft.h"
 #import "UKKQueue.h"
-#import "PLMailer.h"
-
-NSString *MGSSupportEmail = @"support@mugginsoft.com";
 
 @implementation MGSErrorWindowController
 
@@ -236,28 +233,6 @@ NSString *MGSSupportEmail = @"support@mugginsoft.com";
 	[logSizeTextField setHidden:logHidden];
 }
 
-/*
- 
- send log
- 
- */
-- (IBAction)sendLog:(id)sender
-{
-	#pragma unused(sender)
-	
-	PLMailer *mailer = [[PLMailer alloc] init];
-	
-	[mailer setTo:MGSSupportEmail];
-	[mailer setSubject:@"KosmicTask log"];
-	
-	NSString *bodyLeader = @"Problem description:\n\n\n\nLog:\n\n";
-	NSMutableAttributedString *body = [[NSMutableAttributedString alloc] initWithString:bodyLeader];
-	NSString *logText = [[MLog sharedController] logFileText];
-	[body appendAttributedString:[[NSAttributedString alloc] initWithString:logText]];
-	[mailer setBody:body];
-	[mailer setType:PLMailerUrlType];
-	[mailer send:self];
-}
 
 /*
  

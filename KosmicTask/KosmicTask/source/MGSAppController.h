@@ -69,6 +69,7 @@
 - (IBAction)onlineForum:(id)sender;
 - (IBAction)showGuide:(id)sender;
 - (IBAction)showLicenceAgreement:(id)sender;
+- (IBAction)sendLog:(id)sender;
 
 - (IBAction)toggleRunState:(id)sender;
 - (IBAction)viewMenuModeSelected:(id)sender;
