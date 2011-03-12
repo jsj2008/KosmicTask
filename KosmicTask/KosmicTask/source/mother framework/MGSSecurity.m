@@ -112,12 +112,11 @@ static BOOL useDefaultIdentity = NO;
 		
 		// get SSL identity
 		err = SecKeychainCopyDefault(&keychainRef);
-		CFRelease(keychainRef);	// GC - we can send CFRelease immediately - will be collected when no longer rooted
+		CFMakeCollectable(keychainRef);
 		
 		if (err != noErr) return nil;
 		mySSLIdentity = [MGSSecurity findOrCreateSelfSignedIdentityInKeychain:keychainRef];
 		
-
 	}
 	
 	return mySSLIdentity;
