@@ -61,8 +61,10 @@ static BOOL useDefaultIdentity = NO;
 		SecIdentityRef identity = [self SSLIdentityCopy];
 		
 		if (identity) {
-			ca = CFArrayCreate(NULL, (const void **)&identity, 1, NULL);
+			ca = CFArrayCreate(NULL, (const void **)&identity, 1, &kCFTypeArrayCallBacks);
+			CFRelease(identity);
 		} 
+
 	}
 	
 	return ca;
@@ -110,10 +112,11 @@ static BOOL useDefaultIdentity = NO;
 		
 		// get SSL identity
 		err = SecKeychainCopyDefault(&keychainRef);
+		CFMakeCollectable(keychainRef);
+		
 		if (err != noErr) return nil;
 		mySSLIdentity = [MGSSecurity findOrCreateSelfSignedIdentityInKeychain:keychainRef];
 		
-		CFRelease(keychainRef);
 	}
 	
 	return mySSLIdentity;
