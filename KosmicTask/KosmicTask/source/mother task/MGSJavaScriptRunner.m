@@ -66,7 +66,8 @@ JSStringRef MGSJSStringRefCreateWithNSString(NSString *aString);
 	
 	NSString *taskFunction = self.runFunctionName;
 	NSString *resultString = @"";
-
+	JSStringRef scriptJS = NULL;
+	
 	// get script parameter array
 	NSArray *paramArray = [self ScriptParametersWithError:YES];
 	if (!paramArray) return NO;
@@ -99,7 +100,7 @@ JSStringRef MGSJSStringRefCreateWithNSString(NSString *aString);
 	
 
 	// load the task script
-	JSStringRef scriptJS = MGSJSStringRefCreateWithNSString(source);
+	scriptJS = MGSJSStringRefCreateWithNSString(source);
 	JSStringRef sourceURLJS = MGSJSStringRefCreateWithNSString(@"KosmicTask");
 	
 	// evaluate our script for the global object.
@@ -174,7 +175,9 @@ handleException:
 	}
 	
 	// clean up
-	JSStringRelease(scriptJS);	
+	if (scriptJS) {
+		JSStringRelease(scriptJS);	
+	}
 	JSGlobalContextRelease(ctx);	
 	
 	return [self processExecuteResult:resultString];
