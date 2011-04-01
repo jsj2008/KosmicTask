@@ -1016,16 +1016,42 @@ errorExit:;
 	//set our search scope
 	NSString *searchScope =[searchDict objectForKey:MGSScriptKeySearchScope];
 	NSString *predicateFormat = nil;
+	BOOL addWildcards = NO;
 	if ([searchScope isEqualToString:MGSScriptSearchScopeScript]) {
-		predicateFormat = @"((kMDItemContentType == 'com.mugginsoft.kosmictask.document') && (com_mugginsoft_kosmictask_script LIKE[wcd] %@))";
+		predicateFormat = @"com_mugginsoft_kosmictask_script LIKE[wcd] %@";
 		
 		// no idea why the wildcards are reqd - but search fails to find anything without them
-		queryString = [NSString stringWithFormat:@"*%@*", queryString];
+		addWildcards = YES;
 	} else {
 		// search will default to content
-		predicateFormat = @"((kMDItemContentType == 'com.mugginsoft.kosmictask.document') && (kMDItemTextContent LIKE[wcd] %@))";
+		predicateFormat = @"kMDItemTextContent LIKE[wcd] %@";
 	}
 	
+	// build up a compound predicate.
+	// we could formulate this as a string but the object approach is cleaner.
+	// see the NSPredicate programming guide for a comparison of Spotlight and NSPredicate query string syntax differences
+
+	NSMutableArray *subpredicates = [NSMutableArray array];
+	NSPredicate *subPred = [NSPredicate predicateWithFormat:@"kMDItemContentType == %@", @"com.mugginsoft.kosmictask.document"];
+	[subpredicates addObject:subPred];
+	
+	NSArray *terms = [queryString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+	for(NSString *term in terms) {
+		if([term length] == 0) { continue; }
+		
+		// no idea why the wildcards are reqd - but search fails to find anything without them
+		if (addWildcards) {
+			term = [NSString stringWithFormat:@"*%@*", term];
+		}
+		subPred = [NSPredicate predicateWithFormat:predicateFormat, term];
+		[subpredicates addObject:subPred];
+	}
+	
+	NSPredicate * predicate = [NSCompoundPredicate andPredicateWithSubpredicates:subpredicates];
+	//NSLog(@"%@ %@", queryString, [predicate predicateFormat]);
+	
+	[mdQuery setPredicate:predicate];
+
 	/*
 	 
 	 search user and application document paths
@@ -1047,13 +1073,7 @@ errorExit:;
 	MLog(DEBUGLOG, @"search path scope: %@, %@", userDocumentPath, applicationDocumentPath);
 	searchScopes = [NSArray arrayWithObjects:userDocumentPath, applicationDocumentPath, nil];
 	[mdQuery setSearchScopes:searchScopes];
-	
-	// form our predicate.
-	// see the NSPredicate programming guide for a comparison of Spotlight and NSPredicate query string syntax differences
-	NSPredicate * predicate = [NSPredicate predicateWithFormat:predicateFormat, queryString];
-	
-    [mdQuery setPredicate:predicate];
-	
+		
 	// register for query did finish notification
 	[[NSNotificationCenter defaultCenter]
 	 addObserver: self
