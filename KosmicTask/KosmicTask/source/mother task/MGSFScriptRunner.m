@@ -102,7 +102,8 @@
 		NSUInteger firstCharIndex = [blockStackElem firstCharIndex];
 		NSUInteger lastCharIndex = [blockStackElem lastCharIndex];
 		
-		NSRange range =  NSMakeRange(firstCharIndex, lastCharIndex - firstCharIndex);
+		// volatile helps avoid compile warning
+		volatile NSRange range =  NSMakeRange(firstCharIndex, lastCharIndex - firstCharIndex);
 		self.errorInfo = [NSMutableDictionary dictionaryWithCapacity:2];
 		[self.errorInfo setObject:NSStringFromRange(range) forKey:MGSRangeErrorKey];
 		[self.errorInfo setObject:self.error forKey:NSLocalizedFailureReasonErrorKey];	// required
