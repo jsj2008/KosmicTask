@@ -11,6 +11,7 @@
 
 extern NSString *MGSKeyUseFileExtensions;
 extern NSString *MGSKeyFileExtensions;
+extern NSString *MGSKeyFilePath;
 
 @interface MGSFileParameterPlugin : MGSParameterPlugin {
 

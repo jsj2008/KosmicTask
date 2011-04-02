@@ -26,6 +26,16 @@
 
 /*
  
+ + pluginsSelector
+ 
+ */
++ (SEL)pluginsSelector
+{
+	return @selector(plugins);
+}
+
+/*
+ 
  default plugin name
  
  */

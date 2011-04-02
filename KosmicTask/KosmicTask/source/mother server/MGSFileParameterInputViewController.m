@@ -25,6 +25,7 @@
 @synthesize fileSize = _fileSize;
 @synthesize useFileExtensions = _useFileExtensions;
 @synthesize fileExtensions = _fileExtensions;
+@synthesize fileLabel = _fileLabel;
 
 /*
  
@@ -34,7 +35,8 @@
 - (id)init
 {
 	if ([super initWithNibName:@"FileParameterInputView"]) {
-
+		self.sendAsAttachment = YES;
+		self.fileLabel = @"File Content";
 	}
 	return self;
 }
@@ -50,7 +52,6 @@
 - (void)awakeFromNib
 {
 	//_filePath = nil;
-	self.sendAsAttachment = YES;
 	
 	NSImage *defaultImage = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kAlertNoteIcon)];
 	
@@ -63,6 +64,7 @@
 	[[filePathTextField cell] setLineBreakMode:NSLineBreakByTruncatingTail];
 	[[fileNameTextField cell] setLineBreakMode:NSLineBreakByTruncatingTail];
 	[[fileSizeTextField cell] setLineBreakMode:NSLineBreakByTruncatingTail];
+	[[fileTypesTextField cell] setLineBreakMode:NSLineBreakByTruncatingTail];
 	
 	// this will send viewDidLoad to delegate
 	[super awakeFromNib];
@@ -77,14 +79,16 @@
 {
 	self.useFileExtensions = [[self.plist objectForKey:MGSKeyUseFileExtensions withDefault:[NSNumber numberWithBool:NSOffState]] boolValue];
 	self.fileExtensions = [self.plist objectForKey:MGSKeyFileExtensions withDefault:@""];
+	self.parameterValue = [self.plist objectForKey:MGSKeyFilePath withDefault:@""];
 	
 	self.label = NSLocalizedString(@"Input is required", @"label text");
 	
 	NSString *allowedFileTypes = self.fileExtensions;
 	if ([allowedFileTypes length] == 0 || !self.useFileExtensions) {
 		allowedFileTypes = NSLocalizedString(@"all", @"all file types allowed");
-	} 
-	[fileTypesTextField setStringValue:[NSString stringWithFormat:@"Allowed file types: %@", allowedFileTypes]];
+	}
+	NSString *fileTypes = [NSString stringWithFormat:@"%@ - allowed file types: %@", self.fileLabel, allowedFileTypes];
+	[fileTypesTextField setStringValue: fileTypes];
 }
 
 /*

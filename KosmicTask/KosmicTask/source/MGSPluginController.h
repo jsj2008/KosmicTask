@@ -25,6 +25,7 @@
 + (Class)plugInClass;
 
 + (NSString *)bundleExtension;
++ (SEL)pluginsSelector;
 
 // validate the class
 - (BOOL)plugInClassIsValid:(Class)plugInClass;

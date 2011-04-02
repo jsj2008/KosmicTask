@@ -28,5 +28,13 @@
 // is default plugin
 - (BOOL)isDefault;
 
+/*
+ other plugins available.
+ 
+ if a plugin is a bundle's principle class then this method
+ can be overridden to supply other plugins from the same bundle
+ 
+ */
+- (NSArray *)plugins;
 
 @end

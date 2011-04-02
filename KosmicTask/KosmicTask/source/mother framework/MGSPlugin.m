@@ -83,4 +83,19 @@ static id _sharedInstance = nil;
 {
 	return NO;
 }
+
+/*
+ 
+ - plugins
+ 
+ */
+- (NSArray *)plugins
+{
+	/*
+	 
+	 other plugins available
+	 
+	 */
+	return [NSArray new];
+}
 @end

@@ -19,6 +19,7 @@
 	IBOutlet NSTextField *fileTypesTextField;
 	NSString *_fileName;
 	NSString *_fileSize;
+	NSString *_fileLabel;
 	
 	BOOL _useFileExtensions;
 	NSString *_fileExtensions;
@@ -32,6 +33,7 @@
 @property (copy) NSString *fileSize;
 @property BOOL useFileExtensions;
 @property (copy) NSString *fileExtensions;
+@property (copy) NSString *fileLabel;
 
 - (IBAction)selectFile:(id)sender;
 - (IBAction)showFinderQuickLook:(id)sender;

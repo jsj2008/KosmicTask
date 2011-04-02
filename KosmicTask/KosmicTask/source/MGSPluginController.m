@@ -46,6 +46,16 @@ static NSString *appSupportSubpath = @"Application Support/KosmicTask/PlugIns";
 
 /*
  
+ + plugins
+ 
+ */
++ (SEL)pluginsSelector
+{
+	return NULL;
+}
+
+/*
+ 
  - init
  
  */
@@ -53,6 +63,7 @@ static NSString *appSupportSubpath = @"Application Support/KosmicTask/PlugIns";
 {
 	return [self initWithPlugInClass:[[self class] plugInClass]];
 }
+
 
 /*
  
@@ -165,22 +176,39 @@ static NSString *appSupportSubpath = @"Application Support/KosmicTask/PlugIns";
 		
 		// NSLog(@"bundleWithPath: %@", currPath);
         
-		if(currBundle)
-        {
+		if (currBundle) {
 			currPrincipalClass = nil;
 			
 			// extract principle class (this will trigger loading)
             currPrincipalClass = [currBundle principalClass];
 			
 			// validate that the principle class is valid
-            if(currPrincipalClass && [self plugInClassIsValid:currPrincipalClass])  
+            if (currPrincipalClass && [self plugInClassIsValid:currPrincipalClass])  
             {
 				// instantiate an instance of our plug in.
                 currInstance = [[currPrincipalClass alloc] init];
-                if(currInstance)
-                {
+                if (currInstance) {
                     [plugins addObject:[currInstance autorelease]];
                 }
+				
+				// if a selector is defined to allow access other 
+				// plugins from the same bundle then do so
+				SEL otherPluginsSel = [[self class] pluginsSelector];
+				if (otherPluginsSel != NULL && [currInstance respondsToSelector:otherPluginsSel]) {
+					
+					// get an array of other plugins
+					NSArray *otherPlugins = [currInstance performSelector:otherPluginsSel];
+					if (![otherPlugins isKindOfClass:[NSArray class]]) { continue; }
+					
+					// validate other plugins
+					for (id otherPlugin in otherPlugins) {
+						if ([self plugInClassIsValid:[otherPlugin class]]) {
+							[plugins addObject:otherPlugin];
+						} else {
+							MLogInfo(@"bad plugin Class found");
+						}
+					}
+				}
             }
         }
     }
@@ -260,5 +288,6 @@ static NSString *appSupportSubpath = @"Application Support/KosmicTask/PlugIns";
 {
 	[_additionalSearchPaths addObjectsFromArray:paths];
 }
+
 @end
 
