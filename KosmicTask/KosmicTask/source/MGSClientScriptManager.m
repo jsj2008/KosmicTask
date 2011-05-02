@@ -665,6 +665,17 @@ static BOOL _userScriptGroupSaved = NO;
 
 /*
  
+ group script type at index
+ 
+ */
+- (NSString *)groupScriptTypeAtIndex:(NSInteger)idx
+{
+	MGSScript *script = [self groupScriptAtIndex:idx];
+	return [script scriptType];
+}
+
+/*
+ 
  group script name label at index
  
  may return a dictionary or a string
@@ -698,6 +709,24 @@ static BOOL _userScriptGroupSaved = NO;
 	} 
 	
 	return [NSDictionary dictionaryWithObjectsAndKeys:[script description], MGSLabelTextCellStringKey, [NSNumber numberWithInteger:script.labelIndex], MGSLabelTextCellLabelIndexKey, nil];
+}
+/*
+ 
+ group script group at index
+ 
+ may return a dictionary or a string
+ 
+ */
+- (id)groupScriptGroupAtIndex:(NSInteger)idx
+{
+	MGSScript *script = [self groupScriptAtIndex:idx];
+	
+	// if no label index then just return group name
+	//if (script.labelIndex == 0) {
+		return [script group];
+	//} 
+	
+	//return [NSDictionary dictionaryWithObjectsAndKeys:[script description], MGSLabelTextCellStringKey, [NSNumber numberWithInteger:script.labelIndex], MGSLabelTextCellLabelIndexKey, nil];
 }
 /*
  

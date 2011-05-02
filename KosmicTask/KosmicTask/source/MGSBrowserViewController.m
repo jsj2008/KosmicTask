@@ -54,6 +54,8 @@ NSString *MGSTableColumnIdentifierAction = @"action";
 NSString *MGSTableColumnIdentifierSecurity = @"secure";
 NSString *MGSTableColumnIdentifierAuthenticate = @"authenticate";
 NSString *MGSTableColumnIdentifierDescription = @"description";
+NSString *MGSTableColumnIdentifierGroup = @"group";
+NSString *MGSTableColumnIdentifierType = @"type";
 NSString *MGSTableColumnIdentifierPublished = @"published";
 NSString *MGSTableColumnIdentifierBundled = @"bundled";
 NSString *MGSTableColumnIdentifierPublishCheckbox = @"check";
@@ -301,6 +303,16 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;
 	tableColumn = [actionTable tableColumnWithIdentifier: MGSTableColumnIdentifierDescription];
 	[tableColumn setSortDescriptorPrototype:sortDescriptor];
 
+	// group column sorting
+	sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"group" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+	tableColumn = [actionTable tableColumnWithIdentifier: MGSTableColumnIdentifierGroup];
+	[tableColumn setSortDescriptorPrototype:sortDescriptor];
+
+	// script type column sorting
+	sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scriptType" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+	tableColumn = [actionTable tableColumnWithIdentifier: MGSTableColumnIdentifierType];
+	[tableColumn setSortDescriptorPrototype:sortDescriptor];
+	
 	// action column sorting
 	sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(caseInsensitiveCompare:)];
 	tableColumn = [actionTable tableColumnWithIdentifier: MGSTableColumnIdentifierAction];
@@ -2740,6 +2752,16 @@ errorExit:
 		// description
 		if ([identifier isEqualToString:MGSTableColumnIdentifierDescription]) {
 			return [scriptController groupScriptDescriptionLabelAtIndex:rowIndex];
+		}
+
+		// group
+		if ([identifier isEqualToString:MGSTableColumnIdentifierGroup]) {
+			return [scriptController groupScriptGroupAtIndex:rowIndex];
+		}
+
+		// script type
+		if ([identifier isEqualToString:MGSTableColumnIdentifierType]) {
+			return [scriptController groupScriptTypeAtIndex:rowIndex];
 		}
 
 		// UUID
