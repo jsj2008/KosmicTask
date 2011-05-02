@@ -34,7 +34,8 @@
  */
 - (id)init
 {
-	if ([super initWithNibName:@"FileParameterInputView"]) {
+	self = [super initWithNibName:@"FileParameterInputView"];
+	if (self) {
 		self.sendAsAttachment = YES;
 		self.fileLabel = @"File Content";
 	}

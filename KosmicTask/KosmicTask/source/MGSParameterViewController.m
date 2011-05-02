@@ -826,7 +826,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		
 		// observe the input view controller
 		[_typeInputViewController addObserver:self forKeyPath:@"parameterValue" options:0 context:MGSParameterValueContext];
-		[_typeInputViewController addObserver:self forKeyPath:@"sendAsAttachment" options:0 context:MGSParameterSendAsAttachmentContext];
+		[_typeInputViewController addObserver:self forKeyPath:@"sendAsAttachment" options:NSKeyValueObservingOptionInitial context:MGSParameterSendAsAttachmentContext];
 		
 		// load the view
 		[typeViewController view];

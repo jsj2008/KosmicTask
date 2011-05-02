@@ -46,7 +46,7 @@ NSString *MGSKeyFilePath = @"FilePath";
  */
 - (NSString *)menuItemString
 {
-	return NSLocalizedString(@"File Contents", @"Parameter plugin menu item string");
+	return NSLocalizedString(@"File", @"Parameter plugin menu item string");
 }
 
 /*
