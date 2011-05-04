@@ -111,7 +111,7 @@
 	NSString *queryString = [[note userInfo] objectForKey:MGSNoteValueKey];
 
 	// if current query equals the last then bail.
-	// No. its useful tosend the same query if change search scope etc
+	// No. its useful to send the same query if change search scope etc
 	if (NO) {
 		if ([queryString isEqualToString:_queryString]) {
 			return;
@@ -415,6 +415,45 @@
 
 	// send open document selector up the responder chain
 	[NSApp sendAction:@selector(openDocument:) to:nil from:self];
+}
+
+/*
+ 
+ - openTaskInNewWindow:
+ 
+ */
+- (void)openTaskInNewWindow:(id)sender
+{
+#pragma unused(sender)
+	
+	NSInteger idx = [_searchTableView clickedRow];
+	
+	if (idx == -1) {
+		return;
+	}
+
+	MGSTaskSpecifier *taskSpec = [[_taskSpecManager arrangedObjects] objectAtIndex: idx];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteOpenTaskInWindow object:taskSpec];
+}
+
+
+/*
+ 
+ - openTaskInNewTab:
+ 
+ */
+- (void)openTaskInNewTab:(id)sender
+{
+	#pragma unused(sender)
+	
+	NSInteger idx = [_searchTableView clickedRow];
+	
+	if (idx == -1) {
+		return;
+	}
+	
+	MGSTaskSpecifier *taskSpec = [[_taskSpecManager arrangedObjects] objectAtIndex: idx];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteOpenTaskInNewTab object:taskSpec];	
 }
 
 #pragma mark -

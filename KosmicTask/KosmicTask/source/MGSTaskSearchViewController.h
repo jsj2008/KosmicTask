@@ -46,6 +46,8 @@
 - (void)clearSearchResults;
 - (void)search:(NSString *)queryString;
 - (void)sendSearchQuery:(NSDictionary *)searchDict toClientServiceName:(NSString *)serviceName;
+- (void)openTaskInNewWindow:(id)sender;
+- (void)openTaskInNewTab:(id)sender;
 
 @end
 
