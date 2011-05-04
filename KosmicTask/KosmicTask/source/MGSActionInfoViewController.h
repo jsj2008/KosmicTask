@@ -14,6 +14,7 @@
 	MGSTaskSpecifier *_actionSpecifier;
 	
 	IBOutlet NSTextField *_authorName;
+	IBOutlet NSTextField *_scriptType;
 	IBOutlet NSTextField *_authorNote;
 	IBOutlet NSTextField *_dateCreated;
 	IBOutlet NSTextField *_dateModified;

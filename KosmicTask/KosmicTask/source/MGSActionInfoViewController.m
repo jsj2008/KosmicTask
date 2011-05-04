@@ -51,6 +51,7 @@
 	
 	NSString *versionString = [NSString stringWithFormat:@"%i.%i.%i", [script versionMajor], [script versionMinor], [script versionRevision]];
 	[_authorName setStringValueOrEmptyOnNil:[script author]];
+	[_scriptType setStringValueOrEmptyOnNil:[script scriptType]];
 	[_authorNote setStringValueOrEmptyOnNil:[script authorNote]];
 	[_dateCreated setStringValueOrEmptyOnNil:[[script created] descriptionWithLocale: [NSLocale currentLocale]]];
 	[_dateModified setStringValueOrEmptyOnNil:[[script modified] descriptionWithLocale: [NSLocale currentLocale]]];
