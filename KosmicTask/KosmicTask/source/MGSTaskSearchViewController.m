@@ -84,6 +84,7 @@
 	
 	[[_searchTableView tableColumnWithIdentifier:@"identifier"] bind:@"value" toObject:_taskSpecManager withKeyPath:@"arrangedObjects.identifier" options:nil];
 	[[_searchTableView tableColumnWithIdentifier:@"group"] bind:@"value" toObject:_taskSpecManager withKeyPath:@"arrangedObjects.script.group" options:nil];
+	[[_searchTableView tableColumnWithIdentifier:@"type"] bind:@"value" toObject:_taskSpecManager withKeyPath:@"arrangedObjects.script.scriptType" options:nil];
 	[[_searchTableView tableColumnWithIdentifier:@"action"] bind:@"value" toObject:_taskSpecManager withKeyPath:@"arrangedObjects.script.name" options:nil];
 	[[_searchTableView tableColumnWithIdentifier:@"description"] bind:@"value" toObject:_taskSpecManager withKeyPath:@"arrangedObjects.script.description" options:nil];
 	[[_searchTableView tableColumnWithIdentifier:@"UUID"] bind:@"value" toObject:_taskSpecManager withKeyPath:@"arrangedObjects.script.UUID" options:nil];
