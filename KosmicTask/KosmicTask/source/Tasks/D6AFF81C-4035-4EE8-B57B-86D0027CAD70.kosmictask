@@ -64,7 +64,7 @@
 	<key>Description</key>
 	<string>Set the volume</string>
 	<key>FileVersion</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>Group</key>
 	<string>Sound</string>
 	<key>Identifier</key>
@@ -85,6 +85,8 @@
 	<date>2009-09-18T21:12:56Z</date>
 	<key>Name</key>
 	<string>Volume set</string>
+	<key>OnRun</key>
+	<integer>2</integer>
 	<key>Origin</key>
 	<string>Mugginsoft</string>
 	<key>Parameters</key>
@@ -92,6 +94,8 @@
 		<dict>
 			<key>ClassInfo</key>
 			<dict>
+				<key>DecimalPlaces</key>
+				<integer>0</integer>
 				<key>Default</key>
 				<real>50</real>
 				<key>IncrementValue</key>
@@ -102,31 +106,31 @@
 				<real>0.0</real>
 				<key>RequireInteger</key>
 				<true/>
+				<key>Style</key>
+				<integer>0</integer>
 			</dict>
 			<key>ClassName</key>
 			<string>MGSNumberParameterPlugin</string>
 			<key>Description</key>
-			<string>New input</string>
+			<string>Volume level</string>
 			<key>Name</key>
 			<string>Volume Level</string>
 		</dict>
 	</array>
 	<key>ScriptType</key>
 	<string>AppleScript</string>
-	<key>Status</key>
-	<integer>2</integer>
 	<key>Subroutine</key>
 	<string>kosmicTask</string>
 	<key>Timeout</key>
 	<real>0.0</real>
 	<key>VersionID</key>
-	<integer>1</integer>
+	<integer>3</integer>
 	<key>VersionMajor</key>
 	<integer>1</integer>
 	<key>VersionMinor</key>
 	<integer>0</integer>
 	<key>VersionRevision</key>
-	<integer>5</integer>
+	<integer>6</integer>
 	<key>VersionRevisionAuto</key>
 	<true/>
 </dict>
