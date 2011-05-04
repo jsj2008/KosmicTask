@@ -66,8 +66,8 @@
 - (MGSClientScriptManager *)publishedScriptManager;
 - (NSMutableDictionary *)editDictionaryForScript:(MGSScript *)script;
 - (NSArray *)changeArrayScheduleForDelete;
-- (id)groupScriptGroupAtIndex:(NSInteger)idx;
-- (NSString *)groupScriptTypeAtIndex:(NSInteger)idx;
+- (id)groupScriptGroupLabelAtIndex:(NSInteger)idx;
+- (NSString *)groupScriptTypeLabelAtIndex:(NSInteger)idx;
 
 // schedule save
 - (void)acceptScheduleSave;

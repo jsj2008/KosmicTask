@@ -398,6 +398,25 @@
 }
 
 #pragma mark -
+#pragma mark Validation
+
+/*
+ 
+ - validateMenuItem:
+ 
+ */
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+#pragma unused(menuItem)
+	
+	if ([_searchTableView clickedRow] == -1) {
+		return NO;
+	}
+	
+	return YES;
+}
+
+#pragma mark -
 #pragma mark Actions
 
 /*

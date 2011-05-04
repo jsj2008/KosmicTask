@@ -102,7 +102,7 @@
 				if ([deepView isDescendantOf:aClickView]) {
 					
 					/* don't process events for first responder views as they generally display
-						a context menu and we don't want to oberride that
+						a context menu and we don't want to override that
 					 */
 					if ([event type] == NSRightMouseDown && [deepView acceptsFirstResponder]) {
 						break;

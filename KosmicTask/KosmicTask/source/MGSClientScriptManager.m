@@ -665,13 +665,19 @@ static BOOL _userScriptGroupSaved = NO;
 
 /*
  
- group script type at index
+ group script type label at index
  
  */
-- (NSString *)groupScriptTypeAtIndex:(NSInteger)idx
+- (NSString *)groupScriptTypeLabelAtIndex:(NSInteger)idx
 {
 	MGSScript *script = [self groupScriptAtIndex:idx];
-	return [script scriptType];
+	
+	// if no label index then just return name
+	if (script.labelIndex == 0) {
+		return [script scriptType];
+	} 
+	
+	return [NSDictionary dictionaryWithObjectsAndKeys:[script scriptType], MGSLabelTextCellStringKey, [NSNumber numberWithInteger:script.labelIndex], MGSLabelTextCellLabelIndexKey, nil];
 }
 
 /*
@@ -712,21 +718,21 @@ static BOOL _userScriptGroupSaved = NO;
 }
 /*
  
- group script group at index
+ group script group label at index
  
  may return a dictionary or a string
  
  */
-- (id)groupScriptGroupAtIndex:(NSInteger)idx
+- (id)groupScriptGroupLabelAtIndex:(NSInteger)idx
 {
 	MGSScript *script = [self groupScriptAtIndex:idx];
 	
 	// if no label index then just return group name
-	//if (script.labelIndex == 0) {
+	if (script.labelIndex == 0) {
 		return [script group];
-	//} 
+	} 
 	
-	//return [NSDictionary dictionaryWithObjectsAndKeys:[script description], MGSLabelTextCellStringKey, [NSNumber numberWithInteger:script.labelIndex], MGSLabelTextCellLabelIndexKey, nil];
+	return [NSDictionary dictionaryWithObjectsAndKeys:[script group], MGSLabelTextCellStringKey, [NSNumber numberWithInteger:script.labelIndex], MGSLabelTextCellLabelIndexKey, nil];
 }
 /*
  

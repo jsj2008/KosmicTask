@@ -322,7 +322,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;
 	//[actionTable setAction:@selector(tableViewSingleClick:)];
 	[actionTable setDoubleAction:@selector(tableViewDoubleClick:)];
 	
-	// set action table context menus menus
+	// set action table context menus
 	NSMenuItem *labelMenu = [[actionTable menu] itemWithTag:100];	// label menu
 	FVColorMenuView *menuView = [FVColorMenuView menuView];
 	[menuView setTarget:self];
@@ -395,6 +395,7 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;
  */
 - (BOOL)validateMenuItem:(NSMenuItem *)anItem
 {
+	
     SEL action = [anItem action];
     
 	// change task label colour
@@ -408,17 +409,26 @@ objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;
 		return YES;
 	}
 
+	// can right mouse in tableview on unselected cell.
+	// so make sure to get the correct cell
+	MGSScript *script = [self clickedScript];	
+	
 	// change task rating index
     if (action == @selector(changeTaskRatingIndex:)) {
 		
-		// can right mouse in tableview on unselected cell.
-		// so make sure to get the correct cell
-		MGSScript *script = [self clickedScript];	
 		if (!script) return NO;
 		[anItem setState: (script.ratingIndex == [anItem tag]) ? NSOnState : NSOffState];
 		
 		return YES;
 	}
+	
+	if (action == @selector(openTaskInNewTab:) 
+		|| action == @selector(openTaskInNewWindow:)
+		|| action == @selector(changeTaskLabelColour:)) {
+		if (!script) return NO;
+		return YES;
+	}
+	
 	
 	return YES;
 }
@@ -2756,12 +2766,12 @@ errorExit:
 
 		// group
 		if ([identifier isEqualToString:MGSTableColumnIdentifierGroup]) {
-			return [scriptController groupScriptGroupAtIndex:rowIndex];
+			return [scriptController groupScriptGroupLabelAtIndex:rowIndex];
 		}
 
 		// script type
 		if ([identifier isEqualToString:MGSTableColumnIdentifierType]) {
-			return [scriptController groupScriptTypeAtIndex:rowIndex];
+			return [scriptController groupScriptTypeLabelAtIndex:rowIndex];
 		}
 
 		// UUID
