@@ -622,7 +622,7 @@
 	 
 	 */
 	NSString *bundleVersion = [NSBundle mainBundleInfoObjectForKey:@"CFBundleVersion"];
-	NSString *compiledInVersion = [NSString stringWithFormat:@"%i", (NSInteger)KosmicTaskVersionNumber]; 
+	NSString *compiledInVersion = [NSString stringWithFormat:@"%i", (NSInteger)MGSKosmicTaskVersionNumber]; 
 	
 	/*
 	 

@@ -15,5 +15,11 @@
  is essential that agvtool is executed to update the bundle version
  
  */
-extern double KosmicTaskVersionNumber;
-extern const unsigned char KosmicTaskVersionString[];
+
+/* server */
+//extern double KosmicTaskVersionNumber;
+//extern const unsigned char KosmicTaskVersionString[];
+
+/* framework */
+extern double MGSKosmicTaskVersionNumber;
+extern const unsigned char MGSKosmicTaskVersionString[];

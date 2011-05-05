@@ -679,8 +679,8 @@
 		AB97DF330EE32CFF000CD96E /* CloseTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB97DF320EE32CFF000CD96E /* CloseTemplate.tif */; };
 		AB98459D0D40BC4C0072DDA4 /* MGSTaskSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = AB98459C0D40BC4C0072DDA4 /* MGSTaskSpecifier.m */; };
 		AB9845E10D40C0310072DDA4 /* MGSTaskSpecifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9845E00D40C0310072DDA4 /* MGSTaskSpecifierManager.m */; };
-		AB98B0EC10C54DDD00C214B3 /* MGSBundleTaskInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = AB98B0EA10C54DDD00C214B3 /* MGSBundleTaskInfo.h */; };
-		AB98B0ED10C54DDD00C214B3 /* MGSBundleTaskInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB98B0EB10C54DDD00C214B3 /* MGSBundleTaskInfo.m */; };
+		AB98B0EC10C54DDD00C214B3 /* MGSBundleInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = AB98B0EA10C54DDD00C214B3 /* MGSBundleInfo.h */; };
+		AB98B0ED10C54DDD00C214B3 /* MGSBundleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = AB98B0EB10C54DDD00C214B3 /* MGSBundleInfo.m */; };
 		AB992FB211AFC62300889789 /* MGSLanguageResourcesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AB992FB011AFC62300889789 /* MGSLanguageResourcesManager.h */; };
 		AB992FB311AFC62300889789 /* MGSLanguageResourcesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB992FB111AFC62300889789 /* MGSLanguageResourcesManager.m */; };
 		AB9975980D5B589C00DA13B6 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97324FDCFA39411CA2CEA /* AppKit.framework */; };
@@ -3998,8 +3998,8 @@
 		AB98459C0D40BC4C0072DDA4 /* MGSTaskSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSTaskSpecifier.m; sourceTree = "<group>"; };
 		AB9845DF0D40C0310072DDA4 /* MGSTaskSpecifierManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTaskSpecifierManager.h; sourceTree = "<group>"; };
 		AB9845E00D40C0310072DDA4 /* MGSTaskSpecifierManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSTaskSpecifierManager.m; sourceTree = "<group>"; };
-		AB98B0EA10C54DDD00C214B3 /* MGSBundleTaskInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBundleTaskInfo.h; sourceTree = "<group>"; };
-		AB98B0EB10C54DDD00C214B3 /* MGSBundleTaskInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBundleTaskInfo.m; sourceTree = "<group>"; };
+		AB98B0EA10C54DDD00C214B3 /* MGSBundleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBundleInfo.h; sourceTree = "<group>"; };
+		AB98B0EB10C54DDD00C214B3 /* MGSBundleInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBundleInfo.m; sourceTree = "<group>"; };
 		AB992FB011AFC62300889789 /* MGSLanguageResourcesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLanguageResourcesManager.h; sourceTree = "<group>"; };
 		AB992FB111AFC62300889789 /* MGSLanguageResourcesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLanguageResourcesManager.m; sourceTree = "<group>"; };
 		AB99A5D30D707AAB00B9141E /* ClockFaceGrey16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ClockFaceGrey16.png; sourceTree = "<group>"; };
@@ -5981,8 +5981,8 @@
 				ABE145870EB62D0C0079A482 /* MGSCodeSigning.m */,
 				ABAC7B620EEAA7F500ACFD87 /* MGSBundleToolPath.h */,
 				ABAC7B630EEAA7F500ACFD87 /* MGSBundleToolPath.m */,
-				AB98B0EA10C54DDD00C214B3 /* MGSBundleTaskInfo.h */,
-				AB98B0EB10C54DDD00C214B3 /* MGSBundleTaskInfo.m */,
+				AB98B0EA10C54DDD00C214B3 /* MGSBundleInfo.h */,
+				AB98B0EB10C54DDD00C214B3 /* MGSBundleInfo.m */,
 				AB859EF110CD32C40098C8E3 /* MGSMemoryManagement.h */,
 				AB859EF210CD32C40098C8E3 /* MGSMemoryManagement.m */,
 				AB8934F21168A83700F6177E /* MGSResultFormat.h */,
@@ -8703,7 +8703,7 @@
 				ABB4A205104D164100CCC840 /* MGSAppleScriptRunner.h in Headers */,
 				AB3BD5DB1051B9EE003AAB9C /* MGSNumberInputView.h in Headers */,
 				ABA8076B1062CBDA00B06709 /* MGSKeyValueBinding.h in Headers */,
-				AB98B0EC10C54DDD00C214B3 /* MGSBundleTaskInfo.h in Headers */,
+				AB98B0EC10C54DDD00C214B3 /* MGSBundleInfo.h in Headers */,
 				ABCDAE6D10C5CEC700C9BC25 /* AquaticPrime.h in Headers */,
 				ABCDAEE110C5D61300C9BC25 /* MGSAPLicence.h in Headers */,
 				AB54B8D810C6772A00BCC695 /* MGSAPLicenceCode.h in Headers */,
@@ -11393,7 +11393,7 @@
 				ABEEC4651061922F00C42D48 /* MGSIntegerTransformer.m in Sources */,
 				ABA8076C1062CBDA00B06709 /* MGSKeyValueBinding.m in Sources */,
 				ABC103AA107694C00040E569 /* MGSPowerManagement.m in Sources */,
-				AB98B0ED10C54DDD00C214B3 /* MGSBundleTaskInfo.m in Sources */,
+				AB98B0ED10C54DDD00C214B3 /* MGSBundleInfo.m in Sources */,
 				ABCDAE6C10C5CEC700C9BC25 /* AquaticPrime.c in Sources */,
 				AB54B8CF10C6767700BCC695 /* MGSAPLicence.m in Sources */,
 				AB33562B10CAA05F003B44AC /* NSString_Bezier_Mugginsoft.m in Sources */,

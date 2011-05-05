@@ -9,6 +9,7 @@
 #import "MGSLanguagePluginController.h"
 #import "NSBundle_Mugginsoft.h"
 #import "MGSPath.h"
+#import "MGSBundleInfo.h"
 
 static MGSLanguagePluginController *mgs_sharedController = nil;
 
@@ -133,8 +134,30 @@ static MGSLanguagePluginController *mgs_sharedController = nil;
 {
 	if (!self.resourcesLoaded) {
 		
-		// load app resources
 		NSString *appPath = [[self class] applicationLanguageResourcesPath];
+		BOOL resourcesInSyncWithBundle = [MGSBundleInfo appResourcesInSyncWithBundle];
+		
+		/*
+		 
+		 if local resources are not synced with the bundle then we 
+		 delete the local application resources to force all of them 
+		 to be reloaded from the bundle
+		 
+		 */
+		if (!resourcesInSyncWithBundle) {
+			
+			NSMutableString *infoString = [NSMutableString stringWithFormat:@"A new application bundle (ver: %@) has been found\n", [MGSBundleInfo applicationBundleVersion]];
+			[infoString appendString:@"All application resources will be updated from the bundle.\n"];	
+			MLogInfo(infoString, nil);		
+
+			NSError *error = nil;
+			[[NSFileManager defaultManager] removeItemAtPath:appPath error:&error];
+			if (error) {
+				MLogInfo(@"An error occured when trying to update the application resources : %@", error);
+			} 
+		}
+		
+		// load app resources
 		for (MGSLanguagePlugin *plugin in [self instances]) {
 			[plugin loadApplicationResourcesAtPath:appPath name:[plugin scriptType]];
 		}
@@ -146,6 +169,17 @@ static MGSLanguagePluginController *mgs_sharedController = nil;
 		}
 		
 		self.resourcesLoaded = YES;
+		
+		/*
+		 
+		 confirm that app resources are now in sync with bundle.
+		 
+		 at present we don't use any error reporting to confirm wether the resources were imported without error.
+	
+		 */
+		if (!resourcesInSyncWithBundle) {
+			[MGSBundleInfo confirmAppResourcesInSyncWithBundle];
+		}
 	}
 	
 }

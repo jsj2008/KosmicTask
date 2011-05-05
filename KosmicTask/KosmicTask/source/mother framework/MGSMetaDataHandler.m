@@ -7,7 +7,7 @@
 //
 #import "MGSMother.h"
 #import "MGSMetaDataHandler.h"
-#import "MGSBundleTaskInfo.h"
+#import "MGSBundleInfo.h"
 #import "MGSSystem.h"
 #import "NSBundle_Mugginsoft.h"
 #import "MGSKosmicTaskServer_vers.h"
@@ -40,17 +40,17 @@
 		
 		switch (status) {
 			case 0:
-				MLog(RELEASELOG, @"mdimport %@ returns 0 - success", path);
+				MLog(DEBUGLOG, @"mdimport %@ returns 0 - success", path);
 				
 				// get bundle task info dictionary
-				NSMutableDictionary *taskInfo = [MGSBundleTaskInfo infoDictionary];
-				[taskInfo setObject:[NSNumber numberWithDouble:KosmicTaskServerVersionNumber] forKey:MGSToolInfoKeyBundleVersionDocsImported];
+				NSMutableDictionary *taskInfo = [MGSBundleInfo serverInfoDictionary];
+				[taskInfo setObject:[NSNumber numberWithDouble:KosmicTaskServerVersionNumber] forKey:MGSKeyBundleVersionDocsImported];
 				
 				if (NO) {
-					[taskInfo setObject:[[MGSSystem sharedInstance] machineSerialNumber] forKey:MGSToolInfoKeyMachineSerial];
+					[taskInfo setObject:[[MGSSystem sharedInstance] machineSerialNumber] forKey:MGSKeyMachineSerial];
 				}
 				
-				[MGSBundleTaskInfo saveInfoDictionary:taskInfo];
+				[MGSBundleInfo saveServerInfoDictionary];
 				
 				break;
 				
