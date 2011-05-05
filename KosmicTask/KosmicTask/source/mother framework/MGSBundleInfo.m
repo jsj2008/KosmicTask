@@ -51,6 +51,10 @@ NSString *MGSKeyMachineSerial = @"machineSerial";
 	 it is imperative that the bundle version is bumped in this way otherwise
 	 new application task importing will not occur
 	 
+	 we use the compiled in version as it is guaranteed to be accesible to all
+	 the components that link against the framework rather than having to access
+	 the app bundle info.plist
+	 
 	 */
 	NSNumber *bundleVersion = [NSNumber numberWithDouble:MGSKosmicTaskVersionNumber];
 	
