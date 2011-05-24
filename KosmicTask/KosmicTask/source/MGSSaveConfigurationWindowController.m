@@ -97,9 +97,9 @@
 				changeText = NSLocalizedString(@"delete task", @"Save configuration sheet - task will be deleted");
 			} else if  ([script schedulePublished]) {
 				if ([script published]) {
-					changeText = NSLocalizedString(@"publish task", @"Save configuration sheet - task will be published");
+					changeText = NSLocalizedString(@"share task", @"Save configuration sheet - task will be shared");
 				} else {
-					changeText = NSLocalizedString(@"unpublish task", @"Save configuration sheet - task will be unpublished");
+					changeText = NSLocalizedString(@"unshare task", @"Save configuration sheet - task will be unshared");
 				}
 			}
 		}
