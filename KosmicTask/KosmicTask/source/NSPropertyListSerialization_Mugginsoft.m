@@ -117,6 +117,12 @@
  */
 + (NSXMLDocument *)XMLDocumentFromPropertyList:(id)aPlist format:(NSString *)format errorDescription:(NSString **)errorString
 {
+	/*
+	
+	 it might have been smarter to XSLT here and transform the XML that way.
+	 
+	 */
+	
 	#pragma unused(format)
 	NSString *resultString = NSLocalizedString(@"results", @"xml results node");
 
@@ -150,13 +156,26 @@
 		return NO;
 	}
 	
+	
 	// look for simple data types
 	if ([aPlist isKindOfClass:[NSString class]]) {
 		simpleData = YES;
 		nodeName = @"text";
 	} else if ([aPlist isKindOfClass:[NSNumber class]]) {
 		simpleData = YES;
-		nodeName = @"number";
+		
+		
+		const char *nType = [aPlist objCType];
+		NSLog(@"plist type = %s", nType);
+		if (strcmp(nType, @encode(double)) == 0 || strcmp(nType,  @encode(float)) == 0) {
+			nodeName = @"number";
+		} else if (strcmp(nType, @encode(BOOL)) == 0) {
+			nodeName = @"bool";
+		} else {
+			nodeName = @"integer";
+		}
+		aPlist = [aPlist stringValue];
+		
 	} else if ([aPlist isKindOfClass:[NSDate class]]) {
 		simpleData = YES;
 		nodeName = @"date";
@@ -204,7 +223,15 @@
 		
 		NSArray *dictKeys = [aPlist allKeys];
 		for (id key in dictKeys) {
-			if (![self addPropertyList:[aPlist objectForKey:key] toXMLElement:element withName:key errorDescription:errorString]) {
+			
+			// get item
+			id item = [aPlist objectForKey:key];
+			
+			id keyElement = [[NSXMLElement alloc] initWithName:key];
+			[element addChild:keyElement];
+			
+			// add item
+			if (![self addPropertyList:item toXMLElement:keyElement withName:nil errorDescription:errorString]) {
 				return NO;
 			}			
 		}
