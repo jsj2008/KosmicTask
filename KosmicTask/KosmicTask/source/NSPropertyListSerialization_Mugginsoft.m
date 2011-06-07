@@ -166,7 +166,7 @@
 		
 		
 		const char *nType = [aPlist objCType];
-		NSLog(@"plist type = %s", nType);
+		//NSLog(@"plist type = %s", nType);
 		if (strcmp(nType, @encode(double)) == 0 || strcmp(nType,  @encode(float)) == 0) {
 			nodeName = @"number";
 		} else if (strcmp(nType, @encode(BOOL)) == 0) {

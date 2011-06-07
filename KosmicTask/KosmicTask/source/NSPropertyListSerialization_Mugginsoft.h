@@ -9,7 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 
+
 @interface NSPropertyListSerialization (Mugginsoft)
+int myArray[2] = {1,2};
 + (id)coercePropertyList:(id)plist;
 + (NSDictionary *)coerceDictionary:(NSDictionary *)plist;
 + (NSArray *)coerceArray:(NSArray *)plist;

@@ -1189,6 +1189,11 @@
 		ABDB815D0DF7141100F24711 /* UKNibOwner.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDB81240DF712AF00F24711 /* UKNibOwner.m */; };
 		ABDB815E0DF7141500F24711 /* UKSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDB81260DF712AF00F24711 /* UKSystemInfo.m */; };
 		ABDB81600DF7147100F24711 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDB815F0DF7147100F24711 /* AddressBook.framework */; };
+		ABDBEB3E13927AC600553735 /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
+		ABDBEB3F13927AC600553735 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		ABDBEC8613927BD900553735 /* Export Plugin YAML.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = ABDBEB4413927AC600553735 /* Export Plugin YAML.plugin */; };
+		ABDBED6713927D7B00553735 /* MGSYAMLExportPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDBEB3413927A9C00553735 /* MGSYAMLExportPlugin.m */; };
+		ABDBEDA1139282A900553735 /* YAMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F6E8A130C862500342F11 /* YAMLKit.framework */; };
 		ABDCDBAE0D7F4EE4003F8A0C /* MGSFlippedView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDCDBAD0D7F4EE4003F8A0C /* MGSFlippedView.m */; };
 		ABDEA2240E6336AA00CE1739 /* MGSNetSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ABDEA2220E6336AA00CE1739 /* MGSNetSocket.h */; };
 		ABDEA2250E6336AA00CE1739 /* MGSNetSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDEA2230E6336AA00CE1739 /* MGSNetSocket.m */; };
@@ -2597,6 +2602,27 @@
 			remoteGlobalIDString = 09C09E250CDC7D710048BC79;
 			remoteInfo = MGSMother;
 		};
+		ABDBEB3913927AC600553735 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09C09E250CDC7D710048BC79;
+			remoteInfo = MGSMother;
+		};
+		ABDBEC3113927B8F00553735 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABDBEB3713927AC600553735;
+			remoteInfo = "Export Plugin YAML";
+		};
+		ABDBED7F1392823700553735 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = YAMLKit;
+		};
 		ABE014EF0D3EB94A00899F73 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ABE014E50D3EB94A00899F73 /* PSMTabBarControl.xcodeproj */;
@@ -3162,6 +3188,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				ABDBEC8613927BD900553735 /* Export Plugin YAML.plugin in Copy Plugins */,
 				ABE7839A1325189000663CBB /* Language Plugin Lua.lang-plugin in Copy Plugins */,
 				ABBA131312B28EB5005F12A5 /* Language Plugin JSCocoa.lang-plugin in Copy Plugins */,
 				AB19176612AFE02800710031 /* Language Plugin LuaCocoa.lang-plugin in Copy Plugins */,
@@ -4666,6 +4693,10 @@
 		ABDB81250DF712AF00F24711 /* UKSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKSystemInfo.h; sourceTree = "<group>"; };
 		ABDB81260DF712AF00F24711 /* UKSystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKSystemInfo.m; sourceTree = "<group>"; };
 		ABDB815F0DF7147100F24711 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
+		ABDBEB3313927A9C00553735 /* MGSYAMLExportPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSYAMLExportPlugin.h; sourceTree = SOURCE_ROOT; };
+		ABDBEB3413927A9C00553735 /* MGSYAMLExportPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSYAMLExportPlugin.m; sourceTree = SOURCE_ROOT; };
+		ABDBEB4413927AC600553735 /* Export Plugin YAML.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Export Plugin YAML.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABDBEB8F13927AC700553735 /* Export Plugin YAML-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Export Plugin YAML-Info.plist"; sourceTree = "<group>"; };
 		ABDCDBAC0D7F4EE4003F8A0C /* MGSFlippedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFlippedView.h; sourceTree = "<group>"; };
 		ABDCDBAD0D7F4EE4003F8A0C /* MGSFlippedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFlippedView.m; sourceTree = "<group>"; };
 		ABDEA2220E6336AA00CE1739 /* MGSNetSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNetSocket.h; sourceTree = "<group>"; };
@@ -5511,6 +5542,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ABDBEB3D13927AC600553735 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABDBEDA1139282A900553735 /* YAMLKit.framework in Frameworks */,
+				ABDBEB3E13927AC600553735 /* MGSKosmicTask.framework in Frameworks */,
+				ABDBEB3F13927AC600553735 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABE3302D118624A90070EF32 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -6090,6 +6131,7 @@
 				ABA301C70DE4B1BD002DB3F4 /* Export Plugin Plist.plugin */,
 				AB9E8FD40DE1CA0C00501378 /* Export Plugin RTF.plugin */,
 				ABA301E00DE4B245002DB3F4 /* Export Plugin XML.plugin */,
+				ABDBEB4413927AC600553735 /* Export Plugin YAML.plugin */,
 				8D1107320486CEB800E47090 /* KosmicTask.app */,
 				AB27B296118A18D400132977 /* KosmicTaskAppleScriptCocoaRunner */,
 				091835EF0D0C34DF008604BD /* KosmicTaskAppleScriptRunner */,
@@ -6102,6 +6144,7 @@
 				AB6675DB1205B9E2006763E2 /* KosmicTaskJavaScriptRunner */,
 				AB562550118DB1040012487B /* KosmicTaskKshRunner */,
 				AB19162D12AFD90300710031 /* KosmicTaskLuaCocoaRunner */,
+				ABE7816C132516D800663CBB /* KosmicTaskLuaRunner */,
 				AB69B188118AFE5F00903D1D /* KosmicTaskPerlRunner */,
 				AB69B359118B00FB00903D1D /* KosmicTaskPhpRunner */,
 				AB5CD954118AEC4B00C545CD /* KosmicTaskPythonObjCRunner */,
@@ -6123,6 +6166,7 @@
 				AB66758D1205B9DD006763E2 /* Language Plugin JavaScript.lang-plugin */,
 				AB3180C712B2884D001E821B /* Language Plugin JSCocoa.lang-plugin */,
 				AB156148118DA91300DC01C7 /* Language Plugin Korn Shell.lang-plugin */,
+				ABE78257132516FF00663CBB /* Language Plugin Lua.lang-plugin */,
 				AB1914D012AFD8A500710031 /* Language Plugin LuaCocoa.lang-plugin */,
 				AB69B0B2118AFDAB00903D1D /* Language Plugin Perl.lang-plugin */,
 				AB69B2D9118B007500903D1D /* Language Plugin Php.lang-plugin */,
@@ -6149,8 +6193,6 @@
 				ABA2FD0C0DE4CA0C00589B2A /* Send Plugin TextEdit.plugin */,
 				AB1512F10DE4BD17002280E3 /* Send Plugin Word.plugin */,
 				AB31670A128D402C0037EF1C /* Test KosmicTask App.octest */,
-				ABE7816C132516D800663CBB /* KosmicTaskLuaRunner */,
-				ABE78257132516FF00663CBB /* Language Plugin Lua.lang-plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6420,6 +6462,8 @@
 				ABA301B60DE4AD74002DB3F4 /* MGSPlistExportPlugin.m */,
 				ABA301B70DE4B14F002DB3F4 /* MGSXMLExportPlugin.h */,
 				ABA301B80DE4B14F002DB3F4 /* MGSXMLExportPlugin.m */,
+				ABDBEB3313927A9C00553735 /* MGSYAMLExportPlugin.h */,
+				ABDBEB3413927A9C00553735 /* MGSYAMLExportPlugin.m */,
 			);
 			name = Export;
 			sourceTree = "<group>";
@@ -7597,6 +7641,7 @@
 				AB1915C712AFD8A800710031 /* Language Plugin LuaCocoa-Info.plist */,
 				AB31810C12B2884D001E821B /* Language Plugin JSCocoa-Info.plist */,
 				ABE782A0132516FF00663CBB /* Language Plugin CINT-Info copy.plist */,
+				ABDBEB8F13927AC700553735 /* Export Plugin YAML-Info.plist */,
 			);
 			name = info.plist;
 			sourceTree = "<group>";
@@ -8830,7 +8875,7 @@
 			productReference = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8D1107260486CEB800E47090 /* KosmicTask */ = {
+		8D1107260486CEB800E47090 /* Fragaria */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "KosmicTask" */;
 			buildPhases = (
@@ -8901,6 +8946,7 @@
 				AB7604DA12BABEDD00542363 /* PBXTargetDependency */,
 				AB0DBF9E130C8C53000F4673 /* PBXTargetDependency */,
 				ABE782F61325175B00663CBB /* PBXTargetDependency */,
+				ABDBEC3213927B8F00553735 /* PBXTargetDependency */,
 			);
 			name = KosmicTask;
 			productInstallPath = "$(HOME)/Applications";
@@ -9962,6 +10008,25 @@
 			productReference = ABD668D80DE6035000097C1B /* Send Plugin Pages.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		ABDBEB3713927AC600553735 /* Export Plugin YAML */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABDBEB4013927AC600553735 /* Build configuration list for PBXNativeTarget "Export Plugin YAML" */;
+			buildPhases = (
+				ABDBEB3A13927AC600553735 /* Resources */,
+				ABDBEB3B13927AC600553735 /* Sources */,
+				ABDBEB3D13927AC600553735 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABDBEB3813927AC600553735 /* PBXTargetDependency */,
+				ABDBED801392823700553735 /* PBXTargetDependency */,
+			);
+			name = "Export Plugin YAML";
+			productName = "Export Plugin RTF";
+			productReference = ABDBEB4413927AC600553735 /* Export Plugin YAML.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 		ABE3302E118624A90070EF32 /* Language Plugin AppleScript */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABE33034118624AA0070EF32 /* Build configuration list for PBXNativeTarget "Language Plugin AppleScript" */;
@@ -10165,7 +10230,8 @@
 				ABA301BB0DE4B1BD002DB3F4 /* Export Plugin Plist */,
 				AB9E8FD30DE1CA0C00501378 /* Export Plugin RTF */,
 				ABA301D40DE4B245002DB3F4 /* Export Plugin XML */,
-				8D1107260486CEB800E47090 /* KosmicTask */,
+				ABDBEB3713927AC600553735 /* Export Plugin YAML */,
+				8D1107260486CEB800E47090 /* Fragaria */,
 				AB27B287118A18D400132977 /* KosmicTaskAppleScriptCocoaRunner */,
 				091835EE0D0C34DF008604BD /* KosmicTaskAppleScriptRunner */,
 				AB27AF541189F17400132977 /* KosmicTaskBashRunner */,
@@ -11059,6 +11125,13 @@
 			files = (
 				ABB93F780DF9CC94009A2BFC /* FileParameterEditView.xib in Resources */,
 				ABA0896F0DFA815C0099755E /* FileParameterInputView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABDBEB3A13927AC600553735 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12206,6 +12279,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ABDBEB3B13927AC600553735 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABDBED6713927D7B00553735 /* MGSYAMLExportPlugin.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABE3302C118624A90070EF32 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -12889,6 +12970,21 @@
 			isa = PBXTargetDependency;
 			target = 09C09E250CDC7D710048BC79 /* MGSKosmicTask */;
 			targetProxy = ABD668CC0DE6035000097C1B /* PBXContainerItemProxy */;
+		};
+		ABDBEB3813927AC600553735 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09C09E250CDC7D710048BC79 /* MGSKosmicTask */;
+			targetProxy = ABDBEB3913927AC600553735 /* PBXContainerItemProxy */;
+		};
+		ABDBEC3213927B8F00553735 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABDBEB3713927AC600553735 /* Export Plugin YAML */;
+			targetProxy = ABDBEC3113927B8F00553735 /* PBXContainerItemProxy */;
+		};
+		ABDBED801392823700553735 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = YAMLKit;
+			targetProxy = ABDBED7F1392823700553735 /* PBXContainerItemProxy */;
 		};
 		ABE3305A118625DC0070EF32 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -17405,6 +17501,44 @@
 			};
 			name = Release;
 		};
+		ABDBEB4113927AC600553735 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				INFOPLIST_FILE = "Export Plugin YAML-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "Export Plugin YAML";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		ABDBEB4213927AC600553735 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = "Export Plugin YAML-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "Export Plugin YAML";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		ABDBEB4313927AC600553735 /* Release Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				INFOPLIST_FILE = "Export Plugin YAML-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_NAME = "Export Plugin YAML";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = "Release Development";
+		};
 		ABE33031118624AA0070EF32 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -18643,6 +18777,16 @@
 				ABD668D60DE6035000097C1B /* Debug */,
 				ABD668D70DE6035000097C1B /* Release */,
 				AB5F468310CC485500CCFCC2 /* Release Development */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABDBEB4013927AC600553735 /* Build configuration list for PBXNativeTarget "Export Plugin YAML" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABDBEB4113927AC600553735 /* Debug */,
+				ABDBEB4213927AC600553735 /* Release */,
+				ABDBEB4313927AC600553735 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
