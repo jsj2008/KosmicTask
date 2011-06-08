@@ -628,7 +628,7 @@ errorExit:
 	[taskDict setObject:[self taskRunnerClassName] forKey:MGSScriptRunnerClassName];
 	
 	// storage URL
-	[taskDict setObject:[[MGSTempStorage sharedController] reverseURL] forKey:MGSScriptTempStorageReverseURL];
+	[taskDict setObject:[[MGSTempStorage sharedController] storageFolder] forKey:MGSScriptTempStorageReverseURL];
 
 	//
 	// script onRun - mandatory

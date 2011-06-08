@@ -112,6 +112,7 @@ typedef enum _eMGSRequestStatus {
 - (MGSNetRequest *)nextQueuedRequestToSend;
 - (id)nextOwnerInRequestQueue;
 - (void)resetMessages;
+- (MGSNetRequest *)firstRequest;
 
 - (MGSNetRequest *)initWithNetClient:(MGSNetClient *)netClient;
 - (MGSNetRequest *)initWithConnectedSocket:(MGSNetSocket *)socket;

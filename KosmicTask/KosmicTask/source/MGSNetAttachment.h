@@ -11,6 +11,7 @@
 @class MGSError;
 @class MGSNetAttachment;
 @class MGSBrowserImage;
+@class MGSTempStorage;
 
 @protocol MGSNetAttachment <NSObject>
 @required
@@ -28,7 +29,8 @@
 	BOOL _disposed;
 	MGSBrowserImage *_browserImage;
 	id _delegate;
-	NSUInteger _index; 
+	NSUInteger _index;
+	MGSTempStorage *_tempStorage;
 }
 @property (assign) id delegate;
 
@@ -40,8 +42,9 @@
 @property (readonly) BOOL tempFile;
 @property (assign) MGSBrowserImage *browserImage;
 
+- (id)initWithStorageFacility:(MGSTempStorage *)tempStorage;
 + (id)attachmentWithFilePath:(NSString *)filePath;
-+ (id)attachmentWithCreatedTempFilePath;
++ (id)attachmentWithStorageFacility:(MGSTempStorage *)storageFacility;
 + (NSString *)lastPathComponent:(NSString *)path;
 
 - (id)initWithFilePath:(NSString *)filePath;

@@ -37,16 +37,19 @@
  */
 - (void)removeRequest:(MGSNetRequest *)netRequest
 {
-
-	if (![_netRequests containsObject:netRequest]) {
-		return;
+	/*
+	 
+	 this function is called for all requests in a request chain so the negotiate
+	 request may not occur in our collection.
+	 
+	 */
+	if ([_netRequests containsObject:netRequest]) {
+		[_netRequests removeObject:netRequest];
 	}
 	
 	// we are done with this request
 	[netRequest dispose];
 	
-	// remove the request
-	[_netRequests removeObject:netRequest];
 	MLog(DEBUGLOG, @"removeRequest: request handler count is now %i", [_netRequests count]);
 }
 
@@ -79,6 +82,11 @@
 {
 	[self addRequest:request];
 	[request sendRequestOnClient];
+	
+	// do we want to track the negotiate request ?
+	if (request.prevRequest && NO) {
+		[self addRequest:request.prevRequest];
+	}
 }
 
 /*

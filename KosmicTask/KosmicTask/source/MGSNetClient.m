@@ -827,10 +827,24 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 {
 	NSAssert([netSocket disconnectCalled], @"disconnect not called on MGSNetClientSocket");
 	
-	// remove the netsocket
-	//[_netSockets removeObject:netSocket];
+	MGSNetRequest *netRequest = [netSocket.netRequest firstRequest];
 	
-	[_executingRequests removeObject:netSocket.netRequest];
+	// the request that gets added to the list of executing requests may be the first request in a chain
+	// of requests. the request currently bound to the netsocket will likely be the last request in the chain.
+	// failure to remove the correct request leads to a memory leak.
+	// to be certain we traverse the entire request list.
+	BOOL requestFound = NO;
+	do {
+		if ([_executingRequests containsObject:netRequest]) {
+			[_executingRequests removeObject:netRequest];
+			requestFound = YES;
+		}
+		netRequest = netRequest.nextRequest;
+	} while (netRequest);
+	
+	if (!requestFound) {
+		MLog(DEBUGLOG, @"THIS CODE IS LEAKING!");
+	}
 	
 	MLog(DEBUGLOG, @"MGSNetClient: %@ socket removed: executing request count is %i", _serviceName, [_executingRequests count]);
 }
@@ -1062,7 +1076,8 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 			[request sendRequestOnClientSocket];
 		}
 		
-		// add request to executing queue
+		// add request to executing queue.
+		// this may well be a negotiate request
 		[_executingRequests addObject:request];		
 	}
 	

@@ -77,7 +77,7 @@ int MGSTaskRunnerMain (int argc, const char * argv[])
 						format:@"storage URL not found"];
 		}		
 		MGSTempStorage *storage = [MGSTempStorage sharedController];
-		storage.reverseURL = storageURL;
+		storage.storageFolder = storageURL;
 		
 		// get script runner class name
 		NSString *runnerClassName = [taskDict objectForKey:MGSScriptRunnerClassName];

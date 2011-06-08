@@ -108,7 +108,6 @@
 	if ( self == [MGSAppController class] ) {
 		// configure temp storage
 		MGSTempStorage *storage = [MGSTempStorage sharedController];
-		storage.reverseURL = [storage.reverseURL stringByAppendingString:@".files"];
 		[storage deleteStorageFacility];
 		
 		[self initializeUserDefaults];

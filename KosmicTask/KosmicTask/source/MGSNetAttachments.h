@@ -10,6 +10,7 @@
 #import "MGSNetAttachment.h"
 
 @class MGSNetAttachment;
+@class MGSTempStorage;
 
 @interface MGSNetAttachments : NSObject <MGSNetAttachment> {
 	NSMutableArray *_attachments;
@@ -17,6 +18,7 @@
 	NSMutableArray *_attachmentPreviewImages;
 	NSArrayController *_browserImagesController;
 	id delegate;
+	MGSTempStorage *_storageFacility;
 }
 @property (readonly) NSOperationQueue *operationQueue;
 @property (readonly) NSMutableArray *attachmentPreviewImages;
@@ -37,4 +39,5 @@
 - (void)generateAttachmentPreviews;
 - (unsigned long long)validatedLength;
 - (unsigned long long)requiredLength;
+- (MGSTempStorage *)storageFacility;
 @end

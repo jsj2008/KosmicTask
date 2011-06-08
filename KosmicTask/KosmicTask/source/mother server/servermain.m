@@ -85,7 +85,6 @@ int main (int argc, const char * argv[])
 	
 	// configure temp storage
 	MGSTempStorage *storage = [MGSTempStorage sharedController];
-	storage.reverseURL = [storage.reverseURL stringByAppendingString:@".files"];
 	[storage deleteStorageFacility];
 	
 	// create the server

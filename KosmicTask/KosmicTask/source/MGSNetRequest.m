@@ -425,6 +425,24 @@ static NSThread *networkThread = nil;
 
 /*
  
+ - firstRequest
+ 
+ */
+- (MGSNetRequest *)firstRequest
+{
+	MGSNetRequest *request = self;
+	do {
+		if (request.prevRequest == nil) {
+			break;
+		}
+		request = request.prevRequest;
+	} while (YES);
+	
+	return request;
+}
+
+/*
+ 
  - queuedNegotiateRequest
  
  */
@@ -683,6 +701,8 @@ static NSThread *networkThread = nil;
  */
 - (void)dispose
 {
+	MLog(DEBUGLOG, @"MGSNetRequest disposed");
+	
 	disposed = YES;
 	
 	// remove temporary paths

@@ -36,15 +36,15 @@
 	// get path
 	NSString *filename = [NSString stringWithFormat:@"%@.%@", MGSKosmicTempFileNamePrefix, suffix];
 	
-	// this function is for cerating temp storage for server tasks hence ensure
+	// this function is for creating temp storage for server tasks hence ensure
 	// that we use the server URL
-	MGSTempStorage* tempStorage = [[MGSTempStorage alloc] initWithReverseURL:@"com.mugginsoft.kosmictaskserver.files"];	
+	MGSTempStorage* tempStorage = [[MGSTempStorage alloc] initWithFolder:@"com.mugginsoft.kosmictaskserver.files"];	
 	NSString *path = [tempStorage storageFileWithOptions:[NSDictionary dictionaryWithObjectsAndKeys:
 																	  filename, MGSTempFileSuffix,
 																	  nil]];
 	
 	// return value is a URL.
-	// this will be corce to an AS file object
+	// this will be coerced to an AS file object
 	NSURL *url = [NSURL fileURLWithPath:path];
 	
 	return url;

@@ -10,6 +10,7 @@
 #import "MGSNetAttachments.h"
 #import "NSString_Mugginsoft.h"
 #import "NSScanner_Mugginsoft.h"
+#import "MGSTempStorage.h"
 
 static NSString *MGSAttachmentSeparator = @";";
 
@@ -53,6 +54,7 @@ static NSString *MGSAttachmentSeparator = @";";
 - (id)initWithHeaderRepresentation:(NSString *)headerRepresentation
 {
 	if ((self = [super init])) {
+			
 		_attachments = [NSMutableArray arrayWithCapacity:1];
 		
 		_browserImagesController = [NSArrayController new];
@@ -67,6 +69,20 @@ static NSString *MGSAttachmentSeparator = @";";
 	}
 	
 	return self;
+}
+
+/*
+ 
+ - storageFacility
+ 
+ */
+- (MGSTempStorage *)storageFacility
+{
+	if (!_storageFacility) {
+		_storageFacility = [[MGSTempStorage alloc] initStorageFacility];
+	}
+	
+	return _storageFacility;
 }
 
 /*
@@ -106,8 +122,10 @@ static NSString *MGSAttachmentSeparator = @";";
  */
 - (MGSNetAttachment *)addAttachmentToCreatedTempFileWithRequiredLength:(unsigned long long)requiredLength
 {
+
 	// file path must exist and be readable
-	MGSNetAttachment *attachment = [MGSNetAttachment attachmentWithCreatedTempFilePath];
+	MGSNetAttachment *attachment = [MGSNetAttachment attachmentWithStorageFacility:[self storageFacility]];
+
 	if (!attachment) {
 		return nil;
 	}
@@ -365,6 +383,27 @@ static NSString *MGSAttachmentSeparator = @";";
 	}
 	
 	return _operationQueue;
+}
+
+/*
+ 
+ finalize
+ 
+ */
+- (void)finalize
+{
+	MLog(DEBUGLOG, @"MGSNetAttachments finalized.");
+	
+	// dispose of our attachments
+	for (MGSNetAttachment *attachment in _attachments) {
+		[attachment dispose];
+	}
+	
+	if (_storageFacility) {
+		[_storageFacility deleteStorageFacility];
+	}
+	
+	[super finalize];
 }
 
 @end

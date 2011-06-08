@@ -16,7 +16,7 @@ static NSString *MGSAttachmentKeyLength = @"Length";
 static NSString *MGSAttachmentKeyFileName = @"FileName";
 
 @interface MGSNetAttachment(Private)
-- (BOOL)appendFileName:(NSString *)filename;
+- (BOOL)applyFileName:(NSString *)filename;
 - (void)checkForTempFilePath;
 @end
 
@@ -43,6 +43,38 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	return [[self alloc] initWithFilePath:filePath];
 }
 
+/*
+ 
+ - initWithStorageFacility:
+ 
+ */
+- (id)initWithStorageFacility:(MGSTempStorage *)tempStorage
+{
+	// if no temp storage defined then use the shared instance
+	if (!tempStorage) {
+		tempStorage = [MGSTempStorage sharedController];
+	} 
+	_tempStorage = tempStorage;
+	
+	// create a storage file
+	NSString *filePath = [_tempStorage storageFileWithOptions:[NSDictionary dictionaryWithObjectsAndKeys:
+															   @"", MGSTempFileSuffix,
+															   nil]];
+	if (!filePath) {
+		MLog(RELEASELOG, @"Attachment could not created at temp file path %@", filePath);
+		return nil;
+	}
+	
+	MLog(DEBUGLOG, @"Temp attachment file path is: %@", filePath);
+	
+	// create attachment with file path
+	self = [self initWithFilePath:filePath];
+	if (self) {
+		
+	}
+	
+	return self;
+}
 /*
  
  init with file path
@@ -80,23 +112,15 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	return self;
 }
 
+
 /*
  
- attachment with created temp file path
+ + attachmentWithStorageFacility
  
  */
-+ (id)attachmentWithCreatedTempFilePath
++ (id)attachmentWithStorageFacility:(MGSTempStorage *)tempStorage
 {
-	NSString *filePath = [NSString mgs_stringWithCreatedTempFilePathSuffix:MGSKosmicTempFileNamePrefix];
-	if (!filePath) {
-		MLog(RELEASELOG, @"Attachment could not created at temp file path %@");
-		return nil;
-	}
-	
-	MLog(DEBUGLOG, @"Temp attachment file path is: %@", filePath);
-	
-	// create attachment with file path
-	return [self attachmentWithFilePath:filePath];
+	return [[self alloc] initWithStorageFacility:tempStorage];
 }
 
 /*
@@ -318,7 +342,7 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	 if file is on the temp storage path the permit its removal
 	 
 	 */
-	if ([_filePath hasPrefix:[[MGSTempStorage sharedController] storageDirectory]]) {
+	if ([_filePath hasPrefix:[[MGSTempStorage sharedController] storageFacility]]) {
 		_permitFileRemoval = YES;
 	}
 	
@@ -331,20 +355,6 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	} else {
 		MLog(DEBUGLOG, @"Deletion not requested for attachment file: %@", _filePath);
 	}
-}
-
-/*
- 
- finalize
- 
- */
-- (void)finalize
-{
-	MLog(DEBUGLOG, @"MGSNetAttachment finalized.");
-	
-	[self dispose];
-	
-	[super finalize];
 }
 
 /*
@@ -368,7 +378,7 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	// look in dict for original filename of attachment
 	NSString *fileName = [dict objectForKey:MGSAttachmentKeyFileName];
 	if (fileName) {
-		[self appendFileName:fileName];
+		[self applyFileName:fileName];
 	}
 }
 
@@ -461,22 +471,38 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
  rename file
  
  */
-- (BOOL)appendFileName:(NSString *)filename
+- (BOOL)applyFileName:(NSString *)filename
 {
+
 	// rename the temp file so that it ends with name of original file.
 	// this should succeed as the temp file name itself is unqiue
 	NSString *attachmentPath = self.filePath;
+	NSString *newAttachmentPath = nil;
 	
-	NSString *newAttachmentPath = [NSString stringWithFormat:@"%@.%@", attachmentPath, filename];
-	if (![[NSFileManager defaultManager] moveItemAtPath:attachmentPath toPath:newAttachmentPath error:NULL]) {
-		NSString *error = NSLocalizedString(@"Cannot create parameter attachment file", @"Returned by server when cannot rename temp attachment file");
-		MLog(RELEASELOG, @"%@ : %@", error, newAttachmentPath);	
-		
-		return NO;
+	// If tempStorage defined and unique file names are not a requirement then try
+	// and rename file to use filename only. If this fails we use the default implementation
+	// and retain the unique file prefix
+	if (_tempStorage && ![_tempStorage alwaysGenerateUniqueFilenames]) {
+		newAttachmentPath = [[attachmentPath stringByDeletingLastPathComponent]
+							 stringByAppendingPathComponent:filename];
+		if (![[NSFileManager defaultManager] moveItemAtPath:attachmentPath toPath:newAttachmentPath error:NULL]) {
+			newAttachmentPath = nil;
+		}
 	}
 	
+	if (!newAttachmentPath) {
+		newAttachmentPath = [NSString stringWithFormat:@"%@.%@", attachmentPath, filename];
+		if (![[NSFileManager defaultManager] moveItemAtPath:attachmentPath toPath:newAttachmentPath error:NULL]) {
+			NSString *error = NSLocalizedString(@"Cannot create parameter attachment file", @"Returned by server when cannot rename temp attachment file");
+			MLog(RELEASELOG, @"%@ : %@", error, newAttachmentPath);	
+			
+			return NO;
+		}
+		
+	}
+
 	_filePath = newAttachmentPath;
-	
+
 	return YES;
 }
 
@@ -491,7 +517,7 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	// then the file will be flagged for removal on finalize
 	//BOOL isTempFile = [_filePath mgs_isTempFilePathContaining:MGSAttachmentTempFileSuffix];
 
-	BOOL isTempFile = [_filePath hasPrefix:[[MGSTempStorage sharedController] storageDirectory]];
+	BOOL isTempFile = [_filePath hasPrefix:[[MGSTempStorage sharedController] storageFacility]];
 	
 	if (isTempFile) {
 		MLog(DEBUGLOG, @"Attachment temp file WILL be removed on finalization: %@", _filePath);

@@ -72,7 +72,6 @@ typedef enum _MGSScriptAccess {
 	<MGSNetSocketDelegate, MGSNetRequestOwner, NSNetServiceDelegate> {
 	NSNetService *_netService;						// host service - valid for Bonjour discovered clients only
 	BOOL _visible;
-	NSMutableArray *_netSockets;						// sockets connected to host
 	NSMutableArray *_pendingRequests;						// requests waiting to be sent
 	NSMutableArray *_executingRequests;				// running request threads
 	NSMapTable *_contexts;							// client contexts

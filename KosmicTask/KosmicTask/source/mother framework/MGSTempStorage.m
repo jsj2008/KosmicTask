@@ -21,20 +21,34 @@ static id _sharedController = nil;
 
 @implementation MGSTempStorage
 
-@synthesize reverseURL;
+@synthesize storageFolder, alwaysGenerateUniqueFilenames;
+
+/*
+ 
+ + defaultReverseURL
+ 
+ */
++ (NSString *)defaultReverseURL
+{
+	return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"];
+}
 
 /*
  
  shared controller singleton
  
- note that we had a shared controller but that we can also instantiate separate instances
+ note that we had a shared controller but that we can also instantiate separate instances.
+ by default separate instances create their storage within the folder managed by the shared controller.
+ when the shared controller is deallocated all the separate storage instances will be deleted too.
  
  */
 + (id)sharedController 
 {
 	@synchronized(self) {
 		if (nil == _sharedController) {
-			_sharedController = [[self alloc] initWithReverseURL:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"]]; 
+			NSString *revURL = [[self defaultReverseURL] stringByAppendingString:@".files"];
+			_sharedController = [[self alloc] initWithFolder:revURL];
+			[(MGSTempStorage *)_sharedController setAlwaysGenerateUniqueFilenames:YES];
 		}
 	}
 	return _sharedController;
@@ -49,26 +63,57 @@ static id _sharedController = nil;
  */
 - (id) init
 {
-	return [self initWithReverseURL:nil];
+	return [self initStorageFacility];
 }
 
 /*
  
- - init
+ - initWithFolder:
  
  designated initialiser
  
  */
-- (id) initWithReverseURL:(NSString *)URL
+- (id) initWithFolder:(NSString *)folder
 {
 	self = [super init];
 	if (self) {
-		if (!URL) return nil;
-		
-		reverseURL = URL;
+		if (!folder) { 
+			folder = [[self class] defaultReverseURL];
+		}
+		storageFolder = folder;
+		alwaysGenerateUniqueFilenames = NO;
 	}
 	
 	return self;
+}
+
+/*
+ 
+ - initStorageFacility
+ 
+ */
+- (id)initStorageFacility
+{
+	MGSTempStorage *sharedController = [[self class] sharedController];
+	
+	// We want to use the same storage folder as the shared instance.
+	// This will ensure that the separate instances storage folders are created
+	// within the shared instance folder. When the shared instance is deleted at application
+	// shutdown all the separate instance storage will also get removed.
+	// This should prevent any orphaned files from being persisted.
+	
+	// create a new storage directory
+	NSString *storageDirectory = [sharedController storageDirectoryWithOptions:nil];
+	
+	// extract the folder for the above directory
+	NSString *folder = [[sharedController storageFolder] stringByAppendingPathComponent:[storageDirectory lastPathComponent]];
+	
+	
+	self = [self initWithFolder:folder];
+	if (self) {
+	}
+	
+	return self;	
 }
 
 /*
@@ -105,7 +150,7 @@ static id _sharedController = nil;
 	}
 
 	// bundleName
-	path = [path stringByAppendingPathComponent:reverseURL];
+	path = [path stringByAppendingPathComponent:storageFolder];
 	
 	return path;
 }
@@ -115,7 +160,7 @@ static id _sharedController = nil;
  
  */
 
-- (NSString *)storageDirectory
+- (NSString *)storageFacility
 {
 	/*
 	
@@ -160,12 +205,12 @@ static id _sharedController = nil;
 
 	NSString *directory = [options objectForKey:MGSTempFileTemporaryDirectory];
 	if (!directory) {
-		directory = [self storageDirectory];
+		directory = [self storageFacility];
 	}
 	
 	NSString *template = [options objectForKey:MGSTempFileTemplate];
 	if (!template) {
-		template = @"XXXXXXXXXX";
+		template = @"XXXXXX";
 	}
 	
 	// create template
@@ -197,11 +242,11 @@ static id _sharedController = nil;
 {
 	NSString *template = [options objectForKey:MGSTempFileTemplate];
 	if (!template) {
-		template = @"MGSTempStorage.XXXXXXXXXX";
+		template = @"XXXXXX";
 	}
 	
 	// create directory template
-	NSString *templatePath = [NSString stringWithFormat:@"%@%@", [self storageDirectory], template];
+	NSString *templatePath = [NSString stringWithFormat:@"%@%@", [self storageFacility], template];
 	char *buffer = (char *)[templatePath fileSystemRepresentation];
 	if (buffer == NULL) {
 		NSLog(@"Cannot get representation of temp dir: %@", templatePath);
@@ -241,13 +286,13 @@ static id _sharedController = nil;
 
 /*
  
- - setReverseURL:
+ - setStorageFolder:
  
  */
-- (void)setReverseURL:(NSString *)url
+- (void)setStorageFolder:(NSString *)folder
 {
-	if (url) {
-		reverseURL = url;
+	if (folder) {
+		storageFolder = folder;
 		tempDirectory = nil;	// temp directory will now be different
 	}
 }

@@ -15,18 +15,22 @@ extern NSString *MGSKosmicTempFileNamePrefix;
 
 @interface MGSTempStorage : NSObject {
 	NSString *tempDirectory;
-	NSString *reverseURL;
+	NSString *storageFolder;
+	BOOL alwaysGenerateUniqueFilenames;
 }
 
 + (id)sharedController;
-- (id) initWithReverseURL:(NSString *)URL;
++ (NSString *)defaultReverseURL;
+- (id) initWithFolder:(NSString *)URL;
+- (id)initStorageFacility;
 - (NSString *)storageFileWithOptions:(NSDictionary *)options;
 - (NSString *)storageDirectoryWithOptions:(NSDictionary *)options;
 - (BOOL)removeStorageItemAtPath:(NSString *)path;
-- (NSString *)storageDirectory;
+- (NSString *)storageFacility;
 - (NSString *)storagePath;
 - (void)deleteStorageFacility;
 
-@property (copy) NSString *reverseURL;
+@property (copy) NSString *storageFolder;
+@property BOOL alwaysGenerateUniqueFilenames;
 
 @end
