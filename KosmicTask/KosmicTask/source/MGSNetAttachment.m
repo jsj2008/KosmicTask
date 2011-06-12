@@ -491,6 +491,14 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	}
 	
 	if (!newAttachmentPath) {
+		
+		/*
+		 we have a name collision.
+		 
+		 TODO: a better solution might be creat a unique sub directory and copy the file into it.
+		 In that way the original file name could be preserved.
+		 
+		 */
 		newAttachmentPath = [NSString stringWithFormat:@"%@.%@", attachmentPath, filename];
 		if (![[NSFileManager defaultManager] moveItemAtPath:attachmentPath toPath:newAttachmentPath error:NULL]) {
 			NSString *error = NSLocalizedString(@"Cannot create parameter attachment file", @"Returned by server when cannot rename temp attachment file");
