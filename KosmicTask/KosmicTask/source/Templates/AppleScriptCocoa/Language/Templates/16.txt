@@ -1,7 +1,7 @@
 --
 -- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
 --
--- Credits: 
+-- Credits:
 --
 -- Notes: 
 --
@@ -24,10 +24,11 @@ script KosmicTask
 		
 		try
 			
-			-- target application
-			tell application "Finder"
-				set myResult to name
-			end tell			
+			-- insert AppleScript here and compute myResult
+			set myResult to "Hello, kosmos!"
+			
+			-- log error
+			log "Goodbye, kosmos!"
 			
 			-- myResult is complete, task will end
 			return {kosmicData:myResult}

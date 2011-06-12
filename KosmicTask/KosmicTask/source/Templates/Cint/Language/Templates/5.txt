@@ -13,12 +13,13 @@ Notes:
 
 class KosmicTask {  
 	public:           
+  
   	
   	KosmicTask(int argc, char *argv[]) { 
 
-    	cout << "argument count is" << argc - 1 << endl;
+    	cout << "argument count is " << argc - 1 << endl;
     
-   	 	for (int x = 0; x < argc - 1; x++) {
+   	 	for (int x = 1; x < argc; x++) {
         	cout << argv[x] << endl;
     	}  	
     }   
@@ -27,5 +28,5 @@ class KosmicTask {
  
 int main(int argc, char *argv[]) 
 {
-	KosmicTask kosmic(argc, argv);
+	KosmicTask *kosmic = new KosmicTask(argc, argv);
 }

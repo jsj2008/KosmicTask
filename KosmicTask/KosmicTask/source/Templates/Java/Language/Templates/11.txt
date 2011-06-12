@@ -47,7 +47,7 @@ class kosmicTask
     	HashMap<String, Object> Mars = new HashMap<String, Object>();
     	String moonsMars[] = {"Phobos", "Deimos"};
     	Mars.put(name, "Mars");
-    	Mars.put(radius, 6371);
+    	Mars.put(radius, 3396);
     	Mars.put(satellites, moonsMars);
 
     	// Jupiter
@@ -78,6 +78,10 @@ class kosmicTask
     	Neptune.put(radius, -1);
     	Neptune.put(satellites, moonsNeptune);
 
+		// fix radii
+		Mercury.put(radius, 2440);
+		Neptune.put(radius, 24764);
+		
     	// build dynamic array of planets
     	ArrayList<HashMap> planets = new ArrayList<HashMap>();
     	
