@@ -197,8 +197,10 @@ static NSString * const MGSExternalScriptRunnerException = @"MGSExternalScriptRu
 		// the caller will read stderr and hence access all error stream data
 		// from this task and its child unless we reassign stderr.
 		//
-		// this is generally the best approach but in somecase, say Perl, syntax checking
-		// messages are sent to stderr in which case we will need to intercept them.
+		// this is generally the best approach but in some cases, say Perl, syntax checking
+		// messages are sent to stderr in which case we will need to intercept them before
+		// they are returned to the client.
+		//
 		task = [[NSTask alloc] init];
 		[task setCurrentDirectoryPath:self.workingDirectory];
 		[task setLaunchPath:taskPath];

@@ -1,0 +1,31 @@
+#
+# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+#
+# Credits:
+#
+# Notes: 
+#
+# Links:
+#
+# Apple's take on accessing Cocoa from Python
+# http://developer.apple.com/cocoa/pyobjc.html
+#
+# RubyCocoa documentation
+# http://rubycocoa.sourceforge.net/Documentation
+#
+# Tips and tools
+# http://www.rubyinside.com/the-ultimate-list-of-rubycocoa-tutorials-tips-and-tools-728.html
+#
+require 'osx/cocoa'
+
+def kosmictask()
+	
+	# send log value to stderr
+	OSX::NSLog("Goodbye, kosmos!")
+	
+	# return result
+	result =  OSX::NSString.stringWithString_("Hello, kosmos!")
+	
+	return result
+end
+		

@@ -1,0 +1,27 @@
+--
+-- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+--
+-- Credits:
+--
+-- Notes:  
+--
+	
+try
+		
+	-- compute task result
+	set myResult to "Hello, kosmos!"
+	
+	
+	-- send value to log
+	log "Goodbye, kosmos!"
+	
+	-- return result record
+	return {kosmicData:myResult}
+		
+on error errorMessage number errorNumber
+
+	return {kosmicError:errorMessage}
+
+end try
+
+		

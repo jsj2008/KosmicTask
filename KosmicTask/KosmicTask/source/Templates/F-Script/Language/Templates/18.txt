@@ -1,0 +1,21 @@
+"
+
+Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+"
+[
+	" simple string result "
+	result := 'Hello, kosmos!'.
+	
+	" send log value to stderr"
+	stdout print:'Goodbye, kosmos!'.
+	
+	" return it "
+	result.
+]

@@ -1,0 +1,19 @@
+--[[
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+]]
+function kosmicTask()
+
+	-- send log value to stderr
+	io.stderr:write("Goodbye, kosmos!")
+
+	-- return result
+	return "Hello, kosmos!"
+end

@@ -1,0 +1,23 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+#include <stdio.h>
+
+int main() 
+{
+	// send result to stdout
+	printf("Hello, kosmos!");
+	
+	// send log value to stderr
+	fprintf(stderr, "Goodbye, kosmos!");
+	
+    return 0;
+}
