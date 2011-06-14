@@ -1,29 +1,44 @@
 /*
+
+ KosmicTaskController is predefined in the executing context
+ as suplied by the task runner.
  
- JSON
+ KosmicTaskController provides the following methods:
+ 
+ log() - Logs a value to stderr.
+ 
+ We define additional methods here.
  
  */
-KosmicTaskController = {
-	/*
-	 
-	 objectAsString
-	 
-	 */
-	objectAsString : function(theObject) { 
-		var result = JSON.stringify(theObject); 
-		
-		if (result.substr(0,3) !== "---") {
-			result = "---\n" + result;
-		}
-		
-		return result;
-	} ,
+
+/*
+ 
+ objectAsString
+ 
+ */
+KosmicTaskController.objectAsString = function(theObject) { 
+	var result = JSON.stringify(theObject); 
 	
+	if (result.substr(0,3) !== "---") {
+		result = "---\n" + result;
+	}
 	
-	/*
-	 
-	 printObject
-	 
-	 */
-	printObject : function(theObject) { return this.objectAsString(theObject); }
-};
+	return result;
+}
+
+
+/*
+ 
+ printObject
+ 
+ */
+KosmicTaskController.printObject = function(theObject) { return this.objectAsString(theObject); }
+
+/*
+ 
+ Global functions
+ 
+ */
+function log(str) {	KosmicTaskController.log('' + str);	}
+
+

@@ -15,7 +15,13 @@
 
 NSString* MGSStringCreateWithJSString(JSStringRef jsString);
 JSStringRef MGSJSStringRefCreateWithNSString(NSString *aString);
+JSValueRef MGSJSLogFunction(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
 
+
+@interface MGSJavaScriptRunner()
+	- (void)extendContext:(JSGlobalContextRef)ctx;
+@end
+	
 @implementation MGSJavaScriptRunner
 
 /*
@@ -84,6 +90,9 @@ JSStringRef MGSJSStringRefCreateWithNSString(NSString *aString);
 	JSValueRef exception = NULL;
 	JSObjectRef fn = NULL;
 
+	// extend the context
+	[self extendContext:ctx];
+		
 	// load the KosmicTaskController source
 	NSString *controllerPath = [self pathToResource:@"JavaScript/KosmicTaskController.js"];
 	NSString *controllerSource = [NSString stringWithContentsOfFile:controllerPath encoding:NSUTF8StringEncoding error:NULL];
@@ -98,7 +107,6 @@ JSStringRef MGSJSStringRefCreateWithNSString(NSString *aString);
 	JSEvaluateScript(ctx, controllerJS, NULL, controllerURLJS, 1, &exception);
 	if (exception) goto handleException;
 	
-
 	// load the task script
 	scriptJS = MGSJSStringRefCreateWithNSString(source);
 	JSStringRef sourceURLJS = MGSJSStringRefCreateWithNSString(@"KosmicTask");
@@ -274,6 +282,44 @@ handleException:
 #endif
 }
 
+/*
+ -extendContext:
+ 
+ */
+- (void)extendContext:(JSGlobalContextRef)ctx
+{
+	JSObjectRef globalJS = JSContextGetGlobalObject(ctx);
+	
+	// define class functions
+	JSStaticFunction staticFunctions[] = {
+		{ "log", MGSJSLogFunction, kJSPropertyAttributeNone },
+		{ 0, 0,  0 }
+	};
+	
+	/*
+	 
+	 We define a KosmicTaskController property that implements the log command.
+	 We can extend this object using regular JavaScript to provide
+	 our JSON -> YAML functionality.
+	 
+	 */
+	JSClassDefinition definition = kJSClassDefinitionEmpty;
+	definition.className = "KosmicTaskController";
+	definition.staticFunctions = staticFunctions;
+	
+	JSClassRef consoleClass = JSClassCreate(&definition);
+	JSObjectRef consoleObject = JSObjectMake(ctx, consoleClass, NULL);
+    JSStringRef consoleString = JSStringCreateWithUTF8CString("KosmicTaskController");
+    JSObjectSetProperty(ctx,
+                        globalJS,
+                        consoleString,
+                        consoleObject,
+                        kJSPropertyAttributeNone,
+                        NULL);
+    JSClassRelease(consoleClass);
+    JSStringRelease(consoleString);
+	
+}
 @end
 
 /*
@@ -304,5 +350,28 @@ JSStringRef MGSJSStringRefCreateWithNSString(NSString *aString)
 {
 	const char *cString = [aString cStringUsingEncoding:NSUTF8StringEncoding];
 	return JSStringCreateWithUTF8CString(cString);
+}
+
+/*
+ 
+ log function
+ 
+ */
+JSValueRef MGSJSLogFunction(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
+{
+#pragma unused(function)
+#pragma unused(thisObject)	
+
+	if (argumentCount > 0)
+    {
+        JSStringRef string = JSValueToStringCopy(ctx, arguments[0], exception);
+        size_t numChars = JSStringGetMaximumUTF8CStringSize(string);
+        char stringUTF8[numChars];
+        JSStringGetUTF8CString(string, stringUTF8, numChars);
+        fputs(stringUTF8, stderr);
+        JSStringRelease(string);
+    }
+	
+	return JSValueMakeUndefined(ctx);
 }
 
