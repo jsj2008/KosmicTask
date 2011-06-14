@@ -17,6 +17,10 @@
 
 OSErr MGSCustomSendProc( const AppleEvent *anAppleEvent, AppleEvent *aReply, AESendMode aSendMode, AESendPriority aSendPriority, long aTimeOutInTicks, AEIdleUPP anIdleProc, AEFilterUPP aFilterProc, long aSelf );
 
+@interface MGSAppleScriptRunner()
+- (void)handleLogEvent:(NSAppleEventDescriptor*)event withReplyEvent:(NSAppleEventDescriptor*)replyEvent;
+@end
+
 @implementation MGSAppleScriptRunner
 
 /*
@@ -209,9 +213,21 @@ OSErr MGSCustomSendProc( const AppleEvent *anAppleEvent, AppleEvent *aReply, AES
 		}
 			
 	}
-		
+
+	
+	// redirect stdout to stderr
+	[self redirectStdOutToStdErr];
+	
 	// execute the script
 	BOOL executeSuccess = NO;
+	
+	// register log handler for the log event.
+	// AppleScript Editor handles the log event as does osascript.
+	// in order to respond to it we just install a handler.
+	[[NSAppleEventManager sharedAppleEventManager] 
+	 setEventHandler:self andSelector:@selector(handleLogEvent:withReplyEvent:) 
+	 forEventClass:'ascr' 
+	 andEventID:'cmnt'];
 	
 	// if the subroutine is named run then the run handler is called
 	if (subroutine == nil || [subroutine compare:MGSScriptSubroutineRun] == NSOrderedSame) {
@@ -224,6 +240,9 @@ OSErr MGSCustomSendProc( const AppleEvent *anAppleEvent, AppleEvent *aReply, AES
 		executeSuccess = [appleScriptObject executeSubroutineNamed:subroutine argumentsArray:paramArray];
 	}
 	
+	// restore stdout
+	[self restoreStdOut];
+
 	//
 	// handle failure
 	//
@@ -449,6 +468,26 @@ OSErr MGSCustomSendProc( const AppleEvent *anAppleEvent, AppleEvent *aReply, AES
 	return YES;
 }
 
+/*
+ 
+ - handleLogEvent:withReplyEvent:
+ 
+ */
+- (void)handleLogEvent:(NSAppleEventDescriptor*)event withReplyEvent:(NSAppleEventDescriptor*)replyEvent
+{
+#pragma unused(replyEvent)
+	/*
+	 Applescript log command will send the log event to AppleScript.
+	 Default implementation discards it.
+	 Hence this handler.
+	 
+	 */
+	// get the log value
+    NSString* value = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
+	
+	// output to stderr
+	fputs([value cStringUsingEncoding:NSUTF8StringEncoding], stderr);
+}
 @end
 
 /*

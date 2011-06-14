@@ -1221,7 +1221,6 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 		{
 			theEventList = [self listDescriptor];
 		}
-
 		theEvent = [self appleEventWithEventClass:kCoreEventClass eventID:kAEOpenApplication targetDescriptor:aTargetDescriptor returnID:kAutoGenerateReturnID transactionID:kAnyTransactionID];
 		[theEvent setParamDescriptor:theEventList forKeyword:keyDirectObject];		
 	}
