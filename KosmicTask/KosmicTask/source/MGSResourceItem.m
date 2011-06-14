@@ -568,7 +568,8 @@ editable, dictionaryResource;
 	copy.ID = [self.ID copy];
 	copy.stringResource = [self.stringResource copy];
 	copy.attributedStringResource = [self.attributedStringResource copy];
-		
+	copy.dictionaryResource = [self.dictionaryResource copy];
+	
 	return copy;
 }
 
