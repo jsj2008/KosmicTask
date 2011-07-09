@@ -204,8 +204,17 @@
 {
 #pragma unused(sender)
 	
-	NSString *path = [[NSBundle mainBundle] pathForResource:@"release-notes" ofType:@"txt"];
-	[[NSWorkspace sharedWorkspace] openFile:path];
+	if (NO) {
+		NSString *path = [[NSBundle mainBundle] pathForResource:@"release-notes" ofType:@"txt"];
+		[[NSWorkspace sharedWorkspace] openFile:path];
+	} else {
+		
+		// get support URL string from app info.plist
+		NSString *urlString = [NSBundle mainBundleInfoObjectForKey:@"MGSKosmicTaskReleaseNotesURL"];
+		if (!urlString) return;
+		
+		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
+	}
 }
 
 
@@ -941,8 +950,8 @@
 	// Resource browser window
 	} else if (theAction == @selector(showResourceBrowserWindow:)) {
 		
-		// only available to authenticated users
-		if (runMode == kMGSMotherRunModePublic) {
+		// only available to authenticated users ?
+		if (runMode == kMGSMotherRunModePublic && NO) {
 			return NO;
 		}
 	}
