@@ -8,6 +8,7 @@
 
 #import "MGSResourceItem.h"
 #import "mlog.h"
+#import "ORCDiscount/ORCDiscount.h"
 
 NSString * MGSResourceOriginUser = @"User";
 NSString * MGSResourceOriginMugginsoft = @"Mugginsoft";
@@ -389,7 +390,8 @@ editable, dictionaryResource;
 	
 	switch (fileType) {
 			
-		case MGSResourceItemTextFile:;
+		case MGSResourceItemTextFile:
+		case MGSResourceItemMarkdownFile:;
 			
 			if (!stringResource) stringResource = [[NSString alloc] initWithString:@""];
 			

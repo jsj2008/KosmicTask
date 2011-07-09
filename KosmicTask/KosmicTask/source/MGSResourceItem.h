@@ -15,7 +15,8 @@ extern NSString * MGSResourceOriginMugginsoft;
 typedef enum _MGSResourceItemFileType {
 	MGSResourceItemTextFile,
 	MGSResourceItemRTFDFile,
-	MGSResourceItemPlistFile
+	MGSResourceItemPlistFile,
+	MGSResourceItemMarkdownFile,
 }  MGSResourceItemFileType;
 
 @class MGSResourceItem;
