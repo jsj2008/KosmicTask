@@ -11,8 +11,20 @@ git submodule  add path/to/git/repo repo\
 git submodule init\
 git submodule update\
 \
-This basically creates a link to the other repo and imports the current commit.\
+if update the submodule remote at path/to/git/repo then\
+cd repo\
+git pull\
+\
+or\
+\
+git submodule foreach git pull\
+\
+\pard\pardeftab720\sl360\ql\qnatural
+\cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 This basically creates a link to the other repo and imports the current commit.\
 However it is not on a branch and should not not be modified directly.\
+Is the above correct? Submodules seem to be on a branch.\
 \
 Note that I have cloned the repo locally and then taken a submodule from that.\
 It is probably better to just direct the submodule to the original github repo in the first place.\

@@ -19,6 +19,7 @@
 #import "MGSResourceItem.h"
 #import "NSOutlineView_Mugginsoft.h"
 #import "MGSSettingsOutlineViewController.h"
+#import "MGSResourceDocumentViewController.h"
 
 // resource tab indexes
 #define MGS_DOCUMENT_TAB_INDEX 0
@@ -61,6 +62,8 @@ const char MGSResourceSelectedObjectsContext;
 const char MGSResourceTreeSelectedObjectsContext;
 const char MGSSettingsTreeSelectedObjectsContext;
 const char MGSSettingsTreeEditedContext;
+const char MGSDocumentEditedContext;
+const char MGSDocumentModeContext;
 
 @implementation MGSResourceBrowserViewController
 
@@ -136,6 +139,8 @@ requiredResourceDoubleClicked, selectedLanguageProperty;
 	[resourceTreeController addObserver:self forKeyPath:@"selectedObjects" options:0 context:(void *)&MGSResourceTreeSelectedObjectsContext];
 	[settingsOutlineViewController addObserver:self forKeyPath:@"selectedLanguageProperty" options:0 context:(void *)&MGSSettingsTreeSelectedObjectsContext];
 	[settingsOutlineViewController addObserver:self forKeyPath:@"documentEdited" options:0 context:(void *)&MGSSettingsTreeEditedContext];
+	[resourceDocumentViewController addObserver:self forKeyPath:@"documentEdited" options:0 context:(void *)&MGSDocumentEditedContext];
+	[resourceDocumentViewController addObserver:self forKeyPath:@"mode" options:NSKeyValueObservingOptionPrior context:(void *)&MGSDocumentModeContext];
 
 	// notifications
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
@@ -727,6 +732,7 @@ clearTree:
 	// reset edit flag
 	self.documentEdited = NO;	
 	settingsOutlineViewController.documentEdited = NO;
+	resourceDocumentViewController.documentEdited = NO;
 }
 
 /*
@@ -859,6 +865,8 @@ clearTree:
  */
 - (void)setSelectedResource:(MGSResourceItem *)item
 {
+	if (!item) return;
+	
 	[self saveDocument:self];
 	
 	// unload and reload external resource properties
@@ -876,6 +884,8 @@ clearTree:
 		canEdit = [manager canMutate];
 	}
 	self.resourceEditable = canEdit;
+	
+	resourceDocumentViewController.selectedResource = item;
 	
 	// get node represented object and display
 	if ([self.selectedResource isKindOfClass:[MGSLanguageTemplateResource class]]) {
@@ -1090,6 +1100,18 @@ clearTree:
 #pragma unused(object)
 #pragma unused(change)
 	
+	if (context == &MGSDocumentEditedContext) {
+		
+		if (resourceDocumentViewController.documentEdited) {
+			self.documentEdited = YES;
+		}
+		
+		return;
+	} else if (context == &MGSDocumentModeContext) {
+		[resourceController commitEditing];
+		return;
+	}
+	
 	[self commitEditing];
 	
 	// resource tableview selection changed
@@ -1140,9 +1162,7 @@ clearTree:
 			self.documentEdited = YES;
 		}
 		
-	}
-	
-
+	} 	
 }
 
 /*
@@ -1281,14 +1301,14 @@ clearTree:
 	
 	// add sub view to required view hierarchy
 	if (idx == MGS_DOCUMENT_TAB_INDEX) {
-		if ([tabViewDoc1 view] != documentView) {
-			[tabViewDoc2 setView:[[NSView alloc] initWithFrame:[documentView frame]]];
-			[tabViewDoc1 setView:documentView];
+		if ([tabViewDoc1 view] != [resourceDocumentViewController view]) {
+			[tabViewDoc2 setView:[[NSView alloc] initWithFrame:[[resourceDocumentViewController view] frame]]];
+			[tabViewDoc1 setView:[resourceDocumentViewController view]];
 		}
 	} else if (idx == MGS_TEMPLATE_TAB_INDEX) {
-		if ([tabViewDoc2 view] != documentView) {
-			[tabViewDoc1 setView:[[NSView alloc] initWithFrame:[documentView frame]]];
-			[tabViewDoc2 setView:documentView];
+		if ([tabViewDoc2 view] != [resourceDocumentViewController view]) {
+			[tabViewDoc1 setView:[[NSView alloc] initWithFrame:[[resourceDocumentViewController view] frame]]];
+			[tabViewDoc2 setView:[resourceDocumentViewController view]];
 		}
 		if ([tabViewSettings2 view] != settingsView) {
 			[tabViewSettings1 setView:[[NSView alloc] initWithFrame:[settingsView frame]]];

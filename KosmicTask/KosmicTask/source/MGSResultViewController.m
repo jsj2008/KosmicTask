@@ -33,6 +33,8 @@
 #import "NSObject_Mugginsoft.h"
 #import "MGSPreferences.h"
 
+#import <ORCDiscount/ORCDiscount.h>
+
 NSString *MGSKeyResult = @"result";
 static BOOL applicationMenuConfigured = NO;
 

@@ -13,11 +13,15 @@ extern NSString * MGSResourceOriginUser;
 extern NSString * MGSResourceOriginMugginsoft;
 
 typedef enum _MGSResourceItemFileType {
-	MGSResourceItemTextFile,
-	MGSResourceItemRTFDFile,
-	MGSResourceItemPlistFile,
-	MGSResourceItemMarkdownFile,
+	MGSResourceItemTextFile = 0,
+	MGSResourceItemRTFDFile = 1,
+	MGSResourceItemPlistFile = 2,
+	MGSResourceItemMarkdownFile = 3,
 }  MGSResourceItemFileType;
+
+typedef enum _MGSDerivedResourceItemType {
+	MGSDerivedResourceItemHTML = 0,
+}  MGSDerivedResourceItemType;
 
 @class MGSResourceItem;
 
@@ -37,6 +41,8 @@ typedef enum _MGSResourceItemFileType {
 	NSString *author;
 	NSDate *date;
 	NSString *info;
+	MGSResourceItemFileType docFileType;
+	
 	BOOL editable;
 	id <MGSResourceItemDelegate> delegate;
 	MGSResourceBrowserNode *node;
@@ -45,6 +51,8 @@ typedef enum _MGSResourceItemFileType {
 	NSString *stringResource;
 	NSAttributedString *attributedStringResource;
 	id dictionaryResource;
+	NSString *markdownResource;
+	NSString *htmlResource;
 }
 @property id delegate;
 @property (copy) NSString *name;
@@ -57,7 +65,10 @@ typedef enum _MGSResourceItemFileType {
 @property (assign) NSString *stringResource;
 @property (assign) NSAttributedString *attributedStringResource;
 @property (assign) id dictionaryResource;
+@property (assign) NSString *markdownResource;
+@property (assign) NSString *htmlResource;
 @property BOOL editable;
+@property MGSResourceItemFileType docFileType;
 
 + (NSString *)title;
 - (NSString *)title;
@@ -75,6 +86,8 @@ typedef enum _MGSResourceItemFileType {
 - (id)duplicate;
 - (id)duplicateWithDelegate:(id <MGSResourceItemDelegate>)dupDelegate;
 - (BOOL)canDefaultResource;
+- (void)updateDocFileType:(MGSResourceItemFileType)value;
+- (void)loadDerivedResources;
 @end
 
 

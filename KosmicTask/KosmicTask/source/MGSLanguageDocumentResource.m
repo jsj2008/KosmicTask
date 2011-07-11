@@ -51,7 +51,8 @@
 			return NO;
 			break;
 			
-		case MGSResourceItemRTFDFile:;
+		case MGSResourceItemRTFDFile:
+		case MGSResourceItemMarkdownFile:;
 			return YES;
 			break;
 			

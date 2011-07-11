@@ -54,6 +54,30 @@
 	return YES;
 }
 
+#pragma mark -
+#pragma mark Instance methods
+/*
+ 
+ - persistResourceType:
+ 
+ */
+- (BOOL)persistResourceType:(MGSResourceItemFileType)fileType
+{
+	
+	switch (fileType) {
+		case MGSResourceItemTextFile:;
+		case MGSResourceItemRTFDFile:
+		case MGSResourceItemMarkdownFile:;
+			return YES;
+			break;
+			
+		default:
+			break;
+	}
+	
+	return NO;
+}
+
 
 #pragma mark -
 #pragma mark MGTemplateEngineDelegate

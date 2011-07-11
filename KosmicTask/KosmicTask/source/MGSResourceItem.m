@@ -8,7 +8,7 @@
 
 #import "MGSResourceItem.h"
 #import "mlog.h"
-#import "ORCDiscount/ORCDiscount.h"
+#import <ORCDiscount/ORCDiscount.h>
 
 NSString * MGSResourceOriginUser = @"User";
 NSString * MGSResourceOriginMugginsoft = @"Mugginsoft";
@@ -20,12 +20,13 @@ NSString * MGSResourceOriginMugginsoft = @"Mugginsoft";
 - (BOOL)saveResourceType:(MGSResourceItemFileType)fileType;
 - (BOOL)persistResourceType:(MGSResourceItemFileType)fileType;
 - (BOOL)deleteResourceType:(MGSResourceItemFileType)fileType;
+- (BOOL)loadDerivedResourceType:(MGSDerivedResourceItemType)derivedType;
 @end
 
 @implementation MGSResourceItem
 
 @synthesize delegate, name, origin, author, date, info, node, ID, stringResource, attributedStringResource,
-editable, dictionaryResource;
+editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 
 #pragma mark -
 #pragma mark Class methods
@@ -89,6 +90,7 @@ editable, dictionaryResource;
 		date = [NSDate date];
 		author = [self.delegate defaultAuthor];
 		ID = [NSNumber numberWithInteger:1];
+		docFileType = MGSResourceItemMarkdownFile;
 	}
 	
 	return self;
@@ -142,13 +144,39 @@ editable, dictionaryResource;
 
 /*
  
+ - markdownResource
+ 
+ */
+- (NSString *)markdownResource
+{
+	if (!markdownResource) {
+		[self loadResourceType:MGSResourceItemMarkdownFile];
+	}
+	return markdownResource;
+}
+
+/*
+ 
+ - htmlResource
+ 
+ */
+- (NSString *)htmlResource
+{
+	if (!htmlResource) {
+		[self loadDerivedResourceType:MGSDerivedResourceItemHTML];
+	}
+	return htmlResource;
+}
+
+/*
+ 
  - attributedStringResource
  
  */
 - (NSAttributedString *)attributedStringResource
 {
 	if (!attributedStringResource) {
-		[self loadResourceType:MGSResourceItemTextFile];
+		[self loadResourceType:MGSResourceItemRTFDFile];
 	}
 	return attributedStringResource;
 }
@@ -184,6 +212,38 @@ editable, dictionaryResource;
 - (BOOL)canDefaultResource
 {
 	return [[self class] canDefaultResource];
+}
+
+/*
+ 
+ - updateDocFileType:
+ 
+ */
+- (void)updateDocFileType:(MGSResourceItemFileType)value
+{
+
+	switch (value) {
+			
+		case MGSResourceItemMarkdownFile:;
+			self.markdownResource = [self.attributedStringResource string];
+			self.attributedStringResource = [[NSAttributedString alloc] initWithString:@""];
+			break;
+			
+		case MGSResourceItemRTFDFile:;
+			if (YES) {
+				self.attributedStringResource = [[NSAttributedString alloc] initWithString: self.markdownResource];
+			} else {
+				NSData *data = [self.htmlResource dataUsingEncoding:NSUTF8StringEncoding];
+				self.attributedStringResource = [[NSAttributedString alloc] initWithHTML:data documentAttributes:nil];
+			}
+			self.markdownResource = @"";
+			break;
+			
+		default:
+			break;
+	}
+	
+	self.docFileType = value;
 }
 
 #pragma mark -
@@ -230,6 +290,27 @@ editable, dictionaryResource;
 	[self loadResourceType:MGSResourceItemTextFile];
 	[self loadResourceType:MGSResourceItemRTFDFile];
 	[self loadResourceType:MGSResourceItemPlistFile];
+	[self loadResourceType:MGSResourceItemMarkdownFile];
+	
+		
+	// validate
+	switch (self.docFileType) {
+			
+		case MGSResourceItemMarkdownFile:;
+			if ([self.attributedStringResource length] > 0 && [self.markdownResource length] == 0) {
+				self.docFileType = MGSResourceItemRTFDFile;
+			}
+			break;
+			
+		case MGSResourceItemRTFDFile:;
+			if ([self.attributedStringResource length] == 0 && [self.markdownResource length] > 0) {
+				self.docFileType = MGSResourceItemMarkdownFile;
+			}
+			break;
+			
+		default:
+			break;
+	}
 }
 
 /*
@@ -242,6 +323,38 @@ editable, dictionaryResource;
 	[self unloadResourceType:MGSResourceItemTextFile];
 	[self unloadResourceType:MGSResourceItemRTFDFile];
 	[self unloadResourceType:MGSResourceItemPlistFile];
+	[self unloadResourceType:MGSResourceItemMarkdownFile];
+}
+
+/*
+ 
+ - load
+ 
+ */
+- (void)loadDerivedResources
+{
+	[self loadDerivedResourceType:MGSDerivedResourceItemHTML];
+}
+	
+/*
+ 
+ - loadDerivedResourceType:
+ 
+ */
+- (BOOL)loadDerivedResourceType:(MGSDerivedResourceItemType)derivedType
+{
+	switch (derivedType) {
+		case MGSDerivedResourceItemHTML:;
+			NSString *html = [ORCDiscount markdown2HTML:self.markdownResource];
+			self.htmlResource = [ORCDiscount HTMLPage:html withCSSFromURL:[ORCDiscount cssURL]];
+			break;
+		
+		default:
+			return NO;
+		break;
+	}
+	
+	return YES;
 }
 
 /*
@@ -264,6 +377,18 @@ editable, dictionaryResource;
 			}
 			
 			self.stringResource = text;
+			break;
+
+		case MGSResourceItemMarkdownFile:;
+			NSString *markdownText = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+			if (!markdownText) {
+				markdownText = @"";
+			}
+			
+			self.markdownResource = markdownText;
+			
+			[self loadDerivedResourceType:MGSDerivedResourceItemHTML];
+
 			break;
 			
 		case MGSResourceItemRTFDFile:;
@@ -318,6 +443,10 @@ editable, dictionaryResource;
 		case MGSResourceItemPlistFile:
 			self.dictionaryResource = nil;
 			break;
+		
+		case MGSResourceItemMarkdownFile:
+			self.markdownResource = nil;
+			break;
 			
 		default:
 			return NO;
@@ -339,12 +468,28 @@ editable, dictionaryResource;
 		success = NO;
 	}
 	
-	if (![self saveResourceType:MGSResourceItemRTFDFile]) {
+	if (![self saveResourceType:MGSResourceItemPlistFile]) {
 		success = NO;
 	}
 
-	if (![self saveResourceType:MGSResourceItemPlistFile]) {
-		success = NO;
+	switch (self.docFileType) {
+			
+		case MGSResourceItemRTFDFile:
+			if (![self saveResourceType:MGSResourceItemRTFDFile]) {
+				success = NO;
+			}
+			[self deleteResourceType:MGSResourceItemMarkdownFile];
+			break;
+	
+		case MGSResourceItemMarkdownFile:
+			if (![self saveResourceType:MGSResourceItemMarkdownFile]) {
+				success = NO;
+			}
+			[self deleteResourceType:MGSResourceItemRTFDFile];
+			break;
+			
+		default:
+			NSAssert(NO, @"invalid docFileType");
 	}
 	
 	return success;
@@ -364,6 +509,10 @@ editable, dictionaryResource;
 	}
 	
 	if (![self deleteResourceType:MGSResourceItemRTFDFile]) {
+		success = NO;
+	}
+
+	if (![self deleteResourceType:MGSResourceItemMarkdownFile]) {
 		success = NO;
 	}
 	
@@ -388,15 +537,25 @@ editable, dictionaryResource;
 		return NO;
 	}
 	
+	NSString *text = nil;
+	
 	switch (fileType) {
 			
 		case MGSResourceItemTextFile:
-		case MGSResourceItemMarkdownFile:;
 			
 			if (!stringResource) stringResource = [[NSString alloc] initWithString:@""];
 			
 			// we persist as plain text
-			NSString *text = stringResource;
+			text = stringResource;
+			success = [text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+			break;
+
+		case MGSResourceItemMarkdownFile:;
+			
+			if (!markdownResource) markdownResource = [[NSString alloc] initWithString:@""];
+			
+			// we persist as plain text
+			text = markdownResource;
 			success = [text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
 			break;
 			
@@ -460,6 +619,7 @@ editable, dictionaryResource;
 		case MGSResourceItemTextFile:;
 		case MGSResourceItemRTFDFile:;
 		case MGSResourceItemPlistFile:;
+		case MGSResourceItemMarkdownFile:;
 			success = [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
 			break;			
 			
@@ -502,6 +662,7 @@ editable, dictionaryResource;
 								@"Info", @"info", 
 								//@"Origin", @"origin", 
 								@"ID", @"ID",
+								@"DocFileType", @"docFileType",
 								nil];
 	return keyMapping;
 }
@@ -568,9 +729,12 @@ editable, dictionaryResource;
 	copy.date = [self.date copy];
 	copy.author = [self.author copy];
 	copy.ID = [self.ID copy];
+	copy.docFileType = [self docFileType];
 	copy.stringResource = [self.stringResource copy];
 	copy.attributedStringResource = [self.attributedStringResource copy];
 	copy.dictionaryResource = [self.dictionaryResource copy];
+	copy.markdownResource = [self.markdownResource copy];
+	copy.htmlResource = [self.htmlResource copy];
 	
 	return copy;
 }

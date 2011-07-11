@@ -14,10 +14,13 @@
 @class MGSFragaria;
 @class MGSLanguageProperty;
 @class MGSSettingsOutlineViewController;
+@class MGSResourceDocumentViewController;
 
 @interface MGSResourceBrowserViewController : NSViewController <NSTextViewDelegate, NSSplitViewDelegate>{
 
 	MGSSettingsOutlineViewController *settingsOutlineViewController;
+	
+	IBOutlet MGSResourceDocumentViewController *resourceDocumentViewController;
 	
 	// views
 	IBOutlet NSSplitView *splitViewMain;
@@ -28,7 +31,7 @@
 	IBOutlet NSTabView *resourceTabView;
 	IBOutlet NSTabView *resourceChildTabView;
 	IBOutlet NSTableView *resourceTableView;
-	IBOutlet NSView *documentView;
+	//IBOutlet NSView *documentView;
 	IBOutlet NSView *settingsView;
 	IBOutlet NSTextField *tableItemCount;
 	
