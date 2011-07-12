@@ -8,6 +8,7 @@
 
 #import "MGSResourceItem.h"
 #import "MGSResourceDocumentViewController.h"
+#import <MGSFragaria/MGSFragaria.h>
 
 const char MGSContextResourceDocFileType;
 
@@ -37,6 +38,33 @@ const char MGSContextResourceDocFileType;
 	[self addObserver:self forKeyPath:@"selectedResource.docFileType" options:0 context:(void *)&MGSContextResourceDocFileType];
 	
 	return self;
+}
+
+- (void)awakeFromNib
+{
+
+	// create Fragaria instance
+	fragaria = [[MGSFragaria alloc] init];
+	
+	//
+	// define initial object configuration
+	//
+	// see MGSFragaria.h for details
+	//
+	[fragaria setObject:[NSNumber numberWithBool:YES] forKey:MGSFOIsSyntaxColoured];
+	[fragaria setObject:[NSNumber numberWithBool:YES] forKey:MGSFOShowLineNumberGutter];
+	[fragaria setObject:self forKey:MGSFODelegate];
+	[fragaria setObject:@"html" forKey:MGSFOSyntaxDefinitionName];
+	
+	// embed in our host view
+	BOOL lineWrapPref = [[NSUserDefaults standardUserDefaults] boolForKey:MGSPrefsLineWrapNewDocuments];
+	[[NSUserDefaults standardUserDefaults] setBool:YES forKey:MGSPrefsLineWrapNewDocuments];
+	[fragaria embedInView:editorHostView];
+	[[NSUserDefaults standardUserDefaults] setBool:lineWrapPref forKey:MGSPrefsLineWrapNewDocuments];
+	
+	// bind it
+	NSTextView *editorTextView = [fragaria objectForKey:ro_MGSFOTextView];
+	[editorTextView bind:NSValueBinding toObject:resourceController withKeyPath:@"selection.markdownResource" options:nil];
 }
 
 /*
@@ -74,8 +102,6 @@ const char MGSContextResourceDocFileType;
  */
 - (void)setSelectedResource:(MGSResourceItem *)item
 {
-	//self.documentEdited = NO;
-	
 	if (!item) return;
 	
 	selectedResource = item;

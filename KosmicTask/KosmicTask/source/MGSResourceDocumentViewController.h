@@ -15,16 +15,20 @@ typedef enum {
 }  MGSResourceDocumentMode;
 
 @class MGSResourceItem;
+@class MGSFragaria;
 
 @interface MGSResourceDocumentViewController : NSViewController {
+	MGSFragaria *fragaria;	// fragaria instance
 	IBOutlet NSTabView *documentTabView;
 	IBOutlet NSPopUpButton *docType;
 	IBOutlet WebView *webView;
+	IBOutlet NSView *editorHostView;
 	MGSResourceDocumentMode mode;
 	BOOL editModeActive;
 	MGSResourceItem *selectedResource;
 	IBOutlet id delegate;
 	BOOL documentEdited;
+	IBOutlet NSObjectController *resourceController;
 }
 
 - (IBAction)docFormatAction:(id)sender;
