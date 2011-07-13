@@ -224,6 +224,7 @@ const char MGSContextResourceDocFileType;
 	NSString *html = self.selectedResource.htmlResource;
 	if (!html) html = @"";
 	
+	
 	[[webView mainFrame] loadHTMLString:html baseURL:nil];
 }
 
@@ -251,6 +252,40 @@ const char MGSContextResourceDocFileType;
 #pragma unused(notification)
 	
 	self.documentEdited = YES;
+}
+
+#pragma mark -
+#pragma mark WebPolicyDelegate
+
+/*
+ 
+ webView:decidePolicyForNavigationAction:request:frame:decisionListener:
+ 
+ */
+- (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener
+{
+#pragma unused(webView)
+#pragma unused(frame)
+	
+	NSNumber *navType = [actionInformation objectForKey:WebActionNavigationTypeKey];
+	if (navType) {
+		
+		NSString *urlString = request.URL.absoluteString;
+
+		/*
+		 
+		 we don't want to open links in the resource browser webview.
+		 any non local URLRequests are forwarded to the browser.
+		 
+		 */
+		if (![urlString isEqualToString:@"about:blank"]) {
+			[listener ignore];
+			
+			[[NSWorkspace sharedWorkspace] openURL:request.URL];
+		} else {
+			[listener use];
+		}
+	}
 }
 
 @end

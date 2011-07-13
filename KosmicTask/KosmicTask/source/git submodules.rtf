@@ -15,6 +15,10 @@ if update the submodule remote at path/to/git/repo then\
 cd repo\
 git pull\
 \
+if the submoduel complains during the pull that it is not on a branch then switch to one.\
+git checkout master\
+git pull\
+\
 or\
 \
 git submodule foreach git pull\
