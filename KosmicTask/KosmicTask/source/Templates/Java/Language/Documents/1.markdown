@@ -1,0 +1,113 @@
+
+[Java](http://www.oracle.com/technetwork/java/index.html) is a general-purpose, concurrent, class-based, object-oriented language.
+
+KosmicTask Java tasks are pre-compiled to byte-code. When the task is executed the byte-code is retrieved and passed to the Java virtual machine.
+
+
+Calling the Task Run Function
+-----------------------------
+
+KosmicTask Java task execution begins by calling the static main function on the class identified by the **Run Class** setting. In the following example the task **Run Class** setting must be set to **kosmicTask** in order for the main function to be found and called. Any arguments passed to the task will be forwarded to the designated run class main function.
+
+	class kosmicTask
+	{ 
+		public static void main(String args[])
+	    {
+	    	// send result to stdout
+			System.out.println("Hello, kosmos!");
+		}
+	}
+
+Result Objects
+--------------
+
+Java returns results to the client by printing to stdout.
+
+To return structured data, including the contents of files, Java powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+
+Tasks may either print YAML directly to stdout or make use of the provided **KosmicTaskController** class. This class provides a convenience method that prints native Java objects such as ArrayList and HashMap directly to stdout in the required YAML format.
+
+	import java.util.ArrayList;
+	import com.mugginsoft.KosmicTaskController;
+	
+	class kosmicTask
+	{ 
+		public static void main(String args[])
+	    {
+	    	// build dynamic array of planets
+	    	ArrayList<String> planets = new ArrayList<String>();
+	    	
+	    	planets.add("Mercury");
+	    	planets.add("Venus");
+	    	planets.add("Earth");
+	    	planets.add("Mars");
+	    	planets.add("Jupiter");
+	    	planets.add("Saturn");
+	    	planets.add("Uranus");
+	    	planets.add("Neptune");
+	    
+	    	// print native object as YAML
+			KosmicTaskController.printObject(planets);
+		}
+	}
+
+**KosmicTaskController** coerces the Java objects to YAML using the org.yaml.snakeyaml package. This is shipped as part of KosmicTask.
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For Java powered tasks files are returned as results using the following YAML dictionary syntax:
+
+	String filename = "filename.png";
+	String result = String.format("--- {kosmicFile: %s}", filename);
+	System.out.println(result);
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+Java powered tasks can create temporary files simply by creating files in the current working directory.
+
+	import java.io.*;
+	class kosmicTask
+	{ 
+		public static void main(String args[])
+	    {
+	    	try {
+	    		String filename = "filename.png";
+	    		
+	    		// execute command
+	    		// files created in the current directory will be deleted when the task ends
+	    		String cmd = String.format("screencapture -t png %s", filename);
+	    		Runtime.getRuntime().exec(cmd);
+	    	
+	    		// return a YAML inline format dictionary with filename
+	    		String result = String.format("--- {kosmicFile: %s , kosmicInfo: file returned}", filename);
+	
+				System.out.println(result);
+			} catch (IOException e) {
+				
+				System.out.println("exception: " + e.getMessage());
+			}
+			
+		}
+	}
+
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream using System.err . 
+
+	// send log value to stderr
+	System.err.println("Goodbye, kosmos!");
+
+
+Multiple Class Definitions
+--------------------------
+
+Java classes, even if they are defined within a single source file, are compiled into separate class files.
+
+KosmicTask identifies all class files produced as a result of compilation and collates them. So, in theory, a task can contain any number of class definitions.

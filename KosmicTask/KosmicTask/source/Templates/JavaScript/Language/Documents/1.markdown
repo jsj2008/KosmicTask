@@ -1,0 +1,86 @@
+
+[JavaScript](https://developer.mozilla.org/en/JavaScript) is typically used as a client side script within web browsers. It may also be used for general purpose scripting duties.
+
+Limitations
+-----------
+
+JavaScript prohibits general purpose access to the operating system and so cannot, for example, create new file content.
+
+A KosmicTask JavaScript powered task may however return existing file content if the required path is known.
+
+Calling the Task Run Function
+-----------------------------
+
+KosmicTask JavaScript powered tasks are initiated by calling the **Run Function** defined in the task Settings. In the following example the task **Run Function** is set to kosmicTask.
+
+	function kosmicTask() 
+	{
+		// return our string result
+		return 'Hello, kosmos!';
+	}
+
+
+Result Objects
+--------------
+
+JavaScript tasks may generally return numbers and strings directly from the task run function. Some other objects may also be rendered in an intelligible format when returned directly.
+
+To return structured data reliably, including the contents of files, JavaScript powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+
+JavaScript tasks may either return YAML strings directly or make use of the provided **KosmicTaskController** class. This class (which is automatically added to the JavaScript global context) provides a convenience method that converts native JavaScript objects such as Array and Object into the required YAML format string.
+
+	function kosmicTask() 
+	{
+	
+		// define properties on an object
+		var planets = new Object();
+		planets["us"] = "earth";
+		planets["them"] = "mars";
+		planets.no_one = "moon";	
+	
+		// return native object as YAML
+		return KosmicTaskController.objectAsString(planets);
+	}
+
+YAML can be viewed as a natural superset of JSON (JavaScript Object Notation). Hence calling the **KosmicTaskController** class objectAsString function is functionally equivalent to calling JSON.stringify.
+
+JavaScript does not support a dictionary object directly but an associative storage model can be achieved by using dynamic object properties. In the above example a generic object is created and new properties are defined using the two available syntaxes for property assignment. When a JavaScript object is converted to YAML the object's properties are represented as entries in an associative array.
+
+For a discussion on JavaScript associative arrays see <http://blog.xkoder.com/2008/07/10/javascript-associative-arrays-demystified/>
+
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+Javascript cannot directly access the file system to create a file but a task may return a file if it already exists:
+
+	file = "'~/somefile.txt'";
+		
+	// return a YAML inline dictionary
+	result = "--- {kosmicFile: " + file + "}";
+
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream using the log() function. JavaScript does not feature a native logging capability and the function described here is provided by the task runner. 
+
+	// send log value to stderr
+	log("Goodbye, kosmos");
+	
+	The KosmicTaskController object also supports logging.
+	
+	// send log value to stderr
+	KosmicTaskController.log("Goodbye, kosmos");
+
+
+Syntax Checking
+---------------
+
+On Intel powered macs enhanced syntax checking is supplied by [JavaScriptLint](http://www.javascriptlint.com/)
+
+On non Intel powered machines the default WebKit implementation is used.

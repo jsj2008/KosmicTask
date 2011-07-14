@@ -1,0 +1,189 @@
+[F-script](http://www.fscript.org/) is an open-source scripting layer dedicated to Cocoa.
+
+F-script provides one of the most direct and intuitive methods of scripting the Cocoa framework.
+
+
+Calling the Task Run Function
+-----------------------------
+
+The KosmicTask F-script implementation does not provide a means of calling a named entry point function.
+ 
+When an F-Script powered task is run the top level code block is evaluated and any task parameters are passed into it. The task ends when the top level code block is exited.
+
+	[:a :b |
+		
+		" concatenate our parameters "
+		result := 'task parameters are ' ++ a ++ ' and ' ++ b.
+		
+		" return our result "
+		result.
+	]
+
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream using the stderr object. 
+
+	" send log value to stderr"
+	stderr print:'Goodbye, kosmos!'.
+
+Result Objects
+--------------
+
+F-Script powered tasks can return native objects such as arrays and dictionaries as task results. F-Script provides a distinct syntax for specifying literal arrays and dictionaries.
+
+	[	
+		" form our array "
+		result := {'item 1', 'item 2'}.
+		
+		result.
+	]
+
+The task result object returned to the client is the value obtained from evaluating the last statement in the top level code block. Thus, in the above example, an array is returned as it is the value that results from evaluating the result variable.
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For F-Script Cocoa powered tasks files are returned as results using the following syntax:
+
+	return {kosmicFile:posixFilePath}
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+F-Script powered tasks can create temporary files by calling the KosmicTaskController **resultFileWithName:** method.
+
+	[
+		" get our kosmicTaskController "
+		taskController := KosmicTaskController.
+	 	
+	 	" form our image file result path"
+	 	" this file will be automatically deleted when the task ends."
+		path := taskController resultFileWithName: 'capture.png'.
+		
+		" capture screen shot to file "
+		task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/screenCapture' arguments:{'-t', 'png', path}.
+		task waitUntilExit.
+	
+		" form result dictionary "
+		result := #{'kosmicFile' -> path}.
+				
+		result.
+	] 
+
+
+NSObject Subclassing
+--------------------
+
+F-Script provides a distinct syntax for defining new Cocoa derived classes.
+
+	[	
+		" define the person class"
+		Person : NSObject
+		{
+			" define instance variables "
+	   		firstName lastName
+	 
+	 		" init method "
+	   		- initWithFirstName:first lastName:last
+	   		{
+	      		self := super init.
+	      		self ~~ nil ifTrue:
+	      		[
+	         		firstName := first.
+	         		lastName := last
+	      		].
+	      		
+	      		" return self "
+	      		^ self
+	   		}
+	
+			" description method "
+	   		- description
+	   		{
+	      		^ 'I am ' ++ firstName ++ ' ' ++ lastName.
+	   		}
+		}.
+	
+		" create new class instance "
+		me := Person alloc initWithFirstName:'Kosmic' lastName:'Stuff'.
+	
+		" we can return a class instance and KosmicTask will coerce it using - description"
+		me.
+			
+	]
+
+Runloop Management
+-----------------
+
+When an F-Script Cocoa task is run the script runner is transformed into a fully fledged application complete with a run loop (an instance of NSRunLoop). This enables the task to utilise all the features of the Cocoa framework, many of which depend upon the existence of a run loop in order to perform correctly. 
+
+In order for the task to continue executing once its top level code block has exited it is necessary to tell the task controller object (KosmicTaskController) to keep the task alive . KosmicTaskController is a predefined static class that can be simply accessed by name within the task script.
+
+To keep the task running call the KosmicTaskController **keepTaskRunning** method. The task will then continue to process input events on its runloop until the KosmicTaskController **stopTask:** method is called. The task will then end and return its result to the client.
+
+	[
+		" define our class"
+		KosmicTask : NSObject
+		{ 	
+			" instance variables "
+			timer
+			
+	   		" task entry point "
+	   		- start
+	   		{
+	       		" schedule the timer "
+	       		" note that the target is a block and the selector is a block in compact form "
+	       		" #value is equivalent to [:a | a value] "
+				timer := NSTimer scheduledTimerWithTimeInterval: 2 target:[self timerFired:timer] selector: #value  userInfo: nil repeats: false.
+							
+				" use kosmicTaskController to keep our task alive"
+				KosmicTaskController keepTaskRunning.
+	   		}
+	   		
+	   		" timer fired "
+	   		- (void)timerFired:(NSTimer *)aTimer
+	   		{
+	   			" stop our task and return result "
+	   			KosmicTaskController stopTask: 'timer expired'.
+	   		}
+		}.
+	
+		" create new class instance "
+		task := KosmicTask new.
+	
+		" call our entry point "
+		task start.
+	]
+
+
+System Framework Access
+-----------------------
+
+F-Script provides direct access to system framework classes and constants via the Cocoa NSBundle class.
+
+	[
+		"load the addressbook framework"
+		(NSBundle bundleWithPath:'/System/Library/Frameworks/AddressBook.framework') load.
+	
+		" access the me object in the shared address book "
+		person := ABAddressBook sharedAddressBook me.
+		
+		" get the first name property "
+		firstName := person valueForProperty:kABFirstNameProperty.
+	]
+
+
+Calling Cocoa methods with variable argument lists
+--------------------------------------------------
+
+F-Script cannot dispatch Objective-C methods that take a variable number of arguments. This means that we cannot use the equivalent of Objective-C constructs such as:
+
+	[NSString stringWithFormat:@" %@ ", something, nil];
+	[NSDictionary dictionaryWithObjectsForKeys: object1, key1, nil];
+	
+See this [thread](http://groups.google.com/group/f-script/browse_thread/thread/685ce8addbfb8853)

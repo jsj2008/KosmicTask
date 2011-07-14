@@ -1,0 +1,73 @@
+[Lua](http://www.lua.org/) is a powerful, fast, lightweight, embeddable scripting language.
+
+Calling the Task Run Function
+-----------------------------
+
+Arguments are passed to Lua powered tasks as direct parameters rather than through a named entry point function. The task parameters are forwarded to the task script as command line arguments.
+
+
+Result Objects
+--------------
+
+Lua tasks return results to the client by printing to stdout.
+
+To return structured data, including the contents of files, Lua powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+
+Lua tasks may either print YAML strings directly or make use of the provided **KosmicTaskController** module. This module provides a convenience function that prints native Lua tables as YAML formatted strings.
+
+	require "KosmicTaskController"
+	
+	-- build table of planets
+	planets = {"Mercury", "Venus", "Earth"}
+	
+	table.insert(planets, "Mars")
+	table.insert(planets, "Jupiter")
+	table.insert(planets, "Saturn")
+	table.insert(planets, "Uranus")
+	table.insert(planets, "Neptune")
+	
+	-- print native object as YAML
+	KosmicTaskController.printObject(planets)
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For Lua powered tasks files are returned as results using the following YAML dictionary syntax:
+
+	file = "capture.png"
+	result = string.format("--- {kosmicFile: %s}" , file)
+	print(result)
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+Lua powered tasks can create temporary files simply by creating files in the current working directory.
+
+	-- capture screen image to file
+	-- files create in the current directory will be deleted when the task ends
+	local file = "capture.png"
+	
+	-- capture screen
+	os.execute("screencapture -t png " .. file)
+	
+	-- return a YAML inline format dictionary with filename
+	local result = string.format("--- {kosmicFile: %s, kosmicInfo: file returned}", file)
+	print(result)
+
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream on io.stderr. 
+
+	-- send log value to stderr
+	io.stderr:write("Goodbye, kosmos!")
+
+
+Syntax Checking
+---------------
+
+Lua does not possess an in-built syntax checker. However, whenever a Lua task is built the syntax is checked using the Lua compiler [luac](http://www.lua.org/manual/4.0/luac.html). This is included as part of KosmicTask.

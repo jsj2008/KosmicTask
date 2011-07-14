@@ -1,0 +1,74 @@
+
+
+[PHP](http://www.php.net/) is a general purpose scripting language commonly used in web page generation.
+
+
+Calling the Task Run Function
+------------------------------
+
+Arguments are passed to PHP powered tasks as direct parameters rather than through a named entry point function. The task parameters are forwarded to the task script as command line arguments.
+
+
+Result Objects
+--------------
+
+PHP tasks return results to the client by printing to stdout.
+
+To return structured data, including the contents of files, PHP powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+
+PHP tasks may either print YAML strings directly or make use of the provided **KosmicTaskController** class. This class  provides a static convenience function that prints native PHP objects such as arrays and associative arrays as YAML formatted strings.
+
+	<?php
+	
+	require_once "KosmicTaskController.php";
+	
+	# build array
+	$planets[] = "Mercury";
+	$planets[] = "Venus";
+	$planets[] = "Earth";
+	$planets[] = "Mars";
+	$planets[] = "Jupiter";
+	$planets[] = "Saturn";
+	$planets[] = "Uranus";
+	$planets[] = "Neptune";
+	
+	# print native object as YAML
+	KosmicTaskController::printObject($planets);
+
+
+Result File Handling
+---------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For PHP powered tasks files are returned as results using the following YAML dictionary syntax:
+
+	$file="capture.png";
+	echo "--- {kosmicFile: $file}";
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+PHP powered tasks can create temporary files simply by creating files in the current working directory.
+
+	# capture screen image to file
+	# files create in the current directory will be deleted when the task ends
+	$file="capture.png";
+	
+	# capture screen
+	system("screencapture -t png $file");
+	
+	# return a YAML inline format dictionary with filename
+	echo "--- {kosmicFile: $file, kosmicInfo: file returned}";
+
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream on STDERR. 
+
+	# send log value to stderr
+	fprintf(STDERR, "Goodbye, kosmos!");
+
+

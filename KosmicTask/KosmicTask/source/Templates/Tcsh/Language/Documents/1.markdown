@@ -1,0 +1,95 @@
+
+The [Tenex C](http://www.tcsh.org/Home) shell is an alternative Unix shell based on and compatible with the C shell (csh). Early versions of Mac OS X shipped with tcsh as the default shell, but the default for new accounts is bash as of 10.3.
+
+
+Calling the Task Run Function
+-----------------------------
+
+Arguments are passed to Tenex C shell powered tasks as direct parameters rather than through a named entry point function. The task parameters are forwarded to the task script as command line arguments.
+
+
+Result Objects
+--------------
+
+Tenex C shell tasks return results to the client by printing to stdout.
+
+To return structured data, including the contents of files, Tenex C shell powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML).
+
+KosmicTask supports both the YAML inline and block formats.
+
+	# return YAML block format array
+	echo "---"
+	echo "- Mercury"
+	echo "- Venus"
+	echo "- Earth"
+	echo "- Mars"
+	echo "- Jupiter"
+	echo "- Saturn"
+	echo "- Uranus"
+	echo "- Neptune"
+
+Inline format.
+
+	# inline dictionary
+	set item1 = "item 1"
+	set item2 = "item 2"
+	set dict="{key1: $item1, key2: $item2}"
+	
+	# css
+	set css="'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'"
+	
+	# return a YAML inline format dictionary with our dictionary as the data
+	echo "---"
+	echo "{kosmicData: $dict , kosmicStyle: $css}"
+
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For Tenex C shell powered tasks files are returned as results using the following YAML dictionary syntax:
+
+	set file="capture.png"
+	echo "--- {kosmicFile: $file}"
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+Tenex C shell powered tasks can create temporary files simply by creating files in the current working directory.
+	
+	# capture screen image to file
+	# files created in the current directory will be deleted when the task ends
+	set file="capture.png"
+	
+	# capture screen
+	screencapture -t png $file
+	
+	# return a YAML inline format dictionary
+	echo "{kosmicFile: $file}"
+	
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream on /dev/stderr. 
+
+	# send log value to stderr
+	echo "Goodbye, kosmos!" >/dev/stderr
+
+
+Returning YAML format dictionaries
+------------------------------------
+
+The following will generate a Missing }. error from the shell:
+
+	set dict="{key1: item 1, key2: item 2}"
+	echo "---"
+	echo $dict
+
+We need to quote the variable so:
+
+	set dict="{key1: item 1, key2: item 2}"
+	echo "---"
+	echo "$dict"

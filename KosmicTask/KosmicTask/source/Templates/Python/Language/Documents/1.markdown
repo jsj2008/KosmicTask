@@ -1,0 +1,111 @@
+
+[Python](http://www.python.org/) is a general purpose high level programming language with a clear syntax.
+
+
+Calling the Task Run Function
+-----------------------------
+
+Arguments are passed to Python powered tasks as direct parameters rather than through a named entry point function. The task parameters are forwarded to the task script as command line arguments.
+
+
+Result Objects
+---------------
+
+Python tasks return results to the client by printing to stdout.
+
+To return structured data, including the contents of files, Python powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+
+Python tasks may either print YAML strings directly or make use of the provided **KosmicTaskController** class. This class provides a static convenience function that prints native Python objects such as arrays and dictionaries as YAML formatted strings.
+
+	from mugginsoft import KosmicTaskController
+	
+	# build array of planets
+	planets = ["Mercury", "Venus", "Earth"]
+	
+	planets.append("Mars")
+	planets.append("Jupiter")
+	planets.append("Saturn")
+	planets.append("Uranus")
+	planets.append("Neptune")
+	
+	# print native object as YAML
+	KosmicTaskController.printObject(planets)
+
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For Python powered tasks files are returned as results using the following YAML dictionary syntax:
+
+	file = "capture.png"
+	print "--- {kosmicFile: %s}" % file
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+Python powered tasks can create temporary files simply by creating files in the current working directory.
+
+	# capture screen image to file
+	# files create in the current directory will be deleted when the task ends
+	file = "capture.png"
+	
+	# capture screen
+	os.system("screencapture -t png " + file)
+	
+	# return a YAML inline format dictionary with filename
+	print "--- {kosmicFile: %s, kosmicInfo: file returned}" % file
+
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream on sys.stderr. 
+
+	# send log value to stderr
+	print >> sys.stderr, "Goodbye, kosmos!"
+
+
+Syntax Checking
+---------------
+
+Python does not possess an in-built syntax checker. However, whenever a Python task is built the syntax is checked using the third party pyflakes tool. This is included as part of KosmicTask. For more information see <http://divmod.org/trac/wiki/DivmodPyflakes.>
+
+
+Python appscript
+----------------
+
+Python appscript provides a means of sending AppleEvents from python to scriptable applications. In many cases using py-appscript will provide superior script compatibility than the Scripting Bridge. py-appscript is included as part of the KosmicTask Python language plug-in bundle.
+
+From the Python appscript documentation introduction :
+
+> Python appscript (py-appscript) is an easy-to-use Apple event bridge that allows 'AppleScriptable' applications to be controlled by ordinary Python scripts. Appscript makes Python an excellent alternative to Apple's own AppleScript language for automating your Mac.
+>
+> For example, to get the value of the first paragraph of the topmost document in TextEdit:
+>
+>     app('TextEdit').documents['Read Me'].paragraphs[1].get()
+>
+> This is equivalent to the AppleScript statement:
+>
+>     tell application "TextEdit"
+>         get paragraph 1 of document "Read Me"
+>     end tell
+
+More information see the [py-appscript documentation](http://appscript.sourceforge.net/py-appscript/doc/appscript-manual/index.html)
+
+
+Scripting Bridge
+-----------------
+
+From the Apple Scripting Bridge reference document :
+
+
+> Scripting Bridge is a technology that you can use in PyObjC and RubyCocoa scripts to communicate with scriptable applications—that is, applications with scripting interfaces compliant with the Open Scripting Architecture (OSA). With Scripting Bridge, RubyCocoa and PyObjC scripts can do what AppleScript scripts can do: control scriptable applications and exchange data with them. 
+>
+> The Scripting Bridge framework implements a bridge between OSA and the Objective-C runtime. It reads the scripting definition of applications and dynamically populates the Objective-C namespace with objects and methods representing the various items it finds (scripting objects, elements, commands, properties, and so on). RubyCocoa and PyObjC are also bridges to the Objective-C runtime and thus have access to everything in a program’s namespace, including Scripting Bridge–created objects.
+end quote
+
+For more information see the [Apple Reference document](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/RubyPythonCocoa/Articles/UsingScriptingBridge.html)
+

@@ -1,0 +1,84 @@
+
+[AppleScript](http://developer.apple.com/library/mac/#documentation/applescript/conceptual/applescriptlangguide/introduction/ASLR_intro.html%23//apple_ref/doc/uid/TP40000983-CH208-SW1) provides direct automation control for many OS X applications and utilities.
+
+Calling the Task Run Function
+-----------------------------
+
+AppleScript powered tasks can be invoked in a number of ways.
+
+The task **On Run Task** setting can be set to **Call Script**. This setting causes the script to be run without calling an entry point handler. This is convenient for tasks that do not require inputs or contain an explicit run handler.
+
+	return "This task has no inputs"
+
+or
+
+	on run {}
+		return "This task has an explicit run handler and no inputs"
+	end run
+
+Alternatively The task **On Run Task** setting can be set to **Call Run Function**. In this case a named entry point handler is called. In the example below the entry point handler is named **KosmicTask**.
+
+	on KosmicTask()
+		return "This task also a named entry point handler and no inputs"
+	end KosmicTask
+
+If the task **Run Function** setting is set to **run** then the explicit run handler will be called.
+
+
+Result Objects
+--------------
+
+AppleScript can return native objects such as lists and records as task results. KosmicTask will coerce the results as required and return them to the client. 
+
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For AppleScript powered tasks files are returned as results using the following syntax:
+
+	return {kosmicFile:posixFilePath}
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+AppleScript powered tasks can create temporary files by targeting the **KosmicTask** application itself with **result file with name**.
+
+	on KosmicTask()
+		
+		try
+			
+			-- get a result file object from KosmicTask.
+			-- the file will be automatically deleted when the task ends.
+			tell application "KosmicTask"
+				set resultFile to result file with name "capture.png"
+			end tell
+			
+			-- the shell script below will expect a POSIX path
+			set picPosixPath to POSIX path of file resultFile
+			
+			-- do screen capture via shell
+			do shell script "screencapture -t png " & quoted form of picPosixPath
+			
+			-- feedback
+			return {kosmicFile:resultFile, kosmicInfo:"file returned"}
+			
+		on error errorMessage number errorNumber
+			
+			return {kosmicError:errorMessage}
+			
+		end try
+		
+	end KosmicTask
+
+
+Logging and Debugging
+----------------------
+
+Diagnostic and logging information can be written to a task's error stream using the log command. 
+
+	-- send value to log
+	log "Goodbye, kosmos!"
+

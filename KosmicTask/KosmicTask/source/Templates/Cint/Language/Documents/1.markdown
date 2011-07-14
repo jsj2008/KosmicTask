@@ -1,0 +1,93 @@
+
+[CINT](http://root.cern.ch/drupal/content/cint) is a C/C++ interpreter.
+
+Although not wholly ANSI compliant CINT is hugely useful and generally intuitive.
+
+In case of difficulty consult the CINT documentation that has been reproduced here. For further online documentation and to access the support forum see the Links document page.
+
+
+Language Limitations 
+---------------------
+
+CINT is a wonderful tool but it does have some limitations. Please read the included CINT Language limitations document for further details.
+
+Thus, to give a concrete example, it appears that CINT does not support snprintf().
+
+Calling the Task Run Function
+-----------------------------
+
+Arguments are passed to CINT powered tasks as direct parameters rather than through a named entry point function. The task parameters will be forwarded to the task's main() function.
+
+Result Objects
+--------------
+
+The CINT C and C++ tasks return results to the client by printing to stdout.
+
+To return structured data, including the contents of files, CINT powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML).
+
+KosmicTask supports both the YAML inline and block formats.
+
+	#include <stdio.h>
+	
+	int main() 
+	{
+		char *item1 = "item 1";
+		char *item2 = "item 2";
+		
+		// return a YAML inline format array
+		printf("--- [%s, %s]", item1, item2);
+	    return 0;
+	}
+	
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a kosmicFile record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For CINT shell powered tasks files are returned as results using the following YAML dictionary syntax:
+
+	char *file = "capture.png";
+	printf("--- {kosmicFile: %s}", file);
+
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+CINT powered tasks can create temporary files simply by creating files in the current working directory.
+
+	#include <stdio.h>
+	
+	int main() 
+	{
+		// capture screen image to file
+		// files created in the current directory will be deleted when the task ends
+		char *file = "capture.png";
+		char command[100];
+		sprintf(command, "screencapture -t png %s", file);
+		
+		// execute command
+		system(command);
+		
+		// return a YAML inline format dictionary
+		printf("--- {kosmicFile: %s, kosmicInfo: file returned}", file);
+		
+	    return 0;
+	}
+
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream on stderr. 
+
+	// send log value to stderr
+	fprintf(stderr, "Goodbye, kosmos!");
+
+
+Sample Code
+-----------
+
+For an extensive set of CINT samples download the [CINT source](http://root.cern.ch/drupal/content/cint).
+
+Sample code, including STL examples, can be found in the CINT demo folder.

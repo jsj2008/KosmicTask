@@ -1,0 +1,185 @@
+
+
+Python Cocoa tasks access the Cocoa framework via the [PyObjC](http://pyobjc.sourceforge.net/) bridge. 
+
+PyObjC provides a bridge between the Python and Objective-C programming languages. 
+
+
+Calling the Task Run Function
+-------------------------------
+
+The entry point for Python Cocoa task can be a simple named function. The name of this function is configured using the **Run Function** task setting. Alternatively the entry point may consist of a named function within a named class. The class name is configured using the **Run Class** task setting.
+
+	import Foundation
+	
+	class KosmicTask (Foundation.NSObject):
+	    	
+		#
+		# task entry point
+		#
+		def kosmictask(self):
+			return "Hello, kosmos!"
+
+When the task is executed the run class is instantiated and the run function is called.
+
+
+Result Objects
+---------------
+
+Tasks written in Python Cocoa can return native Python objects or Cocoa objects as task results. The PyObjC bridge ensures that all objects are coerced as required.
+
+	import AppKit
+	
+	def kosmictask():
+	
+		# call Cocoa and return NSString
+		return AppKit.NSString.stringWithString_("Hello, kosmos!")
+	
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For Python Cocoa powered tasks files are returned as results using the following syntax:
+
+	result = {}
+	result["kosmicFile"] = path
+	return result
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+Python Cocoa powered tasks can create temporary files by calling the **KosmicTaskController** **resultFileWithName_** function.
+
+	import os
+	import Foundation
+	
+	# KosmicTask controller
+	taskController = Foundation.NSClassFromString("KosmicTaskController")
+	
+	def kosmictask():
+	
+		# create path to temp result file from taskController.
+		# this file will be automatically deleted when the task ends.
+		#
+		# an alternative would be:
+		# fileno, path = tempfile.mkstemp(suffix='.png', prefix='capture')
+		# os.close(fileno)
+	   	#
+		path = taskController.resultFileWithName_('capture.png');
+	    
+		# capture sceen shot to file
+		os.system("screencapture -t png " + path)
+	
+		# form our result dictionary
+		result = {}
+		result["kosmicFile"] = path
+		result["kosmicInfo"] = "file returned"
+		
+		# return object
+		return result
+
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream using AppKit.NSLog(). 
+
+	# send log value to stderr
+	AppKit.NSLog("Goodbye, kosmos!")
+
+
+NSObject Subclassing
+--------------------
+
+Python objects can be subclassed directly from Cocoa's NSObject 
+
+	import Foundation
+	
+	class KosmicTask (Foundation.NSObject):
+	    	
+		#
+		# task entry point
+		#
+		def kosmictask(self):
+		
+			# return python string
+			return "Hello, kosmos!"
+	
+
+Runloop Management
+------------------
+
+When an Python Cocoa task is run the script runner is transformed into a fully fledged application complete with a run loop (an instance of NSRunLoop). This enables the task to utilise all the features of the Cocoa framework, many of which depend upon the existence of a run loop in order to perform correctly. As a result of its application based nature a task written in PyObjC will probably take longer to launch and consume more system resources than a regular Python task.
+
+By default however the PyObjc task will exit its run loop whenever the task entry point exits unless it is requested to do otherwise. This is the case in the example above.
+
+In order for the task to continue executing it is necessary to tell the task controller object (KosmicTaskController) to keep the task running after the script entry point function has returned. **KosmicTaskController** is a predefined class that can be accessed within the task script by using the statement `taskController = Foundation.NSClassFromString("KosmicTaskController")`.
+
+To keep the task running call the **KosmicTaskController keepTaskRunning** static method. The task will then continue to process input events on its runloop until the **KosmicTaskController stopTask_** static method is called. The task will then end and return its result to the client.
+
+	import AppKit
+	import Foundation
+	
+	# create KosmicTask controller class object
+	taskController = Foundation.NSClassFromString("KosmicTaskController")
+	
+	class KosmicTask (Foundation.NSObject):
+	    	
+		#
+		# task entry point
+		#
+		def kosmictask(self):
+	
+			# schedule the timer
+			AppKit.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(2, self, "timerFired:", "", 1)
+	
+			# keep the task running
+			taskController.keepTaskRunning()
+		
+			# the task will not exit when this function returns
+			return
+			
+		#
+		# task timer expired
+		#
+		def timerFired_(self,timer):
+			
+			# invalidate the timer
+			timer.invalidate()
+			
+			# stop task and return result
+			taskController.stopTask_("timer expired")
+		
+			return
+
+
+System Framework Access
+-----------------------
+
+Python Cocoa tasks can access system framework classes simply by importing them by name.
+
+	# import our system framework by name
+	import AddressBook
+	
+	def kosmictask():
+		
+		person = AddressBook.ABAddressBook.sharedAddressBook().me()
+		firstName = person.valueForProperty_(AddressBook.kABFirstNameProperty)
+		
+		# return object
+		return firstName
+
+
+Syntax Checking
+----------------
+
+Python does not possess an in-built syntax checker. Whenever a Python Cocoa task is built the syntax is checked using the third party pyflakes tool. This is included as part of KosmicTask. For more information see <http://divmod.org/trac/wiki/DivmodPyflakes>.
+
+
+Python appscript
+----------------
+
+See the Python Usage document. 

@@ -1,0 +1,71 @@
+
+[Perl](http://www.perl.org/) is a general purpose scripting language adept at text manipulation.
+
+Calling the Task Run Function
+-----------------------------
+
+Arguments are passed to Perl powered tasks as direct parameters rather than through a named entry point function. The task parameters are forwarded to the task script as command line arguments.
+
+
+Result Objects
+---------------
+
+Perl tasks return results to the client by printing to stdout.
+
+To return structured data, including the contents of files, Perl powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+
+Perl tasks may either print YAML strings directly or make use of the provided KosmicTaskController module. This module  provides a convenience function that prints native Perl objects such as arrays and hashes as YAML formatted strings.
+
+	use warnings;
+	
+	use KosmicTaskController;
+	
+	# define planets array
+	@planets = ("Mercury", "Venus", "Earth");
+	push(@planets, "Mars");
+	push(@planets, "Jupiter");
+	push(@planets, "Saturn");
+	push(@planets, "Uranus");
+	push(@planets, "Neptune");
+	
+	# print native object as YAML
+	KosmicTaskController->printObject(\@planets);
+
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a kosmicFile record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For Perl powered tasks files are returned as results using the following YAML dictionary syntax:
+
+	$FILE="capture.png";
+	print "--- {kosmicFile: $FILE}";
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+Perl powered tasks can create temporary files simply by creating files in the current working directory.
+
+	use warnings;
+	
+	# capture screen image to file
+	# files created in the current directory will be deleted when the task ends
+	$FILE="capture.png";
+	
+	# capture screen
+	`screencapture -t png $FILE`;
+	
+	# return a YAML inline format dictionary with filename
+	print "--- {kosmicFile: $FILE, kosmicInfo: file returned}";
+	
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream on STDERR. 
+
+	# send log value to stderr
+	print STDERR "Goodbye, kosmos!";
+

@@ -1,0 +1,88 @@
+
+[Tcl](http://www.tcl.tk/) is a scripting language commonly used for rapid prototyping and testing.
+
+
+Calling the Task Run Function
+-----------------------------
+
+Arguments are passed to Tcl powered tasks as direct parameters rather than through a named entry point function. The task parameters are forwarded to the task script as command line arguments.
+
+
+Result Objects
+---------------
+
+Tcl tasks return results to the client by printing to stdout.
+
+To return structured data, including the contents of files, Tcl powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+
+Tcl tasks may either print YAML strings directly or make use of the provided **KosmicTaskController** package. This package provides a convenience function that prints native Tcl objects such as lists, dictionaries and huddles as YAML formatted strings.
+
+	package require KosmicTaskController
+	
+	# build list of planets
+	set planets [list "Mercury" "Venus" "Earth"]
+	lappend planets "Mars"
+	lappend planets "Jupiter"
+	lappend planets "Saturn"
+	lappend planets "Uranus"
+	lappend planets "Neptune"
+	
+	# print native object as YAML
+	::KosmicTaskController::printObject $planets
+
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For Tcl powered tasks files are returned as results using the following YAML dictionary syntax:
+
+	set file "capture.png"
+	puts "--- {kosmicFile: $file"
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+Tcl powered tasks can create temporary files simply by creating files in the current working directory.
+
+	# file created in task current directory will be automatically deleted
+	set file "capture.png"
+	 
+	# capture sceen shot to file
+	exec screencapture -t png $file
+	    
+	# return a YAML inline format dictionary with filename
+	set result "{kosmicFile: $file, kosmicInfo: file returned}"
+	
+	puts "---"
+	puts $result
+
+
+Logging and Debugging
+----------------------
+
+Diagnostic and logging information can be written to a task's error stream using puts stderr. 
+
+	# send log value to stderr
+	puts stderr "Goodbye, kosmos!"
+
+
+Preventing command substitution for YAML inline format arrays
+-------------------------------------------------------------
+
+TCL automatically performs command substitution within strings whenever it encounters square brackets:
+
+	set item "Earth"
+	puts "Here we are on [set item]"
+
+This substitution causes problems when we attempt to return a YAML inline format array:
+
+	puts "[Earth, Moon]"
+
+TCL attempts to execute a command called Earth, and reports invalid command name "Earth,".
+
+To successfully return a YAML inline format array string we need to escape the initial square bracket :
+
+	puts "\[Earth, Moon]"

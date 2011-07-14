@@ -1,0 +1,365 @@
+AppleScript Cocoa tasks are scripted in [AppleScriptObjC](http://developer.apple.com/library/mac/#releasenotes/ScriptingAutomation/RN-AppleScriptObjC/_index.html). 
+
+AppleScriptObjC provides a bridge between AppleScript and the Cocoa framework.
+
+
+Calling the Task Run Function
+-----------------------------
+
+The entry point for an AppleScript Cocoa task can be a simple named function. The name of this function is configured using the **Run Function** task setting. Alternatively the entry point may consist of a named function within a named class. The class name is configured using the **Run Class** task setting.
+
+	script KosmicTask
+			
+		(*
+		 
+		task entry point
+		
+		*)
+		on KosmicTask()
+			
+			try
+				
+				-- insert AppleScript here and compute myResult
+				set myResult to "Hello, kosmos!"
+				
+				-- myResult is complete, task will end
+				return {kosmicData:myResult}
+				
+			on error errorMessage number errorNumber
+	
+				return {kosmicError:errorMessage}
+	
+			end try
+	
+		end KosmicTask
+			
+	end script
+
+When the task is executed the run class is instantiated and the run function is called.
+
+
+Result Objects
+--------------
+
+Like AppleScript, AppleScriptObjC can return native objects such as lists and records as task results. KosmicTask will coerce the results as required and return them to the client. In addition, AppleScriptObjC powered tasks may also return Cocoa objects as task results.
+
+	-- Cocoa classes
+	property NSArray : class "NSArray"
+	
+	script KosmicTask
+		property parent : class "NSObject"
+		
+		(*
+		 
+		task entry point
+		
+		*)
+		on KosmicTask()
+	
+			-- create a Cocoa NSArray instance
+			set myResult to NSArray's arrayWithObjects_("item 1", "item 2", missing value)
+				
+			-- return NSArray instance
+			return myResult
+				
+		end KosmicTask
+			
+	end script
+
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For AppleScript Cocoa powered tasks files are returned as results using the following syntax:
+
+	return {kosmicFile:posixFilePath}
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+AppleScript Cocoa powered tasks can create temporary files by calling the **KosmicTaskController resultFileWithName_** handler.
+
+	-- KosmicTask controller
+	property taskController : class "KosmicTaskController"
+	
+	script KosmicTask
+		property parent : class "NSObject"
+			
+		(*
+		 
+		task entry point
+		
+		*)
+		on KosmicTask()
+			
+			try
+				
+				-- get result file path from taskController.
+				-- the file will be automatically deleted when the task ends.
+				set tempPath to taskController's resultFileWithName_("capture.png")
+				set picPosixPath to tempPath as string
+				
+				-- do screen capture via shell
+				do shell script "screencapture -t png " & quoted form of picPosixPath
+				
+				-- return result
+				return {kosmicFile:picPosixPath, kosmicInfo:"file returned"}
+				
+			on error errorMessage number errorNumber
+				
+				return {kosmicError:errorMessage}
+				
+			end try
+			
+		end KosmicTask
+		
+	end script
+
+
+Logging and Debugging
+---------------------
+
+Diagnostic and logging information can be written to a task's error stream using the *log* command. 
+
+	-- send value to log
+	log "Goodbye, kosmos!"
+
+
+NSObject Subclassing
+--------------------
+
+ASObjC scripts objects can be subclassed from Cocoa's NSObject using the *property parent* construct.
+
+	script KosmicTask
+		property parent : class "NSObject"
+		
+		(*
+		 
+		task entry point
+		
+		*)
+		on KosmicTask()
+				
+			-- task will end
+			return "Hello, kosmos!"
+	
+		end KosmicTask
+			
+	end script
+
+
+Runloop Management
+------------------
+
+When an AppleScript Cocoa task is run the script runner is transformed into a fully fledged application complete with a run loop (an instance of NSRunLoop). This enables the task to utilise all the features of the Cocoa framework, many of which depend upon the existence of a run loop in order to perform correctly. As a result of its application based nature a task written in ASObjC will probably take longer to launch and consume more system resources than a regular AppleScript task.
+
+By default however the ASObjC task will exit its run loop whenever the task entry point exits unless it is requested to do otherwise. This is the case in the example above.
+
+In order for the task to continue executing it is necessary to tell the task controller object (KosmicTaskController ) to keep the task running after the script object entry point handler has returned. KosmicTaskController is a predefined static class that can be accessed within the task script using a property statement.
+
+To keep the task running call the KosmicTaskController **keepTaskRunning** handler. The task will then continue to process input events on its runloop until the KosmicTaskController **stopTask_** handler is called. The task will then end and return its result to the client.
+
+	-- KosmicTask controller
+	property taskController : class "KosmicTaskController"
+	
+	-- Cocoa classes
+	property NSApplication : class "NSApplication"
+	property NSTimer : class "NSTimer"
+	
+	script KosmicTask
+		property parent : class "NSObject"
+		
+		property delayRepeat : 1
+		property delayTime : 0
+		property repeatCounter : 0
+		
+		(*
+		
+		task entry point
+		
+		*)
+		on kosmicTask(theDelay, theRepeat)
+			
+			set delayTime to theDelay
+			set delayRepeat to theRepeat
+			
+			-- create the timer
+			set theTimer to NSTimer's scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(theDelay, me, "timerFired:", "", true)
+			
+			-- keep our task running
+			taskController's keepTaskRunning()
+			
+		end kosmicTask
+		
+		(*
+		
+		task timer expired
+		
+		*)
+		on timerFired_(theTimer)
+			
+			set repeatCounter to repeatCounter + 1
+			if repeatCounter = delayRepeat then
+				
+				-- invalidate the timer
+				theTimer's invalidate()
+				
+				-- build our result
+				set theResult to ("Completed " & delayRepeat as string) & " iteration(s) of " & delayTime & " second(s) each"
+				
+				-- stop our task
+				taskController's stopTask_(theResult)
+			end if
+		end timerFired_
+		
+	end script
+
+
+System Framework Access
+-----------------------
+
+AppleScriptObjC can access system framework classes and constants using a property statement.
+
+	-- Cocoa system framework class
+	property ABAddressBook : class "ABAddressBook"
+	
+	-- Cocoa enumerations and constants
+	property kABFirstNameProperty : my kABFirstNameProperty
+	
+	script KosmicTask
+		property parent : class "NSObject"
+		
+		(*
+		 
+		task entry point
+		
+		*)
+		on KosmicTask()
+			
+			-- access the framework class
+			set thePerson to ABAddressBook's sharedAddressBook's |me|
+			set myName to thePerson's valueForProperty_(kABFirstNameProperty)
+				
+			-- return result
+			return myName
+				
+		end KosmicTask
+			
+	end script
+
+
+Frameworks may also be loaded dynamically using **NSBundle bundleWithPath:**. However, loading frameworks in this way usually means that framework property strings and constants won't be available.
+
+	-- Cocoa classes
+	property NSBundle : class "NSBundle"
+	
+	script KosmicTask
+		property parent : class "NSObject"
+		
+		(*
+		 
+		task entry point
+		
+		*)
+		on KosmicTask()
+			
+			try
+				-- load the framework
+				NSBundle's bundleWithPath_("/System/Library/Frameworks/AddressBook.framework")'s load
+				
+				-- get the address book
+				set ABAddressBook to class "ABAddressBook" of current application
+	
+				-- the commented line below will fail if AddressBook.framework is not statically linked
+				-- set firstName to current application's kABFirstNameProperty 
+				set firstName to "First"
+				
+				-- access the framework class
+				set thePerson to ABAddressBook's sharedAddressBook's |me|
+				set myResult to thePerson's valueForProperty_(firstName)
+				
+				-- myResult is complete, task will end
+				return {kosmicData:myResult}
+				
+			on error errorMessage number errorNumber
+				
+				return {kosmicError:errorMessage}
+				
+			end try
+			
+		end KosmicTask
+		
+	end script
+
+
+Note that AppleScriptObjC on OS X 10.6 has no method of specifying which frameworks should be imported. By default, therefore, the KosmicTask AppleScript Cocoa task runner is linked to all the system frameworks listed below. This means that all the listed frameworks will be fully accessible (both classes and properties) from within AppleScriptObjC powered tasks.
+
+Foundation  
+Cocoa  
+Carbon
+OSAKit  
+AppleScriptObjC  
+AGL  
+Accelerate  
+AddressBook  
+AppKitScripting  
+AppleShareClientCore  
+ApplicationServices  
+AudioToolbox  
+AudioUnit  
+Automator  
+CalendarStore  
+Collaboration  
+CoreAudio  
+CoreAudioKit  
+CoreData  
+CoreLocation  
+CoreMIDI  
+CoreServices  
+CoreVideo  
+CoreWLAN  
+DVDComponentGlue  
+DVDPlayback  
+DirectoryService  
+DiscRecording  
+DiscRecordingUI  
+DiskArbitration  
+ExceptionHandling  
+ForceFeedback  
+GLUT  
+IOBluetooth  
+IOBluetoothUI  
+IOKit  
+IOSurface  
+ImageCaptureCore  
+InputMethodKit  
+InstantMessage  
+JavaScriptCore  
+JavaVM  
+Kerberos  
+NetFS  
+OpenAL  
+OpenCL  
+OpenDirectory  
+OpenGL  
+PreferencePanes  
+PubSub  
+QTKit  
+Quartz  
+QuartzCore  
+QuickLook  
+QuickTime  
+ScreenSaver  
+Scripting  
+ScriptingBridge  
+Security  
+SecurityFoundation  
+SecurityInterface  
+ServerNotification  
+ServiceManagement  
+SyncServices  
+SystemConfiguration  
+WebKit

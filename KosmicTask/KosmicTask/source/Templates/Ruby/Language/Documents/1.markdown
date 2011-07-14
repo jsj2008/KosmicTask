@@ -1,0 +1,116 @@
+
+[Ruby](http://www.ruby-lang.org/en/) is a dynamic general purpose object-orientated programming language.
+
+
+Calling the Task Run Function
+------------------------------
+
+Arguments are passed to Ruby powered tasks as direct parameters rather than through a named entry point function. The task parameters are forwarded to the task script as command line arguments.
+
+
+Result Objects
+--------------
+
+Ruby tasks return results to the client by printing to stdout.
+
+To return structured data, including the contents of files, Ruby powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+
+Ruby tasks may either print YAML strings directly or make use of the provided **KosmicTaskController** class. This class provides a static convenience function that prints native Ruby objects such as arrays and dictionaries as YAML formatted strings.
+
+	require "KosmicTaskController"
+	
+	# build the planets
+	Planets = Array["Mercury", "Venus", "Earth", "Mars", "Jupiter"]
+	Planets.push("Saturn")
+	Planets.push("Uranus")
+	Planets.push("Neptune")
+	
+	# print native object as YAML
+	KosmicTaskController.printObject(Planets)
+
+
+Result File Handling
+--------------------
+
+KosmicTask supports the returning of file contents within task results. 
+
+KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
+
+For Ruby powered tasks files are returned as results using the following YAML dictionary syntax:
+
+	file = "capture.png"
+	puts "--- {kosmicFile: #{file}}"
+
+A common usage scenario is that a task creates a temporary file (or files) whose contents are then returned to the client. KosmicTask therefore supports automatic temporary file creation and deletion. Temporary files created through KosmicTask are automatically deleted once the parent task has completed.
+
+Ruby powered tasks can create temporary files simply by creating files in the current working directory.
+
+	# file created in task current directory will be automatically deleted
+	file = "capture.png"
+	    
+	# capture sceen shot to file
+	system "screencapture -t png " + file
+	    
+	# return a YAML inline format dictionary with filename
+	result = "{kosmicFile: #{file}, kosmicInfo: file returned}"
+	
+	puts "---"
+	puts result
+
+
+Logging and Debugging
+----------------------
+
+Diagnostic and logging information can be written to a task's error stream using $stderr. 
+
+	# send log value to stderr
+	$stderr.puts "Goodbye, kosmos!"
+
+
+Ruby appscript
+--------------
+
+Ruby appscript provides a means of sending AppleEvents from ruby to scriptable applications. In many cases using rb-appscript will provide superior script compatibility than the Scripting Bridge. rb-appscript is included as part of the KosmicTask Ruby language plug-in.
+
+From the Ruby appscript documentation introduction :
+
+> Ruby appscript (rb-appscript) is an easy-to-use Apple event bridge that allows 'AppleScriptable' applications to be controlled by ordinary Ruby scripts. Appscript makes Ruby an excellent alternative to Apple's own AppleScript language for automating your Mac.
+>
+> For example, to get the value of the first paragraph of the topmost document in TextEdit:
+>
+>     app('TextEdit').documents[1].paragraphs[1].get
+>
+> This is equivalent to the AppleScript statement:
+> 
+>     tell application "TextEdit"
+>         get paragraph 1 of document 1
+>     end tell
+>
+> The following script uses appscript to create a new "Hello World!" document in TextEdit:
+> 
+>     #!/usr/bin/env ruby
+>     
+>     require "appscript"
+>     include Appscript
+>     
+>     app('TextEdit').documents.end.make(
+>         :new => :document,
+>         :with_properties => {:text => "Hello World!\n"}
+>     )
+
+More information see the [rb-appscript documentation](http://appscript.sourceforge.net/rb-appscript/doc/appscript-manual/index.html)
+
+Matt Neuburg has also released an [online book](http://www.apeth.com/rbappscript/00intro.html) covering rb-appscript. 
+
+
+Scripting Bridge
+----------------
+
+From the Apple Scripting Bridge reference document :
+
+> Scripting Bridge is a technology that you can use in PyObjC and RubyCocoa scripts to communicate with scriptable applications—that is, applications with scripting interfaces compliant with the Open Scripting Architecture (OSA). With Scripting Bridge, RubyCocoa and PyObjC scripts can do what AppleScript scripts can do: control scriptable applications and exchange data with them. 
+> 
+> The Scripting Bridge framework implements a bridge between OSA and the Objective-C runtime. It reads the scripting definition of applications and dynamically populates the Objective-C namespace with objects and methods representing the various items it finds (scripting objects, elements, commands, properties, and so on). RubyCocoa and PyObjC are also bridges to the Objective-C runtime and thus have access to everything in a program’s namespace, including Scripting Bridge–created objects.
+
+For more information see the [Apple Reference document](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/RubyPythonCocoa/Articles/UsingScriptingBridge.html)
+
