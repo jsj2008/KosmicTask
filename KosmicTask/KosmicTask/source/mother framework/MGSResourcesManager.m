@@ -766,7 +766,7 @@ origin, canMutate;
 			break;
 
 		case MGSResourceItemMarkdownFile:
-			extension = @"mdtxt";
+			extension = @"markdown";
 			break;
 			
 		case MGSResourceItemRTFDFile:
