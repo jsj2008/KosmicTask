@@ -346,7 +346,13 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 	switch (derivedType) {
 		case MGSDerivedResourceItemHTML:;
 			NSString *html = [ORCDiscount markdown2HTML:self.markdownResource];
-			self.htmlResource = [ORCDiscount HTMLPage:html withCSSFromURL:[ORCDiscount cssURL]];
+			
+			// default framework cssUrl is at [ORCDiscount cssURL]
+			NSURL *cssURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"ResourceDocument" withExtension:@"css"];
+			if (!cssURL) {
+				cssURL = [ORCDiscount cssURL];
+			}
+			self.htmlResource = [ORCDiscount HTMLPage:html withCSSFromURL:cssURL];
 			break;
 		
 		default:
