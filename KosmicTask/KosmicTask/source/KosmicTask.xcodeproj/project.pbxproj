@@ -1290,6 +1290,7 @@
 		ABF35D8F0D5DBFE70082B762 /* WhiteCrossRedCircle16.png in Resources */ = {isa = PBXBuildFile; fileRef = ABF35D8E0D5DBFE70082B762 /* WhiteCrossRedCircle16.png */; };
 		ABF3D4221220366B00442B67 /* yaml in Copy Python Resources */ = {isa = PBXBuildFile; fileRef = ABF3D4071220364A00442B67 /* yaml */; };
 		ABF50A6B0F2380E900F0DFC2 /* KosmicTask.icns in Resources */ = {isa = PBXBuildFile; fileRef = ABF50A6A0F2380E900F0DFC2 /* KosmicTask.icns */; };
+		ABF6CE3613CF78C0000EADD7 /* QLMarkdown.qlgenerator in Copy QuickLook generator */ = {isa = PBXBuildFile; fileRef = ABF6CDBC13CF786A000EADD7 /* QLMarkdown.qlgenerator */; };
 		ABF711410E83A3D800D01E25 /* MGSProgressTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF711400E83A3D800D01E25 /* MGSProgressTableView.m */; };
 		ABFB31120DDE45060080E7BA /* MGSPopupButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFB31110DDE45060080E7BA /* MGSPopupButtonCell.m */; };
 		ABFBC56C0DCA7CAE000BD40E /* GoDownTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = ABFBC56A0DCA7CAE000BD40E /* GoDownTemplate.tif */; };
@@ -2752,6 +2753,20 @@
 			remoteGlobalIDString = AB6675CB1205B9E2006763E2;
 			remoteInfo = KosmicTaskJavaScriptRunner;
 		};
+		ABF6CDBB13CF786A000EADD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF6CDB413CF786A000EADD7 /* QLMarkdown.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D576316048677EA00EA77CD /* QLMarkdown.qlgenerator */;
+			remoteInfo = QLMarkdown;
+		};
+		ABF6CE2213CF7894000EADD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF6CDB413CF786A000EADD7 /* QLMarkdown.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* QLMarkdown */;
+			remoteInfo = QLMarkdown;
+		};
 		ABFBAA9C0DAB9535004D1DE4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ABE014E50D3EB94A00899F73 /* PSMTabBarControl.xcodeproj */;
@@ -3296,6 +3311,7 @@
 			dstPath = Contents/Library/QuickLook;
 			dstSubfolderSpec = 1;
 			files = (
+				ABF6CE3613CF78C0000EADD7 /* QLMarkdown.qlgenerator in Copy QuickLook generator */,
 				AB92321411A6963E0093EDE3 /* KosmicTask.qlgenerator in Copy QuickLook generator */,
 			);
 			name = "Copy QuickLook generator";
@@ -4877,6 +4893,7 @@
 		ABF50A6A0F2380E900F0DFC2 /* KosmicTask.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = KosmicTask.icns; sourceTree = "<group>"; };
 		ABF664DC11D9F69A004F9939 /* MGSOriginTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSOriginTransformer.h; sourceTree = "<group>"; };
 		ABF664DD11D9F69B004F9939 /* MGSOriginTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSOriginTransformer.m; sourceTree = "<group>"; };
+		ABF6CDB413CF786A000EADD7 /* QLMarkdown.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QLMarkdown.xcodeproj; path = ../../../qlmarkdown/QLMarkdown.xcodeproj; sourceTree = SOURCE_ROOT; };
 		ABF7113F0E83A3D800D01E25 /* MGSProgressTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSProgressTableView.h; sourceTree = "<group>"; };
 		ABF711400E83A3D800D01E25 /* MGSProgressTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSProgressTableView.m; sourceTree = "<group>"; };
 		ABFB31100DDE45060080E7BA /* MGSPopupButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPopupButtonCell.h; sourceTree = "<group>"; };
@@ -7239,6 +7256,7 @@
 		AB69B67A130EAAA400171D4F /* Git hub */ = {
 			isa = PBXGroup;
 			children = (
+				ABF6CDB413CF786A000EADD7 /* QLMarkdown.xcodeproj */,
 				ABA1DE831204916A000B3F00 /* FScript.xcodeproj */,
 			);
 			name = "Git hub";
@@ -8712,6 +8730,14 @@
 			name = Licensing;
 			sourceTree = "<group>";
 		};
+		ABF6CDB513CF786A000EADD7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABF6CDBC13CF786A000EADD7 /* QLMarkdown.qlgenerator */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		ABFE703F11AEEFE80097EDE4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -9006,6 +9032,7 @@
 				AB0DBF9E130C8C53000F4673 /* PBXTargetDependency */,
 				ABE782F61325175B00663CBB /* PBXTargetDependency */,
 				ABDBEC3213927B8F00553735 /* PBXTargetDependency */,
+				ABF6CE2313CF7894000EADD7 /* PBXTargetDependency */,
 			);
 			name = KosmicTask;
 			productInstallPath = "$(HOME)/Applications";
@@ -10279,6 +10306,10 @@
 					ProjectRef = ABE014E50D3EB94A00899F73 /* PSMTabBarControl.xcodeproj */;
 				},
 				{
+					ProductGroup = ABF6CDB513CF786A000EADD7 /* Products */;
+					ProjectRef = ABF6CDB413CF786A000EADD7 /* QLMarkdown.xcodeproj */;
+				},
+				{
 					ProductGroup = AB776F7E130C6BFB000973D4 /* Products */;
 					ProjectRef = AB776F7D130C6BFB000973D4 /* Sparkle.xcodeproj */;
 				},
@@ -10688,6 +10719,13 @@
 			fileType = wrapper.framework;
 			path = PSMTabBarControl.framework;
 			remoteRef = ABE014F30D3EB94A00899F73 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF6CDBC13CF786A000EADD7 /* QLMarkdown.qlgenerator */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = QLMarkdown.qlgenerator;
+			remoteRef = ABF6CDBB13CF786A000EADD7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ABFE704411AEEFE80097EDE4 /* MGTemplateEngine.app */ = {
@@ -13127,6 +13165,11 @@
 			isa = PBXTargetDependency;
 			target = AB6675CB1205B9E2006763E2 /* KosmicTaskJavaScriptRunner */;
 			targetProxy = ABF0D2E7120CB34B006ABDB2 /* PBXContainerItemProxy */;
+		};
+		ABF6CE2313CF7894000EADD7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = QLMarkdown;
+			targetProxy = ABF6CE2213CF7894000EADD7 /* PBXContainerItemProxy */;
 		};
 		ABFBAA9D0DAB9535004D1DE4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
