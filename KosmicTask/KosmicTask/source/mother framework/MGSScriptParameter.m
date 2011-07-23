@@ -16,6 +16,10 @@
 
 @synthesize modelDataModified = _modelDataModified;
 
++ (NSString *)defaultDescription
+{
+	return NSLocalizedString(@"Enter input.", @"New parameter description");
+}
 /*
  
  create a new parameter
@@ -26,7 +30,7 @@
 	MGSScriptParameter *parameter = [self newDict];
 	
 	[parameter setName:NSLocalizedString(@"New", @"New parameter name")];
-	[parameter setDescription:NSLocalizedString(@"New input", @"New parameter description")];
+	[parameter setDescription:[self defaultDescription]];
 	
 	// set default plugin class name
 	MGSParameterPluginController *parameterPluginController = [[NSApp delegate] parameterPluginController];

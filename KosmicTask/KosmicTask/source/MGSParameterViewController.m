@@ -82,6 +82,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 @synthesize mode = _mode;
 @synthesize parameterName = _parameterName;
 @synthesize resetEnabled = _resetEnabled;
+@synthesize parameterDescription = _parameterDescription;
 
 #pragma mark -
 #pragma mark Instance handling
@@ -106,6 +107,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		_bottomLayoutSize = NSZeroSize;
 		_layoutHasOccurred = NO;
 		_resetEnabled = NO;
+		_parameterDescription = nil;
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateModel:) name:MGSNoteEditWindowUpdateModel object:nil];
 
@@ -137,7 +139,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	[[self.bannerRightLabel cell] setBackgroundColor:[MGSImageAndTextCell countColor]];
 	
 	// create description view controller with appropriate mode
-	_descriptionViewController = [[MGSDescriptionViewController alloc] initWithMode:self.mode];
+	_descriptionViewController = [[MGSParameterDescriptionViewController alloc] initWithMode:self.mode];
 	[_descriptionViewController setDelegate:self];
 	[_descriptionViewController view];	// load the view
 	
@@ -411,6 +413,15 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	MGSParameterPlugin *plugin = representedObject;
 	
 	[self setParameterPlugin:plugin];
+	
+	fix this
+	
+	// change parameter description if not edited
+	NSString *descripton = self.parameterDescription;
+	if (!descripton) {
+		descripton = [MGSScriptParameter defaultDescription];
+	}
+	[_scriptParameter setDescription:descripton];
 }
 
 #pragma mark -
@@ -659,7 +670,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
  description view did resize
  
  */
-- (void)descriptionViewDidResize:(MGSDescriptionViewController *)controller oldSize:(NSSize)oldSize
+- (void)descriptionViewDidResize:(MGSParameterDescriptionViewController *)controller oldSize:(NSSize)oldSize
 {
 	[self subViewDidResize:controller.view oldSize:oldSize];
 }
@@ -817,6 +828,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		// plist will not be loaded yet so defaults will be returned
 		self.canDragHeight = [_typeEditViewController canDragHeight];	// generally YES
 		self.canDragMiddleView = [_typeEditViewController canDragMiddleView]; // depends on view functionality
+		self.parameterDescription = _typeEditViewController.parameterDescription;
 		
 	} else if (MGSParameterModeInput == _mode && [plugin respondsToSelector:@selector(createViewController:delegate:)]) {
 
@@ -839,7 +851,8 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		// plist will not be loaded yet so defaults will be returned
 		self.canDragHeight = [_typeInputViewController canDragHeight];	// depends on view functionality
 		self.canDragMiddleView = [_typeInputViewController canDragMiddleView];	// generally NO
-
+		self.parameterDescription = _typeInputViewController.parameterDescription;
+		
 		// input plugin view wrapper
 		// the wrapper will provide additional standard controls for the input plugin 
 		_pluginInputViewController = [[MGSParameterPluginInputViewController alloc] init];

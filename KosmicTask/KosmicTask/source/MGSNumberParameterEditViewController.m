@@ -42,6 +42,7 @@ NSString *MGSIncrementValueContext = @"IncrementValue";
 		_decimalPlaces = 0;
 		_representationMax = DBL_MAX;
 		_representationMin = -DBL_MAX;
+		self.parameterDescription = NSLocalizedString(@"Enter a number.", @"Number selection prompt");
 	}
 	return self;
 }

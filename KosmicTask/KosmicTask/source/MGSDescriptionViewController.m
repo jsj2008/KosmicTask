@@ -13,7 +13,7 @@
 #define DYNAMIC_TOP_MARGIN 10
 #define DYNAMIC_BOTTOM_MARGIN 5
 
-@interface MGSDescriptionViewController (Private)
+@interface MGSParameterDescriptionViewController (Private)
 - (void)layoutViewForMode;
 - (void)setDisclosureButtonIsHidden:(BOOL)isHidden;
 - (void)resizeHasOccurred:(NSSize)oldSize;
@@ -21,7 +21,7 @@
 - (NSSize)descriptionTitleLineSize;
 @end
 
-@implementation MGSDescriptionViewController
+@implementation MGSParameterDescriptionViewController
 
 @synthesize mode = _mode;
 @synthesize delegate = _delegate;
@@ -35,7 +35,7 @@
  */
 -(id)initWithMode:(MGSParameterMode)mode
 {
-	if ([super initWithNibName:@"DescriptionView" bundle:nil]) {
+	if ([super initWithNibName:@"ParameterDescriptionView" bundle:nil]) {
 		_mode = mode;
 		_layoutHasOccurred = NO;
 	}
@@ -164,7 +164,7 @@
 
 @end
 
-@implementation MGSDescriptionViewController (Private)
+@implementation MGSParameterDescriptionViewController (Private)
 
 /*
  

@@ -75,6 +75,11 @@
 		AB0DC030130C8ECB000F4673 /* JSCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F6E24130C85B900342F11 /* JSCocoa.framework */; };
 		AB0EE2270EF13CE5008EA368 /* TaskPublishedTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB0EE2260EF13CE5008EA368 /* TaskPublishedTemplate.tif */; };
 		AB1089B410F632CC00882FC7 /* NSEvent_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1089B310F632CC00882FC7 /* NSEvent_Mugginsoft.m */; };
+		AB10CE4613D43DDB003971C7 /* MGSFolderParameterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB10CE4513D43D0E003971C7 /* MGSFolderParameterPlugin.m */; };
+		AB10CE5813D4400D003971C7 /* MGSFolderParameterInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB10CE5713D4400D003971C7 /* MGSFolderParameterInputViewController.m */; };
+		AB10CE5B13D4405F003971C7 /* MGSFolderParameterEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB10CE5A13D4405F003971C7 /* MGSFolderParameterEditViewController.m */; };
+		AB10CE7A13D4455A003971C7 /* FolderParameterEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB10CE7913D4455A003971C7 /* FolderParameterEditView.xib */; };
+		AB10CF1C13D44576003971C7 /* FolderParameterInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB10CF1B13D44576003971C7 /* FolderParameterInputView.xib */; };
 		AB12468D0D8168A40077786C /* OSAKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA858C40D5CAE910077F640 /* OSAKit.framework */; };
 		AB12AED513087715006047E0 /* MGSSidebarOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB12AED413087715006047E0 /* MGSSidebarOutlineView.m */; };
 		AB13FCD60EC8A4F4002ADE93 /* GearSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = AB13FCD50EC8A4F4002ADE93 /* GearSmall.png */; };
@@ -1092,7 +1097,7 @@
 		ABBC2DBB1078E14C001E606E /* MGSNetClientProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBC2DBA1078E14C001E606E /* MGSNetClientProxy.m */; };
 		ABBC2E91107900C2001E606E /* LCD display red.png in Resources */ = {isa = PBXBuildFile; fileRef = ABBC2E90107900C2001E606E /* LCD display red.png */; };
 		ABBCF725104FDC99005508E8 /* kosmictask_sparkle_dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = ABBCF724104FDC99005508E8 /* kosmictask_sparkle_dsa_pub.pem */; };
-		ABBF5EE50E1B870600F82F81 /* DescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABBF5EE30E1B870600F82F81 /* DescriptionView.xib */; };
+		ABBF5EE50E1B870600F82F81 /* ParameterDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABBF5EE30E1B870600F82F81 /* ParameterDescriptionView.xib */; };
 		ABBF60340E1BB85800F82F81 /* ParameterPluginInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABBF60320E1BB85800F82F81 /* ParameterPluginInputView.xib */; };
 		ABBF60380E1BB9C900F82F81 /* MGSParameterPluginInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBF60370E1BB9C900F82F81 /* MGSParameterPluginInputViewController.m */; };
 		ABBF64220E9D65C3003E2434 /* Clip16.png in Resources */ = {isa = PBXBuildFile; fileRef = ABBF64210E9D65C3003E2434 /* Clip16.png */; };
@@ -3451,6 +3456,14 @@
 		AB0EE2260EF13CE5008EA368 /* TaskPublishedTemplate.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TaskPublishedTemplate.tif; sourceTree = "<group>"; };
 		AB1089B210F632CC00882FC7 /* NSEvent_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEvent_Mugginsoft.h; sourceTree = "<group>"; };
 		AB1089B310F632CC00882FC7 /* NSEvent_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSEvent_Mugginsoft.m; sourceTree = "<group>"; };
+		AB10CE4413D43D0E003971C7 /* MGSFolderParameterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFolderParameterPlugin.h; sourceTree = "<group>"; };
+		AB10CE4513D43D0E003971C7 /* MGSFolderParameterPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFolderParameterPlugin.m; sourceTree = "<group>"; };
+		AB10CE5613D4400D003971C7 /* MGSFolderParameterInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFolderParameterInputViewController.h; sourceTree = "<group>"; };
+		AB10CE5713D4400D003971C7 /* MGSFolderParameterInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFolderParameterInputViewController.m; sourceTree = "<group>"; };
+		AB10CE5913D4405F003971C7 /* MGSFolderParameterEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFolderParameterEditViewController.h; sourceTree = "<group>"; };
+		AB10CE5A13D4405F003971C7 /* MGSFolderParameterEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFolderParameterEditViewController.m; sourceTree = "<group>"; };
+		AB10CE7913D4455A003971C7 /* FolderParameterEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderParameterEditView.xib; sourceTree = "<group>"; };
+		AB10CF1B13D44576003971C7 /* FolderParameterInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderParameterInputView.xib; sourceTree = "<group>"; };
 		AB1208E30D5BAD9600EF60AC /* MGSViewToolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSViewToolViewController.h; sourceTree = "<group>"; };
 		AB1208E40D5BAD9600EF60AC /* MGSViewToolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSViewToolViewController.m; sourceTree = "<group>"; };
 		AB12AED313087715006047E0 /* MGSSidebarOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSidebarOutlineView.h; sourceTree = "<group>"; };
@@ -4630,7 +4643,7 @@
 		ABBC2E90107900C2001E606E /* LCD display red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LCD display red.png"; sourceTree = "<group>"; };
 		ABBCF724104FDC99005508E8 /* kosmictask_sparkle_dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kosmictask_sparkle_dsa_pub.pem; sourceTree = "<group>"; };
 		ABBCF791104FDEE0005508E8 /* kosmictask_sparkle_dsa_priv.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = kosmictask_sparkle_dsa_priv.pem; sourceTree = "<group>"; };
-		ABBF5EE40E1B870600F82F81 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/DescriptionView.xib; sourceTree = "<group>"; };
+		ABBF5EE40E1B870600F82F81 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ParameterDescriptionView.xib; sourceTree = "<group>"; };
 		ABBF60330E1BB85800F82F81 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ParameterPluginInputView.xib; sourceTree = "<group>"; };
 		ABBF60360E1BB9C900F82F81 /* MGSParameterPluginInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterPluginInputViewController.h; sourceTree = "<group>"; };
 		ABBF60370E1BB9C900F82F81 /* MGSParameterPluginInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterPluginInputViewController.m; sourceTree = "<group>"; };
@@ -6308,6 +6321,8 @@
 				AB19167412AFD90300710031 /* KosmicTaskRunner-Info copy 3.plist */,
 				ABBA126A12B28B16005F12A5 /* KosmicTaskRunner copy.plist */,
 				ABE7823D132516DB00663CBB /* KosmicTaskRunner copy.plist */,
+				AB10CE7913D4455A003971C7 /* FolderParameterEditView.xib */,
+				AB10CF1B13D44576003971C7 /* FolderParameterInputView.xib */,
 			);
 			name = mother;
 			sourceTree = "<group>";
@@ -6348,7 +6363,7 @@
 				AB9EE4BD0E03DE70004AF953 /* Crash reporter */,
 				ABB44ECF0DE828E500BB5427 /* Credits.rtf */,
 				ABE81B060D36248500EF303E /* DebugPanel.xib */,
-				ABBF5EE30E1B870600F82F81 /* DescriptionView.xib */,
+				ABBF5EE30E1B870600F82F81 /* ParameterDescriptionView.xib */,
 				AB9EE4AC0E03DD55004AF953 /* Edit window */,
 				AB04C5A90D8E8F1300651270 /* ErrorWindow.xib */,
 				ABE81B080D36248500EF303E /* ExceptionPanel.xib */,
@@ -6474,6 +6489,19 @@
 				AB4A5C6B120D600D006A66CC /* scala */,
 			);
 			name = Scala;
+			sourceTree = "<group>";
+		};
+		AB10CE5513D43F8A003971C7 /* Folder Path */ = {
+			isa = PBXGroup;
+			children = (
+				AB10CE4413D43D0E003971C7 /* MGSFolderParameterPlugin.h */,
+				AB10CE4513D43D0E003971C7 /* MGSFolderParameterPlugin.m */,
+				AB10CE5613D4400D003971C7 /* MGSFolderParameterInputViewController.h */,
+				AB10CE5713D4400D003971C7 /* MGSFolderParameterInputViewController.m */,
+				AB10CE5913D4405F003971C7 /* MGSFolderParameterEditViewController.h */,
+				AB10CE5A13D4405F003971C7 /* MGSFolderParameterEditViewController.m */,
+			);
+			name = "Folder Path";
 			sourceTree = "<group>";
 		};
 		AB1208E60D5BADC200EF60AC /* Toolbar view controllers */ = {
@@ -8465,6 +8493,7 @@
 		ABAFC7970DF9C30600349FC3 /* File */ = {
 			isa = PBXGroup;
 			children = (
+				AB10CE5513D43F8A003971C7 /* Folder Path */,
 				ABAFC6450DF987A100349FC3 /* MGSFileParameterEditViewController.h */,
 				ABAFC6460DF987A100349FC3 /* MGSFileParameterEditViewController.m */,
 				ABAFC87B0DF9C7DE00349FC3 /* MGSFileParameterPlugin.h */,
@@ -10868,7 +10897,7 @@
 				ABB15FC90E0FE62A002AB48D /* LoudHailer.icns in Resources */,
 				AB9F347A0E164A59002B2CBF /* ScriptIconGreen.png in Resources */,
 				AB9F347B0E164A59002B2CBF /* ScriptIconRed.png in Resources */,
-				ABBF5EE50E1B870600F82F81 /* DescriptionView.xib in Resources */,
+				ABBF5EE50E1B870600F82F81 /* ParameterDescriptionView.xib in Resources */,
 				ABBF60340E1BB85800F82F81 /* ParameterPluginInputView.xib in Resources */,
 				ABA118430E27A8E700F672C4 /* RunDisabled.png in Resources */,
 				ABA118440E27A8E700F672C4 /* RunInactiveDisabled.png in Resources */,
@@ -11243,6 +11272,8 @@
 			files = (
 				ABB93F780DF9CC94009A2BFC /* FileParameterEditView.xib in Resources */,
 				ABA0896F0DFA815C0099755E /* FileParameterInputView.xib in Resources */,
+				AB10CE7A13D4455A003971C7 /* FolderParameterEditView.xib in Resources */,
+				AB10CF1C13D44576003971C7 /* FolderParameterInputView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12366,6 +12397,9 @@
 				ABA089390DFA7DFF0099755E /* MGSFileParameterInputViewController.m in Sources */,
 				AB3D763E13477B7700CB254B /* MGSFilePathParameterPlugin.m in Sources */,
 				AB3D76EB1347AE6C00CB254B /* MGSFilePathParameterInputViewController.m in Sources */,
+				AB10CE4613D43DDB003971C7 /* MGSFolderParameterPlugin.m in Sources */,
+				AB10CE5813D4400D003971C7 /* MGSFolderParameterInputViewController.m in Sources */,
+				AB10CE5B13D4405F003971C7 /* MGSFolderParameterEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13467,12 +13501,12 @@
 			name = ImageCollectionWindow.xib;
 			sourceTree = "<group>";
 		};
-		ABBF5EE30E1B870600F82F81 /* DescriptionView.xib */ = {
+		ABBF5EE30E1B870600F82F81 /* ParameterDescriptionView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				ABBF5EE40E1B870600F82F81 /* English */,
 			);
-			name = DescriptionView.xib;
+			name = ParameterDescriptionView.xib;
 			sourceTree = "<group>";
 		};
 		ABBF60320E1BB85800F82F81 /* ParameterPluginInputView.xib */ = {

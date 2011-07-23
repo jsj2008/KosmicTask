@@ -50,7 +50,8 @@
  */
 - (id)init
 {
-	if ([super init]) {
+	self = [super init];
+	if (self) {
 		self.value = @"";
 		self.isInitialValue = NO;
 	}
@@ -128,6 +129,8 @@
 		// controller
 		_arrayController = [[NSArrayController alloc] init];
 		[_arrayController setObjectClass:[MGSListParameterItem class]];
+		self.parameterDescription = NSLocalizedString(@"Select an item from the list.", @"List selection prompt");
+
 	}
 	return self;
 }

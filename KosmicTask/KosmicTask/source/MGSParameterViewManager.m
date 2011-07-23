@@ -310,6 +310,11 @@
 	NSInteger idx = [_scriptParameterHandler count] - 1;
 	MGSParameterViewController *viewController = [self createViewForParameterAtIndex:idx];
 
+	// set parameter description if set
+	if ([viewController parameterDescription]) {
+		[[viewController scriptParameter] setDescription:[viewController parameterDescription]];
+	}
+	
 	// update the view locations
 	[self updateViewLocations];
 	

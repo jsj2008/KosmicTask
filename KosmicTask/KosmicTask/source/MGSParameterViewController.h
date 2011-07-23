@@ -13,7 +13,7 @@
 @class MGSScriptParameter;
 @class MGSParameterSubEditViewController;
 @class MGSParameterSubInputViewController;
-@class MGSDescriptionViewController;
+@class MGSParameterDescriptionViewController;
 @class MGSParameterViewController;
 @class MGSParameterPluginInputViewController;
 
@@ -81,9 +81,10 @@ typedef enum _MGSParameterType {
 	
 	MGSParameterMode _mode;	// input or edit mode
 	
-	IBOutlet MGSDescriptionViewController *_descriptionViewController;
+	IBOutlet MGSParameterDescriptionViewController *_descriptionViewController;
 	
 	NSString *_parameterName;
+	NSString *_parameterDescription;
 	BOOL _initialTypePluginLoaded;	// set to YES once a valid parameter type plugin has been loaded
 	BOOL _layoutHasOccurred;		// YES when view has been laid out
 	
@@ -99,6 +100,7 @@ typedef enum _MGSParameterType {
 @property MGSParameterType parameterType;
 @property (readonly)MGSParameterMode mode;
 @property (copy) NSString *parameterName;
+@property (copy) NSString *parameterDescription;
 @property (readonly) BOOL resetEnabled;
 
 -(id)initWithMode:(MGSParameterMode)mode;

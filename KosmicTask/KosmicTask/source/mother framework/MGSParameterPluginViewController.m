@@ -29,6 +29,7 @@
 @synthesize defaultValueSelected = _defaultValueSelected;
 @synthesize delegate;
 @synthesize label;
+@synthesize parameterDescription =_parameterDescription;
 
 /*
  
@@ -47,6 +48,7 @@
 		_sendAsAttachment = NO;
 		_valid = YES;
 		_defaultValueSelected = YES;
+		_parameterDescription = nil;
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateModel:) name:MGSNoteEditWindowUpdateModel object:nil];
 		

@@ -19,6 +19,7 @@ typedef enum _MGSScriptParameterRepresentation {
 @interface MGSScriptParameter : MGSDictionary {
 	BOOL _modelDataModified;
 }
++ (NSString *)defaultDescription;
 + (id)new;
 //- (NSString *)type_;
 //- (void)setType_:(NSString *)aString;

@@ -24,6 +24,8 @@
 	self = [super initWithNibName:@"TextParameterEditView"];
 	if (self) {
 		inputStyle = kMGSParameterInputStyleMultiLine;
+		
+		self.parameterDescription = NSLocalizedString(@"Enter text.", @"Text parameter description");
 	}
 	return self;
 }

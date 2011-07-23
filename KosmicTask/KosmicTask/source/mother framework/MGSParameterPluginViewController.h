@@ -41,6 +41,7 @@ typedef enum _MGSProcessParameterPlist {
 	id delegate;
 	NSSize oldFrameSize;
 	NSString *label;
+	NSString *_parameterDescription;
 }
 
 @property BOOL canDragHeight;
@@ -55,6 +56,7 @@ typedef enum _MGSProcessParameterPlist {
 @property (getter=isDefaultValueSelected) BOOL defaultValueSelected;
 @property id delegate;
 @property (copy) NSString *label;
+@property (copy) NSString *parameterDescription;
 
 - (NSMutableDictionary *)plist;	// access by subclasses only
 

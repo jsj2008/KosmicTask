@@ -23,6 +23,7 @@
 - (id)init
 {
 	if ([super initWithNibName:@"DateParameterEditView"]) {
+		self.parameterDescription = NSLocalizedString(@"Select a date.", @"Date selection prompt");
 	}
 	return self;
 }

@@ -10,15 +10,15 @@
 #import "MGSParameterViewController.h"
 
 @class MGSScriptParameter;
-@class MGSDescriptionViewController;
+@class MGSParameterDescriptionViewController;
 
 @protocol MGSDescriptionViewController 
 
 @optional
-- (void)descriptionViewDidResize:(MGSDescriptionViewController *)controller oldSize:(NSSize)oldSize;
+- (void)descriptionViewDidResize:(MGSParameterDescriptionViewController *)controller oldSize:(NSSize)oldSize;
 @end
 
-@interface MGSDescriptionViewController : NSViewController {
+@interface MGSParameterDescriptionViewController : NSViewController {
 	
 	// description
 	IBOutlet NSButton *descriptionDisclosureButton;		// disclosure button
