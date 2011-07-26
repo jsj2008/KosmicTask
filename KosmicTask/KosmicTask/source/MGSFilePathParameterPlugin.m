@@ -21,7 +21,7 @@
  */
 - (id)editViewControllerClass
 {
-	return [MGSFilePathParameterEditViewController class];
+	return [MGSFileParameterEditViewController class];
 }
 
 

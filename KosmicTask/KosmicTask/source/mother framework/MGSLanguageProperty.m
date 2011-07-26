@@ -201,11 +201,14 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
 		}
 	}
 	
-	if (![newValue isKindOfClass:[initialValue class]]) {
-		MLogInfo(@"new value is of wrong class: %@", [newValue className]);
-		return;
+    // fails on OS X 10.7
+    if (NO) {
+        if (![newValue isKindOfClass:[initialValue class]]) {
+            MLogInfo(@"new value is of wrong class: %@", [newValue className]);
+            return;
+        }
 	}
-	
+    
 	if ([newValue isEqualTo:value]) {
 		return;
 	}

@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <MGSNetRequest.h>
+#import "MGSNetRequest.h"
 
 @interface MGSNetRequest (KosmicTask)
 

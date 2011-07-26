@@ -58,8 +58,7 @@
 {
 	// disconnect must be called for all instances
 	if (!disconnectCalled) {
-		NSString *text = [NSString stringWithFormat:@"AsyncSocket finalize without prior disconnect call: %@", self];
-		NSAssert (disconnectCalled, text);
+		NSAssert (@"AsyncSocket finalize without prior disconnect call: %@", self);
 	}
 	
 	MLog(DEBUGLOG, @"MGSAsyncSocket finalized.");

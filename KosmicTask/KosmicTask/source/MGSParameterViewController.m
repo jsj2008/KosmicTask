@@ -414,7 +414,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	
 	[self setParameterPlugin:plugin];
 	
-	fix this
+#warning chnge description if not edited
 	
 	// change parameter description if not edited
 	NSString *descripton = self.parameterDescription;

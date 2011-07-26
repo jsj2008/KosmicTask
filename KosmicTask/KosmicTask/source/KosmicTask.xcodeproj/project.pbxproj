@@ -3740,7 +3740,7 @@
 		AB426831125BC9D400C0D649 /* MGSPerlLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSPerlLanguage.h; path = ../MGSPerlLanguage.h; sourceTree = "<group>"; };
 		AB426836125BCB2300C0D649 /* MGSTcshLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSTcshLanguage.h; path = ../MGSTcshLanguage.h; sourceTree = "<group>"; };
 		AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KosmicTaskHelper.xcodeproj; path = ../../KosmicTaskHelper/KosmicTaskHelper.xcodeproj; sourceTree = SOURCE_ROOT; };
-		AB450DC611C0146F00550A4E /* KosmicTask.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.sdef; path = KosmicTask.sdef; sourceTree = "<group>"; };
+		AB450DC611C0146F00550A4E /* KosmicTask.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = KosmicTask.sdef; sourceTree = "<group>"; };
 		AB4654280D31033D00DCA1FA /* MGSParameterViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterViewManager.h; sourceTree = "<group>"; };
 		AB4654290D31033D00DCA1FA /* MGSParameterViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterViewManager.m; sourceTree = "<group>"; };
 		AB4654440D313D6E00DCA1FA /* MGSRoundedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSRoundedView.h; sourceTree = "<group>"; };
@@ -7275,6 +7275,7 @@
 		AB69B66D130EAA8E00171D4F /* Git repo is local */ = {
 			isa = PBXGroup;
 			children = (
+				ABA1DE831204916A000B3F00 /* FScript.xcodeproj */,
 				ABCE467B13C8E70D00DF3CD0 /* MarkdownLive.xcodeproj */,
 				ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */,
 				AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */,
@@ -7288,7 +7289,6 @@
 			isa = PBXGroup;
 			children = (
 				ABF6CDB413CF786A000EADD7 /* QLMarkdown.xcodeproj */,
-				ABA1DE831204916A000B3F00 /* FScript.xcodeproj */,
 			);
 			name = "Git hub";
 			sourceTree = "<group>";
@@ -10273,7 +10273,11 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "KosmicTask" */;
 			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* mother */;
 			projectDirPath = "";
 			projectReferences = (
@@ -11486,7 +11490,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# change framework install name in executable.\n# note that running install_name_tool on a library won't work\n# http://qin.laya.com/tech_coding_help/dylib_linking.html\ncd \"$BUILD_DIR/$BUILD_STYLE\"\ninstall_name_tool -change \"/Users/Jonathan/Library/Frameworks/JSCocoa.framework/Versions/A/JSCocoa\" \"@rpath/JSCocoa.framework/Versions/Current/JSCocoa\" $FULL_PRODUCT_NAME";
+			shellScript = "# change framework install name in executable.\n# note that running install_name_tool on a library won't work\n# http://qin.laya.com/tech_coding_help/dylib_linking.html\ncd \"$BUILD_DIR/$BUILD_STYLE\"\ninstall_name_tool -change \"/Users/Jonathan/Library/Frameworks/JSCocoa.framework/Versions/A/JSCocoa\" \"@rpath/JSCocoa.framework/Versions/Current/JSCocoa\" \"$TARGET_BUILD_DIR/$EXECUTABLE_PATH\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -14781,7 +14785,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
 				INFOPLIST_FILE = "Test KosmicTask App-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
@@ -14807,7 +14811,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
 				INFOPLIST_FILE = "Test KosmicTask App-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
@@ -14832,7 +14836,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
 				INFOPLIST_FILE = "Test KosmicTask App-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
@@ -15952,6 +15956,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB4F92851039AD9F005EF329 /* beta-expiring.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 56;
@@ -15960,7 +15965,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -15983,6 +15988,7 @@
 				IBC_WARNINGS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = macosx;
 				SEPARATE_STRIP = YES;
 				STRIP_STYLE = "non-global";
 				VALID_ARCHS = "i386 ppc";
@@ -16017,6 +16023,7 @@
 					"\"$(SRCROOT)/../../cint/cint/lib\"",
 				);
 				PRODUCT_NAME = KosmicTask;
+				SDKROOT = macosx;
 				STRIPFLAGS = "-S -x -r";
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = all;
@@ -16039,6 +16046,7 @@
 					"\"KosmicTaskServer-Info.plist\"",
 				);
 				PRODUCT_NAME = KosmicTaskServer;
+				VALID_ARCHS = i386;
 			};
 			name = "Release Development";
 		};
@@ -18228,6 +18236,7 @@
 					"\"$(SRCROOT)/../../cint/cint/lib\"",
 				);
 				PRODUCT_NAME = KosmicTask;
+				SDKROOT = macosx;
 				SYMROOT = /Users/Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -18255,6 +18264,7 @@
 					"\"$(SRCROOT)/../../cint/cint/lib\"",
 				);
 				PRODUCT_NAME = KosmicTask;
+				SDKROOT = macosx;
 				STRIPFLAGS = "-S -x -r";
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = all;
@@ -18267,6 +18277,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB4F92851039AD9F005EF329 /* beta-expiring.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 56;
@@ -18276,7 +18287,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -18299,6 +18310,7 @@
 				IBC_WARNINGS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = macosx;
 				SEPARATE_STRIP = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALID_ARCHS = i386;
@@ -18316,6 +18328,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB4F92851039AD9F005EF329 /* beta-expiring.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 56;
@@ -18325,7 +18338,7 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -18348,6 +18361,7 @@
 				IBC_WARNINGS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				RUN_CLANG_STATIC_ANALYZER = NO;
+				SDKROOT = macosx;
 				SEPARATE_STRIP = YES;
 				STRIP_STYLE = "non-global";
 				VALID_ARCHS = i386;
