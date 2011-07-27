@@ -402,11 +402,18 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
  
  */
 - (void)typePopupMenuItemSelected:(id)sender
-{
+{   
+    [self commitEditing];
+    
 	if (![sender respondsToSelector:@selector(representedObject)]) {
 		return;
 	}
 
+    BOOL updateParameterDescription = NO;
+    if ([[_scriptParameter description] isEqualToString:self.parameterDescription]) {
+        updateParameterDescription = YES;
+    }
+    
 	// the represented object is a plugin which will
 	// determine the parameter type
 	id representedObject = [sender representedObject];
@@ -414,14 +421,14 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	
 	[self setParameterPlugin:plugin];
 	
-#warning chnge description if not edited
-	
 	// change parameter description if not edited
 	NSString *descripton = self.parameterDescription;
 	if (!descripton) {
 		descripton = [MGSScriptParameter defaultDescription];
 	}
-	[_scriptParameter setDescription:descripton];
+    if (![_scriptParameter description] || [[_scriptParameter description] isEqualToString:@""] || updateParameterDescription) {
+        [_scriptParameter setDescription:descripton];
+    }
 }
 
 #pragma mark -

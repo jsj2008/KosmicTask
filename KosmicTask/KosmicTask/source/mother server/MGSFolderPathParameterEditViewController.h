@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSParameterSubEditViewController.h"
 
-@interface MGSFolderParameterEditViewController : MGSParameterSubEditViewController <NSOpenSavePanelDelegate> {
+@interface MGSFolderPathParameterEditViewController : MGSParameterSubEditViewController <NSOpenSavePanelDelegate> {
 	NSString *_folderPath;
 	IBOutlet NSTextField *pathTextField;
 }

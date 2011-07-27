@@ -6,15 +6,15 @@
 //  Copyright 2011 mugginsoft.com. All rights reserved.
 //
 
-#import "MGSFolderParameterPlugin.h"
-#import "MGSFolderParameterEditViewController.h"
+#import "MGSFolderPathParameterPlugin.h"
+#import "MGSFolderPathParameterEditViewController.h"
 
 // class extension
-@interface MGSFolderParameterEditViewController()
+@interface MGSFolderPathParameterEditViewController()
 - (void)openPanelDidEnd:(NSOpenPanel *)sheet returnCode:(int)returnCode contextInfo:(void  *)contextInfo;
 @end
 
-@implementation MGSFolderParameterEditViewController
+@implementation MGSFolderPathParameterEditViewController
 
 @synthesize folderPath = _folderPath;
 
@@ -25,7 +25,7 @@
  */
 - (id)init
 {
-	if ([super initWithNibName:@"FolderParameterEditView"]) {
+	if ([super initWithNibName:@"FolderPathParameterEditView"]) {
 		self.parameterDescription = NSLocalizedString(@"Select folder. Folder path will be sent to task.", @"Parameter folder selection prompt");
 	}
 	return self;

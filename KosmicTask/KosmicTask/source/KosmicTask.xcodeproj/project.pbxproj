@@ -75,11 +75,11 @@
 		AB0DC030130C8ECB000F4673 /* JSCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F6E24130C85B900342F11 /* JSCocoa.framework */; };
 		AB0EE2270EF13CE5008EA368 /* TaskPublishedTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB0EE2260EF13CE5008EA368 /* TaskPublishedTemplate.tif */; };
 		AB1089B410F632CC00882FC7 /* NSEvent_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1089B310F632CC00882FC7 /* NSEvent_Mugginsoft.m */; };
-		AB10CE4613D43DDB003971C7 /* MGSFolderParameterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB10CE4513D43D0E003971C7 /* MGSFolderParameterPlugin.m */; };
+		AB10CE4613D43DDB003971C7 /* MGSFolderPathParameterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB10CE4513D43D0E003971C7 /* MGSFolderPathParameterPlugin.m */; };
 		AB10CE5813D4400D003971C7 /* MGSFolderParameterInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB10CE5713D4400D003971C7 /* MGSFolderParameterInputViewController.m */; };
-		AB10CE5B13D4405F003971C7 /* MGSFolderParameterEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB10CE5A13D4405F003971C7 /* MGSFolderParameterEditViewController.m */; };
-		AB10CE7A13D4455A003971C7 /* FolderParameterEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB10CE7913D4455A003971C7 /* FolderParameterEditView.xib */; };
-		AB10CF1C13D44576003971C7 /* FolderParameterInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB10CF1B13D44576003971C7 /* FolderParameterInputView.xib */; };
+		AB10CE5B13D4405F003971C7 /* MGSFolderPathParameterEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB10CE5A13D4405F003971C7 /* MGSFolderPathParameterEditViewController.m */; };
+		AB10CE7A13D4455A003971C7 /* FolderPathParameterEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB10CE7913D4455A003971C7 /* FolderPathParameterEditView.xib */; };
+		AB10CF1C13D44576003971C7 /* FolderPathParameterInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB10CF1B13D44576003971C7 /* FolderPathParameterInputView.xib */; };
 		AB12468D0D8168A40077786C /* OSAKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA858C40D5CAE910077F640 /* OSAKit.framework */; };
 		AB12AED513087715006047E0 /* MGSSidebarOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB12AED413087715006047E0 /* MGSSidebarOutlineView.m */; };
 		AB13FCD60EC8A4F4002ADE93 /* GearSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = AB13FCD50EC8A4F4002ADE93 /* GearSmall.png */; };
@@ -3456,14 +3456,14 @@
 		AB0EE2260EF13CE5008EA368 /* TaskPublishedTemplate.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TaskPublishedTemplate.tif; sourceTree = "<group>"; };
 		AB1089B210F632CC00882FC7 /* NSEvent_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEvent_Mugginsoft.h; sourceTree = "<group>"; };
 		AB1089B310F632CC00882FC7 /* NSEvent_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSEvent_Mugginsoft.m; sourceTree = "<group>"; };
-		AB10CE4413D43D0E003971C7 /* MGSFolderParameterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFolderParameterPlugin.h; sourceTree = "<group>"; };
-		AB10CE4513D43D0E003971C7 /* MGSFolderParameterPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFolderParameterPlugin.m; sourceTree = "<group>"; };
-		AB10CE5613D4400D003971C7 /* MGSFolderParameterInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFolderParameterInputViewController.h; sourceTree = "<group>"; };
+		AB10CE4413D43D0E003971C7 /* MGSFolderPathParameterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFolderPathParameterPlugin.h; sourceTree = "<group>"; };
+		AB10CE4513D43D0E003971C7 /* MGSFolderPathParameterPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFolderPathParameterPlugin.m; sourceTree = "<group>"; };
+		AB10CE5613D4400D003971C7 /* MGSFolderPathParameterInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = MGSFolderPathParameterInputViewController.h; sourceTree = "<group>"; };
 		AB10CE5713D4400D003971C7 /* MGSFolderParameterInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFolderParameterInputViewController.m; sourceTree = "<group>"; };
-		AB10CE5913D4405F003971C7 /* MGSFolderParameterEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFolderParameterEditViewController.h; sourceTree = "<group>"; };
-		AB10CE5A13D4405F003971C7 /* MGSFolderParameterEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFolderParameterEditViewController.m; sourceTree = "<group>"; };
-		AB10CE7913D4455A003971C7 /* FolderParameterEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderParameterEditView.xib; sourceTree = "<group>"; };
-		AB10CF1B13D44576003971C7 /* FolderParameterInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderParameterInputView.xib; sourceTree = "<group>"; };
+		AB10CE5913D4405F003971C7 /* MGSFolderPathParameterEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = MGSFolderPathParameterEditViewController.h; sourceTree = "<group>"; };
+		AB10CE5A13D4405F003971C7 /* MGSFolderPathParameterEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFolderPathParameterEditViewController.m; sourceTree = "<group>"; };
+		AB10CE7913D4455A003971C7 /* FolderPathParameterEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderPathParameterEditView.xib; sourceTree = "<group>"; };
+		AB10CF1B13D44576003971C7 /* FolderPathParameterInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderPathParameterInputView.xib; sourceTree = "<group>"; };
 		AB1208E30D5BAD9600EF60AC /* MGSViewToolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSViewToolViewController.h; sourceTree = "<group>"; };
 		AB1208E40D5BAD9600EF60AC /* MGSViewToolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSViewToolViewController.m; sourceTree = "<group>"; };
 		AB12AED313087715006047E0 /* MGSSidebarOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSidebarOutlineView.h; sourceTree = "<group>"; };
@@ -6321,8 +6321,8 @@
 				AB19167412AFD90300710031 /* KosmicTaskRunner-Info copy 3.plist */,
 				ABBA126A12B28B16005F12A5 /* KosmicTaskRunner copy.plist */,
 				ABE7823D132516DB00663CBB /* KosmicTaskRunner copy.plist */,
-				AB10CE7913D4455A003971C7 /* FolderParameterEditView.xib */,
-				AB10CF1B13D44576003971C7 /* FolderParameterInputView.xib */,
+				AB10CE7913D4455A003971C7 /* FolderPathParameterEditView.xib */,
+				AB10CF1B13D44576003971C7 /* FolderPathParameterInputView.xib */,
 			);
 			name = mother;
 			sourceTree = "<group>";
@@ -6494,12 +6494,12 @@
 		AB10CE5513D43F8A003971C7 /* Folder Path */ = {
 			isa = PBXGroup;
 			children = (
-				AB10CE4413D43D0E003971C7 /* MGSFolderParameterPlugin.h */,
-				AB10CE4513D43D0E003971C7 /* MGSFolderParameterPlugin.m */,
-				AB10CE5613D4400D003971C7 /* MGSFolderParameterInputViewController.h */,
+				AB10CE4413D43D0E003971C7 /* MGSFolderPathParameterPlugin.h */,
+				AB10CE4513D43D0E003971C7 /* MGSFolderPathParameterPlugin.m */,
+				AB10CE5613D4400D003971C7 /* MGSFolderPathParameterInputViewController.h */,
 				AB10CE5713D4400D003971C7 /* MGSFolderParameterInputViewController.m */,
-				AB10CE5913D4405F003971C7 /* MGSFolderParameterEditViewController.h */,
-				AB10CE5A13D4405F003971C7 /* MGSFolderParameterEditViewController.m */,
+				AB10CE5913D4405F003971C7 /* MGSFolderPathParameterEditViewController.h */,
+				AB10CE5A13D4405F003971C7 /* MGSFolderPathParameterEditViewController.m */,
 			);
 			name = "Folder Path";
 			sourceTree = "<group>";
@@ -11276,8 +11276,8 @@
 			files = (
 				ABB93F780DF9CC94009A2BFC /* FileParameterEditView.xib in Resources */,
 				ABA0896F0DFA815C0099755E /* FileParameterInputView.xib in Resources */,
-				AB10CE7A13D4455A003971C7 /* FolderParameterEditView.xib in Resources */,
-				AB10CF1C13D44576003971C7 /* FolderParameterInputView.xib in Resources */,
+				AB10CE7A13D4455A003971C7 /* FolderPathParameterEditView.xib in Resources */,
+				AB10CF1C13D44576003971C7 /* FolderPathParameterInputView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12401,9 +12401,9 @@
 				ABA089390DFA7DFF0099755E /* MGSFileParameterInputViewController.m in Sources */,
 				AB3D763E13477B7700CB254B /* MGSFilePathParameterPlugin.m in Sources */,
 				AB3D76EB1347AE6C00CB254B /* MGSFilePathParameterInputViewController.m in Sources */,
-				AB10CE4613D43DDB003971C7 /* MGSFolderParameterPlugin.m in Sources */,
+				AB10CE4613D43DDB003971C7 /* MGSFolderPathParameterPlugin.m in Sources */,
 				AB10CE5813D4400D003971C7 /* MGSFolderParameterInputViewController.m in Sources */,
-				AB10CE5B13D4405F003971C7 /* MGSFolderParameterEditViewController.m in Sources */,
+				AB10CE5B13D4405F003971C7 /* MGSFolderPathParameterEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

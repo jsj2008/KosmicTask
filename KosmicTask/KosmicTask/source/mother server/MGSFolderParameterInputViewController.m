@@ -7,16 +7,16 @@
 //
 
 #import "MGSMother.h"
-#import "MGSFolderParameterInputViewController.h"
-#import "MGSFolderParameterPlugin.h"
+#import "MGSFolderPathParameterInputViewController.h"
+#import "MGSFolderPathParameterPlugin.h"
 #import "NSString_Mugginsoft.h"
 
 // class extension
-@interface MGSFolderParameterInputViewController()
+@interface MGSFolderPathParameterInputViewController()
 - (void)openPanelDidEnd:(NSOpenPanel *)sheet returnCode:(int)returnCode contextInfo:(void  *)contextInfo;
 @end
 
-@implementation MGSFolderParameterInputViewController
+@implementation MGSFolderPathParameterInputViewController
 
 
 @synthesize fileLabel = _fileLabel;
@@ -28,7 +28,7 @@
  */
 - (id)init
 {
-	self = [super initWithNibName:@"FolderParameterInputView"];
+	self = [super initWithNibName:@"FolderPathParameterInputView"];
 	if (self) {
 		self.sendAsAttachment = NO;
 		//self.fileLabel = @"File Content";

@@ -6,10 +6,10 @@
 //  Copyright 2011 mugginsoft.com. All rights reserved.
 //
 
-#import "MGSFolderParameterPlugin.h"
+#import "MGSFolderPathParameterPlugin.h"
 
-#import "MGSFolderParameterEditViewController.h"
-#import "MGSFolderParameterInputViewController.h"
+#import "MGSFolderPathParameterEditViewController.h"
+#import "MGSFolderPathParameterInputViewController.h"
 
 NSString *MGSKeyFolderPath = @"FolderPath";
 
@@ -22,7 +22,7 @@ NSString *MGSKeyFolderPath = @"FolderPath";
  */
 - (id)editViewControllerClass
 {
-	return [MGSFolderParameterEditViewController class];
+	return [MGSFolderPathParameterEditViewController class];
 }
 
 
@@ -33,7 +33,7 @@ NSString *MGSKeyFolderPath = @"FolderPath";
  */
 - (id)inputViewControllerClass
 {
-	return [MGSFolderParameterInputViewController class];
+	return [MGSFolderPathParameterInputViewController class];
 }
 
 /* 

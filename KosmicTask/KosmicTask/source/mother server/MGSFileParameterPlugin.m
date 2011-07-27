@@ -11,7 +11,7 @@
 #import "MGSFileParameterInputViewController.h"
 
 #import "MGSFilePathParameterPlugin.h"
-#import "MGSFolderParameterPlugin.h"
+#import "MGSFolderPathParameterPlugin.h"
 
 NSString *MGSKeyUseFileExtensions = @"UseFileExtensions";
 NSString *MGSKeyFileExtensions = @"FileExtensions";

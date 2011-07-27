@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSParameterSubInputViewController.h"
 
-@interface MGSFolderParameterInputViewController : MGSParameterSubInputViewController <NSOpenSavePanelDelegate> {
+@interface MGSFolderPathParameterInputViewController : MGSParameterSubInputViewController <NSOpenSavePanelDelegate> {
 	
 	IBOutlet NSTextField *pathTextField;
 	NSString *_fileLabel;
