@@ -908,7 +908,6 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 		return;
 	}
 	
-	//_authenticationDictionary = payload.dictionary;
 }
 
 #pragma mark Authentication handling
@@ -947,6 +946,14 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
  */
 - (NSDictionary *)authenticationDictionary
 {
+    // auto generate authentication dictionary for localhost
+    if ([self isLocalHost] && !_authenticationDictionary) {
+        self.authenticationDictionary = [[MGSAuthentication sharedController] 
+                                         responseDictionaryforSessionService:self.serviceName 
+                                         password:[MGSAuthentication localHost] 
+                                         username:[MGSAuthentication localHost]];
+    }
+
 	return _authenticationDictionary;
 }
 /*
@@ -956,13 +963,6 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
  */
 - (NSDictionary *)authenticationDictionaryForRunMode
 {
-	if ([self isLocalHost] && !self.authenticationDictionary) {
-		self.authenticationDictionary = [[MGSAuthentication sharedController] 
-										 responseDictionaryforSessionService:self.serviceName 
-										 password:[MGSAuthentication localHost] 
-										 username:[MGSAuthentication localHost]];
-	}
-	
 	switch (self.applicationWindowContext.runMode) {
 			
 			// do not want to authenticate public mode even if the

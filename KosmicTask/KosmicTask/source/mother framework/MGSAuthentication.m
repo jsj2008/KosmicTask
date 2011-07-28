@@ -266,7 +266,7 @@ const NSString *MGSAuthenticationClearText = @"ClearText";
 	// some reason a new item cannot be created in the keychain.
 //#warning failure here on occasion
 	if (![MGSKeyChain addService:[MGSKeyChain sessionService:service] withUsername:username password:password]) {
-		NSAssert(NO, @"Cannot add session details to keychain.");
+		NSLog(@"Cannot save session details to keychain.");
 	}
 	
 	// we will restore the password from the keychain when required using -authDictionaryforService:withDictionary:

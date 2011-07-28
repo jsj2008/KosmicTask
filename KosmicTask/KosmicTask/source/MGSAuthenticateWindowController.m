@@ -320,6 +320,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 				
 		_keychainSearchedForCredentials = YES;
 		
+        
 		// get the username and password for this session
 		NSString *password = nil;
 		NSString *username = [[_netRequest netClient] hostUserName];

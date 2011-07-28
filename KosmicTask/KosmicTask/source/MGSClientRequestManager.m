@@ -620,7 +620,17 @@ static MGSClientRequestManager *_sharedController = nil;
 	// strictly required for some commands
 	//
 	// don't authenticate unless reqd
+    //
 	NSDictionary *authDict = [netRequest.netClient authenticationDictionaryForRunMode];
+    if (!authDict) {
+        
+        /* if we are authenticating against the local host then
+            use the auto generated authentication dictionary at all times.
+         */
+        if (netRequest.netClient.isLocalHost && [command isEqualToString:MGSNetMessageCommandAuthenticate]) {
+            authDict = [netRequest.netClient authenticationDictionary];
+        }
+    }
 	if (authDict) {
 		[[netRequest requestMessage] setAuthenticationDictionary:authDict];
 	}
