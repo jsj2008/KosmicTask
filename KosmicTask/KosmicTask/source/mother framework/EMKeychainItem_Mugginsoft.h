@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EMKeychainItem.h"
+#import "EMKeychain.h"
 
 @interface EMKeychainItem (Mugginsoft)
 - (BOOL)setDescription:(NSString *)value;

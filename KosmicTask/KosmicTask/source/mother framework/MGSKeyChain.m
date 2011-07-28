@@ -7,9 +7,8 @@
 //
 
 #import "MGSKeyChain.h"
-#import "EMKeyChainProxy.h"
-#import "EMKeyChainProxy_Mugginsoft.h"
-#import "EMKeyChainItem_Mugginsoft.h"
+#import "EMKeyChain.h"
+#import "EMKeychainItem_Mugginsoft.h"
 
 NSString *MGSKeyPassword = @"password";
 NSString *MGSKeyUsername = @"username";
@@ -31,7 +30,7 @@ NSString *MGSSession = @".{Session}";
 	NSString *chainService = [self chainServiceName:service];
 	
 	// check for existing item
-	EMGenericKeychainItem *item  = [[EMKeychainProxy sharedProxy] genericKeychainItemForService:chainService withUsername:username];
+	EMGenericKeychainItem *item  = [EMGenericKeychainItem genericKeychainItemForService:chainService withUsername:username];
 	if (item) {
 		[item setPassword:password];
 	} else {	
@@ -40,8 +39,9 @@ NSString *MGSSession = @".{Session}";
 		// see MID: 607.
 		// one cause was an NSTextView getting sent -setString:nil
 		// maybe a threading issue?
-		item = [[EMKeychainProxy sharedProxy] addGenericKeychainItemForService:chainService withUsername:username password:password];
+		item = [EMGenericKeychainItem addGenericKeychainItemForService:chainService withUsername:username password:password];
 		[item setDescription: @"KosmicTask application password"];	// keychain displays as Kind
+        [item setLabel: @"KosmicTask application password"];
 	}
 	
 	return item;
@@ -50,7 +50,7 @@ NSString *MGSSession = @".{Session}";
 // Get password for service and user name.
 + (NSString *)passwordForService:(NSString *)service withUsername:(NSString *)username
 {
-	EMGenericKeychainItem *item  = [[EMKeychainProxy sharedProxy] 
+	EMGenericKeychainItem *item  = [EMGenericKeychainItem 
 									genericKeychainItemForService: [ self chainServiceName:service] 
 									withUsername:username];
 
@@ -61,7 +61,7 @@ NSString *MGSSession = @".{Session}";
 // if there is more than one matching service entry this code returns the first match
 + (NSDictionary *)passwordAndUsernameForService:(NSString *)service 
 {
-	EMGenericKeychainItem *item  = [[EMKeychainProxy sharedProxy] 
+	EMGenericKeychainItem *item  = [EMGenericKeychainItem
 									genericKeychainItemForService: [self chainServiceName:service]];
 	if (!item) return nil;
 	
@@ -77,7 +77,14 @@ NSString *MGSSession = @".{Session}";
 // delete service
 + (BOOL)deleteService:(NSString *)service withUsername:(NSString *)username
 {
-	return [[EMKeychainProxy sharedProxy] deleteGenericKeychainItemForService:[self chainServiceName:service] withUsername:username];
+    EMGenericKeychainItem *item = [EMGenericKeychainItem 
+                                   genericKeychainItemForService:[self chainServiceName:service] 
+                                   withUsername:username];
+    if (!item) return NO;
+                                   
+    [item remove];
+    
+    return YES;
 }
 
 @end
