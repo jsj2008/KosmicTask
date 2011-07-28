@@ -82,7 +82,12 @@ NSString *MGSSession = @".{Session}";
                                    genericKeychainItemForService:[self chainServiceName:service] 
                                    withUsername:username];
     if (!item) return NO;
-                                   
+    
+    // see API documentation for SecKeychainItemDelete
+    /* 
+     Do not delete a keychain item and recreate it in order to modify it; instead, use the SecKeychainItemModifyContent or SecKeychainItemModifyAttributesAndData function to modify an existing keychain item. When you delete a keychain item, you lose any access controls and trust settings added by the user or by other applications.
+    */
+    
     [item remove];
     
     return YES;

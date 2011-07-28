@@ -445,9 +445,20 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
          
          The best solution is to leave the session item in place and update it if required.
          
+        
          */
+        
+        // see API docs for SecKeychainItemDelete
+        
+        /*
+         
+         Do not delete a keychain item and recreate it in order to modify it; instead, use the SecKeychainItemModifyContent or SecKeychainItemModifyAttributesAndData function to modify an existing keychain item. When you delete a keychain item, you lose any access controls and trust settings added by the user or by other applications.
+         
+         This behaviour was verified and added to the readme notes for EMKeyChain
+         */
+        
 		// when service name defined delete any residual session passwords
-		[[MGSAuthentication sharedController] deleteKeychainSessionPasswordForService:_serviceName];
+		// [[MGSAuthentication sharedController] deleteKeychainSessionPasswordForService:_serviceName];
 	}
 }
 

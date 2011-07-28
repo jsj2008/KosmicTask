@@ -339,6 +339,14 @@ const NSString *MGSAuthenticationClearText = @"ClearText";
 	if (!username) return NO;
 	
 	// delete the password from the keychain
+    // see API docs for SecKeychainItemDelete
+    
+    /*
+     
+     Do not delete a keychain item and recreate it in order to modify it; instead, use the SecKeychainItemModifyContent or SecKeychainItemModifyAttributesAndData function to modify an existing keychain item. When you delete a keychain item, you lose any access controls and trust settings added by the user or by other applications.
+     
+     */
+    
 	return [MGSKeyChain deleteService:sessionService withUsername:username];
 }
 
@@ -365,6 +373,14 @@ const NSString *MGSAuthenticationClearText = @"ClearText";
 	NSString *username = [[NSString alloc] initWithData:[usernameBase64 decodeBase64WithNewlines:NO] encoding:NSUTF8StringEncoding];
 	
 	// delete the password from the keychain
+    
+    // see API docs for SecKeychainItemDelete
+    
+    /*
+     
+     Do not delete a keychain item and recreate it in order to modify it; instead, use the SecKeychainItemModifyContent or SecKeychainItemModifyAttributesAndData function to modify an existing keychain item. When you delete a keychain item, you lose any access controls and trust settings added by the user or by other applications.
+     
+     */
 	return [MGSKeyChain deleteService:service withUsername:username];
 }
 
