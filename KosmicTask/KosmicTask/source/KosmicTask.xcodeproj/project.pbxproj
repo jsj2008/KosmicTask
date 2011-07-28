@@ -65,9 +65,6 @@
 		AB0463DB0E01D29E00194233 /* ParameterEndView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB0463DA0E01D29E00194233 /* ParameterEndView.xib */; };
 		AB04C5AB0D8E8F1300651270 /* ErrorWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB04C5A90D8E8F1300651270 /* ErrorWindow.xib */; };
 		AB04C5AF0D8E91F000651270 /* MGSErrorWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB04C5AE0D8E91F000651270 /* MGSErrorWindowController.m */; };
-		AB04DF0913E1B1E400159889 /* EMKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = AB04DF0613E1B1E400159889 /* EMKeychain.h */; };
-		AB04DF0A13E1B1E400159889 /* EMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = AB04DF0713E1B1E400159889 /* EMKeychain.m */; };
-		AB04DF0B13E1B1E400159889 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AB04DF0813E1B1E400159889 /* README.md */; };
 		AB0519190D2A6982004EF3FB /* MGSNetClientSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AB0519170D2A6982004EF3FB /* MGSNetClientSocket.h */; };
 		AB08ED510E1543AE004D44F8 /* MGSEmptyParameterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB08ED500E1543AE004D44F8 /* MGSEmptyParameterViewController.m */; };
 		AB08ED940E154BE1004D44F8 /* MGSFilledView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB08ED930E154BE1004D44F8 /* MGSFilledView.m */; };
@@ -137,6 +134,9 @@
 		AB19176A12AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB19176912AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m */; };
 		AB19176B12AFE15100710031 /* KosmicTaskLuaCocoaRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB19162D12AFD90300710031 /* KosmicTaskLuaCocoaRunner */; };
 		AB1BD7DD12AFFE6B00B7733A /* LuaCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1BD78212AFFE2900B7733A /* LuaCocoa.framework */; };
+		AB1E1AF013E1BBC4003643AC /* EMKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = AB1E1AED13E1BBC4003643AC /* EMKeychain.h */; };
+		AB1E1AF113E1BBC4003643AC /* EMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E1AEE13E1BBC4003643AC /* EMKeychain.m */; };
+		AB1E1AF213E1BBC4003643AC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AB1E1AEF13E1BBC4003643AC /* README.md */; };
 		AB1FD21F0DF035920053C1A1 /* MGSLWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1FD21E0DF035920053C1A1 /* MGSLWindowController.m */; };
 		AB1FD2220DF035D70053C1A1 /* LicenceWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB1FD2200DF035D70053C1A1 /* LicenceWindow.xib */; };
 		AB214DE10D53A34600D4966C /* GreenRightArrow.icns in Resources */ = {isa = PBXBuildFile; fileRef = AB214DDD0D53A34600D4966C /* GreenRightArrow.icns */; };
@@ -3440,9 +3440,6 @@
 		AB04C5AA0D8E8F1300651270 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ErrorWindow.xib; sourceTree = "<group>"; };
 		AB04C5AD0D8E91F000651270 /* MGSErrorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSErrorWindowController.h; sourceTree = "<group>"; };
 		AB04C5AE0D8E91F000651270 /* MGSErrorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSErrorWindowController.m; sourceTree = "<group>"; };
-		AB04DF0613E1B1E400159889 /* EMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMKeychain.h; path = ../../../../EMKeychain/EMKeychain.h; sourceTree = "<group>"; };
-		AB04DF0713E1B1E400159889 /* EMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMKeychain.m; path = ../../../../EMKeychain/EMKeychain.m; sourceTree = "<group>"; };
-		AB04DF0813E1B1E400159889 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../../../../EMKeychain/README.md; sourceTree = "<group>"; };
 		AB0519170D2A6982004EF3FB /* MGSNetClientSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNetClientSocket.h; sourceTree = "<group>"; };
 		AB0519180D2A6982004EF3FB /* MGSNetClientSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNetClientSocket.m; sourceTree = "<group>"; };
 		AB08ED4F0E1543AE004D44F8 /* MGSEmptyParameterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSEmptyParameterViewController.h; sourceTree = "<group>"; };
@@ -3510,6 +3507,9 @@
 		AB19176912AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLuaCocoaLanguagePlugin.m; sourceTree = "<group>"; };
 		AB1BA9400CF7711B00F35D8F /* servermainDO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = servermainDO.m; sourceTree = "<group>"; };
 		AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LuaCocoa.xcodeproj; path = ../../../../../bitbucket/luacocoa/Xcode/LuaCocoa.xcodeproj; sourceTree = SOURCE_ROOT; };
+		AB1E1AED13E1BBC4003643AC /* EMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMKeychain.h; path = ../../../../../../github/Mugginsoft/EMKeychain/EMKeychain.h; sourceTree = "<group>"; };
+		AB1E1AEE13E1BBC4003643AC /* EMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMKeychain.m; path = ../../../../../../github/Mugginsoft/EMKeychain/EMKeychain.m; sourceTree = "<group>"; };
+		AB1E1AEF13E1BBC4003643AC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../../../../../../github/Mugginsoft/EMKeychain/README.md; sourceTree = "<group>"; };
 		AB1FD21D0DF035920053C1A1 /* MGSLWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLWindowController.h; sourceTree = "<group>"; };
 		AB1FD21E0DF035920053C1A1 /* MGSLWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLWindowController.m; sourceTree = "<group>"; };
 		AB1FD2210DF035D70053C1A1 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/LicenceWindow.xib; sourceTree = "<group>"; };
@@ -7780,9 +7780,9 @@
  */ = {
 			isa = PBXGroup;
 			children = (
-				AB04DF0613E1B1E400159889 /* EMKeychain.h */,
-				AB04DF0713E1B1E400159889 /* EMKeychain.m */,
-				AB04DF0813E1B1E400159889 /* README.md */,
+				AB1E1AED13E1BBC4003643AC /* EMKeychain.h */,
+				AB1E1AEE13E1BBC4003643AC /* EMKeychain.m */,
+				AB1E1AEF13E1BBC4003643AC /* README.md */,
 				AB9B8D330D96EB2C0044D4BC /* ReadMe(Really).rtf */,
 				ABCA58AE0DA0E20200CF2BBF /* MGSKeyChain.h */,
 				ABCA58AF0DA0E20200CF2BBF /* MGSKeyChain.m */,
@@ -8881,7 +8881,7 @@
 				AB2E6CA012C799790071052D /* MGSNetMessage+KosmicTask.h in Headers */,
 				AB2E6D7C12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h in Headers */,
 				ABC5BC70131E674E0020003D /* NSIndexPath+Mugginsoft.h in Headers */,
-				AB04DF0913E1B1E400159889 /* EMKeychain.h in Headers */,
+				AB1E1AF013E1BBC4003643AC /* EMKeychain.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10778,7 +10778,7 @@
 				AB226F661039B9C000CF213D /* Trial.ktlic in Resources */,
 				AB9B8D930D96FC310044D4BC /* AuthenticateWindow.xib in Resources */,
 				ABAFC8C40DF9CA1F00349FC3 /* NumberInputView.xib in Resources */,
-				AB04DF0B13E1B1E400159889 /* README.md in Resources */,
+				AB1E1AF213E1BBC4003643AC /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11644,7 +11644,7 @@
 				AB2E6CA112C799790071052D /* MGSNetMessage+KosmicTask.m in Sources */,
 				AB2E6D7D12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m in Sources */,
 				ABC5BC71131E674E0020003D /* NSIndexPath+Mugginsoft.m in Sources */,
-				AB04DF0A13E1B1E400159889 /* EMKeychain.m in Sources */,
+				AB1E1AF113E1BBC4003643AC /* EMKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -41,7 +41,6 @@ NSString *MGSSession = @".{Session}";
 		// maybe a threading issue?
 		item = [EMGenericKeychainItem addGenericKeychainItemForService:chainService withUsername:username password:password];
 		[item setDescription: @"KosmicTask application password"];	// keychain displays as Kind
-        [item setLabel: @"KosmicTask application password"];
 	}
 	
 	return item;
@@ -50,6 +49,8 @@ NSString *MGSSession = @".{Session}";
 // Get password for service and user name.
 + (NSString *)passwordForService:(NSString *)service withUsername:(NSString *)username
 {
+    [EMKeychainItem setLogsErrors:YES];
+    
 	EMGenericKeychainItem *item  = [EMGenericKeychainItem 
 									genericKeychainItemForService: [ self chainServiceName:service] 
 									withUsername:username];

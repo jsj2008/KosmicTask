@@ -11,5 +11,4 @@
 
 @interface EMKeychainItem (Mugginsoft)
 - (BOOL)setDescription:(NSString *)value;
-- (BOOL)setGeneric:(NSString *)value;
 @end

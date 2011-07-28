@@ -21,13 +21,4 @@
 	return [self modifyAttributeWithTag:kSecDescriptionItemAttr toBeString:value];
 }
 
-- (BOOL)setGeneric:(NSString *)value
-{
-	//[self willChangeValueForKey:@"label"];
-	//[myLabel autorelease];
-	//myLabel = [newLabel copy];
-	//[self didChangeValueForKey:@"label"];
-	return [self modifyAttributeWithTag:kSecGenericItemAttr toBeString:value];
-}
-
 @end

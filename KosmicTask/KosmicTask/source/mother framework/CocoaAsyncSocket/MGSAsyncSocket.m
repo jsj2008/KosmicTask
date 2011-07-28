@@ -58,7 +58,7 @@
 {
 	// disconnect must be called for all instances
 	if (!disconnectCalled) {
-		NSAssert (@"AsyncSocket finalize without prior disconnect call: %@", self);
+		NSAssert (NO, @"AsyncSocket finalize without prior disconnect call: %@", self);
 	}
 	
 	MLog(DEBUGLOG, @"MGSAsyncSocket finalized.");

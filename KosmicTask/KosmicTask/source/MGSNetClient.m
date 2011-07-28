@@ -437,7 +437,15 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	_serviceName = value;
 	
 	if (_serviceName != nil && ![_serviceName isEqualToString:@""]) {
-		
+		       
+        /*
+         
+         if a session password exists and we delete it when it is recreated
+         it cannot be found!
+         
+         The best solution is to leave the session item in place and update it if required.
+         
+         */
 		// when service name defined delete any residual session passwords
 		[[MGSAuthentication sharedController] deleteKeychainSessionPasswordForService:_serviceName];
 	}
