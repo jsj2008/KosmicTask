@@ -614,7 +614,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 		return YES;
 	}
 	
-	BOOL success = NO;
+	BOOL success = YES;
 	
 	NSString *path = [self.delegate pathToResource:self type:fileType];
 	if (!path) {
@@ -626,7 +626,9 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 		case MGSResourceItemRTFDFile:;
 		case MGSResourceItemPlistFile:;
 		case MGSResourceItemMarkdownFile:;
-			success = [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+                success = [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
+            }
 			break;			
 			
 		default:
