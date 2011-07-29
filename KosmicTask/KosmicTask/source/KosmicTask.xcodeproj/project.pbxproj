@@ -305,7 +305,6 @@
 		AB406A56119AE163006E3552 /* NSString+SymlinksAndAliases.m in Sources */ = {isa = PBXBuildFile; fileRef = AB406A54119AE163006E3552 /* NSString+SymlinksAndAliases.m */; };
 		AB406F68119B40A0006E3552 /* MGSCocoaScriptRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = AB406F66119B40A0006E3552 /* MGSCocoaScriptRunner.h */; };
 		AB4070F3119B4A11006E3552 /* MGSPythonScriptExecutor.py in Resources */ = {isa = PBXBuildFile; fileRef = AB4070EE119B4717006E3552 /* MGSPythonScriptExecutor.py */; };
-		AB407110119B4E52006E3552 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB40710F119B4E52006E3552 /* Python.framework */; };
 		AB408CEF11917A4900A8037A /* pyflakes in Copy Python Resources */ = {isa = PBXBuildFile; fileRef = AB408CD111917A0F00A8037A /* pyflakes */; };
 		AB425FE91268562800C195FC /* GroupTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB425FE81268562800C195FC /* GroupTemplate.tif */; };
 		AB44A2AB12084A6500525087 /* MGSTempStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB36DE10120837290059D9C4 /* MGSTempStorage.m */; };
@@ -5326,7 +5325,6 @@
 				AB5CD94D118AEC4B00C545CD /* Cocoa.framework in Frameworks */,
 				AB5CD94E118AEC4B00C545CD /* Carbon.framework in Frameworks */,
 				AB5CD94F118AEC4B00C545CD /* MGSKosmicTaskRunner.framework in Frameworks */,
-				AB407110119B4E52006E3552 /* Python.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15706,6 +15704,7 @@
 				ARCHS = "$(NATIVE_ARCH)";
 				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks/Python.framework/Versions/2.6/Headers;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
@@ -15721,6 +15720,7 @@
 					__TEXT,
 					__info_plist,
 					"KosmicTaskRunner-Info.plist",
+					/System/Library/Frameworks/Python.framework/Versions/2.6/Python,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = KosmicTaskPythonObjCRunner;
@@ -15735,6 +15735,7 @@
 				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks/Python.framework/Versions/2.6/Headers;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
@@ -15749,6 +15750,7 @@
 					__TEXT,
 					__info_plist,
 					"KosmicTaskRunner-Info.plist",
+					/System/Library/Frameworks/Python.framework/Versions/2.6/Python,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = KosmicTaskPythonObjCRunner;
@@ -15762,6 +15764,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
+				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks/Python.framework/Versions/2.6/Headers;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
@@ -15776,6 +15779,7 @@
 					__TEXT,
 					__info_plist,
 					"KosmicTaskRunner-Info.plist",
+					/System/Library/Frameworks/Python.framework/Versions/2.6/Python,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = KosmicTaskPythonObjCRunner;
