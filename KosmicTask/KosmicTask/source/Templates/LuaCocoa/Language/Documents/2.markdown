@@ -101,6 +101,32 @@ Obj-C instance variables are declared and accessed using the followng syntax:
 
 For details of the Lua colon syntax that is used to access NSObject methods see <http://www.lua.org/pil/16.html>
 
+### Type Encoding
+
+NSObject subclass methods need to provide a [type encoding](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html) method signature that defines both the function return type and its argument types.
+
+The signature is constructed as follows:
+
+`[+/-][return type encoding][@:][argument type encoding]…`
+
+where:
+
+* `[+/-]` use + to designate a class method and - an instance method
+* `[return type encoding]` a [type encoding](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html) for the function return value
+* `[@:]` this element is always required (it represents the receiver and selector passed as the first two arguments to `objc_msgSend()`)
+* `[argument type encoding]` a [type encoding](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html) for each function argument
+
+**Examples**
+
+`+(void)initialize` has a signature of `+v@:`
+
+`-(void *)timerFired:(id)sender` has a signature of `-v@:@`
+
+`-(void)setObject:(id)obj forKey:(id)key` has a signature of `-v@:@@`
+
+`+(NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)seconds target:(id)target selector:(SEL)aSelector userInfo:(id)userInfo repeats:(BOOL)repeats` has a signature of `+@@:d@:@c`
+
+
 
 Runloop Management
 -------------------

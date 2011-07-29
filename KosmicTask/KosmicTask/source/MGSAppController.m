@@ -1152,6 +1152,7 @@
  */
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {	
+  
 	//
 	// validate that min os is present
 	//

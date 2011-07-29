@@ -13,7 +13,7 @@ Notes:
 LuaCocoa.import("Foundation")
 
 -- get the kosmicTaskController class
-taskController = NSClassFromString("KosmicTaskController")
+taskController = KosmicTaskController
 
 -- create class definition
 KosmicTask = LuaCocoa.CreateClass("KosmicTask", NSObject)

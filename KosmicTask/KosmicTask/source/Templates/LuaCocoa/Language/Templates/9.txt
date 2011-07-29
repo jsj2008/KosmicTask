@@ -15,7 +15,7 @@ LuaCocoa.import("Foundation")
 function kosmicTask()
 
 	-- get the kosmicTaskController class
-	local taskController = NSClassFromString("KosmicTaskController")
+	local taskController = KosmicTaskController
 	
 	-- get our image file result path
  	-- this file will be automatically deleted when the task ends.

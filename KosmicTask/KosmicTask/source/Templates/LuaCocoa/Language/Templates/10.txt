@@ -15,7 +15,7 @@ LuaCocoa.import("Foundation")
 function kosmicTask()
 
 	-- get the kosmicTaskController class
-	local taskController = NSClassFromString("KosmicTaskController")
+	local taskController = KosmicTaskController
 	
 	-- allocate our paths table
 	local paths = {}
