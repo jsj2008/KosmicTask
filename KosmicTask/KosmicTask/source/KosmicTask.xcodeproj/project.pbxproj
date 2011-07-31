@@ -933,6 +933,8 @@
 		ABAD866E0ED0D46D00003FA4 /* FVColorMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAD866D0ED0D46D00003FA4 /* FVColorMenuView.m */; };
 		ABAD86720ED0D51C00003FA4 /* FVFinderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAD86710ED0D51C00003FA4 /* FVFinderLabel.m */; };
 		ABAD86C90ED0DADA00003FA4 /* FVColorMenuView.nib in Resources */ = {isa = PBXBuildFile; fileRef = ABAD86C80ED0DADA00003FA4 /* FVColorMenuView.nib */; };
+		ABADD7F513E5BD8E0033E038 /* FeedbackReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABADD7EE13E5BD040033E038 /* FeedbackReporter.framework */; };
+		ABADD7F613E5BDAA0033E038 /* FeedbackReporter.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABADD7EE13E5BD040033E038 /* FeedbackReporter.framework */; };
 		ABADEE29104D32F8007A5319 /* IntegerMath.c in Sources */ = {isa = PBXBuildFile; fileRef = AB9E63DF0DD5F6DB0022A1E3 /* IntegerMath.c */; };
 		ABADEE2A104D3302007A5319 /* NDComponentInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9E63E20DD5F6DB0022A1E3 /* NDComponentInstance.m */; };
 		ABADEE2B104D330A007A5319 /* NDProgrammerUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9E63E40DD5F6DB0022A1E3 /* NDProgrammerUtilities.m */; };
@@ -2447,6 +2449,34 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = OpenFeedback;
 		};
+		ABADD7ED13E5BD040033E038 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = FeedbackReporter;
+		};
+		ABADD7EF13E5BD040033E038 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9DA7D6B10DEB8A3500C3B586;
+			remoteInfo = Tests;
+		};
+		ABADD7F113E5BD040033E038 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9DB634E30E4DD64C00C72888;
+			remoteInfo = App;
+		};
+		ABADD7F313E5BD510033E038 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = FeedbackReporter;
+		};
 		ABADEE6F104D347F007A5319 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2838,6 +2868,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				ABADD7F613E5BDAA0033E038 /* FeedbackReporter.framework in Copy Frameworks */,
 				ABCE468D13C8E75E00DF3CD0 /* ORCDiscount.framework in Copy Frameworks */,
 				AB0D2D89130EB4B600FA992A /* YAMLKit.framework in Copy Frameworks */,
 				AB0DC00B130C8C9C000F4673 /* MGSFragaria.framework in Copy Frameworks */,
@@ -4468,6 +4499,7 @@
 		ABAD869D0ED0D73200003FA4 /* FVUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVUtilities.h; sourceTree = "<group>"; };
 		ABAD869E0ED0D73200003FA4 /* FVUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FVUtilities.m; sourceTree = "<group>"; };
 		ABAD86C80ED0DADA00003FA4 /* FVColorMenuView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = FVColorMenuView.nib; sourceTree = "<group>"; };
+		ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FeedbackReporter.xcodeproj; path = ../../../feedbackreporter/FeedbackReporter.xcodeproj; sourceTree = "<group>"; };
 		ABADEE02104D32A9007A5319 /* NDScript.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NDScript.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABADEE03104D32A9007A5319 /* NDScript-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NDScript-Info.plist"; sourceTree = "<group>"; };
 		ABAE0B78131558BC000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "appscript-1.0.0-py2.6-macosx-10.6-universal.egg"; path = "../../Python/py-appscript/install/appscript-1.0.0-py2.6-macosx-10.6-universal.egg"; sourceTree = SOURCE_ROOT; };
@@ -4980,6 +5012,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABADD7F513E5BD8E0033E038 /* FeedbackReporter.framework in Frameworks */,
 				ABCE468713C8E74700DF3CD0 /* ORCDiscount.framework in Frameworks */,
 				AB0DBFF6130C8C80000F4673 /* MGSFragaria.framework in Frameworks */,
 				ABFE708311AEF0510097EDE4 /* MGSTemplateEngine.framework in Frameworks */,
@@ -7280,6 +7313,7 @@
 		AB69B67A130EAAA400171D4F /* Git hub */ = {
 			isa = PBXGroup;
 			children = (
+				ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */,
 				ABF6CDB413CF786A000EADD7 /* QLMarkdown.xcodeproj */,
 			);
 			name = "Git hub";
@@ -8403,6 +8437,16 @@
 			name = Menus;
 			sourceTree = "<group>";
 		};
+		ABADD7E413E5BD030033E038 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABADD7EE13E5BD040033E038 /* FeedbackReporter.framework */,
+				ABADD7F013E5BD040033E038 /* Tests.octest */,
+				ABADD7F213E5BD040033E038 /* App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		ABAFC5840DF966D600349FC3 /* Parameter view controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -9002,6 +9046,7 @@
 				AB9DC2FB0DE5C99800B85F5E /* PBXBuildRule */,
 			);
 			dependencies = (
+				ABADD7F413E5BD510033E038 /* PBXTargetDependency */,
 				ABAC5E901035828C003A7231 /* PBXTargetDependency */,
 				AB72CEF80E70453300E6711C /* PBXTargetDependency */,
 				ABFBAA9D0DAB9535004D1DE4 /* PBXTargetDependency */,
@@ -10273,6 +10318,10 @@
 					ProjectRef = ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */;
 				},
 				{
+					ProductGroup = ABADD7E413E5BD030033E038 /* Products */;
+					ProjectRef = ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */;
+				},
+				{
 					ProductGroup = AB3F6627130C845F00342F11 /* Products */;
 					ProjectRef = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
 				},
@@ -10672,6 +10721,27 @@
 			fileType = wrapper.framework;
 			path = OpenFeedback.framework;
 			remoteRef = ABAC5E0A103581EB003A7231 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABADD7EE13E5BD040033E038 /* FeedbackReporter.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FeedbackReporter.framework;
+			remoteRef = ABADD7ED13E5BD040033E038 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABADD7F013E5BD040033E038 /* Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Tests.octest;
+			remoteRef = ABADD7EF13E5BD040033E038 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABADD7F213E5BD040033E038 /* App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = App.app;
+			remoteRef = ABADD7F113E5BD040033E038 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ABBDFDE410C532CB000E51A3 /* KosmicTask.mdimporter */ = {
@@ -13023,6 +13093,11 @@
 			isa = PBXTargetDependency;
 			name = OpenFeedback;
 			targetProxy = ABAC5E8F1035828C003A7231 /* PBXContainerItemProxy */;
+		};
+		ABADD7F413E5BD510033E038 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FeedbackReporter;
+			targetProxy = ABADD7F313E5BD510033E038 /* PBXContainerItemProxy */;
 		};
 		ABADEE70104D347F007A5319 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

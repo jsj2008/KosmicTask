@@ -2,6 +2,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSResultViewController.h"
+#import <FeedbackReporter/FRFeedbackReporter.h>
 
 @class MGSExceptionController;
 @class MGSDebugController;
@@ -23,7 +24,7 @@
 @class MGSNetClient;
 @class MGSLRWindowController;
 
-@interface MGSAppController : NSObject <MGSResultViewDelegate>
+@interface MGSAppController : NSObject <MGSResultViewDelegate, FRFeedbackReporterDelegate>
 {
 	MGSExceptionController *_exceptionController;
 	MGSDebugHandler *_debugHandler;

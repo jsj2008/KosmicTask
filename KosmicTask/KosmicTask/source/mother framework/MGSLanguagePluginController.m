@@ -122,7 +122,7 @@ static MGSLanguagePluginController *mgs_sharedController = nil;
 		
 		[scriptTypes addObject:[plugin scriptType]];
 	}
-	[scriptTypes sortUsingSelector:@selector(isEqualToString:)];	
+	[scriptTypes sortUsingSelector:@selector(isEqualToString:)];
 }
 
 /*

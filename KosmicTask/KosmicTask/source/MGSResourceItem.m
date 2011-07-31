@@ -398,6 +398,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 			break;
 			
 		case MGSResourceItemRTFDFile:;
+#warning excepton occurring here
 			NSAttributedString *atext = [[NSAttributedString alloc] initWithPath:path documentAttributes:NULL];
 			if (!atext) {
 				NSFont *font = [NSFont fontWithName:@"Helvetica" size:14.0f];

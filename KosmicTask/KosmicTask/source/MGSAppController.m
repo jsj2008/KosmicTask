@@ -61,6 +61,7 @@
 - (NSArray *)notableWindows;
 - (BOOL)validateBundleVersion;
 - (void)handleURLEvent:(NSAppleEventDescriptor*)event withReplyEvent:(NSAppleEventDescriptor*)replyEvent;
+- (NSDictionary*) customParametersForFeedbackReport;
 @end
 
 // private category
@@ -192,7 +193,11 @@
 	#pragma unused(sender)
 	
 	//[_openFeedbackController presentFeedbackPanelForSupport:self];
-	[[OpenFeedback sharedController] presentFeedbackPanelForSupport:self];
+    if (YES) {
+        [[OpenFeedback sharedController] presentFeedbackPanelForSupport:self];
+    } else {
+        [[FRFeedbackReporter sharedReporter] reportFeedback];
+    }
 }
 
 /*
@@ -474,6 +479,13 @@
 		}
 	}
 	
+    /*
+    
+     FRFeedbackReporter can also report crashes but only for
+     the main app not for auxiliary executables.
+     
+     */
+    
 	// check if crash occurred.
 	// not sure what will occur if two components crash at the same time!
 	// check for application crash
@@ -482,8 +494,17 @@
 	// check for server crash
 	UKCrashReporterCheckForCrash(@"KosmicTaskServer", MLogFilePath());
 	
-	// check for task crash
-	UKCrashReporterCheckForCrash(@"KosmicTaskASRunner", MLogFilePath());
+    /* 
+     
+     Note that when the plugins are loaded we could check for 
+     crashes in each of the task runners
+     
+     */
+    for (MGSLanguagePlugin *plugin in [[MGSLanguagePluginController sharedController] instances]) {
+        NSString *process = plugin.taskProcessName;
+        UKCrashReporterCheckForCrash(process, nil);
+    }
+    
 }
 
 
@@ -1086,6 +1107,17 @@
 	[[MGSResourceBrowserWindowController sharedController] resolveURL:url];
 }
 
+#pragma mark -
+#pragma mark FRFeedbakReporter delegate
+- (NSDictionary*) customParametersForFeedbackReport
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    [dict setObject:@"KosmicTask" forKey:@"application"];
+    
+    return dict;
+}
+
 @end
 
 #pragma mark -
@@ -1152,7 +1184,8 @@
  */
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {	
-  
+    [[FRFeedbackReporter sharedReporter] setDelegate:self];
+    
 	//
 	// validate that min os is present
 	//
@@ -1250,7 +1283,7 @@
 		setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) 
 		forEventClass:kInternetEventClass 
 		andEventID:kAEGetURL];
-
+    
 }
 
 /*

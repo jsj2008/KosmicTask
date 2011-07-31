@@ -9,12 +9,6 @@
 /* Begin PBXBuildFile section */
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
-		ABDAE7E50F371DA4009FDA60 /* NSException+Callstack.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDAE7E10F371DA4009FDA60 /* NSException+Callstack.m */; };
-		ABDAE7E60F371DA4009FDA60 /* NSException+Callstack.h in Headers */ = {isa = PBXBuildFile; fileRef = ABDAE7E20F371DA4009FDA60 /* NSException+Callstack.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ABDAE7E70F371DA4009FDA60 /* FRExceptionReportingApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = ABDAE7E30F371DA4009FDA60 /* FRExceptionReportingApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ABDAE7E80F371DA4009FDA60 /* FRExceptionReportingApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDAE7E40F371DA4009FDA60 /* FRExceptionReportingApplication.m */; };
-		ABDAE7EC0F371DC8009FDA60 /* Command.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDAE7EA0F371DC8009FDA60 /* Command.m */; };
-		ABDAE7ED0F371DC8009FDA60 /* Command.h in Headers */ = {isa = PBXBuildFile; fileRef = ABDAE7EB0F371DC8009FDA60 /* Command.h */; };
 		C64172300DF2921E009A95BD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C641722F0DF2921E009A95BD /* AddressBook.framework */; };
 		C641723A0DF292B1009A95BD /* OFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = C64172360DF292B1009A95BD /* OFUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C641723B0DF292B1009A95BD /* OFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = C64172370DF292B1009A95BD /* OFUtilities.m */; };
@@ -31,12 +25,6 @@
 		32DBCF5E0370ADEE00C91783 /* OpenFeedback_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenFeedback_Prefix.pch; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* OpenFeedback.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OpenFeedback.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABDAE7E10F371DA4009FDA60 /* NSException+Callstack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSException+Callstack.m"; sourceTree = "<group>"; };
-		ABDAE7E20F371DA4009FDA60 /* NSException+Callstack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSException+Callstack.h"; sourceTree = "<group>"; };
-		ABDAE7E30F371DA4009FDA60 /* FRExceptionReportingApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRExceptionReportingApplication.h; sourceTree = "<group>"; };
-		ABDAE7E40F371DA4009FDA60 /* FRExceptionReportingApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRExceptionReportingApplication.m; sourceTree = "<group>"; };
-		ABDAE7EA0F371DC8009FDA60 /* Command.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Command.m; sourceTree = "<group>"; };
-		ABDAE7EB0F371DC8009FDA60 /* Command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Command.h; sourceTree = "<group>"; };
 		C641722F0DF2921E009A95BD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
 		C64172360DF292B1009A95BD /* OFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OFUtilities.h; sourceTree = "<group>"; };
 		C64172370DF292B1009A95BD /* OFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OFUtilities.m; sourceTree = "<group>"; };
@@ -101,7 +89,6 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				ABDAE7F00F371DD2009FDA60 /* From FeedbackReporter */,
 				C64172360DF292B1009A95BD /* OFUtilities.h */,
 				C64172370DF292B1009A95BD /* OFUtilities.m */,
 				C64172380DF292B1009A95BD /* OpenFeedback.h */,
@@ -137,19 +124,6 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
-		ABDAE7F00F371DD2009FDA60 /* From FeedbackReporter */ = {
-			isa = PBXGroup;
-			children = (
-				ABDAE7EA0F371DC8009FDA60 /* Command.m */,
-				ABDAE7EB0F371DC8009FDA60 /* Command.h */,
-				ABDAE7E10F371DA4009FDA60 /* NSException+Callstack.m */,
-				ABDAE7E20F371DA4009FDA60 /* NSException+Callstack.h */,
-				ABDAE7E30F371DA4009FDA60 /* FRExceptionReportingApplication.h */,
-				ABDAE7E40F371DA4009FDA60 /* FRExceptionReportingApplication.m */,
-			);
-			name = "From FeedbackReporter";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -159,9 +133,6 @@
 			files = (
 				C641723A0DF292B1009A95BD /* OFUtilities.h in Headers */,
 				C641723C0DF292B1009A95BD /* OpenFeedback.h in Headers */,
-				ABDAE7E60F371DA4009FDA60 /* NSException+Callstack.h in Headers */,
-				ABDAE7E70F371DA4009FDA60 /* FRExceptionReportingApplication.h in Headers */,
-				ABDAE7ED0F371DC8009FDA60 /* Command.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,7 +165,11 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "OpenFeedback" */;
 			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* OpenFeedback */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
 			projectDirPath = "";
@@ -224,9 +199,6 @@
 			files = (
 				C641723B0DF292B1009A95BD /* OFUtilities.m in Sources */,
 				C641723D0DF292B1009A95BD /* OpenFeedback.m in Sources */,
-				ABDAE7E50F371DA4009FDA60 /* NSException+Callstack.m in Sources */,
-				ABDAE7E80F371DA4009FDA60 /* FRExceptionReportingApplication.m in Sources */,
-				ABDAE7EC0F371DC8009FDA60 /* Command.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
