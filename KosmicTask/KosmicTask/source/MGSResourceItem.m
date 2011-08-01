@@ -336,34 +336,48 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 		case MGSResourceItemRTFDFile:;
             NSAttributedString *atext = nil;
             NSError *docError = nil;
-            
-            // get path to rtf file
-            NSString *filePath = [path stringByAppendingPathComponent:@"TXT.rtf"];
-            
-            // rtf data might not have been written out yet
-            if ([[NSFileManager  defaultManager] fileExistsAtPath:filePath]) {
-                
-                // get data
-                NSData *data = [NSData dataWithContentsOfFile:filePath options:0 error:&docError];
-                
-                // get attributed string
-                if (!docError) {
-                    atext = [[NSAttributedString alloc] initWithData:data options:nil documentAttributes:NULL error:&docError];
-                }
-            }
-            
+
             /*
              On migrating to Lion we encounter:
              
-            Error Domain=NSCocoaErrorDomain Code=257 "The file “5.rtfd” couldn’t be opened because you don’t have permission to view it." UserInfo=0x14bf910 {NSFilePath=/Users/Jonathan/Documents/KosmicTask/Application Tasks/Resources/Languages/AppleScript Cocoa/Templates/5.rtfd, NSUnderlyingError=0x245eb00 "The operation couldn’t be completed. Permission denied"}
+             Error Domain=NSCocoaErrorDomain Code=257 "The file “5.rtfd” couldn’t be opened because you don’t have permission to view it." UserInfo=0x14bf910 {NSFilePath=/Users/Jonathan/Documents/KosmicTask/Application Tasks/Resources/Languages/AppleScript Cocoa/Templates/5.rtfd, NSUnderlyingError=0x245eb00 "The operation couldn’t be completed. Permission denied"}
              
              Previously the resource was loaded without issue as below.
              On lion however we get a sigbus error:
              
              NSAttributedString *atext = [[NSAttributedString alloc] initWithPath:testPath documentAttributes:NULL];
-            */
-    
+             
+             To trigger the issue dsiplay the resource browser, collapse all the languages, expand them and then select the first item.
+             
+             */
 
+            // the following works but discards images in the RTFD!
+            if (YES) {
+                // get path to rtf file
+                NSString *filePath = [path stringByAppendingPathComponent:@"TXT.rtf"];
+                
+                // rtf data might not have been written out yet
+                if ([[NSFileManager  defaultManager] fileExistsAtPath:filePath]) {
+                    
+                    // get data - but any images will not be loaded!
+                    NSData *data = [NSData dataWithContentsOfFile:filePath options:0 error:&docError];
+                    
+                    // get attributed string
+                    if (!docError) {
+                        atext = [[NSAttributedString alloc] initWithData:data options:nil documentAttributes:NULL error:&docError];
+                    }
+                }
+            }
+
+            /* fails
+            NSFileWrapper *wrapper = [[NSFileWrapper alloc] initWithURL:[NSURL fileURLWithPath:path] options:NSFileWrapperReadingImmediate error:nil];
+            atext = [[NSAttributedString alloc] initWithRTFDFileWrapper:wrapper documentAttributes:NULL];
+             */
+            
+            /* fails too
+            atext = [[NSAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path] documentAttributes:NULL];
+            */
+            
             if (!atext) {
 				NSFont *font = [NSFont fontWithName:@"Helvetica" size:14.0f];
 				NSColor *colour = [NSColor blackColor];
