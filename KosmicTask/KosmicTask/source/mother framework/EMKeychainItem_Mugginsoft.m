@@ -8,6 +8,9 @@
 
 #import "EMKeychainItem_Mugginsoft.h"
 
+@interface EMKeychainItem ()
+- (BOOL)modifyAttributeWithTag:(SecItemAttr)attributeTag toBeString:(NSString *)newStringValue;
+@end
 
 @implementation EMKeychainItem (Mugginsoft)
 

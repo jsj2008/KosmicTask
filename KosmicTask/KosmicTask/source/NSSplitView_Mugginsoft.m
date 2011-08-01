@@ -109,7 +109,7 @@
 					rect1.origin = NSMakePoint(rect0.origin.x + rect0.size.width + dividerThickness, 0);
 
 				} else {
-					NSAssert(NO, assertMsg);
+					NSAssert(NO, @"%@", assertMsg);
 				}
 				
 			} else {
@@ -143,7 +143,7 @@
 					}
 					
 				} else {
-					NSAssert(NO, assertMsg);
+					NSAssert(NO, @"%@", assertMsg);
 				}
 				
 				rect1.origin = NSMakePoint(0, rect0.size.height + dividerThickness);
@@ -175,7 +175,7 @@
 					rect2.size.height = newFrame.size.height;
 					
 				} else {
-					NSAssert(NO, assertMsg);
+					NSAssert(NO, @"%@", assertMsg);
 				}
 				
 			} else {	// views are on top of each other
@@ -233,7 +233,7 @@
 					
 					
 				} else {
-					NSAssert(NO, assertMsg);
+					NSAssert(NO, @"%@", assertMsg);
 				}	
 				
 			}
