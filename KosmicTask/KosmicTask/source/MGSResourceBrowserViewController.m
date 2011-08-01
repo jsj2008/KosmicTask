@@ -1099,7 +1099,7 @@ clearTree:
 #pragma unused(keyPath)
 #pragma unused(object)
 #pragma unused(change)
-	
+    
 	if (context == &MGSDocumentEditedContext) {
 		
 		if (resourceDocumentViewController.documentEdited) {
@@ -1144,13 +1144,14 @@ clearTree:
 		}
 		
 		[self resourceNodeSelected:selectedNode];
-			
+		      
 		// resource array binds to the nodes, not the represented object.
 		// we only want leaf resources.
 		self.resourceArray = [selectedNode leaves];
 		
 		[self viewEditability:resourceOutlineView forResource:selectedNode.representedObject];
 	
+        
 	// settings tree objects selection
 	} else if (context == &MGSSettingsTreeSelectedObjectsContext) {
 

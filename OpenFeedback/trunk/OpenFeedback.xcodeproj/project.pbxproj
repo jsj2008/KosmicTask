@@ -163,6 +163,9 @@
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0410;
+			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "OpenFeedback" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -233,7 +236,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -244,7 +246,6 @@
 					"-seg1addr",
 					0xc0000000,
 				);
-				PREBINDING = YES;
 				PRODUCT_NAME = OpenFeedback;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -267,7 +268,6 @@
 					"-seg1addr",
 					0xc0000000,
 				);
-				PREBINDING = YES;
 				PRODUCT_NAME = OpenFeedback;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -300,7 +300,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				WARNING_CFLAGS = (
 					"-Wfloat-equal",
@@ -337,7 +336,6 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SEPARATE_STRIP = YES;
 				WARNING_CFLAGS = (
@@ -375,7 +373,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
-				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				WARNING_CFLAGS = (
 					"-Wfloat-equal",
@@ -395,7 +392,6 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -407,7 +403,6 @@
 					"-seg1addr",
 					0xc0000000,
 				);
-				PREBINDING = YES;
 				PRODUCT_NAME = OpenFeedback;
 				WRAPPER_EXTENSION = framework;
 			};

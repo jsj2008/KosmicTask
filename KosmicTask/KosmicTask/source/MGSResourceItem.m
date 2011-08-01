@@ -131,70 +131,6 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 
 /*
  
- - stringResource
- 
- */
-- (NSString *)stringResource
-{
-	if (!stringResource) {
-		[self loadResourceType:MGSResourceItemTextFile];
-	}
-	return stringResource;
-}
-
-/*
- 
- - markdownResource
- 
- */
-- (NSString *)markdownResource
-{
-	if (!markdownResource) {
-		[self loadResourceType:MGSResourceItemMarkdownFile];
-	}
-	return markdownResource;
-}
-
-/*
- 
- - htmlResource
- 
- */
-- (NSString *)htmlResource
-{
-	if (!htmlResource) {
-		[self loadDerivedResourceType:MGSDerivedResourceItemHTML];
-	}
-	return htmlResource;
-}
-
-/*
- 
- - attributedStringResource
- 
- */
-- (NSAttributedString *)attributedStringResource
-{
-	if (!attributedStringResource) {
-		[self loadResourceType:MGSResourceItemRTFDFile];
-	}
-	return attributedStringResource;
-}
-/*
- 
- - dictionaryResource
- 
- */
-- (NSAttributedString *)dictionaryResource
-{
-	if (!dictionaryResource) {
-		[self loadResourceType:MGSResourceItemPlistFile];
-	}
-	return dictionaryResource;
-}
-
-/*
- 
  - setOrigin:
  
  */
@@ -398,9 +334,37 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 			break;
 			
 		case MGSResourceItemRTFDFile:;
-#warning excepton occurring here
-			NSAttributedString *atext = [[NSAttributedString alloc] initWithPath:path documentAttributes:NULL];
-			if (!atext) {
+            NSAttributedString *atext = nil;
+            NSError *docError = nil;
+            
+            // get path to rtf file
+            NSString *filePath = [path stringByAppendingPathComponent:@"TXT.rtf"];
+            
+            // rtf data might not have been written out yet
+            if ([[NSFileManager  defaultManager] fileExistsAtPath:filePath]) {
+                
+                // get data
+                NSData *data = [NSData dataWithContentsOfFile:filePath options:0 error:&docError];
+                
+                // get attributed string
+                if (!docError) {
+                    atext = [[NSAttributedString alloc] initWithData:data options:nil documentAttributes:NULL error:&docError];
+                }
+            }
+            
+            /*
+             On migrating to Lion we encounter:
+             
+            Error Domain=NSCocoaErrorDomain Code=257 "The file “5.rtfd” couldn’t be opened because you don’t have permission to view it." UserInfo=0x14bf910 {NSFilePath=/Users/Jonathan/Documents/KosmicTask/Application Tasks/Resources/Languages/AppleScript Cocoa/Templates/5.rtfd, NSUnderlyingError=0x245eb00 "The operation couldn’t be completed. Permission denied"}
+             
+             Previously the resource was loaded without issue as below.
+             On lion however we get a sigbus error:
+             
+             NSAttributedString *atext = [[NSAttributedString alloc] initWithPath:testPath documentAttributes:NULL];
+            */
+    
+
+            if (!atext) {
 				NSFont *font = [NSFont fontWithName:@"Helvetica" size:14.0f];
 				NSColor *colour = [NSColor blackColor];
 				NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -410,7 +374,12 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 				
 				// string must be non null to change NSTextView typing attributes.
 				// see: http://developer.apple.com/mac/library/documentation/Cocoa/Conceptual/TextUILayer/Tasks/SetTextAttributes.html#//apple_ref/doc/uid/20000936-CJBJHGAG
-				atext = [[NSAttributedString alloc] initWithString:@"\n" attributes:attrsDictionary];
+                
+                if (docError) {
+                    atext = [[NSAttributedString alloc] initWithString:[docError localizedDescription]];
+                } else {
+                    atext = [[NSAttributedString alloc] initWithString:@"\n" attributes:attrsDictionary];
+                }
 			}
 			
 			self.attributedStringResource = atext;
