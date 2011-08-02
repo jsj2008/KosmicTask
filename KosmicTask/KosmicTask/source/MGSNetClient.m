@@ -1113,6 +1113,9 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	if (_authenticationDictionary) {
 		[[MGSAuthentication sharedController] deleteKeychainSessionPasswordForService:_serviceName withDictionary:_authenticationDictionary];
 	}	
+    
+    // as precaution delete any other session key that may remain or has been generated erroneously
+    while ([[MGSAuthentication sharedController] deleteKeychainSessionPasswordForService:_serviceName]);
 }
 
 	

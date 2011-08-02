@@ -125,14 +125,16 @@
 		//
 		// complete authentication data.
 		//
-		// to avoid the app having to cache the password the the default auth dictionary 
+		// to avoid the app having to cache the password in memory the default auth dictionary 
 		// does not include the password, only the username.
 		// the password is retrieved from the keychain and added to the existing auth dict.
 		//
 		authDict = [message authenticationDictionary];
 		if (authDict) {
 			
-			// get authentication password from the keychain and create new auth dict
+			// get authentication password from the keychain and create new auth dict.
+            // regardless of wether the keychain is stored permantently in the keychain or not
+            // we retrieve the password from the session service/
 			newAuthDict = [[MGSAuthentication sharedController] 
 										authDictionaryforSessionService:clientServiceName
 										  withDictionary:authDict];
