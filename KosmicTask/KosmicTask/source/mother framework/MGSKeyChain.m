@@ -25,13 +25,16 @@ NSString *MGSSession = @".{Session}";
 // add service to keychain
 // service name will uniquely identify the item in combination with the user name.
 // the label property controls the items displayed name in the keychain.
-+ (EMGenericKeychainItem *)addService:(NSString *)service withUsername:(NSString *)username password:(NSString *)password;
++ (EMGenericKeychainItem *)addService:(NSString *)service withUsername:(NSString *)username password:(NSString *)password
 {
 	NSString *chainService = [self chainServiceName:service];
 	
-	// check for existing item
-	EMGenericKeychainItem *item  = [EMGenericKeychainItem genericKeychainItemForService:chainService withUsername:username];
+	// check for existing item.
+    // we only ever wnat to have one keychain entry for this service
+    EMGenericKeychainItem *item  = [EMGenericKeychainItem genericKeychainItemForService:chainService];
+
 	if (item) {
+        [item setUsername:username];
 		[item setPassword:password];
 	} else {	
 		// on occasion this call fails.
@@ -49,8 +52,7 @@ NSString *MGSSession = @".{Session}";
 // Get password for service and user name.
 + (NSString *)passwordForService:(NSString *)service withUsername:(NSString *)username
 {
-    [EMKeychainItem setLogsErrors:YES];
-    
+  
 	EMGenericKeychainItem *item  = [EMGenericKeychainItem 
 									genericKeychainItemForService: [ self chainServiceName:service] 
 									withUsername:username];

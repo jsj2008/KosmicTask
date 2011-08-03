@@ -61,6 +61,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 @synthesize challenge = _challenge;
 @synthesize modalForWindow = _modalForWindow;
 @synthesize netRequest = _netRequest;
+@synthesize canConnect = _canConnect;
 
 #pragma mark class methods
 
@@ -120,6 +121,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 	// note that this differs from NSViewController behaviour
 	[super initWithWindowNibName:@"AuthenticateWindow"];
 
+    _canConnect = NO;
 	_modalSession = nil;
 	_modalForWindow = nil;
 	_sheetIsVisible = NO;
@@ -163,6 +165,22 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 	[[self window] makeFirstResponder:passwordTextField];	// if control is first responder then cannot change editable status
 }
 
+#pragma mark -
+#pragma mark Accessors
+
+/*
+ 
+ - username
+ 
+ */
+- (void)setUsername:(NSString *)aString
+{
+    _username = aString;
+    self.canConnect = ([_username length] > 0 ? YES : NO);
+}
+
+#pragma mark -
+#pragma mark Actions
 /*
  
  cancel the authentication attempt
@@ -236,7 +254,9 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 	
 	[objectController commitEditing];
 	
-	[self sendAuthenticatedRequest];
+    if ([self canConnect]) {
+        [self sendAuthenticatedRequest];
+    }
 }
 
 /*
@@ -478,6 +498,9 @@ static MGSAuthenticateWindowController *_sharedController = nil;
  */
 - (void)sendAuthenticatedRequest
 {
+    NSAssert(self.username, @"username is nil");
+    NSAssert(self.password, @"password is nil");
+    
 	// disable all the window controls
 	[self setControlsEnabled:NO];
 	[cancelButton setEnabled:YES];

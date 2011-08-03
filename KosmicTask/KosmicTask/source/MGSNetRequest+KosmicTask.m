@@ -26,6 +26,12 @@
 - (BOOL)prepareConnectionNegotiation
 {
 	// if we already have a negotiate request
+    // TODO: is this always correct.
+    // are there cases where a non secure negotiator is in place
+    // and a secure one is required.
+    //
+    // see: http://projects.mugginsoft.net/view.php?id=1128
+    //
 	if ([self queuedNegotiateRequest]) {
 		return YES;
 	}

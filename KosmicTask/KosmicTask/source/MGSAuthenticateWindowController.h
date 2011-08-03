@@ -34,6 +34,7 @@
 	//BOOL _awaitingAuthenticationResponse;
 	NSModalSession _modalSession;
 	NSWindow *_modalForWindow;
+    BOOL _canConnect;
 }
 
 @property (copy) NSString *username;
@@ -43,6 +44,7 @@
 @property (readonly) NSDictionary *challenge;
 @property NSWindow *modalForWindow;
 @property (readonly) MGSNetRequest *netRequest;
+@property BOOL canConnect;
 
 
 + (id)sharedController;
