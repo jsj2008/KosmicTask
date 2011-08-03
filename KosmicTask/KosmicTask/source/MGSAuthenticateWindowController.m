@@ -384,7 +384,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 		self.username = NSUserName();
 	}
 	
-	NSString *format = NSLocalizedString(@"Enter your OS X user name and password to secure access to KosmicTask on \"%@\".", @"Authentication window text");
+	NSString *format = NSLocalizedString(@"Enter a valid OS X user name and password to gain secure access to KosmicTask on \"%@\".", @"Authentication window text");
 	self.windowText = [NSString stringWithFormat:format, [[_netRequest netClient] serviceShortName]];
 	
 	// if no username supplied then make it first responder
