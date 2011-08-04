@@ -808,6 +808,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	mgsError = replyMessage.error;
 	if (mgsError) {
 		
+        [netRequest tagError:mgsError];
+        
 		//=================================================================
 		// Has authentication failure occured?
 		// 
@@ -855,6 +857,7 @@ static MGSClientRequestManager *_sharedController = nil;
 		// However, the request owners still need a reply.
 		//
 	
+        [netRequest tagError:netRequest.error];
 	}
 		
 	//=================================================================
@@ -967,6 +970,7 @@ invalid_message:
 	
 	if (!mgsError) {
 		mgsError = [MGSError clientCode:errorCode reason:error];	// log error
+        [netRequest tagError:mgsError];
 	}
 	
 	payload.requestError = mgsError;

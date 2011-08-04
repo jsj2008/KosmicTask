@@ -28,7 +28,7 @@ static MGSErrorWindowController *_controller;
 
 @implementation MGSError
 
-@synthesize date = _date, flags;
+@synthesize date = _date, flags, machineName = _machineName;
 
 #pragma mark -
 #pragma mark Class methods
@@ -218,7 +218,8 @@ static MGSErrorWindowController *_controller;
 	
 	// set additional properties
 	error.date = [NSDate date];
-		
+    error.machineName = @"Localhost";
+    
 	BOOL logToConsole = logIt;
 	
 	// some errors we don't want to log

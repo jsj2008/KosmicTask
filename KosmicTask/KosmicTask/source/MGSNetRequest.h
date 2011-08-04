@@ -153,6 +153,8 @@ typedef enum _eMGSRequestStatus {
 - (void)prepareToResend;
 - (BOOL)commandBasedNegotiation;
 
+- (void)tagError:(MGSError *)error;
+
 @property (readonly) MGSNetSocket *netSocket;
 @property (readonly) MGSNetClient *netClient;
 @property (readonly) MGSNetMessage *requestMessage;

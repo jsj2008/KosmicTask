@@ -319,7 +319,7 @@ static NSThread *networkThread = nil;
  */
 - (void)sendRequestOnClientSocket
 {
-#pragma unused(sender)
+
 	/*===================================================
 	 =
 	 = if requests are being handled concurrently then
@@ -561,6 +561,18 @@ static NSThread *networkThread = nil;
 	return (self.flags & kCommandBasedNegotiation);
 }
 
+#pragma mark -
+#pragma mark Error handling
+
+/*
+ 
+ tagError:
+ 
+ */
+- (void)tagError:(MGSError *)error
+{
+    error.machineName = [self.netClient hostName];
+}
 #pragma mark -
 #pragma mark Validation
 

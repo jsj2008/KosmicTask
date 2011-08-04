@@ -86,6 +86,7 @@ extern NSString *MGSErrorDomainMotherScriptTask;
 @interface MGSError : NSError {
 	NSDate *_date;
 	NSUInteger flags; 
+    NSString *_machineName;
 }
 
 // class messages
@@ -118,6 +119,7 @@ extern NSString *MGSErrorDomainMotherScriptTask;
 
 
 + (NSMutableDictionary *)userInfoFromAppleScriptErrorDict:(NSDictionary *)errorDict;
+
 // instance messages
 - (NSDictionary *)dictionary;
 - (NSString *)stringValue;
@@ -130,4 +132,5 @@ extern NSString *MGSErrorDomainMotherScriptTask;
 
 @property (assign) NSDate *date;
 @property NSUInteger flags; 
+@property (assign)NSString *machineName;
 @end

@@ -54,6 +54,7 @@
 	[[tableview tableColumnWithIdentifier:@"code"] bind:@"value" toObject:_errorController withKeyPath:@"arrangedObjects.code" options:nil];
 	[[tableview tableColumnWithIdentifier:@"description"] bind:@"value" toObject:_errorController withKeyPath:@"arrangedObjects.localizedDescription" options:nil];
 	[[tableview tableColumnWithIdentifier:@"reason"] bind:@"value" toObject:_errorController withKeyPath:@"arrangedObjects.localizedFailureReasonPreview" options:nil];
+	[[tableview tableColumnWithIdentifier:@"machine"] bind:@"value" toObject:_errorController withKeyPath:@"arrangedObjects.machineName" options:[NSDictionary dictionaryWithObjectsAndKeys: @"Missing", NSNullPlaceholderBindingOption, nil]];
 }
 
 /*
