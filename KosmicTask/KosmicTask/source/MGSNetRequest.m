@@ -793,7 +793,7 @@ static NSThread *networkThread = nil;
 		// if the connection is not secure then we refuse
 		// the authentication request unless it is from the localhost
 		if (!self.secure && ![_netSocket isConnectedToLocalHost]) {
-			error =  NSLocalizedString(@"Non secure authentication requested.", @"Error returned by server");
+			error =  NSLocalizedString(@"Request denied. Authentication required.", @"Error returned by server");
 			goto error_exit;
 		}
 	}
