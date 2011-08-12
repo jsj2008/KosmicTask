@@ -61,6 +61,8 @@ static char MGSSeletedDetailViewSegmentContext;
 - (void)selectDetailSegment:(NSInteger)idx;
 - (void)saveUserDefaults;
 - (void)openTaskInNewTab:(NSNotification *)notification;
+
+@property (readwrite) BOOL netClientIsChanging;
 @end
 
 @interface MGSMainViewController(private)
@@ -75,6 +77,7 @@ static char MGSSeletedDetailViewSegmentContext;
 @synthesize scriptViewController = _scriptViewController;
 @synthesize netClient = _netClient;
 @synthesize tabViewController = _requestTabViewController;
+@synthesize netClientIsChanging;
 
 /*
  
@@ -86,7 +89,8 @@ static char MGSSeletedDetailViewSegmentContext;
 	_scriptVersionID = 0;
 	_detailSegmentToSelectWhenNotHidden = TASK_DETAIL_HISTORY_SEGMENT_INDEX;
 	_detailViewVisible = YES;
-	
+	netClientIsChanging = NO;
+    
 	// indent text
 	[[statusBarLabel cell] setBackgroundStyle:NSBackgroundStyleRaised];
 
@@ -443,6 +447,8 @@ static char MGSSeletedDetailViewSegmentContext;
  */
 - (void)setNetClient:(MGSNetClient *)netClient
 {
+    self.netClientIsChanging = YES;
+    
 	// remove observers
 	if (self.netClient) {
 		@try {
@@ -458,6 +464,8 @@ static char MGSSeletedDetailViewSegmentContext;
 	
 	// add observer
 	[self.netClient addObserver:self forKeyPath:MGSNetClientKeyPathRunMode options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:(void *)&MGSNetClientRunModeContext];
+    
+    self.netClientIsChanging = NO;
 }
 
 /*
@@ -527,13 +535,14 @@ static char MGSSeletedDetailViewSegmentContext;
 			break;
 	}
 	
-	//[detailSegmentedControl setSelectedSegment:indexDetailSegment];
-	//[detailTabView selectTabViewItemAtIndex:indexTab];
-	
-	// script view will retrieve scripts in edit mode
+	// script view will retrieve scripts in edit mode.
+    // note that we don't want to do this when the net client is changing.
+    // rather we wait to be motified that the selected task has changed.
+    // however we need to configure the view so we set the task spec to nil.
+    if (self.netClientIsChanging) {
+        [_scriptViewController setTaskSpec:nil];
+    }
 	[_scriptViewController setEditMode:mode];
-	
-	//[self updateDetailSegmentedControlVisibility];
 }
 
 /*

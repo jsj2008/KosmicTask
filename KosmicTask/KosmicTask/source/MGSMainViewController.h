@@ -58,12 +58,14 @@
 	MGSTaskSpecifier *_selectedTabViewAction;
 	NSInteger _scriptVersionID;
 	NSView *_dummyView;
+    BOOL netClientIsChanging;
 }
 
 @property (readonly) MGSBrowserViewController *browserViewController;
 @property (readonly) MGSScriptViewController *scriptViewController;
 @property MGSNetClient *netClient;
 @property (readonly) MGSRequestTabViewController *tabViewController;
+@property (readonly) BOOL netClientIsChanging;
 
 - (void)windowClosing;
 - (IBAction)detailSegControlClicked:(id)sender;

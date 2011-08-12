@@ -206,10 +206,16 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	
 	_requestID = NO_REQUEST_OUTSTANDING;
 	
+    
 	// just keep a reference to the task spec.
 	// the reference is shared between various views each of which may update it
 	_taskSpec = aTaskSpec;	
-	_scriptType = [[_taskSpec script] scriptType];
+
+    if (!_taskSpec) {
+        return;
+    }
+
+    _scriptType = [[_taskSpec script] scriptType];
 	
 	// configure the editor
 	[self configureEditorForScript];
