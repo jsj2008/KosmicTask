@@ -846,7 +846,8 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 {
 	NSAssert([netSocket disconnectCalled], @"disconnect not called on MGSNetClientSocket");
 	
-	MGSNetRequest *netRequest = [netSocket.netRequest firstRequest];
+    MGSNetRequest *netRequest = netSocket.netRequest;
+	netRequest = [netRequest firstRequest];
 	
 	// the request that gets added to the list of executing requests may be the first request in a chain
 	// of requests. the request currently bound to the netsocket will likely be the last request in the chain.

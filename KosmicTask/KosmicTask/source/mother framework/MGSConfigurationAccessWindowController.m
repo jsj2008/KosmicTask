@@ -50,20 +50,20 @@
 
 /*
  
- init
+ - init
  
  */
 - (id)init
 {
 	if ((self = [super initWithWindowNibName:@"ConfigurationAccessWindow"])) {
 	
-		// register for notifications
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authDialogDisplay:) name:MGSNoteAuthenticationDialogWillDisplay object:nil];
 	}
 	
 	return self;
 }
 
+#pragma mark -
+#pragma mark Window handling
 /*
  
  window did load
@@ -90,6 +90,43 @@
 
 /*
  
+ close window
+ 
+ */
+- (void)closeWindow
+{	
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+	if (_cancelTimer) {
+		[_cancelTimer invalidate];
+		_cancelTimer = nil;
+	}
+    
+	if (_displayTimer) {
+		[_displayTimer invalidate];
+		_displayTimer = nil;
+	}
+	
+	[progressIndicator stopAnimation:self];
+    
+	[[self window] orderOut:self];
+	[NSApp endSheet:[self window] returnCode:1];
+	
+	if (_authenticationComplete) {
+		
+		NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:_accessType], MGSNoteModeKey , nil];
+		[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteAuthenticateAccessSucceeded object:nil userInfo:infoDict];
+	}
+    
+    _netClient = nil;
+    _modalForWindow = nil;
+}
+
+
+#pragma mark -
+#pragma mark Authentication control
+/*
+ 
  authenticate client
  
  */
@@ -103,6 +140,9 @@
 	_authenticationCancelled = NO;
 	_accessType = accessType;
 	
+    // register for notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authDialogDisplay:) name:MGSNoteAuthenticationDialogWillDisplay object:nil];
+
 	NSAssert(netClient, @"net client is nil");
 	NSString *message;
 	
@@ -156,83 +196,23 @@
 
 /*
  
- display timer fired
- 
- */
-- (void)displayTimerFired:(NSTimer *)theTimer
-{
-	#pragma unused(theTimer)
-	
-	[_displayTimer invalidate];
-	_displayTimer = nil;
-	
-	if (_authenticationComplete) {
-		[self closeWindow];
-	}
-}
-
-/*
- 
- cancel timer fired
- 
- */
-- (void)cancelTimerFired:(NSTimer *)theTimer
-{
-	#pragma unused(theTimer)
-	
-	[_cancelTimer invalidate];
-	_cancelTimer = nil;
-	
-	[cancelButton setEnabled:YES];
-}
-
-/*
- 
- close window
- 
- */
-- (void)closeWindow
-{	
-	
-	// if window is closed then auth cancelled by default
-	//_authenticationCancelled = YES;
-	
-	if (_cancelTimer) {
-		[_cancelTimer invalidate];
-		_cancelTimer = nil;
-	}
-
-	if (_displayTimer) {
-		[_displayTimer invalidate];
-		_displayTimer = nil;
-	}
-	
-	[progressIndicator stopAnimation:self];
-
-	[[self window] orderOut:self];
-	[NSApp endSheet:[self window] returnCode:1];
-	
-	if (_authenticationComplete) {
-		
-		NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:_accessType], MGSNoteModeKey , nil];
-		[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteAuthenticateAccessSucceeded object:self userInfo:infoDict];
-	}
-}
-
-/*
- 
  request authentication reply
  
  */
 -(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
-	#pragma unused(netRequest)
+#pragma unused(netRequest)
 	
 	// if have cancelled out of this sheet then ignore reply
-	if (_authenticationCancelled) {
+    // if authentication complete then ignore reply.
+	if (_authenticationCancelled || _authenticationComplete) {
 		return;
 	}
 	
+    if (netRequest.owner == self) {
+        netRequest.owner = nil;
+    }
+    
 	// if error in reply then authentication was cancelled by user
 	// within the object which sent this message
 	NSDictionary *errorDict = [payload.dictionary objectForKey:MGSNetMessageKeyError];
@@ -262,13 +242,10 @@
  */
 -(void)cancelAuthentication:(id)sender
 {
-	#pragma unused(sender)
+#pragma unused(sender)
 	
 	_authenticationCancelled = YES;
-
-	//NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:_accessType], MGSNoteModeKey , nil];
-	//[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteAuthenticateAccessFailed object:self userInfo:infoDict];
-
+    
 	[self closeWindow];
 }
 
@@ -280,9 +257,50 @@
  */
 - (void)authDialogDisplay:(NSNotification *)notification
 {
-	#pragma unused(notification)
+#pragma unused(notification)
 	
 	[self closeWindow];
 }
+
+#pragma mark -
+#pragma mark Timer callbacks
+
+/*
+ 
+ display timer fired
+ 
+ */
+- (void)displayTimerFired:(NSTimer *)theTimer
+{
+	#pragma unused(theTimer)
+	
+    // invalidate the display timer
+	[_displayTimer invalidate];
+	_displayTimer = nil;
+	
+    // if authentication complete then close the window
+	if (_authenticationComplete) {
+		[self closeWindow];
+	}
+}
+
+/*
+ 
+ cancel timer fired
+ 
+ */
+- (void)cancelTimerFired:(NSTimer *)theTimer
+{
+	#pragma unused(theTimer)
+	
+    // invalidate the cancel timer
+	[_cancelTimer invalidate];
+	_cancelTimer = nil;
+	
+    // enable cncel button
+	[cancelButton setEnabled:YES];
+}
+
+
 
 @end

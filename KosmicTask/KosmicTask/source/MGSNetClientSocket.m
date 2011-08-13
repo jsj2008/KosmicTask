@@ -13,8 +13,8 @@
 //
 #import "MGSMother.h"
 #import "MGSNetClientSocket.h"
-#import "MGSNetRequest.h";
-#import "MGSPreferences.h";
+#import "MGSNetRequest.h"
+#import "MGSPreferences.h"
 #import "MGSNetMessage.h"
 #import "MGSNetHeader.h"
 #import "MGSAsyncSocket.h"
@@ -290,11 +290,12 @@
 	if ([self delegate] && 
 		[[self delegate] respondsToSelector:@selector(netSocketDisconnect:)]) {
 		
+        // we want to wait for completion here so that disconnect
+        // processing is allowed to complete.
+        // see: http://projects.mugginsoft.net/view.php?id=1131
 		[(id)[self delegate] performSelectorOnMainThread:@selector(netSocketDisconnect:) 
 										  withObject:self
-									   waitUntilDone:NO];
-		
-		//[[self delegate] netSocketDisconnect:self];
+									   waitUntilDone:YES];
 	}
 }
 
@@ -442,7 +443,7 @@ errorExit:;
  socket did connect to host
  
  */
--(void) onSocket:(MGSAsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port;
+-(void) onSocket:(MGSAsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port
 {
 	#pragma unused(sock)
 	#pragma unused(host)

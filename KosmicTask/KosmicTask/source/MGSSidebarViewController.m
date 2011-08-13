@@ -1143,7 +1143,7 @@ char MGSScriptDictContext;
 // -------------------------------------------------------------------------------
 //	shouldSelectItem:item
 // -------------------------------------------------------------------------------
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item;
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
 {
 	#pragma unused(outlineView)
 	

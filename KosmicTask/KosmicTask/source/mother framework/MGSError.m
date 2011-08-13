@@ -449,7 +449,7 @@ static MGSErrorWindowController *_controller;
 	}
 	
 	// format error
-	format = NSLocalizedString(@"%@Desc: %@ Code: %i. Source: %@", @"MGSError string value output format"); ;
+	format = NSLocalizedString(@"%@Desc: %@ Code: %i. Source: %@", @"MGSError string value output format"); 
 	error = [NSString stringWithFormat:format, failureReason, [[self localizedDescription] mgs_stringTerminatedWithPeriod], [self code], [[self domain] mgs_stringTerminatedWithPeriod]];
 	
 	return error;
@@ -463,7 +463,7 @@ static MGSErrorWindowController *_controller;
 - (NSString *)localizedFailureReason
 {
 	if (![super localizedFailureReason]) {
-		return @"??";
+		return NSLocalizedString(@"No localized failure reason available.", @"MGSError no localized failure reason available");
 	}
 	
 	return [super localizedFailureReason];
