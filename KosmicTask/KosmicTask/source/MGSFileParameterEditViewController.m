@@ -28,7 +28,7 @@
 - (id)init
 {
 	if ([super initWithNibName:@"FileParameterEditView"]) {
-		self.parameterDescription = NSLocalizedString(@"Select file. File content will be sent to task.", @"File selection prompt");
+		self.parameterDescription = NSLocalizedString(@"Select file. File content will be sent to the task.", @"File selection prompt");
 	}
 	return self;
 }

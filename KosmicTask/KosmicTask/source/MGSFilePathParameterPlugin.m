@@ -9,6 +9,7 @@
 #import "MGSFilePathParameterPlugin.h"
 
 #import "MGSFileParameterEditViewController.h"
+#import "MGSFilePathParameterEditViewController.h"
 #import "MGSFileParameterInputViewController.h"
 #import "MGSFilePathParameterInputViewController.h"
 
@@ -21,7 +22,7 @@
  */
 - (id)editViewControllerClass
 {
-	return [MGSFileParameterEditViewController class];
+	return [MGSFilePathParameterEditViewController class];
 }
 
 

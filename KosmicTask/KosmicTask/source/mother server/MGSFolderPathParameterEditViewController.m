@@ -26,7 +26,7 @@
 - (id)init
 {
 	if ([super initWithNibName:@"FolderPathParameterEditView"]) {
-		self.parameterDescription = NSLocalizedString(@"Select folder. Folder path will be sent to task.", @"Parameter folder selection prompt");
+		self.parameterDescription = NSLocalizedString(@"Select folder. Folder path will be sent to the task.", @"Parameter folder selection prompt");
 	}
 	return self;
 }
