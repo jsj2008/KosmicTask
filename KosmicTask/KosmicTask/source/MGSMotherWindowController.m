@@ -1465,6 +1465,8 @@ const char MGSContextStartupComplete;
 				// put the current windowMainView back into the splitview and redisplay
 				[contentView replaceSubview:_contentSubview with:windowSplitView];
 				[windowSplitView setFrame:[contentView bounds]];
+                
+                // nasty bugs appear in Lion if do not make new view same as existing view!
                 [_contentSubview setFrame:[_dummyView frame]];
 				[windowSplitView replaceSubview:_dummyView with:_contentSubview];
 
