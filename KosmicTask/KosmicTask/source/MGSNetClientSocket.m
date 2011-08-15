@@ -141,7 +141,7 @@
 			if (newAuthDict) {
 				[message setAuthenticationDictionary:newAuthDict];
 			} else {
-				[NSException raise:MGSNetSocketSecurityException format:@"Cannot not retrieve authentication dictionary from keychain"];
+				[NSException raise:MGSNetSocketSecurityException format:@"Cannot retrieve authentication dictionary from keychain"];
 			}
 		}
 	}
