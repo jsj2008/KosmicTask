@@ -613,9 +613,8 @@ static char MGSSeletedDetailViewSegmentContext;
 				_dummyView = [[NSView alloc] initWithFrame:[tabView frame]];
 				
 				// swap out the tabview from the splitview and replace the splitview with the tabview
-				[mainSplitView replaceSubview:tabView with:_dummyView];
-				[tabView setFrame:[mainSplitView frame]];
-				[[self view] replaceSubview:mainSplitView with:tabView];
+				[mainSplitView replaceSubview:tabView withViewFrameAsOld:_dummyView];
+				[[self view] replaceSubview:mainSplitView withViewFrameAsOld:tabView];
 				
 				_currentSubview = tabView;
 			} else {
@@ -631,9 +630,9 @@ static char MGSSeletedDetailViewSegmentContext;
 
 		// if the current view is not the splitview then swap it in
 		if (_currentSubview != mainSplitView) {
-			[[self view] replaceSubview:_currentSubview with:mainSplitView];
+			[[self view] replaceSubview:_currentSubview withViewFrameAsOld:mainSplitView];
 			[mainSplitView setFrame:[_currentSubview frame]];
-			[mainSplitView replaceSubview:_dummyView with:_currentSubview];
+			[mainSplitView replaceSubview:_dummyView withViewFrameAsOld:_currentSubview];
 			_currentSubview = mainSplitView;
 			_dummyView = nil;
 		}

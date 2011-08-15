@@ -202,8 +202,7 @@ const char MGSContextStartupComplete;
 	// the bottom panel is an activity viewer.
 	// this will not be implemented till v2.0 so swap splitview with sidebar for now
 	_sidebarViewController = [[MGSSidebarViewController alloc] initWithNibName:@"SidebarView" bundle:nil];
-	[[_sidebarViewController view] setFrame:[leftSplitView frame]];
-	[leftView replaceSubview:leftSplitView with:[_sidebarViewController view]];
+	[leftView replaceSubview:leftSplitView withViewFrameAsOld:[_sidebarViewController view]];
 	
 	//
 	// load the left view into the window left view
@@ -1452,9 +1451,9 @@ const char MGSContextStartupComplete;
 				_dummyView = [[NSView alloc] initWithFrame:[windowMainView frame]];
 				
 				// swap out the tabview from the splitview and replace thesplitview with the tabview
-				[windowSplitView replaceSubview:windowMainView with:_dummyView];
+				[windowSplitView replaceSubview:windowMainView withViewFrameAsOld:_dummyView];
 				[windowMainView setFrame:[contentView bounds]];
-				[contentView replaceSubview:windowSplitView with:windowMainView];
+				[contentView replaceSubview:windowSplitView withViewFrameAsOld:windowMainView];
 				
 				_contentSubview = windowMainView;
 			} else {
@@ -1463,12 +1462,11 @@ const char MGSContextStartupComplete;
 
 				// side bar is not visible.
 				// put the current windowMainView back into the splitview and redisplay
-				[contentView replaceSubview:_contentSubview with:windowSplitView];
+				[contentView replaceSubview:_contentSubview withViewFrameAsOld:windowSplitView];
 				[windowSplitView setFrame:[contentView bounds]];
                 
                 // nasty bugs appear in Lion if do not make new view same as existing view!
-                [_contentSubview setFrame:[_dummyView frame]];
-				[windowSplitView replaceSubview:_dummyView with:_contentSubview];
+				[windowSplitView replaceSubview:_dummyView withViewFrameAsOld:_contentSubview];
 
 				_contentSubview = windowSplitView;
 				_dummyView = nil;
