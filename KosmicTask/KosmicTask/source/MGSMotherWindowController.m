@@ -1428,7 +1428,7 @@ const char MGSContextStartupComplete;
 	if (number) {
 		viewState = [number integerValue];
 	}
-	NSView *view = [[self window] contentView];
+	NSView *contentView = [[self window] contentView];
 	
 	switch (mode) {
 		
@@ -1446,8 +1446,6 @@ const char MGSContextStartupComplete;
 				
 				if (viewState == kMGSViewStateShow) return;
 				
-				NSView *tabView = windowMainView;
-				
 				// must have at least two views in splitview.
 				// if want to display a single view from the splitview
 				// then have to replace the splitview
@@ -1455,19 +1453,21 @@ const char MGSContextStartupComplete;
 				
 				// swap out the tabview from the splitview and replace thesplitview with the tabview
 				[windowSplitView replaceSubview:windowMainView with:_dummyView];
-				[windowMainView setFrame:[view bounds]];
-				[view replaceSubview:windowSplitView with:windowMainView];
+				[windowMainView setFrame:[contentView bounds]];
+				[contentView replaceSubview:windowSplitView with:windowMainView];
 				
-				_contentSubview = tabView;
+				_contentSubview = windowMainView;
 			} else {
 				
 				if (viewState == kMGSViewStateHide) return;
 
 				// side bar is not visible.
 				// put the current windowMainView back into the splitview and redisplay
-				[view replaceSubview:_contentSubview with:windowSplitView];
-				[windowSplitView setFrame:[view bounds]];
+				[contentView replaceSubview:_contentSubview with:windowSplitView];
+				[windowSplitView setFrame:[contentView bounds]];
+                [_contentSubview setFrame:[_dummyView frame]];
 				[windowSplitView replaceSubview:_dummyView with:_contentSubview];
+
 				_contentSubview = windowSplitView;
 				_dummyView = nil;
 			}
