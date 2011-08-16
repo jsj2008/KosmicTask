@@ -13791,7 +13791,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 57;
+				DYLIB_CURRENT_VERSION = 58;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -13808,7 +13808,7 @@
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 57;
+				DYLIB_CURRENT_VERSION = 58;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -13915,28 +13915,6 @@
 			};
 			name = Release;
 		};
-		AB1560AF118DA83300DC01C7 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin C Shell-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin C Shell";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
-		};
 		AB1560FA118DA87E00DC01C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -13986,28 +13964,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB1560FC118DA87E00DC01C7 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin TENEX C Shell-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin TENEX C Shell";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB156145118DA91300DC01C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -14059,28 +14015,6 @@
 			};
 			name = Release;
 		};
-		AB156147118DA91300DC01C7 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Korn Shell-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Korn Shell";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
-		};
 		AB156195118DA9AC00DC01C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14131,28 +14065,6 @@
 			};
 			name = Release;
 		};
-		AB156197118DA9AC00DC01C7 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Z Shell-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Z Shell";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
-		};
 		AB1561E0118DAA1E00DC01C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14202,28 +14114,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB1561E2118DAA1E00DC01C7 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Tcl Shell-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Tcl Shell";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB1914CD12AFD8A500710031 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -14282,32 +14172,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB1914CF12AFD8A500710031 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Jonathan/Documents/Computing/bitbucket/luacocoa,
-				);
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin LuaCocoa-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin LuaCocoa";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB19162A12AFD90300710031 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -14372,35 +14236,6 @@
 			};
 			name = Release;
 		};
-		AB19162C12AFD90300710031 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/Jonathan/Documents/Computing/bitbucket/luacocoa/**",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = required;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
-				INFOPLIST_FILE = KosmicTaskRunner.plist;
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks @loader_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskLuaCocoaRunner;
-			};
-			name = "Release Development";
-		};
 		AB27AD071189E86C00132977 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14408,7 +14243,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 57;
+				DYLIB_CURRENT_VERSION = 58;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -14437,7 +14272,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 57;
+				DYLIB_CURRENT_VERSION = 58;
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -14456,32 +14291,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB27AD091189E86C00132977 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = NO;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 57;
-				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "MGSKosmicTaskRunner-Info.plist";
-				INSTALL_PATH = "@rpath";
-				LD_RUNPATH_SEARCH_PATHS = "";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = MGSKosmicTaskRunner;
-			};
-			name = "Release Development";
 		};
 		AB27AF831189F17600132977 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -14534,29 +14343,6 @@
 			};
 			name = Release;
 		};
-		AB27AF851189F17600132977 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"\"KosmicTaskRunner-Info.plist\"",
-				);
-				PRODUCT_NAME = KosmicTaskShellScriptRunner;
-			};
-			name = "Release Development";
-		};
 		AB27B0B5118A104900132977 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14607,29 +14393,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB27B0B7118A104900132977 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"\"KosmicTaskRunner-Info.plist\"",
-				);
-				PRODUCT_NAME = KosmicTaskPythonRunner;
-			};
-			name = "Release Development";
 		};
 		AB27B19A118A12B500132977 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -14682,29 +14445,6 @@
 			};
 			name = Release;
 		};
-		AB27B19C118A12B500132977 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"\"KosmicTaskRunner-Info.plist\"",
-				);
-				PRODUCT_NAME = KosmicTaskRubyCocoaRunner;
-			};
-			name = "Release Development";
-		};
 		AB27B293118A18D400132977 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14756,29 +14496,6 @@
 			};
 			name = Release;
 		};
-		AB27B295118A18D400132977 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = required;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskAppleScriptCocoaRunner;
-			};
-			name = "Release Development";
-		};
 		AB31670C128D402D0037EF1C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14828,28 +14545,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB31670E128D402D0037EF1C /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "Test KosmicTask App-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PRODUCT_NAME = "Test KosmicTask App";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = "Release Development";
 		};
 		AB3180C412B2884D001E821B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -14903,29 +14598,6 @@
 			};
 			name = Release;
 		};
-		AB3180C612B2884D001E821B /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin JSCocoa-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin JSCocoa";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
-		};
 		AB36002D11886EF900F1E894 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -14976,28 +14648,6 @@
 			};
 			name = Release;
 		};
-		AB36002F11886EF900F1E894 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin RubyCocoa-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin RubyCocoa";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
-		};
 		AB36006511886FD800F1E894 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -15047,28 +14697,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB36006711886FD800F1E894 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Python-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Python";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB4A5CC1120D7753006A66CC /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -15136,36 +14764,6 @@
 			};
 			name = Release;
 		};
-		AB4A5CC3120D7753006A66CC /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cint\"",
-				);
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin CINT-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cint/cint/lib\"",
-				);
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin CINT";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
-		};
 		AB4A5D0F120D775B006A66CC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -15226,35 +14824,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB4A5D11120D775B006A66CC /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cint/cint/lib\"",
-				);
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskCINTRunner;
-				USER_HEADER_SEARCH_PATHS = "/Users/Jonathan/Documents/Computing/KosmicTask/cint/cint/inc/**";
-			};
-			name = "Release Development";
 		};
 		AB4D190B0DE2D49400D0E517 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -15329,29 +14898,6 @@
 			};
 			name = Release;
 		};
-		AB5624AE118DAFAD0012487B /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info copy.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskCshRunner;
-			};
-			name = "Release Development";
-		};
 		AB5624FF118DB0FF0012487B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -15402,29 +14948,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB562501118DB0FF0012487B /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskTcshRunner;
-			};
-			name = "Release Development";
 		};
 		AB56254D118DB1040012487B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -15477,29 +15000,6 @@
 			};
 			name = Release;
 		};
-		AB56254F118DB1040012487B /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskKshRunner;
-			};
-			name = "Release Development";
-		};
 		AB56259C118DB1090012487B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -15551,29 +15051,6 @@
 			};
 			name = Release;
 		};
-		AB56259E118DB1090012487B /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskZshRunner;
-			};
-			name = "Release Development";
-		};
 		AB5625EB118DB10F0012487B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -15624,29 +15101,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB5625ED118DB10F0012487B /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskTclshRunner;
-			};
-			name = "Release Development";
 		};
 		AB5CD951118AEC4B00C545CD /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -15705,32 +15159,6 @@
 			};
 			name = Release;
 		};
-		AB5CD953118AEC4B00C545CD /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks/Python.framework/Versions/2.6/Headers;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-					/System/Library/Frameworks/Python.framework/Versions/2.6/Python,
-				);
-				PRODUCT_NAME = KosmicTaskPythonObjCRunner;
-			};
-			name = "Release Development";
-		};
 		AB5CDABC118AF38200C545CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -15780,28 +15208,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB5CDABE118AF38200C545CD /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Ruby-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Ruby";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB5CDB01118AF3EF00C545CD /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -15854,345 +15260,6 @@
 			};
 			name = Release;
 		};
-		AB5CDB03118AF3EF00C545CD /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskRubyRunner;
-			};
-			name = "Release Development";
-		};
-		AB5F467310CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB4F92851039AD9F005EF329 /* beta-expiring.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = i386;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 57;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = required;
-				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
-				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
-				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
-				GCC_WARN_MISSING_PARENTHESES = YES;
-				GCC_WARN_PEDANTIC = NO;
-				GCC_WARN_SHADOW = YES;
-				GCC_WARN_SIGN_COMPARE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_LABEL = YES;
-				GCC_WARN_UNUSED_PARAMETER = YES;
-				GCC_WARN_UNUSED_VALUE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "./include/**";
-				IBC_WARNINGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				RUN_CLANG_STATIC_ANALYZER = NO;
-				SDKROOT = macosx;
-				SEPARATE_STRIP = YES;
-				STRIP_STYLE = "non-global";
-				VALID_ARCHS = "i386 ppc";
-				VERSIONING_SYSTEM = "apple-generic";
-				WARNING_CFLAGS = (
-					"-Wformat",
-					"-Wfloat-equal",
-					"-Wall",
-					"-Wextra",
-				);
-			};
-			name = "Release Development";
-		};
-		AB5F467410CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				CODE_SIGN_RESOURCE_RULES_PATH = ./kosmictask_code_signing_rules.plist;
-				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../Sparkle 1.5b6/With Garbage Collection\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = mother_Prefix.pch;
-				HEADER_SEARCH_PATHS = ../../PSMTabBarControl/trunk/source;
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(HOME)/Applications";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../cint/cint/lib\"",
-				);
-				PRODUCT_NAME = KosmicTask;
-				SDKROOT = macosx;
-				STRIPFLAGS = "-S -x -r";
-				STRIP_INSTALLED_PRODUCT = YES;
-				STRIP_STYLE = all;
-				SYMROOT = /Users/Shared;
-				WRAPPER_EXTENSION = app;
-			};
-			name = "Release Development";
-		};
-		AB5F467510CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				FRAMEWORK_SEARCH_PATHS = /Users/Jonathan/Documents/Computing/source/KosmicTask/yamlkit;
-				INFOPLIST_FILE = "KosmicTaskServer-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"\"KosmicTaskServer-Info.plist\"",
-				);
-				PRODUCT_NAME = KosmicTaskServer;
-				VALID_ARCHS = i386;
-			};
-			name = "Release Development";
-		};
-		AB5F467610CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 57;
-				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
-				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)\"",
-				);
-				PRODUCT_NAME = MGSKosmicTask;
-			};
-			name = "Release Development";
-		};
-		AB5F467710CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_ENABLE_OBJC_GC = unsupported;
-				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"\"KosmicTaskRunner-Info.plist\"",
-				);
-				PRODUCT_NAME = KosmicTaskAppleScriptRunner;
-			};
-			name = "Release Development";
-		};
-		AB5F467810CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 57;
-				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				INFOPLIST_FILE = "NDScript-Info.plist";
-				INSTALL_PATH = "@rpath";
-				LD_RUNPATH_SEARCH_PATHS = ../../../Frameworks;
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = NDScript;
-				ZERO_LINK = NO;
-			};
-			name = "Release Development";
-		};
-		AB5F467910CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GENERATE_PKGINFO_FILE = NO;
-				INFOPLIST_FILE = "Export Plugin RTF-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Export Plugin RTF";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F467A10CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Export Plugin Plain Text-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Export Plugin Plain Text";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F467B10CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Export Plugin PDF-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Export Plugin PDF";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F467C10CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Export Plugin Plist-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Export Plugin Plist";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F467D10CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				INFOPLIST_FILE = "Export Plugin XML-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Export Plugin XML";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F467E10CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				INFOPLIST_FILE = "Send Plugin Word-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Send Plugin Word";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F467F10CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Send Plugin Excel-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Send Plugin Excel";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F468010CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Send Plugin TextEdit-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Send Plugin TextEdit";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F468110CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Send Plugin Mail-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Send Plugin Mail";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F468210CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				INFOPLIST_FILE = "Send Plugin Numbers-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Send Plugin Numbers";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F468310CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Send Plugin Pages-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Send Plugin Pages";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F468410CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Parameter Plugin Number-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Parameter Plugin Number";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F468510CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Parameter Plugin Text-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Parameter Plugin Text";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F468610CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Parameter Plugin Date-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Parameter Plugin Date";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F468710CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Parameter Plugin File-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Parameter Plugin File";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
-		AB5F468810CC485500CCFCC2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Parameter Plugin List-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Parameter Plugin List";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
 		AB66758A1205B9DD006763E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -16242,28 +15309,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB66758C1205B9DD006763E2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin JavaScript-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin JavaScript";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB6675D81205B9E2006763E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -16320,31 +15365,6 @@
 			};
 			name = Release;
 		};
-		AB6675DA1205B9E2006763E2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = required;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks @loader_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskJavaScriptRunner;
-			};
-			name = "Release Development";
-		};
 		AB6677871205BEB7006763E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -16394,28 +15414,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB6677891205BEB7006763E2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Java-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Java";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB6677D71205BEC0006763E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -16468,29 +15466,6 @@
 			};
 			name = Release;
 		};
-		AB6677D91205BEC0006763E2 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskJavaRunner;
-			};
-			name = "Release Development";
-		};
 		AB69B0AF118AFDAB00903D1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -16540,28 +15515,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB69B0B1118AFDAB00903D1D /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Perl-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Perl";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB69B185118AFE5F00903D1D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -16614,29 +15567,6 @@
 			};
 			name = Release;
 		};
-		AB69B187118AFE5F00903D1D /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskPerlRunner;
-			};
-			name = "Release Development";
-		};
 		AB69B2D6118B007500903D1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -16686,28 +15616,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB69B2D8118B007500903D1D /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Php-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Php";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB69B356118B00FB00903D1D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -16760,29 +15668,6 @@
 			};
 			name = Release;
 		};
-		AB69B358118B00FB00903D1D /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskPhpRunner;
-			};
-			name = "Release Development";
-		};
 		AB92D09D12047BD20025EAEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -16832,28 +15717,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB92D09F12047BD20025EAEF /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin F-Script-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin F-Script";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB92D0B812047C100025EAEF /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -16923,38 +15786,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB92D0BA12047C100025EAEF /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/shared/Development/**",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = required;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				HEADER_SEARCH_PATHS = (
-					"../../../F-Script/**",
-					"./include/**",
-				);
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info copy.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks @loader_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = "KosmicTaskF-ScriptRunner";
-			};
-			name = "Release Development";
 		};
 		AB9B272A0DFC754E00CDA79A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -17026,28 +15857,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		AB9CB748118AEA6D006F19F1 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin PythonObjC-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin PythonObjC";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		AB9DC39D0DE5CDF200B85F5E /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -17234,35 +16043,13 @@
 			};
 			name = Release;
 		};
-		ABA8E26B1188BA3000414A7D /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Bash Shell-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Bash Shell";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
-		};
 		ABADEE04104D32AC007A5319 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 57;
+				DYLIB_CURRENT_VERSION = 58;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -17283,7 +16070,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 57;
+				DYLIB_CURRENT_VERSION = 58;
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -17438,32 +16225,6 @@
 			};
 			name = Release;
 		};
-		ABBA122412B28B16005F12A5 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = required;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
-				INFOPLIST_FILE = KosmicTaskRunner.plist;
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks @loader_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskJavaScriptCocoaRunner;
-			};
-			name = "Release Development";
-		};
 		ABD668A80DE6034C00097C1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -17532,17 +16293,6 @@
 			};
 			name = Release;
 		};
-		ABDBEB4313927AC600553735 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				INFOPLIST_FILE = "Export Plugin YAML-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = "Export Plugin YAML";
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = "Release Development";
-		};
 		ABE33031118624AA0070EF32 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -17593,28 +16343,6 @@
 			};
 			name = Release;
 		};
-		ABE33033118624AA0070EF32 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin AppleScript-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin AppleScript";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
-		};
 		ABE330DA118626EB0070EF32 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -17664,28 +16392,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		ABE330DC118626EB0070EF32 /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin AppleScript Cocoa-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin AppleScript Cocoa";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		ABE78169132516D800663CBB /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -17750,35 +16456,6 @@
 			};
 			name = Release;
 		};
-		ABE7816B132516D800663CBB /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/Jonathan/Documents/Computing/bitbucket/luacocoa/**",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = required;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
-				INFOPLIST_FILE = KosmicTaskRunner.plist;
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks @loader_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskLuaRunner;
-			};
-			name = "Release Development";
-		};
 		ABE78254132516FF00663CBB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -17833,30 +16510,6 @@
 			};
 			name = Release;
 		};
-		ABE78256132516FF00663CBB /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin CINT-Info copy.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin CINT";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
-		};
 		ABFFCD92120D5A09005CC65A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -17906,28 +16559,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		ABFFCD94120D5A09005CC65A /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Scala-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Scala";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = "Release Development";
 		};
 		ABFFCDA6120D5A28005CC65A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -17979,29 +16610,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		ABFFCDA8120D5A28005CC65A /* Release Development */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info copy.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskScalaRunner;
-			};
-			name = "Release Development";
 		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -18066,7 +16674,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
@@ -18117,7 +16725,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
@@ -18169,7 +16777,6 @@
 			buildConfigurations = (
 				091835F30D0C34E0008604BD /* Debug */,
 				091835F40D0C34E0008604BD /* Release */,
-				AB5F467710CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18179,7 +16786,6 @@
 			buildConfigurations = (
 				0953D02E0CD941E000519488 /* Debug */,
 				0953D02F0CD941E000519488 /* Release */,
-				AB5F467510CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18189,7 +16795,6 @@
 			buildConfigurations = (
 				09C09E290CDC7D720048BC79 /* Debug */,
 				09C09E2A0CDC7D720048BC79 /* Release */,
-				AB5F467610CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18199,7 +16804,6 @@
 			buildConfigurations = (
 				AB1512EF0DE4BD17002280E3 /* Debug */,
 				AB1512F00DE4BD17002280E3 /* Release */,
-				AB5F467E10CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18209,7 +16813,6 @@
 			buildConfigurations = (
 				AB1513220DE4BD62002280E3 /* Debug */,
 				AB1513230DE4BD62002280E3 /* Release */,
-				AB5F467F10CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18219,7 +16822,6 @@
 			buildConfigurations = (
 				AB1560AD118DA83300DC01C7 /* Debug */,
 				AB1560AE118DA83300DC01C7 /* Release */,
-				AB1560AF118DA83300DC01C7 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18229,7 +16831,6 @@
 			buildConfigurations = (
 				AB1560FA118DA87E00DC01C7 /* Debug */,
 				AB1560FB118DA87E00DC01C7 /* Release */,
-				AB1560FC118DA87E00DC01C7 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18239,7 +16840,6 @@
 			buildConfigurations = (
 				AB156145118DA91300DC01C7 /* Debug */,
 				AB156146118DA91300DC01C7 /* Release */,
-				AB156147118DA91300DC01C7 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18249,7 +16849,6 @@
 			buildConfigurations = (
 				AB156195118DA9AC00DC01C7 /* Debug */,
 				AB156196118DA9AC00DC01C7 /* Release */,
-				AB156197118DA9AC00DC01C7 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18259,7 +16858,6 @@
 			buildConfigurations = (
 				AB1561E0118DAA1E00DC01C7 /* Debug */,
 				AB1561E1118DAA1E00DC01C7 /* Release */,
-				AB1561E2118DAA1E00DC01C7 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18269,7 +16867,6 @@
 			buildConfigurations = (
 				AB1914CD12AFD8A500710031 /* Debug */,
 				AB1914CE12AFD8A500710031 /* Release */,
-				AB1914CF12AFD8A500710031 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18279,7 +16876,6 @@
 			buildConfigurations = (
 				AB19162A12AFD90300710031 /* Debug */,
 				AB19162B12AFD90300710031 /* Release */,
-				AB19162C12AFD90300710031 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18289,7 +16885,6 @@
 			buildConfigurations = (
 				AB27AD071189E86C00132977 /* Debug */,
 				AB27AD081189E86C00132977 /* Release */,
-				AB27AD091189E86C00132977 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18299,7 +16894,6 @@
 			buildConfigurations = (
 				AB27AF831189F17600132977 /* Debug */,
 				AB27AF841189F17600132977 /* Release */,
-				AB27AF851189F17600132977 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18309,7 +16903,6 @@
 			buildConfigurations = (
 				AB27B0B5118A104900132977 /* Debug */,
 				AB27B0B6118A104900132977 /* Release */,
-				AB27B0B7118A104900132977 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18319,7 +16912,6 @@
 			buildConfigurations = (
 				AB27B19A118A12B500132977 /* Debug */,
 				AB27B19B118A12B500132977 /* Release */,
-				AB27B19C118A12B500132977 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18329,7 +16921,6 @@
 			buildConfigurations = (
 				AB27B293118A18D400132977 /* Debug */,
 				AB27B294118A18D400132977 /* Release */,
-				AB27B295118A18D400132977 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18339,7 +16930,6 @@
 			buildConfigurations = (
 				AB31670C128D402D0037EF1C /* Debug */,
 				AB31670D128D402D0037EF1C /* Release */,
-				AB31670E128D402D0037EF1C /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18349,7 +16939,6 @@
 			buildConfigurations = (
 				AB3180C412B2884D001E821B /* Debug */,
 				AB3180C512B2884D001E821B /* Release */,
-				AB3180C612B2884D001E821B /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18359,7 +16948,6 @@
 			buildConfigurations = (
 				AB36002D11886EF900F1E894 /* Debug */,
 				AB36002E11886EF900F1E894 /* Release */,
-				AB36002F11886EF900F1E894 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18369,7 +16957,6 @@
 			buildConfigurations = (
 				AB36006511886FD800F1E894 /* Debug */,
 				AB36006611886FD800F1E894 /* Release */,
-				AB36006711886FD800F1E894 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18379,7 +16966,6 @@
 			buildConfigurations = (
 				AB4A5CC1120D7753006A66CC /* Debug */,
 				AB4A5CC2120D7753006A66CC /* Release */,
-				AB4A5CC3120D7753006A66CC /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18389,7 +16975,6 @@
 			buildConfigurations = (
 				AB4A5D0F120D775B006A66CC /* Debug */,
 				AB4A5D10120D775B006A66CC /* Release */,
-				AB4A5D11120D775B006A66CC /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18399,7 +16984,6 @@
 			buildConfigurations = (
 				AB4D190B0DE2D49400D0E517 /* Debug */,
 				AB4D190C0DE2D49400D0E517 /* Release */,
-				AB5F467B10CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18409,7 +16993,6 @@
 			buildConfigurations = (
 				AB5624AC118DAFAD0012487B /* Debug */,
 				AB5624AD118DAFAD0012487B /* Release */,
-				AB5624AE118DAFAD0012487B /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18419,7 +17002,6 @@
 			buildConfigurations = (
 				AB5624FF118DB0FF0012487B /* Debug */,
 				AB562500118DB0FF0012487B /* Release */,
-				AB562501118DB0FF0012487B /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18429,7 +17011,6 @@
 			buildConfigurations = (
 				AB56254D118DB1040012487B /* Debug */,
 				AB56254E118DB1040012487B /* Release */,
-				AB56254F118DB1040012487B /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18439,7 +17020,6 @@
 			buildConfigurations = (
 				AB56259C118DB1090012487B /* Debug */,
 				AB56259D118DB1090012487B /* Release */,
-				AB56259E118DB1090012487B /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18449,7 +17029,6 @@
 			buildConfigurations = (
 				AB5625EB118DB10F0012487B /* Debug */,
 				AB5625EC118DB10F0012487B /* Release */,
-				AB5625ED118DB10F0012487B /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18459,7 +17038,6 @@
 			buildConfigurations = (
 				AB5CD951118AEC4B00C545CD /* Debug */,
 				AB5CD952118AEC4B00C545CD /* Release */,
-				AB5CD953118AEC4B00C545CD /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18469,7 +17047,6 @@
 			buildConfigurations = (
 				AB5CDABC118AF38200C545CD /* Debug */,
 				AB5CDABD118AF38200C545CD /* Release */,
-				AB5CDABE118AF38200C545CD /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18479,7 +17056,6 @@
 			buildConfigurations = (
 				AB5CDB01118AF3EF00C545CD /* Debug */,
 				AB5CDB02118AF3EF00C545CD /* Release */,
-				AB5CDB03118AF3EF00C545CD /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18489,7 +17065,6 @@
 			buildConfigurations = (
 				AB66758A1205B9DD006763E2 /* Debug */,
 				AB66758B1205B9DD006763E2 /* Release */,
-				AB66758C1205B9DD006763E2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18499,7 +17074,6 @@
 			buildConfigurations = (
 				AB6675D81205B9E2006763E2 /* Debug */,
 				AB6675D91205B9E2006763E2 /* Release */,
-				AB6675DA1205B9E2006763E2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18509,7 +17083,6 @@
 			buildConfigurations = (
 				AB6677871205BEB7006763E2 /* Debug */,
 				AB6677881205BEB7006763E2 /* Release */,
-				AB6677891205BEB7006763E2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18519,7 +17092,6 @@
 			buildConfigurations = (
 				AB6677D71205BEC0006763E2 /* Debug */,
 				AB6677D81205BEC0006763E2 /* Release */,
-				AB6677D91205BEC0006763E2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18529,7 +17101,6 @@
 			buildConfigurations = (
 				AB69B0AF118AFDAB00903D1D /* Debug */,
 				AB69B0B0118AFDAB00903D1D /* Release */,
-				AB69B0B1118AFDAB00903D1D /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18539,7 +17110,6 @@
 			buildConfigurations = (
 				AB69B185118AFE5F00903D1D /* Debug */,
 				AB69B186118AFE5F00903D1D /* Release */,
-				AB69B187118AFE5F00903D1D /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18549,7 +17119,6 @@
 			buildConfigurations = (
 				AB69B2D6118B007500903D1D /* Debug */,
 				AB69B2D7118B007500903D1D /* Release */,
-				AB69B2D8118B007500903D1D /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18559,7 +17128,6 @@
 			buildConfigurations = (
 				AB69B356118B00FB00903D1D /* Debug */,
 				AB69B357118B00FB00903D1D /* Release */,
-				AB69B358118B00FB00903D1D /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18569,7 +17137,6 @@
 			buildConfigurations = (
 				AB92D09D12047BD20025EAEF /* Debug */,
 				AB92D09E12047BD20025EAEF /* Release */,
-				AB92D09F12047BD20025EAEF /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18579,7 +17146,6 @@
 			buildConfigurations = (
 				AB92D0B812047C100025EAEF /* Debug */,
 				AB92D0B912047C100025EAEF /* Release */,
-				AB92D0BA12047C100025EAEF /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18589,7 +17155,6 @@
 			buildConfigurations = (
 				AB9B272A0DFC754E00CDA79A /* Debug */,
 				AB9B272B0DFC754E00CDA79A /* Release */,
-				AB5F468810CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18599,7 +17164,6 @@
 			buildConfigurations = (
 				AB9CB746118AEA6D006F19F1 /* Debug */,
 				AB9CB747118AEA6D006F19F1 /* Release */,
-				AB9CB748118AEA6D006F19F1 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18609,7 +17173,6 @@
 			buildConfigurations = (
 				AB9DC39D0DE5CDF200B85F5E /* Debug */,
 				AB9DC39E0DE5CDF200B85F5E /* Release */,
-				AB5F468110CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18619,7 +17182,6 @@
 			buildConfigurations = (
 				AB9E8FD60DE1CA0C00501378 /* Debug */,
 				AB9E8FD70DE1CA0C00501378 /* Release */,
-				AB5F467910CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18629,7 +17191,6 @@
 			buildConfigurations = (
 				ABA247940DE2CEEB00BD2A66 /* Debug */,
 				ABA247950DE2CEEB00BD2A66 /* Release */,
-				AB5F467A10CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18639,7 +17200,6 @@
 			buildConfigurations = (
 				ABA2FD0A0DE4CA0C00589B2A /* Debug */,
 				ABA2FD0B0DE4CA0C00589B2A /* Release */,
-				AB5F468010CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18649,7 +17209,6 @@
 			buildConfigurations = (
 				ABA301C50DE4B1BD002DB3F4 /* Debug */,
 				ABA301C60DE4B1BD002DB3F4 /* Release */,
-				AB5F467C10CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18659,7 +17218,6 @@
 			buildConfigurations = (
 				ABA301DE0DE4B245002DB3F4 /* Debug */,
 				ABA301DF0DE4B245002DB3F4 /* Release */,
-				AB5F467D10CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18669,7 +17227,6 @@
 			buildConfigurations = (
 				ABA8E2691188BA3000414A7D /* Debug */,
 				ABA8E26A1188BA3000414A7D /* Release */,
-				ABA8E26B1188BA3000414A7D /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18679,7 +17236,6 @@
 			buildConfigurations = (
 				ABADEE04104D32AC007A5319 /* Debug */,
 				ABADEE05104D32AC007A5319 /* Release */,
-				AB5F467810CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18689,7 +17245,6 @@
 			buildConfigurations = (
 				ABAFC6C40DF9B0DB00349FC3 /* Debug */,
 				ABAFC6C50DF9B0DB00349FC3 /* Release */,
-				AB5F468410CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18699,7 +17254,6 @@
 			buildConfigurations = (
 				ABAFC7A60DF9C5B200349FC3 /* Debug */,
 				ABAFC7A70DF9C5B200349FC3 /* Release */,
-				AB5F468510CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18709,7 +17263,6 @@
 			buildConfigurations = (
 				ABAFC7CD0DF9C5C200349FC3 /* Debug */,
 				ABAFC7CE0DF9C5C200349FC3 /* Release */,
-				AB5F468610CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18719,7 +17272,6 @@
 			buildConfigurations = (
 				ABAFC7F40DF9C5C700349FC3 /* Debug */,
 				ABAFC7F50DF9C5C700349FC3 /* Release */,
-				AB5F468710CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18729,7 +17281,6 @@
 			buildConfigurations = (
 				ABBA122212B28B16005F12A5 /* Debug */,
 				ABBA122312B28B16005F12A5 /* Release */,
-				ABBA122412B28B16005F12A5 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18739,7 +17290,6 @@
 			buildConfigurations = (
 				ABD668A80DE6034C00097C1B /* Debug */,
 				ABD668A90DE6034C00097C1B /* Release */,
-				AB5F468210CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18749,7 +17299,6 @@
 			buildConfigurations = (
 				ABD668D60DE6035000097C1B /* Debug */,
 				ABD668D70DE6035000097C1B /* Release */,
-				AB5F468310CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18759,7 +17308,6 @@
 			buildConfigurations = (
 				ABDBEB4113927AC600553735 /* Debug */,
 				ABDBEB4213927AC600553735 /* Release */,
-				ABDBEB4313927AC600553735 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18769,7 +17317,6 @@
 			buildConfigurations = (
 				ABE33031118624AA0070EF32 /* Debug */,
 				ABE33032118624AA0070EF32 /* Release */,
-				ABE33033118624AA0070EF32 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18779,7 +17326,6 @@
 			buildConfigurations = (
 				ABE330DA118626EB0070EF32 /* Debug */,
 				ABE330DB118626EB0070EF32 /* Release */,
-				ABE330DC118626EB0070EF32 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18789,7 +17335,6 @@
 			buildConfigurations = (
 				ABE78169132516D800663CBB /* Debug */,
 				ABE7816A132516D800663CBB /* Release */,
-				ABE7816B132516D800663CBB /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18799,7 +17344,6 @@
 			buildConfigurations = (
 				ABE78254132516FF00663CBB /* Debug */,
 				ABE78255132516FF00663CBB /* Release */,
-				ABE78256132516FF00663CBB /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18809,7 +17353,6 @@
 			buildConfigurations = (
 				ABFFCD92120D5A09005CC65A /* Debug */,
 				ABFFCD93120D5A09005CC65A /* Release */,
-				ABFFCD94120D5A09005CC65A /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18819,7 +17362,6 @@
 			buildConfigurations = (
 				ABFFCDA6120D5A28005CC65A /* Debug */,
 				ABFFCDA7120D5A28005CC65A /* Release */,
-				ABFFCDA8120D5A28005CC65A /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18829,7 +17371,6 @@
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
 				C01FCF4C08A954540054247B /* Release */,
-				AB5F467410CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -18839,7 +17380,6 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
-				AB5F467310CC485500CCFCC2 /* Release Development */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
