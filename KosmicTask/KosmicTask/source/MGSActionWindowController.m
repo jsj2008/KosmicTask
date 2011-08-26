@@ -267,10 +267,11 @@
  */
 - (NSSize)windowWillResize:(NSWindow *) window toSize:(NSSize)newSize
 {
-	if([window showsResizeIndicator])
+	if (([window styleMask] & NSResizableWindowMask)) {
 		return newSize; //resize happens
-	else
+	} else {
 		return [window frame].size; //no change
+    }
 }
 
 /*
@@ -282,8 +283,9 @@
 {
 	#pragma unused(newFrame)
 	
-	//let the zoom happen if showsResizeIndicator is YES
-	return [window showsResizeIndicator];
+	// let the zoom happen if showsResizeIndicator is YES
+    return ([window styleMask] & NSResizableWindowMask);
+	//return [window showsResizeIndicator];
 }
 #pragma mark MGSRequestViewController delegate messages
 /*
@@ -385,15 +387,12 @@
 				}
 
 				[zoomButton setEnabled:NO];
-				[[self window] setShowsResizeIndicator:NO];
+				[[self window] setShowsResizeIndicator:NO]; // ignored on 10.7
 				[[self window] setMinSize:minSize];
 				[[self window] setFrame:frame display:YES animate:NO];
 
-				// 10.6 only
-				if (NO) {
-					styleMask ^= NSResizableWindowMask;
-					[[self window] setStyleMask:styleMask];
-				}
+                styleMask ^= NSResizableWindowMask;
+                [[self window] setStyleMask:styleMask];
 				
 				_sizeMode = kMGSMotherSizeModeMinimal;
 				
@@ -423,13 +422,10 @@
 					frame.origin.x = 0;
 				}
 				
-				// 10.6 only
-				if (NO) {
-					[[self window] setStyleMask:_styleMask];
-				}
+                [[self window] setStyleMask:_styleMask];
 				
 				[zoomButton setEnabled:YES];
-				[[self window] setShowsResizeIndicator:YES];
+				[[self window] setShowsResizeIndicator:YES];    // ignored on 10.7
 				[[self window] setFrame:frame display:YES animate:NO];
 				[[self window] setMinSize:minSize];
 				[[self window] setContentView:_contentView]; 
