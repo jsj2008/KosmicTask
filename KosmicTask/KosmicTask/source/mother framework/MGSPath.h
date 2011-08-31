@@ -31,12 +31,6 @@
 + (BOOL)userApplicationSupportPathExists;
 + (NSString *)verifyUserApplicationSupportPath;
 
-// application support path
-+ (NSString *)applicationSupportPath;
-+ (BOOL)applicationSupportPathExists;
-+ (NSString *)verifyApplicationSupportPath;
-
-
 + (NSString *)hostNameMinusLocalLink:(NSString *)hostName;
 + (NSDictionary *)userFileAttributes;
 + (NSString *)createFolder:(NSString *)folder withAttributes:(NSDictionary *)attributes;

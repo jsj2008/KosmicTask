@@ -38,7 +38,6 @@ typedef enum _MGSLMMode {
 - (NSString *)savePathFromLicenceType:(NSInteger)licenceType;
 - (BOOL) validateItemAtPath:(NSString *)path;
 - (NSDictionary *)dictionaryOfItemAtPath:(NSString *)path;
-+ (NSString *)applicationSavePath;
 + (NSString *)userApplicationSavePath;
 - (BOOL)removeObjectAndFile:(MGSL *)licence;
 - (NSArray *)allAppData;

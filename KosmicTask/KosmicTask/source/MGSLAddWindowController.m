@@ -68,9 +68,11 @@
 	[[_detailTableView tableColumnWithIdentifier:@"name"] bind:@"value" toObject:_licenceDictionaryController withKeyPath:@"arrangedObjects.key" options:nil];
 	[[_detailTableView tableColumnWithIdentifier:@"value"] bind:@"value" toObject:_licenceDictionaryController withKeyPath:@"arrangedObjects.value" options:nil];
 
-	// only admin users may select licensing options
+	// only admin users may select licensing options.
+    // on lion non admin users can no longer write to /library/application support
+    // so better to disable support for it
 	BOOL enableLicenceOptions;
-	if ([[MGSUser currentUser] isMemberOfAdminGroup]) {
+	if ([[MGSUser currentUser] isMemberOfAdminGroup] && NO) {
 		[_licenceTypePopup setMenu:adminLicenceTypeMenu];
 		enableLicenceOptions = YES;
 		self.licenceType = MGSLTypeComputer;

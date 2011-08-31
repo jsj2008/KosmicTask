@@ -1708,12 +1708,7 @@
 {
 	// user application support path
 	[MGSPath verifyUserApplicationSupportPath];
-	
-	// application support path
-	if ([[MGSUser currentUser] isMemberOfAdminGroup]) {
-		[MGSPath verifyApplicationSupportPath];
-	}
-	
+		
 	[MGSLM initializePaths];
 }
 

@@ -23,7 +23,9 @@
  */
 + (NSNumber *)defaultType
 {
-	NSInteger licenceType = [[MGSUser currentUser] isMemberOfAdminGroup] ? MGSLTypeComputer: MGSLTypeIndividual;
+    // on lion non admin users can no longer write to /library/application support
+    // so better to disable support for it
+	NSInteger licenceType = ([[MGSUser currentUser] isMemberOfAdminGroup] && NO) ? MGSLTypeComputer: MGSLTypeIndividual;
 	return [NSNumber numberWithInteger:licenceType];
 }
 /*

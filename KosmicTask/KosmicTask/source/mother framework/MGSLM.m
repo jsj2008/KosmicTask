@@ -66,15 +66,6 @@ NSString *MGSNoteLicenceStatusChanged = @"MGSWindowStatusChanged";	// non obviou
 	{
 		[MGSPath createFolder:folder withAttributes:[MGSPath userFileAttributes]];
 	}
-	 
-	// admin licence support path
-	if ([[MGSUser currentUser] isMemberOfAdminGroup]) {
-		folder = [self applicationSavePath];
-		if (![[NSFileManager defaultManager] fileExistsAtPath:folder])
-		{
-			[MGSPath createFolder:folder withAttributes:[MGSPath adminFileAttributes]];
-		}
-	}
 }
 /*
  
@@ -382,8 +373,9 @@ NSString *MGSNoteLicenceStatusChanged = @"MGSWindowStatusChanged";	// non obviou
 	switch (licenceType) {
 		case MGSLTypeComputer:
 			// will require admin rights
-			path = [[self class] applicationSavePath];
-			break;
+            // no longer support licence saving to /Library/Application Support
+			//path = [[self class] applicationSavePath];
+			//break;
 			
 		case MGSLTypeIndividual:
 		default:
@@ -391,17 +383,6 @@ NSString *MGSNoteLicenceStatusChanged = @"MGSWindowStatusChanged";	// non obviou
 			break;
 	}
 	return path;
-}
-
-/*
- 
- application save path
- 
- */
-
-+ (NSString *)applicationSavePath
-{
-	return [[MGSPath applicationSupportPath] stringByAppendingPathComponent:MGSSoftwareLicenceFolder];
 }
 
 /*
@@ -494,7 +475,6 @@ NSString *MGSNoteLicenceStatusChanged = @"MGSWindowStatusChanged";	// non obviou
 	// search for all licences in bundle search path
 	//
 	[bundleSearchPaths addObject: [[self class] userApplicationSavePath]];
-	[bundleSearchPaths addObject: [[self class] applicationSavePath]];
 	
 	// trial licence framework bundle resource path
     [bundleSearchPaths addObject: [[NSBundle bundleForClass:[self class]] resourcePath]];	

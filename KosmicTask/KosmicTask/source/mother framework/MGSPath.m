@@ -18,8 +18,6 @@
 NSString *MGSUserDocumentPath = @"~/Documents/KosmicTask/User Tasks";
 NSString *MGSApplicationDocumentPath = @"~/Documents/KosmicTask/Application Tasks";
 NSString *MGSUserApplicationSupportPath =  @"~/Library/Application Support/KosmicTask/";
-NSString *MGSApplicationSupportPath = @"/Library/Application Support/KosmicTask/";
-
 
 @implementation MGSPath
 
@@ -92,16 +90,6 @@ Here is a summary of the meanings for individual octal digit values:
 6 rw- read and write
 7 rwx read, write and execute
  */
-// note that non admins will not be able to create this path
-+ (NSString *)verifyApplicationSupportPath
-{
-	NSString *folder = [self applicationSupportPath];
-	if (![[NSFileManager defaultManager] fileExistsAtPath:folder])
-	{
-		return [self createFolder:folder withAttributes:[self adminFileAttributes]];
-	}     
-	return folder;
-}
 
 // path to user application support
 // this method will create the folder if it does not exist
@@ -207,16 +195,6 @@ Here is a summary of the meanings for individual octal digit values:
 
 /*
  
- application support path
- 
- */
-+ (NSString *)applicationSupportPath
-{
-	return MGSApplicationSupportPath;
-}
-
-/*
- 
  user application support path
  
  */
@@ -243,16 +221,6 @@ Here is a summary of the meanings for individual octal digit values:
 + (BOOL)applicationDocumentPathExists
 {
 	return [[NSFileManager defaultManager] fileExistsAtPath:[self applicationDocumentPath]];
-}
-
-/*
- 
- application support path exists
- 
- */
-+ (BOOL)applicationSupportPathExists
-{
-	return [[NSFileManager defaultManager] fileExistsAtPath:[self applicationSupportPath]];
 }
 
 /*
