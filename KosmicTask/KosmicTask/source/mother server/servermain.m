@@ -12,6 +12,7 @@
 #import "MySignalHandler.h"
 #import "MGSCodeSigning.h"
 #import "MGSTempStorage.h"
+#import "MGSPath.h"
 #import <unistd.h>
 #import <pthread.h>
 #include <sys/types.h>
@@ -38,11 +39,10 @@ int main (int argc, const char * argv[])
 	int waitx = 1; while (waitx);	// spin here to allow debugger attachment
 #endif
 	
-	// [[NSBundle mainBundle] executablePath] will return path for foundation tool
 	MLog(DEBUGLOG, @" ");
 	MLog(DEBUGLOG, @"SERVER STARTED");
 	MLog(DEBUGLOG, @" ");
-	MLog(DEBUGLOG, @"KosmicTaskServer path: %@\n", [[NSBundle mainBundle] executablePath]);
+	MLog(DEBUGLOG, @"KosmicTaskServer path: %@\n", [MGSPath executablePath]);
 	
 	// print banner
 	printf ("KosmicTaskServer by Mugginsoft 2010.");
@@ -73,7 +73,7 @@ int main (int argc, const char * argv[])
 	
 	// check code signing
 	MGSCodeSigning *codeSign = [MGSCodeSigning new];
-	NSString *path = [[NSBundle mainBundle] executablePath];
+	NSString *path = [MGSPath executablePath];
 	if ([codeSign validatePath:path] != CodesignOkay) {
 		MLog(RELEASELOG, @"KosmicTaskServer code signing failure: %@\n", codeSign.resultString);
 	} else {

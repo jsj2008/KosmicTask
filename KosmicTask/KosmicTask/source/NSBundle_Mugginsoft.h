@@ -12,6 +12,5 @@
 @interface NSBundle (Mugginsoft)
 
 + (id)mainBundleInfoObjectForKey:(NSString*)key;
-- (NSString *)pathForCustomAuxiliaryExecutable:(NSString *)execName;
 
 @end

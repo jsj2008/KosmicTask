@@ -11,6 +11,7 @@
 #import "NSBundle_Mugginsoft.h"
 #import "MGSTempStorage.h"
 #import "JAProcessInfo.h"
+#import "MGSPath.h"
 
 @interface NSMutableData (MGSTask)
 - (void) mgsTask_fileHandleDataAvailable:(NSNotification*)notification;
@@ -74,7 +75,7 @@
 
 /*
  
- start the the task
+ start the task
  
  */
 - (BOOL)start:(NSString *)execPath data:(NSData *)dataForStdIn withError:(NSError **)error
@@ -88,7 +89,7 @@
 		
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 		
-		MLog(DEBUGLOG, @"server bundle path is %@", [[NSBundle mainBundle] bundlePath]);
+		MLog(DEBUGLOG, @"server bundle path is %@", [MGSPath bundlePath]);
 		MLog(DEBUGLOG, @"task runner path is %@", execPath);
 		if (!execPath || ![[NSFileManager defaultManager] fileExistsAtPath:execPath]) {
 			errMsg = NSLocalizedString(@"Cannot find script task executable.", @"Return by server when find script task executable");

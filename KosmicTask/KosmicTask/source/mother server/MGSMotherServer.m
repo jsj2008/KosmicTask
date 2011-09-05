@@ -64,6 +64,14 @@
 	 in advance rather than trying to create it during socket connection.
 	 we also want to do this before publishing our service.
 	 */
+    /*
+     
+     if client creates the certificate then the server has no default access
+     and the user has to be promped to allow keychain access for the server.
+     if logging in from a remote instance this causes the remote instance to hang
+     indefinately while the local user is queried.
+     
+     */
 	CFArrayRef certificatesArray = [MGSSecurity sslCertificatesArray];
 	if (!certificatesArray){
 		MLog(RELEASELOG, @"could not retrieve SSL identity");

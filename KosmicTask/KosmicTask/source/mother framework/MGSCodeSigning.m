@@ -7,6 +7,7 @@
 //
 
 #import "MGSCodeSigning.h"
+#import "MGSPath.h"
 #include <dlfcn.h>
 
 @implementation MGSCodeSigning
@@ -20,6 +21,7 @@
  */
 - (CodesignResult)validateExecutable
 {
+    // also see [MGSPath bundleExecutable]
     Dl_info info;	
 	int errDlAddr = dladdr( (const void *)__func__, &info );
     if(errDlAddr == 0) {
@@ -37,7 +39,7 @@
  */
 - (CodesignResult)validateApplication
 {
-	return [self validatePath:[[NSBundle mainBundle] bundlePath]];
+	return [self validatePath:[MGSPath bundlePath]];
 }
 /*
  

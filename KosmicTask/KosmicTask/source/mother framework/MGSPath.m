@@ -8,18 +8,160 @@
 #import <sys/stat.h>
 #import "MGSPath.h"
 #import "MGSMother.h"
-
+#include <mach-o/dyld.h>
 
 // at present Spotlight cannot index inside packages.
 // you can define a UTI for the package and have an importer run against the package
 // but the index is against the package path, not the the contained file path.
-//NSString *MGSUserDocumentPath = @"~/Documents/KosmicTask/User.kosmictask-pack";
-//NSString *MGSApplicationDocumentPath = @"~/Documents/KosmicTask/Application.kosmictask-pack";
 NSString *MGSUserDocumentPath = @"~/Documents/KosmicTask/User Tasks";
 NSString *MGSApplicationDocumentPath = @"~/Documents/KosmicTask/Application Tasks";
 NSString *MGSUserApplicationSupportPath =  @"~/Library/Application Support/KosmicTask/";
 
 @implementation MGSPath
+
+/*
+ 
+ + bundleExecutablePath
+ 
+ works for client and agent.
+
+ agent may successfully use some NSBundle path methods IF the agent resides
+ in Contents/MacOS. the following method works for any executable.
+ 
+ */
++ (NSString *)executablePath
+{
+    NSString *path = nil;
+    
+    char buffer[MAXPATHLEN];
+    uint32_t size = sizeof(buffer);
+    
+    char *execPath = buffer;
+    int i = 0;
+    i = _NSGetExecutablePath(execPath, &size);
+    if (i == -1) {
+        execPath = malloc(size);
+        _NSGetExecutablePath(execPath, &size);
+    }
+    path = [NSString stringWithCString:execPath encoding:NSUTF8StringEncoding];
+    
+    if (execPath != buffer) {
+        free(execPath);
+        execPath = NULL;
+    }
+    
+    MLog(DEBUGLOG, @"Executable path is: %@", path);
+    
+    return path;
+}
+
+/*
+ 
+ + bundleContentPath
+ 
+ works for client and agent as long as both are in subfolders of the bundle Contents folder.
+ 
+ */
++ (NSString *)bundleContentPath
+{
+    NSString *path = [self executablePath];
+    path = [path stringByDeletingLastPathComponent];    // remove executable
+    path = [path stringByDeletingLastPathComponent];    // remove folder name
+    
+    // the last path component should be the Contents folder
+    if ([[path lastPathComponent] caseInsensitiveCompare:@"contents"] != NSOrderedSame) {
+        NSAssert(NO, @"Executable does not seem to be within a bundle");
+    }
+    
+    MLog(DEBUGLOG, @"Bundle content path is: %@", path);
+    
+    return path;    
+}
+
+/*
+ 
+ + bundleResourcePath
+ 
+ works for client and agent as long as both are in subfolders of the bundle Contents folder.
+ 
+ */
++ (NSString *)bundleResourcePath
+{
+    NSString *path = [self bundleContentPath];
+    path = [path stringByAppendingPathComponent:@"/Resources"];
+    
+    MLog(DEBUGLOG, @"Bundle resource path is: %@", path);
+    
+    return path;
+}
+
+/*
+ 
+ + bundleHelperPath
+ 
+ works for client and agent as long as both are in subfolders of the bundle Contents folder.
+ 
+ */
++ (NSString *)bundleHelperPath
+{
+    NSString *path = [self bundleContentPath];
+    path = [path stringByAppendingPathComponent:@"/Helpers"];
+    
+    MLog(DEBUGLOG, @"Bundle helper path is: %@", path);
+    
+    return path;
+}
+
+/*
+ 
+ + bundlePath
+ 
+ works for client and agent as long as both are in subfolders of the bundle Contents folder.
+ 
+ */
++ (NSString *)bundlePath
+{
+    NSString *path = [self bundleContentPath];
+    path = [path stringByDeletingLastPathComponent];
+    
+    MLog(DEBUGLOG, @"Bundle path is: %@", path);
+    
+    return path;
+}
+
+/*
+ 
+ + bundlePluginPath
+ 
+ works for client and agent as long as both are in subfolders of the bundle Contents folder.
+ 
+ */
++ (NSString *)bundlePluginPath
+{
+    NSString *path = [self bundleContentPath];
+    path = [path stringByAppendingPathComponent:@"/Plugins"];
+    
+    MLog(DEBUGLOG, @"Bundle plugin path is: %@", path);
+    
+    return path;
+}
+
+/*
+ 
+ path for custom auxiliary executable
+ 
+ */
++ (NSString *)bundlePathForHelperExecutable:(NSString *)execName
+{
+
+    // see http://projects.mugginsoft.net/view.php?id=1159
+    // SL has trouble with the keychain security when signed helper tools run from Contents/MacOS.
+    // so use separate helper folder
+    NSString *path = [self bundleHelperPath]; 
+ 	path = [path stringByAppendingPathComponent:execName];
+	
+	return path;
+}
 
 // path to application support 
 // this method will create the folder if it does not exist
@@ -233,9 +375,13 @@ Here is a summary of the meanings for individual octal digit values:
 	return [[NSFileManager defaultManager] fileExistsAtPath:[self userApplicationSupportPath]];
 }
 
-
-
-// return host name minus its local link (.local.) if it exits
+/*
+ 
+ + hostNameMinusLocalLink:
+ 
+ return host name minus its local link (.local.) if it exits
+ 
+ */
 + (NSString *)hostNameMinusLocalLink:(NSString *)hostName
 {
 	// need to deal with fully qualified domain names eg: .local.

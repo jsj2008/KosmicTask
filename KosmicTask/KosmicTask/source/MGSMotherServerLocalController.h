@@ -8,8 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-extern NSString *MGSMotherServerDaemonName;
-extern NSString *MGSMotherServerScriptTaskName;
+extern NSString *MGSKosmicTaskAgentName;
 
 @interface MGSMotherServerLocalController : NSObject {
 	NSTask *_serverTask;

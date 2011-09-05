@@ -16,6 +16,15 @@
 
 }
 
+// bundle paths (work for both client and agent)
++ (NSString *)executablePath;
++ (NSString *)bundleContentPath;
++ (NSString *)bundleResourcePath;
++ (NSString *)bundleHelperPath;
++ (NSString *)bundlePluginPath;
++ (NSString *)bundlePath;
++ (NSString *)bundlePathForHelperExecutable:(NSString *)execName;
+
 // user document path
 + (NSString *)userDocumentPath;
 + (BOOL)userDocumentPathExists;

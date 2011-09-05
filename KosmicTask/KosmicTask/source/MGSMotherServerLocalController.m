@@ -10,9 +10,9 @@
 #import "NSBundle_Mugginsoft.h"
 #import "MGSSecurity.h"
 #import "JAProcessInfo.h"
+#import "MGSPath.h"
 
-NSString *MGSMotherServerDaemonName = @"KosmicTaskServer";
-NSString *MGSMotherServerScriptTaskName = @"KosmicTaskASRunner";
+NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
 
 @interface MGSMotherServerLocalController()
 - (void)startTimerExpired:(NSTimer *)theTimer;
@@ -30,7 +30,7 @@ NSString *MGSMotherServerScriptTaskName = @"KosmicTaskASRunner";
 {
 	JAProcessInfo *processInfo = [[JAProcessInfo alloc] init];
 	[processInfo obtainFreshProcessList];
-	if (![processInfo findProcessWithName: MGSMotherServerDaemonName]) {
+	if (![processInfo findProcessWithName: MGSKosmicTaskAgentName]) {
 		return [self launch];
 	}
 	
@@ -44,7 +44,10 @@ NSString *MGSMotherServerScriptTaskName = @"KosmicTaskASRunner";
 - (BOOL) launch
 {
 	if (!_serverTask) {
-		
+
+		// path to agent executable
+		NSString *agentPath = [MGSPath bundlePathForHelperExecutable:MGSKosmicTaskAgentName];	
+        
 		/* 
 		 try and get SSL identity.
 		 if not present in keychain then try and create it.
@@ -52,31 +55,32 @@ NSString *MGSMotherServerScriptTaskName = @"KosmicTaskASRunner";
 		 in advance rather than trying to create it during socket connection.
 		 we also want to do this before publishing our service.
 		 */
-		CFArrayRef certificatesArray = [MGSSecurity sslCertificatesArray];
-		if (!certificatesArray){
-			MLog(RELEASELOG, @"could not retrieve SSL identity");
-			NSRunAlertPanel(NSLocalizedString(@"SSL identity not found.", @"SSL identity not found alert title text"),
-							NSLocalizedString(@"Secure communications will not be available.", @"SSL identity alert title text"),
-							NSLocalizedString(@"OK", @"SSL identity alert button text"),nil,nil); 
+        
+        if (YES) {
+            
+            /*
+             
+             set the identity options.
+             this includes:
+             
+             1. list of paths that are trusted to access the identity without triggering a user prompt.
+             
+             */
+            NSArray *paths = [NSArray arrayWithObjects:agentPath, nil];
+            [MGSSecurity setIdentityOptions:[NSDictionary dictionaryWithObjectsAndKeys:paths, @"trustedAppPaths", nil]];
+            
+            CFArrayRef certificatesArray = [MGSSecurity sslCertificatesArray];
+            if (!certificatesArray){
+                MLog(RELEASELOG, @"could not retrieve SSL identity");
+                NSRunAlertPanel(NSLocalizedString(@"SSL identity not found.", @"SSL identity not found alert title text"),
+                                NSLocalizedString(@"Secure communications will not be available.", @"SSL identity alert title text"),
+                                NSLocalizedString(@"OK", @"SSL identity alert button text"),nil,nil); 
+            }
 		}
-		
-		// get server path from bundle
-		NSBundle *mainBundle = [NSBundle mainBundle];
-		
-		// path to agent/daemon executable
-		// NOTE:
-		// Placing motherd in pathForAuxiliaryExecutable (which is just in /contents/MACOS) causes a curious problem.
-		// When an AppleScript is run the componentInstance contacts the windowServer and if it is being run from
-		// the bundle's /contents/MACOS it shows a dock icon for it!
-		// Moving the executable to the resource folder solves the problem.
-		// However code siging doesn't like executables in the resources folder.
-		// Creating a further an Auxiliary sub folder in /Contents/MacOs seems to work.
-		NSString *serverExecPath = [mainBundle pathForCustomAuxiliaryExecutable:MGSMotherServerDaemonName];		
-		//NSString *serverExecPath = [mainBundle pathForAuxiliaryExecutable:MGSMotherServerDaemonName];
-		//NSString *serverExecPath = [mainBundle pathForResource:MGSMotherServerDaemonName ofType:nil];
+        
 
 		_serverTask = [[NSTask alloc] init];
-		[_serverTask setLaunchPath:serverExecPath];
+		[_serverTask setLaunchPath:agentPath];
 		//[serverTask setArguments:serverArguments];
 		
 		// launch it
@@ -95,6 +99,7 @@ NSString *MGSMotherServerScriptTaskName = @"KosmicTaskASRunner";
 		
 		if ([_serverTask isRunning]) {
 			_timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(startTimerExpired:) userInfo:nil repeats:NO];	
+
 		}
 		
 		// cannot seem to observe isRunning, hence timers
@@ -142,7 +147,7 @@ NSString *MGSMotherServerScriptTaskName = @"KosmicTaskASRunner";
 		_serverTask = nil;
 		[_timer invalidate];
 		_timer = nil;
-		MLog(DEBUGLOG, @"relaunching motherd");
+		MLog(DEBUGLOG, @"relaunching server");
 		[self launch];
 	}
 }

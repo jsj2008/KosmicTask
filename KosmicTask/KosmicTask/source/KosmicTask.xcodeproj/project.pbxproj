@@ -365,6 +365,7 @@
 		AB4D186F0DE2D05D00D0E517 /* Export Plugin Plain Text.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = ABA247960DE2CEEB00BD2A66 /* Export Plugin Plain Text.plugin */; };
 		AB4D19080DE2D49400D0E517 /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
 		AB4D19090DE2D49400D0E517 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		AB4DA70B1411703900869CDC /* NSBundle_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB62F930DED732A00C68736 /* NSBundle_Mugginsoft.m */; };
 		AB4F2B5110DD72C800E79849 /* KosmicTask.mdimporter in Copy Spotlight importers */ = {isa = PBXBuildFile; fileRef = ABBDFDE410C532CB000E51A3 /* KosmicTask.mdimporter */; };
 		AB4F650110C99E1700229E4E /* GlossyGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4F650010C99E1700229E4E /* GlossyGradient.m */; };
 		AB4F92641039AD9A005EF329 /* deployment.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = AB4F92621039AD9A005EF329 /* deployment.xcconfig */; };
@@ -858,7 +859,6 @@
 		ABA62B8F0D297C4B00744BCD /* MGSScriptPlist.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA62B8D0D297C4B00744BCD /* MGSScriptPlist.h */; };
 		ABA62B900D297C4B00744BCD /* MGSScriptPlist.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA62B8E0D297C4B00744BCD /* MGSScriptPlist.m */; };
 		ABA650EE0DAF6C9800C93DFA /* PLMailer.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA650ED0DAF6C9800C93DFA /* PLMailer.m */; };
-		ABA665A50EB4969000F5DF3A /* NSBundle_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB62F930DED732A00C68736 /* NSBundle_Mugginsoft.m */; };
 		ABA7397A10EBF3A400842C7F /* MGSOutputRequestView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7397910EBF3A400842C7F /* MGSOutputRequestView.m */; };
 		ABA762390EE9782F00D900A6 /* MGSMetaDataHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA762370EE9782F00D900A6 /* MGSMetaDataHandler.h */; };
 		ABA7A5DB119EBFCC004892C0 /* MGSASObjCScriptManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7A5DA119EBFCC004892C0 /* MGSASObjCScriptManager.m */; };
@@ -3338,8 +3338,8 @@
 		ABB535E40D89389C006BC17D /* Copy Auxiliary executables */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 6;
+			dstPath = Contents/Helpers;
+			dstSubfolderSpec = 1;
 			files = (
 				09A68AD10CDC867C0022898B /* KosmicTaskServer in Copy Auxiliary executables */,
 			);
@@ -5860,7 +5860,6 @@
 			children = (
 				ABA762370EE9782F00D900A6 /* MGSMetaDataHandler.h */,
 				ABA762380EE9782F00D900A6 /* MGSMetaDataHandler.m */,
-				AB63D43B10C5AF6F009EACC7 /* KosmicTaskServer-Info.plist */,
 				0953D0C20CD945C800519488 /* servermain.m */,
 				0953D0CA0CD9473900519488 /* motherd_Prefix.pch */,
 				AB2D05090CDE8171006632AF /* MGSMotherServer.h */,
@@ -7724,6 +7723,7 @@
 		AB98B0AA10C5423B00C214B3 /* info.plist */ = {
 			isa = PBXGroup;
 			children = (
+				AB63D43B10C5AF6F009EACC7 /* KosmicTaskServer-Info.plist */,
 				ABE7850313251DF000663CBB /* Language Plugin Lua-Info.plist */,
 				AB66782B1205BFAA006763E2 /* Language Plugin Java-Info.plist */,
 				AB6676941205BBB4006763E2 /* Language Plugin JavaScript-Info.plist */,
@@ -11677,7 +11677,6 @@
 				ABC14B2A0E75946F00BA566D /* MGSInternetSharingServer.m in Sources */,
 				ABA4F1080EA91C7E00165602 /* NSData-Base64Extensions.m in Sources */,
 				ABA4F10A0EA91C7E00165602 /* NSString-Base64Extensions.m in Sources */,
-				ABA665A50EB4969000F5DF3A /* NSBundle_Mugginsoft.m in Sources */,
 				AB4535A90EB65770006493E7 /* MGSCodeSigning.m in Sources */,
 				ABAD832F0ED0367400003FA4 /* MGSImageAndTextCell.m in Sources */,
 				ABAD83310ED036A200003FA4 /* MGSImageAndText.m in Sources */,
@@ -11942,6 +11941,7 @@
 				AB182F251278760500B79BA4 /* MGSSendClientNetRequestOperation.m in Sources */,
 				AB12AED513087715006047E0 /* MGSSidebarOutlineView.m in Sources */,
 				ABEC4E9C13C9BE390009E659 /* MGSResourceDocumentViewController.m in Sources */,
+				AB4DA70B1411703900869CDC /* NSBundle_Mugginsoft.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13787,7 +13787,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 60;
+				DYLIB_CURRENT_VERSION = 61;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -13804,7 +13804,7 @@
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 60;
+				DYLIB_CURRENT_VERSION = 61;
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -14239,7 +14239,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 60;
+				DYLIB_CURRENT_VERSION = 61;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -14268,7 +14268,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 60;
+				DYLIB_CURRENT_VERSION = 61;
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -16045,7 +16045,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 60;
+				DYLIB_CURRENT_VERSION = 61;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -16066,7 +16066,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 60;
+				DYLIB_CURRENT_VERSION = 61;
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -16670,7 +16670,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
@@ -16721,7 +16721,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 60;
+				CURRENT_PROJECT_VERSION = 61;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;

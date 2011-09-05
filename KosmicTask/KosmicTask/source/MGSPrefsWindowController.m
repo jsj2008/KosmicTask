@@ -22,6 +22,7 @@
 #import "MGSInternetSharingClient.h"
 #import "NSBundle_Mugginsoft.h"
 #import "MGSSecurity.h"
+#import "MGSPath.h"
 
 NSString *MGSMotherLaunchdPlist = @"com.mugginsoft.kosmictasklaunchd.plist";
 
@@ -52,7 +53,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
  */
 - (id)initWithWindow:(NSWindow *)window
 {
-	#pragma unused(sender)
+	#pragma unused(window)
 	
 	if ([super initWithWindow:window]) {
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -160,15 +161,8 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	NSBundle *bundle = [NSBundle mainBundle];
 	
-	// path to agent/daemon executable
-	// NOTE:
-	// Placing motherd in pathForAuxiliaryExecutable (which is just in /contents/MACOS) causes a curious problem.
-	// When an AppleScript is run the componentInstance contacts the windowServer and if it is being run from
-	// the bundle's /contents/MACOS it shows a dock icon for it!
-	// Moving the executable to the resource folder solves the problem
-	//
-	NSString *serverPath = [bundle pathForCustomAuxiliaryExecutable:MGSMotherServerDaemonName];
-	//NSString *serverPath = [[NSBundle mainBundle] pathForResource:MGSMotherServerDaemonName ofType:nil];
+	// path to agent executable
+    NSString *serverPath = [MGSPath bundlePathForHelperExecutable:MGSKosmicTaskAgentName];
 	
 	// path to the bundle launchd template plist
 	NSString *templatePlistPath = [bundle pathForResource:MGSMotherLaunchdPlist	ofType:nil];

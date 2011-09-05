@@ -66,7 +66,7 @@ static BOOL _userScriptGroupSaved = NO;
 	// lazy
 	if (!_bundleScriptGroup) {
 		// load task groups dict from bundle
-		NSString *bundleTaskGroupsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"TaskGroups.plist"];
+		NSString *bundleTaskGroupsPath = [[MGSPath bundleResourcePath] stringByAppendingPathComponent:@"TaskGroups.plist"];
 		_bundleScriptGroup = [[MGSScriptGroup alloc] initWithContentsOfFile:bundleTaskGroupsPath];		
 	}
 	return _bundleScriptGroup;

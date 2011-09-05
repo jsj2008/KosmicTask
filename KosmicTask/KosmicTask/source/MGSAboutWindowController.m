@@ -13,6 +13,7 @@
 #import "MGSCodeSigning.h"
 #import "MGSMotherServerLocalController.h"
 #import "NSBundle_Mugginsoft.h"
+#import "MGSPath.h"
 
 @implementation MGSAboutWindowController
 
@@ -66,17 +67,10 @@
 								codeSign.resultString];
 
 	// validate server code siging
-	[codeSign validatePath:[[NSBundle mainBundle] pathForCustomAuxiliaryExecutable:MGSMotherServerDaemonName]];
+	[codeSign validatePath:[MGSPath bundlePathForHelperExecutable:MGSKosmicTaskAgentName]];
 	self.serverCodeSignatureStatus = [NSString stringWithFormat: NSLocalizedString(@"Server code signature: %@", @"About window code signature text"), 
 								codeSign.resultString];
 
-	// validate application code siging
-	if (NO) {
-		[codeSign validatePath:[[NSBundle mainBundle] pathForCustomAuxiliaryExecutable:MGSMotherServerScriptTaskName]];
-		self.taskCodeSignatureStatus = [NSString stringWithFormat: NSLocalizedString(@"Script task code signature: %@", @"About window code signature text"), 
-									codeSign.resultString];
-	}
-	
 }
 
 /*

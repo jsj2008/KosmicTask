@@ -204,11 +204,9 @@ NSString *MGSKeyPublished = @"Published";
 {
 	if (!_applicationTaskDictionary) {
 		
-		// for a foundation tool [[NSBundle mainBundle] resourcePath] gives resourcePath folder
-		NSString *bundleTaskPath = [[NSBundle mainBundle] resourcePath];
 		
-		// regardless of where motherd is in the app bundle our plist is in the bundle resources folder
-		//bundleTaskPath = [bundleTaskPath stringByAppendingPathComponent:@"../Resources"];
+		// regardless of where agent is in the app bundle our plist is in the bundle resources folder
+		NSString *bundleTaskPath = [MGSPath bundleResourcePath];
 		bundleTaskPath = [bundleTaskPath stringByAppendingPathComponent:MGSApplicationTaskPlist];
 		
 		// load bundle task dictionary

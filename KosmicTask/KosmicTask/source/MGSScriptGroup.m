@@ -8,6 +8,7 @@
 
 #import "MGSScriptGroup.h"
 #import "MGSResourceImages.h"
+#import "MGSPath.h"
 
 #define DEFAULT_ALL_GROUP_IMAGE_NAME @"44.png"
 #define DEFAULT_GROUP_IMAGE_NAME @"47.png"
@@ -81,7 +82,7 @@ static NSMutableArray *_groupResourceIcons = nil;
 	// lazy
 	if (!_groupResourceIcons) {
 		// local group icons dict array
-		NSString *groupIconsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"GroupIcons"];
+		NSString *groupIconsPath = [[MGSPath bundleResourcePath] stringByAppendingPathComponent:@"GroupIcons"];
 		_groupResourceIcons = [MGSResourceImages imageDictionaryArrayAtPath:groupIconsPath];
 	}
 	

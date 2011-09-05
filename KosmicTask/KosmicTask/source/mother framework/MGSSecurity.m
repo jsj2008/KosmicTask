@@ -16,13 +16,14 @@
 #define SSL_COMMON_NAME @"Mugginsoft KosmicTask"
 
 static BOOL useDefaultIdentity = NO; 
+static NSDictionary *identityOptions = nil;
 
 @interface MGSSecurity()
 + (SecIdentityRef)SSLIdentityCopy;
 + (SecIdentityRef)findOrCreateSelfSignedIdentityInKeychain:(SecKeychainRef)keychain;
 + (void)addSelfSignedCertToKeychain:(SecKeychainRef)keychain;
 + (SecCertificateRef)getSelfSignedCertificateInKeychain:(SecKeychainRef)keychain;
-+ (SecIdentityRef)SSLIdentityCopy;
++ secErrorString:(OSStatus)err;
 @end
 
 @implementation MGSSecurity 
@@ -48,6 +49,48 @@ static BOOL useDefaultIdentity = NO;
 }
 
 /*
+ + setIdentityOptions
+ */
++ (void)setIdentityOptions:(NSDictionary *)options
+{
+    identityOptions = options;
+           
+    //SecKeychainItemRef privateKey = NULL;
+    //SecKeychainSearchRef searchRef = NULL;
+    
+    //Set up the attribute vector (each attribute consists
+    // of {tag, length, pointer}):
+    /*SecKeychainAttribute attrs[] = {
+     { kSecLabelItemAttr, strlen(itemLabelUTF8), (char *)itemLabelUTF8 },
+     { kSecAccountItemAttr, strlen(accountUTF8), (char *)accountUTF8 },
+     { kSecServerItemAttr, strlen(serverUTF8), (char *)serverUTF8 },
+     { kSecPortItemAttr, sizeof(int), (int *)&port },
+     { kSecProtocolItemAttr, sizeof(SecProtocolType),
+     (SecProtocolType *)&protocol },
+     { kSecPathItemAttr, strlen(pathUTF8), (char *)pathUTF8 }
+     };
+     SecKeychainAttributeList attributes = { sizeof(attrs) / sizeof(attrs[0]),
+     attrs };*/
+   /* 
+    SecKeychainSearchCreateFromAttributes(NULL, kSecPrivateKeyItemClass, NULL, &searchRef);
+    if (err != noErr) {
+        return NO;
+    }
+
+    NSMutableDictionary *query = [[NSMutableDictionary alloc] init];
+    [query setObject:(id)kSecClassKey forKey:(id)kSecClass];
+    [query setObject:(id)kSecMatchLimitOne forKey:(id)kSecMatchLimit];
+    [query setObject:(id)kSecAttrKeyClassPrivate forKey:(id)kSecAttrKeyClass];
+    [query setObject:(id)[NSArray arrayWithObject:(id)identity] forKey:(id)kSecMatchItemList];
+    
+    NSMutableDictionary *queryResult = nil;
+    err = SecItemCopyMatching((CFDictionaryRef)query, (CFTypeRef *)queryResult);
+    if (err != noErr) {
+        return NO;
+    }
+    */
+}
+/*
  
  + sslCertificatesArray
  
@@ -61,6 +104,9 @@ static BOOL useDefaultIdentity = NO;
 		SecIdentityRef identity = [self SSLIdentityCopy];
 		
 		if (identity) {
+            
+            // when used to secure an SSL connection the certficate array has to include and identity as the
+            // first item
 			ca = CFArrayCreate(NULL, (const void **)&identity, 1, &kCFTypeArrayCallBacks);
 			CFRelease(identity);
 		} 
@@ -153,6 +199,13 @@ static BOOL useDefaultIdentity = NO;
 	SecIdentitySearchRef searchRef = nil;
 	OSStatus err;
 	
+    /*
+     an identity in this context is a combination of a private key and its associated certificate.
+     
+     see Certificate, Key, and Trust Services Programming Guide
+     http://developer.apple.com/library/ios//#/library/mac/documentation/Security/Conceptual/CertKeyTrustProgGuide/01introduction/introduction.html#//apple_ref/doc/uid/TP40001358-CH203-DontLinkElementID_11
+     
+     */
 	err = SecIdentitySearchCreate(keychain, CSSM_KEYUSE_DECRYPT, &searchRef);
 	if (err != noErr) {
 		MLogInfo(@"Cannot search keychain. Error = %n", err);
@@ -268,6 +321,8 @@ static BOOL useDefaultIdentity = NO;
  */
 + (void)addSelfSignedCertToKeychain:(SecKeychainRef)keychain
 {
+    OSStatus err = noErr;
+    
 	// create a path to a temp file
 	NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpCert.pem"];
 	if (tmpPath == nil) return;
@@ -278,7 +333,7 @@ static BOOL useDefaultIdentity = NO;
 		/*
 		 also see:
 		 
-		 man security (access keychains and do all the securtiy framework can do)
+		 man security (access keychains and do all the security framework can do)
 		 man certtool (generate certificates)
 		 
 		 */
@@ -312,16 +367,70 @@ static BOOL useDefaultIdentity = NO;
 	// add certificate to keychain
 	SecExternalFormat format = kSecFormatPEMSequence;
 	SecExternalItemType type = kSecItemTypeAggregate;
+
+    /*
+     
+     if client creates the certificate then the server has no default access
+     and the user has to be promped to allow keychain access for the server.
+     if logging in from a remote instance this causes the remote instance to hang
+     indefinately while the local user is queried.
+     
+     however, on SL, error -67061 is returned which I think means that the server code signature is deemed invalid.
+     see http://lists.apple.com/archives/apple-cdsa/2008/Apr/msg00000.html. on Lion things happen as expected.
+     
+     see http://projects.mugginsoft.net/view.php?id=1159
+     
+     the solution is to import the keychain with a specific access object rather than the default one.
+     
+     */
+
+    // the access reference to be applied to the private key needs to be applied here.
+    // trying to modify it later in the day is harder and will likely result in the user
+    // getting prompted.
 	SecKeyImportExportParameters params;
 	memset(&params, 0, sizeof(params));
 	
+    params.flags = 0;
 	params.version = SEC_KEY_IMPORT_EXPORT_PARAMS_VERSION;
-	// params.passphrase = CFSTR("passphrase");
-	// params.flags = kSecKeySecurePassphrase;
 	params.keyUsage = CSSM_KEYUSE_DECRYPT;
 	params.keyAttributes = CSSM_KEYATTR_EXTRACTABLE | CSSM_KEYATTR_PERMANENT;
-	
-	OSStatus err = SecKeychainItemImport(
+    
+    // process the identity options
+    SecAccessRef accessObject = NULL;
+    if (identityOptions) {
+        NSArray *paths = [identityOptions objectForKey:@"trustedAppPaths"];
+        if (paths) {
+            
+            // build an array of trusted application references
+            CFMutableArrayRef apps = CFArrayCreateMutable(NULL, [paths count], &kCFTypeArrayCallBacks);
+            
+            for (NSString *path in paths) {
+                SecTrustedApplicationRef app = NULL;
+                err = SecTrustedApplicationCreateFromPath([path cStringUsingEncoding:NSUTF8StringEncoding], &app);
+                if (err != noErr) {
+                     MLog(RELEASELOG, @"Error creating trusted application from path %d - %@.", err, [self secErrorString:err]);
+                    return;
+                }
+                CFArrayAppendValue(apps, app);
+                CFRelease(app);
+            }
+            
+            err = SecAccessCreate((CFStringRef)@"KosmicTask", apps, &accessObject);
+            CFRelease(apps);
+            if (err != noErr) {
+                 MLog(RELEASELOG, @"Error creating certificate access object %d - %@.", err, [self secErrorString:err]);
+                return;
+            }
+            params.accessRef = accessObject;
+        }
+    }
+    
+    /*
+     
+    import the certificate file.
+     
+     */
+	err = SecKeychainItemImport(
 										 (CFDataRef) [NSData dataWithContentsOfFile:tmpPath],
 										 (CFStringRef) tmpPath,
 										 &format,
@@ -332,12 +441,24 @@ static BOOL useDefaultIdentity = NO;
 										 NULL);
 	
 	if (err != noErr) {
-		MLog(RELEASELOG, @"SecKeychainItemImport returned %d.", err);
+        MLog(RELEASELOG, @"Certificate import error. SecKeychainItemImport returned %d - %@.", err, [self secErrorString:err]);
 	}
 	
 	[[NSFileManager defaultManager] removeItemAtPath:tmpPath error:NULL];
+    CFRelease(accessObject);
 }
 
+/*
+ 
+ + secErrorString:
+ 
+ */
++ (NSString *)secErrorString:(OSStatus)err
+{
+    CFStringRef errRef = SecCopyErrorMessageString(err, NULL);
+    
+    return NSMakeCollectable(errRef);
+}
 /*
  
  show certficate

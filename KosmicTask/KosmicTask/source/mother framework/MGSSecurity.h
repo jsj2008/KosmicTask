@@ -17,5 +17,5 @@
 + (BOOL)useDefaultIdentity;
 + (void)setUseDefaultIdentity:(BOOL)aBool;
 + (CFArrayRef)sslCertificatesArray;
-
++ (void)setIdentityOptions:(NSDictionary *)options;
 @end

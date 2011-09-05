@@ -46,18 +46,19 @@
 	return [MGSPath userDocumentPath];
 }
 
+
 /* 
  
  path to bundle scripts document folder
  
+ this code is called both by the client and by the agent tool.
+ 
  */
 + (NSString *)bundleDocumentPath
 {
-	// get path to app bundle scripts folder and enumerate contents.
-	// note that resourcePath works for foundation tool in Contents/MacOS
-	NSString *path = [[NSBundle mainBundle] resourcePath];
-	
-	// regardless of where motherd is in the app bundle the plists are in the bundle resources folder
+    NSString *path = [MGSPath bundleResourcePath];
+    
+	// regardless of where the agent tool is in the app bundle the plists are in the bundle resources folder
 	path = [path stringByAppendingPathComponent:@"Tasks"];
 	path = [path stringByStandardizingPath];
 	

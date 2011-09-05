@@ -17,6 +17,7 @@
 #import "MGSLanguagePluginController.h"
 #import "mlog.h"
 #import "MGSNetNegotiator.h"
+#import "MGSPath.h"
 
 static MGSServerRequestManager *_sharedController = nil;
 
@@ -64,13 +65,8 @@ static MGSServerRequestManager *_sharedController = nil;
  */
 - (BOOL)initialise
 {
+	NSString *pluginsPath = [MGSPath bundlePluginPath];
 	
-	// for a foundation tool in a bundle we can get the resource path
-	NSString *toolPath = [[NSBundle mainBundle] resourcePath];
-	
-	// plugin path will be at
-	NSString *pluginsPath = [toolPath stringByAppendingPathComponent:@"../Plugins"];
-
 	MLogDebug(@"server plugins path : %@", pluginsPath);
 	
 	// add additional search paths for Language plugin controller.
