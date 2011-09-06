@@ -21,7 +21,7 @@ NSString *MGSUserApplicationSupportPath =  @"~/Library/Application Support/Kosmi
 
 /*
  
- + bundleExecutablePath
+ + executablePath
  
  works for client and agent.
 

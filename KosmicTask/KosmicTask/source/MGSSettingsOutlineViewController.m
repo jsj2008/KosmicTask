@@ -70,6 +70,15 @@ selectedLanguageProperty, editedLanguageProperty;
 	[self buildSettingsTree];
 }
 
+/*
+ 
+ - setEditable:
+ 
+ */
+- (void)setEditable:(BOOL)value
+{
+    editable = value;
+}
 #pragma mark -
 #pragma mark Nib
 /*
@@ -107,7 +116,7 @@ selectedLanguageProperty, editedLanguageProperty;
 					options:[NSDictionary dictionaryWithObjectsAndKeys:[MGSLanguageSettingsTransformer new], NSValueTransformerBindingOption, nil]];	
 	
 	// settings outline view editable binding
-	[[settingsOutlineView tableColumnWithIdentifier:@"value"] bind:NSEditableBinding toObject:settingsTreeController withKeyPath:@"arrangedObjects.representedObject.editable" options:nil];	
+    [[settingsOutlineView tableColumnWithIdentifier:@"value"] bind:NSEditableBinding toObject:settingsTreeController withKeyPath:@"arrangedObjects.representedObject.editable" options:nil];	
 	[[settingsOutlineView tableColumnWithIdentifier:@"value"] bind:[NSEditableBinding stringByAppendingString:@"2"] toObject:self withKeyPath:@"editable" options:nil];
 	options = [NSDictionary dictionaryWithObjectsAndKeys: NSNegateBooleanTransformerName, NSValueTransformerNameBindingOption, nil];
 	[[settingsOutlineView tableColumnWithIdentifier:@"value"] bind:[NSEditableBinding stringByAppendingString:@"3"] toObject:settingsTreeController withKeyPath:@"arrangedObjects.representedObject.isList" options:options];
@@ -195,8 +204,11 @@ selectedLanguageProperty, editedLanguageProperty;
 				return cell1;
 			}
 			
-		} else if ([[tableColumn identifier] isEqualToString:@"value"]) {			
-			if (langProp.optionValues && [langProp.optionValues count] > 0) {			
+		} else if ([[tableColumn identifier] isEqualToString:@"value"]) {
+			
+            // a popup button cell wil be required if we have a number of options available
+            // and the view is editable.
+			if (langProp.optionValues && [langProp.optionValues count] > 0 && self.editable) {			
 				return  smallPopUpButtonCell;
 			}
 		}
