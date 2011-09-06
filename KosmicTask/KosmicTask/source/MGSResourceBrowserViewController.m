@@ -874,10 +874,13 @@ clearTree:
 	selectedResource = item;
 	[self.selectedResource load];
 	
-	// hasrequired resource type has been selected?
+	// has required resource type has been selected?
 	self.requiredResourceSelected = [self.selectedResource isKindOfClass:[requiredResourceClass class]];
 	
 	// is the resource editable?
+    // application resources are generally not editable.
+    // user resources are.
+    // if the resource manager can be mutated then the resources themselves can be edited.
 	BOOL canEdit = NO;
 	id manager = [self.selectedResource delegate];
 	if ([manager isKindOfClass:[MGSResourcesManager class]]) {
@@ -1007,6 +1010,17 @@ clearTree:
 	[resourceTableView setMenu:menu];
 	
 	settingsOutlineViewController.editable = self.editable;
+}
+/*
+ 
+ - setResourceEditable:
+ 
+ */
+- (void)setResourceEditable:(BOOL)aBool
+{
+    resourceEditable = aBool;
+    
+    settingsOutlineViewController.resourceEditable = self.resourceEditable;
 }
 
 /*
@@ -1168,7 +1182,7 @@ clearTree:
 
 /*
  
- - outlineEditabilityForResource
+ - viewEditability:forResource:
  
  */
 - (void)viewEditability:(NSView *)view forResource:(id)resourceObject

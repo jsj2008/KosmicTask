@@ -14,7 +14,8 @@
 	id delegate;
 	NSMutableArray *settingsTree;
 	BOOL documentEdited;
-	BOOL editable;
+	BOOL editable;  // view editable
+    BOOL resourceEditable;	// resource editable
 	MGSLanguagePropertyManager *languagePropertyManager;
 	MGSLanguageProperty *selectedLanguageProperty;
 	MGSLanguageProperty *editedLanguageProperty;
@@ -31,6 +32,7 @@
 @property id delegate;
 @property BOOL documentEdited;
 @property BOOL editable;
+@property BOOL resourceEditable;
 @property (copy) NSMutableArray *settingsTree;
 @property (assign) MGSLanguagePropertyManager *languagePropertyManager;
 @property (assign) MGSLanguageProperty *selectedLanguageProperty;

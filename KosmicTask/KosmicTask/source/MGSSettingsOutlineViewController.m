@@ -27,7 +27,7 @@ const char MGSSettingsTreeSelectedObjectsContext;
 @implementation MGSSettingsOutlineViewController
 
 @synthesize delegate, documentEdited, editable, settingsTree, languagePropertyManager,
-selectedLanguageProperty, editedLanguageProperty;
+selectedLanguageProperty, editedLanguageProperty, resourceEditable;
 
 #pragma mark -
 #pragma mark Instance 
@@ -41,6 +41,7 @@ selectedLanguageProperty, editedLanguageProperty;
 	if ((self = [super initWithNibName:@"SettingsOutlineView" bundle:nil])) {
 		documentEdited = NO;
 		editable = YES;
+        resourceEditable = YES;
 	}
 	return self;
 }
@@ -79,6 +80,17 @@ selectedLanguageProperty, editedLanguageProperty;
 {
     editable = value;
 }
+
+/*
+ 
+ - setSettingsTree:
+ 
+ */
+- (void)setSettingsTree:(NSMutableArray *)value
+{
+    settingsTree = value;
+}
+   
 #pragma mark -
 #pragma mark Nib
 /*
@@ -120,6 +132,7 @@ selectedLanguageProperty, editedLanguageProperty;
 	[[settingsOutlineView tableColumnWithIdentifier:@"value"] bind:[NSEditableBinding stringByAppendingString:@"2"] toObject:self withKeyPath:@"editable" options:nil];
 	options = [NSDictionary dictionaryWithObjectsAndKeys: NSNegateBooleanTransformerName, NSValueTransformerNameBindingOption, nil];
 	[[settingsOutlineView tableColumnWithIdentifier:@"value"] bind:[NSEditableBinding stringByAppendingString:@"3"] toObject:settingsTreeController withKeyPath:@"arrangedObjects.representedObject.isList" options:options];
+	[[settingsOutlineView tableColumnWithIdentifier:@"value"] bind:[NSEditableBinding stringByAppendingString:@"4"] toObject:self withKeyPath:@"resourceEditable" options:nil];
 	
 	[settingsOutlineView setGridStyleMask:NSTableViewSolidVerticalGridLineMask | NSTableViewSolidHorizontalGridLineMask];
 	[settingsOutlineView bind:NSSortDescriptorsBinding toObject:settingsTreeController withKeyPath:@"sortDescriptors" options:nil];
@@ -207,8 +220,8 @@ selectedLanguageProperty, editedLanguageProperty;
 		} else if ([[tableColumn identifier] isEqualToString:@"value"]) {
 			
             // a popup button cell wil be required if we have a number of options available
-            // and the view is editable.
-			if (langProp.optionValues && [langProp.optionValues count] > 0 && self.editable) {			
+            // and the view is editable and the resource is editable.
+			if (langProp.optionValues && [langProp.optionValues count] > 0 && self.editable && self.resourceEditable) {			
 				return  smallPopUpButtonCell;
 			}
 		}

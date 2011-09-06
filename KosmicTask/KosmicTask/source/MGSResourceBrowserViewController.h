@@ -31,7 +31,6 @@
 	IBOutlet NSTabView *resourceTabView;
 	IBOutlet NSTabView *resourceChildTabView;
 	IBOutlet NSTableView *resourceTableView;
-	//IBOutlet NSView *documentView;
 	IBOutlet NSView *settingsView;
 	IBOutlet NSTextField *tableItemCount;
 	
@@ -45,7 +44,6 @@
 	MGSLanguagePlugin *languagePlugin;
 	NSString *defaultScriptType;
 	MGSLanguageProperty *selectedLanguageProperty;
-	//NSDictionary *languageProperties;
 	
 	// resources
 	NSMutableArray *resourceTree;
@@ -78,7 +76,6 @@
 	BOOL requiredResourceDoubleClicked;
 	
 	BOOL documentEdited;
-	//NSInteger selectedTabIndex;
 	NSInteger resourceTabIndex;
 	NSInteger resourceChildTabIndex;
 	
