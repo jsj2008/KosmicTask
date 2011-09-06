@@ -65,9 +65,10 @@
 {
 	
 	switch (fileType) {
-		case MGSResourceItemTextFile:;
+		case MGSResourceItemTextFile:
 		case MGSResourceItemRTFDFile:
-		case MGSResourceItemMarkdownFile:;
+		case MGSResourceItemMarkdownFile:
+		case MGSResourceItemPlistFile:
 			return YES;
 			break;
 			
