@@ -268,11 +268,9 @@ requiredResourceDoubleClicked, selectedLanguageProperty;
 	// select and expand initial node
 	if (selectedNode) {
 		[self processOutlineResourceNode:selectedNode options:[NSSet setWithObjects:@"select", nil]];
-		//[self processOutlineResourceNode:selectedNode options:[NSSet setWithObjects:@"select", @"expand", nil]];
 	}
 	
 	[self updateDefaultLanguagePlugin];
-	//[self selectDefaultTemplate];
 }
 
 /*
@@ -769,7 +767,7 @@ clearTree:
 	
 	self.defaultScriptType = [[MGSLanguagePluginController sharedController] defaultScriptType];
 	
-	self.documentEdited = YES;
+	//self.documentEdited = YES;
 }
 
 /*
@@ -1032,6 +1030,16 @@ clearTree:
 {
 	defaultScriptType = scriptType;
 	[self selectDefaultTemplate];
+}
+
+/*
+ 
+ - setDocumentEdited:
+ 
+ */
+- (void)setDocumentEdited:(BOOL)value
+{
+    documentEdited = value;
 }
 
 #pragma mark -
@@ -1684,8 +1692,10 @@ clearTree:
 	// mark document dirty
 	self.documentEdited = YES;
 	
-	// save
-	[self saveDocument:self];
+	// save if we are editable only.
+    if (self.editable) {
+        [self saveDocument:self];
+    }
 }
 
 @end

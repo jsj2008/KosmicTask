@@ -51,6 +51,7 @@ const char MGSContextResourcesChanged;
 	resourceBrowserViewController.editable = NO;
 	[resourceBrowserViewController buildResourceTree];
 
+
 	// bindings
 	[okButton bind:NSEnabledBinding toObject:self withKeyPath:@"resourceBrowserViewController.requiredResourceSelected" options:nil];
 	 
