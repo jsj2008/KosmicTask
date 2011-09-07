@@ -90,4 +90,5 @@ extern NSString *MGSDefaultResourceIDChanged;
 - (BOOL)mutateWithSelector:(SEL)selector object:(id)object;
 - (id <MGSResourcesManagerDelegate>)rootManagerDelegate;
 - (MGSResourcesManager *)managerForResourceClass:(Class)klass;
+- (BOOL)supportsMutation;
 @end

@@ -60,6 +60,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 	return NO;
 }
 
+
 #pragma mark -
 #pragma mark Initialization
 /*

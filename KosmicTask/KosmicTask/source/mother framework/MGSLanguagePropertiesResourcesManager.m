@@ -16,6 +16,16 @@
 
 /*
  
+ - supportsMutation
+ 
+ */
+- (BOOL)supportsMutation
+{
+    return NO;
+}
+
+/*
+ 
  - resourceTitle
  
  */

@@ -412,6 +412,15 @@ origin, canMutate;
 
 /*
  
+ - supportsMutation
+ 
+ */
+- (BOOL)supportsMutation
+{
+    return YES;
+}
+/*
+ 
  - canAddResources
  
  */

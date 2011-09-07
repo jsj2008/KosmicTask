@@ -150,6 +150,9 @@
 - (IBAction)setDefaultOutlineResource:(id)sender;
 - (IBAction)setDefaultTableResource:(id)sender;
 
+- (IBAction)addTableResource:(id)sender;
+- (IBAction)addOutlineResource:(id)sender;
+
 - (IBAction)duplicateTableResource:(id)sender;
 - (IBAction)duplicateOutlineResource:(id)sender;
 

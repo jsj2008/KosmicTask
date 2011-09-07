@@ -55,6 +55,8 @@
 - (void)buildSettingsTree;
 - (NSInteger)_mgs_outlineView:(NSOutlineView *)outlineView drawStyleForRow:(int)row;
 - (void)setLanguagePropertyManager:(MGSLanguagePropertyManager *)manager;
+- (void)selectClickedResource:(id)sender;
+- (BOOL)clickedResourceIsSelected:(id)sender;
 @property BOOL requiredResourceSelected;
 @end
 
@@ -482,6 +484,33 @@ clearTree:
 
 /*
  
+ - clickedResourceIsSelected:
+ 
+ */
+- (BOOL)clickedResourceIsSelected:(id)sender
+{
+    MGSResourceItem* clickedResource = [self clickedResource:sender];
+    if (!clickedResource) return YES;
+    
+    return (self.selectedResource == clickedResource ? YES : NO);
+}
+/*
+ 
+ - selectClickedResource:
+ 
+ */
+- (void)selectClickedResource:(id)sender
+{
+    MGSResourceItem* clickedResource = [self clickedResource:sender];
+    if (!clickedResource) return;
+
+    if (self.selectedResource != clickedResource) {
+        self.selectedResource = clickedResource;
+    }
+}
+
+/*
+ 
  - clickedResource
  
  */
@@ -532,20 +561,71 @@ clearTree:
 	return object;
 }
 
+#pragma mark -
+#pragma mark Add resource
+
 /*
  
  - addResource:
  
  */
-- (IBAction)addResource:(id)sender;
+- (IBAction)addResource:(id)sender
 {	
 #pragma unused(sender)
+    
 	[self commitEditing];
-	
-	// resources can only be added to the user resources manager
-	[self.selectedResourcesManager addNewResource]; 
-	
+    
+    // we may call addResource with a resource manager or a resource item selected
+    id clickedObject = [self clickedObject:sender];
+    if ([clickedObject isKindOfClass:[MGSResourcesManager class]]) {
+        self.selectedResourcesManager = clickedObject;
+        [self.selectedResourcesManager addNewResource];
+    } else {
+        
+        [self selectClickedResource:sender];
+    
+        // resources can only be added to the user resources manager
+        if ([self.selectedResource.delegate isKindOfClass:[MGSResourcesManager class]]) {
+            
+            MGSResourcesManager *manager = self.selectedResource.delegate;
+            [manager addNewResource]; 
+            
+        }
+    }
+    
 	self.documentEdited = YES;
+}
+
+/*
+
+- addOutlineResource:
+
+*/
+- (IBAction)addOutlineResource:(id)sender
+{
+#pragma unused(sender)
+	
+	[self addResource:resourceOutlineView];
+}
+
+/*
+ 
+ - addTableResource:
+ 
+ */
+- (IBAction)addTableResource:(id)sender
+{
+#pragma unused(sender)
+    
+    // if the table view is empty we wont be able to determine the resource type
+    // from the selected item. is so use the resource outline selection instead.
+    sender = resourceTableView;
+	id clickedObject = [self clickedObject:sender];
+    if (clickedObject == nil) {
+        sender = resourceOutlineView;
+    }
+    
+	[self addResource:sender];
 }
 
 #pragma mark -
@@ -558,17 +638,23 @@ clearTree:
  */
 - (void)duplicateResource:(id)sender
 {
-#pragma unused(sender)
 	
 	[self commitEditing];
-		
-	if ([self.selectedResource.delegate isKindOfClass:[MGSResourcesManager class]]) {
-				
+	   
+    /*
+     
+     this action can be sent as the result of right clicking on a resource.
+     for duplication to be successful we need to make sure that the resource
+     gets selected
+     
+     */
+    [self selectClickedResource:sender];
+    
+    if ([self.selectedResource.delegate isKindOfClass:[MGSResourcesManager class]]) {
+        
 		MGSResourcesManager *manager = self.selectedResource.delegate;
-
-		id clickedResource = [self clickedResource:sender];
-		[manager addDuplicateResource:clickedResource]; 
-			
+		[manager addDuplicateResource:self.selectedResource]; 
+        
 	}
 }
 
@@ -606,11 +692,16 @@ clearTree:
  */
 - (void)deleteResource:(id)sender
 {
-#pragma unused(sender)
 	
 	//[self commitEditing];
-	
-	[self.selectedResourcesManager deleteResource:[self clickedResource:sender]];
+	[self selectClickedResource:sender];
+        
+    if ([self.selectedResource.delegate isKindOfClass:[MGSResourcesManager class]]) {
+        
+		MGSResourcesManager *manager = self.selectedResource.delegate;
+		[manager deleteResource:self.selectedResource]; 
+        
+	}
 }
 
 /*
@@ -1144,13 +1235,18 @@ clearTree:
 		// selected resource array node
 		MGSResourceBrowserNode *selectedNode = [self selectedResourceArrayNode];
 		if (!selectedNode) {
-			//self.tableCanAddResource = self.outlineCanAddResource;
-			return;
-		}
+			
+            // if no resource selected then we have likely selected an empty resource manager.
+            // so retrieve the selected node from the outline instead
+            selectedNode = [self selectedResourceTreeNode];
+            if (!selectedNode) return;
+            
+		} else {
 		
-		// process selected node
-		[self resourceNodeSelected:selectedNode];
-
+            // process selected node
+            [self resourceNodeSelected:selectedNode];
+        }
+        
 		[self viewEditability:resourceTableView forResource:selectedNode.representedObject];		
 		
 	// resource tree objects selection
@@ -1166,13 +1262,24 @@ clearTree:
 		}
 		
 		[self resourceNodeSelected:selectedNode];
-		      
+		
+        BOOL resourceArrayWasEmpty = NO;
+        if (!resourceArray || [self.resourceArray count] == 0) {
+            resourceArrayWasEmpty = YES;
+        }
+        
 		// resource array binds to the nodes, not the represented object.
 		// we only want leaf resources.
 		self.resourceArray = [selectedNode leaves];
 		
 		[self viewEditability:resourceOutlineView forResource:selectedNode.representedObject];
 	
+        // if the resource array was empty and still is then
+        // a selection change notification will not be sent for the table view.
+        // we need to update the resource table view editabilty manually.
+        if ((!resourceArray || [self.resourceArray count] == 0) && resourceArrayWasEmpty) {
+            [self viewEditability:resourceTableView forResource:selectedNode.representedObject];
+        }
         
 	// settings tree objects selection
 	} else if (context == &MGSSettingsTreeSelectedObjectsContext) {
@@ -1202,23 +1309,44 @@ clearTree:
 	
 	MGSResourceItem *resource = nil;
 	MGSResourcesManager *manager = nil;
-	
+	MGSResourceItem *defaultResource = nil;
+    BOOL defaultResourceSelected = NO;
+    
+    /*
+     
+     determine behaviour for resource
+     
+     */
+    if ([resourceObject isKindOfClass:[MGSResourceItem class]]) {
+        resource = resourceObject;
+        manager = [resource delegate];
+        
+        defaultResource = [manager defaultResource];
+        if ([resource canDefaultResource]) {
+            defaultResourceSelected = defaultResource == resource;
+        }
+        canAdd = [manager supportsMutation];
+        canDelete = [manager canAddResources] && !defaultResourceSelected;
+        canDuplicate = canAdd;
+        canDefault = [resource canDefaultResource] && !defaultResourceSelected;
+    } else if ([resourceObject isKindOfClass:[MGSLanguageTemplateResourcesManager class]] ||
+               [resourceObject isKindOfClass:[MGSLanguageDocumentResourcesManager class]]) {
+        canAdd = YES;
+    } 
+    
+    /*
+     
+     [manager canAddResources] indicates whether resources can be added to a specific manager.
+     in general however we want to be able to initiate an add when any resource is selected even
+     if the new resource will utimately be added to another manager (this is the case when an application resource
+     is selected and a new resource is added to the user resources).
+     
+     */
 	if (view == resourceOutlineView) {
 		
 		if ([resourceObject isKindOfClass:[MGSResourceItem class]]) {
-			resource = resourceObject;
-			manager = [resource delegate];
-			
-			MGSResourceItem *defaultResource = [manager defaultResource];
-			BOOL defaultResourceSelected = defaultResource == resource;
-			
-			canAdd = YES;
-			canDelete = [manager canAddResources] && !defaultResourceSelected;
-			canDuplicate = YES;
-			canDefault = [resource canDefaultResource] && !defaultResourceSelected;	
-		} else if ([resourceObject isKindOfClass:[MGSLanguageTemplateResourcesManager class]] ||
-				   [resourceObject isKindOfClass:[MGSLanguageDocumentResourcesManager class]]) {
-			canAdd = YES;
+            // customise behaviour if reqd
+
 		} else if ([resourceObject isKindOfClass:[MGSLanguagePlugin class]]) {
 			canDefault = YES;
 		}
@@ -1227,16 +1355,12 @@ clearTree:
 		self.outlineCanDeleteResource = canDelete;
 		self.outlineCanDuplicateResource = canDuplicate;
 		self.outlineCanDefaultResource = canDefault;	
+        
 	} else if (view == resourceTableView) {
 		
-		if (!resourceObject) {
-			canAdd = self.selectedResourcesManager ? YES : NO;
-		} else if ([resourceObject isKindOfClass:[MGSResourceItem class]]) {
-			resource = resourceObject;
-			canAdd = self.selectedResourcesManager ? YES : NO;
-			canDelete = self.resourceEditable;
-			canDuplicate = YES;
-			canDefault = [resource canDefaultResource];
+
+		if ([resourceObject isKindOfClass:[MGSResourceItem class]]) {
+            // customise behaviour if reqd
 		}
 		
 		self.tableCanAddResource = canAdd;
