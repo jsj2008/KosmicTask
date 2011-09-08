@@ -183,6 +183,38 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 	self.docFileType = value;
 }
 
+/*
+ 
+ - stringForFileType:
+ 
+ */
+- (NSString *)stringForFileType:(MGSResourceItemFileType)fileType
+{
+    NSString *value = @"unknown";
+    switch(fileType){
+        
+        case MGSResourceItemTextFile:
+            value = @"text";
+            break;
+            
+        case MGSResourceItemRTFDFile:
+            value = @"RTF";
+            break;
+            
+        case MGSResourceItemPlistFile:
+            value = @"plist";
+            break;
+	
+        case MGSResourceItemMarkdownFile:
+            value = @"markdown";
+            break;
+        
+        default:
+            break;
+    }
+    
+    return value;
+}
 #pragma mark -
 #pragma mark Comparing
 /*
@@ -522,14 +554,27 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 	}
 	
 	BOOL success = NO;
+	NSString *text = nil;
+	NSError *error = nil;
 	
+    // get path
 	NSString *path = [self.delegate pathToResource:self type:fileType];
 	if (!path) {
 		return NO;
 	}
-	
-	NSString *text = nil;
-	
+    
+    // create folder
+    NSString *folder = [path stringByDeletingLastPathComponent];
+	if (![[NSFileManager defaultManager] createDirectoryAtPath:folder
+                              withIntermediateDirectories:YES 
+                                                    attributes:nil error:&error]) {
+        MLogInfo(@"Error creating %@ (%@): %@\nFolder: %@", [self title], [self stringForFileType:fileType], [error localizedDescription], folder);
+        return NO;
+    }
+    
+
+    [self deleteResourceType:fileType];
+    
 	switch (fileType) {
 			
 		case MGSResourceItemTextFile:
@@ -538,7 +583,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 			
 			// we persist as plain text
 			text = stringResource;
-			success = [text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+			success = [text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&error];
 			break;
 
 		case MGSResourceItemMarkdownFile:;
@@ -547,7 +592,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 			
 			// we persist as plain text
 			text = markdownResource;
-			success = [text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+			success = [text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&error];
 			break;
 			
 		case MGSResourceItemRTFDFile:;
@@ -562,10 +607,13 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 				success = [rtfData writeToFile:path atomically:YES];
 			} else {
 				NSFileWrapper *wrapper = [attributedStringResource 
-				 RTFDFileWrapperFromRange:NSMakeRange(0, [self.attributedStringResource length]) 
-				 documentAttributes:nil];
+                                            RTFDFileWrapperFromRange:NSMakeRange(0, [self.attributedStringResource length]) 
+                                            documentAttributes:nil];
 				
-				success = [wrapper writeToFile:path atomically:YES updateFilenames:YES];
+                success = [wrapper writeToURL:[NSURL fileURLWithPath:[path stringByExpandingTildeInPath]] 
+                                        options:NSFileWrapperWritingAtomic & NSFileWrapperWritingWithNameUpdating
+                                        originalContentsURL:nil 
+                                        error:&error];
 			}
 			break;
 			
@@ -581,7 +629,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 	}
 	
 	if (!success) {
-		MLogInfo(@"error writing to: %@", path);
+		MLogInfo(@"Error writing %@ (%@): %@\nPath: %@", [self title], [self stringForFileType:fileType], [error localizedDescription], path);
 		return NO;
 	}
 

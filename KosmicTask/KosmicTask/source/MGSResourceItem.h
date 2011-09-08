@@ -88,6 +88,7 @@ typedef enum _MGSDerivedResourceItemType {
 - (BOOL)canDefaultResource;
 - (void)updateDocFileType:(MGSResourceItemFileType)value;
 - (void)loadDerivedResources;
+- (NSString *)stringForFileType:(MGSResourceItemFileType)fileType;
 @end
 
 
