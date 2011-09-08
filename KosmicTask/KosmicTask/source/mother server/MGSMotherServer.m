@@ -74,7 +74,7 @@
      */
 	CFArrayRef certificatesArray = [MGSSecurity sslCertificatesArray];
 	if (!certificatesArray){
-		MLog(RELEASELOG, @"could not retrieve SSL identity");
+		MLogInfo(@"could not retrieve SSL identity");
 	}
 	
 	//=====================================================================
@@ -144,7 +144,7 @@
 	int port = [[MGSPreferences standardUserDefaults] integerForKey:MGSExternalPortNumber];
 	
 	if (port <= 0) {
-		MLog(RELEASELOG, @"External port is invalid: %i. Resetting to default.", port);
+		MLogInfo(@"External port is invalid: %i. Resetting to default.", port);
 		port = MOTHER_IANA_REGISTERED_PORT;
 	}
 	return port;
@@ -224,7 +224,7 @@
 - (void)receivedPreferencesNotification:(NSNotification *)note
 {
 	if (![[note userInfo] isKindOfClass:[NSDictionary class]]) {
-		MLog(RELEASELOG, @"invalid server preferences notification object");
+		MLogInfo(@"invalid server preferences notification object");
 		return;
 	}
 	

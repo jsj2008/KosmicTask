@@ -217,7 +217,7 @@
 {
 	int exitCode = [[note object] terminationStatus];
 	if (exitCode != 0) {
-		MLog(RELEASELOG, @"Task terminated with exit code 0");
+		MLogInfo(@"Task terminated with exit code 0");
 #pragma mark warning what happens here? Anything?
 	}
 	
@@ -319,7 +319,7 @@
 		
 		// send signal
 		if (kill([pid intValue], sig) != 0) {
-			MLog(RELEASELOG, @"errno: %i sending signal: %i to child PID: %i", errno, sig, [pid intValue]);
+			MLogInfo(@"errno: %i sending signal: %i to child PID: %i", errno, sig, [pid intValue]);
 		} else {
 			MLog(DEBUGLOG, @"sent signal: %i to child PID: %i", sig, [pid intValue]);
 		}

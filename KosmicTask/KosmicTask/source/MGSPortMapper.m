@@ -115,11 +115,11 @@
 	
 	if ([_mapping mappingStatus]==TCMPortMappingStatusMapped) {
 	
-		 MLog(RELEASELOG, @"port mapping established: %@", [_mapping description]);
+		 MLogInfo(@"Port mapping established: %@", [_mapping description]);
 		
 	} else {
 		
-		MLog(RELEASELOG, @"port mapping could not be established: %@", [_mapping description]);
+		MLogInfo(@"Port mapping could not be established: %@", [_mapping description]);
 
 	}
 	

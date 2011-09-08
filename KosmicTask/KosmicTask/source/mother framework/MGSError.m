@@ -565,7 +565,7 @@ static MGSErrorWindowController *_controller;
 	// MLog(RELEASELOG, logError);
 	// as the unanticipated format specifiers will cause runtime failure as the va_list
 	// looks for matching data
-	MLog(RELEASELOG, @"%@", logError);
+	MLogInfo(@"%@", logError);
 	
 	self.flags |= kLoggedToConsole;
 }

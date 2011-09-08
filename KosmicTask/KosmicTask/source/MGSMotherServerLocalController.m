@@ -71,7 +71,7 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
             
             CFArrayRef certificatesArray = [MGSSecurity sslCertificatesArray];
             if (!certificatesArray){
-                MLog(RELEASELOG, @"could not retrieve SSL identity");
+                MLogInfo(@"could not retrieve SSL identity");
                 NSRunAlertPanel(NSLocalizedString(@"SSL identity not found.", @"SSL identity not found alert title text"),
                                 NSLocalizedString(@"Secure communications will not be available.", @"SSL identity alert title text"),
                                 NSLocalizedString(@"OK", @"SSL identity alert button text"),nil,nil); 

@@ -294,7 +294,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	MGSParameterPluginController *parameterPluginController = [[NSApp delegate] parameterPluginController];
 	MGSParameterPlugin *plugin = [parameterPluginController pluginWithClassName:pluginClassName];
 	if (!plugin) {
-		MLog(RELEASELOG, @"Plugin not found: %@. Default will be loaded.", pluginClassName);
+		MLogInfo(@"Plugin not found: %@. Default will be loaded.", pluginClassName);
 		
 		// select default plugin
 		plugin = [parameterPluginController defaultPlugin];
@@ -306,7 +306,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		[typePopup selectItemAtIndex:idx];
 		[self typePopupMenuItemSelected:[typePopup selectedItem]];
 	} else {
-		MLog(RELEASELOG, @"No valid plugin could be loaded.");
+		MLogInfo(@"No valid plugin could be loaded.");
 	}
 
 	// if an initial value exists and the a type input view controller is available

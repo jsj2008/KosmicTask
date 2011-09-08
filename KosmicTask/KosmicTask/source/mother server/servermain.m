@@ -45,7 +45,7 @@ int main (int argc, const char * argv[])
 	MLog(DEBUGLOG, @"KosmicTaskServer path: %@\n", [MGSPath executablePath]);
 	
 	// print banner
-	printf ("KosmicTaskServer by Mugginsoft 2010.");
+	printf ("KosmicTaskServer by Mugginsoft 2011.");
 	printf ("\nSYNTAX: %s port (if port omitted defaults to %i)", argv[0], MOTHER_IANA_REGISTERED_PORT);
 	printf ("\nAccepts multiple connections from KosmicTask clients.\n");
 	
@@ -65,8 +65,8 @@ int main (int argc, const char * argv[])
 	
 	// validate that min os is present
 	if (![[MGSSystem sharedInstance] OSVersionIsSupported]) {
-		MLog(RELEASELOG, @"KosmicTaskServer requires at least OS X %@.\n", [[MGSSystem sharedInstance] minOSVersionSupported]);
-		MLog(RELEASELOG, @"KosmicTaskServer exiting.\n");
+		MLogInfo(@"KosmicTaskServer requires at least OS X %@.\n", [[MGSSystem sharedInstance] minOSVersionSupported]);
+		MLogInfo(@"KosmicTaskServer exiting.\n");
 		
 		exit(1);
 	} 
@@ -75,7 +75,7 @@ int main (int argc, const char * argv[])
 	MGSCodeSigning *codeSign = [MGSCodeSigning new];
 	NSString *path = [MGSPath executablePath];
 	if ([codeSign validatePath:path] != CodesignOkay) {
-		MLog(RELEASELOG, @"KosmicTaskServer code signing failure: %@\n", codeSign.resultString);
+		MLogInfo(@"KosmicTaskServer code signing failure: %@\n", codeSign.resultString);
 	} else {
 		MLog(DEBUGLOG, @"KosmicTaskServer code signing: %@\n", codeSign.resultString);
 	}
@@ -92,8 +92,8 @@ int main (int argc, const char * argv[])
 	
 	// bail out if initialisation fails
 	if (![motherServer initialised]) {
-		MLog(RELEASELOG, @"KosmicTaskServer server initialisation failed.\n");
-		MLog(RELEASELOG, @"KosmicTaskServer exiting.\n");
+		MLogInfo(@"KosmicTaskServer server initialisation failed.\n");
+		MLogInfo(@"KosmicTaskServer exiting.\n");
 		
 		exit(1);
 	}
@@ -106,13 +106,13 @@ int main (int argc, const char * argv[])
 		pthread_t thread; 
 		int threadError = pthread_create(&thread, 0, WatchForParentTermination, 0); 
 		if (threadError != 0) {
-			MLog(RELEASELOG, @"Parent process watcher thread could not be started.\n");
+			MLogInfo(@"Parent process watcher thread could not be started.\n");
 		} else {
-			MLog(RELEASELOG, @"This process will terminate if its parent exits unexpectedly.\n");
+			MLogInfo(@"This process will terminate if its parent exits unexpectedly.\n");
 		}
 	}
 #else
-	MLog(RELEASELOG, @"This process will outlive its parent if the parent exits unexpectedly.\n");
+	MLogInfo(@"This process will outlive its parent if the parent exits unexpectedly.\n");
 #endif
 
 	// if the server initialised then queue a server start and start the run loop

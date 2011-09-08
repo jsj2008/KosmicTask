@@ -98,7 +98,7 @@
 	}
 	
 	if (setrlimit(RLIMIT_CORE, &r1) == -1) {
-		MLog(RELEASELOG, @"Error enabling core dump capture.");
+		MLogInfo(@"Error enabling core dump capture.");
 	}
 }
 

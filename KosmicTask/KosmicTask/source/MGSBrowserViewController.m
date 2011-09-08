@@ -1450,7 +1450,7 @@ errorExit:
 		if ([netClient hostViaBonjour]) {
 			// retry - allow time for the TXTRecord to be received
 			if (++netClient.initialRequestRetryCount < 10) {
-				MLog(RELEASELOG, @"%@ : service available but cannot yet connect. Retrying (%d)...", netClient.serviceShortName, netClient.initialRequestRetryCount);
+				MLogInfo(@"%@ : service available but cannot yet connect. Retrying (%d)...", netClient.serviceShortName, netClient.initialRequestRetryCount);
 				[self performSelector:_cmd withObject:netClient afterDelay:2.0];
 			} else {
 				NSString *reason = [NSString stringWithFormat:@"%@ : Maximum retries exceeded trying to sending initial request.", netClient.serviceShortName];

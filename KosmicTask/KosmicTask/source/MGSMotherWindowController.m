@@ -1301,13 +1301,13 @@ const char MGSContextStartupComplete;
 
 			if (netRequest.ownerString == MGSRequestDuplicateAction) {
 				action = netRequest.ownerObject;
-				MLog(RELEASELOG, @"Could not duplicate script UUID: %@", [[action script] UUID]);
+				MLogInfo(@"Could not duplicate script UUID: %@", [[action script] UUID]);
 			}
 			
 			else if (netRequest.ownerString == MGSRequestEditAction) {
 				action = netRequest.ownerObject;
 				[self removeEditPendingForAction:action];
-				MLog(RELEASELOG, @"Could not edit script UUID: %@", [[action script] UUID]);
+				MLogInfo(@"Could not edit script UUID: %@", [[action script] UUID]);
 			}
 			
 		}

@@ -102,7 +102,7 @@ NSString *MGSNoteLicenceStatusChanged = @"MGSWindowStatusChanged";	// non obviou
 		_sharedController = [[self alloc] init];
 		if (![_sharedController loadAll]) {
 			NSString *endMessage = [NSString stringWithFormat:@"Licence file error: %@\n\nApplication will end.", _sharedController.lastError];
-			MLog(RELEASELOG, endMessage);
+			MLogInfo(endMessage);
 			NSRunAlertPanel(@"Licence File Problem", endMessage, @"OK", nil, nil);
 			[NSApp terminate:nil];
 		}
@@ -227,7 +227,7 @@ NSString *MGSNoteLicenceStatusChanged = @"MGSWindowStatusChanged";	// non obviou
 			MGSL *licence_j = [[self arrangedObjects] objectAtIndex:j];
 			if ([[licence_j hash] isEqualToString:[licence_i hash]]) {
 				[self removeObject:licence_i];
-				MLog(RELEASELOG, @"Duplicate licence found at path: %@ hash: %@", [licence_i path], [licence_i hash]);
+				MLogInfo(@"Duplicate licence found at path: %@ hash: %@", [licence_i path], [licence_i hash]);
 				break;
 			}
 		}

@@ -87,7 +87,7 @@
 	#pragma unused(sock)
 	
 	if (err != nil)
-		MLog(RELEASELOG, @"Server socket will disconnect. Error domain %@, code %d (%@).",
+		MLogInfo(@"Server socket will disconnect. Error domain %@, code %d (%@).",
 			   [err domain], [err code], [err localizedDescription]);
 	else {
 		MLog(DEBUGLOG, @"Server socket will disconnect. No error.");
@@ -307,7 +307,7 @@
 		// get SSL identity
 		CFArrayRef ca = [MGSSecurity sslCertificatesArray];
 		if (!ca) {
-			MLog(RELEASELOG, @"SERVER SSL: could not retrieve required identity");
+			MLogInfo(@"SERVER SSL: could not retrieve required identity");
 			return NO;
 		}
 		

@@ -286,7 +286,7 @@ NSString *MGSKeyPublished = @"Published";
 		
 		// validate that filename is a valid UUID
 		if (![[file stringByDeletingPathExtension] mgs_isUUID]) {
-			MLog(RELEASELOG, @"invalid UUID at path: %@", [path stringByAppendingPathComponent:file]);
+			MLog(RELEASELOG, @"Invalid UUID at path: %@", [path stringByAppendingPathComponent:file]);
 			continue;
 		}
 		
@@ -312,7 +312,7 @@ NSString *MGSKeyPublished = @"Published";
 			case MGSScriptRepresentationDisplay:
 			case MGSScriptRepresentationPreview:
 				if (![script conformToRepresentation:representation]) {
-					MLog(RELEASELOG, @"script faild to conform to required representation");
+					MLog(RELEASELOG, @"script failed to conform to required representation");
 					continue;
 				}
 				

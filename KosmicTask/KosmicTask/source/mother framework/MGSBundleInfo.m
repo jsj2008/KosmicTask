@@ -89,7 +89,7 @@ NSString *MGSKeyMachineSerial = @"machineSerial";
 	NSString *path = [[self infoPath] stringByAppendingPathComponent:name];
 	BOOL saved = [dictionary writeToFile:path atomically:YES];
 	if (!saved) {
-		MLog(RELEASELOG, @"Failed to save task info: %@", path);
+		MLogInfo(@"Failed to save task info: %@", path);
 	}
 	
 	return saved;

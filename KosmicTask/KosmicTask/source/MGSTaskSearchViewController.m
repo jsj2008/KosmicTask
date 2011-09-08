@@ -247,27 +247,27 @@
 	
 	// parse request errors
 	if (netRequest.error) {
-		MLog(RELEASELOG, @"a search error has occurred");
+		MLogInfo(@"a search error has occurred");
 		return;
 	} 
 	
 	// process the payload
 	if (![payload dictionary]) {
-		MLog(RELEASELOG, @"search payload dictionary not found");
+		MLogInfo(@"search payload dictionary not found");
 		return;
 	}
 		
 	// look for result dict
 	NSDictionary *resultDict = [[payload dictionary] objectForKey:MGSScriptKeyResult];
 	if (!resultDict) {
-		MLog(RELEASELOG, @"search result dictionary not found");
+		MLogInfo(@"search result dictionary not found");
 		return;
 	}
 	
 	// search ID
 	NSNumber *searchID = [resultDict objectForKey:MGSScriptKeySearchID];
 	if (!searchID) {
-		MLog(RELEASELOG, @"search ID not found");
+		MLogInfo(@"search ID not found");
 		return;
 	}
 	
