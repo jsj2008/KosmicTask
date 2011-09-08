@@ -124,7 +124,7 @@
 		<string>IDEWorkspaceTabController_FBF33D75-7FD1-4AD0-831D-62176A6BDB4D</string>
 		<string>IDEWindowToolbarIsVisible</string>
 		<false/>
-		<string>{{10, 38}, {1440, 827}}</string>
+		<string>{{26, 48}, {1440, 827}}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -445,7 +445,7 @@
 				<integer>42</integer>
 			</dict>
 		</dict>
-		<string>MGSResourceDocumentViewController.m</string>
+		<string>MGSResourceBrowserViewController.m</string>
 		<dict>
 			<key>$classes</key>
 			<array>
@@ -532,7 +532,7 @@
 				<integer>55</integer>
 			</dict>
 			<key>NS.string</key>
-			<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceDocumentViewController.m</string>
+			<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceBrowserViewController.m</string>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -962,9 +962,9 @@
 		<string>PrimaryDocumentVisibleCharacterRange</string>
 		<string>HideAllIssues</string>
 		<string>PrimaryDocumentSelectedCharacterRange</string>
-		<real>337179316.32532102</real>
-		<string>{2371, 599}</string>
-		<string>{2892, 0}</string>
+		<real>337182226.87990999</real>
+		<string>{21168, 1006}</string>
+		<string>{21669, 0}</string>
 		<dict>
 			<key>$classes</key>
 			<array>
@@ -974,7 +974,7 @@
 			<key>$classname</key>
 			<string>NSDictionary</string>
 		</dict>
-		<string>-setSelectedResource:</string>
+		<string>-setDefaultResource:</string>
 		<string>Xcode.IDEKit.EditorDocument.SourceCode</string>
 		<dict>
 			<key>$class</key>
@@ -993,7 +993,7 @@
 				<integer>100</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceDocumentViewController.m</string>
+		<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceBrowserViewController.m</string>
 		<dict>
 			<key>$classes</key>
 			<array>
@@ -2275,7 +2275,7 @@
 			</array>
 		</dict>
 		<string>{{0, 0}, {1091, 751}}</string>
-		<string>MGSResourceDocumentViewController.m</string>
+		<string>MGSResourceBrowserViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -4530,27 +4530,27 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>499</integer>
+					<integer>498</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>501</integer>
+					<integer>500</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>503</integer>
+					<integer>502</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>505</integer>
+					<integer>504</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>507</integer>
+					<integer>506</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>509</integer>
+					<integer>508</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -6207,17 +6207,8 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>498</integer>
+				<integer>54</integer>
 			</dict>
-		</dict>
-		<dict>
-			<key>$class</key>
-			<dict>
-				<key>CF$UID</key>
-				<integer>55</integer>
-			</dict>
-			<key>NS.string</key>
-			<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceBrowserViewController.m</string>
 		</dict>
 		<dict>
 			<key>$class</key>
@@ -6233,7 +6224,7 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>500</integer>
+				<integer>499</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -6259,7 +6250,7 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>502</integer>
+				<integer>501</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -6285,7 +6276,7 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>504</integer>
+				<integer>503</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -6311,7 +6302,7 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>506</integer>
+				<integer>505</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -6337,7 +6328,7 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>508</integer>
+				<integer>507</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -6363,8 +6354,17 @@
 			<key>NS.relative</key>
 			<dict>
 				<key>CF$UID</key>
-				<integer>54</integer>
+				<integer>509</integer>
 			</dict>
+		</dict>
+		<dict>
+			<key>$class</key>
+			<dict>
+				<key>CF$UID</key>
+				<integer>55</integer>
+			</dict>
+			<key>NS.string</key>
+			<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceDocumentViewController.m</string>
 		</dict>
 		<dict>
 			<key>$class</key>
@@ -9645,9 +9645,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>337178907.86603302</real>
-		<string>{34887, 1554}</string>
-		<string>{34893, 69}</string>
+		<real>337182226.878335</real>
+		<string>{21168, 1006}</string>
+		<string>{21669, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -9933,9 +9933,9 @@
 				</dict>
 			</array>
 		</dict>
-		<real>337179316.32439899</real>
-		<string>{2371, 599}</string>
-		<string>{2892, 0}</string>
+		<real>337181874.43909198</real>
+		<string>{998, 1247}</string>
+		<string>{2672, 0}</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -17495,7 +17495,7 @@
 				<integer>1378</integer>
 			</dict>
 			<key>NS.time</key>
-			<real>337179115.70648903</real>
+			<real>337182127.22217101</real>
 		</dict>
 		<dict>
 			<key>$classes</key>
@@ -17506,7 +17506,7 @@
 			<key>$classname</key>
 			<string>NSDate</string>
 		</dict>
-		<string>Today at 13:51</string>
+		<string>Today at 14:42</string>
 		<integer>234</integer>
 		<string>PSMTabBarControlFramework</string>
 		<dict>
@@ -18688,7 +18688,7 @@
 				<integer>1483</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceDocumentViewController.m</string>
+		<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceBrowserViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -18706,7 +18706,7 @@
 				<integer>1485</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceDocumentViewController.h</string>
+		<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceDocumentViewController.m</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -18724,7 +18724,7 @@
 				<integer>1487</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceBrowserViewController.h</string>
+		<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceDocumentViewController.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -18742,7 +18742,7 @@
 				<integer>1489</integer>
 			</dict>
 		</dict>
-		<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceBrowserViewController.m</string>
+		<string>file://localhost/Users/Jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/source/MGSResourceBrowserViewController.h</string>
 		<dict>
 			<key>$class</key>
 			<dict>

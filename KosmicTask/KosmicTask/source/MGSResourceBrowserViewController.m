@@ -746,6 +746,10 @@ clearTree:
 		if ([manager isKindOfClass:[MGSResourcesManager class]]) {
 			[manager setDefaultResourceID:resource.ID];
 		}
+        
+        // need to re assert
+        [self viewEditability:resourceTableView forResource:resource];
+        
 	} else if ([selectedObject isKindOfClass:[MGSLanguagePlugin class]]) {
 
 		MGSLanguagePlugin *plugin = selectedObject;
