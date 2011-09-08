@@ -119,6 +119,9 @@ const char MGSContextResourceDocFileType;
 			
 	}
 	
+    if (![item editable]) {
+        self.mode = kMGSResourceDocumentModeView;
+    }
 }
 
 
