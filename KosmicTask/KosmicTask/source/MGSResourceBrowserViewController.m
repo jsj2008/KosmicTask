@@ -20,6 +20,7 @@
 #import "NSOutlineView_Mugginsoft.h"
 #import "MGSSettingsOutlineViewController.h"
 #import "MGSResourceDocumentViewController.h"
+#import "NSView_Mugginsoft.h"
 
 // resource tab indexes
 #define MGS_DOCUMENT_TAB_INDEX 0
@@ -57,6 +58,7 @@
 - (void)setLanguagePropertyManager:(MGSLanguagePropertyManager *)manager;
 - (void)selectClickedResource:(id)sender;
 - (BOOL)clickedResourceIsSelected:(id)sender;
+- (void)selectContextClickedRow:(id)sender;
 @property BOOL requiredResourceSelected;
 @end
 
@@ -66,6 +68,7 @@ const char MGSSettingsTreeSelectedObjectsContext;
 const char MGSSettingsTreeEditedContext;
 const char MGSDocumentEditedContext;
 const char MGSDocumentModeContext;
+const char MGSResourceArrangedObjectsContext;
 
 @implementation MGSResourceBrowserViewController
 
@@ -143,6 +146,8 @@ requiredResourceDoubleClicked, selectedLanguageProperty;
 	[settingsOutlineViewController addObserver:self forKeyPath:@"documentEdited" options:0 context:(void *)&MGSSettingsTreeEditedContext];
 	[resourceDocumentViewController addObserver:self forKeyPath:@"documentEdited" options:0 context:(void *)&MGSDocumentEditedContext];
 	[resourceDocumentViewController addObserver:self forKeyPath:@"mode" options:NSKeyValueObservingOptionPrior context:(void *)&MGSDocumentModeContext];
+
+    [resourceArrayController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:(void *)&MGSResourceArrangedObjectsContext];
 
 	// notifications
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
@@ -504,6 +509,7 @@ clearTree:
     MGSResourceItem* clickedResource = [self clickedResource:sender];
     if (!clickedResource) return;
 
+    // note that this won't change the selection in the UI
     if (self.selectedResource != clickedResource) {
         self.selectedResource = clickedResource;
     }
@@ -561,6 +567,32 @@ clearTree:
 	return object;
 }
 
+/*
+ 
+ - selectContextClickedRow:
+ 
+ */
+- (void)selectContextClickedRow:(id)sender
+{
+	if ([sender respondsToSelector:@selector(clickedRow)]) {
+        
+        // clicked row is context clicked row
+		NSInteger row = [sender clickedRow];
+		if (row == -1) {
+            return;
+        }
+		
+		if (sender == resourceOutlineView) {
+		} else if (sender == resourceTableView) {
+		} else {
+			return;
+		}
+		
+		[sender selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+	}
+}
+
+
 #pragma mark -
 #pragma mark Add resource
 
@@ -582,7 +614,7 @@ clearTree:
         [self.selectedResourcesManager addNewResource];
     } else {
         
-        [self selectClickedResource:sender];
+        [self selectContextClickedRow:sender];
     
         // resources can only be added to the user resources manager
         if ([self.selectedResource.delegate isKindOfClass:[MGSResourcesManager class]]) {
@@ -648,7 +680,7 @@ clearTree:
      gets selected
      
      */
-    [self selectClickedResource:sender];
+   [self selectContextClickedRow:sender];
     
     if ([self.selectedResource.delegate isKindOfClass:[MGSResourcesManager class]]) {
         
@@ -692,10 +724,10 @@ clearTree:
  */
 - (void)deleteResource:(id)sender
 {
-	
-	//[self commitEditing];
-	[self selectClickedResource:sender];
-        
+	[self commitEditing];
+
+    [self selectContextClickedRow:sender];
+    
     if ([self.selectedResource.delegate isKindOfClass:[MGSResourcesManager class]]) {
         
 		MGSResourcesManager *manager = self.selectedResource.delegate;
@@ -737,7 +769,11 @@ clearTree:
  */
 - (IBAction)setDefaultResource:(id)sender
 {
-	id selectedObject = [self clickedObject:sender];
+    [self commitEditing];
+
+    id selectedObject = [self clickedObject:sender];
+    
+    [self selectContextClickedRow:sender];
 		
 	if ([selectedObject isKindOfClass:[MGSResourceItem class]]) {
 		
@@ -747,7 +783,7 @@ clearTree:
 			[manager setDefaultResourceID:resource.ID];
 		}
         
-        // need to re assert
+        // the tableview selection may not change to trigger this
         [self viewEditability:resourceTableView forResource:resource];
         
 	} else if ([selectedObject isKindOfClass:[MGSLanguagePlugin class]]) {
@@ -958,13 +994,19 @@ clearTree:
  */
 - (void)setSelectedResource:(MGSResourceItem *)item
 {
-	if (!item) return;
 	
 	[self saveDocument:self];
 	
 	// unload and reload external resource properties
 	[self.selectedResource unload];
 	selectedResource = item;
+
+	if (!selectedResource) {
+        self.resourceEditable = NO;  
+        resourceDocumentViewController.selectedResource = nil;
+        return;
+    }
+
 	[self.selectedResource load];
 	
 	// has required resource type has been selected?
@@ -980,7 +1022,6 @@ clearTree:
 		canEdit = [manager canMutate];
 	}
 	self.resourceEditable = canEdit;
-	
 	resourceDocumentViewController.selectedResource = item;
 	
 	// get node represented object and display
@@ -1227,7 +1268,24 @@ clearTree:
 	} else if (context == &MGSDocumentModeContext) {
 		[resourceController commitEditing];
 		return;
-	}
+	} else if (context == &MGSResourceArrangedObjectsContext) {
+        
+        // determine desired resource view
+        NSView *desiredView = nil;
+        if ([[resourceArrayController arrangedObjects] count] > 0) {
+            desiredView = resourceTabView;
+        } else {
+            desiredView = emptyResourceView;
+        }
+        
+        // show the desired view
+        if (desiredView != resourceView) {
+            [[resourceView superview] replaceSubview:resourceView withViewSizedAsOld:desiredView];
+            resourceView = desiredView;
+        }
+        
+        return;
+    }
 	
 	[self commitEditing];
 	

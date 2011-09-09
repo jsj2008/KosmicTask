@@ -28,6 +28,8 @@
 	IBOutlet NSSplitView *splitViewResource;
 	IBOutlet NSView *editorHostView;
 	IBOutlet NSOutlineView *resourceOutlineView;
+    IBOutlet NSView *resourceView;
+    IBOutlet NSView *emptyResourceView;
 	IBOutlet NSTabView *resourceTabView;
 	IBOutlet NSTabView *resourceChildTabView;
 	IBOutlet NSTableView *resourceTableView;
