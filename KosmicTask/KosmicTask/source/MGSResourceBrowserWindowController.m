@@ -169,6 +169,18 @@ const char MGSContextDocumentEdited;
 	[resourceBrowserViewController saveDocument:self];
 }
 
+/*
+ 
+ - windowDidResignKey:
+ 
+ */
+- (void)windowDidResignKey:(NSNotification *)notification
+{
+#pragma unused(notification)
+    
+	[resourceBrowserViewController saveDocument:self];
+}
+
 #pragma mark -
 #pragma mark URL handling
 
