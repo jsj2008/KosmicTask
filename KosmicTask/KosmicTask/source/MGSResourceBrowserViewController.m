@@ -1231,7 +1231,11 @@ clearTree:
 	
 	[self commitEditing];
 	
-	// resource tableview selection changed
+	/*
+     
+     resource tableview selection changed
+     
+     */
 	if (context == &MGSResourceSelectedObjectsContext) {
 
 		[self viewEditability:resourceTableView forResource:nil];
@@ -1253,10 +1257,13 @@ clearTree:
         
 		[self viewEditability:resourceTableView forResource:selectedNode.representedObject];		
 		
-	// resource tree objects selection
+	/*
+     
+     resource tree objects selection
+     
+     */
 	} else if (context == &MGSResourceTreeSelectedObjectsContext) {
 		
-
 		[self viewEditability:resourceOutlineView forResource:nil];
 
 		// selected resource tree node

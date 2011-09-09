@@ -13,7 +13,7 @@
 #import "MGSOriginTransformer.h"
 #import "MGSImageManager.h"
 
-#define MGS_DEFAULT_RESOURCEID [NSNumber numberWithInteger:1]
+#define MGS_DEFAULT_RESOURCEID -1
 
 NSString *MGSResourcesManagerWillChange = @"MGSResourcesManagerWillChange";
 NSString *MGSResourcesManagerDidChange = @"MGSResourcesManagerDidChange";
@@ -94,7 +94,7 @@ origin, canMutate;
 		managerNode.hasCount = YES;
 		
 		resources = [NSMutableArray arrayWithCapacity:10];
-		defaultResourceID = MGS_DEFAULT_RESOURCEID;
+		defaultResourceID = [NSNumber numberWithInteger:MGS_DEFAULT_RESOURCEID];
 		
 		// create resources managers
 		resourcesManagers = [NSMutableArray arrayWithCapacity:5];
@@ -157,7 +157,7 @@ origin, canMutate;
 - (void) setDefaultResourceID:(NSNumber *)value
 {
 	if (!value) {
-		value = [NSNumber numberWithInteger:-1];
+		value = [NSNumber numberWithInteger:MGS_DEFAULT_RESOURCEID];
 	}
 	
 	if ([[self resourceClass] canDefaultResource]) {
