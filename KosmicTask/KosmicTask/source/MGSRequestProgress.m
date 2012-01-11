@@ -74,7 +74,7 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
 			progress = MGSRequestProgressWaitingForReply;
 			break;
 			
-		case kMGSStatusReadingMessagePayload:
+		case kMGSStatusReadingMessageBody:
 			progress = MGSRequestProgressReceivingReply;
 			break;
 			

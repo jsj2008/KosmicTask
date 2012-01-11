@@ -22,7 +22,7 @@
 #import "NSPropertyListSerialization_Mugginsoft.h"
 #import "MGSNetAttachments.h"
 #import "MGSNetAttachment.h"
-#import "NSString_Mugginsoft.h";
+#import "NSString_Mugginsoft.h"
 #import "MGSServerRequestThreadHelper.h"
 #import "MGSAppleScriptData.h"
 #import "MGSServerRequestManager.h"
@@ -72,6 +72,8 @@ static BOOL LicenceValidForRequest(MGSNetRequest *netRequest, MGSError **mgsErro
 - (BOOL)resumeRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest;
 - (BOOL)resumeRequestUUID:(NSString *)UUID;
 - (BOOL)terminateRequestUUID:(NSString *)UUID;
+- (BOOL)logRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest;
+- (BOOL)logRequestUUID:(NSString *)UUID forRequest:(MGSNetRequest *)netRequest;
 @end
 
 @interface MGSServerScriptRequest (Script)
@@ -312,7 +314,9 @@ static BOOL LicenceValidForRequest(MGSNetRequest *netRequest, MGSError **mgsErro
 		// this data can inform non Bonjour clients of some/all of parameters of the mDNS TRXTRecord
 		NSInteger usernameDisclosureMode = [[MGSPreferences standardUserDefaults] integerForKey:MGSUsernameDisclosureMode];
 		NSDictionary *appDict = [NSDictionary dictionaryWithObjectsAndKeys: 
-								 (usernameDisclosureMode == DISCLOSE_USERNAME_TO_ALL ? NSUserName(): @""), MGSApplicationKeyUsername, nil];
+								 (usernameDisclosureMode == DISCLOSE_USERNAME_TO_ALL ? NSUserName(): @""), MGSApplicationKeyUsername, 
+                                 [NSNumber numberWithBool:YES], MGSApplicationKeyRealTimeLogging, 
+                                 nil];
 		[responseMessage setMessageObject:appDict forKey:MGSNetMessageKeyApplication];
 
 		// send reply
@@ -425,6 +429,14 @@ static BOOL LicenceValidForRequest(MGSNetRequest *netRequest, MGSError **mgsErro
 		return [self getCompiledSourceForScriptUUID:commandParameters forRequest:netRequest];
 	}
 	
+    //*******************************************
+	// log output of message with given UUID
+	//*******************************************
+	if ([command isEqualToString:MGSScriptCommandLogMesgUUID]) {
+		
+		return [self logRequestUUIDs:commandParameters forRequest:netRequest];
+	}
+    
 	//
 	// remaining commands require a script dictionary
 	//
@@ -432,7 +444,7 @@ static BOOL LicenceValidForRequest(MGSNetRequest *netRequest, MGSError **mgsErro
 	//
 	NSMutableDictionary *requestScriptDict = [motherDict objectForKey:MGSScriptKeyScript];
 	if (!requestScriptDict) {
-		errorReason = NSLocalizedString(@"request script dictionary not found", @"Error returned by server");
+		errorReason = NSLocalizedString(@"Request script dictionary not found", @"Error returned by server");
 		goto errorExit;
 	}
 
@@ -875,7 +887,7 @@ errorExit:;
 		[self suspendRequestUUID:UUID];
 	}
 	
-	// add scripts dict to reply, flag as valid and send
+	// add dict to reply, flag as valid and send
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
 	[[netRequest responseMessage] setMessageObject:dict forKey:MGSScriptKeyKosmicTask];
 	
@@ -916,7 +928,7 @@ errorExit:;
 		[self resumeRequestUUID:UUID];
 	}
 	
-	// add scripts dict to reply, flag as valid and send
+	// add dict to reply, flag as valid and send
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
 	[[netRequest responseMessage] setMessageObject:dict forKey:MGSScriptKeyKosmicTask];
 	
@@ -925,6 +937,48 @@ errorExit:;
 	
 	return YES;	
 }
+/*
+ 
+ log request UUIDs
+ 
+ */
+- (BOOL)logRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest
+{
+    // in reality we will only ever log one UUID on the current request
+	for (NSString *UUID in UUIDs) {
+		[self logRequestUUID:UUID forRequest:netRequest];
+	}
+	
+	// logging output will be sent in real time as required	
+	return YES;	
+}
+/*
+ 
+ log request UUID
+ 
+ */
+- (BOOL)logRequestUUID:(NSString *)UUID forRequest:(MGSNetRequest *)netRequest
+{
+    // get task with given UUID
+    MGSScriptTask *scriptTask = [_scriptTasks objectForKey:UUID];
+    if (!scriptTask) {
+        return NO;
+    }
+    
+    // inform the script task that we want to use the
+    // given request for routing log messages
+    scriptTask.logRequest = netRequest;
+    
+    // add dict to reply, flag as valid and send
+	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
+	[[netRequest responseMessage] setMessageObject:dict forKey:MGSScriptKeyKosmicTask];
+	
+	// send reply
+	[self sendValidRequestReply:netRequest];
+
+    return YES;
+}
+
 /*
  
  terminate request UUID
@@ -1602,6 +1656,7 @@ errorExit:;
 	
 	return NO;	// caller will issue reply
 }
+
 
 //=======================================================
 // compile a script

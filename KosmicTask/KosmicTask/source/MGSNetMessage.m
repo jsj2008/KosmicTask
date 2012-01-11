@@ -24,6 +24,7 @@ NSString *MGSNetMessageKeyRequestWasValid = @"RequestWasValid";
 NSString *MGSNetMessageKeyNull = @"Null";
 NSString *MGSMessageKeyVersion = @"Version";
 NSString *MGSMessageKeyUUID = @"UUID";
+NSString *MGSMessageKeyRequestUUID = @"RequestUUID";
 NSString *MGSMessageKeyOrigin = @"Origin";
 NSString *MGSMessageKeyLicenceData = @"Validation";
 static NSString *MGSNetMessageKeyAuthentication = @"Authentication";
@@ -53,7 +54,8 @@ NSString *MGSNetMessageCommandAuthenticate = @"Authenticate";				// perform auth
 NSString *MGSNetMessageCommandNegotiate = @"Negotiate";				// perform negotiation
 
 // application keys
-NSString *MGSApplicationKeyUsername = @"Username";	// current username or @"" if name not disclosed
+NSString *MGSApplicationKeyUsername = @"Username";                  // current username or @"" if name not disclosed
+NSString *MGSApplicationKeyRealTimeLogging = @"RealTimeLogging";
 
 static unsigned long int messageSequenceCounter = 0;
 
@@ -162,6 +164,7 @@ static unsigned long int messageSequenceCounter = 0;
 	}
 	return self;
 }
+
 
 #pragma mark -
 #pragma mark Origin
@@ -608,7 +611,7 @@ static unsigned long int messageSequenceCounter = 0;
 	// set the header attachments
 	_header.attachments = attachments;
 	
-	// add attachments plist representation to the messase
+	// add attachments plist representation to the message
 	[self addAttachmentsPropertyListRepresentation];
 }
 

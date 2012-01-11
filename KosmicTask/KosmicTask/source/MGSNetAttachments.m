@@ -252,7 +252,7 @@ static NSString *MGSAttachmentSeparator = @";";
 	if (!_attachments || [_attachments count] == 0) {
 		return 0;
 	}
-	
+
 	unsigned long long validatedLength = 0;
 	for (MGSNetAttachment *attachment in _attachments) {
 		

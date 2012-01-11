@@ -3,7 +3,7 @@
 //  Mother
 //
 //  Created by Jonathan on 19/12/2008.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//  Copyright 2008 Mugginsoft LLP. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

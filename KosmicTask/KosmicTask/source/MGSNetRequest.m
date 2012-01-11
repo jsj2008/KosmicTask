@@ -55,8 +55,12 @@ static NSThread *networkThread = nil;
 @synthesize sendUpdatesToOwner = _sendUpdatesToOwner;
 @synthesize prevRequest = _prevRequest;
 @synthesize nextRequest = _nextRequest;
+@synthesize childRequests = _childRequests;
+@synthesize parentRequest = _parentRequest;
 @synthesize netSocket = _netSocket;
 @synthesize flags = _flags;
+@synthesize chunksReceived = _chunksReceived;
+@synthesize requestType = _requestType;
 
 #pragma mark Class methods
 
@@ -376,12 +380,25 @@ static NSThread *networkThread = nil;
 
 	// the client will need to be informed of how timeouts are to be handled.
 	// so pass the request timeout info in the header
-	_responseMessage.header.requestTimeout = (NSInteger)_readTimeout;
+	_responseMessage.header.requestTimeout = (NSInteger)_readTimeout; 
 	_responseMessage.header.responseTimeout = (NSInteger)_writeTimeout; 
-
+    
+    // identify the request that matches the response
+    [_responseMessage setMessageObject:[_requestMessage messageUUID] forKey:MGSMessageKeyRequestUUID];
+    
 	// send response message - raises on error
 	[_netSocket sendResponse];	
 } 
+/*
+ 
+ send response chunk on socket
+ 
+ */
+- (void)sendResponseChunkOnSocket:(NSData *)data
+{
+    // send response message - raises on error
+	[_netSocket sendResponseChunk:data];
+}
 
 /*
  
@@ -420,6 +437,35 @@ static NSThread *networkThread = nil;
 	}
 }
 
+/*
+ 
+ -chunkStringReceived
+ 
+ */
+- (void)chunkStringReceived:(NSString *)chunk {
+    if (_chunksReceived) {
+        _chunksReceived = [NSMutableArray arrayWithCapacity:5];
+    }
+    [_chunksReceived addObject:chunk];
+    
+    if (_owner && [_owner respondsToSelector:@selector(netRequestChunkReceived:)]) {
+        [_owner performSelectorOnMainThread:@selector(netRequestChunkReceived:) withObject:self waitUntilDone:NO];
+    }
+}
+
+#pragma mark -
+#pragma mark Request child handling
+
+/*
+ 
+ - addChildRequest:
+ 
+ */
+- (void)addChildRequest:(MGSNetRequest *)request
+{
+    [self.childRequests addObject:request];
+    request.parentRequest = self;
+}
 #pragma mark -
 #pragma mark Request queue handling
 
@@ -493,7 +539,6 @@ static NSThread *networkThread = nil;
 {	
 	MGSNetRequest *sendRequest = self;
 	
-	
 	// look for a previous unsent request
 	if (!sendRequest.sent) {
 		MGSNetRequest *prevRequest = nil;
@@ -549,7 +594,7 @@ static NSThread *networkThread = nil;
 }
 
 #pragma mark -
-#pragma mark Diagnostics
+#pragma mark Flags
 
 /*
  
@@ -560,6 +605,7 @@ static NSThread *networkThread = nil;
 {
 	return (self.flags & kCommandBasedNegotiation);
 }
+
 
 #pragma mark -
 #pragma mark Error handling
@@ -1020,8 +1066,7 @@ error_exit:
  */
 -(void)initialise
 {
-	_netClient = nil;
-	_netSocket = nil;
+    _requestType = kMGSRequestTypeWorker;
 	_status = kMGSStatusNotConnected;
 	
 	_requestMessage = [[MGSNetMessage alloc] init];			// request will be received from client
@@ -1030,14 +1075,11 @@ error_exit:
 	_readTimeout = -1.0;	// don't timeout
 	_writeTimeout = -1.0;	// don't timeout
 	_requestID = requestSequenceID++;
-	_owner = nil;
-	_ownerObject = nil;
-	_ownerString = nil;
-	_error = nil;
 	self.allowUserToAuthenticate = YES;
 	_sendUpdatesToOwner = NO;
 	temporaryPaths = [NSMutableArray new];
 	disposed = NO;
+    _childRequests = [NSMutableArray new];
 }
 
 

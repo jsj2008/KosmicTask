@@ -27,6 +27,7 @@ extern NSString *MGSScriptCommandExecuteScript;
 extern NSString *MGSScriptCommandTerminateMessageUUID;
 extern NSString *MGSScriptCommandSuspendMessageUUID;
 extern NSString *MGSScriptCommandResumeMessageUUID;
+extern NSString *MGSScriptCommandLogMesgUUID;
 extern NSString *MGSScriptCommandGetScriptUUID;
 extern NSString *MGSScriptCommandGetScriptUUIDCompiledSource;
 extern NSString *MGSScriptCommandSaveChangesAndPublish;
@@ -44,6 +45,7 @@ extern NSString *MGSScriptKeyCompiledScriptDataFormat;
 
 // script plist keys
 extern NSString *MGSScriptKeyScripts;
+extern NSString *MGSScriptKeyCapabilities;
 extern NSString *MGSScriptKeyDescription;
 extern NSString *MGSScriptKeyGroup;
 

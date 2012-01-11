@@ -11,6 +11,21 @@
 #define NETSOCKET_CLIENT 0
 #define NETSOCKET_SERVER 1
 
+enum MGSNetSocketWriteTags {
+    kMGSSocketWriteMessage = 0,
+    kMGSSocketWriteAttachmentData,
+    kMGSSocketWriteAttachmentChunk,
+    kMGSSocketWriteAttachmentLastChunk,
+};
+
+enum MGSNetSocketReadTags {
+    kMGSSocketReadMessage = 0,
+    kMGSSocketReadAttachmentData,
+    kMGSSocketReadAttachmentChunkSize,
+    kMGSSocketReadAttachmentChunk,
+    kMGSSocketReadAttachmentLastChunk,
+};
+
 extern NSString *const MGSNetSocketSecurityException;
 extern NSString *const MGSNetSocketException;
 
@@ -59,6 +74,7 @@ extern NSString *const MGSNetSocketException;
 - (MGSNetMessage *)messageToBeRead;
 - (MGSNetMessage *)messageToBeWritten;
 - (void)sendResponse;
+- (void)sendResponseChunk:(NSData *)data;
 - (void)sendRequest;
 - (void)progressOfRead:(unsigned long *)bytesDone totalBytes:(unsigned long *)bytesTotal;
 - (void)progressOfWrite:(unsigned long *)bytesDone totalBytes:(unsigned long *)bytesTotal;

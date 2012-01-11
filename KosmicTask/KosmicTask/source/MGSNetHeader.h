@@ -8,11 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern NSString *MGSNetHeaderTerminator;
 extern NSString *MGSNetHeaderPrefix;
 extern NSString *MGSNetHeaderSizeFormat;
 extern NSInteger MGSNetHeaderPrefixLength;
 extern NSInteger MGSNetHeaderSizeLength;
 extern NSInteger MGSNetHeaderLength;
+
+extern NSString *MGSNetHeaderContentTypeXml;
+extern NSString *MGSNetHeaderContentSubtypePlist;
+extern NSString *MGSNetHeaderContentEncodingUTF8;
+extern NSString *MGSNetHeaderAttachmentTransferEncodingIdentity;
+extern NSString *MGSNetHeaderAttachmentTransferEncodingChunked;
+extern NSString *MGSNetHeaderAttachmentEncodingUTF8;
+extern NSString *MGSNetHeaderAttachmentEncodingBinary;
 
 @class MGSNetAttachments;
 
@@ -24,11 +33,18 @@ extern NSInteger MGSNetHeaderLength;
 	NSInteger _requestTimeout;
 	NSInteger _responseTimeout;
 	NSInteger _headerLength;
+    NSString *_attachmentEncoding;
+    NSString *_attachmentTransferEncoding;
+    NSDate *_date;
+    NSString *_userAgent;
+    
 	BOOL _prefixValidated;
 	BOOL _headerValidated;
 	MGSNetAttachments *_attachments;
 }
 
+- (id)initWithXMLPlist;
+- (id)initWithContentType:(NSString *)type subType:(NSString *)subType encoding:(NSString *)encoding;
 - (NSData *)headerDataWithPayloadSize:(NSInteger) size;
 - (BOOL)validatePrefix:(NSString *)prefix;
 - (BOOL)validateHeader:(NSString *)header;
@@ -44,4 +60,8 @@ extern NSInteger MGSNetHeaderLength;
 @property (readonly) BOOL prefixValidated;
 @property (readonly) BOOL headerValidated;
 @property (assign) MGSNetAttachments *attachments;
+@property (assign) NSString *attachmentTransferEncoding;
+@property (assign) NSString *attachmentEncoding;
+@property (readonly) NSDate *date;
+@property (readonly) NSString *userAgent;
 @end

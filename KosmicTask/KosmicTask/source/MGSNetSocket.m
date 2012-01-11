@@ -31,7 +31,9 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 
 @interface MGSNetSocket (Private)
 - (BOOL)sendAttachments;
-- (BOOL)readAttachmentData:(NSData *)data;
+- (BOOL)readAttachmentIdentityData:(NSData *)data withTag:(long)tag;
+- (void)readAttachmentChunkedData:(NSData *)data withTag:(long)tag;
+- (void)readAttachments:(NSData *)data withTag:(long)tag;
 @end
 
 
@@ -128,6 +130,10 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
  */
 - (void)disconnect
 {
+    // disconnect child sockets
+    for (MGSNetRequest *request in self.netRequest.childRequests) {
+        [request disconnect];
+    }
 	[_socket disconnect];
 }
 
@@ -175,6 +181,19 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
  */
 - (void)sendResponse
 {
+	[NSException raise:MGSNetSocketException format:@"method must be overridden"];
+}
+
+/*
+ 
+ send response chunk
+ 
+ needs to be overidden
+ 
+ */
+- (void)sendResponseChunk:(NSData *)data
+{
+    #pragma unused(data)
 	[NSException raise:MGSNetSocketException format:@"method must be overridden"];
 }
 
@@ -297,7 +316,7 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 					_netRequest.readTimeout = netMessage.header.responseTimeout;
 					_netRequest.writeTimeout = netMessage.header.requestTimeout;
 					
-					_netRequest.status = kMGSStatusReadingMessagePayload;
+					_netRequest.status = kMGSStatusReadingMessageBody;
 					netMessage.expectedLength = length;
 					
 					// Read payload data from this socket.
@@ -310,7 +329,9 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 				break;
 				
 				// header received, awaiting payload
-			case kMGSStatusReadingMessagePayload:
+			case kMGSStatusReadingMessageBody:
+                
+                // validate the data length
 				if (dataLength != netMessage.expectedLength) {
 					error = @"unexpected payload length";
 					MLog(RELEASELOG, @"unexpected payload length %@", dataString);
@@ -324,29 +345,16 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 					goto cleanup;
 				}
 				
-				// start reading attachments
-				//
-				// after - readAttachmentData has returned
-				// status may be kMGSStatusMessageReceived if no attachments
-				// or all attachments have been sent
-				//
-				if (![self readAttachmentData:nil]) {
-					error = @"cannot read attachment data";
-					MLog(RELEASELOG, @"%@", error);
-					goto cleanup;
-				}
-				
+                // start reading attachments if present.
+                [self readAttachments:nil withTag:tag];
+             				
 				break;
 				
-				// reading attachments
+				// continue reading attachments
 			case kMGSStatusReadingMessageAttachments:
-
-				if (![self readAttachmentData:data]) {
-					error = @"cannot read attachment data";
-					MLog(RELEASELOG, @"%@", error);
-					goto cleanup;
-				}
-				
+                
+                //  read attachment data
+                [self readAttachments:data withTag:tag];
 				
 				break;
 
@@ -361,7 +369,7 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 		}
 	}
 	@catch (NSException *e) {
-		error = [NSString stringWithFormat: @"Exception reading network data: ", e];
+		error = [NSString stringWithFormat: @"Socket read error: %@ %@", [e name], [e reason]];
 		throwMe = e;
 		goto cleanup;
 	}
@@ -369,15 +377,15 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 	return;
 	
 cleanup:
-	[self onReadBadDataWithErrors: error];
+	[self onReadBadDataWithErrors:error];
 	
 	if (throwMe) {
 		@throw throwMe;
 	}
 	
 	return;
-	
 }
+
 
 /* 
  
@@ -443,8 +451,31 @@ cleanup:
 			case kMGSStatusSendingMessage:
 			case kMGSStatusSendingMessageAttachments:
 				
-				// send attachment data if required
-				if (![self sendAttachments]) {
+                // sending chunked attachments
+                if ([message.header.attachmentTransferEncoding isEqualToString:MGSNetHeaderAttachmentTransferEncodingChunked]) {
+                    
+                    switch (_netRequest.status) {
+                        
+                        // we have sent our message so we now wait for chunks to be written
+                        case kMGSStatusSendingMessage:
+                            _netRequest.status = kMGSStatusSendingMessageAttachments;
+                            break;
+
+                        // we sent a chunk so check it it was the last one.
+                        // if so our message is done.
+                        case kMGSStatusSendingMessageAttachments:
+                            
+                            if (tag == kMGSSocketWriteAttachmentLastChunk) {
+                                _netRequest.status = kMGSStatusMessageSent;
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                    
+                // sending identity attachments
+                } else if (![self sendAttachments]) {
 					error = @"cannot send attachment data";
 					goto cleanup;				
 				}
@@ -459,6 +490,7 @@ cleanup:
 		switch (_netRequest.status) {
 				
 				// if sending attachments then wait for callback
+                // or wait for more chunked data to be written
 			case kMGSStatusSendingMessageAttachments:
 				return;
 				
@@ -533,7 +565,7 @@ cleanup:
 	// will be sent followed by didDisconnect.
 	// allowing the read to detect the socket EOF allows the normal
 	// TCP shutdown sequence to be followed.
-	[_socket readDataToLength:MGSNetHeaderLength withTimeout:_netRequest.readTimeout tag:0];
+	[_socket readDataToLength:MGSNetHeaderLength withTimeout:_netRequest.readTimeout tag:kMGSSocketReadMessage];
 	
 	MLog(DEBUGLOG, @"A read has been queued. Awaiting response...");
 	
@@ -565,7 +597,7 @@ cleanup:
 	
 	// send the packet data
 	_netRequest.status = kMGSStatusSendingMessage;
-	[_socket writeData:data withTimeout:_netRequest.writeTimeout tag:0];
+	[_socket writeData:data withTimeout:_netRequest.writeTimeout tag:kMGSSocketWriteMessage];
 }
 
 /*
@@ -752,7 +784,7 @@ cleanup:
 		}
 		
 		// send the attachment data
-		[_socket writeData:data withTimeout:_netRequest.writeTimeout tag:0];
+		[_socket writeData:data withTimeout:_netRequest.writeTimeout tag:kMGSSocketWriteAttachmentData];
 		
 	} 
 	@catch (NSException *e) {
@@ -773,17 +805,160 @@ errorExit:
 
 /*
  
- read attachment data
+ - readAttachments:withTag:
  
  */
-- (BOOL)readAttachmentData:(NSData *)data
+- (void)readAttachments:(NSData *)data withTag:(long)tag
 {
+    
+    MGSNetMessage *netMessage = [self messageToBeRead];
+    
+    // if no attachments then the message is complete
+    if (netMessage.header.attachmentTransferEncoding == nil) {
+        _netRequest.status = kMGSStatusMessageReceived;
+        
+        return;
+        
+    // chunked attachments
+    } if ([netMessage.header.attachmentTransferEncoding isEqualToString:MGSNetHeaderAttachmentTransferEncodingChunked]) {
+        
+        [self readAttachmentChunkedData:data withTag:tag];
+    
+    // identity attachments
+    } else if ([netMessage.header.attachmentTransferEncoding isEqualToString:MGSNetHeaderAttachmentTransferEncodingIdentity]) {
+        
+        if (![self readAttachmentIdentityData:data withTag:tag]) {
+            [NSException raise:MGSNetSocketException format:@"Error reading attachment data", nil];
+        }
+        
+    // anything else  is inavlid
+    } else {
+        [NSException raise:MGSNetSocketException format:@"Invalid attachment transfer encoding : %@", netMessage.header.attachmentTransferEncoding];
+    }
+}
+
+/*
+ 
+ - readAttachmentChunckedData:withTag: 
+ */
+- (void)readAttachmentChunkedData:(NSData *)data withTag:(long)tag
+{
+    // chunk terminator
+    static NSData *chunkTerminator = nil;
+    if (!chunkTerminator) {
+        chunkTerminator = [MGSNetHeaderTerminator dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    MGSNetMessage *netMessage = [self messageToBeRead];
+    
+    NSAssert([netMessage.header.attachmentTransferEncoding isEqualToString:MGSNetHeaderAttachmentTransferEncodingChunked], 
+             @"Invalid attachment transfer encoding: %@", netMessage.header.attachmentTransferEncoding);
+
+    NSAssert([netMessage.header.attachmentEncoding isEqualToString:MGSNetHeaderAttachmentEncodingUTF8], 
+             @"Invalid attachment encoding: %@", netMessage.header.attachmentEncoding);
+
+    // data is UTF-8 so we can convert it to a string regardless
+    // of wether it is the chunk size or the data.
+    // if we start chunking non UTF-8 data then this will ned to be modified.
+    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+    // if we are done reading the message body start reading the chunks
+    if (!data && _netRequest.status == kMGSStatusReadingMessageBody) {
+        
+        // we are now reading the attachments
+        _netRequest.status = kMGSStatusReadingMessageAttachments;
+        
+        // read the first chunk size
+        [_socket readDataToData:chunkTerminator withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunkSize];
+        
+    } else if (_netRequest.status == kMGSStatusReadingMessageAttachments) {
+        
+        NSScanner *scanner = nil;
+        
+        switch (tag) {
+            case kMGSSocketReadAttachmentChunkSize:;
+                
+                // get the chunk size
+                NSString *chunkSizeString = nil;
+                
+                // scan up to terminator
+                scanner = [NSScanner scannerWithString:dataString];
+                if (![scanner scanUpToString:MGSNetHeaderTerminator intoString:&chunkSizeString]) {
+                    [NSException raise:MGSNetSocketException format:@"Chunk size terminator missing", nil];
+                }
+                
+                // scan from hex to decimal
+                unsigned length = 0;
+                scanner = [NSScanner scannerWithString:chunkSizeString];
+                [scanner scanHexInt:&length];
+                NSUInteger chunkSize = length;
+                
+                // we want to read the chunk data + the terminator
+                chunkSize += [MGSNetHeaderTerminator length];
+                
+                // read the chunk data up to given length
+                [_socket readDataToLength:chunkSize withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunk];
+                
+                break;
+                
+            case kMGSSocketReadAttachmentChunk:;
+                
+                // get the chunk string
+                NSString *chunkString = nil;
+                
+                // the data should contain the terminator
+                // so scan up to it
+                scanner = [NSScanner scannerWithString:dataString];
+                if (![scanner scanUpToString:MGSNetHeaderTerminator intoString:&chunkString]) {
+                    [NSException raise:MGSNetSocketException format:@"Chunk data terminator missing", nil];
+                }
+                
+                // a zero sized chunk marks the end of the attachmnet stream
+                if (!chunkString || [chunkString length] == 0) {
+                    
+                    _netRequest.status = kMGSStatusMessageReceived;
+                    
+                } else {
+                    
+                    [_netRequest chunkStringReceived:chunkString];
+                    
+                    // read the next chunk size
+                    [_socket readDataToData:chunkTerminator withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunkSize];
+                }
+                
+                break;
+                
+            default:
+                [NSException raise:MGSNetSocketException format:@"Invalid atatchment data read tag: %i", tag];
+                break;
+                
+        }
+    } else {
+        [NSException raise:MGSNetSocketException format:@"Invalid request status in chunked read: %i", _netRequest.status];
+    }
+
+} 
+
+/*
+ 
+ - readAttachmentIdentityData:withTag: 
+ */
+- (BOOL)readAttachmentIdentityData:(NSData *)data withTag:(long)tag
+{
+    #pragma unused(tag)
+    
 	NSString *error = nil;
 	MGSNetAttachment *attachment = nil;
 	
 	@try {
 		MGSNetMessage *netMessage = [self messageToBeRead];
 		
+        NSAssert([netMessage.header.attachmentTransferEncoding isEqualToString:MGSNetHeaderAttachmentTransferEncodingIdentity], 
+                 @"Invalid attachment transfer encoding: %@", netMessage.header.attachmentTransferEncoding);
+
+        NSAssert([netMessage.header.attachmentEncoding isEqualToString:MGSNetHeaderAttachmentEncodingBinary], 
+                 @"Invalid attachment encoding: %@", netMessage.header.attachmentEncoding);
+
 		// get attachments - may be none
 		NSArray *attachments = [netMessage.attachments array];
 		if (!attachments || [attachments count] == 0) {
@@ -852,7 +1027,7 @@ errorExit:
 		unsigned long long readLength = remainingLength > ATTACHMENT_DATA_BLOCK_LENGTH ? ATTACHMENT_DATA_BLOCK_LENGTH : remainingLength;
 
 		// read the attachment data
-		[_socket readDataToLength:(NSUInteger)readLength withTimeout:_netRequest.readTimeout tag:0];	
+		[_socket readDataToLength:(NSUInteger)readLength withTimeout:_netRequest.readTimeout tag:kMGSSocketReadAttachmentData];	
 		
 	} 
 	@catch (NSException *e) {

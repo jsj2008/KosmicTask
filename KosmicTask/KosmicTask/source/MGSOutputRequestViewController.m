@@ -732,6 +732,18 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 }
 
 #pragma mark -
+#pragma mark Tasklogging
+/*
+ 
+ - addLogString:
+ 
+ */
+- (void)addLogString:(NSString *)value {
+    [_resultViewController addLogString:value];
+}
+
+
+#pragma mark -
 #pragma mark Progress
 /*
  

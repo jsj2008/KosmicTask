@@ -17,6 +17,7 @@
 // message dictionary keys
 extern NSString *MGSMessageKeyVersion;
 extern NSString *MGSMessageKeyUUID;
+extern NSString *MGSMessageKeyRequestUUID;
 extern NSString *MGSMessageKeyLicenceData;
 extern NSString *MGSMessageKeyOrigin;
 extern NSString *MGSNetMessageKeyCommand;
@@ -45,6 +46,7 @@ extern NSString *MGSNetMessageCommandNegotiate;
 
 // application keys
 extern NSString *MGSApplicationKeyUsername;
+extern NSString *MGSApplicationKeyRealTimeLogging;
 
 @interface MGSNetMessage : NSObject {
 	NSMutableDictionary *_messageDict;		// message content is this dictionary
@@ -66,9 +68,8 @@ extern NSString *MGSApplicationKeyUsername;
 
 + (NSMutableDictionary *)netOrigin;
 + (NSArray *)commands;
-
+- (MGSNetMessage *)initWithContentType:(NSString *)type subType:(NSString *)subType encoding:(NSString *)encoding;
 - (BOOL)isNegotiateMessage;
-- (MGSNetMessage *) initWithTemplate:(NSString *)path;
 - (void)setMessageObject:(id)object forKey:(NSString *)key;
 - (id)messageObjectForKey:(NSString *)key;
 - (void)removeMessageObjectForKey:(NSString *)key;

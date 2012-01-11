@@ -24,7 +24,9 @@ NSString *MGSScriptCommandListPublished = @"List Published";			// command host t
 NSString *MGSScriptCommandListAll = @"List All";						// command host to provide list of all available scripts
 
 NSString *MGSScriptCommandExecuteScript = @"Execute Script";			// command host to execute a given script
-NSString *MGSScriptCommandBuildScript = @"Compile Script";			// command to compile script
+NSString *MGSScriptCommandBuildScript = @"Compile Script";              // command to compile script
+
+NSString *MGSScriptCommandLogMesgUUID = @"Log MesgUUID";            // command to log request with given Message UUID
 
 NSString *MGSScriptCommandTerminateMessageUUID = @"Terminate MesgUUID";		// command host to terminate a given Message UUID
 NSString *MGSScriptCommandSuspendMessageUUID = @"Suspend MesgUUID";			// command host to suspend a given Message UUID
@@ -47,7 +49,8 @@ NSString *MGSScriptKeyBoolResult = @"BoolResult";	// a bool result
 NSString *MGSScriptKeyScriptCompilationError = @"ScriptCompilationError";
 
 // these keys are saved in the application scripts plist.
-NSString *MGSScriptKeyScripts = @"Scripts";	// marks scripts array in dictionary
+NSString *MGSScriptKeyScripts = @"Scripts";             // mark scripts array in dictionary
+NSString *MGSScriptKeyCapabilities = @"Capabilities";   // mark capabilities dict in dictionary
 
 // keys to define an individual script
 NSString *MGSScriptKeyIdentifier = @"Identifier";

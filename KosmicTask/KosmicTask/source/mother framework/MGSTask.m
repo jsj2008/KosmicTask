@@ -13,6 +13,9 @@
 #import "JAProcessInfo.h"
 #import "MGSPath.h"
 
+@interface MGSErrorMutableData
+@end
+
 @interface NSMutableData (MGSTask)
 - (void) mgsTask_fileHandleDataAvailable:(NSNotification*)notification;
 @end
@@ -154,8 +157,8 @@
 		// read task stdErr async
 		if ((fileHandle = [_errorPipe fileHandleForReading])) {
 			_taskErrorData = [NSMutableData data];
-			[[NSNotificationCenter defaultCenter] addObserver:_taskErrorData 
-													 selector:@selector(mgsTask_fileHandleDataAvailable:) 
+			[[NSNotificationCenter defaultCenter] addObserver:self 
+													 selector:@selector(fileHandleErrorDataAvailable:) 
 														 name:NSFileHandleDataAvailableNotification object:fileHandle];
 			[fileHandle waitForDataInBackgroundAndNotify];			
 		}
@@ -368,6 +371,23 @@
 	[_tempFilePaths addObject:tempPath];
 }
 
+/*
+ 
+ - fileHandleErrorDataAvailable:
+ 
+ */
+- (void)fileHandleErrorDataAvailable:(NSNotification*)notification
+{
+    NSFileHandle *fileHandle = [notification object];
+    
+	// an empty data block is returned on EOF
+	NSData *data = [fileHandle availableData];
+	if ([data length] > 0) {
+		[_taskErrorData appendData:data];
+		[fileHandle waitForDataInBackgroundAndNotify];
+	}
+}
+
 @end						
 										
 @implementation MGSTask(Private)
@@ -396,6 +416,7 @@
 		NSLog(@"Exception: %@", e);
 	}
 }
+
 
 @end
 

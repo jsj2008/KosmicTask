@@ -79,6 +79,7 @@
 - (IBAction)showPrevViewMode:(id)sender;
 - (NSAttributedString *)saveResultString;
 - (NSTextView *)saveResultTextView;
+- (void)addLogString:(NSString *)value;
 
 //@property NSString *title;
 @property (copy) NSImage *titleImage;

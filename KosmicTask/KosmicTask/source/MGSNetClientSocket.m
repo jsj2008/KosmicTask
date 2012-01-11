@@ -314,23 +314,36 @@
 				
 			// if awaiting header then write has completed
 			case kMGSStatusReadingMessageHeaderPrefix:;
-				//
-				// log request sent with script command
-				//
-				NSDictionary *appDict = [[self.netRequest.requestMessage messageDict] objectForKey:MGSScriptKeyKosmicTask];	
-				NSString *command = [appDict objectForKey:MGSScriptKeyCommand];
-				if (!command) {
-					command = @"*";
-				}
-				
+                
+                //
+                // log request sent with script command
+                //
 				// TODO: add a preference for this
 				if (NO) {
+                    NSDictionary *appDict = [[self.netRequest.requestMessage messageDict] objectForKey:MGSScriptKeyKosmicTask];	
+                    NSString *command = [appDict objectForKey:MGSScriptKeyCommand];
+                    if (!command) {
+                        command = @"*";
+                    }
+				
 					MLogInfo(@"Sent command: %@ to %@ in request %@", 
 						 command, 
 						 clientServiceName, 
 						 [self.netRequest UUID]);
 				}
 				
+                /*
+                 
+                 If we have a auxiliary requests then send them now.
+                 We wait for the main request to be sent to ensure that the
+                 auxiliary requests can refer to the parent request message UUID if required.
+                 We need to make sure that the server has received the parent UUID before
+                 another request references it.
+                 
+                 */
+                for (MGSNetRequest *auxiliaryRequest in self.netRequest.childRequests) {
+                    [auxiliaryRequest sendRequestOnClient];
+                }
 				return;
 				
 			default:

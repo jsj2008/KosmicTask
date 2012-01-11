@@ -55,6 +55,7 @@ MLog(DEBUGLOG, @"logged an int %d",10);
 #define MLogInfo(s,...) [[MLog sharedController] withLevel:RELEASELOG sourceFile:"" lineNumber:0 format:(s),## __VA_ARGS__]
 #define MLogDebug(s,...) [[MLog sharedController] withLevel:DEBUGLOG sourceFile:__FILE__ lineNumber:__LINE__ format:(s),## __VA_ARGS__]
 
+#define MLogException(e) MLogInfo(@"Exception : %@ %@", [e name], [e reason])
 
 // don't let the log file get to big or the cost of scrolling the text
 // in the error window becomes very heavy

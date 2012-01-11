@@ -25,6 +25,10 @@
 
 static MGSClientRequestManager *_sharedController = nil;
 
+@interface MGSClientRequestManager()
+- (NSMutableDictionary *)scriptDictForCommand:(NSString *)command parameter:(id)parameter;
+@end
+
 @interface MGSClientRequestManager(Private)
 - (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner withCommand:(NSString *)command withScriptDict:(NSMutableDictionary *)dict;
 - (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner withScriptDict:(NSMutableDictionary *)dict;
@@ -135,10 +139,45 @@ static MGSClientRequestManager *_sharedController = nil;
 	// we want the owner to receive status updates as the request proceeds.
 	netRequest.sendUpdatesToOwner = YES;
 	
+    /*=======================================
+     create a child logging request
+     *=======================================
+     */
+     NSMutableDictionary *logDictionary = [self scriptDictForCommand:MGSScriptCommandLogMesgUUID parameter:netRequest.requestMessage.messageUUID];
+   
+    // create child request
+    MGSNetRequest *logRequest = [self createRequestForClient:netClient withOwner:nil withScriptDict:logDictionary];
+    logRequest.requestType = kMGSRequestTypeLogging;
+    [netRequest addChildRequest:logRequest];
+    
 	// send the request 
 	[self sendRequestOnClient:netRequest];
 }
 
+/*
+ 
+ -scriptDictForCommand:parameter:
+ 
+ */
+- (NSMutableDictionary *)scriptDictForCommand:(NSString *)command parameter:(id)parameter
+{
+    // create the logging request
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
+    
+    // command is log message with a given UUID
+	[dict setObject:command forKey:MGSScriptKeyCommand];
+    
+    // create array of command parameters
+    NSArray *parameters = nil;
+    if ([parameter isKindOfClass:[NSArray class]]) {
+        parameters = parameter;
+    } else {
+        parameters = [NSArray arrayWithObject:parameter];
+    }
+	[dict setObject:parameters forKey:MGSScriptKeyCommandParamaters];
+    
+    return dict;
+}
 /*
  
  request compiled script source for task

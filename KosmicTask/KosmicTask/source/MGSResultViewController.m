@@ -227,6 +227,18 @@ static BOOL applicationMenuConfigured = NO;
 	//[super awakeFromNib];
 }
 
+#pragma mark -
+#pragma mark Tasklogging
+/*
+ 
+ - addLogString:
+ 
+ */
+- (void)addLogString:(NSString *)value {
+    MLogInfo(@"Chunk = %@", value);
+}
+
+#pragma mark -
 #pragma mark Result handling
 
 /*

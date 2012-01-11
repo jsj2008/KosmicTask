@@ -42,9 +42,10 @@
 - (void)resume;
 - (void)addTempFilePath:(NSString *)tempPath;
 - (NSArray *)processDescendents;
+- (void)fileHandleErrorDataAvailable:(NSNotification*)notification;
 
 @property (readonly) NSMutableData *taskOutputData;
-@property (readonly) NSData *taskErrorData;
+@property (readonly) NSMutableData *taskErrorData;
 @property BOOL taskComplete;
 @property (readonly) NSString *workingDirectoryPath;
 

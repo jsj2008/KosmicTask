@@ -11,6 +11,11 @@
 
 #define MGS_STANDARD_TIMEOUT 60
 
+typedef enum _eMGSRequestType {
+    kMGSRequestTypeWorker = 0,
+    kMGSRequestTypeLogging= 1
+} eMGSRequestType;
+
 // net request status
 typedef enum _eMGSRequestStatus {
 	kMGSStatusExceptionOnConnecting = -2,
@@ -33,7 +38,7 @@ typedef enum _eMGSRequestStatus {
 	// receiving message
 	kMGSStatusReadingMessageHeaderPrefix = 100,
 	kMGSStatusReadingMessageHeader = 101,
-	kMGSStatusReadingMessagePayload = 102,
+	kMGSStatusReadingMessageBody = 102,
 	kMGSStatusReadingMessageAttachments = 103,
 	kMGSStatusMessageReceived = 104,
 	
@@ -57,6 +62,9 @@ typedef enum _eMGSRequestStatus {
 
 // request status update
 -(void)netRequestUpdate:(MGSNetRequest *)netRequest;
+
+// request status update
+-(void)netRequestChunkReceived:(NSString *)chunk;
 
 // request will send
 -(NSDictionary *)netRequestWillSend:(MGSNetRequest *)netRequest;
@@ -82,6 +90,7 @@ typedef enum _eMGSRequestStatus {
 
 
 @interface MGSNetRequest : NSObject {
+    eMGSRequestType _requestType;
 	MGSNetMessage *_requestMessage;		// request message sent from client to server
 	MGSNetMessage *_responseMessage;	// response message from server to client
 	MGSNetClient *_netClient;			// netclient defining service to use to connect to server
@@ -101,7 +110,10 @@ typedef enum _eMGSRequestStatus {
 	BOOL _sendUpdatesToOwner;			// flag send updates to owner
 	MGSNetRequest *_prevRequest;		// previous request
 	MGSNetRequest *_nextRequest;		// next request
+    NSMutableArray *_childRequests;     // child requests
+    MGSNetRequest *_parentRequest;      // parent request
 	NSUInteger _flags;
+    NSMutableArray *_chunksReceived;    // chunks received
 }
 
 + (id)requestWithClient:(MGSNetClient *)netClient;
@@ -118,6 +130,7 @@ typedef enum _eMGSRequestStatus {
 - (MGSNetRequest *)initWithConnectedSocket:(MGSNetSocket *)socket;
 - (void)sendRequestOnClient;
 - (void)sendResponseOnSocket;
+- (void)sendResponseChunkOnSocket:(NSData *)data;
 - (void)sendErrorToOwner;
 
 - (void)setSocketDisconnected;
@@ -154,6 +167,8 @@ typedef enum _eMGSRequestStatus {
 - (BOOL)commandBasedNegotiation;
 
 - (void)tagError:(MGSError *)error;
+- (void)addChildRequest:(MGSNetRequest *)request;
+
 
 @property (readonly) MGSNetSocket *netSocket;
 @property (readonly) MGSNetClient *netClient;
@@ -172,8 +187,11 @@ typedef enum _eMGSRequestStatus {
 @property BOOL sendUpdatesToOwner;
 @property (assign) MGSNetRequest *prevRequest;			// previous request
 @property (assign) MGSNetRequest *nextRequest;			// next request
+@property (assign) NSMutableArray *childRequests;		// logging request
+@property (assign) MGSNetRequest *parentRequest;			// parent request
 @property (readonly) NSUInteger flags;
-
+@property (readonly) NSMutableArray *chunksReceived;
+@property eMGSRequestType requestType;
 @end
 
 

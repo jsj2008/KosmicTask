@@ -367,6 +367,44 @@
 	
 }
 
+/*
+ 
+ - sendResponseChunk:
+ 
+ */
+- (void)sendResponseChunk:(NSData *)data
+{
+    NSAssert(self.socket, @"socket is nil");
+	NSAssert(self.netRequest, @"net request is nil");
+	
+    // chunked data must have been flagged in the header
+    MGSNetMessage *netMessage = [self messageToBeWritten];
+    if (![netMessage.header.attachmentTransferEncoding isEqualToString:MGSNetHeaderAttachmentTransferEncodingChunked]) {
+        [NSException raise:MGSNetSocketException format:@"Request status does not permit sending chunked data."];
+    }
+    
+    // a chunk is only valid when sending attachments 
+	//if (self.netRequest.status != kMGSStatusSendingMessageAttachments) {
+	//	[NSException raise:MGSNetSocketException format:@"Request status does not permit sending chunked data."];
+	//}
+	   
+    // build the chunk.
+    NSMutableData *chunk = [NSMutableData dataWithCapacity:[data length] + 30];
+    NSString *dataLength = [NSString stringWithFormat:@"%X%@", [data length], MGSNetHeaderTerminator];
+    [chunk appendData:[dataLength dataUsingEncoding:NSUTF8StringEncoding]];
+    [chunk appendData:data];
+    [chunk appendData:[MGSNetHeaderTerminator dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    long tag = kMGSSocketWriteAttachmentChunk;
+    
+    // zero length chunk signals the end of the data stream
+    if ([data length] == 0) {
+        tag = kMGSSocketWriteAttachmentLastChunk;
+    }
+    
+	// send the chunk
+	[self.socket writeData:chunk withTimeout:self.netRequest.writeTimeout tag:tag];
+}
 @end
 
 @implementation MGSNetServerSocket(Private)
