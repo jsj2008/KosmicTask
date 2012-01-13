@@ -20,7 +20,7 @@
 	id _delegate;
 }
 
-@property id delegate;
+@property id <MGSPortMapperDelegate> delegate;
 
 - (id)initWithExternalPort:(int)externalPort listeningPort:(int)listeningPort;
 - (void)remapWithExternalPort:(int)externalPort listeningPort:(int)listeningPort;

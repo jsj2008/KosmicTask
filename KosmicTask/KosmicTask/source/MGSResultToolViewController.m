@@ -29,7 +29,7 @@
  initialise
  
  */
-- (void)initialiseForWindow:(NSWindow *)window;
+- (void)initialiseForWindow:(NSWindow *)window
 {
 	NSAssert(window, @"window is nil");
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewConfigDidChange:) name:MGSNoteViewConfigDidChange object:window];

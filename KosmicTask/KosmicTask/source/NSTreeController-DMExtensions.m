@@ -63,7 +63,7 @@
 
 @implementation NSTreeController (DMExtensions)
 
-- (void)dm_setSelectedObjects:(NSArray *)newSelectedObjects;
+- (void)dm_setSelectedObjects:(NSArray *)newSelectedObjects
 {
 	NSMutableArray *indexPaths = [NSMutableArray array];
 	unsigned int selectedObjectIndex;
@@ -78,7 +78,7 @@
 	[self setSelectionIndexPaths:indexPaths];
 }
 
-- (NSIndexPath *)dm_indexPathToObject:(id)object;
+- (NSIndexPath *)dm_indexPathToObject:(id)object
 {
 	NSArray *children = [self content];
 	return [self dm_indexPathFromIndexPath:nil inChildren:children childCount:[children count]
@@ -91,7 +91,7 @@
 @implementation NSTreeController (DMExtensions_Private)
 
 - (NSIndexPath *)dm_indexPathFromIndexPath:(NSIndexPath *)baseIndexPath inChildren:(NSArray *)children
-							  childCount:(unsigned int)childCount toObject:(id)object;
+							  childCount:(unsigned int)childCount toObject:(id)object
 {
 	unsigned int childIndex;
 	for (childIndex = 0; childIndex < childCount; childIndex++) {

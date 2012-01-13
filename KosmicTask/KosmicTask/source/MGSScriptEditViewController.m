@@ -775,7 +775,7 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 			// validate rtfSource if reqd
 			if (rtfSource) {
 			
-				stringSource = [[NSAttributedString alloc] initWithRTF:rtfSource documentAttributes:nil];
+				stringSource = [[[NSAttributedString alloc] initWithRTF:rtfSource documentAttributes:nil] string];
 			
 			} else {
 				

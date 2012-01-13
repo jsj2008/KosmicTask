@@ -64,7 +64,7 @@ typedef enum _eMGSRequestStatus {
 -(void)netRequestUpdate:(MGSNetRequest *)netRequest;
 
 // request status update
--(void)netRequestChunkReceived:(NSString *)chunk;
+- (void)netRequestChunkReceived:(MGSNetRequest *)netRequest;
 
 // request will send
 -(NSDictionary *)netRequestWillSend:(MGSNetRequest *)netRequest;
@@ -83,6 +83,7 @@ typedef enum _eMGSRequestStatus {
 @protocol MGSNetRequestDelegate
 
 @optional
+- (void)sendRequestOnClient:(MGSNetRequest *)request;
 - (void)netRequestReplyOnClient:(MGSNetRequest *)netRequest;
 - (void)sendResponseOnSocket:(MGSNetRequest *)netRequest wasValid:(BOOL)valid;
 - (void)authenticationFailed:(MGSNetRequest *)netRequest;
@@ -168,7 +169,8 @@ typedef enum _eMGSRequestStatus {
 
 - (void)tagError:(MGSError *)error;
 - (void)addChildRequest:(MGSNetRequest *)request;
-
+- (void)sendChildRequests;
+- (void)chunkStringReceived:(NSString *)chunk;
 
 @property (readonly) MGSNetSocket *netSocket;
 @property (readonly) MGSNetClient *netClient;

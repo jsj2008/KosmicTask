@@ -132,7 +132,9 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 {
     // disconnect child sockets
     for (MGSNetRequest *request in self.netRequest.childRequests) {
-        [request disconnect];
+        if (NO) {
+            [request disconnect];
+        }
     }
 	[_socket disconnect];
 }

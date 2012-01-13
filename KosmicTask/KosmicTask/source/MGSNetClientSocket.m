@@ -341,9 +341,7 @@
                  another request references it.
                  
                  */
-                for (MGSNetRequest *auxiliaryRequest in self.netRequest.childRequests) {
-                    [auxiliaryRequest sendRequestOnClient];
-                }
+                [self.netRequest sendChildRequests];
 				return;
 				
 			default:

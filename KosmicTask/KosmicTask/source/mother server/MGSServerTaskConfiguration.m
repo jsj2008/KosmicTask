@@ -21,7 +21,7 @@
 #import "NSPropertyListSerialization_Mugginsoft.h"
 #import "MGSNetAttachments.h"
 #import "MGSNetAttachment.h"
-#import "NSString_Mugginsoft.h";
+#import "NSString_Mugginsoft.h"
 #import "MGSServerRequestThreadHelper.h"
 #import "MGSAppleScriptData.h"
 #import "MGSServerRequestManager.h"

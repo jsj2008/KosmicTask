@@ -937,7 +937,6 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 {
 	#pragma unused(aTabView)
 	#pragma unused(tabViewItem)
-	#pragma unused(tabbarControl)
 	
 	MLog(DEBUGLOG, @"didDropTabViewItem: %@ inTabBar: %@", [tabViewItem label], tabBarControl);
 }

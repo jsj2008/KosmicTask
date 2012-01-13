@@ -263,7 +263,7 @@ static NDComponentInstance		* sharedComponentInstance = nil;
 /*
 	- setAppleEventSendTarget:
  */
-- (void)setAppleEventSendTarget:(id<NDScriptDataSendEvent>)aTarget currentProcessOnly:(BOOL)aFlag;
+- (void)setAppleEventSendTarget:(id<NDScriptDataSendEvent>)aTarget currentProcessOnly:(BOOL)aFlag
 {
 	sendAppleEvent.currentProcessOnly = aFlag;
 	if( aTarget != sendAppleEvent.target )

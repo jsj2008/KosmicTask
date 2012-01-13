@@ -45,7 +45,7 @@ void offsetPoint (NSPoint *point, CGFloat x, CGFloat y)
 
 // Not even necessary as it seems that when the window becomes/resigns key the views
 // are redisplyed anyway
-- (void)viewWillMoveToWindow:(NSWindow *)newWindow;
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow
 {
 	#pragma unused(newWindow)
 	
@@ -239,7 +239,7 @@ void offsetPoint (NSPoint *point, CGFloat x, CGFloat y)
 
 
 // NSWindow notification
-- (void)windowDidChangeKeyNotification:(NSNotification *)notification;
+- (void)windowDidChangeKeyNotification:(NSNotification *)notification
 {
 	#pragma unused(notification)
 	

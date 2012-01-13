@@ -231,8 +231,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
  */
 - (void)setSelectedPartnerIndex:(NSInteger)idx
 {
-	#pragma unused(sender)
-	
+
 	_selectedPartnerIndex = idx;
 	
 	// if display locked with partner then change

@@ -811,6 +811,7 @@ commonExit:
 -(void)netRequestChunkReceived:(MGSNetRequest *)netRequest
 {
     if (netRequest.requestType == kMGSRequestTypeLogging) {
+        
         // iterate over the available chunks
         for (NSString *chunk in netRequest.chunksReceived) {
             [_outputViewController addLogString:chunk];

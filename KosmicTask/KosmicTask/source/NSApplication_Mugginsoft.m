@@ -17,7 +17,7 @@
  */
 + (void)getSystemVersionMajor:(unsigned *)major
                         minor:(unsigned *)minor
-                       bugFix:(unsigned *)bugFix;
+                       bugFix:(unsigned *)bugFix
 {
     OSErr err;
     SInt32 systemVersion, versionMajor, versionMinor, versionBugFix;

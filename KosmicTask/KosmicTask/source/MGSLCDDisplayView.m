@@ -13,6 +13,8 @@
 @implementation MGSLCDDisplayView
 
 @synthesize maxIntensity = _maxIntensity;
+@synthesize active = _active;
+@synthesize available = _available;
 
 /*
  

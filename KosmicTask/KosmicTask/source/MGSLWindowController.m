@@ -247,7 +247,6 @@ static BOOL trialExpired = NO;
  */
 - (void)openPanelDidEnd:(NSOpenPanel *)sheet returnCode:(int)returnCode contextInfo:(void  *)contextInfo
 {
-	#pragma unused(sender)
 	#pragma unused(contextInfo)
 	
 	// hide the sheet

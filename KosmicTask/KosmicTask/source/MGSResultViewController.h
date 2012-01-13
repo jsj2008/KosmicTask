@@ -62,6 +62,7 @@
 	MarkerLineNumberView *_lineNumberView;
 }
 
+- (id)initWithDelegate:(id)delegate;
 - (IBAction)saveResult:(id)sender;
 - (IBAction)quicklook:(id)sender;
 - (IBAction)sendResult:(id)sender;

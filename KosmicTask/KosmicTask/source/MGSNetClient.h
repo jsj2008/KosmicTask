@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MGSNetClientSocket.h";
+#import "MGSNetClientSocket.h"
 #import "MGSNetRequest.h"
 #import "MGSMotherModes.h"
 

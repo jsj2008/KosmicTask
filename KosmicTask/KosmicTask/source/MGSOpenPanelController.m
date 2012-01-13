@@ -23,14 +23,13 @@
  - openSourceFile:options:
  
  */
-- (NSOpenPanel *)openSourceFile:(id)theSender options:(NSDictionary *)options
+- (NSOpenPanel *)openSourceFile:(id)sender options:(NSDictionary *)options
 {
-#pragma unused(sender)
-	
+
 	NSOpenPanel *op = [NSOpenPanel openPanel];
 	
 	window = [options objectForKey:@"window"];
-	delegate = theSender;
+	delegate = sender;
 	
 	// configure panel
 	[op setCanChooseDirectories:NO];

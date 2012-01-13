@@ -65,7 +65,7 @@
 												format:NSPropertyListXMLFormat_v1_0
 												errorDescription:&error];
 	if (!data || error) {
-		NSLog(@"initWithPlist: failed: %@", *error);
+		NSLog(@"initWithPlist: failed: %@", error);
 		return nil;
 	}
 	return [self initWithData:data];

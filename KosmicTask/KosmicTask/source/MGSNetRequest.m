@@ -451,6 +451,10 @@ static NSThread *networkThread = nil;
     if (_owner && [_owner respondsToSelector:@selector(netRequestChunkReceived:)]) {
         [_owner performSelectorOnMainThread:@selector(netRequestChunkReceived:) withObject:self waitUntilDone:NO];
     }
+    
+    // for now we do not preserve the chunks.
+    // in time we may wish to write them to file.
+    [_chunksReceived removeAllObjects];
 }
 
 #pragma mark -
@@ -465,6 +469,16 @@ static NSThread *networkThread = nil;
 {
     [self.childRequests addObject:request];
     request.parentRequest = self;
+}
+/*
+ - sendChildRequests
+ 
+ */
+- (void)sendChildRequests
+{
+    for (MGSNetRequest *auxiliaryRequest in self.childRequests) {
+        [[self delegate] sendRequestOnClient:auxiliaryRequest];
+    }
 }
 #pragma mark -
 #pragma mark Request queue handling

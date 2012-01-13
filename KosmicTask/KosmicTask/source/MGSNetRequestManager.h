@@ -7,10 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MGSNetRequest.h"
 
 @class MGSNetRequest;
 
-@interface MGSNetRequestManager : NSObject {
+@interface MGSNetRequestManager : NSObject <MGSNetRequestDelegate> {
 	NSMutableArray *_netRequests;
 }
 - (NSUInteger)requestCount;

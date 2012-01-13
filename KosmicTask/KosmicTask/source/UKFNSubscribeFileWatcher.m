@@ -201,5 +201,5 @@ void    UKFileSubscriptionProc( FNMessage message, OptionBits flags, void *refco
     if( message == kFNDirectoryModifiedMessage )    // No others exist as of 10.4
         [obj sendDelegateMessage: message forSubscription: subscription];
     else
-        NSLog( @"UKFileSubscriptionProc: Unknown message %d", message );
+        NSLog( @"UKFileSubscriptionProc: Unknown message %lu", message );
 }

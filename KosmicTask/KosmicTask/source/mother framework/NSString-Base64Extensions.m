@@ -27,12 +27,12 @@
 
 @implementation NSString (Base64)
 
-- (NSData *) decodeBase64;
+- (NSData *) decodeBase64
 {
     return [self decodeBase64WithNewlines: YES];
 }
 
-- (NSData *) decodeBase64WithNewlines: (BOOL) encodedWithNewlines;
+- (NSData *) decodeBase64WithNewlines: (BOOL) encodedWithNewlines
 {
     // Create a memory buffer containing Base64 encoded string data
     BIO * mem = BIO_new_mem_buf((void *) [self cString], [self cStringLength]);

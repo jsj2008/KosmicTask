@@ -12,6 +12,12 @@
 #import "MGSAsyncSocket.h"
 #import "MGSMother.h"
 
+@interface AsyncSocket()
+- (void)doSendBytes;
+- (void)doBytesAvailable;
+- (void)close;
+@end
+
 @implementation MGSAsyncSocket
 
 /*
@@ -82,7 +88,7 @@
 	// the superclass close method is private hence the use of perform selector
 	SEL closeSelector = @selector(close);
 	if ([AsyncSocket instancesRespondToSelector:closeSelector]) {	
-		[(id)super close];	// the id cast keeps the compiler content without need for a category		
+		[super close];	// the id cast keeps the compiler content without need for a category		
 		MLog(DEBUGLOG, @"MGSAsyncSocket closed.");
 	} else {
 		NSAssert (NO, @"AsyncSocket no longer responds to close message.");
@@ -142,7 +148,7 @@
 - (void)doSendBytes
 {
 	if (!writeSuspended) {
-		[(id)super doSendBytes];	// id cast keeps compiler happy
+		[super doSendBytes];	// id cast keeps compiler happy
 	}
 }
 /*
@@ -155,7 +161,7 @@
 - (void)doBytesAvailable
 {
 	if (!readSuspended) {
-		[(id)super doBytesAvailable];
+		[super doBytesAvailable];
 	}
 }
 @end

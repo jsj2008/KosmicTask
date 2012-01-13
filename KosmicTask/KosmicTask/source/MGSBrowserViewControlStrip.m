@@ -11,8 +11,8 @@
 #import "MGSNotifications.h"
 #import "MGSMotherModes.h"
 #import "MGSNetClient.h"
-#import "MGSMainViewController.h";
-#import "MGSPreferences.h";
+#import "MGSMainViewController.h"
+#import "MGSPreferences.h"
 
 @interface MGSBrowserViewControlStrip()
 - (void)viewConfigDidChange:(NSNotification *)note;

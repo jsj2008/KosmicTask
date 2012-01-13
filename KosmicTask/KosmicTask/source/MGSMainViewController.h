@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MGSBrowserViewController.h";
+#import "MGSBrowserViewController.h"
 #import "MGSMotherModes.h"
 
 #define TASK_DETAIL_CLOSE_SEGMENT_INDEX 0

@@ -12,7 +12,7 @@
 #import "MGSTempStorage.h"
 #import "MGSScriptRunnerApplication.h"
 
-#define OSStatusLog(status) NSLog(@"OSStatus error: %i - reason: %s", status, GetMacOSStatusErrorString(status))
+#define OSStatusLog(status) NSLog(@"OSStatus error: %lx - reason: %s", status, GetMacOSStatusErrorString(status))
 
 static BOOL isForegroundApplication = NO;
 

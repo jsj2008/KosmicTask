@@ -53,7 +53,8 @@
 	// credits
     //	Locate the README.rtf inside the application’s bundle.
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Credits" ofType: @"rtf"];
-	self.credits =  path ?[[NSMutableAttributedString alloc] initWithPath: path documentAttributes: NULL] : @"";
+	self.credits =  path ? [[NSAttributedString alloc] initWithPath: path documentAttributes: NULL] : 
+                            [[NSAttributedString alloc] initWithString:@"" attributes:nil];
 	
 	// version
 	MGSAppController *appController = [NSApp delegate];

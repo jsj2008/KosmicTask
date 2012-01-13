@@ -131,13 +131,13 @@ static NSString * const FVColorNameUpdateNotification = @"FVColorNameUpdateNotif
     [NSApp sendAction:[self action] to:[self target] from:self];
 }
 
-- (void)selectLabel:(NSUInteger)label;
+- (void)selectLabel:(NSUInteger)label
 {
     NSParameterAssert(nil != _matrix);
     [_matrix selectCellWithTag:label];
 }
 
-- (NSInteger)selectedTag;
+- (NSInteger)selectedTag
 {
     NSParameterAssert(nil != [_matrix selectedCell]); 
     return [[_matrix selectedCell] tag];
@@ -149,7 +149,7 @@ static NSString * const FVColorNameUpdateNotification = @"FVColorNameUpdateNotif
     return [self selectedTag];
 }
 
-+ (FVColorMenuView *)menuView;
++ (FVColorMenuView *)menuView
 {
     FVColorMenuView *menuView = nil;
     
@@ -333,7 +333,7 @@ static NSRect __FVSquareRectCenteredInRect(const NSRect iconRect)
     [super mouseExited:event];
 }
 
-- (NSString *)boxedLabelName;
+- (NSString *)boxedLabelName
 {
     NSCell *cell = nil;
     

@@ -126,7 +126,7 @@
  - templateEngine:encounteredError:isContinuing:
  
  */
-- (void)templateEngine:(MGTemplateEngine *)engine encounteredError:(NSError *)error isContinuing:(BOOL)continuing;
+- (void)templateEngine:(MGTemplateEngine *)engine encounteredError:(NSError *)error isContinuing:(BOOL)continuing
 {
 #pragma unused(engine)
 #pragma unused(continuing)

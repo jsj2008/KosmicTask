@@ -216,7 +216,7 @@
 	return fourCharCode == [aNumber fourCharCode];
 }
 
-- (NSString *)descriptionWithLocale:(NSDictionary *)aLocale;
+- (NSString *)descriptionWithLocale:(NSDictionary *)aLocale
 {
 	#pragma unused(aLocale)
 

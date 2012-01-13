@@ -30,7 +30,7 @@ const char MGSTaskProcessingContext;
  initialise for window
  
  */
-- (void)initialiseForWindow:(NSWindow *)window;
+- (void)initialiseForWindow:(NSWindow *)window
 {
 	NSAssert(window, @"window is nil");
 	

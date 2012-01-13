@@ -34,6 +34,7 @@
 @property (assign) MGSTaskSpecifier *action;
 @property BOOL invertedLeftBannerImage;
 
+-(id)initWithMode:(MGSParameterMode)mode ;
 - (void)updateBanner;
 - (MGSActionView *)actionView;
 - (void)setFrameSize:(NSSize)size;

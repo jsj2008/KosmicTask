@@ -68,7 +68,8 @@ extern NSString *MGSApplicationKeyRealTimeLogging;
 
 + (NSMutableDictionary *)netOrigin;
 + (NSArray *)commands;
-- (MGSNetMessage *)initWithContentType:(NSString *)type subType:(NSString *)subType encoding:(NSString *)encoding;
+
+- (MGSNetMessage *) initWithTemplate:(NSString *)path;
 - (BOOL)isNegotiateMessage;
 - (void)setMessageObject:(id)object forKey:(NSString *)key;
 - (id)messageObjectForKey:(NSString *)key;

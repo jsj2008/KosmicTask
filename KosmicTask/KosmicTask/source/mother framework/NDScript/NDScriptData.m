@@ -948,9 +948,15 @@ static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptI
 - (NDScriptHandler *)scriptHandlerForSubroutineNamed:(NSString *)aName
 {
 	OSAID		theResultScriptID = kOSANullScript;
-	return NDLogOSAError( OSAGetHandler( [self instanceRecord], kOSAModeNull, [self scriptID], [[NSAppleEventDescriptor descriptorWithString:aName] aeDesc], &theResultScriptID ))
-		? [[NDScriptData newWithScriptID:theResultScriptID componentInstance:[self componentInstance]] autorelease]
-		: nil;
+    NDScriptHandler *handler = nil;
+    
+    BOOL success = NDLogOSAError( OSAGetHandler( [self instanceRecord], kOSAModeNull, [self scriptID], [[NSAppleEventDescriptor descriptorWithString:aName] aeDesc], &theResultScriptID ));
+    
+    if (success) {
+        handler = (NDScriptHandler *)[[NDScriptData newWithScriptID:theResultScriptID componentInstance:[self componentInstance]] autorelease];
+    }
+
+    return handler;
 }
 
 /*
@@ -959,9 +965,15 @@ static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptI
 - (NDScriptHandler *)scriptHandlerForEventClass:(AEEventClass)anEventClass eventID:(AEEventID)anEventID
 {
 	OSAID		theResultScriptID = kOSANullScript;
-	return NDLogOSAError( OSAGetHandler( [self instanceRecord], kOSAModeNull, [self scriptID], [[NSAppleEventDescriptor descriptorWithEventClass:anEventClass eventID:anEventID] aeDesc], &theResultScriptID ))
-		? [[NDScriptData newWithScriptID:theResultScriptID componentInstance:[self componentInstance]] autorelease]
-		: nil;
+    NDScriptHandler *handler = nil;
+    
+	BOOL success = NDLogOSAError( OSAGetHandler( [self instanceRecord], kOSAModeNull, [self scriptID], [[NSAppleEventDescriptor descriptorWithEventClass:anEventClass eventID:anEventID] aeDesc], &theResultScriptID ));
+    
+    if (success) {
+		handler = (NDScriptHandler *)[[NDScriptData newWithScriptID:theResultScriptID componentInstance:[self componentInstance]] autorelease];
+	}
+    
+    return handler;
 }
 
 /*

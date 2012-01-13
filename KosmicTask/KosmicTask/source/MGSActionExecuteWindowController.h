@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSActionExecuteWindow.h"
 #import "MGSResultWindowController.h"
-#import "MGSOpenPanelController.h";
+#import "MGSOpenPanelController.h"
 
 @class MGSTaskSpecifier;
 @class MGSNetClient;

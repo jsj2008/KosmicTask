@@ -196,7 +196,7 @@
 			_resultString = mutableResult;
 		}
 	} @catch(NSException *e) {
-		_resultString =[[NSAttributedString alloc] initWithString: NSLocalizedString(@"(exception building result representation)", @"Exception building result representation")];
+		_resultString =[[NSMutableAttributedString alloc] initWithString: NSLocalizedString(@"(exception building result representation)", @"Exception building result representation")];
 	}
 	return _resultString;
 }

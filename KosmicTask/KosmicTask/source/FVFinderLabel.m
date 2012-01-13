@@ -272,7 +272,7 @@ static void __FVLinearColorReleaseFunction(void *info)
 }
 
 // Note: there is no optimization or caching here because this is only called once per color to draw the CGLayer
-+ (void)_drawLabel:(NSUInteger)label inRect:(NSRect)rect ofContext:(CGContextRef)context;
++ (void)_drawLabel:(NSUInteger)label inRect:(NSRect)rect ofContext:(CGContextRef)context
 {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
     FVGradientColor *gradientColor = CFAllocatorAllocate(CFAllocatorGetDefault(), sizeof(FVGradientColor), 0);
@@ -373,7 +373,7 @@ static void ClipContextToCircleCappedPathInRect(CGContextRef context, CGRect rec
     CGPathRelease(path);
 }
 
-+ (void)drawFinderLabel:(NSUInteger)label inRect:(CGRect)rect ofContext:(CGContextRef)context flipped:(BOOL)isFlipped roundEnds:(BOOL)flag;
++ (void)drawFinderLabel:(NSUInteger)label inRect:(CGRect)rect ofContext:(CGContextRef)context flipped:(BOOL)isFlipped roundEnds:(BOOL)flag
 {
     NSAssert1(label <= 7, @"Invalid Finder label %d (must be in the range 0--7)", label);
     
@@ -408,13 +408,13 @@ static void ClipContextToCircleCappedPathInRect(CGContextRef context, CGRect rec
     CGContextRestoreGState(context);
 }
 
-+ (void)drawFinderLabel:(NSUInteger)label inRect:(NSRect)rect roundEnds:(BOOL)flag;
++ (void)drawFinderLabel:(NSUInteger)label inRect:(NSRect)rect roundEnds:(BOOL)flag
 {
     NSGraphicsContext *nsContext = [NSGraphicsContext currentContext];
     [self drawFinderLabel:label inRect:NSRectToCGRect(rect) ofContext:[nsContext graphicsPort] flipped:[nsContext isFlipped] roundEnds:flag];
 }
 
-+ (NSUInteger)finderLabelForURL:(NSURL *)aURL;
++ (NSUInteger)finderLabelForURL:(NSURL *)aURL
 {
     FSRef fileRef;
     NSUInteger label = 0;
@@ -441,7 +441,7 @@ static void ClipContextToCircleCappedPathInRect(CGContextRef context, CGRect rec
     return (label >> 1L);
 }
 
-+ (void)setFinderLabel:(NSUInteger)label forURL:(NSURL *)aURL;
++ (void)setFinderLabel:(NSUInteger)label forURL:(NSURL *)aURL
 {
     FSRef fileRef;
     

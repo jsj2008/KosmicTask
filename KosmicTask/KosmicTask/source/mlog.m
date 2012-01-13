@@ -188,7 +188,7 @@ static NSUInteger _logFilePosition = 0;
  log with level, sourcefile, line number, format and arguments
  
  */
-- (BOOL)withLevel:(int)level sourceFile:(char *)sourceFile lineNumber:(int)lineNumber format:(NSString *)format, ...;
+- (BOOL)withLevel:(int)level sourceFile:(char *)sourceFile lineNumber:(int)lineNumber format:(NSString *)format, ...
 {
 	@try {
 		
