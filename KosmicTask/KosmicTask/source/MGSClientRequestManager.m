@@ -766,6 +766,11 @@ static MGSClientRequestManager *_sharedController = nil;
 		return;
 	}
 	
+    // logging requests do not need to communicate with their owner
+    if (netRequest.requestType == kMGSRequestTypeLogging) {
+        return;
+    }
+    
 	// generate previews for the attachments
 	// this will occur asynchronously
 	[responseMessage.attachments generateAttachmentPreviews];

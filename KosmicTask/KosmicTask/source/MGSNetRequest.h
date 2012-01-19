@@ -12,8 +12,8 @@
 #define MGS_STANDARD_TIMEOUT 60
 
 typedef enum _eMGSRequestType {
-    kMGSRequestTypeWorker = 0,
-    kMGSRequestTypeLogging= 1
+    kMGSRequestTypeWorker = 0,  
+    kMGSRequestTypeLogging = 1
 } eMGSRequestType;
 
 // net request status
