@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 extern NSString *MGSNetHeaderTerminator;
+extern NSString *MGSNetChunkTerminator;
 extern NSString *MGSNetHeaderPrefix;
 extern NSString *MGSNetHeaderSizeFormat;
 extern NSInteger MGSNetHeaderPrefixLength;

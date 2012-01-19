@@ -43,6 +43,8 @@
 - (void)addTempFilePath:(NSString *)tempPath;
 - (NSArray *)processDescendents;
 - (void)fileHandleErrorDataAvailable:(NSNotification*)notification;
+- (void)readErrorPipeToEndOfFile;
+- (void)readOutputPipeToEndOfFile;
 
 @property (readonly) NSMutableData *taskOutputData;
 @property (readonly) NSMutableData *taskErrorData;

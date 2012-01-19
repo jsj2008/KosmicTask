@@ -443,18 +443,26 @@ static NSThread *networkThread = nil;
  
  */
 - (void)chunkStringReceived:(NSString *)chunk {
-    if (_chunksReceived) {
-        _chunksReceived = [NSMutableArray arrayWithCapacity:5];
-    }
-    [_chunksReceived addObject:chunk];
     
     if (_owner && [_owner respondsToSelector:@selector(netRequestChunkReceived:)]) {
-        [_owner performSelectorOnMainThread:@selector(netRequestChunkReceived:) withObject:self waitUntilDone:NO];
+        
+        if (!_chunksReceived) {
+            _chunksReceived = [NSMutableArray arrayWithCapacity:5];
+        }
+        [_chunksReceived addObject:chunk];
+
+        // thw chunks will have been removed by the time the following is scheduled to execute
+        //[_owner performSelectorOnMainThread:@selector(netRequestChunkReceived:) withObject:self waitUntilDone:NO];
+
+        // tell owner that a chunk is available
+        [_owner netRequestChunkReceived:self];
+        
+        // for now we do not preserve the chunks.
+        // in time we may wish to write them to file.
+        [_chunksReceived removeAllObjects];
     }
     
-    // for now we do not preserve the chunks.
-    // in time we may wish to write them to file.
-    [_chunksReceived removeAllObjects];
+
 }
 
 #pragma mark -

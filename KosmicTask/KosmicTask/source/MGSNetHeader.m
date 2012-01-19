@@ -24,6 +24,7 @@ NSString *const MGSNetHeaderException = @"MGSNetHeaderException";
 
 // HTTP use CRLF as a terminator
 NSString *MGSNetHeaderTerminator = @"\r\n";
+NSString *MGSNetChunkTerminator = @"\r\n";
 
 // first two lines of header are fixed size
 NSString *MGSNetHeaderPrefix = @"MGSNetMessage 1.1\r\n";

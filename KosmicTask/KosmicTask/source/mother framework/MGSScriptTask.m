@@ -12,6 +12,11 @@
 #import "MGSNetHeader.h"
 #import "MLog.h"
 
+// class extension
+@interface MGSScriptTask() 
+- (void)sendErrorDataChunk;
+@end
+
 @implementation MGSScriptTask 
 
 @synthesize netRequest = _netRequest;
@@ -81,19 +86,49 @@
     // if we have a log request active then we want to write the
     // available error data as part of the log response.
     if (self.logRequest) {
+        [self sendErrorDataChunk];
+    }
+}
+
+/*
+ 
+ - sendErrorDataChunk
+ 
+ */
+- (void)sendErrorDataChunk
+{
+    // get the error data
+    NSMutableData *data = self.taskErrorData;
+    if ([data length] > 0) {
+        
+        // We send the log as plain text with no defined content length header.
+        // The client will simply continue to read the log until we close the socket.
+        // write the log content
+        [self.logRequest sendResponseChunkOnSocket:[data copy]];
+        
+        // we don't want to send the data again so clear the buffer
+        [self.taskErrorData setLength:0];
+    }
+}
+/*
+ 
+ - readErrorPipeToEndOfFile
+ 
+ */
+- (void)readErrorPipeToEndOfFile
+{
+    [super readErrorPipeToEndOfFile];
     
-        // get the error data
-        NSMutableData *data = self.taskErrorData;
-        if ([data length] > 0) {
-                   
-            // We send the log as plain text with no defined content length header.
-            // The client will simply continue to read the log until we close the socket.
-            // write the log content
-            [self.logRequest sendResponseChunkOnSocket:[data copy]];
-             
-            // we don't want to send the data again so clear the buffer
-            [self.taskErrorData setLength:0];
-        }
+    // if a logging request is active then we need to write
+    // any error data followed by an empty data object
+    // to indicate the end of the chunked response
+    if (self.logRequest) {
+        
+        // send any remaining error data
+        [self sendErrorDataChunk];
+        
+        // send an empty data chunk
+        [self.logRequest sendResponseChunkOnSocket:[NSData new]];
     }
 }
 @end

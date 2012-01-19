@@ -235,24 +235,17 @@
 - (void)setTaskComplete:(BOOL)value
 {
 	_taskComplete = value;
-	NSFileHandle *fileHandle = nil;
 	
 	if (!_taskComplete) {
 		return;
 	}
 	
 	// complete error data read
-	if ((fileHandle = [_errorPipe fileHandleForReading])) {
-		[[NSNotificationCenter defaultCenter] removeObserver:_taskErrorData name:NSFileHandleDataAvailableNotification object:fileHandle];
-		[_taskErrorData appendData:[fileHandle readDataToEndOfFile]];
-	}
-	
+    [self readErrorPipeToEndOfFile];
+    
 	// complete output data read
-	if ((fileHandle = [_outputPipe fileHandleForReading])) {
-		[[NSNotificationCenter defaultCenter] removeObserver:_taskOutputData name:NSFileHandleDataAvailableNotification object:fileHandle];
-		[_taskOutputData appendData:[fileHandle readDataToEndOfFile]];
-	}
-	
+    [self readOutputPipeToEndOfFile];
+    
 	// remove observers
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 		
@@ -388,6 +381,37 @@
 	}
 }
 
+/*
+ 
+ - readErrorPipeToEndOfFile
+ 
+ */
+- (void)readErrorPipeToEndOfFile
+{
+    NSFileHandle *fileHandle = nil;
+    
+	if ((fileHandle = [_errorPipe fileHandleForReading])) {
+		[[NSNotificationCenter defaultCenter] removeObserver:_taskErrorData name:NSFileHandleDataAvailableNotification object:fileHandle];
+		[_taskErrorData appendData:[fileHandle readDataToEndOfFile]];
+	}
+
+}
+
+/*
+ 
+ - readOutputPipeToEndOfFile
+ 
+ */
+- (void)readOutputPipeToEndOfFile
+{
+    NSFileHandle *fileHandle = nil;
+   
+    if ((fileHandle = [_outputPipe fileHandleForReading])) {
+		[[NSNotificationCenter defaultCenter] removeObserver:_taskOutputData name:NSFileHandleDataAvailableNotification object:fileHandle];
+		[_taskOutputData appendData:[fileHandle readDataToEndOfFile]];
+	}
+    
+}
 @end						
 										
 @implementation MGSTask(Private)

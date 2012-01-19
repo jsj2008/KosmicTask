@@ -134,6 +134,7 @@ static MGSClientRequestManager *_sharedController = nil;
 		[netRequest.requestMessage addAppData];
 	}
 	
+    // associate the request with the task
 	task.netRequest = netRequest;
 	
 	// we want the owner to receive status updates as the request proceeds.
@@ -143,10 +144,10 @@ static MGSClientRequestManager *_sharedController = nil;
      create a child logging request
      *=======================================
      */
-     NSMutableDictionary *logDictionary = [self scriptDictForCommand:MGSScriptCommandLogMesgUUID parameter:netRequest.requestMessage.messageUUID];
+    NSMutableDictionary *logDictionary = [self scriptDictForCommand:MGSScriptCommandLogMesgUUID parameter:netRequest.requestMessage.messageUUID];
    
     // create child request
-    MGSNetRequest *logRequest = [self createRequestForClient:netClient withOwner:nil withScriptDict:logDictionary];
+    MGSNetRequest *logRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:logDictionary];
     logRequest.requestType = kMGSRequestTypeLogging;
     [netRequest addChildRequest:logRequest];
     

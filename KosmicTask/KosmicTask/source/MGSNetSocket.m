@@ -822,7 +822,7 @@ errorExit:
         return;
         
     // chunked attachments
-    } if ([netMessage.header.attachmentTransferEncoding isEqualToString:MGSNetHeaderAttachmentTransferEncodingChunked]) {
+    } else if ([netMessage.header.attachmentTransferEncoding isEqualToString:MGSNetHeaderAttachmentTransferEncodingChunked]) {
         
         [self readAttachmentChunkedData:data withTag:tag];
     
@@ -833,7 +833,7 @@ errorExit:
             [NSException raise:MGSNetSocketException format:@"Error reading attachment data", nil];
         }
         
-    // anything else  is inavlid
+    // anything else  is invalid
     } else {
         [NSException raise:MGSNetSocketException format:@"Invalid attachment transfer encoding : %@", netMessage.header.attachmentTransferEncoding];
     }
@@ -846,24 +846,11 @@ errorExit:
 - (void)readAttachmentChunkedData:(NSData *)data withTag:(long)tag
 {
     // chunk terminator
-    static NSData *chunkTerminator = nil;
-    if (!chunkTerminator) {
-        chunkTerminator = [MGSNetHeaderTerminator dataUsingEncoding:NSUTF8StringEncoding];
+    static NSData *chunkTerminatorData = nil;
+    if (!chunkTerminatorData) {
+        chunkTerminatorData = [MGSNetChunkTerminator dataUsingEncoding:NSUTF8StringEncoding];
     }
-    
-    MGSNetMessage *netMessage = [self messageToBeRead];
-    
-    NSAssert([netMessage.header.attachmentTransferEncoding isEqualToString:MGSNetHeaderAttachmentTransferEncodingChunked], 
-             @"Invalid attachment transfer encoding: %@", netMessage.header.attachmentTransferEncoding);
 
-    NSAssert([netMessage.header.attachmentEncoding isEqualToString:MGSNetHeaderAttachmentEncodingUTF8], 
-             @"Invalid attachment encoding: %@", netMessage.header.attachmentEncoding);
-
-    // data is UTF-8 so we can convert it to a string regardless
-    // of wether it is the chunk size or the data.
-    // if we start chunking non UTF-8 data then this will ned to be modified.
-    NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
     // if we are done reading the message body start reading the chunks
     if (!data && _netRequest.status == kMGSStatusReadingMessageBody) {
         
@@ -871,32 +858,71 @@ errorExit:
         _netRequest.status = kMGSStatusReadingMessageAttachments;
         
         // read the first chunk size
-        [_socket readDataToData:chunkTerminator withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunkSize];
-        
-    } else if (_netRequest.status == kMGSStatusReadingMessageAttachments) {
+        [_socket readDataToData:chunkTerminatorData withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunkSize];
+
+        return;
+    }
+    
+    //
+    // validate the data chunk
+    //
+
+    // it must at the very least consist of a terminator
+    if ([data length] < [chunkTerminatorData length]) {
+        [NSException raise:MGSNetSocketException format:@"Invalid attachment chunk data size: %u", [data length]];
+    }
+    
+    // validate that the chunk ends with the terminator
+    NSData *dataTerminator = [data subdataWithRange:NSMakeRange([data length] - [chunkTerminatorData length], [chunkTerminatorData length])];
+    if (![dataTerminator isEqualToData:chunkTerminatorData]) {
+        [NSException raise:MGSNetSocketException format:@"Chunk terminator not found"];
+    }
+    
+    MGSNetMessage *netMessage = [self messageToBeRead];
+    
+    //
+    // validate the transfer encoding
+    //
+    if (![netMessage.header.attachmentTransferEncoding isEqualToString:MGSNetHeaderAttachmentTransferEncodingChunked]) {
+        NSAssert(NO, @"Invalid attachment transfer encoding: %@", netMessage.header.attachmentTransferEncoding);
+    }
+
+    //
+    // validate the attachment encoding
+    //
+    NSMutableString *dataString = nil;
+    if ([netMessage.header.attachmentEncoding isEqualToString:MGSNetHeaderAttachmentEncodingUTF8]) {
+
+        // data is UTF-8 so we can convert it to a string regardless
+        // of whether it is the chunk size or the data.
+        // if we start chunking non UTF-8 data then this will need to be modified.
+        dataString = [[NSMutableString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+    } else {    
+        NSAssert(NO, @"Invalid attachment encoding: %@", netMessage.header.attachmentEncoding);
+    }
+    
+    if (_netRequest.status == kMGSStatusReadingMessageAttachments) {
         
         NSScanner *scanner = nil;
         
         switch (tag) {
             case kMGSSocketReadAttachmentChunkSize:;
-                
+                                            
                 // get the chunk size
-                NSString *chunkSizeString = nil;
-                
-                // scan up to terminator
-                scanner = [NSScanner scannerWithString:dataString];
-                if (![scanner scanUpToString:MGSNetHeaderTerminator intoString:&chunkSizeString]) {
-                    [NSException raise:MGSNetSocketException format:@"Chunk size terminator missing", nil];
-                }
-                
                 // scan from hex to decimal
                 unsigned length = 0;
-                scanner = [NSScanner scannerWithString:chunkSizeString];
+                scanner = [NSScanner scannerWithString:dataString];
                 [scanner scanHexInt:&length];
                 NSUInteger chunkSize = length;
                 
+                // a zero sized chunk marks the end of the data
+                if (chunkSize == 0) {
+                    MLogDebug(@"Zero chunk size found");
+                }
+                
                 // we want to read the chunk data + the terminator
-                chunkSize += [MGSNetHeaderTerminator length];
+                chunkSize += [MGSNetChunkTerminator length];
                 
                 // read the chunk data up to given length
                 [_socket readDataToLength:chunkSize withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunk];
@@ -905,33 +931,28 @@ errorExit:
                 
             case kMGSSocketReadAttachmentChunk:;
                 
-                // get the chunk string
-                NSString *chunkString = nil;
-                
-                // the data should contain the terminator
-                // so scan up to it
-                scanner = [NSScanner scannerWithString:dataString];
-                if (![scanner scanUpToString:MGSNetHeaderTerminator intoString:&chunkString]) {
-                    [NSException raise:MGSNetSocketException format:@"Chunk data terminator missing", nil];
-                }
-                
+                // get the data string minus the terminator
+                [dataString deleteCharactersInRange:NSMakeRange([dataString length] - [MGSNetChunkTerminator length], [MGSNetChunkTerminator length])];
+                                                                   
                 // a zero sized chunk marks the end of the attachmnet stream
-                if (!chunkString || [chunkString length] == 0) {
+                if ([dataString length] == 0) {
+                    
+                     MLogDebug(@"Chunked attachments received");
                     
                     _netRequest.status = kMGSStatusMessageReceived;
                     
                 } else {
                     
-                    [_netRequest chunkStringReceived:chunkString];
+                    [_netRequest chunkStringReceived:dataString];
                     
                     // read the next chunk size
-                    [_socket readDataToData:chunkTerminator withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunkSize];
+                    [_socket readDataToData:chunkTerminatorData withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunkSize];
                 }
                 
                 break;
                 
             default:
-                [NSException raise:MGSNetSocketException format:@"Invalid atatchment data read tag: %i", tag];
+                [NSException raise:MGSNetSocketException format:@"Invalid attachment chunked data read tag: %i", tag];
                 break;
                 
         }

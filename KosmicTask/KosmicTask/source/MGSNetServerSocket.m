@@ -337,6 +337,9 @@
 	return YES;
 	
 }
+
+#pragma mark -
+#pragma mark Response
 /*
  
  send response
@@ -399,6 +402,8 @@
     
     // zero length chunk signals the end of the data stream
     if ([data length] == 0) {
+        MLogDebug(@"Sending last chunk");
+        
         tag = kMGSSocketWriteAttachmentLastChunk;
     }
     
