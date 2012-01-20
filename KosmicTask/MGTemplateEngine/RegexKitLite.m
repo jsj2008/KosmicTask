@@ -342,7 +342,11 @@ static NSError *RKLNSErrorForRegex(NSString *regexString, RKLRegexOptions regexO
   }
 
   if(NSRangeInsideRange(cacheSlot->lastMatchRange, range) == NO) { goto exitNow; } // If the regex matched outside the requested range, exit.
-  if(capture == 0) { captureRange = cacheSlot->lastMatchRange; } else { RKLGetRangeForCapture(cacheSlot->icu_regex, status, capture, captureRange); }
+  if (capture == 0) { 
+      captureRange = cacheSlot->lastMatchRange; 
+  } else { 
+      (void)RKLGetRangeForCapture(cacheSlot->icu_regex, status, capture, captureRange); 
+  }
 
  exitNow: // A bit of advice...
   OSSpinLockUnlock(&cacheSpinLock); // Always... no, no... never... forget to unlock your locks.
