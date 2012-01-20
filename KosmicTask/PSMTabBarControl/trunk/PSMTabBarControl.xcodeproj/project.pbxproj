@@ -633,6 +633,9 @@
 /* Begin PBXProject section */
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = C056398B08A954F8003078D8 /* Build configuration list for PBXProject "PSMTabBarControl" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -857,7 +860,6 @@
 				FRAMEWORK_SEARCH_PATHS = /users/jonathan/documents/computing/mother/mother/trunk/build/debug;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -871,7 +873,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = TabBarControlDemo;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -883,7 +884,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -896,7 +896,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = TabBarControlDemo;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -913,7 +912,6 @@
 				FRAMEWORK_VERSION = A;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -966,7 +964,6 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1009,7 +1006,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = All;
@@ -1050,7 +1046,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				MACOSX_DEPLOYMENT_TARGET_i386 = 10.5;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.5;
-				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 				SDKROOT_i386 = /Developer/SDKs/MacOSX10.5.sdk;
@@ -1072,7 +1067,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				MACOSX_DEPLOYMENT_TARGET_i386 = 10.5;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.5;
-				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 				SDKROOT_i386 = /Developer/SDKs/MacOSX10.5.sdk;
