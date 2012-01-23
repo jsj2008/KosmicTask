@@ -908,8 +908,6 @@
 		ABAB193410486B3E00AA3E9A /* Appscript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABAB188A1048671D00AA3E9A /* Appscript.framework */; };
 		ABABF96F0EE733770071F9E9 /* MGSSearchTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABABF96E0EE733770071F9E9 /* MGSSearchTableView.m */; };
 		ABAC5D3510357DDC003A7231 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABAC5D3410357DDC003A7231 /* Sparkle.framework */; };
-		ABAC5E0E10358201003A7231 /* OpenFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAC5E0B103581EB003A7231 /* OpenFeedback.framework */; };
-		ABAC5E2F1035820B003A7231 /* OpenFeedback.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABAC5E0B103581EB003A7231 /* OpenFeedback.framework */; };
 		ABAC6F9B0E6FDBF200A82FFE /* PinMeTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = ABAC6F9A0E6FDBF100A82FFE /* PinMeTemplate.png */; };
 		ABAC76E80E62B2C200B76864 /* MGSNetAttachments.h in Headers */ = {isa = PBXBuildFile; fileRef = ABAC76E60E62B2C200B76864 /* MGSNetAttachments.h */; };
 		ABAC76E90E62B2C200B76864 /* MGSNetAttachments.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAC76E70E62B2C200B76864 /* MGSNetAttachments.m */; };
@@ -2454,20 +2452,6 @@
 			remoteGlobalIDString = 3180119E0D4DEC8400BE3B28;
 			remoteInfo = TCMPortMapper;
 		};
-		ABAC5E0A103581EB003A7231 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = OpenFeedback;
-		};
-		ABAC5E8F1035828C003A7231 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = OpenFeedback;
-		};
 		ABADD7ED13E5BD040033E038 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */;
@@ -2656,6 +2640,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 09C09E250CDC7D710048BC79;
 			remoteInfo = MGSMother;
+		};
+		ABDA109E14CDB2F400B1746A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = OpenFeedback;
 		};
 		ABDBEB3913927AC600553735 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2874,7 +2865,6 @@
 				AB27AE801189EA1900132977 /* MGSKosmicTaskRunner.framework in Copy Frameworks */,
 				ABADF08D104D374E007A5319 /* NDScript.framework in Copy Frameworks */,
 				ABAB193410486B3E00AA3E9A /* Appscript.framework in Copy Frameworks */,
-				ABAC5E2F1035820B003A7231 /* OpenFeedback.framework in Copy Frameworks */,
 				ABAC5D3510357DDC003A7231 /* Sparkle.framework in Copy Frameworks */,
 				AB49FB8D0E8D841E0046E4B8 /* PSMTabBarControl.framework in Copy Frameworks */,
 				AB49FB580E8D83EB0046E4B8 /* TCMPortMapper.framework in Copy Frameworks */,
@@ -4463,7 +4453,7 @@
 		ABABF96D0EE733770071F9E9 /* MGSSearchTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSearchTableView.h; sourceTree = "<group>"; };
 		ABABF96E0EE733770071F9E9 /* MGSSearchTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSearchTableView.m; sourceTree = "<group>"; };
 		ABAC5D3410357DDC003A7231 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "../../../Sparkle 1.5b6/With Garbage Collection/Sparkle.framework"; sourceTree = SOURCE_ROOT; };
-		ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OpenFeedback.xcodeproj; path = ../../../OpenFeedback/trunk/OpenFeedback.xcodeproj; sourceTree = SOURCE_ROOT; };
+		ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OpenFeedback.xcodeproj; path = ../../../OpenFeedback/OpenFeedback.xcodeproj; sourceTree = SOURCE_ROOT; };
 		ABAC6F9A0E6FDBF100A82FFE /* PinMeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinMeTemplate.png; sourceTree = "<group>"; };
 		ABAC76E60E62B2C200B76864 /* MGSNetAttachments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNetAttachments.h; sourceTree = "<group>"; };
 		ABAC76E70E62B2C200B76864 /* MGSNetAttachments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNetAttachments.m; sourceTree = "<group>"; };
@@ -5016,7 +5006,6 @@
 				AB0DBFF6130C8C80000F4673 /* MGSFragaria.framework in Frameworks */,
 				ABFE708311AEF0510097EDE4 /* MGSTemplateEngine.framework in Frameworks */,
 				ABCDAE3C10C5CD9F00C9BC25 /* Sparkle.framework in Frameworks */,
-				ABAC5E0E10358201003A7231 /* OpenFeedback.framework in Frameworks */,
 				ABC119990E5233A400018584 /* PSMTabBarControl.framework in Frameworks */,
 				AB87D77F0E52317700A9C761 /* MGSKosmicTask.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
@@ -8401,14 +8390,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		ABAC5E07103581EB003A7231 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ABAC5E0B103581EB003A7231 /* OpenFeedback.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		ABAC8F21111C6EB7003960A8 /* Licensing */ = {
 			isa = PBXGroup;
 			children = (
@@ -8708,6 +8689,14 @@
 				ABD668950DE602B400097C1B /* MGSNumbersSendPlugin.m */,
 			);
 			name = Numbers;
+			sourceTree = "<group>";
+		};
+		ABDA109B14CDB2F400B1746A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABDA109F14CDB2F400B1746A /* OpenFeedback.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		ABDB811D0DF7127400F24711 /* CrashReporter */ = {
@@ -9042,7 +9031,6 @@
 			);
 			dependencies = (
 				ABADD7F413E5BD510033E038 /* PBXTargetDependency */,
-				ABAC5E901035828C003A7231 /* PBXTargetDependency */,
 				AB72CEF80E70453300E6711C /* PBXTargetDependency */,
 				ABFBAA9D0DAB9535004D1DE4 /* PBXTargetDependency */,
 				09A68AED0CDC8B7A0022898B /* PBXTargetDependency */,
@@ -10360,7 +10348,7 @@
 					ProjectRef = ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */;
 				},
 				{
-					ProductGroup = ABAC5E07103581EB003A7231 /* Products */;
+					ProductGroup = ABDA109B14CDB2F400B1746A /* Products */;
 					ProjectRef = ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */;
 				},
 				{
@@ -10728,13 +10716,6 @@
 			remoteRef = ABAB188B1048671D00AA3E9A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		ABAC5E0B103581EB003A7231 /* OpenFeedback.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = OpenFeedback.framework;
-			remoteRef = ABAC5E0A103581EB003A7231 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		ABADD7EE13E5BD040033E038 /* FeedbackReporter.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -10789,6 +10770,13 @@
 			fileType = "compiled.mach-o.executable";
 			path = luac;
 			remoteRef = ABD056231325267000A728B8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABDA109F14CDB2F400B1746A /* OpenFeedback.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OpenFeedback.framework;
+			remoteRef = ABDA109E14CDB2F400B1746A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ABE014F00D3EB94A00899F73 /* PSMTabBarControl.palette */ = {
@@ -13090,11 +13078,6 @@
 			isa = PBXTargetDependency;
 			name = TCMPortMapper;
 			targetProxy = ABAB188D1048679D00AA3E9A /* PBXContainerItemProxy */;
-		};
-		ABAC5E901035828C003A7231 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OpenFeedback;
-			targetProxy = ABAC5E8F1035828C003A7231 /* PBXContainerItemProxy */;
 		};
 		ABADD7F413E5BD510033E038 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
