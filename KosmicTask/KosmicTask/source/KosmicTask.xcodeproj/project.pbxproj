@@ -209,8 +209,7 @@
 		AB2E6CA112C799790071052D /* MGSNetMessage+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6C9F12C799790071052D /* MGSNetMessage+KosmicTask.m */; };
 		AB2E6D7C12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h in Headers */ = {isa = PBXBuildFile; fileRef = AB2E6D7A12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h */; };
 		AB2E6D7D12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6D7B12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m */; };
-		AB2EC83B14D1E24C00B54313 /* MGSTemplateEngine.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC83814D1E22800B54313 /* MGSTemplateEngine.framework */; };
-		AB2EC83C14D1E28000B54313 /* MGSTemplateEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC83814D1E22800B54313 /* MGSTemplateEngine.framework */; };
+		AB2EC96A14D1F3AF00B54313 /* MGTemplateEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC95314D1F10200B54313 /* MGTemplateEngine.framework */; };
 		AB2FB96A0E995C3500BA3246 /* MGSNullBindingProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB9690E995C3500BA3246 /* MGSNullBindingProxy.m */; };
 		AB3167A5128D42280037EF1C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3167A4128D42280037EF1C /* SenTestingKit.framework */; };
 		AB3167C9128D44520037EF1C /* MGSLanguage_test.m in Sources */ = {isa = PBXBuildFile; fileRef = AB316712128D409E0037EF1C /* MGSLanguage_test.m */; };
@@ -1704,19 +1703,26 @@
 			remoteGlobalIDString = 8D1107320486CEB800E47090;
 			remoteInfo = MGTemplateEngine;
 		};
-		AB2EC83714D1E22800B54313 /* PBXContainerItemProxy */ = {
+		AB2EC95014D1F10200B54313 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = ABFE6FC311AEEDA40097EDE4;
-			remoteInfo = MGSTemplateEngine;
+			remoteGlobalIDString = 945489211263531D00D24C8F;
+			remoteInfo = libMGTemplateEngine;
 		};
-		AB2EC83914D1E23400B54313 /* PBXContainerItemProxy */ = {
+		AB2EC95214D1F10200B54313 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 947BD4201343688100765304;
+			remoteInfo = MGTemplateEngine.framework;
+		};
+		AB2EC96814D1F39600B54313 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = ABFE6FC211AEEDA40097EDE4;
-			remoteInfo = MGSTemplateEngine;
+			remoteGlobalIDString = 947BD41F1343688100765304;
+			remoteInfo = MGTemplateEngine.framework;
 		};
 		AB3167E6128D47380037EF1C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2858,7 +2864,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AB2EC83B14D1E24C00B54313 /* MGSTemplateEngine.framework in Copy Frameworks */,
 				ABDD7D6A14D1A5C000CB91F8 /* PSMTabBarControl.framework in Copy Frameworks */,
 				AB1CBC7C14CDCFF000CCF7DD /* OpenFeedback.framework in Copy Frameworks */,
 				AB79AF7714CA32FE00087932 /* ORCDiscount.framework in Copy Frameworks */,
@@ -4980,6 +4985,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB2EC96A14D1F3AF00B54313 /* MGTemplateEngine.framework in Frameworks */,
 				AB89EFAE14CA34650077A496 /* ORCDiscount.framework in Frameworks */,
 				AB33582110CABF75003B44AC /* CoreFoundation.framework in Frameworks */,
 				ABB7335A1056636F0042B4D0 /* libcrypto.0.9.7.dylib in Frameworks */,
@@ -5018,7 +5024,6 @@
 				ABAD1B801073EA9E00297C8C /* IOKit.framework in Frameworks */,
 				AB33581E10CABF6E003B44AC /* CoreFoundation.framework in Frameworks */,
 				ABE8E68013CA42FB005852B5 /* WebKit.framework in Frameworks */,
-				AB2EC83C14D1E28000B54313 /* MGSTemplateEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6789,7 +6794,8 @@
 			isa = PBXGroup;
 			children = (
 				AB2EC83614D1E22800B54313 /* MGTemplateEngine.app */,
-				AB2EC83814D1E22800B54313 /* MGSTemplateEngine.framework */,
+				AB2EC95114D1F10200B54313 /* libMGTemplateEngine.a */,
+				AB2EC95314D1F10200B54313 /* MGTemplateEngine.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8998,6 +9004,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AB2EC96914D1F39600B54313 /* PBXTargetDependency */,
 				AB79AF7614CA32B800087932 /* PBXTargetDependency */,
 				ABAB188E1048679D00AA3E9A /* PBXTargetDependency */,
 			);
@@ -9030,7 +9037,6 @@
 				AB9DC2FB0DE5C99800B85F5E /* PBXBuildRule */,
 			);
 			dependencies = (
-				AB2EC83A14D1E23400B54313 /* PBXTargetDependency */,
 				ABDD7D6814D1A58F00CB91F8 /* PBXTargetDependency */,
 				ABC0F53914D05D3300BCE71D /* PBXTargetDependency */,
 				AB1CBC7A14CDCFAA00CCF7DD /* PBXTargetDependency */,
@@ -10508,11 +10514,18 @@
 			remoteRef = AB2EC83514D1E22800B54313 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AB2EC83814D1E22800B54313 /* MGSTemplateEngine.framework */ = {
+		AB2EC95114D1F10200B54313 /* libMGTemplateEngine.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMGTemplateEngine.a;
+			remoteRef = AB2EC95014D1F10200B54313 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2EC95314D1F10200B54313 /* MGTemplateEngine.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = MGSTemplateEngine.framework;
-			remoteRef = AB2EC83714D1E22800B54313 /* PBXContainerItemProxy */;
+			path = MGTemplateEngine.framework;
+			remoteRef = AB2EC95214D1F10200B54313 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AB3F662D130C845F00342F11 /* Fragaria Document Based App.app */ = {
@@ -12689,10 +12702,10 @@
 			target = 0953D02A0CD941AD00519488 /* KosmicTaskServer */;
 			targetProxy = AB2D041F0CDE6285006632AF /* PBXContainerItemProxy */;
 		};
-		AB2EC83A14D1E23400B54313 /* PBXTargetDependency */ = {
+		AB2EC96914D1F39600B54313 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = MGSTemplateEngine;
-			targetProxy = AB2EC83914D1E23400B54313 /* PBXContainerItemProxy */;
+			name = MGTemplateEngine.framework;
+			targetProxy = AB2EC96814D1F39600B54313 /* PBXContainerItemProxy */;
 		};
 		AB3167E7128D47380037EF1C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
