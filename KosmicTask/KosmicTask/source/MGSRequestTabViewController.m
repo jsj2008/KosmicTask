@@ -10,8 +10,8 @@
 //
 #import "MGSRequestTabViewController.h"
 #import "FakeModel.h"
-#import "PSMTabBarControl.h"
-#import "PSMTabStyle.h"
+#import <PSMTabBarControl/PSMTabBarControl.h>
+#import <PSMTabBarControl/PSMTabStyle.h>
 #import "MGSRequestViewController.h"
 #import "MGSInputRequestViewController.h"
 #import "MGSActionViewController.h"

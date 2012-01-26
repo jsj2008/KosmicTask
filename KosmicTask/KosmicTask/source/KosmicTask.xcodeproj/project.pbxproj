@@ -209,6 +209,8 @@
 		AB2E6CA112C799790071052D /* MGSNetMessage+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6C9F12C799790071052D /* MGSNetMessage+KosmicTask.m */; };
 		AB2E6D7C12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h in Headers */ = {isa = PBXBuildFile; fileRef = AB2E6D7A12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h */; };
 		AB2E6D7D12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6D7B12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m */; };
+		AB2EC83B14D1E24C00B54313 /* MGSTemplateEngine.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC83814D1E22800B54313 /* MGSTemplateEngine.framework */; };
+		AB2EC83C14D1E28000B54313 /* MGSTemplateEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC83814D1E22800B54313 /* MGSTemplateEngine.framework */; };
 		AB2FB96A0E995C3500BA3246 /* MGSNullBindingProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB9690E995C3500BA3246 /* MGSNullBindingProxy.m */; };
 		AB3167A5128D42280037EF1C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3167A4128D42280037EF1C /* SenTestingKit.framework */; };
 		AB3167C9128D44520037EF1C /* MGSLanguage_test.m in Sources */ = {isa = PBXBuildFile; fileRef = AB316712128D409E0037EF1C /* MGSLanguage_test.m */; };
@@ -1298,9 +1300,6 @@
 		ABFBC56C0DCA7CAE000BD40E /* GoDownTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = ABFBC56A0DCA7CAE000BD40E /* GoDownTemplate.tif */; };
 		ABFBC56D0DCA7CAE000BD40E /* GoUpTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = ABFBC56B0DCA7CAE000BD40E /* GoUpTemplate.tif */; };
 		ABFBFC650EFBAF8700A7A3A4 /* MGSClientTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFBFC640EFBAF8700A7A3A4 /* MGSClientTaskController.m */; };
-		ABFE708311AEF0510097EDE4 /* MGSTemplateEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE704611AEEFE80097EDE4 /* MGSTemplateEngine.framework */; };
-		ABFE709011AEF0960097EDE4 /* MGSTemplateEngine.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE704611AEEFE80097EDE4 /* MGSTemplateEngine.framework */; };
-		ABFE712111AF03EB0097EDE4 /* MGSTemplateEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE704611AEEFE80097EDE4 /* MGSTemplateEngine.framework */; };
 		ABFE7AA20D01F9AA00CBA780 /* message.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABFE7A650D01EE7200CBA780 /* message.plist */; };
 		ABFF56C40DA95E0700762E71 /* MGSRemoveServerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFF56C30DA95E0700762E71 /* MGSRemoveServerWindowController.m */; };
 		ABFF56C80DA95EC700762E71 /* DisconnectServer.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABFF56C60DA95EC700762E71 /* DisconnectServer.xib */; };
@@ -1697,6 +1696,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = 0953D02A0CD941AD00519488;
 			remoteInfo = motherd;
+		};
+		AB2EC83514D1E22800B54313 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
+			remoteInfo = MGTemplateEngine;
+		};
+		AB2EC83714D1E22800B54313 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ABFE6FC311AEEDA40097EDE4;
+			remoteInfo = MGSTemplateEngine;
+		};
+		AB2EC83914D1E23400B54313 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = ABFE6FC211AEEDA40097EDE4;
+			remoteInfo = MGSTemplateEngine;
 		};
 		AB3167E6128D47380037EF1C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2685,13 +2705,6 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = YAMLKit;
 		};
-		ABDD7CD314D1A49E00CB91F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABE014E50D3EB94A00899F73 /* PSMTabBarControl.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D1AC9740486D14A00FE50C9;
-			remoteInfo = PSMTabBarControl;
-		};
 		ABDD7CD514D1A49E00CB91F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ABE014E50D3EB94A00899F73 /* PSMTabBarControl.xcodeproj */;
@@ -2811,34 +2824,6 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = QLMarkdown;
 		};
-		ABFE704311AEEFE80097EDE4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D1107320486CEB800E47090;
-			remoteInfo = MGTemplateEngine;
-		};
-		ABFE704511AEEFE80097EDE4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = ABFE6FC311AEEDA40097EDE4;
-			remoteInfo = MGSTemplateEngine;
-		};
-		ABFE708111AEF00F0097EDE4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = ABFE6FC211AEEDA40097EDE4;
-			remoteInfo = MGSTemplateEngine;
-		};
-		ABFE712211AF03F90097EDE4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = ABFE6FC211AEEDA40097EDE4;
-			remoteInfo = MGSTemplateEngine;
-		};
 		ABFFCD83120D5A09005CC65A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2873,13 +2858,13 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				AB2EC83B14D1E24C00B54313 /* MGSTemplateEngine.framework in Copy Frameworks */,
 				ABDD7D6A14D1A5C000CB91F8 /* PSMTabBarControl.framework in Copy Frameworks */,
 				AB1CBC7C14CDCFF000CCF7DD /* OpenFeedback.framework in Copy Frameworks */,
 				AB79AF7714CA32FE00087932 /* ORCDiscount.framework in Copy Frameworks */,
 				ABADD7F613E5BDAA0033E038 /* FeedbackReporter.framework in Copy Frameworks */,
 				AB0D2D89130EB4B600FA992A /* YAMLKit.framework in Copy Frameworks */,
 				AB0DC00B130C8C9C000F4673 /* MGSFragaria.framework in Copy Frameworks */,
-				ABFE709011AEF0960097EDE4 /* MGSTemplateEngine.framework in Copy Frameworks */,
 				AB27AE801189EA1900132977 /* MGSKosmicTaskRunner.framework in Copy Frameworks */,
 				ABADF08D104D374E007A5319 /* NDScript.framework in Copy Frameworks */,
 				ABAB193410486B3E00AA3E9A /* Appscript.framework in Copy Frameworks */,
@@ -3598,6 +3583,7 @@
 		AB2E6C9F12C799790071052D /* MGSNetMessage+KosmicTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MGSNetMessage+KosmicTask.m"; sourceTree = "<group>"; };
 		AB2E6D7A12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MGSNetRequest+KosmicTask.h"; sourceTree = "<group>"; };
 		AB2E6D7B12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MGSNetRequest+KosmicTask.m"; sourceTree = "<group>"; };
+		AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MGTemplateEngine.xcodeproj; path = ../../../MGTemplateEngine/MGTemplateEngine.xcodeproj; sourceTree = "<group>"; };
 		AB2FB9680E995C3500BA3246 /* MGSNullBindingProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNullBindingProxy.h; sourceTree = "<group>"; };
 		AB2FB9690E995C3500BA3246 /* MGSNullBindingProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNullBindingProxy.m; sourceTree = "<group>"; };
 		AB31670A128D402C0037EF1C /* Test KosmicTask App.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Test KosmicTask App.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4949,7 +4935,6 @@
 		ABFBC56B0DCA7CAE000BD40E /* GoUpTemplate.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = GoUpTemplate.tif; sourceTree = "<group>"; };
 		ABFBFC630EFBAF8700A7A3A4 /* MGSClientTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSClientTaskController.h; sourceTree = "<group>"; };
 		ABFBFC640EFBAF8700A7A3A4 /* MGSClientTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSClientTaskController.m; sourceTree = "<group>"; };
-		ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MGTemplateEngine.xcodeproj; path = ../../MGTemplateEngine/MGTemplateEngine.xcodeproj; sourceTree = SOURCE_ROOT; };
 		ABFE7A650D01EE7200CBA780 /* message.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = message.plist; sourceTree = "<group>"; };
 		ABFF56C20DA95E0700762E71 /* MGSRemoveServerWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSRemoveServerWindowController.h; sourceTree = "<group>"; };
 		ABFF56C30DA95E0700762E71 /* MGSRemoveServerWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSRemoveServerWindowController.m; sourceTree = "<group>"; };
@@ -4996,7 +4981,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB89EFAE14CA34650077A496 /* ORCDiscount.framework in Frameworks */,
-				ABFE712111AF03EB0097EDE4 /* MGSTemplateEngine.framework in Frameworks */,
 				AB33582110CABF75003B44AC /* CoreFoundation.framework in Frameworks */,
 				ABB7335A1056636F0042B4D0 /* libcrypto.0.9.7.dylib in Frameworks */,
 				ABC65FDA0E7162D400D0A72E /* TCMPortMapper.framework in Frameworks */,
@@ -5023,7 +5007,6 @@
 				AB1CBC7B14CDCFD800CCF7DD /* OpenFeedback.framework in Frameworks */,
 				ABADD7F513E5BD8E0033E038 /* FeedbackReporter.framework in Frameworks */,
 				AB0DBFF6130C8C80000F4673 /* MGSFragaria.framework in Frameworks */,
-				ABFE708311AEF0510097EDE4 /* MGSTemplateEngine.framework in Frameworks */,
 				ABCDAE3C10C5CD9F00C9BC25 /* Sparkle.framework in Frameworks */,
 				AB87D77F0E52317700A9C761 /* MGSKosmicTask.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
@@ -5035,6 +5018,7 @@
 				ABAD1B801073EA9E00297C8C /* IOKit.framework in Frameworks */,
 				AB33581E10CABF6E003B44AC /* CoreFoundation.framework in Frameworks */,
 				ABE8E68013CA42FB005852B5 /* WebKit.framework in Frameworks */,
+				AB2EC83C14D1E28000B54313 /* MGSTemplateEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6311,7 +6295,6 @@
 				AB3F5EEF130C7C5300342F11 /* MGSPythonScriptManager.m */,
 				AB777ED1130C7087000973D4 /* Git submodule projects - do not edit directly */,
 				AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */,
-				ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */,
 				AB92318511A695E70093EDE3 /* KosmicTask Quick Look Plugin.xcodeproj */,
 				ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */,
 				ABCF25AE0EE0A66F00FC0364 /* KosmicTask MDImporter.xcodeproj */,
@@ -6800,6 +6783,15 @@
 				ABF3D4071220364A00442B67 /* yaml */,
 			);
 			name = Python;
+			sourceTree = "<group>";
+		};
+		AB2EC82E14D1E22700B54313 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB2EC83614D1E22800B54313 /* MGTemplateEngine.app */,
+				AB2EC83814D1E22800B54313 /* MGSTemplateEngine.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		AB316710128D40630037EF1C /* OCUnit testing */ = {
@@ -7311,6 +7303,7 @@
 		AB69B66D130EAA8E00171D4F /* Git repo is local */ = {
 			isa = PBXGroup;
 			children = (
+				AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */,
 				AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */,
 				AB79AF6814CA2F0E00087932 /* MarkdownLive.xcodeproj */,
 				ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */,
@@ -8735,7 +8728,6 @@
 		ABDD7CCD14D1A49E00CB91F8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ABDD7CD414D1A49E00CB91F8 /* PSMTabBarControl.palette */,
 				ABDD7CD614D1A49E00CB91F8 /* TabBarControlDemo.app */,
 				ABDD7CD814D1A49E00CB91F8 /* PSMTabBarControl.framework */,
 			);
@@ -8801,15 +8793,6 @@
 			isa = PBXGroup;
 			children = (
 				ABF6CDBC13CF786A000EADD7 /* QLMarkdown.qlgenerator */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		ABFE703F11AEEFE80097EDE4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ABFE704411AEEFE80097EDE4 /* MGTemplateEngine.app */,
-				ABFE704611AEEFE80097EDE4 /* MGSTemplateEngine.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -9017,7 +9000,6 @@
 			dependencies = (
 				AB79AF7614CA32B800087932 /* PBXTargetDependency */,
 				ABAB188E1048679D00AA3E9A /* PBXTargetDependency */,
-				ABFE712311AF03F90097EDE4 /* PBXTargetDependency */,
 			);
 			name = MGSKosmicTask;
 			productName = MGSMother;
@@ -9048,6 +9030,7 @@
 				AB9DC2FB0DE5C99800B85F5E /* PBXBuildRule */,
 			);
 			dependencies = (
+				AB2EC83A14D1E23400B54313 /* PBXTargetDependency */,
 				ABDD7D6814D1A58F00CB91F8 /* PBXTargetDependency */,
 				ABC0F53914D05D3300BCE71D /* PBXTargetDependency */,
 				AB1CBC7A14CDCFAA00CCF7DD /* PBXTargetDependency */,
@@ -9088,7 +9071,6 @@
 				AB15625E118DAB0900DC01C7 /* PBXTargetDependency */,
 				AB92D17A12047EF50025EAEF /* PBXTargetDependency */,
 				AB92320311A696140093EDE3 /* PBXTargetDependency */,
-				ABFE708211AEF00F0097EDE4 /* PBXTargetDependency */,
 				AB6676D41205BBD6006763E2 /* PBXTargetDependency */,
 				AB66786E1205BFE5006763E2 /* PBXTargetDependency */,
 				ABA1F036120D787C0079E65B /* PBXTargetDependency */,
@@ -10364,8 +10346,8 @@
 					ProjectRef = AB79AF6814CA2F0E00087932 /* MarkdownLive.xcodeproj */;
 				},
 				{
-					ProductGroup = ABFE703F11AEEFE80097EDE4 /* Products */;
-					ProjectRef = ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */;
+					ProductGroup = AB2EC82E14D1E22700B54313 /* Products */;
+					ProjectRef = AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */;
 				},
 				{
 					ProductGroup = AB1CBC7114CDCF8F00CCF7DD /* Products */;
@@ -10517,6 +10499,20 @@
 			fileType = wrapper.framework;
 			path = OpenFeedback.framework;
 			remoteRef = AB1CBC7714CDCF8F00CCF7DD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2EC83614D1E22800B54313 /* MGTemplateEngine.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MGTemplateEngine.app;
+			remoteRef = AB2EC83514D1E22800B54313 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2EC83814D1E22800B54313 /* MGSTemplateEngine.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MGSTemplateEngine.framework;
+			remoteRef = AB2EC83714D1E22800B54313 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AB3F662D130C845F00342F11 /* Fragaria Document Based App.app */ = {
@@ -10799,13 +10795,6 @@
 			remoteRef = ABD056231325267000A728B8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		ABDD7CD414D1A49E00CB91F8 /* PSMTabBarControl.palette */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PSMTabBarControl.palette;
-			remoteRef = ABDD7CD314D1A49E00CB91F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		ABDD7CD614D1A49E00CB91F8 /* TabBarControlDemo.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -10825,20 +10814,6 @@
 			fileType = wrapper.cfbundle;
 			path = QLMarkdown.qlgenerator;
 			remoteRef = ABF6CDBB13CF786A000EADD7 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABFE704411AEEFE80097EDE4 /* MGTemplateEngine.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = MGTemplateEngine.app;
-			remoteRef = ABFE704311AEEFE80097EDE4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABFE704611AEEFE80097EDE4 /* MGSTemplateEngine.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = MGSTemplateEngine.framework;
-			remoteRef = ABFE704511AEEFE80097EDE4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -12714,6 +12689,11 @@
 			target = 0953D02A0CD941AD00519488 /* KosmicTaskServer */;
 			targetProxy = AB2D041F0CDE6285006632AF /* PBXContainerItemProxy */;
 		};
+		AB2EC83A14D1E23400B54313 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MGSTemplateEngine;
+			targetProxy = AB2EC83914D1E23400B54313 /* PBXContainerItemProxy */;
+		};
 		AB3167E7128D47380037EF1C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 09C09E250CDC7D710048BC79 /* MGSKosmicTask */;
@@ -13288,16 +13268,6 @@
 			isa = PBXTargetDependency;
 			name = QLMarkdown;
 			targetProxy = ABF6CE2213CF7894000EADD7 /* PBXContainerItemProxy */;
-		};
-		ABFE708211AEF00F0097EDE4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MGSTemplateEngine;
-			targetProxy = ABFE708111AEF00F0097EDE4 /* PBXContainerItemProxy */;
-		};
-		ABFE712311AF03F90097EDE4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MGSTemplateEngine;
-			targetProxy = ABFE712211AF03F90097EDE4 /* PBXContainerItemProxy */;
 		};
 		ABFFCD82120D5A09005CC65A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
