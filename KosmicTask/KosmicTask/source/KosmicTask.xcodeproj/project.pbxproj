@@ -134,6 +134,8 @@
 		AB19176A12AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB19176912AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m */; };
 		AB19176B12AFE15100710031 /* KosmicTaskLuaCocoaRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB19162D12AFD90300710031 /* KosmicTaskLuaCocoaRunner */; };
 		AB1BD7DD12AFFE6B00B7733A /* LuaCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1BD78212AFFE2900B7733A /* LuaCocoa.framework */; };
+		AB1CBC7B14CDCFD800CCF7DD /* OpenFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */; };
+		AB1CBC7C14CDCFF000CCF7DD /* OpenFeedback.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */; };
 		AB1D731713F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D731613F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m */; };
 		AB1E1AF013E1BBC4003643AC /* EMKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = AB1E1AED13E1BBC4003643AC /* EMKeychain.h */; };
 		AB1E1AF113E1BBC4003643AC /* EMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E1AEE13E1BBC4003643AC /* EMKeychain.m */; };
@@ -1633,6 +1635,20 @@
 			remoteGlobalIDString = 008397AB128250A4009609AE;
 			remoteInfo = CoreAnimationScriptability;
 		};
+		AB1CBC7714CDCF8F00CCF7DD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = OpenFeedback;
+		};
+		AB1CBC7914CDCFAA00CCF7DD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = OpenFeedback;
+		};
 		AB27AE7B1189E97600132977 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2585,6 +2601,13 @@
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = "spotlight importer";
 		};
+		ABC0F53814D05D3300BCE71D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB79AF6814CA2F0E00087932 /* MarkdownLive.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = ABECD8C113C8B8CA00B77CFD;
+			remoteInfo = ORCDiscount;
+		};
 		ABD0561D1325267000A728B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
@@ -2640,13 +2663,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 09C09E250CDC7D710048BC79;
 			remoteInfo = MGSMother;
-		};
-		ABDA109E14CDB2F400B1746A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = OpenFeedback;
 		};
 		ABDBEB3913927AC600553735 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2857,6 +2873,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				AB1CBC7C14CDCFF000CCF7DD /* OpenFeedback.framework in Copy Frameworks */,
 				AB79AF7714CA32FE00087932 /* ORCDiscount.framework in Copy Frameworks */,
 				ABADD7F613E5BDAA0033E038 /* FeedbackReporter.framework in Copy Frameworks */,
 				AB0D2D89130EB4B600FA992A /* YAMLKit.framework in Copy Frameworks */,
@@ -3525,6 +3542,7 @@
 		AB19176912AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLuaCocoaLanguagePlugin.m; sourceTree = "<group>"; };
 		AB1BA9400CF7711B00F35D8F /* servermainDO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = servermainDO.m; sourceTree = "<group>"; };
 		AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LuaCocoa.xcodeproj; path = ../../../../../bitbucket/luacocoa/Xcode/LuaCocoa.xcodeproj; sourceTree = SOURCE_ROOT; };
+		AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OpenFeedback.xcodeproj; path = ../../../OpenFeedback/OpenFeedback.xcodeproj; sourceTree = "<group>"; };
 		AB1D731513F9B9C40062BC80 /* MGSFilePathParameterEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFilePathParameterEditViewController.h; sourceTree = "<group>"; };
 		AB1D731613F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFilePathParameterEditViewController.m; sourceTree = "<group>"; };
 		AB1E1AED13E1BBC4003643AC /* EMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMKeychain.h; path = ../../../../EMKeyChain/EMKeychain.h; sourceTree = "<group>"; };
@@ -4453,7 +4471,6 @@
 		ABABF96D0EE733770071F9E9 /* MGSSearchTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSearchTableView.h; sourceTree = "<group>"; };
 		ABABF96E0EE733770071F9E9 /* MGSSearchTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSearchTableView.m; sourceTree = "<group>"; };
 		ABAC5D3410357DDC003A7231 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "../../../Sparkle 1.5b6/With Garbage Collection/Sparkle.framework"; sourceTree = SOURCE_ROOT; };
-		ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OpenFeedback.xcodeproj; path = ../../../OpenFeedback/OpenFeedback.xcodeproj; sourceTree = SOURCE_ROOT; };
 		ABAC6F9A0E6FDBF100A82FFE /* PinMeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinMeTemplate.png; sourceTree = "<group>"; };
 		ABAC76E60E62B2C200B76864 /* MGSNetAttachments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNetAttachments.h; sourceTree = "<group>"; };
 		ABAC76E70E62B2C200B76864 /* MGSNetAttachments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNetAttachments.m; sourceTree = "<group>"; };
@@ -5002,6 +5019,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB1CBC7B14CDCFD800CCF7DD /* OpenFeedback.framework in Frameworks */,
 				ABADD7F513E5BD8E0033E038 /* FeedbackReporter.framework in Frameworks */,
 				AB0DBFF6130C8C80000F4673 /* MGSFragaria.framework in Frameworks */,
 				ABFE708311AEF0510097EDE4 /* MGSTemplateEngine.framework in Frameworks */,
@@ -6296,7 +6314,6 @@
 				ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */,
 				AB92318511A695E70093EDE3 /* KosmicTask Quick Look Plugin.xcodeproj */,
 				ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */,
-				ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */,
 				ABCF25AE0EE0A66F00FC0364 /* KosmicTask MDImporter.xcodeproj */,
 				AB72CE370E703C5500E6711C /* Port Map.xcodeproj */,
 				ABE014E50D3EB94A00899F73 /* PSMTabBarControl.xcodeproj */,
@@ -6650,6 +6667,14 @@
 				AB1BD78812AFFE2900B7733A /* SimpleLuaView.app */,
 				AB1BD78A12AFFE2900B7733A /* SimpleLuaOpenGLView.app */,
 				AB1BD78C12AFFE2900B7733A /* CoreAnimationScriptability.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB1CBC7114CDCF8F00CCF7DD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7287,6 +7312,7 @@
 		AB69B66D130EAA8E00171D4F /* Git repo is local */ = {
 			isa = PBXGroup;
 			children = (
+				AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */,
 				AB79AF6814CA2F0E00087932 /* MarkdownLive.xcodeproj */,
 				ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */,
 				ABF6CDB413CF786A000EADD7 /* QLMarkdown.xcodeproj */,
@@ -8691,14 +8717,6 @@
 			name = Numbers;
 			sourceTree = "<group>";
 		};
-		ABDA109B14CDB2F400B1746A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ABDA109F14CDB2F400B1746A /* OpenFeedback.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		ABDB811D0DF7127400F24711 /* CrashReporter */ = {
 			isa = PBXGroup;
 			children = (
@@ -9030,6 +9048,8 @@
 				AB9DC2FB0DE5C99800B85F5E /* PBXBuildRule */,
 			);
 			dependencies = (
+				ABC0F53914D05D3300BCE71D /* PBXTargetDependency */,
+				AB1CBC7A14CDCFAA00CCF7DD /* PBXTargetDependency */,
 				ABADD7F413E5BD510033E038 /* PBXTargetDependency */,
 				AB72CEF80E70453300E6711C /* PBXTargetDependency */,
 				ABFBAA9D0DAB9535004D1DE4 /* PBXTargetDependency */,
@@ -10348,8 +10368,8 @@
 					ProjectRef = ABFE703E11AEEFE80097EDE4 /* MGTemplateEngine.xcodeproj */;
 				},
 				{
-					ProductGroup = ABDA109B14CDB2F400B1746A /* Products */;
-					ProjectRef = ABAC5E06103581EB003A7231 /* OpenFeedback.xcodeproj */;
+					ProductGroup = AB1CBC7114CDCF8F00CCF7DD /* Products */;
+					ProjectRef = AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */;
 				},
 				{
 					ProductGroup = AB3F6EBE130C867700342F11 /* Products */;
@@ -10490,6 +10510,13 @@
 			fileType = wrapper.application;
 			path = CoreAnimationScriptability.app;
 			remoteRef = AB1BD78B12AFFE2900B7733A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OpenFeedback.framework;
+			remoteRef = AB1CBC7714CDCF8F00CCF7DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AB3F662D130C845F00342F11 /* Fragaria Document Based App.app */ = {
@@ -10770,13 +10797,6 @@
 			fileType = "compiled.mach-o.executable";
 			path = luac;
 			remoteRef = ABD056231325267000A728B8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABDA109F14CDB2F400B1746A /* OpenFeedback.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = OpenFeedback.framework;
-			remoteRef = ABDA109E14CDB2F400B1746A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ABE014F00D3EB94A00899F73 /* PSMTabBarControl.palette */ = {
@@ -12653,6 +12673,11 @@
 			target = AB1914B912AFD8A500710031 /* Language Plugin LuaCocoa */;
 			targetProxy = AB19174712AFDFDB00710031 /* PBXContainerItemProxy */;
 		};
+		AB1CBC7A14CDCFAA00CCF7DD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OpenFeedback;
+			targetProxy = AB1CBC7914CDCFAA00CCF7DD /* PBXContainerItemProxy */;
+		};
 		AB27AE7C1189E97600132977 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AB27AD041189E86A00132977 /* MGSKosmicTaskRunner */;
@@ -13153,6 +13178,11 @@
 			isa = PBXTargetDependency;
 			target = AB3180AF12B2884D001E821B /* Language Plugin JSCocoa */;
 			targetProxy = ABBA12CA12B28DC3005F12A5 /* PBXContainerItemProxy */;
+		};
+		ABC0F53914D05D3300BCE71D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ORCDiscount;
+			targetProxy = ABC0F53814D05D3300BCE71D /* PBXContainerItemProxy */;
 		};
 		ABD056841325272900A728B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
