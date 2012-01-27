@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSResourceItem.h"
-#import "MGSTemplateEngine/MGTemplateEngine.h"
+#import <MGTemplateEngine/MGTemplateEngine.h>
 
 @class MGSScript;
 

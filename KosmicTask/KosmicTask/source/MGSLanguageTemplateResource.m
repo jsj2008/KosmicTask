@@ -8,7 +8,7 @@
 
 #import "MGSLanguageTemplateResource.h"
 #import "MGSResourceBrowserNode.h"
-#import "MGSTemplateEngine/ICUTemplateMatcher.h"
+#import "MGTemplateEngine/ICUTemplateMatcher.h"
 
 // class extension
 @interface MGSLanguageTemplateResource()

@@ -33,7 +33,7 @@
 #import "MGSAddServerWindowController.h"
 #import "NSImage+QuickLook.h"
 #import <OpenFeedback/OpenFeedback.h>  
-#import "Sparkle/SUUpdater.h" 
+#import <Sparkle/SUUpdater.h> 
 #import "MGSSaveConfigurationWindowController.h"
 #import "MGSNetClientManager.h"
 #import "MGSNotifications.h"
