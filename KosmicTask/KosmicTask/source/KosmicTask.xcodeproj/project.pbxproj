@@ -588,6 +588,8 @@
 		AB8C14B01257551E004231E2 /* MGSSettingsOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8C14AE1257551E004231E2 /* MGSSettingsOutlineViewController.m */; };
 		AB8C14B31257556C004231E2 /* SettingsOutlineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8C14B11257556C004231E2 /* SettingsOutlineView.xib */; };
 		AB8CB3FA1059665D00FFBBAF /* MGSServerTaskConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8CB3F91059665D00FFBBAF /* MGSServerTaskConfiguration.m */; };
+		AB8D3EC614D2C92F00FC88A2 /* Appscript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */; };
+		AB8D3EC714D2C94A00FC88A2 /* Appscript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */; };
 		AB8D7C7F0DA2309E00F84082 /* MGSNetRequestPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB074AF0D72CF15004C70F7 /* MGSNetRequestPayload.m */; };
 		AB8E7C330D5873C30049E876 /* MGSDisplayToolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8E7C320D5873C30049E876 /* MGSDisplayToolViewController.m */; };
 		AB8F0D630D30225F00F3631C /* MGSParameterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F0D620D30225F00F3631C /* MGSParameterView.m */; };
@@ -910,7 +912,6 @@
 		ABAAD6570D78037100E67A03 /* MGSActionDeleteWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAAD6560D78037100E67A03 /* MGSActionDeleteWindowController.m */; };
 		ABAAD65A0D78040600E67A03 /* ActionDeleteWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAAD6580D78040600E67A03 /* ActionDeleteWindow.xib */; };
 		ABAB16D410481DA200AA3E9A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAB16D310481DA200AA3E9A /* IOKit.framework */; };
-		ABAB193410486B3E00AA3E9A /* Appscript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABAB188A1048671D00AA3E9A /* Appscript.framework */; };
 		ABABF96F0EE733770071F9E9 /* MGSSearchTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABABF96E0EE733770071F9E9 /* MGSSearchTableView.m */; };
 		ABAC6F9B0E6FDBF200A82FFE /* PinMeTemplate.png in Resources */ = {isa = PBXBuildFile; fileRef = ABAC6F9A0E6FDBF100A82FFE /* PinMeTemplate.png */; };
 		ABAC76E80E62B2C200B76864 /* MGSNetAttachments.h in Headers */ = {isa = PBXBuildFile; fileRef = ABAC76E60E62B2C200B76864 /* MGSNetAttachments.h */; };
@@ -968,7 +969,6 @@
 		ABADEF1A104D34CA007A5319 /* OSAKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA858C40D5CAE910077F640 /* OSAKit.framework */; };
 		ABADEFD9104D34CE007A5319 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB473EE20D90167700CB6816 /* Carbon.framework */; };
 		ABADEFDA104D34CE007A5319 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
-		ABADF025104D361A007A5319 /* Appscript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAB188A1048671D00AA3E9A /* Appscript.framework */; };
 		ABADF08D104D374E007A5319 /* NDScript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABADEE02104D32A9007A5319 /* NDScript.framework */; };
 		ABAE0B79131558CC000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg in Copy Python Resources */ = {isa = PBXBuildFile; fileRef = ABAE0B78131558BC000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg */; };
 		ABAE0B7A131558E9000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg in Copy Python resources */ = {isa = PBXBuildFile; fileRef = ABAE0B78131558BC000A5F6D /* appscript-1.0.0-py2.6-macosx-10.6-universal.egg */; };
@@ -1682,13 +1682,6 @@
 			remoteGlobalIDString = AB27AD041189E86A00132977;
 			remoteInfo = MGSKosmicTaskRunner;
 		};
-		AB28944C104DAB590031754F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = Appscript;
-		};
 		AB2D041F0CDE6285006632AF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2291,6 +2284,20 @@
 			remoteGlobalIDString = ABECD8C113C8B8CA00B77CFD;
 			remoteInfo = ORCDiscount;
 		};
+		AB8D3EC214D2C8ED00FC88A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Appscript;
+		};
+		AB8D3EC414D2C92200FC88A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Appscript;
+		};
 		AB92318C11A695E70093EDE3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AB92318511A695E70093EDE3 /* KosmicTask Quick Look Plugin.xcodeproj */;
@@ -2444,20 +2451,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = ABA8E2661188BA2E00414A7D;
 			remoteInfo = "Language Plugin Bash Shell";
-		};
-		ABAB18891048671D00AA3E9A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = Appscript;
-		};
-		ABAB188B1048671D00AA3E9A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4FED70860D2E6B63003412D7;
-			remoteInfo = "objc-appscript-test";
 		};
 		ABADD7ED13E5BD040033E038 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2829,6 +2822,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				AB8D3EC714D2C94A00FC88A2 /* Appscript.framework in Copy Frameworks */,
 				AB2ECA1114D1F5AE00B54313 /* TCMPortMapper.framework in Copy Frameworks */,
 				ABDD7D6A14D1A5C000CB91F8 /* PSMTabBarControl.framework in Copy Frameworks */,
 				AB1CBC7C14CDCFF000CCF7DD /* OpenFeedback.framework in Copy Frameworks */,
@@ -2838,7 +2832,6 @@
 				AB0DC00B130C8C9C000F4673 /* MGSFragaria.framework in Copy Frameworks */,
 				AB27AE801189EA1900132977 /* MGSKosmicTaskRunner.framework in Copy Frameworks */,
 				ABADF08D104D374E007A5319 /* NDScript.framework in Copy Frameworks */,
-				ABAB193410486B3E00AA3E9A /* Appscript.framework in Copy Frameworks */,
 				AB87D6F30E52316800A9C761 /* MGSKosmicTask.framework in Copy Frameworks */,
 				AB3B522E14D2AFF300B82B95 /* Sparkle.framework in Copy Frameworks */,
 			);
@@ -3449,8 +3442,8 @@
 		AB10CE5713D4400D003971C7 /* MGSFolderParameterInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFolderParameterInputViewController.m; sourceTree = "<group>"; };
 		AB10CE5913D4405F003971C7 /* MGSFolderPathParameterEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFolderPathParameterEditViewController.h; sourceTree = "<group>"; };
 		AB10CE5A13D4405F003971C7 /* MGSFolderPathParameterEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFolderPathParameterEditViewController.m; sourceTree = "<group>"; };
-		AB10CE7913D4455A003971C7 /* FolderPathParameterEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderPathParameterEditView.xib; sourceTree = "<group>"; };
-		AB10CF1B13D44576003971C7 /* FolderPathParameterInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderPathParameterInputView.xib; sourceTree = "<group>"; };
+		AB10CE7913D4455A003971C7 /* FolderPathParameterEditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = FolderPathParameterEditView.xib; path = ../FolderPathParameterEditView.xib; sourceTree = "<group>"; };
+		AB10CF1B13D44576003971C7 /* FolderPathParameterInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = FolderPathParameterInputView.xib; path = ../FolderPathParameterInputView.xib; sourceTree = "<group>"; };
 		AB1208E30D5BAD9600EF60AC /* MGSViewToolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSViewToolViewController.h; sourceTree = "<group>"; };
 		AB1208E40D5BAD9600EF60AC /* MGSViewToolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSViewToolViewController.m; sourceTree = "<group>"; };
 		AB12AED313087715006047E0 /* MGSSidebarOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSidebarOutlineView.h; sourceTree = "<group>"; };
@@ -3486,7 +3479,6 @@
 		AB1914D012AFD8A500710031 /* Language Plugin LuaCocoa.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin LuaCocoa.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1915C712AFD8A800710031 /* Language Plugin LuaCocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Language Plugin LuaCocoa-Info.plist"; sourceTree = "<group>"; };
 		AB19162D12AFD90300710031 /* KosmicTaskLuaCocoaRunner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KosmicTaskLuaCocoaRunner; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB19167412AFD90300710031 /* KosmicTaskRunner-Info copy 3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "KosmicTaskRunner-Info copy 3.plist"; path = "../KosmicTaskRunner-Info copy 3.plist"; sourceTree = "<group>"; };
 		AB19168212AFDA9C00710031 /* MGSLuaCocoaLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSLuaCocoaLanguage.h; path = "../mother task/MGSLuaCocoaLanguage.h"; sourceTree = "<group>"; };
 		AB19168312AFDA9C00710031 /* MGSLuaCocoaLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSLuaCocoaLanguage.m; path = "../mother task/MGSLuaCocoaLanguage.m"; sourceTree = "<group>"; };
 		AB1916F312AFDD6100710031 /* MGSLuaCocoaRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLuaCocoaRunner.h; sourceTree = "<group>"; };
@@ -3755,7 +3747,6 @@
 		AB4A5CC4120D7753006A66CC /* Language Plugin CINT.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin CINT.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4A5D01120D7753006A66CC /* Language Plugin CINT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Language Plugin CINT-Info.plist"; sourceTree = "<group>"; };
 		AB4A5D12120D775B006A66CC /* KosmicTaskCINTRunner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KosmicTaskCINTRunner; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB4A5D57120D775C006A66CC /* KosmicTaskRunner-Info copy 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "KosmicTaskRunner-Info copy 2.plist"; path = "../KosmicTaskRunner-Info copy 2.plist"; sourceTree = "<group>"; };
 		AB4A6C1710E96467009A856F /* MGSExpandingSplitview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSExpandingSplitview.h; sourceTree = "<group>"; };
 		AB4A6C1810E96467009A856F /* MGSExpandingSplitview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSExpandingSplitview.m; sourceTree = "<group>"; };
 		AB4BBC500D644CC5000A4B07 /* PencilAndPaper24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PencilAndPaper24.png; sourceTree = "<group>"; };
@@ -4423,7 +4414,7 @@
 		ABAAD6560D78037100E67A03 /* MGSActionDeleteWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSActionDeleteWindowController.m; sourceTree = "<group>"; };
 		ABAAD6590D78040600E67A03 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ActionDeleteWindow.xib; sourceTree = "<group>"; };
 		ABAB16D310481DA200AA3E9A /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Appscript.xcodeproj; path = "../../objc-appscript/trunk/src/Appscript/Appscript.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Appscript.xcodeproj; path = "../../../appscript/objc-appscript/trunk/src/Appscript/Appscript.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		ABABF96D0EE733770071F9E9 /* MGSSearchTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSearchTableView.h; sourceTree = "<group>"; };
 		ABABF96E0EE733770071F9E9 /* MGSSearchTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSearchTableView.m; sourceTree = "<group>"; };
 		ABAC6F9A0E6FDBF100A82FFE /* PinMeTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinMeTemplate.png; sourceTree = "<group>"; };
@@ -4609,7 +4600,6 @@
 		ABB978F10DA953460092680D /* Home.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Home.icns; sourceTree = "<group>"; };
 		ABB978F20DA953460092680D /* HomeGrey.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = HomeGrey.icns; sourceTree = "<group>"; };
 		ABBA122512B28B16005F12A5 /* KosmicTaskJavaScriptCocoaRunner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KosmicTaskJavaScriptCocoaRunner; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABBA126A12B28B16005F12A5 /* KosmicTaskRunner copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "KosmicTaskRunner copy.plist"; sourceTree = "<group>"; };
 		ABBA127D12B28C77005F12A5 /* MGSJavaScriptCocoaRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSJavaScriptCocoaRunner.h; sourceTree = "<group>"; };
 		ABBA127E12B28C77005F12A5 /* MGSJavaScriptCocoaRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSJavaScriptCocoaRunner.m; sourceTree = "<group>"; };
 		ABBA476F0D283D1000E1650E /* MGSClientScriptManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSClientScriptManager.h; sourceTree = "<group>"; };
@@ -4801,7 +4791,6 @@
 		ABE6EED80E50996E00FCD92C /* MGSLCDDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLCDDisplayView.m; sourceTree = "<group>"; };
 		ABE6EF050E50A38500FCD92C /* LCD display blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LCD display blue.png"; sourceTree = "<group>"; };
 		ABE7816C132516D800663CBB /* KosmicTaskLuaRunner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KosmicTaskLuaRunner; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABE7823D132516DB00663CBB /* KosmicTaskRunner copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KosmicTaskRunner copy.plist"; sourceTree = "<group>"; };
 		ABE78257132516FF00663CBB /* Language Plugin Lua.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin Lua.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABE782A0132516FF00663CBB /* Language Plugin CINT-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Language Plugin CINT-Info copy.plist"; sourceTree = "<group>"; };
 		ABE7843D13251ACE00663CBB /* MGSLuaLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLuaLanguage.h; sourceTree = "<group>"; };
@@ -4915,7 +4904,6 @@
 		ABFFCD95120D5A09005CC65A /* Language Plugin Scala.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin Scala.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABFFCD96120D5A0A005CC65A /* Language Plugin Scala-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Language Plugin Scala-Info.plist"; sourceTree = "<group>"; };
 		ABFFCDA9120D5A28005CC65A /* KosmicTaskScalaRunner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KosmicTaskScalaRunner; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABFFCDEE120D5A28005CC65A /* KosmicTaskRunner-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "KosmicTaskRunner-Info copy.plist"; path = "../KosmicTaskRunner-Info copy.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5528,7 +5516,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABADF025104D361A007A5319 /* Appscript.framework in Frameworks */,
+				AB8D3EC614D2C92F00FC88A2 /* Appscript.framework in Frameworks */,
 				ABADEFD9104D34CE007A5319 /* Carbon.framework in Frameworks */,
 				ABADEFDA104D34CE007A5319 /* Foundation.framework in Frameworks */,
 				ABADEF1A104D34CA007A5319 /* OSAKit.framework in Frameworks */,
@@ -6292,15 +6280,7 @@
 				ABF0D014120C227F006ABDB2 /* vecLib.framework */,
 				ABF0D016120C227F006ABDB2 /* VideoDecodeAcceleration.framework */,
 				ABF0D019120C227F006ABDB2 /* XgridFoundation.framework */,
-				ABFFCDEE120D5A28005CC65A /* KosmicTaskRunner-Info copy.plist */,
-				AB4A5D57120D775C006A66CC /* KosmicTaskRunner-Info copy 2.plist */,
-				AB31670B128D402C0037EF1C /* Test KosmicTask App-Info.plist */,
 				AB3167A4128D42280037EF1C /* SenTestingKit.framework */,
-				AB19167412AFD90300710031 /* KosmicTaskRunner-Info copy 3.plist */,
-				ABBA126A12B28B16005F12A5 /* KosmicTaskRunner copy.plist */,
-				ABE7823D132516DB00663CBB /* KosmicTaskRunner copy.plist */,
-				AB10CE7913D4455A003971C7 /* FolderPathParameterEditView.xib */,
-				AB10CF1B13D44576003971C7 /* FolderPathParameterInputView.xib */,
 			);
 			name = mother;
 			sourceTree = "<group>";
@@ -6472,6 +6452,8 @@
 		AB10CE5513D43F8A003971C7 /* Folder Path */ = {
 			isa = PBXGroup;
 			children = (
+				AB10CE7913D4455A003971C7 /* FolderPathParameterEditView.xib */,
+				AB10CF1B13D44576003971C7 /* FolderPathParameterInputView.xib */,
 				AB10CE4413D43D0E003971C7 /* MGSFolderPathParameterPlugin.h */,
 				AB10CE4513D43D0E003971C7 /* MGSFolderPathParameterPlugin.m */,
 				AB10CE5613D4400D003971C7 /* MGSFolderPathParameterInputViewController.h */,
@@ -7410,6 +7392,14 @@
 			name = Language;
 			sourceTree = "<group>";
 		};
+		AB8D3EBF14D2C8EC00FC88A2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AB92318611A695E70093EDE3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -7735,6 +7725,7 @@
 				AB31810C12B2884D001E821B /* Language Plugin JSCocoa-Info.plist */,
 				ABE782A0132516FF00663CBB /* Language Plugin CINT-Info copy.plist */,
 				ABDBEB8F13927AC700553735 /* Export Plugin YAML-Info.plist */,
+				AB31670B128D402C0037EF1C /* Test KosmicTask App-Info.plist */,
 			);
 			name = info.plist;
 			sourceTree = "<group>";
@@ -8356,15 +8347,6 @@
 				ABA27B0C0E9AC0CC002056C7 /* Read Me.rtf */,
 			);
 			name = "Line Numbering";
-			sourceTree = "<group>";
-		};
-		ABAB18821048671D00AA3E9A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ABAB188A1048671D00AA3E9A /* Appscript.framework */,
-				ABAB188C1048671D00AA3E9A /* objc-appscript-test.octest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		ABAC8F21111C6EB7003960A8 /* Licensing */ = {
@@ -9963,7 +9945,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				AB28944D104DAB590031754F /* PBXTargetDependency */,
+				AB8D3EC514D2C92200FC88A2 /* PBXTargetDependency */,
 			);
 			name = NDScript;
 			productName = NDScript;
@@ -10259,7 +10241,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = ABAB18821048671D00AA3E9A /* Products */;
+					ProductGroup = AB8D3EBF14D2C8EC00FC88A2 /* Products */;
 					ProjectRef = ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */;
 				},
 				{
@@ -10650,25 +10632,18 @@
 			remoteRef = AB79AF7314CA2F1000087932 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Appscript.framework;
+			remoteRef = AB8D3EC214D2C8ED00FC88A2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		AB92318D11A695E70093EDE3 /* KosmicTask.qlgenerator */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = KosmicTask.qlgenerator;
 			remoteRef = AB92318C11A695E70093EDE3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABAB188A1048671D00AA3E9A /* Appscript.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Appscript.framework;
-			remoteRef = ABAB18891048671D00AA3E9A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABAB188C1048671D00AA3E9A /* objc-appscript-test.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "objc-appscript-test.octest";
-			remoteRef = ABAB188B1048671D00AA3E9A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ABADD7EE13E5BD040033E038 /* FeedbackReporter.framework */ = {
@@ -12610,11 +12585,6 @@
 			target = AB27AD041189E86A00132977 /* MGSKosmicTaskRunner */;
 			targetProxy = AB27B289118A18D400132977 /* PBXContainerItemProxy */;
 		};
-		AB28944D104DAB590031754F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Appscript;
-			targetProxy = AB28944C104DAB590031754F /* PBXContainerItemProxy */;
-		};
 		AB2D04200CDE6285006632AF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			comments = "http://www.cocoadev.com/index.pl?LinkingAuxiliaryExecutablesToEmbeddedFramework\nThis topic will discuss how to link auxiliary executables to a framework that is embedded in an application. The tricky part about doing this is dealing with linker warnings caused by \"missing files\". Three target types will be covered here:\n\n\t•\tCocoa Shell Tool\n\t•\tCocoa Helper Application\n\t•\tLoadable Cocoa Bundle\nCocoa Shell Tool\nThe most basic case is where a client Cocoa application spawns a server task. If the server task links against a framework that is also an embedded framework of the client application, the build/test setup must accommodate a different search path. ld expects to see the embedded framework located at @executable_path/../Frameworks. Xcode needs to associate the server target to an application target that embeds the framework. The easiest way to do this is to make the server target a direct dependency of the client application target.\nFor example, if a client application is built using a target named \"App\" and a server shell tool is built using a target named \"Server\", \"Server\" must be added as a direct dependency to \"App\" (search ADC using Xcode and \"direct dependencies\" for information on how to add dependencies to a target).\n\"Server\" is built indirectly (i.e. \"Server\" is built when \"App\" is built). As long as \"App\" is the active target, Xcode will know where the embedded framework is located relative to the server's executable path. \"Server\" can only be tested as a child process if it is linked to an embedded framework. One plus side to this is the runtime log will show both server/client logs when testing.\nThe final \"App\" target setup involves adding a copy phase with a \"Destination\" of \"Executable\" and dragging the product icon for \"Server\" onto the new copy phase icon. This should copy the \"Server\" executable into the \"MacOS\" folder inside the application bundle for \"App\". Launching the server from the application is fairly easy (see code below).";
@@ -12905,6 +12875,11 @@
 			isa = PBXTargetDependency;
 			name = ORCDiscount;
 			targetProxy = AB79AF7514CA32B800087932 /* PBXContainerItemProxy */;
+		};
+		AB8D3EC514D2C92200FC88A2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Appscript;
+			targetProxy = AB8D3EC414D2C92200FC88A2 /* PBXContainerItemProxy */;
 		};
 		AB92320311A696140093EDE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -13609,7 +13584,6 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
 				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
 				OTHER_LDFLAGS = (
@@ -13627,7 +13601,6 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
 				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
 				OTHER_LDFLAGS = (
@@ -13645,7 +13618,6 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
 				FRAMEWORK_SEARCH_PATHS = /Users/Jonathan/Documents/Computing/source/KosmicTask/yamlkit;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "KosmicTaskServer-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = (
@@ -13663,7 +13635,6 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
 				FRAMEWORK_SEARCH_PATHS = /Users/Jonathan/Documents/Computing/source/KosmicTask/yamlkit;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "KosmicTaskServer-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				OTHER_LDFLAGS = (
@@ -13682,7 +13653,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 62;
 				FRAMEWORK_VERSION = A;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -13700,7 +13670,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 62;
 				FRAMEWORK_VERSION = A;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -13770,7 +13739,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin C Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -13795,7 +13763,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin C Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -13822,7 +13789,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin TENEX C Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -13847,7 +13813,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin TENEX C Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -13874,7 +13839,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Korn Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -13899,7 +13863,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Korn Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -13926,7 +13889,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Z Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -13951,7 +13913,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Z Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -13978,7 +13939,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Tcl Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14003,7 +13963,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Tcl Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14034,7 +13993,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin LuaCocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14063,7 +14021,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin LuaCocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14097,7 +14054,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
 				INFOPLIST_FILE = KosmicTaskRunner.plist;
 				INSTALL_PATH = /usr/local/bin;
@@ -14129,7 +14085,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
 				INFOPLIST_FILE = KosmicTaskRunner.plist;
 				INSTALL_PATH = /usr/local/bin;
@@ -14160,7 +14115,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MGSKosmicTaskRunner-Info.plist";
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "";
@@ -14188,7 +14142,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "MGSKosmicTaskRunner-Info.plist";
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "";
@@ -14215,7 +14168,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14241,7 +14193,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14268,7 +14219,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14294,7 +14244,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14321,7 +14270,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14347,7 +14295,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14374,7 +14321,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14400,7 +14346,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14478,7 +14423,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin JSCocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14504,7 +14448,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin JSCocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14531,7 +14474,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin RubyCocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14556,7 +14498,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin RubyCocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14583,7 +14524,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Python-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14608,7 +14548,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Python-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14639,7 +14578,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin CINT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14672,7 +14610,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin CINT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -14705,7 +14642,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14736,7 +14672,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14761,7 +14696,6 @@
 			buildSettings = {
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Export Plugin PDF-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin PDF";
@@ -14772,7 +14706,6 @@
 		AB4D190C0DE2D49400D0E517 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Export Plugin PDF-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin PDF";
@@ -14792,7 +14725,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info copy.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14818,7 +14750,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14845,7 +14776,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14871,7 +14801,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14898,7 +14827,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14924,7 +14852,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14951,7 +14878,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14977,7 +14903,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15004,7 +14929,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15030,7 +14954,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15059,7 +14982,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15088,7 +15010,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15114,7 +15035,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Ruby-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15139,7 +15059,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Ruby-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15168,7 +15087,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15194,7 +15112,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15219,7 +15136,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin JavaScript-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15244,7 +15160,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin JavaScript-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15274,7 +15189,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
@@ -15302,7 +15216,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
@@ -15328,7 +15241,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Java-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15353,7 +15265,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Java-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15382,7 +15293,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15408,7 +15318,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15433,7 +15342,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Perl-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15458,7 +15366,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Perl-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15487,7 +15394,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15513,7 +15419,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15538,7 +15443,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Php-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15563,7 +15467,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Php-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15592,7 +15495,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15618,7 +15520,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -15643,7 +15544,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin F-Script-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15668,7 +15568,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin F-Script-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15702,7 +15601,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"../../../F-Script/**",
 					"./include/**",
@@ -15737,7 +15635,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"../../../F-Script/**",
 					"./include/**",
@@ -15789,7 +15686,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin PythonObjC-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15814,7 +15710,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin PythonObjC-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15860,7 +15755,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = NO;
 				INFOPLIST_FILE = "Export Plugin RTF-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15873,7 +15767,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = NO;
 				INFOPLIST_FILE = "Export Plugin RTF-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -15886,7 +15779,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Export Plugin Plain Text-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin Plain Text";
@@ -15897,7 +15789,6 @@
 		ABA247950DE2CEEB00BD2A66 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Export Plugin Plain Text-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin Plain Text";
@@ -15933,7 +15824,6 @@
 			buildSettings = {
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Export Plugin Plist-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin Plist";
@@ -15944,7 +15834,6 @@
 		ABA301C60DE4B1BD002DB3F4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Export Plugin Plist-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin Plist";
@@ -15958,7 +15847,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Export Plugin XML-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin XML";
@@ -15970,7 +15858,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Export Plugin XML-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin XML";
@@ -15988,7 +15875,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Bash Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16013,7 +15899,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Bash Shell-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16044,7 +15929,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "NDScript-Info.plist";
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = ../../../Frameworks;
@@ -16063,7 +15947,6 @@
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "NDScript-Info.plist";
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = ../../../Frameworks;
@@ -16123,7 +16006,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Parameter Plugin Date-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Parameter Plugin Date";
@@ -16134,7 +16016,6 @@
 		ABAFC7CE0DF9C5C200349FC3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Parameter Plugin Date-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Parameter Plugin Date";
@@ -16150,7 +16031,6 @@
 					"\"$(SRCROOT)/../../../Sparkle/Release (GC dual-mode; 10.5-only)\"",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Parameter Plugin File-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Parameter Plugin File";
@@ -16165,7 +16045,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Sparkle/Release (GC dual-mode; 10.5-only)\"",
 				);
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Parameter Plugin File-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Parameter Plugin File";
@@ -16187,7 +16066,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
 				INFOPLIST_FILE = KosmicTaskRunner.plist;
 				INSTALL_PATH = /usr/local/bin;
@@ -16216,7 +16094,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
 				INFOPLIST_FILE = KosmicTaskRunner.plist;
 				INSTALL_PATH = /usr/local/bin;
@@ -16286,7 +16163,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Export Plugin YAML-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin YAML";
@@ -16298,7 +16174,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Export Plugin YAML-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin YAML";
@@ -16316,7 +16191,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin AppleScript-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16341,7 +16215,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin AppleScript-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16368,7 +16241,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin AppleScript Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16393,7 +16265,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin AppleScript Cocoa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16427,7 +16298,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
 				INFOPLIST_FILE = KosmicTaskRunner.plist;
 				INSTALL_PATH = /usr/local/bin;
@@ -16459,7 +16329,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = NO;
 				INFOPLIST_FILE = KosmicTaskRunner.plist;
 				INSTALL_PATH = /usr/local/bin;
@@ -16486,7 +16355,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Lua-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16513,7 +16381,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Lua-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16541,7 +16408,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Scala-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16566,7 +16432,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "Language Plugin Scala-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16595,7 +16460,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info copy.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -16621,7 +16485,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info copy.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -16649,7 +16512,6 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mother_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = ../../PSMTabBarControl/trunk/source;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -16679,7 +16541,6 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mother_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = ../../PSMTabBarControl/trunk/source;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -16712,7 +16573,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -16763,7 +16623,6 @@
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
