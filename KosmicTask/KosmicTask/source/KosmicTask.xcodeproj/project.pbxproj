@@ -298,8 +298,6 @@
 		AB3A06330D3D6ECB005EB557 /* RequestTabView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB3A06310D3D6ECB005EB557 /* RequestTabView.xib */; };
 		AB3A063E0D3D7075005EB557 /* MGSRequestTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3A063D0D3D7075005EB557 /* MGSRequestTabViewController.m */; };
 		AB3A3B9313CF963800141100 /* ResourceDocument.css in Resources */ = {isa = PBXBuildFile; fileRef = AB3A3B9213CF960900141100 /* ResourceDocument.css */; };
-		AB3B522D14D2AFBC00B82B95 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B522C14D2AFBB00B82B95 /* Sparkle.framework */; };
-		AB3B522E14D2AFF300B82B95 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B522C14D2AFBB00B82B95 /* Sparkle.framework */; };
 		AB3BD5DB1051B9EE003AAB9C /* MGSNumberInputView.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3BD5D91051B9EE003AAB9C /* MGSNumberInputView.h */; };
 		AB3BD5DC1051B9EE003AAB9C /* MGSNumberInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3BD5DA1051B9EE003AAB9C /* MGSNumberInputView.m */; };
 		AB3C6C77104A9EF600ED6CFE /* AEMCodecs_Mugginsoft.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3C6C75104A9EF600ED6CFE /* AEMCodecs_Mugginsoft.h */; };
@@ -590,6 +588,9 @@
 		AB8CB3FA1059665D00FFBBAF /* MGSServerTaskConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8CB3F91059665D00FFBBAF /* MGSServerTaskConfiguration.m */; };
 		AB8D3EC614D2C92F00FC88A2 /* Appscript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */; };
 		AB8D3EC714D2C94A00FC88A2 /* Appscript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */; };
+		AB8D400214D2DF7300FC88A2 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D400114D2DF7300FC88A2 /* Sparkle.framework */; };
+		AB8D400314D2DFE600FC88A2 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D400114D2DF7300FC88A2 /* Sparkle.framework */; };
+		AB8D400414D2E00D00FC88A2 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D400114D2DF7300FC88A2 /* Sparkle.framework */; };
 		AB8D7C7F0DA2309E00F84082 /* MGSNetRequestPayload.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB074AF0D72CF15004C70F7 /* MGSNetRequestPayload.m */; };
 		AB8E7C330D5873C30049E876 /* MGSDisplayToolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8E7C320D5873C30049E876 /* MGSDisplayToolViewController.m */; };
 		AB8F0D630D30225F00F3631C /* MGSParameterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8F0D620D30225F00F3631C /* MGSParameterView.m */; };
@@ -2833,7 +2834,7 @@
 				AB27AE801189EA1900132977 /* MGSKosmicTaskRunner.framework in Copy Frameworks */,
 				ABADF08D104D374E007A5319 /* NDScript.framework in Copy Frameworks */,
 				AB87D6F30E52316800A9C761 /* MGSKosmicTask.framework in Copy Frameworks */,
-				AB3B522E14D2AFF300B82B95 /* Sparkle.framework in Copy Frameworks */,
+				AB8D400314D2DFE600FC88A2 /* Sparkle.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3691,7 +3692,6 @@
 		AB3A063C0D3D7075005EB557 /* MGSRequestTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSRequestTabViewController.h; sourceTree = "<group>"; };
 		AB3A063D0D3D7075005EB557 /* MGSRequestTabViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGSRequestTabViewController.m; sourceTree = "<group>"; };
 		AB3A3B9213CF960900141100 /* ResourceDocument.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = ResourceDocument.css; sourceTree = "<group>"; };
-		AB3B522C14D2AFBB00B82B95 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = "../../../Frameworks/Sparkle/Release (GC dual-mode; 10.5-only)/Sparkle.framework"; sourceTree = "<group>"; };
 		AB3BD5D91051B9EE003AAB9C /* MGSNumberInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNumberInputView.h; sourceTree = "<group>"; };
 		AB3BD5DA1051B9EE003AAB9C /* MGSNumberInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNumberInputView.m; sourceTree = "<group>"; };
 		AB3C6C75104A9EF600ED6CFE /* AEMCodecs_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEMCodecs_Mugginsoft.h; sourceTree = "<group>"; };
@@ -4007,6 +4007,7 @@
 		AB8C14B11257556C004231E2 /* SettingsOutlineView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsOutlineView.xib; sourceTree = "<group>"; };
 		AB8CB3F81059665D00FFBBAF /* MGSServerTaskConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSServerTaskConfiguration.h; sourceTree = "<group>"; };
 		AB8CB3F91059665D00FFBBAF /* MGSServerTaskConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSServerTaskConfiguration.m; sourceTree = "<group>"; };
+		AB8D400114D2DF7300FC88A2 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		AB8E7C310D5873C30049E876 /* MGSDisplayToolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSDisplayToolViewController.h; sourceTree = "<group>"; };
 		AB8E7C320D5873C30049E876 /* MGSDisplayToolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSDisplayToolViewController.m; sourceTree = "<group>"; };
 		AB8F0D610D30225F00F3631C /* MGSParameterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterView.h; sourceTree = "<group>"; };
@@ -4961,7 +4962,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB3B522D14D2AFBC00B82B95 /* Sparkle.framework in Frameworks */,
 				ABDD7D6914D1A5A300CB91F8 /* PSMTabBarControl.framework in Frameworks */,
 				AB1CBC7B14CDCFD800CCF7DD /* OpenFeedback.framework in Frameworks */,
 				ABADD7F513E5BD8E0033E038 /* FeedbackReporter.framework in Frameworks */,
@@ -4975,6 +4975,7 @@
 				ABDB81600DF7147100F24711 /* AddressBook.framework in Frameworks */,
 				ABAD1B801073EA9E00297C8C /* IOKit.framework in Frameworks */,
 				AB33581E10CABF6E003B44AC /* CoreFoundation.framework in Frameworks */,
+				AB8D400414D2E00D00FC88A2 /* Sparkle.framework in Frameworks */,
 				ABE8E68013CA42FB005852B5 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5556,6 +5557,7 @@
 			files = (
 				ABAFC7F00DF9C5C700349FC3 /* MGSKosmicTask.framework in Frameworks */,
 				ABAFC7F10DF9C5C700349FC3 /* Cocoa.framework in Frameworks */,
+				AB8D400214D2DF7300FC88A2 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6086,7 +6088,6 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AB3B522C14D2AFBB00B82B95 /* Sparkle.framework */,
 				AB3366CF11AAC36A0038A67C /* Accelerate.framework */,
 				ABDB815F0DF7147100F24711 /* AddressBook.framework */,
 				AB3366CD11AAC36A0038A67C /* AGL.framework */,
@@ -6374,6 +6375,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB8D400114D2DF7300FC88A2 /* Sparkle.framework */,
 				AB25B3951325995D00D5B634 /* yaml.so */,
 				ABB732F3105662670042B4D0 /* libcrypto linking copy */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
@@ -16028,7 +16030,7 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Sparkle/Release (GC dual-mode; 10.5-only)\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Parameter Plugin File-Info.plist";
@@ -16043,7 +16045,7 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Sparkle/Release (GC dual-mode; 10.5-only)\"",
+					"\"$(SRCROOT)\"",
 				);
 				INFOPLIST_FILE = "Parameter Plugin File-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16506,9 +16508,7 @@
 				CODE_SIGN_RESOURCE_RULES_PATH = ./kosmictask_code_signing_rules.plist;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Sparkle 1.5b6/With Garbage Collection\"",
-					"\"$(SRCROOT)/../../../Sparkle/Release (GC dual-mode; 10.5-only)\"",
-					"\"$(SRCROOT)/../../../Frameworks/Sparkle/Release (GC dual-mode; 10.5-only)\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mother_Prefix.pch;
@@ -16535,9 +16535,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Sparkle 1.5b6/With Garbage Collection\"",
-					"\"$(SRCROOT)/../../../Sparkle/Release (GC dual-mode; 10.5-only)\"",
-					"\"$(SRCROOT)/../../../Frameworks/Sparkle/Release (GC dual-mode; 10.5-only)\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mother_Prefix.pch;
