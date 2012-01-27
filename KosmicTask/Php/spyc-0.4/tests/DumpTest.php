@@ -35,43 +35,6 @@ class DumpTest extends PHPUnit_Framework_TestCase {
       $awaiting = "---\n- item1\n- item2\n- item3\n";
       $this->assertEquals ($awaiting, $dump);
     }
-    
-    public function testNull() {
-        $dump = Spyc::YAMLDump(array('a' => 1, 'b' => null, 'c' => 3));
-        $awaiting = "---\na: 1\nb: null\nc: 3\n";
-        $this->assertEquals ($awaiting, $dump);
-    }
-    
-    public function testNext() {
-        $array = array("aaa", "bbb", "ccc");
-        #set arrays internal pointer to next element
-        next($array);
-        $dump = Spyc::YAMLDump($array);        
-        $awaiting = "---\n- aaa\n- bbb\n- ccc\n";
-        $this->assertEquals ($awaiting, $dump);        
-    }
-    
-    public function testDumpingMixedArrays() {
-        $array = array();
-        $array[] = 'Sequence item';
-        $array['The Key'] = 'Mapped value';
-        $array[] = array('A sequence','of a sequence');
-        $array[] = array('first' => 'A sequence','second' => 'of mapped values');
-        $array['Mapped'] = array('A sequence','which is mapped');
-        $array['A Note'] = 'What if your text is too long?';
-        $array['Another Note'] = 'If that is the case, the dumper will probably fold your text by using a block.  Kinda like this.';
-        $array['The trick?'] = 'The trick is that we overrode the default indent, 2, to 4 and the default wordwrap, 40, to 60.';
-        $array['Old Dog'] = "And if you want\n to preserve line breaks, \ngo ahead!";
-        $array['key:withcolon'] = "Should support this to";
-
-        $yaml = Spyc::YAMLDump($array,4,60);        
-    }
-    
-    public function testMixed() {
-        $dump = Spyc::YAMLDump(array(0 => 1, 'b' => 2, 1 => 3));
-        $awaiting = "---\n0: 1\nb: 2\n1: 3\n";
-        $this->assertEquals ($awaiting, $dump);
-    }    
 
     public function testDumpNumerics() {
       $dump = Spyc::YAMLDump(array ('404', '405', '500'));
@@ -88,24 +51,6 @@ class DumpTest extends PHPUnit_Framework_TestCase {
     public function testDumpAmpersands() {
       $dump = Spyc::YAMLDump(array ('some' => '&foo'));
       $awaiting = "---\nsome: '&foo'\n";
-      $this->assertEquals ($awaiting, $dump);
-    }
-    
-    public function testDumpExclamations() {
-      $dump = Spyc::YAMLDump(array ('some' => '!foo'));
-      $awaiting = "---\nsome: '!foo'\n";
-      $this->assertEquals ($awaiting, $dump);
-    }
-
-    public function testDumpExclamations2() {
-      $dump = Spyc::YAMLDump(array ('some' => 'foo!'));
-      $awaiting = "---\nsome: foo!\n";
-      $this->assertEquals ($awaiting, $dump);
-    }
-
-    public function testDumpApostrophes() {
-      $dump = Spyc::YAMLDump(array ('some' => "'Biz' pimpt bedrijventerreinen"));
-      $awaiting = "---\nsome: \"'Biz' pimpt bedrijventerreinen\"\n";
       $this->assertEquals ($awaiting, $dump);
     }
 

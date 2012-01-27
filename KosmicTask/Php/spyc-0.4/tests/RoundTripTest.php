@@ -17,10 +17,6 @@ class RoundTripTest extends PHPUnit_Framework_TestCase {
     public function testY() {
       $this->assertEquals (array ('x' => 'y'), roundTrip ('y'));
     }
-    
-    public function testExclam() {
-      $this->assertEquals (array ('x' => '!yeah'), roundTrip ('!yeah'));
-    }
 
     public function test5() {
       $this->assertEquals (array ('x' => '5'), roundTrip ('5'));
@@ -28,10 +24,6 @@ class RoundTripTest extends PHPUnit_Framework_TestCase {
 
     public function testSpaces() {
       $this->assertEquals (array ('x' => 'x '), roundTrip ('x '));
-    }
-    
-    public function testApostrophes() {
-      $this->assertEquals (array ('x' => "'biz'"), roundTrip ("'biz'"));
     }
 
     public function testNewLines() {
@@ -46,16 +38,5 @@ class RoundTripTest extends PHPUnit_Framework_TestCase {
       $this->assertEquals (array ('x' => "aaaaaaaaaaaaaaaaaaaaaaaaaaaa  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"), roundTrip ("aaaaaaaaaaaaaaaaaaaaaaaaaaaa  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"));
     }
 
-    public function testABCD() {
-      $this->assertEquals (array ('a', 'b', 'c', 'd'), Spyc::YAMLLoad(Spyc::YAMLDump(array('a', 'b', 'c', 'd'))));
-    }
-    
-    public function testABCD2() {
-        $a = array('a', 'b', 'c', 'd'); // Create a simple list
-        $b = Spyc::YAMLDump($a);        // Dump the list as YAML
-        $c = Spyc::YAMLLoad($b);        // Load the dumped YAML
-        $d = Spyc::YAMLDump($c);        // Re-dump the data
-        $this->assertSame($b, $d);
-    }
    
 }
