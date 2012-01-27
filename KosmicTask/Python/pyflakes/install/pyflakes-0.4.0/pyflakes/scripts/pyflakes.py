@@ -3,9 +3,8 @@
 Implementation of the command-line I{pyflakes} tool.
 """
 
-import sys
+import compiler, sys
 import os
-import _ast
 
 checker = __import__('pyflakes.checker').checker
 
@@ -23,10 +22,18 @@ def check(codeString, filename):
     @return: The number of warnings emitted.
     @rtype: C{int}
     """
-    # First, compile into an AST and handle syntax errors.
+    # Since compiler.parse does not reliably report syntax errors, use the
+    # built in compiler first to detect those.
     try:
-        tree = compile(codeString, filename, "exec", _ast.PyCF_ONLY_AST)
-    except SyntaxError, value:
+        try:
+            compile(codeString, filename, "exec")
+        except MemoryError:
+            # Python 2.4 will raise MemoryError if the source can't be
+            # decoded.
+            if sys.version_info[:2] == (2, 4):
+                raise SyntaxError(None)
+            raise
+    except (SyntaxError, IndentationError), value:
         msg = value.args[0]
 
         (lineno, offset, text) = value.lineno, value.offset, value.text
@@ -51,7 +58,9 @@ def check(codeString, filename):
 
         return 1
     else:
-        # Okay, it's syntactically valid.  Now check it.
+        # Okay, it's syntactically valid.  Now parse it into an ast and check
+        # it.
+        tree = compiler.parse(codeString)
         w = checker.Checker(tree, filename)
         w.messages.sort(lambda a, b: cmp(a.lineno, b.lineno))
         for warning in w.messages:
