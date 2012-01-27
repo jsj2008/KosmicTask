@@ -133,7 +133,6 @@
 		AB19176612AFE02800710031 /* Language Plugin LuaCocoa.lang-plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = AB1914D012AFD8A500710031 /* Language Plugin LuaCocoa.lang-plugin */; };
 		AB19176A12AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB19176912AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m */; };
 		AB19176B12AFE15100710031 /* KosmicTaskLuaCocoaRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB19162D12AFD90300710031 /* KosmicTaskLuaCocoaRunner */; };
-		AB1BD7DD12AFFE6B00B7733A /* LuaCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1BD78212AFFE2900B7733A /* LuaCocoa.framework */; };
 		AB1CBC7B14CDCFD800CCF7DD /* OpenFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */; };
 		AB1CBC7C14CDCFF000CCF7DD /* OpenFeedback.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */; };
 		AB1D731713F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D731613F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m */; };
@@ -202,6 +201,10 @@
 		AB2A4604119C02FD00A0D67F /* MGSPythonScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = AB27B048118A0F1600132977 /* MGSPythonScriptRunner.m */; };
 		AB2A468D119C094B00A0D67F /* MGSRubyScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5CDAA7118AF2DD00C545CD /* MGSRubyScriptRunner.m */; };
 		AB2A469B119C0A2500A0D67F /* pyflakes in Copy Python resources */ = {isa = PBXBuildFile; fileRef = AB408CD111917A0F00A8037A /* pyflakes */; };
+		AB2C728F14D2F42000C524B5 /* lua in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB2C71D614D2F32200C524B5 /* lua */; };
+		AB2C729014D2F42000C524B5 /* luac in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB2C71D814D2F32200C524B5 /* luac */; };
+		AB2C729314D2F45600C524B5 /* LuaCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2C71F114D2F34400C524B5 /* LuaCocoa.framework */; };
+		AB2C729414D2F48600C524B5 /* lua.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2C71D214D2F32200C524B5 /* lua.framework */; };
 		AB2CD02F122013CA005E2379 /* perl5 in Copy Perl resources */ = {isa = PBXBuildFile; fileRef = AB2CD01012201370005E2379 /* perl5 */; };
 		AB2D050B0CDE8171006632AF /* MGSMotherServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2D050A0CDE8171006632AF /* MGSMotherServer.m */; };
 		AB2D9B02128AFEE8005B0484 /* MGSAppleScriptLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2D9B01128AFEE8005B0484 /* MGSAppleScriptLanguage.m */; };
@@ -1083,7 +1086,6 @@
 		ABBA127B12B28BD7005F12A5 /* KosmicTaskJavaScriptCocoaRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = ABBA122512B28B16005F12A5 /* KosmicTaskJavaScriptCocoaRunner */; };
 		ABBA127F12B28C78005F12A5 /* MGSJavaScriptCocoaRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBA127E12B28C77005F12A5 /* MGSJavaScriptCocoaRunner.m */; };
 		ABBA128112B28CF4005F12A5 /* MGSJSCocoaLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB31811612B2890D001E821B /* MGSJSCocoaLanguage.m */; };
-		ABBA128212B28D69005F12A5 /* LuaCocoa.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB1BD78212AFFE2900B7733A /* LuaCocoa.framework */; };
 		ABBA131312B28EB5005F12A5 /* Language Plugin JSCocoa.lang-plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = AB3180C712B2884D001E821B /* Language Plugin JSCocoa.lang-plugin */; };
 		ABBA133E12B28F64005F12A5 /* MGSJSCocoaLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB31811612B2890D001E821B /* MGSJSCocoaLanguage.m */; };
 		ABBAD11C0E2E309A00049696 /* Resume.png in Resources */ = {isa = PBXBuildFile; fileRef = ABBAD1190E2E309A00049696 /* Resume.png */; };
@@ -1152,8 +1154,6 @@
 		ABCF9B440D2D9C9000E3A36D /* MGSError.h in Headers */ = {isa = PBXBuildFile; fileRef = ABCF9B420D2D9C9000E3A36D /* MGSError.h */; };
 		ABCF9B450D2D9C9000E3A36D /* MGSError.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCF9B430D2D9C9000E3A36D /* MGSError.m */; };
 		ABD054DF1325231A00A728B8 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = ABD054DE1325231A00A728B8 /* Language */; };
-		ABD0566F132526BC00A728B8 /* lua in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = ABD056221325267000A728B8 /* lua */; };
-		ABD05670132526BC00A728B8 /* luac in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = ABD056241325267000A728B8 /* luac */; };
 		ABD05CB00E7E98AA00AE32B5 /* MGSBuildTaskSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD05CAF0E7E98AA00AE32B5 /* MGSBuildTaskSheetController.m */; };
 		ABD05CDB0E7E9B3E00AE32B5 /* CompileActionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABD05CDA0E7E9B3E00AE32B5 /* CompileActionSheet.xib */; };
 		ABD05DAE0E7EC0FC00AE32B5 /* MGSServerRequestThreadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD05D9F0E7EBD6200AE32B5 /* MGSServerRequestThreadHelper.m */; };
@@ -1592,48 +1592,6 @@
 			remoteGlobalIDString = AB1914B912AFD8A500710031;
 			remoteInfo = "Language Plugin LuaCocoa";
 		};
-		AB1BD78112AFFE2900B7733A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = LuaCocoa;
-		};
-		AB1BD78312AFFE2900B7733A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 00E16942124596690095535F;
-			remoteInfo = luacocoa_shell;
-		};
-		AB1BD78512AFFE2900B7733A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 006467DD1081A1CA00183915;
-			remoteInfo = TestApp;
-		};
-		AB1BD78712AFFE2900B7733A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 00E16AEF1245BD2D0095535F;
-			remoteInfo = SimpleLuaView;
-		};
-		AB1BD78912AFFE2900B7733A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 00DF0B9A12605A56007AED88;
-			remoteInfo = SimpleLuaOpenGLView;
-		};
-		AB1BD78B12AFFE2900B7733A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 008397AB128250A4009609AE;
-			remoteInfo = CoreAnimationScriptability;
-		};
 		AB1CBC7714CDCF8F00CCF7DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */;
@@ -1682,6 +1640,97 @@
 			proxyType = 1;
 			remoteGlobalIDString = AB27AD041189E86A00132977;
 			remoteInfo = MGSKosmicTaskRunner;
+		};
+		AB2C71D114D2F32200C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Lua;
+		};
+		AB2C71D314D2F32200C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00760539109E987A0079B079;
+			remoteInfo = liblua;
+		};
+		AB2C71D514D2F32200C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00760660109E9C350079B079;
+			remoteInfo = lua;
+		};
+		AB2C71D714D2F32200C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00760671109E9C7F0079B079;
+			remoteInfo = luac;
+		};
+		AB2C71F014D2F34400C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = LuaCocoa;
+		};
+		AB2C71F214D2F34400C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00E16942124596690095535F;
+			remoteInfo = luacocoa_shell;
+		};
+		AB2C71F414D2F34400C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 006467DD1081A1CA00183915;
+			remoteInfo = TestApp;
+		};
+		AB2C71F614D2F34400C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00E16AEF1245BD2D0095535F;
+			remoteInfo = SimpleLuaView;
+		};
+		AB2C71F814D2F34400C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00DF0B9A12605A56007AED88;
+			remoteInfo = SimpleLuaOpenGLView;
+		};
+		AB2C71FA14D2F34400C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 008397AB128250A4009609AE;
+			remoteInfo = CoreAnimationScriptability;
+		};
+		AB2C728B14D2F40B00C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0076065F109E9C350079B079;
+			remoteInfo = lua;
+		};
+		AB2C728D14D2F40B00C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 00760670109E9C7F0079B079;
+			remoteInfo = luac;
+		};
+		AB2C729114D2F44500C524B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = LuaCocoa;
 		};
 		AB2D041F0CDE6285006632AF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2593,48 +2642,6 @@
 			remoteGlobalIDString = ABECD8C113C8B8CA00B77CFD;
 			remoteInfo = ORCDiscount;
 		};
-		ABD0561D1325267000A728B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = Lua;
-		};
-		ABD0561F1325267000A728B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 00760539109E987A0079B079;
-			remoteInfo = liblua;
-		};
-		ABD056211325267000A728B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 00760660109E9C350079B079;
-			remoteInfo = lua;
-		};
-		ABD056231325267000A728B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 00760671109E9C7F0079B079;
-			remoteInfo = luac;
-		};
-		ABD056831325272900A728B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 0076065F109E9C350079B079;
-			remoteInfo = lua;
-		};
-		ABD056851325272900A728B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABD056161325267000A728B8 /* lua.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 00760670109E9C7F0079B079;
-			remoteInfo = luac;
-		};
 		ABD6689E0DE6034C00097C1B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2746,13 +2753,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = ABE78241132516FF00663CBB;
 			remoteInfo = "Language Plugin Lua";
-		};
-		ABE8E78013CB37C8005852B5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = LuaCocoa;
 		};
 		ABEC6B65130C8ACB0082698A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2985,7 +2985,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				ABBA128212B28D69005F12A5 /* LuaCocoa.framework in Copy Frameworks */,
+				AB2C729414D2F48600C524B5 /* lua.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3310,8 +3310,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				ABD0566F132526BC00A728B8 /* lua in Copy auxiliary executables */,
-				ABD05670132526BC00A728B8 /* luac in Copy auxiliary executables */,
+				AB2C728F14D2F42000C524B5 /* lua in Copy auxiliary executables */,
+				AB2C729014D2F42000C524B5 /* luac in Copy auxiliary executables */,
 				ABE783F9132518D200663CBB /* KosmicTaskLuaRunner in Copy auxiliary executables */,
 			);
 			name = "Copy auxiliary executables";
@@ -3489,7 +3489,7 @@
 		AB19176812AFE09300710031 /* MGSLuaCocoaLanguagePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLuaCocoaLanguagePlugin.h; sourceTree = "<group>"; };
 		AB19176912AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLuaCocoaLanguagePlugin.m; sourceTree = "<group>"; };
 		AB1BA9400CF7711B00F35D8F /* servermainDO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = servermainDO.m; sourceTree = "<group>"; };
-		AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LuaCocoa.xcodeproj; path = ../../../../../bitbucket/luacocoa/Xcode/LuaCocoa.xcodeproj; sourceTree = SOURCE_ROOT; };
+		AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LuaCocoa.xcodeproj; path = ../../../luacocoa/Xcode/LuaCocoa.xcodeproj; sourceTree = SOURCE_ROOT; };
 		AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OpenFeedback.xcodeproj; path = ../../../OpenFeedback/OpenFeedback.xcodeproj; sourceTree = "<group>"; };
 		AB1D731513F9B9C40062BC80 /* MGSFilePathParameterEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFilePathParameterEditViewController.h; sourceTree = "<group>"; };
 		AB1D731613F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFilePathParameterEditViewController.m; sourceTree = "<group>"; };
@@ -4686,7 +4686,7 @@
 		ABCF9B420D2D9C9000E3A36D /* MGSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSError.h; sourceTree = "<group>"; };
 		ABCF9B430D2D9C9000E3A36D /* MGSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSError.m; sourceTree = "<group>"; };
 		ABD054DE1325231A00A728B8 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Lua/Language; sourceTree = SOURCE_ROOT; };
-		ABD056161325267000A728B8 /* lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua.xcodeproj; path = ../../../../../bitbucket/luacocoa/lua/Xcode/lua.xcodeproj; sourceTree = SOURCE_ROOT; };
+		ABD056161325267000A728B8 /* lua.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = lua.xcodeproj; path = ../../../luacocoa/lua/Xcode/lua.xcodeproj; sourceTree = SOURCE_ROOT; };
 		ABD05CAE0E7E98AA00AE32B5 /* MGSBuildTaskSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBuildTaskSheetController.h; sourceTree = "<group>"; };
 		ABD05CAF0E7E98AA00AE32B5 /* MGSBuildTaskSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBuildTaskSheetController.m; sourceTree = "<group>"; };
 		ABD05CD80E7E9B2200AE32B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/CompileActionSheet.xib; sourceTree = "<group>"; };
@@ -5056,7 +5056,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB1BD7DD12AFFE6B00B7733A /* LuaCocoa.framework in Frameworks */,
+				AB2C729314D2F45600C524B5 /* LuaCocoa.framework in Frameworks */,
 				AB1915E112AFD90300710031 /* Carbon.framework in Frameworks */,
 				AB1915E212AFD90300710031 /* Cocoa.framework in Frameworks */,
 				AB1915F612AFD90300710031 /* Foundation.framework in Frameworks */,
@@ -6591,19 +6591,6 @@
 			name = "Redundant source";
 			sourceTree = "<group>";
 		};
-		AB1BD76312AFFE2900B7733A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AB1BD78212AFFE2900B7733A /* LuaCocoa.framework */,
-				AB1BD78412AFFE2900B7733A /* luacocoa */,
-				AB1BD78612AFFE2900B7733A /* TestApp.app */,
-				AB1BD78812AFFE2900B7733A /* SimpleLuaView.app */,
-				AB1BD78A12AFFE2900B7733A /* SimpleLuaOpenGLView.app */,
-				AB1BD78C12AFFE2900B7733A /* CoreAnimationScriptability.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		AB1CBC7114CDCF8F00CCF7DD /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -6713,6 +6700,30 @@
 				ABC4D42A119ED8A30059D28A /* MGSAppleScriptExecutor.applescript */,
 			);
 			name = "AppleScriptCocoa runner";
+			sourceTree = "<group>";
+		};
+		AB2C71CB14D2F32200C524B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB2C71D214D2F32200C524B5 /* lua.framework */,
+				AB2C71D414D2F32200C524B5 /* liblua.a */,
+				AB2C71D614D2F32200C524B5 /* lua */,
+				AB2C71D814D2F32200C524B5 /* luac */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB2C71E214D2F34400C524B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB2C71F114D2F34400C524B5 /* LuaCocoa.framework */,
+				AB2C71F314D2F34400C524B5 /* luacocoa */,
+				AB2C71F514D2F34400C524B5 /* TestApp.app */,
+				AB2C71F714D2F34400C524B5 /* SimpleLuaView.app */,
+				AB2C71F914D2F34400C524B5 /* SimpleLuaOpenGLView.app */,
+				AB2C71FB14D2F34400C524B5 /* CoreAnimationScriptability.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		AB2CD00F12201324005E2379 /* Perl */ = {
@@ -6894,8 +6905,6 @@
 		AB3F6FE5130C86DF00342F11 /* HG submodule project */ = {
 			isa = PBXGroup;
 			children = (
-				ABD056161325267000A728B8 /* lua.xcodeproj */,
-				AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */,
 				AB0DC012130C8DF5000F4673 /* Hg submodule.rtf */,
 			);
 			name = "HG submodule project";
@@ -7266,6 +7275,8 @@
 		AB69B66D130EAA8E00171D4F /* Git repo is local */ = {
 			isa = PBXGroup;
 			children = (
+				ABD056161325267000A728B8 /* lua.xcodeproj */,
+				AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */,
 				AB72CE370E703C5500E6711C /* Port Map.xcodeproj */,
 				AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */,
 				AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */,
@@ -8594,17 +8605,6 @@
 			name = Versioning;
 			sourceTree = "<group>";
 		};
-		ABD056171325267000A728B8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ABD0561E1325267000A728B8 /* lua.framework */,
-				ABD056201325267000A728B8 /* liblua.a */,
-				ABD056221325267000A728B8 /* lua */,
-				ABD056241325267000A728B8 /* luac */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		ABD05CAC0E7E988600AE32B5 /* Compile action sheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -9199,8 +9199,8 @@
 			);
 			comments = "Normally I would leave the LuaCocoa project dependency in place but in this case the LuaCocoa project builds with a lot of warnings.\n\nSo the dependency has been removed.";
 			dependencies = (
+				AB2C729214D2F44500C524B5 /* PBXTargetDependency */,
 				AB1915CC12AFD90300710031 /* PBXTargetDependency */,
-				ABE8E78113CB37C8005852B5 /* PBXTargetDependency */,
 			);
 			name = KosmicTaskLuaCocoaRunner;
 			productName = KosmicTaskShellScriptRunner;
@@ -10177,10 +10177,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				AB2C728C14D2F40B00C524B5 /* PBXTargetDependency */,
+				AB2C728E14D2F40B00C524B5 /* PBXTargetDependency */,
 				ABE78242132516FF00663CBB /* PBXTargetDependency */,
 				ABE782F01325173C00663CBB /* PBXTargetDependency */,
-				ABD056841325272900A728B8 /* PBXTargetDependency */,
-				ABD056861325272900A728B8 /* PBXTargetDependency */,
 			);
 			name = "Language Plugin Lua";
 			productName = "Language Plugin Ruby";
@@ -10275,11 +10275,11 @@
 					ProjectRef = AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */;
 				},
 				{
-					ProductGroup = ABD056171325267000A728B8 /* Products */;
+					ProductGroup = AB2C71CB14D2F32200C524B5 /* Products */;
 					ProjectRef = ABD056161325267000A728B8 /* lua.xcodeproj */;
 				},
 				{
-					ProductGroup = AB1BD76312AFFE2900B7733A /* Products */;
+					ProductGroup = AB2C71E214D2F34400C524B5 /* Products */;
 					ProjectRef = AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */;
 				},
 				{
@@ -10389,53 +10389,81 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		AB1BD78212AFFE2900B7733A /* LuaCocoa.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = LuaCocoa.framework;
-			remoteRef = AB1BD78112AFFE2900B7733A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB1BD78412AFFE2900B7733A /* luacocoa */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = luacocoa;
-			remoteRef = AB1BD78312AFFE2900B7733A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB1BD78612AFFE2900B7733A /* TestApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = TestApp.app;
-			remoteRef = AB1BD78512AFFE2900B7733A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB1BD78812AFFE2900B7733A /* SimpleLuaView.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = SimpleLuaView.app;
-			remoteRef = AB1BD78712AFFE2900B7733A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB1BD78A12AFFE2900B7733A /* SimpleLuaOpenGLView.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = SimpleLuaOpenGLView.app;
-			remoteRef = AB1BD78912AFFE2900B7733A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB1BD78C12AFFE2900B7733A /* CoreAnimationScriptability.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = CoreAnimationScriptability.app;
-			remoteRef = AB1BD78B12AFFE2900B7733A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = OpenFeedback.framework;
 			remoteRef = AB1CBC7714CDCF8F00CCF7DD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2C71D214D2F32200C524B5 /* lua.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = lua.framework;
+			remoteRef = AB2C71D114D2F32200C524B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2C71D414D2F32200C524B5 /* liblua.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblua.a;
+			remoteRef = AB2C71D314D2F32200C524B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2C71D614D2F32200C524B5 /* lua */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = lua;
+			remoteRef = AB2C71D514D2F32200C524B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2C71D814D2F32200C524B5 /* luac */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = luac;
+			remoteRef = AB2C71D714D2F32200C524B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2C71F114D2F34400C524B5 /* LuaCocoa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LuaCocoa.framework;
+			remoteRef = AB2C71F014D2F34400C524B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2C71F314D2F34400C524B5 /* luacocoa */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = luacocoa;
+			remoteRef = AB2C71F214D2F34400C524B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2C71F514D2F34400C524B5 /* TestApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TestApp.app;
+			remoteRef = AB2C71F414D2F34400C524B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2C71F714D2F34400C524B5 /* SimpleLuaView.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SimpleLuaView.app;
+			remoteRef = AB2C71F614D2F34400C524B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2C71F914D2F34400C524B5 /* SimpleLuaOpenGLView.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = SimpleLuaOpenGLView.app;
+			remoteRef = AB2C71F814D2F34400C524B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB2C71FB14D2F34400C524B5 /* CoreAnimationScriptability.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CoreAnimationScriptability.app;
+			remoteRef = AB2C71FA14D2F34400C524B5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AB2EC83614D1E22800B54313 /* MGTemplateEngine.app */ = {
@@ -10674,34 +10702,6 @@
 			fileType = wrapper.cfbundle;
 			path = KosmicTask.mdimporter;
 			remoteRef = ABBDFDE310C532CB000E51A3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD0561E1325267000A728B8 /* lua.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = lua.framework;
-			remoteRef = ABD0561D1325267000A728B8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD056201325267000A728B8 /* liblua.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = liblua.a;
-			remoteRef = ABD0561F1325267000A728B8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD056221325267000A728B8 /* lua */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = lua;
-			remoteRef = ABD056211325267000A728B8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABD056241325267000A728B8 /* luac */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = luac;
-			remoteRef = ABD056231325267000A728B8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ABDD7CD614D1A49E00CB91F8 /* TabBarControlDemo.app */ = {
@@ -12587,6 +12587,21 @@
 			target = AB27AD041189E86A00132977 /* MGSKosmicTaskRunner */;
 			targetProxy = AB27B289118A18D400132977 /* PBXContainerItemProxy */;
 		};
+		AB2C728C14D2F40B00C524B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = lua;
+			targetProxy = AB2C728B14D2F40B00C524B5 /* PBXContainerItemProxy */;
+		};
+		AB2C728E14D2F40B00C524B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = luac;
+			targetProxy = AB2C728D14D2F40B00C524B5 /* PBXContainerItemProxy */;
+		};
+		AB2C729214D2F44500C524B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LuaCocoa;
+			targetProxy = AB2C729114D2F44500C524B5 /* PBXContainerItemProxy */;
+		};
 		AB2D04200CDE6285006632AF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			comments = "http://www.cocoadev.com/index.pl?LinkingAuxiliaryExecutablesToEmbeddedFramework\nThis topic will discuss how to link auxiliary executables to a framework that is embedded in an application. The tricky part about doing this is dealing with linker warnings caused by \"missing files\". Three target types will be covered here:\n\n\t•\tCocoa Shell Tool\n\t•\tCocoa Helper Application\n\t•\tLoadable Cocoa Bundle\nCocoa Shell Tool\nThe most basic case is where a client Cocoa application spawns a server task. If the server task links against a framework that is also an embedded framework of the client application, the build/test setup must accommodate a different search path. ld expects to see the embedded framework located at @executable_path/../Frameworks. Xcode needs to associate the server target to an application target that embeds the framework. The easiest way to do this is to make the server target a direct dependency of the client application target.\nFor example, if a client application is built using a target named \"App\" and a server shell tool is built using a target named \"Server\", \"Server\" must be added as a direct dependency to \"App\" (search ADC using Xcode and \"direct dependencies\" for information on how to add dependencies to a target).\n\"Server\" is built indirectly (i.e. \"Server\" is built when \"App\" is built). As long as \"App\" is the active target, Xcode will know where the embedded framework is located relative to the server's executable path. \"Server\" can only be tested as a child process if it is linked to an embedded framework. One plus side to this is the runtime log will show both server/client logs when testing.\nThe final \"App\" target setup involves adding a copy phase with a \"Destination\" of \"Executable\" and dragging the product icon for \"Server\" onto the new copy phase icon. This should copy the \"Server\" executable into the \"MacOS\" folder inside the application bundle for \"App\". Launching the server from the application is fairly easy (see code below).";
@@ -13068,16 +13083,6 @@
 			name = ORCDiscount;
 			targetProxy = ABC0F53814D05D3300BCE71D /* PBXContainerItemProxy */;
 		};
-		ABD056841325272900A728B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = lua;
-			targetProxy = ABD056831325272900A728B8 /* PBXContainerItemProxy */;
-		};
-		ABD056861325272900A728B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = luac;
-			targetProxy = ABD056851325272900A728B8 /* PBXContainerItemProxy */;
-		};
 		ABD6689D0DE6034C00097C1B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 09C09E250CDC7D710048BC79 /* MGSKosmicTask */;
@@ -13147,11 +13152,6 @@
 			isa = PBXTargetDependency;
 			target = ABE78241132516FF00663CBB /* Language Plugin Lua */;
 			targetProxy = ABE782F51325175B00663CBB /* PBXContainerItemProxy */;
-		};
-		ABE8E78113CB37C8005852B5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = LuaCocoa;
-			targetProxy = ABE8E78013CB37C8005852B5 /* PBXContainerItemProxy */;
 		};
 		ABEC6B66130C8ACB0082698A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
