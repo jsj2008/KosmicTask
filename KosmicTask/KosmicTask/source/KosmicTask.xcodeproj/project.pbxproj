@@ -567,6 +567,8 @@
 		AB85C1AC0D3BFA8200C1205B /* HistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB85C1AA0D3BFA8200C1205B /* HistoryView.xib */; };
 		AB85C1B10D3BFE3300C1205B /* MGSHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB85C1B00D3BFE3300C1205B /* MGSHistoryViewController.m */; };
 		AB85C2490D3C14F900C1205B /* SidebarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB85C2470D3C14F900C1205B /* SidebarView.xib */; };
+		AB86987614D73C820002F88E /* GTMObjC2Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = AB86987514D73C720002F88E /* GTMObjC2Runtime.m */; };
+		AB86987714D73C820002F88E /* GTMSystemVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = AB86987114D73C020002F88E /* GTMSystemVersion.m */; };
 		AB874D2B0D3385C5003A752B /* MGSParameterSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB874D2A0D3385C5003A752B /* MGSParameterSplitView.m */; };
 		AB874D320D338C22003A752B /* MGSNetMessageDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = AB874D300D338C22003A752B /* MGSNetMessageDictionary.h */; };
 		AB874D330D338C22003A752B /* MGSNetMessageDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = AB874D310D338C22003A752B /* MGSNetMessageDictionary.m */; };
@@ -3980,6 +3982,12 @@
 		AB85C1AF0D3BFE3300C1205B /* MGSHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSHistoryViewController.h; sourceTree = "<group>"; };
 		AB85C1B00D3BFE3300C1205B /* MGSHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSHistoryViewController.m; sourceTree = "<group>"; };
 		AB85C2480D3C14F900C1205B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SidebarView.xib; sourceTree = "<group>"; };
+		AB86987014D73C020002F88E /* GTMSystemVersion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GTMSystemVersion.h; path = "../../google-toolbox-for-mac/source/Foundation/GTMSystemVersion.h"; sourceTree = "<group>"; };
+		AB86987114D73C020002F88E /* GTMSystemVersion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GTMSystemVersion.m; path = "../../google-toolbox-for-mac/source/Foundation/GTMSystemVersion.m"; sourceTree = "<group>"; };
+		AB86987214D73C240002F88E /* GTMDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GTMDefines.h; path = "../../google-toolbox-for-mac/source/GTMDefines.h"; sourceTree = "<group>"; };
+		AB86987314D73C3E0002F88E /* GTMGarbageCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GTMGarbageCollection.h; path = "../../google-toolbox-for-mac/source/Foundation/GTMGarbageCollection.h"; sourceTree = "<group>"; };
+		AB86987414D73C720002F88E /* GTMObjC2Runtime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GTMObjC2Runtime.h; path = "../../google-toolbox-for-mac/source/Foundation/GTMObjC2Runtime.h"; sourceTree = "<group>"; };
+		AB86987514D73C720002F88E /* GTMObjC2Runtime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GTMObjC2Runtime.m; path = "../../google-toolbox-for-mac/source/Foundation/GTMObjC2Runtime.m"; sourceTree = "<group>"; };
 		AB874D290D3385C5003A752B /* MGSParameterSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterSplitView.h; sourceTree = "<group>"; };
 		AB874D2A0D3385C5003A752B /* MGSParameterSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterSplitView.m; sourceTree = "<group>"; };
 		AB874D300D338C22003A752B /* MGSNetMessageDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNetMessageDictionary.h; sourceTree = "<group>"; };
@@ -6256,6 +6264,7 @@
 				AB92318511A695E70093EDE3 /* KosmicTask Quick Look Plugin.xcodeproj */,
 				ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */,
 				ABCF25AE0EE0A66F00FC0364 /* KosmicTask MDImporter.xcodeproj */,
+				AB86986814D73A830002F88E /* Google toolbox for mac */,
 				AB4F64FD10C99DF100229E4E /* Shared Source */,
 				AB4F925D1039AD39005EF329 /* build xcconfigs */,
 				0953D0C00CD942C200519488 /* Application code */,
@@ -7374,6 +7383,27 @@
 				AB65AC7111CB957E000F5F1B /* NSTreeController-DMExtensions.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		AB86986814D73A830002F88E /* Google toolbox for mac */ = {
+			isa = PBXGroup;
+			children = (
+				AB86987214D73C240002F88E /* GTMDefines.h */,
+				AB86986C14D73B220002F88E /* Foundation */,
+			);
+			name = "Google toolbox for mac";
+			sourceTree = "<group>";
+		};
+		AB86986C14D73B220002F88E /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				AB86987414D73C720002F88E /* GTMObjC2Runtime.h */,
+				AB86987514D73C720002F88E /* GTMObjC2Runtime.m */,
+				AB86987314D73C3E0002F88E /* GTMGarbageCollection.h */,
+				AB86987014D73C020002F88E /* GTMSystemVersion.h */,
+				AB86987114D73C020002F88E /* GTMSystemVersion.m */,
+			);
+			name = Foundation;
 			sourceTree = "<group>";
 		};
 		AB89F44A118620880099785A /* Language */ = {
@@ -11921,6 +11951,8 @@
 				ABE3D3F3128B520B00FB5C90 /* MGSLanguage.m in Sources */,
 				AB38487A128C0B2A0046FC72 /* MGSShellLanguage.m in Sources */,
 				AB752DCF12BAAA3800C5C379 /* MGSScriptRunnerApplication.m in Sources */,
+				AB86987614D73C820002F88E /* GTMObjC2Runtime.m in Sources */,
+				AB86987714D73C820002F88E /* GTMSystemVersion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSLanguage.h"
+#import "GTMSystemVersion.h"
 
 @protocol MGSScriptRunner
 @required

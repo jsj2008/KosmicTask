@@ -5,11 +5,12 @@
 //  Created by Jonathan on 30/04/2010.
 //  Copyright 2010 mugginsoft.com. All rights reserved.
 //
-
 #import "MGSRubyScriptRunner.h"
 #import "MGSRubyLanguage.h"
 
 #define APPSCRIPT_PATH_10_6 @"Ruby/rb-appscript/lib-osx10.6"
+#define APPSCRIPT_PATH_10_7 @"Ruby/rb-appscript/lib-osx10.7"
+#define APPSCRIPT_PATH APPSCRIPT_PATH_10_7
 
 @implementation MGSRubyScriptRunner
 
@@ -75,9 +76,14 @@
  */
 - (NSString *)appscriptPath
 {
-	// appscript root path
-	NSString *path = [self pathToResource:APPSCRIPT_PATH_10_6];
+	// set default appscript root path
+	NSString *path = [self pathToResource:APPSCRIPT_PATH];
 	
+    // check for other system versions
+    if ([GTMSystemVersion isSnowLeopard]) {
+        path = [self pathToResource:APPSCRIPT_PATH_10_6];
+    }
+    
 	return path;
 }
 
@@ -109,8 +115,9 @@
 	 
 	 rb lib installs into
 	  /Library/Ruby/Site/1.8
-	 ae.bundle is installed into /library/ruby/site/1.8/universal-darwin10.0
-
+	 on 10.6 ae.bundle is installed into /library/ruby/site/1.8/universal-darwin10.0
+     on 10.6 ae.bundle is installed into /library/ruby/site/1.8/universal-darwin11.0
+     
 	 installing ae.bundle into the APPSCRIPT_PATH_10_6 path along with the other
 	 components seems to work: ie lib-osx10.6
 	 _aem
