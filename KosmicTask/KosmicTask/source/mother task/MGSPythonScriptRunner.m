@@ -9,7 +9,9 @@
 #import "MGSPythonScriptRunner.h"
 #import "MGSPythonLanguage.h"
 
-#define APPSCRIPT_EGG_10_6 @"Python/appscript-1.0.0-py2.6-macosx-10.6-universal.egg"
+#define APPSCRIPT_EGG_10_6 @"Python/py-appscript/appscript-1.0.0-py2.6-macosx-10.6-universal.egg"
+#define APPSCRIPT_EGG_10_7 @"Python/py-appscript/appscript-1.0.0-py2.6-macosx-10.7-intel.egg"
+#define APPSCRIPT_EGG APPSCRIPT_EGG_10_7
 
 @implementation MGSPythonScriptRunner
 
@@ -65,8 +67,13 @@
 - (NSString *)appscriptPath
 {
 	// appscript root path
-	NSString *path = [self pathToResource:APPSCRIPT_EGG_10_6];
+	NSString *path = [self pathToResource:APPSCRIPT_EGG];
 	
+    // check for other system versions
+    if ([GTMSystemVersion isSnowLeopard]) {
+        path = [self pathToResource:APPSCRIPT_EGG_10_6];
+    }
+    
 	return path;
 }
 
