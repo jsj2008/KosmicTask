@@ -3,11 +3,13 @@
 #
 # send -- Event class represents a packed AppleEvent that's ready to send via AESendMessage
 #
+# Copyright (C) 2006-2009 HAS. Released under MIT License.
+#
 
 module Send
 
 	# Defines the Event class, which represents an Apple event that's packed and ready to send, 
-	# and the EventError class, which contains error information for a failed event.
+	# and the CommandError class, which contains error information for a failed event.
 
 	require "ae"
 	require "kae"
@@ -71,7 +73,7 @@ module Send
 				reply_event = _send_apple_event(flags, timeout)
 			rescue AE::MacOSError => err # The Apple Event Manager raised an error.
 				if not(@_event_code == 'aevtquit' and err.to_i == -609) # Ignore invalid connection errors (-609) when quitting
-					raise EventError.new(err.to_i)
+					raise CommandError.new(err.to_i)
 				end
 			else # Decode application's reply, if any. May be a return value, error number (and optional message), or nothing.
 				if reply_event.type != KAE::TypeNull
@@ -84,7 +86,7 @@ module Send
 						# Error info is unpacked using default codecs for reliability.
 						e_num = DefaultCodecs.unpack(event_result[KAE::KeyErrorNumber])
 						if e_num != 0 # Some apps (e.g. Finder) may return error code 0 to indicate a successful operation, so ignore this.
-							raise EventError.new(e_num, event_result)
+							raise CommandError.new(e_num, event_result)
 						end
 					end
 					if event_result.has_key?(KAE::KeyAEResult)
@@ -99,7 +101,7 @@ module Send
 	end
 	
 	
-	class EventError < RuntimeError
+	class CommandError < RuntimeError
 		# Represents an error raised by the Apple Event Manager or target application when a command fails.
 		#
 		# Methods:
@@ -253,9 +255,9 @@ module Send
 		
 		def to_s
 			if message != ''
-				return "EventError\n\t\tOSERROR: #{number}\n\t\tMESSAGE: #{message}"
+				return "CommandError\n\t\tOSERROR: #{number}\n\t\tMESSAGE: #{message}"
 			else
-				return "EventError\n\t\tOSERROR: #{number}"
+				return "CommandError\n\t\tOSERROR: #{number}"
 			end
 		end
 		

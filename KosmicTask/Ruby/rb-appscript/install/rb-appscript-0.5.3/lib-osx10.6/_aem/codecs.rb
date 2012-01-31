@@ -3,15 +3,14 @@
 #
 # codecs -- convert native Ruby objects to AEDescs, and vice-versa
 #
-
-require "date"
+# Copyright (C) 2006-2009 HAS. Released under MIT License.
+#
 
 require "ae"
 require "kae"
 require "_aem/typewrappers"
 require "_aem/aemreference"
 require "_aem/mactypes"
-require "_aem/encodingsupport"
 
 # Note that AE strings (typeChar, typeUnicodeText, etc.) are unpacked as UTF8-encoded Ruby strings, and UTF8-encoded Ruby strings are packed as typeUnicodeText. Using UTF8 on the Ruby side avoids data loss; using typeUnicodeText on the AEM side provides compatibility with all [reasonably well designed] applications. To change this behaviour (e.g. to support legacy apps that demand typeChar and break on typeUnicodeText), subclass Codecs and override pack and/or unpack methods to provide alternative packing/unpacking of string values. Users can also pack data manually using AE::AEDesc.new(type, data).
 
@@ -130,7 +129,6 @@ module DisableObjectSpecifierCaching
 	end
 end
 
-#######
 
 class Codecs
 	# Provides pack and unpack methods for converting data between Ruby and AE types.
@@ -143,16 +141,7 @@ class Codecs
 
 	def initialize
 		@unit_type_codecs = UnitTypeCodecs.new
-		# Note: while typeUnicodeText is deprecated (see AEDataModel.h), it's still the
-		# most commonly used Unicode type so is used here for compatibility's sake.
-		# typeUTF8Text was initially tried, but existing applications had problems with it; i.e.
-		# some apps make unsafe assumptions on what to expect based on AS's behaviour.
-		# Once AppleScript is using typeUTF8Text/typeUTF16ExternalRepresentation
-		# and existing applications don't choke, this code can be similarly upgraded.
 		@pack_text_as_type = KAE::TypeUnicodeText
-		# on Ruby 1.9+, set String encoding to UTF-8
-		@encoding_support = AEMEncodingSupport.encoding_support
-		@unpack_dates_as_datetime = false
 	end
 	
 	######################################################################
@@ -184,25 +173,6 @@ class Codecs
 		end
 		@pack_text_as_type = code
 	end
-	
-	def use_ascii_8bit
-		# By default on Ruby 1.9+, Codecs#pack creates String instances with UTF-8 
-		# encoding and #unpack ensures all strings are UTF-8 encoded before packing 
-		# them into AEDescs of typeUTF8Text. To force the old-style behaviour where
-		# strings are treated as byte strings containing UTF-8 data, call:
-		#
-		#	some_application.AS_app_data.use_ascii_8bit_strings
-		#
-		# This will cause Strings to use the binary ASCII-8BIT encoding; as in Ruby 1.8, 
-		# the user is responsible for ensuring that strings contain UTF-8 data.
-		@encoding_support = AEMEncodingSupport::DisableStringEncodings
-	end
-	
-	def use_datetime
-		# By default dates are unpacked as Time instances, which have limited range.
-		# Call this method to unpack dates as DateTime instances instead.
-		@unpack_dates_as_datetime = true
-	end
 
 	######################################################################
 	# Subclasses could override these to provide their own reference roots if needed
@@ -231,7 +201,7 @@ class Codecs
 	
 	def pack(val) # clients may override this to replace existing packers
 		case val
-			when AEMReference::Query then val.AEM_pack_self(self)
+			when AEMReference::Base then val.AEM_pack_self(self)
 			
 			when Fixnum, Bignum then
 				if SInt32Bounds === val
@@ -245,7 +215,23 @@ class Codecs
 				end
 			
 			when String then 
-				@encoding_support.pack_string(val, @pack_text_as_type)
+				begin
+					# Note: while typeUnicodeText is deprecated (see AEDataModel.h), it's still the
+					# most commonly used Unicode type so is used here for compatibility's sake.
+					# typeUTF8Text was initially tried, but existing applications had problems with it; i.e.
+					# some apps make unsafe assumptions on what to expect based on AS's behaviour.
+					# Once AppleScript is using typeUTF8Text/typeUTF16ExternalRepresentation
+					# and existing applications don't choke, this code can be similarly upgraded.
+					# Note: while the BOM is optional in typeUnicodeText, it's not included by AS
+					# and some apps, e.g. iTunes 7, will handle it incorrectly, so it's omitted here.)
+					AE::AEDesc.new(KAE::TypeUTF8Text, val).coerce(@pack_text_as_type)
+				rescue AE::MacOSError => e
+					if e.to_i == -1700 # couldn't coerce to TypeUnicodeText
+						raise TypeError, "Not valid UTF8 data or couldn't coerce to type %{@pack_text_as_type}: #{val.inspect}"
+					else
+						raise
+					end
+				end
 			
 			when TrueClass then TrueDesc
 			when FalseClass then FalseDesc
@@ -254,11 +240,7 @@ class Codecs
 			
 			when Time
 				AE::AEDesc.new(KAE::TypeLongDateTime,
-					[AE.convert_unix_seconds_to_long_date_time(val.to_i)].pack('q'))
-			
-			when DateTime, Date then
-				AE::AEDesc.new(KAE::TypeLongDateTime,
-					[AE.convert_string_to_long_date_time(val.strftime('%F %T'))].pack('q'))
+						[AE.convert_unix_seconds_to_long_date_time(val.to_i)].pack('q'))
 			
 			when Array then pack_array(val)
 			when Hash then pack_hash(val)
@@ -363,18 +345,13 @@ class Codecs
 					KAE::TypeIntlText, 
 					KAE::TypeUTF16ExternalRepresentation,
 					KAE::TypeStyledText
-				@encoding_support.unpack_string(desc)
+				desc.coerce(KAE::TypeUTF8Text).data
 				
 			when KAE::TypeFalse then false
 			when KAE::TypeTrue then true
 			
 			when KAE::TypeLongDateTime then
-				t = desc.data.unpack('q')[0]
-				if @unpack_dates_as_datetime
-					DateTime.strptime(AE.convert_long_date_time_to_string(t), '%F %T')
-				else
-					Time.at(AE.convert_long_date_time_to_unix_seconds(t))
-				end
+				Time.at(AE.convert_long_date_time_to_unix_seconds(desc.data.unpack('q')[0]))
 			
 			when KAE::TypeAEList then unpack_aelist(desc)
 			when KAE::TypeAERecord then unpack_aerecord(desc)
@@ -632,7 +609,7 @@ class Codecs
 		# reference being tested is second operand, so need to make sure first operand is an its-based ref;
 		# if not, rearrange accordingly.
 		# Since type-checking is involved, this extra hook is provided so that appscript's AppData subclass can override this method to add its own type checking
-		if  op1.is_a?(AEMReference::Query) and op1.AEM_root == AEMReference::Its
+		if  op1.is_a?(AEMReference::Base) and op1.AEM_root == AEMReference::Its
 			return op1.contains(op2)
 		else
 			return op2.is_in(op1)

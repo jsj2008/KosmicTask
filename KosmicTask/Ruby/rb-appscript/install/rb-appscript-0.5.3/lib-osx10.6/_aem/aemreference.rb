@@ -3,6 +3,8 @@
 #
 # aemreference -- an object-oriented API for constructing object specifier AEDescs
 #
+# Copyright (C) 2006-2009 HAS. Released under MIT License.
+#
 
 ######################################################################
 # Endianness support
@@ -83,14 +85,14 @@ module AEMReference
 	# BASE CLASS
 	######################################################################
 	
-	class Query
+	class Base
 	
 		def initialize
 			@_comparable = nil
 		end
 	
 		def AEM_comparable
-			# called by Query#==; returns the data needed to compare two aem references
+			# called by Base#==; returns the data needed to compare two aem references
 			if not @_comparable
 				collector = AEMReference::CollectComparable.new
 				AEM_resolve(collector)
@@ -121,7 +123,7 @@ module AEMReference
 	# BASE CLASS FOR ALL REFERENCE FORMS
 	######################################################################
 	
-	class Specifier < Query
+	class Specifier < Base
 		# Base class for insertion specifier and all object specifier classes.
 		
 		attr_reader :_key, :_container
@@ -717,7 +719,7 @@ module AEMReference
 	###################################
 	# Unresolved reference
 	
-	class DeferredSpecifier < Query
+	class DeferredSpecifier < Base
 		def initialize(desc, codecs)
 			@_ref = nil
 			@_desc = desc
@@ -756,7 +758,7 @@ module AEMReference
 	###################################
 	# Base class
 	
-	class Test < Query
+	class Test < Base
 	
 		# Logical tests
 		

@@ -3,6 +3,8 @@
 #
 # referencerenderer -- obtain an appscript-style string representation of an aem reference
 #
+# Copyright (C) 2006-2009 HAS. Released under MIT License.
+#
 
 require "_aem/aemreference"
 
@@ -19,7 +21,7 @@ class ReferenceRenderer
 	end
 	
 	def _format(val)
-		if val.is_a?(AEMReference::Query)
+		if val.is_a?(AEMReference::Base)
 			return ReferenceRenderer.render(@_app_data, val)
 		else
 			return val.inspect

@@ -4,6 +4,8 @@
 # aem -- a mid-level object-oriented API for creating and sending Apple events
 #    using raw AE codes; may be used directly or via high-level appscript wrapper
 #
+# Copyright (C) 2006-2009 HAS. Released under MIT License.
+#
 
 require "ae"
 require "kae"
@@ -37,8 +39,7 @@ module AEM
 	AEProp = TypeWrappers::AEProp
 	AEKey = TypeWrappers::AEKey
 	
-	EventError = Send::EventError	
-	CommandError = Send::EventError # deprecated class name; kept for backwards compatibility
+	CommandError = Send::CommandError
 	
 	#######
 	# Reference roots
@@ -62,7 +63,7 @@ module AEM
 	#######
 	# Application class
 	
-	class Application < AEMReference::Query
+	class Application < AEMReference::Base
 		# Identifies an application and provides an #event method for constructing Apple events targetted at it.
 	
 		require "weakref"

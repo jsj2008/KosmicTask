@@ -4,6 +4,8 @@
 # appscript -- syntactically sugared wrapper around the mid-level aem API;
 #    provides a high-level, easy-to-use API for creating and sending Apple events
 #
+# Copyright (C) 2006-2009 HAS. Released under MIT License.
+#
 
 require "_aem/mactypes"
 
@@ -116,7 +118,7 @@ module Appscript
 						'aRef' => pack(ref),
 					}).send)
 				return nil
-			rescue AEM::EventError => e
+			rescue AEM::CommandError => e
 				return e
 			end
 		end
@@ -322,8 +324,7 @@ module Appscript
 	
 		def to_s
 			s= @_call[0]
-			@_call[1, @_call.length].each do |name, args|
-				if name == :[]
+			@_call[1, @_call.length].each do |name, args|					if name == :[]
 					if args.length == 1
 						s += "[#{args[0].inspect}]"
 					else
@@ -505,7 +506,7 @@ module Appscript
 			begin
 				return @AS_app_data.target.event(code, params, atts, 
 						KAE::KAutoGenerateReturnID, @AS_app_data).send(timeout, send_flags)
-			rescue AEM::EventError => e
+			rescue AEM::CommandError => e
 				if e.number == -1708 and code == 'ascrnoop'
 					return # 'launch' events always return 'not handled' errors; just ignore these
 				elsif [-600, -609].include?(e.number) and @AS_app_data.constructor == :by_path 
@@ -534,7 +535,7 @@ module Appscript
 					begin
 						return @AS_app_data.target.event(code, params, atts, 
 								KAE::KAutoGenerateReturnID, @AS_app_data).send(timeout, send_flags)
-					rescue AEM::EventError => e
+					rescue AEM::CommandError => e
 						raise CommandError.new(self, name, args, e, @AS_app_data)
 					end
 				end
@@ -884,7 +885,7 @@ module Appscript
 		def AS_new_reference(ref)
 			if ref.is_a?(Appscript::GenericReference)
 				return ref.AS_resolve(@AS_app_data)
-			elsif ref.is_a?(AEMReference::Query)
+			elsif ref.is_a?(AEMReference::Base)
 				return Reference.new(@AS_app_data, ref)
 			elsif ref == nil
 				return  Reference.new(@AS_app_data, AEM.app)
@@ -912,7 +913,7 @@ module Appscript
 			else
 				begin
 					@AS_app_data.target.event('ascrnoop').send # will send launch event to app if already running; else will error
-				rescue AEM::EventError => e
+				rescue AEM::CommandError => e
 					raise if e.to_i != -1708
 				end
 			end
@@ -1020,7 +1021,7 @@ module Appscript
 		end
 		
 		def to_s
-			if @real_error.is_a?(AEM::EventError)
+			if @real_error.is_a?(AEM::CommandError)
 				err = "CommandError\n\t\tOSERROR: #{error_number}"
 				err += "\n\t\tMESSAGE: #{error_message}" if error_message != ''
 				[
@@ -1038,7 +1039,7 @@ module Appscript
 		end
 		
 		def error_number
-			if @real_error.is_a?(AE::MacOSError) or @real_error.is_a?(AEM::EventError)
+			if @real_error.is_a?(AE::MacOSError) or @real_error.is_a?(AEM::CommandError)
 				return @real_error.to_i
 			else
 				return -2700
@@ -1052,19 +1053,19 @@ module Appscript
 		end
 		
 		def offending_object
-			return nil if not @real_error.is_a?(AEM::EventError)
+			return nil if not @real_error.is_a?(AEM::CommandError)
 			desc = @real_error.raw[KAE::KOSAErrorOffendingObject]
 			return desc ? @codecs.unpack(desc) : nil
 		end
 		
 		def expected_type
-			return nil if not @real_error.is_a?(AEM::EventError)
+			return nil if not @real_error.is_a?(AEM::CommandError)
 			desc = @real_error.raw[KAE::KOSAErrorExpectedType]
 			return desc ? @codecs.unpack(desc) : nil
 		end
 		
 		def partial_result
-			return nil if not @real_error.is_a?(AEM::EventError)
+			return nil if not @real_error.is_a?(AEM::CommandError)
 			desc = @real_error.raw[KAE::KOSAErrorPartialResult]
 			return desc ? @codecs.unpack(desc) : nil
 		end
