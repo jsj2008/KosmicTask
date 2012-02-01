@@ -8,8 +8,8 @@
 
 #import "NDScriptContext_Mugginsoft.h"
 #import "NSValue+NDFourCharCode.h"
-#import "appscript/types.h"
-#import "appscript/codecs.h"
+#import <appscript/types.h>
+#import <appscript/codecs.h>
 
 @interface NDScriptContext (Mugginsoft_private)
 - (NSDictionary *)resolveDictionary:(NSDictionary *)input;

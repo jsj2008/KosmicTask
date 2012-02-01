@@ -591,7 +591,6 @@
 		AB8C14B01257551E004231E2 /* MGSSettingsOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8C14AE1257551E004231E2 /* MGSSettingsOutlineViewController.m */; };
 		AB8C14B31257556C004231E2 /* SettingsOutlineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8C14B11257556C004231E2 /* SettingsOutlineView.xib */; };
 		AB8CB3FA1059665D00FFBBAF /* MGSServerTaskConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8CB3F91059665D00FFBBAF /* MGSServerTaskConfiguration.m */; };
-		AB8D3EC614D2C92F00FC88A2 /* Appscript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */; };
 		AB8D3EC714D2C94A00FC88A2 /* Appscript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */; };
 		AB8D400214D2DF7300FC88A2 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D400114D2DF7300FC88A2 /* Sparkle.framework */; };
 		AB8D400314D2DFE600FC88A2 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D400114D2DF7300FC88A2 /* Sparkle.framework */; };
@@ -711,6 +710,8 @@
 		AB99A5D40D707AAB00B9141E /* ClockFaceGrey16.png in Resources */ = {isa = PBXBuildFile; fileRef = AB99A5D30D707AAB00B9141E /* ClockFaceGrey16.png */; };
 		AB9A1C790D51EA4B001B6AEA /* NSSplitView_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A1C780D51EA4B001B6AEA /* NSSplitView_Mugginsoft.m */; };
 		AB9A7B4E14D9DC6B0026EDB1 /* MGTemplateEngine.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC95314D1F10200B54313 /* MGTemplateEngine.framework */; };
+		AB9A7D9314D9E9870026EDB1 /* NDScriptContext_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9C2C7F0DF7E3A000FE2CB8 /* NDScriptContext_Mugginsoft.m */; };
+		AB9A7D9614D9EDB80026EDB1 /* Appscript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */; };
 		AB9AC4BE0D95AB9A00767691 /* serverauthenticate.c in Sources */ = {isa = PBXBuildFile; fileRef = AB9AC49A0D95AAA300767691 /* serverauthenticate.c */; };
 		AB9AC4BF0D95ABAE00767691 /* CRAMMD5helper.c in Sources */ = {isa = PBXBuildFile; fileRef = AB9AC48F0D95A9F300767691 /* CRAMMD5helper.c */; };
 		AB9AC4C00D95ABB400767691 /* DSUtility.c in Sources */ = {isa = PBXBuildFile; fileRef = AB9AC4910D95A9F300767691 /* DSUtility.c */; };
@@ -956,7 +957,6 @@
 		ABADEE30104D3338007A5319 /* NSString+NDCarbonUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9E63F10DD5F6DB0022A1E3 /* NSString+NDCarbonUtilities.m */; };
 		ABADEE31104D3341007A5319 /* NSURL+NDCarbonUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9E63F50DD5F6DB0022A1E3 /* NSURL+NDCarbonUtilities.m */; };
 		ABADEE32104D3351007A5319 /* NSValue+NDFourCharCode.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9E63F70DD5F6DB0022A1E3 /* NSValue+NDFourCharCode.m */; };
-		ABADEE33104D3357007A5319 /* NDScriptContext_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9C2C7F0DF7E3A000FE2CB8 /* NDScriptContext_Mugginsoft.m */; };
 		ABADEE3F104D3394007A5319 /* IntegerMath.h in Headers */ = {isa = PBXBuildFile; fileRef = AB9E63E00DD5F6DB0022A1E3 /* IntegerMath.h */; };
 		ABADEE40104D3394007A5319 /* NDComponentInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = AB9E63E10DD5F6DB0022A1E3 /* NDComponentInstance.h */; };
 		ABADEE41104D3394007A5319 /* NDProgrammerUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = AB9E63E30DD5F6DB0022A1E3 /* NDProgrammerUtilities.h */; };
@@ -2343,13 +2343,6 @@
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = Appscript;
 		};
-		AB8D3EC414D2C92200FC88A2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = Appscript;
-		};
 		AB92318C11A695E70093EDE3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AB92318511A695E70093EDE3 /* KosmicTask Quick Look Plugin.xcodeproj */;
@@ -2398,6 +2391,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = ABD668CA0DE6035000097C1B;
 			remoteInfo = "Send Plugin Pages";
+		};
+		AB9A7D9414D9E9CE0026EDB1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Appscript;
 		};
 		AB9B271D0DFC754E00CDA79A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -4919,6 +4919,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB9A7D9614D9EDB80026EDB1 /* Appscript.framework in Frameworks */,
 				AB289393104D5ECA0031754F /* NDScript.framework in Frameworks */,
 				AB91F8220D8C29ED00ECE09E /* OSAKit.framework in Frameworks */,
 				09AAC6730D0C356400D9B17A /* Foundation.framework in Frameworks */,
@@ -5524,7 +5525,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB8D3EC614D2C92F00FC88A2 /* Appscript.framework in Frameworks */,
 				ABADEFD9104D34CE007A5319 /* Carbon.framework in Frameworks */,
 				ABADEFDA104D34CE007A5319 /* Foundation.framework in Frameworks */,
 				ABADEF1A104D34CA007A5319 /* OSAKit.framework in Frameworks */,
@@ -8926,10 +8926,12 @@
 			buildPhases = (
 				091835EC0D0C34DF008604BD /* Sources */,
 				091835ED0D0C34DF008604BD /* Frameworks */,
+				AB9A7D9214D9E89E0026EDB1 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AB9A7D9514D9E9CE0026EDB1 /* PBXTargetDependency */,
 				ABADEE94104D3498007A5319 /* PBXTargetDependency */,
 				AB27AE7C1189E97600132977 /* PBXTargetDependency */,
 			);
@@ -8994,7 +8996,6 @@
 				AB9E90590DE1D24800501378 /* Copy Plugins */,
 				ABB535E40D89389C006BC17D /* Copy Auxiliary executables */,
 				AB9FEEC20E215DC200CA6801 /* Run Script: Index Help */,
-				ABAA01420D2C425D008B0FF4 /* Run Script: remove app files */,
 				AB450E0711C0148700550A4E /* Run Script: scripting support */,
 			);
 			buildRules = (
@@ -9970,12 +9971,10 @@
 				ABADEDFE104D32A9007A5319 /* Resources */,
 				ABADEDFF104D32A9007A5319 /* Sources */,
 				ABADEE00104D32A9007A5319 /* Frameworks */,
-				AB5254C511A68C9200B0B510 /* set Appscript dyld search path */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AB8D3EC514D2C92200FC88A2 /* PBXTargetDependency */,
 			);
 			name = NDScript;
 			productName = NDScript;
@@ -11338,22 +11337,6 @@
 			shellPath = /bin/sh;
 			shellScript = "#/usr/bin/sdp -fast -o \"$BUILD_DIR/$BUILD_STYLE/$FULL_PRODUCT_NAME/Contents/Resources\" \"$SOURCE_ROOT/KosmicTask.sdef\"";
 		};
-		AB5254C511A68C9200B0B510 /* set Appscript dyld search path */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			comments = "Hmm.\n\nWhen Appscript is built the default dyld path is @executable_path/../Frameworks, which is normal.\n\nIn this case however NDScript is lining against Appscript and NDScript is linked against by the applescript bundle aux executable.\nThe  @executable_path for it will be itself not the main app executable.\n\nWe could change the the default dyld path for appscript but that would be fragile when  updates occur.\nHence we can use install_name_tool to point to the correct relative location of AppScript.\n\nAn alternative would be to move NDScript and appscript out of the main app bundle framework folder\nand into the plugin but the frameworks would still need to be shared between As and ASObjC.";
-			files = (
-			);
-			inputPaths = (
-				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
-			);
-			name = "set Appscript dyld search path";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# see http://www.cocoabuilder.com/archive/xcode/272910-xcode-dyld-external-dynamic-libraries-and-setting-dy-ld-library-path-for-running-targets.html\n# also see comments tab\ninstall_name_tool -change /Appscript.framework/Versions/A/Appscript @loader_path/../../../../Frameworks/Appscript.framework/Versions/A/Appscript \"$TARGET_BUILD_DIR/$EXECUTABLE_PATH\"";
-		};
 		AB691A8F122327CC00B1EA05 /* Make java package */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -11382,6 +11365,21 @@
 			shellPath = "/usr/bin/perl -w";
 			shellScript = "# Xcode auto-versioning script for Subversion\n# by Axel Andersson, modified by Daniel Jalkut to add\n# \"--revision HEAD\" to the svn info line, which allows\n# the latest revision to always be used.\n        \nuse strict;\n        \ndie \"$0: Must be run from Xcode\" unless $ENV{\"BUILT_PRODUCTS_DIR\"};\n        \n# Get the current subversion revision number and use it to set the CFBundleVersion value\nmy $REV = `export PATH=\\$PATH:/usr/local/bin;/usr/bin/env svnversion -n ./`;\nmy $INFO = \"$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Info.plist\";\n        \nmy $version = $REV;\n$version =~ s/([\\d]*:)(\\d+[M|S]*).*/$2/;\ndie \"$0: No Subversion revision found\" unless $version;\n        \nopen(FH, \"$INFO\") or die \"$0: $INFO: $!\";\nmy $info = join(\"\", <FH>);\nclose(FH);\n\nmy $plistKey = \"MGSSubversionRevision\";\n$info =~ s/([\\t ]+<key>$plistKey<\\/key>\\n[\\t ]+<string>).*?(<\\/string>)/$1$version$2/;\n        \nopen(FH, \">$INFO\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose(FH);";
 		};
+		AB9A7D9214D9E89E0026EDB1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# see http://www.cocoabuilder.com/archive/xcode/272910-xcode-dyld-external-dynamic-libraries-and-setting-dy-ld-library-path-for-running-targets.html\n# also see comments tab\ninstall_name_tool -change /Appscript.framework/Versions/A/Appscript @rpath/appscript.framework/Appscript \"$TARGET_BUILD_DIR/$EXECUTABLE_PATH\"";
+			showEnvVarsInLog = 0;
+		};
 		AB9FEEC20E215DC200CA6801 /* Run Script: Index Help */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -11396,20 +11394,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#fails on SL\n#/Developer/Applications/Utilities/Help\\ Indexer.app/Contents/MacOS/Help\\ Indexer $TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/English.lproj/KosmicTask\\ Help/ -PantherIndexing NO -TigerIndexing YES -Tokenizer 1 -UseRemoteRoot NO -IndexAchors YES -MinTermLength 3 -LogStyle 1 -GenerateSummaries YES";
-		};
-		ABAA01420D2C425D008B0FF4 /* Run Script: remove app files */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script: remove app files";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#rm -r \"/library/application support/mother\"";
 		};
 		ABBBD1DB107F86AD00613896 /* Mark tasks as bundled */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -11476,6 +11460,7 @@
 				09AAC6740D0C357D00D9B17A /* taskmain.m in Sources */,
 				AB2892D0104D586B0031754F /* MGSAppleScriptRunner.m in Sources */,
 				AB3848BF128C0E260046FC72 /* MGSAppleScriptLanguage.m in Sources */,
+				AB9A7D9314D9E9870026EDB1 /* NDScriptContext_Mugginsoft.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12331,7 +12316,6 @@
 				ABADEE30104D3338007A5319 /* NSString+NDCarbonUtilities.m in Sources */,
 				ABADEE31104D3341007A5319 /* NSURL+NDCarbonUtilities.m in Sources */,
 				ABADEE32104D3351007A5319 /* NSValue+NDFourCharCode.m in Sources */,
-				ABADEE33104D3357007A5319 /* NDScriptContext_Mugginsoft.m in Sources */,
 				ABADEE4B104D3394007A5319 /* NSString+NDUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -12923,11 +12907,6 @@
 			name = ORCDiscount;
 			targetProxy = AB79AF7514CA32B800087932 /* PBXContainerItemProxy */;
 		};
-		AB8D3EC514D2C92200FC88A2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Appscript;
-			targetProxy = AB8D3EC414D2C92200FC88A2 /* PBXContainerItemProxy */;
-		};
 		AB92320311A696140093EDE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "KosmicTask Quick Look Plugin";
@@ -12957,6 +12936,11 @@
 			isa = PBXTargetDependency;
 			target = ABD668CA0DE6035000097C1B /* Send Plugin Pages */;
 			targetProxy = AB955F420DE6054500F7B6D9 /* PBXContainerItemProxy */;
+		};
+		AB9A7D9514D9E9CE0026EDB1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Appscript;
+			targetProxy = AB9A7D9414D9E9CE0026EDB1 /* PBXContainerItemProxy */;
 		};
 		AB9B271C0DFC754E00CDA79A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
