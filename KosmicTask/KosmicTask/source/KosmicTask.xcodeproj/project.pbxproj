@@ -11352,7 +11352,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# see http://www.cocoabuilder.com/archive/xcode/272910-xcode-dyld-external-dynamic-libraries-and-setting-dy-ld-library-path-for-running-targets.html\n# also see comments tab\ninstall_name_tool -change @executable_path/../Frameworks/Appscript.framework/Versions/A/Appscript @loader_path/../../../../Frameworks/Appscript.framework/Versions/A/Appscript \"$TARGET_BUILD_DIR/$EXECUTABLE_PATH\"";
+			shellScript = "# see http://www.cocoabuilder.com/archive/xcode/272910-xcode-dyld-external-dynamic-libraries-and-setting-dy-ld-library-path-for-running-targets.html\n# also see comments tab\ninstall_name_tool -change /Appscript.framework/Versions/A/Appscript @loader_path/../../../../Frameworks/Appscript.framework/Versions/A/Appscript \"$TARGET_BUILD_DIR/$EXECUTABLE_PATH\"";
 		};
 		AB691A8F122327CC00B1EA05 /* Make java package */ = {
 			isa = PBXShellScriptBuildPhase;
