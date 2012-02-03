@@ -11,7 +11,7 @@
 
 @implementation MGSTextView
 
-@synthesize forcedTypingAttributes;
+@synthesize consoleAttributes;
 
 
 
@@ -26,7 +26,7 @@
 	self = [super initWithFrame:frameRect textContainer:container];
 	if (self) {
 		NSFont *consoleFont = [NSFont fontWithName:@"Menlo" size: 11];
-		forcedTypingAttributes = [NSDictionary
+		consoleAttributes = [NSDictionary
 							 dictionaryWithObjectsAndKeys:
 							 [NSColor blackColor], NSForegroundColorAttributeName,
 							 consoleFont, NSFontAttributeName, nil];
@@ -47,11 +47,49 @@
 	// impose a default font
 	
 	// Set typing attributes every time the cursor is moved.
-	if (self.forcedTypingAttributes) {
-		[self setTypingAttributes:self.forcedTypingAttributes];
+	if (self.consoleAttributes) {
+		[self setTypingAttributes:self.consoleAttributes];
 	}
 	
 	return proposedSelRange;
 }
+
+/*
+ 
+ - setText:append:options:
+ 
+ */
+- (void)setText:(NSString *)text append:(BOOL)append options:(NSDictionary *)options
+{
+	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:consoleAttributes];
+	
+	// process options
+	if (options) {
+		
+		// combine text attributes with attributes
+		NSDictionary *optionAttributes = [options objectForKey:@"attributes"];
+		if (optionAttributes) {
+			[attributes addEntriesFromDictionary:optionAttributes];
+		}
+	}
+	
+	NSAttributedString *attrMesg = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+	NSTextStorage *textStorage = [self textStorage];
+	
+	NSRange endRange;
+	endRange.location = [[self textStorage] length];
+    endRange.length = 0;
+    
+	[textStorage beginEditing];
+	if (append) {
+		[textStorage appendAttributedString:attrMesg];
+	} else {
+		[textStorage replaceCharactersInRange:NSMakeRange(0, [[self textStorage] length]) withAttributedString:attrMesg];
+	}
+	[textStorage endEditing];
+	endRange.length = [text length];
+    [self scrollRangeToVisible:endRange];
+}
+
 
 @end

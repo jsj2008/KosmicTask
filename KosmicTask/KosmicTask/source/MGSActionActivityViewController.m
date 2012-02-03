@@ -207,6 +207,24 @@
 	return _dragThumbImage;
 }
 
+/*
+ 
+ - addDisplayString:
+ 
+ */
+- (void)addDisplayString:(NSString *)value
+{
+    [_activityView appendText:value];
+}
+/*
+ 
+ - clearDisplayString
+ 
+ */
+- (void)clearDisplayString
+{
+    [_activityView clearText];
+}
 #pragma mark MGSActionActivityViewDelegate methods
 
 /*

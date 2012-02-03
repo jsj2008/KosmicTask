@@ -17,6 +17,8 @@
 
 @end
 
+@class MGSActionActivityTextView;
+
 @interface MGSActionActivityView : NSView {
 	MGSTaskActivity _activity;
 	eMGSMotherRunMode _runMode;
@@ -75,6 +77,11 @@
 	NSTrackingArea *_trackingArea;
 	id target;
 	SEL action;
+    
+    MGSActionActivityTextView *_textView;
+    NSScrollView *_textScrollview;
+    CGFloat _masterAlpha;
+    NSTimer *_alphaTimer;
 }
 
 - (void)initialise;
@@ -94,6 +101,9 @@
 - (void)clearDisplayCache;
 - (void)updateAnimation;
 
+- (void)appendText:(NSString *)text;
+- (void)clearText;
+
 @property MGSTaskActivity activity;
 @property eMGSMotherRunMode runMode;
 @property (copy) NSColor *backgroundFillColor;
@@ -104,5 +114,6 @@
 
 @property id target;
 @property SEL action;
+@property (readonly) MGSActionActivityTextView *textView;
 
 @end

@@ -27,5 +27,7 @@
 - (void)updateAnimation;
 - (NSView *)splitViewAdditionalView;
 - (void)setRunMode:(eMGSMotherRunMode)mode;
+- (void)addDisplayString:(NSString *)value;
+- (void)clearDisplayString;
 
 @end

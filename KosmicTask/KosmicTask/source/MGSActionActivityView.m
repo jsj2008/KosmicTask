@@ -29,8 +29,11 @@
 #import "GlossyGradient.h"
 #import "NSString_Mugginsoft.h"
 #import "NSString_Bezier_Mugginsoft.h"
+#import "MGSActionActivityTextView.h"
+#import <Quartz/Quartz.h>
 
 #define ConvertAngle(a) (fmod((90.0-(a)), 360.0))
+#define MASTER_ALPHA_MIN 0.101f
 
 #define DEG2RAD  0.017453292519943295f
 #define MAX_BLEND_RADIUS 3.0f
@@ -46,6 +49,15 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	
 	return pt;
 }
+
+// class extension
+@interface MGSActionActivityView()
+- (NSColor *)alphaColor:(NSColor *)color;
+- (void)alphaTimerExpired:(NSTimer*)theTimer;
+-(BOOL)ispoint:(NSPoint)aPoint inCircleWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius;
+- (BOOL)isEventInCircle:(NSEvent *)theEvent;
+- (BOOL)viewIsDimmed;
+@end
 
 @interface MGSActionActivityView (Private)
 - (void)drawPausedInRect:(NSRect)rect;
@@ -70,8 +82,10 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 @synthesize backgroundFillColor = _backgroundFillColor;
 @synthesize foregroundColor = _fillColor;
 @synthesize hasDropShadow = _hasDropShadow;
-@synthesize target, action, runMode = _runMode, respectRunMode = _respectRunMode, delegate = _delegate;
+@synthesize target, action, runMode = _runMode, respectRunMode = _respectRunMode, delegate = _delegate, textView = _textView;
 
+#pragma mark -
+#pragma mark initialisation
 /*
  
  init with frame
@@ -167,7 +181,123 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	// send nil targeted action to toggle run state
 	[self setTarget:nil];
 	[self setAction:@selector(toggleRunState:)];
+    
+    // turn on layer backed views for this view
+    // and all subviews
+    if (NO) {
+        [self setWantsLayer:YES];
+    }
+    
+    _masterAlpha = 1.0f;
 }
+
+#pragma mark -
+#pragma mark Text display
+/*
+ 
+ - textView
+ 
+ */
+- (MGSActionActivityTextView *)textView
+{
+    // lazy allocation
+    if (!_textView) {
+        
+        /*
+         
+         we add a transparent textview + scroll as sub views of the activity view
+         
+         */
+        
+        // configure the scroll view 
+        _textScrollview = [[NSScrollView alloc] initWithFrame:[self frame]];
+        NSSize contentSize = [_textScrollview contentSize];
+        
+        // create and configure scroll view
+        [_textScrollview setBorderType:NSNoBorder];
+        [_textScrollview setHasVerticalScroller:YES];
+        [_textScrollview setHasHorizontalScroller:NO];
+        [_textScrollview setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+        [_textScrollview setDrawsBackground:NO];
+        
+        // create and configure text view
+        _textView = [[MGSActionActivityTextView alloc] initWithFrame:NSMakeRect(0, 0,
+                                                                   contentSize.width, contentSize.height)];
+        [_textView setMinSize:NSMakeSize(0.0, 0.0)];
+        [_textView setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
+        [_textView setVerticallyResizable:YES];
+        [_textView setHorizontallyResizable:NO];
+        [_textView setAutoresizingMask:NSViewWidthSizable];
+        [[_textView textContainer] setContainerSize:NSMakeSize(contentSize.width, FLT_MAX)];
+        [[_textView textContainer] setWidthTracksTextView:YES];
+        
+        // if not selectable or editable then mouse events pass through to superview
+        [_textView setEditable:NO];
+        [_textView setSelectable:NO];
+        
+        // add text view to scroll view
+        [_textScrollview setDocumentView:_textView];
+        
+        // add scrollview as subview
+        [self addSubview:_textScrollview];
+        
+        // add a filter
+        if ([self wantsLayer]) {
+            
+            // this works but the overhead is high - cpu usage increase from 4 -> 40%
+            CIFilter *filter = [CIFilter filterWithName:@"CIColorBurnBlendMode"];
+            [_textScrollview setCompositingFilter:filter];
+        }
+    }
+    return _textView; 
+}
+
+/*
+ 
+ - appendText
+ 
+ */
+- (void)appendText:(NSString *)text
+{
+    // if our text view is empty then
+    // fade out the activity view
+    if (!_textView || [[_textView string] length] == 0) {
+        
+        if (!_alphaTimer) {
+        _alphaTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(alphaTimerExpired:) userInfo:nil repeats:YES];
+        }
+    } 
+    
+    // append text
+    [self.textView setText:text append:YES options:nil];
+}
+
+/*
+ 
+ - clearText
+ 
+ */
+- (void)clearText
+{
+    if (_textView) {
+        [_textView setString:@""];
+        _masterAlpha = 1.0f;
+    }
+    //[self setAlphaValue:1.0]; 
+}
+
+#pragma mark -
+#pragma mark NSView
+/*
+ 
+ is opaque
+ 
+ */
+- (BOOL)isOpaque
+{
+	return NO;
+}
+
 
 /*
  
@@ -190,6 +320,35 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     return YES;
 }
 
+#pragma mark -
+#pragma mark Hit testing
+/*
+ 
+ - ispoint:inCircleWithCenter:radius
+ 
+ */
+-(BOOL)ispoint:(NSPoint)aPoint inCircleWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius 
+{
+    CGFloat squareDistance = (aCenter.x - aPoint.x) * (aCenter.x - aPoint.x) +
+    (aCenter.y - aPoint.y) * (aCenter.y - aPoint.y);
+    return squareDistance <= aRadius * aRadius;
+}
+
+/*
+ 
+ - isEventInCircle
+ 
+ */
+- (BOOL)isEventInCircle:(NSEvent *)theEvent 
+{
+    NSPoint event_location = [theEvent locationInWindow];
+    NSPoint local_point = [self convertPoint:event_location fromView:nil];
+        
+    return [self ispoint:local_point inCircleWithCenter:_centerPoint radius:_outerRadius];
+}
+
+#pragma mark -
+#pragma mark Mouse
 /*
  
  we want to accept first mouse event
@@ -209,6 +368,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 - (void)mouseEntered:(NSEvent *)theEvent 
 {
 	#pragma unused(theEvent)
+
 }
 
 /*
@@ -218,9 +378,34 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (void)mouseMoved:(NSEvent *)theEvent 
 {
-	#pragma unused(theEvent)
-	
-    [self displayIfNeeded]; 
+    BOOL mouseIsInCircle = [self isEventInCircle:theEvent];
+    
+    // if view is dimmed
+    if ([self viewIsDimmed]) {
+        
+        // if mouse within circle
+        if (mouseIsInCircle) {
+            
+            // un dim the view
+            _masterAlpha = 1.0f;
+            [self clearDisplayCache];
+            [self setNeedsDisplay:YES];
+        } 
+    } else {
+        
+        // mouse is outside circle
+        if (!mouseIsInCircle) {
+            
+            // dim the view
+            _masterAlpha = MASTER_ALPHA_MIN;
+            [self clearDisplayCache];
+            [self setNeedsDisplay:YES];
+        }
+    }
+    
+    if (NO) {
+        [self displayIfNeeded]; 
+    }
 }
 
 /* 
@@ -232,8 +417,10 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 {
 	#pragma unused(theEvent)
 	
-	[self setNeedsDisplay:YES];
-    [self displayIfNeeded]; 
+    if (NO) {
+        [self setNeedsDisplay:YES];
+        [self displayIfNeeded]; 
+    }
 }
 
 /*
@@ -271,9 +458,13 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	_depressed = NO;
 	[self setNeedsDisplay:YES];
     [self displayIfNeeded];
+    
+    // send the action
     [NSApp sendAction:[self action] to:[self target] from:[self window]];
 }
 
+#pragma mark -
+#pragma mark Drawing
 /*
  
  clear display cache
@@ -331,7 +522,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	// fill background
 	if (1) {
 		[_backgroundFillColor set];
-		NSRectFill(rect);
+		// NSRectFill(rect);
 	} else {
 		// gradient
 		NSBezierPath *bgPath = [NSBezierPath bezierPathWithRect:rect];
@@ -369,8 +560,8 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 		[theShadow setShadowBlurRadius:4.0f];
 		
 		// Use a partially transparent color for shapes that overlap.
-		[theShadow setShadowColor:[[NSColor blackColor]
-								   colorWithAlphaComponent:0.3f]];
+		[theShadow setShadowColor:[self alphaColor:[[NSColor blackColor]
+								   colorWithAlphaComponent:0.3f]]];
 		
 		[theShadow set];
 	}
@@ -416,49 +607,6 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	[self drawSpinner];
 }
 
-/*
- 
- double value
- 
- */
-- (double)doubleValue
-{
-	return doubleValue;
-}
-
-- (void)setDoubleValue:(double)value
-{
-	//if (doubleValue != value) {
-		doubleValue = value;
-		if (doubleValue > 1.0) {
-			doubleValue = 1.0;
-		} else if (doubleValue < 0.0) {
-			doubleValue = 0.0;
-		}
-	//}
-}
-
-/*
- 
- animation delay
- 
- */
-- (NSTimeInterval)animationDelay
-{
-	return animationDelay;
-}
-
-/*
- 
- set animation delay
- 
- */
-- (void)setAnimationDelay:(NSTimeInterval)value
-{
-	//if (animationDelay != value) {
-		animationDelay = value;
-	//}
-}
 
 /*
  
@@ -504,6 +652,181 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 		[self clearDisplayCache];
 		[self setNeedsDisplay:YES];
 	}
+}
+
+#pragma mark -
+#pragma mark Color and alpha
+/*
+ 
+ - alphaColor:
+ 
+ */
+- (NSColor *)alphaColor:(NSColor *)color
+{
+    if (_masterAlpha > 0.99) {
+        return color;
+    }
+    
+    // we want don't want to darken whites
+    if (NO) {
+        CGFloat red, green, blue, alpha;
+        
+        // this method raises if the color is not registered with an NSColorSpace.
+        [color getRed:&red green:&green blue:&blue alpha:&alpha];
+        if (red > 0.8 && blue > 0.8 && green > 0.8) {
+            return color;
+        }
+    }
+    
+    CGFloat newAlpha = _masterAlpha * [color alphaComponent];
+    NSColor *paleColor = [color colorWithAlphaComponent:newAlpha];
+    
+    return paleColor;
+}
+
+/*
+ 
+ - alphaTimerExpired:
+ 
+ */
+- (void)alphaTimerExpired:(NSTimer*)theTimer
+{
+    CGFloat activeAlpha = 0.0;
+    
+    if ([self wantsLayer] && NO) {
+       
+        // change the backing layer alpha
+        CGFloat layerAlpha = [[self layer] opacity];
+        layerAlpha -= 0.1f;
+        [self setAlphaValue:layerAlpha];
+ 
+        
+        activeAlpha = layerAlpha;
+        
+    } else {
+    
+        // reduce the master alpha value
+        _masterAlpha -= 0.1f;
+        
+        // we need to redraw the cache with the new master alpha applied
+        [self clearDisplayCache];
+        _useImageCache = false;   
+        
+        activeAlpha = _masterAlpha;
+    }
+
+    // invalidate timer when minimal alpha achieved
+    if (activeAlpha <= MASTER_ALPHA_MIN) {
+        [theTimer invalidate];
+        _alphaTimer = nil;
+    }
+
+    [self setNeedsDisplay:YES]; 
+}
+
+/*
+ 
+ - viewIsDimmed
+ 
+ */
+- (BOOL)viewIsDimmed
+{
+    return (_masterAlpha < 0.99f);
+}
+
+
+#pragma mark -
+#pragma mark Animation
+/*
+ 
+ update animation
+ 
+ */
+- (void)updateAnimation
+{
+	// use the cache
+	if (_useImageCache) {
+		
+		if (1) {
+			// standard method
+			// use invalidated rects
+			[self setNeedsDisplayInRect:_animatedCircleRect];
+			[self updateAnimatedRect];
+			[self setNeedsDisplayInRect:_animatedCircleRect];
+			[self displayIfNeeded];
+		} else {
+			// custom method
+			// direct animation - some artefacts
+			// seems to relate to size of rect being slightly larger
+			// clip rect effect?
+			// anyhow the graphics state is obbviously a bit different
+			[self lockFocus];
+			[[NSGraphicsContext currentContext] setShouldAntialias:NO];
+			//NSRect rect  = NSMakeRect(_animatedCircleRect.origin.x-10, _animatedCircleRect.origin.y-10, _animatedCircleRect.size.width+20, _animatedCircleRect.size.height+20);
+			//[self drawRectFromCache:rect];
+			[self drawRectFromCache:_animatedCircleRect];
+			[self updateAnimatedRect];
+			[self drawSpinner];
+			[[NSGraphicsContext currentContext] flushGraphics];
+			[self unlockFocus];
+		}
+	} else {
+		
+		// update the whole view
+		[self setNeedsDisplay:YES];
+	}
+}
+
+/*
+ 
+ animation delay
+ 
+ */
+- (NSTimeInterval)animationDelay
+{
+	return animationDelay;
+}
+
+/*
+ 
+ set animation delay
+ 
+ */
+- (void)setAnimationDelay:(NSTimeInterval)value
+{
+	//if (animationDelay != value) {
+    animationDelay = value;
+	//}
+}
+
+
+#pragma mark -
+#pragma mark Accessors
+/*
+ 
+ -doubleValue
+ 
+ */
+- (double)doubleValue
+{
+	return doubleValue;
+}
+
+/*
+ 
+ - setDoubleValue:
+ 
+ */
+- (void)setDoubleValue:(double)value
+{
+	//if (doubleValue != value) {
+    doubleValue = value;
+    if (doubleValue > 1.0) {
+        doubleValue = 1.0;
+    } else if (doubleValue < 0.0) {
+        doubleValue = 0.0;
+    }
+	//}
 }
 
 /*
@@ -570,45 +893,6 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	[self setNeedsDisplay:YES];
 }
 
-/*
- 
- update animation
- 
- */
-- (void)updateAnimation
-{
-	// use the cache
-	if (_useImageCache) {
-		
-		if (1) {
-			// standard method
-			// use invalidated rects
-			[self setNeedsDisplayInRect:_animatedCircleRect];
-			[self updateAnimatedRect];
-			[self setNeedsDisplayInRect:_animatedCircleRect];
-			[self displayIfNeeded];
-		} else {
-			// custom method
-			// direct animation - some artefacts
-			// seems to relate to size of rect being slightly larger
-			// clip rect effect?
-			// anyhow the graphics state is obbviously a bit different
-			[self lockFocus];
-			[[NSGraphicsContext currentContext] setShouldAntialias:NO];
-			//NSRect rect  = NSMakeRect(_animatedCircleRect.origin.x-10, _animatedCircleRect.origin.y-10, _animatedCircleRect.size.width+20, _animatedCircleRect.size.height+20);
-			//[self drawRectFromCache:rect];
-			[self drawRectFromCache:_animatedCircleRect];
-			[self updateAnimatedRect];
-			[self drawSpinner];
-			[[NSGraphicsContext currentContext] flushGraphics];
-			[self unlockFocus];
-		}
-	} else {
-		
-		// update the whole view
-		[self setNeedsDisplay:YES];
-	}
-}
 @end
 
 @implementation MGSActionActivityView (Private)
@@ -623,15 +907,6 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	[self drawCentreInRect:rect];
 }
 
-/*
- 
- is opaque
- 
- */
-- (BOOL)isOpaque
-{
-	return YES;
-}
 
 /*
  
@@ -672,6 +947,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 {
 	[self drawCentreInRect:rect];
 }
+
 /*
  
  draw centre in rect
@@ -685,10 +961,10 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 
 	if (_depressed) {
 		[_depressedBackgroundColor set];
-		[_bezierPath fill];
+		//[_bezierPath fill];
 	}
 	
-	[_fillColor set];
+	[[self alphaColor:_fillColor] set];
 	[self saveBezierState];
 
 	// draw circle
@@ -697,7 +973,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	[self restoreBezierState];
 	
 	
-	[_centreColor set];
+	[[self alphaColor:_centreColor] set];
 	
 	// compute points
 	CGFloat xOrigin = _centerPoint.x;
@@ -716,7 +992,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	
 	// setup gradients
 	NSGradient *gradient = _centreGradient;
-	NSColor *glossyColor = _centreColorGradientStart;
+	NSColor *glossyColor = [self alphaColor:_centreColorGradientStart];
 
 	// define pt 0
 	pt0 = NSMakePoint(xOrigin + r, yOrigin + 0);	
@@ -732,7 +1008,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 				
 			case kMGSMotherRunModeConfigure:;
 				gradient = _centreGradient;
-				glossyColor = _centreColorGradientStart;
+				glossyColor = [self alphaColor:_centreColorGradientStart];
 				
 				r = _innerRadius * 0.9f;
 				// centered gear
@@ -836,7 +1112,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 			case MGSPausedTaskActivity:;
 			case MGSProcessingTaskActivity:;
 				gradient = _centreGradientHighlight;
-				glossyColor = _centreColorActiveGradientStart;
+				glossyColor = [self alphaColor:_centreColorActiveGradientStart];
 				
 				// centered square
 				r *= cosf(DEG2RAD * 30);
@@ -886,7 +1162,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 			// unavailable
 			case MGSUnavailableTaskActivity:;
 				gradient = _centreGradientAlt;
-				glossyColor = _centreColorAltGradientStart;
+				glossyColor = [self alphaColor:_centreColorAltGradientStart];
 				
 				// centered horizontal line
 				r *= cosf(DEG2RAD * 30);
@@ -904,6 +1180,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 				return;
 		}
 	}
+    
 	// fill the path
 	if (YES) {
 		
@@ -924,7 +1201,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	}
 	
 	[self restoreBezierState];		
-	[_fillColor set];
+	[[self alphaColor:_fillColor] set];
 }
 
 
@@ -938,7 +1215,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	if ([self isSpinning]) {
 		
 		if (_activity == MGSPausedTaskActivity) {
-			[_pausedSpinnerColor set];
+			[[self alphaColor:_pausedSpinnerColor] set];
 		} else {
 			[_spinnerColor set];
 		}
@@ -1036,6 +1313,6 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	//MLog(DEBUGLOG, @"%@: rect drawn from cache", [self className]);
 	//MLog(DEBUGLOG, @"%@: rect origin.x =%f, origin.y = %f, size.width = %f, size.height = %f", [self className], rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 
-	[_imageCache drawInRect:rect fromRect:rect operation:NSCompositeSourceOver fraction:1.0f];
+	[_imageCache drawInRect:rect fromRect:rect operation:NSCompositeSourceOver fraction:1.0];
 }
 @end

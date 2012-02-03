@@ -283,6 +283,7 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	}
 	
 	_actionActivityViewController.activity = MGSReadyTaskActivity;
+    [_actionActivityViewController clearDisplayString];
 	[self setResultsAvailableForAction:NO];
 	[self resetRequestProgress];
 }
@@ -310,7 +311,9 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 		newView = [_actionActivityViewController view];
 		[_resultController setSelectedObjects:nil];		// setting nil here will display bound nul placeholder
 	}
-	
+	        
+    [_actionActivityViewController clearDisplayString];
+    
 	if (resultView != newView) {
 		[splitView replaceSubview:resultView withViewFrameAsOld:newView];
 		resultView = newView;
@@ -740,8 +743,9 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
  */
 - (void)addLogString:(NSString *)value {
     [_resultViewController addLogString:value];
+    
+    [_actionActivityViewController addDisplayString:value];
 }
-
 
 #pragma mark -
 #pragma mark Progress

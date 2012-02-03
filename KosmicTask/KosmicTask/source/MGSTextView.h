@@ -10,9 +10,10 @@
 
 
 @interface MGSTextView : NSTextView {
-	NSDictionary *forcedTypingAttributes;
+	NSDictionary *consoleAttributes;
 }
 
-@property (copy) NSDictionary *forcedTypingAttributes;
+@property (copy) NSDictionary *consoleAttributes;
 
+- (void)setText:(NSString *)text append:(BOOL)append options:(NSDictionary *)options;
 @end
