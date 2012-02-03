@@ -33,6 +33,8 @@
 #import <Quartz/Quartz.h>
 
 #define ConvertAngle(a) (fmod((90.0-(a)), 360.0))
+
+#define MASTER_ALPHA_MAX 1.000f
 #define MASTER_ALPHA_MIN 0.101f
 
 #define DEG2RAD  0.017453292519943295f
@@ -40,6 +42,11 @@
 
 #define SS_ROUND_PROGRESS 0
 #define SS_CIRCLE_DOTS 1
+
+enum _mgsFadeType {
+    kMGSFadeTypeIn,
+    kMGSFadeTypeOut
+} typedef mgsFadeType;
 
 NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians) {
 	NSPoint pt = NSMakePoint(pt0.x, pt0.y);
@@ -57,6 +64,9 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 -(BOOL)ispoint:(NSPoint)aPoint inCircleWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius;
 - (BOOL)isEventInCircle:(NSEvent *)theEvent;
 - (BOOL)viewIsDimmed;
+- (void)scheduleFade:(mgsFadeType)fade;
+- (BOOL)isMouseInCircle;
+- (BOOL)hasText;
 @end
 
 @interface MGSActionActivityView (Private)
@@ -183,7 +193,9 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	[self setAction:@selector(toggleRunState:)];
     
     // turn on layer backed views for this view
-    // and all subviews
+    // and all subviews.
+    //
+    // this works up to a point but the cpu usage can be very high
     if (NO) {
         [self setWantsLayer:YES];
     }
@@ -259,13 +271,12 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (void)appendText:(NSString *)text
 {
+    BOOL mouseInCircle = [self isMouseInCircle];
+    
     // if our text view is empty then
-    // fade out the activity view
-    if (!_textView || [[_textView string] length] == 0) {
-        
-        if (!_alphaTimer) {
-        _alphaTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(alphaTimerExpired:) userInfo:nil repeats:YES];
-        }
+    // fade out the activity view if mouse not in circle
+    if (![self hasText] && !mouseInCircle) {       
+        [self scheduleFade:kMGSFadeTypeOut];
     } 
     
     // append text
@@ -286,6 +297,19 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     //[self setAlphaValue:1.0]; 
 }
 
+/*
+ 
+ - hasText
+ 
+ */
+- (BOOL)hasText
+{
+    if (_textView && [[_textView string] length] > 0) {
+        return YES;
+    }
+    
+    return NO;
+}
 #pragma mark -
 #pragma mark NSView
 /*
@@ -336,7 +360,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 
 /*
  
- - isEventInCircle
+ - isEventInCircle:
  
  */
 - (BOOL)isEventInCircle:(NSEvent *)theEvent 
@@ -347,8 +371,26 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     return [self ispoint:local_point inCircleWithCenter:_centerPoint radius:_outerRadius];
 }
 
+/*
+ 
+ - isMouseInCircle
+ 
+ */
+- (BOOL)isMouseInCircle
+{
+
+    if (![self window]) {
+        return NO;
+    }
+    
+    NSPoint mouse_location = [[self window] mouseLocationOutsideOfEventStream];
+    NSPoint local_point = [self convertPoint:mouse_location fromView:nil];
+    
+    return [self ispoint:local_point inCircleWithCenter:_centerPoint radius:_outerRadius];
+}
+
 #pragma mark -
-#pragma mark Mouse
+#pragma mark NSView mouse
 /*
  
  we want to accept first mouse event
@@ -360,68 +402,6 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     return YES;
 }
 
-/*
- 
- mouse entered
- 
- */
-- (void)mouseEntered:(NSEvent *)theEvent 
-{
-	#pragma unused(theEvent)
-
-}
-
-/*
- 
- mouse moved
- 
- */
-- (void)mouseMoved:(NSEvent *)theEvent 
-{
-    BOOL mouseIsInCircle = [self isEventInCircle:theEvent];
-    
-    // if view is dimmed
-    if ([self viewIsDimmed]) {
-        
-        // if mouse within circle
-        if (mouseIsInCircle) {
-            
-            // un dim the view
-            _masterAlpha = 1.0f;
-            [self clearDisplayCache];
-            [self setNeedsDisplay:YES];
-        } 
-    } else {
-        
-        // mouse is outside circle
-        if (!mouseIsInCircle) {
-            
-            // dim the view
-            _masterAlpha = MASTER_ALPHA_MIN;
-            [self clearDisplayCache];
-            [self setNeedsDisplay:YES];
-        }
-    }
-    
-    if (NO) {
-        [self displayIfNeeded]; 
-    }
-}
-
-/* 
- 
- mouse exited
- 
- */
-- (void)mouseExited:(NSEvent *)theEvent 
-{
-	#pragma unused(theEvent)
-	
-    if (NO) {
-        [self setNeedsDisplay:YES];
-        [self displayIfNeeded]; 
-    }
-}
 
 /*
  
@@ -436,10 +416,13 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 		return;
 	}
 	
-	_useImageCache = NO; // dump the cache otherwise no redraw
-	_depressed = YES;
-	[self setNeedsDisplay:YES];
-    [self displayIfNeeded];
+    // detect if we have clicked within the circle
+    if ([self isEventInCircle:theEvent]) {
+        _useImageCache = NO; // dump the cache otherwise no redraw
+        _depressed = YES;
+        [self setNeedsDisplay:YES];
+        [self displayIfNeeded];
+    }
 }
 
 /*
@@ -459,8 +442,91 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	[self setNeedsDisplay:YES];
     [self displayIfNeeded];
     
-    // send the action
-    [NSApp sendAction:[self action] to:[self target] from:[self window]];
+    // send the action if appropriate
+    if ([self isEventInCircle:theEvent]) {
+        [NSApp sendAction:[self action] to:[self target] from:[self window]];
+    }
+}
+
+#pragma mark -
+#pragma mark NSTrackingArea mouse
+/*
+ 
+ mouse entered
+ 
+ */
+- (void)mouseEntered:(NSEvent *)theEvent 
+{
+#pragma unused(theEvent)
+    
+}
+
+/*
+ 
+ mouse moved
+ 
+ */
+- (void)mouseMoved:(NSEvent *)theEvent 
+{
+    // check if mouse is in circle
+    BOOL mouseIsInCircle = [self isEventInCircle:theEvent];
+
+    // is text displayed?
+    if ([self hasText]) {
+        
+        // if view is dimmed
+        if ([self viewIsDimmed]) {
+            
+            // if mouse within circle
+            if (mouseIsInCircle) {
+                
+                // fade the view in
+                [self scheduleFade:kMGSFadeTypeIn];
+            } 
+        } else {
+            
+            // mouse is outside circle
+            if (!mouseIsInCircle) {
+                
+                // fade the view out
+                [self scheduleFade:kMGSFadeTypeOut];
+            }
+        }
+    }
+    
+    // update cursor
+    if (NO) {
+        NSCursor *cursor = nil;
+        if (mouseIsInCircle) {
+            if ([NSCursor currentCursor] != [NSCursor pointingHandCursor]) {
+                cursor = [NSCursor pointingHandCursor];
+            }
+        } else {
+            if ([NSCursor currentCursor] != [NSCursor arrowCursor]) {
+                cursor = [NSCursor arrowCursor];
+            }
+        }
+        [cursor set];
+    }
+    
+    if (NO) {
+        [self displayIfNeeded]; 
+    }
+}
+
+/* 
+ 
+ mouse exited
+ 
+ */
+- (void)mouseExited:(NSEvent *)theEvent 
+{
+#pragma unused(theEvent)
+	
+    if (NO) {
+        [self setNeedsDisplay:YES];
+        [self displayIfNeeded]; 
+    }
 }
 
 #pragma mark -
@@ -691,37 +757,53 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (void)alphaTimerExpired:(NSTimer*)theTimer
 {
-    CGFloat activeAlpha = 0.0;
-    
+   
     if ([self wantsLayer] && NO) {
        
         // change the backing layer alpha
         CGFloat layerAlpha = [[self layer] opacity];
         layerAlpha -= 0.1f;
         [self setAlphaValue:layerAlpha];
- 
-        
-        activeAlpha = layerAlpha;
         
     } else {
-    
-        // reduce the master alpha value
-        _masterAlpha -= 0.1f;
+        
+        BOOL fadeComplete = NO;
+        
+        NSDictionary *fadeInfo = [theTimer userInfo];
+        CGFloat startAlpha = [[fadeInfo objectForKey:@"startAlpha"] floatValue];
+        CGFloat endAlpha = [[fadeInfo objectForKey:@"endAlpha"] floatValue];
+        CGFloat alphaDelta = [[fadeInfo objectForKey:@"alphaDelta"] floatValue];
+        
+        // mutate the master alpha value
+        if (startAlpha < endAlpha) {
+            _masterAlpha += alphaDelta;
+            if (_masterAlpha >= endAlpha) {
+                fadeComplete = YES;
+            }
+        } else {
+             _masterAlpha -= alphaDelta;
+            if (_masterAlpha <= endAlpha) {
+                fadeComplete = YES;
+            }
+        }
+        
+        // on fade completion
+        if (fadeComplete) {
+            
+            // keep alpha within limits
+            _masterAlpha = endAlpha;
+            
+            // invalidate the timer
+            [theTimer invalidate];
+            _alphaTimer = nil;
+        }
         
         // we need to redraw the cache with the new master alpha applied
         [self clearDisplayCache];
         _useImageCache = false;   
+        [self setNeedsDisplay:YES];
         
-        activeAlpha = _masterAlpha;
     }
-
-    // invalidate timer when minimal alpha achieved
-    if (activeAlpha <= MASTER_ALPHA_MIN) {
-        [theTimer invalidate];
-        _alphaTimer = nil;
-    }
-
-    [self setNeedsDisplay:YES]; 
 }
 
 /*
@@ -799,7 +881,58 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	//}
 }
 
+/*
+ 
+ - scheduleFade:
+ 
+ */
+- (void)scheduleFade:(mgsFadeType)fade
+{
+    // invalidate any existing timer
+    if (_alphaTimer) {
+        [_alphaTimer invalidate];
+        _alphaTimer = nil;
+    }
+    
+    // configure the fade
+    CGFloat startAlpha = 1.0f, endAlpha = 1.0f;
+    switch (fade) {
+        case kMGSFadeTypeIn:
+            
+            // if already at max alpha then do not attempt fade
+            if (_masterAlpha >= MASTER_ALPHA_MAX) return;
+            
+            // fade in from current alpha to max alpha
+            startAlpha = _masterAlpha;
+            endAlpha = MASTER_ALPHA_MAX;
+            break;
+            
+        case kMGSFadeTypeOut:
+            
+            // if already at min alpha then do not attempt fade
+            if (_masterAlpha <= MASTER_ALPHA_MIN) return;
 
+            // fade out from current alpha to min alpha
+            startAlpha = _masterAlpha;
+            endAlpha = MASTER_ALPHA_MIN;
+
+            break;
+            
+        default:
+            NSAssert(NO, @"invalid fade type");
+    }
+    
+    // build fade info
+    NSDictionary *fadeInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                [NSNumber numberWithFloat:startAlpha], @"startAlpha", 
+                [NSNumber numberWithFloat:endAlpha], @"endAlpha",
+                [NSNumber numberWithFloat:0.1f], @"alphaDelta",
+                nil];
+
+    // schedule new timer
+    _alphaTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(alphaTimerExpired:) userInfo:fadeInfo repeats:YES];
+    
+}
 #pragma mark -
 #pragma mark Accessors
 /*
@@ -961,7 +1094,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 
 	if (_depressed) {
 		[_depressedBackgroundColor set];
-		//[_bezierPath fill];
+		[_bezierPath fill];
 	}
 	
 	[[self alphaColor:_fillColor] set];

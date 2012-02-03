@@ -235,7 +235,7 @@ static BOOL applicationMenuConfigured = NO;
  
  */
 - (void)addLogString:(NSString *)value {
-    MLogInfo(@"Chunk = %@", value);
+  
 }
 
 #pragma mark -
