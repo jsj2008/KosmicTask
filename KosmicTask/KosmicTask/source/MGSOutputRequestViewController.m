@@ -316,8 +316,8 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
     
 	if (resultView != newView) {
 		[splitView replaceSubview:resultView withViewFrameAsOld:newView];
-		resultView = newView;
-	
+        resultView = newView;
+        
 		[viewModeSegmentedControl setEnabled:_resultsAvailableForAction];
 		[detachWindowButton setEnabled:_resultsAvailableForAction];
 		self.indexMatchesPartnerIndex = _resultsAvailableForAction;

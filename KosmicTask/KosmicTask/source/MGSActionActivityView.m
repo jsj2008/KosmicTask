@@ -222,7 +222,11 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
          */
         
         // configure the scroll view 
-        _textScrollview = [[NSScrollView alloc] initWithFrame:[self frame]];
+        NSRect scrollFrame = [self frame];
+        scrollFrame.origin.x = 0;
+        scrollFrame.origin.y = 0;
+        
+        _textScrollview = [[NSScrollView alloc] initWithFrame:scrollFrame];
         NSSize contentSize = [_textScrollview contentSize];
         
         // create and configure scroll view
@@ -252,7 +256,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
         
         // add scrollview as subview
         [self addSubview:_textScrollview];
-        
+               
         // add a filter
         if ([self wantsLayer]) {
             
