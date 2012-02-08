@@ -77,7 +77,33 @@
 		//
 		// http://www.fscript.org/documentation/EmbeddingFScriptIntoCocoa/index.htm
 		//
-		//NSString* blockFormatString = [NSString stringWithFormat:@"[ %@ %@ ]", f-parameters, source];
+		/*
+         From the F-script mailing list:
+         
+         An alternative, that avoid touching private APIs, is to use the method
+         "asBlockOnError:" defined in the FSNSString category (or the method
+         "blockFromString:onError:" in FSSystem).
+         
+         For example:
+         
+         [source asBlockOnError:[@"[:msg :start :end | {msg, start, end}]"
+         asBlock]];
+         
+         This will either return an FSBlock instance (if there is no syntax
+         error) or an array with error information (if there is a syntax
+         error).
+         
+         A second alternative is to use FSInterpreter's execute method after
+         patching the source code you want to validate in a way that will
+         prevent it to execute, as shown here:
+         
+         FSInterpreterResult *result = [myInterpreter execute:[NSString
+         stringWithFormat:@"[%@]", source]];
+         
+         If you then use the error range provided by FSInterpreterResult,
+         remember to decrement the location by one.
+         */
+        
 		FSBlock *block = [source asBlock];
 		(void)block;
 	}
