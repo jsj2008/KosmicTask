@@ -14,7 +14,9 @@
 	IBOutlet MGSActionActivityView *_activityView;
 	IBOutlet NSTextField *_activityTextField;
 	IBOutlet NSImageView *_dragThumbImage;
-	
+	IBOutlet NSScrollView *_scrollView;
+    IBOutlet NSTextView *_textView;
+    
 	MGSTaskActivity _activity;
 	NSTimer *_animationTimer;
 	

@@ -61,7 +61,12 @@
 		
 		// observe app run mode
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appRunModeChanged:) name:MGSNoteAppRunModeChanged object:nil];
-	}
+        
+        // add action activity view as subview of NSTextView
+        NSRect documentVisibleRect = [_scrollView documentVisibleRect];
+        [_activityView setFrame:documentVisibleRect];
+        [_textView addSubview:_activityView];
+    }        
 }
 
 /*

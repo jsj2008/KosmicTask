@@ -29,8 +29,12 @@
 #import "GlossyGradient.h"
 #import "NSString_Mugginsoft.h"
 #import "NSString_Bezier_Mugginsoft.h"
+#import "MGSTextView.h"
 #import "MGSActionActivityTextView.h"
 #import <Quartz/Quartz.h>
+
+#define MGS_VIEW_DEBUG
+#define MGS_VIEW_WANTS_LAYER NO
 
 #define ConvertAngle(a) (fmod((90.0-(a)), 360.0))
 
@@ -67,6 +71,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 - (void)scheduleFade:(mgsFadeType)fade;
 - (BOOL)isMouseInCircle;
 - (BOOL)hasText;
+- (void)scrollContentBoundsChanged:(NSNotification *)note;
 @end
 
 @interface MGSActionActivityView (Private)
@@ -92,7 +97,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 @synthesize backgroundFillColor = _backgroundFillColor;
 @synthesize foregroundColor = _fillColor;
 @synthesize hasDropShadow = _hasDropShadow;
-@synthesize target, action, runMode = _runMode, respectRunMode = _respectRunMode, delegate = _delegate, textView = _textView;
+@synthesize target, action, runMode = _runMode, respectRunMode = _respectRunMode, delegate = _delegate;
 
 #pragma mark -
 #pragma mark initialisation
@@ -173,16 +178,19 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	
 	[self clearDisplayCache];
 	_useImageCache = NO;
-	//[self allocateGState];
 	
-	// we have subclassed NSControl rather than NSButton as this seemed the easiest
-	// way to transition from NSView .. we shall see.
-	// need to track the mouse
+	
+	// in docs see "Using Tracking-Area Objects".
+    // this view probably won't be the first responder hence the need for
+    // NSTrackingActiveAlways
 	_trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame]
 												options: (NSTrackingMouseEnteredAndExited | 
+                                                          NSTrackingMouseMoved |
 														  NSTrackingActiveWhenFirstResponder |
 														  NSTrackingActiveInKeyWindow |
-														  NSTrackingInVisibleRect)
+														  NSTrackingActiveInActiveApp |
+                                                          NSTrackingInVisibleRect |
+                                                          NSTrackingActiveAlways)
 												  owner:self userInfo:nil];
 	[self addTrackingArea:_trackingArea];
 	
@@ -191,16 +199,10 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	// send nil targeted action to toggle run state
 	[self setTarget:nil];
 	[self setAction:@selector(toggleRunState:)];
-    
-    // turn on layer backed views for this view
-    // and all subviews.
-    //
-    // this works up to a point but the cpu usage can be very high
-    if (NO) {
-        [self setWantsLayer:YES];
-    }
-    
+       
     _masterAlpha = 1.0f;
+    
+    _useLayers = MGS_VIEW_WANTS_LAYER;
 }
 
 #pragma mark -
@@ -210,59 +212,105 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  - textView
  
  */
-- (MGSActionActivityTextView *)textView
+- (MGSTextView *)textView
 {
     // lazy allocation
     if (!_textView) {
-        
-        /*
-         
-         we add a transparent textview + scroll as sub views of the activity view
-         
-         */
-        
-        // configure the scroll view 
-        NSRect scrollFrame = [self frame];
-        scrollFrame.origin.x = 0;
-        scrollFrame.origin.y = 0;
-        
-        _textScrollview = [[NSScrollView alloc] initWithFrame:scrollFrame];
-        NSSize contentSize = [_textScrollview contentSize];
-        
-        // create and configure scroll view
-        [_textScrollview setBorderType:NSNoBorder];
-        [_textScrollview setHasVerticalScroller:YES];
-        [_textScrollview setHasHorizontalScroller:NO];
-        [_textScrollview setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-        [_textScrollview setDrawsBackground:NO];
-        
-        // create and configure text view
-        _textView = [[MGSActionActivityTextView alloc] initWithFrame:NSMakeRect(0, 0,
-                                                                   contentSize.width, contentSize.height)];
-        [_textView setMinSize:NSMakeSize(0.0, 0.0)];
-        [_textView setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
-        [_textView setVerticallyResizable:YES];
-        [_textView setHorizontallyResizable:NO];
-        [_textView setAutoresizingMask:NSViewWidthSizable];
-        [[_textView textContainer] setContainerSize:NSMakeSize(contentSize.width, FLT_MAX)];
-        [[_textView textContainer] setWidthTracksTextView:YES];
-        
-        // if not selectable or editable then mouse events pass through to superview
-        [_textView setEditable:NO];
-        [_textView setSelectable:NO];
-        
-        // add text view to scroll view
-        [_textScrollview setDocumentView:_textView];
-        
-        // add scrollview as subview
-        [self addSubview:_textScrollview];
-               
-        // add a filter
-        if ([self wantsLayer]) {
+             
+        // we may be a subclass ?
+        if ([self isKindOfClass:[NSTextView class]]) {
+            _textView = (id)self;
+        }
+        // if we are embedded in a textview use it
+        else if ([[self superview] isKindOfClass:[NSTextView class]]) {
             
-            // this works but the overhead is high - cpu usage increase from 4 -> 40%
-            CIFilter *filter = [CIFilter filterWithName:@"CIColorBurnBlendMode"];
-            [_textScrollview setCompositingFilter:filter];
+            // get the text view
+            _textView = (id)[self superview];
+            
+            // set scrollview background drawing behaviour
+            [[self enclosingScrollView] setDrawsBackground:NO];
+            
+            // observe changes to the scrollview content bounds.
+            // see "How Scroll Views Work" in the docs
+            [[[self enclosingScrollView] contentView] setPostsBoundsChangedNotifications:YES];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollContentBoundsChanged:) name:NSViewBoundsDidChangeNotification object:[[self enclosingScrollView] contentView]];
+            
+            // turn on layer backed views for this view
+            // and all subviews.
+            //
+            // this works up to a point but the cpu usage can be very high
+            if (NO) {
+                [_textView setWantsLayer:YES];
+            }
+
+            // add a filter
+            if (_useLayers) {
+                
+                // create layer for textview and all subviews
+                [_textView setWantsLayer:YES];
+
+                // this works but the overhead is high - cpu usage increase from 4 -> 40%
+                CIFilter *filter = [CIFilter filterWithName:@"CIColorBurnBlendMode"];
+                [self setCompositingFilter:filter];
+            }
+
+        } 
+        // add an NSTextView Subclass
+        else {
+             
+            /*
+             
+             we add a transparent textview + scroll as sub views of the activity view
+             
+             */
+            
+            // configure the scroll view 
+            NSRect scrollFrame = [self frame];
+            scrollFrame.origin.x = 0;
+            scrollFrame.origin.y = 0;
+            
+            _textScrollview = [[NSScrollView alloc] initWithFrame:scrollFrame];
+            NSSize contentSize = [_textScrollview contentSize];
+            
+            // create and configure scroll view
+            [_textScrollview setBorderType:NSNoBorder];
+            [_textScrollview setHasVerticalScroller:YES];
+            [_textScrollview setHasHorizontalScroller:NO];
+            [_textScrollview setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+            [_textScrollview setDrawsBackground:NO];
+            
+            // create and configure text view
+            _textView = [[MGSActionActivityTextView alloc] initWithFrame:NSMakeRect(0, 0,
+                                                                       contentSize.width, contentSize.height)];
+            [_textView setMinSize:NSMakeSize(0.0, 0.0)];
+            [_textView setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
+            [_textView setVerticallyResizable:YES];
+            [_textView setHorizontallyResizable:NO];
+            [_textView setAutoresizingMask:NSViewWidthSizable];
+            [[_textView textContainer] setContainerSize:NSMakeSize(contentSize.width, FLT_MAX)];
+            [[_textView textContainer] setWidthTracksTextView:YES];
+            
+            // if not selectable or editable then mouse events pass through to superview
+            [_textView setEditable:NO];
+            [_textView setSelectable:NO];
+            
+            // add text view to scroll view
+            [_textScrollview setDocumentView:_textView];
+            
+            // add scrollview as subview
+            [self addSubview:_textScrollview];
+                   
+            // use layers?
+            if (_useLayers) {
+                
+                // create layer for textview and all subviews
+                [self setWantsLayer:YES];
+                
+                // add a filter
+                // this works but the overhead is high - cpu usage increase from 4 -> 40%
+                CIFilter *filter = [CIFilter filterWithName:@"CIColorBurnBlendMode"];
+                [_textScrollview setCompositingFilter:filter];
+            }
         }
     }
     return _textView; 
@@ -275,12 +323,19 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (void)appendText:(NSString *)text
 {
-    BOOL mouseInCircle = [self isMouseInCircle];
     
     // if our text view is empty then
     // fade out the activity view if mouse not in circle
-    if (![self hasText] && !mouseInCircle) {       
-        [self scheduleFade:kMGSFadeTypeOut];
+    if (![self hasText] ) {       
+        
+        BOOL mouseInCircle = [self isMouseInCircle];
+
+        if (!mouseInCircle) {
+            [self scheduleFade:kMGSFadeTypeOut];
+        }
+        
+        // set scroller to end
+        [[[self enclosingScrollView] verticalScroller] setFloatValue:1.0];
     } 
     
     // append text
@@ -313,6 +368,27 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     }
     
     return NO;
+}
+
+/*
+ 
+ - scrollContentBoundsChanged:
+ 
+ */
+- (void)scrollContentBoundsChanged:(NSNotification *)note
+{
+    #pragma unused(note)
+
+    // set our frame equal to the document visible rect
+    NSRect viewRect = [[_textView enclosingScrollView] documentVisibleRect];   
+    [self setFrame:viewRect];
+    
+#ifdef MGS_VIEW_DEBUG
+    NSLog(@"document view visible rect: x=%f y=%f width=%f height=%f", viewRect.origin.x, viewRect.origin.y, viewRect.size.width, viewRect.size.height);
+    
+    viewRect = [_textView frame];
+    NSLog(@"text view frame rect: x=%f y=%f width=%f height=%f", viewRect.origin.x, viewRect.origin.y, viewRect.size.width, viewRect.size.height);
+#endif
 }
 #pragma mark -
 #pragma mark NSView
@@ -499,18 +575,17 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     }
     
     // update cursor
-    if (NO) {
+    if (YES) {
         NSCursor *cursor = nil;
         if (mouseIsInCircle) {
-            if ([NSCursor currentCursor] != [NSCursor pointingHandCursor]) {
-                cursor = [NSCursor pointingHandCursor];
-            }
-        } else {
             if ([NSCursor currentCursor] != [NSCursor arrowCursor]) {
                 cursor = [NSCursor arrowCursor];
             }
+            [cursor set];
+        } else {
+            [[self superview] mouseMoved:theEvent];
         }
-        [cursor set];
+        
     }
     
     if (NO) {
@@ -542,6 +617,11 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (void)clearDisplayCache
 {
+    
+#ifdef MGS_VIEW_DEBUG
+    NSLog(@"Invalidating display cache.");
+#endif
+    
 	_cacheRect = NSZeroRect;
 	_imageCache = nil;
 }
@@ -1427,13 +1507,18 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	
 	// if bounds rect and cache rect are not equal then
 	// the cache will have to be updated
-	if (!NSEqualRects(boundsRect, _cacheRect)) {
+	if (!NSEqualSizes(boundsRect.size, _cacheRect.size)) {
 		[self clearDisplayCache];
 	}
 	
 	// if no display cache available then need to draw bounds into cache
 	if (!_imageCache) {
 		rect = boundsRect;
+        
+#ifdef MGS_VIEW_DEBUG
+        NSLog(@"Display cache rect set to view bounds.");
+#endif
+        
 	}
 	
 	return rect;

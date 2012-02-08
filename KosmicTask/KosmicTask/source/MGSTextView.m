@@ -63,6 +63,8 @@
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:consoleAttributes];
 	
+    float scrollPosition = [[[self enclosingScrollView] verticalScroller] floatValue];
+    
 	// process options
 	if (options) {
 		
@@ -87,8 +89,13 @@
 		[textStorage replaceCharactersInRange:NSMakeRange(0, [[self textStorage] length]) withAttributedString:attrMesg];
 	}
 	[textStorage endEditing];
-	endRange.length = [text length];
-    [self scrollRangeToVisible:endRange];
+    
+    // if was scrolled to end before text was updated then scroll to end 
+    if (scrollPosition == 1.0f) {
+        endRange.length = [text length];
+        [self scrollRangeToVisible:endRange];
+        [[[self enclosingScrollView] verticalScroller] setFloatValue:1.0];
+    }
 }
 
 

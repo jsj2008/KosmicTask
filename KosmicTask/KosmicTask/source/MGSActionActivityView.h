@@ -17,7 +17,7 @@
 
 @end
 
-@class MGSActionActivityTextView;
+@class MGSTextView;
 
 @interface MGSActionActivityView : NSView {
 	MGSTaskActivity _activity;
@@ -78,10 +78,11 @@
 	id target;
 	SEL action;
     
-    MGSActionActivityTextView *_textView;
+    MGSTextView *_textView;
     NSScrollView *_textScrollview;
     CGFloat _masterAlpha;
     NSTimer *_alphaTimer;
+    BOOL _useLayers;
 }
 
 - (void)initialise;
@@ -114,6 +115,5 @@
 
 @property id target;
 @property SEL action;
-@property (readonly) MGSActionActivityTextView *textView;
 
 @end
