@@ -10,6 +10,12 @@
 #import "MGSTaskSpecifier.h"
 #import "MGSMotherModes.h"
 
+enum _mgsFadeType {
+    kMGSFadeTypeNone,
+    kMGSFadeTypeIn,
+    kMGSFadeTypeOut
+} typedef mgsFadeType;
+
 @protocol MGSActionActivityViewDelegate <NSObject>
 
 @required
@@ -83,6 +89,8 @@
     CGFloat _masterAlpha;
     NSTimer *_alphaTimer;
     BOOL _useLayers;
+    BOOL _updateCursor;
+    mgsFadeType _activeFadeType;
 }
 
 - (void)initialise;

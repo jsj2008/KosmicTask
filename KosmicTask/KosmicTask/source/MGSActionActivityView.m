@@ -33,13 +33,15 @@
 #import "MGSActionActivityTextView.h"
 #import <Quartz/Quartz.h>
 
-#define MGS_VIEW_DEBUG
+#undef MGS_VIEW_DEBUG
 #define MGS_VIEW_WANTS_LAYER NO
+#define MGS_VIEW_IMPLEMENT_FADE_USING_CACHE YES
 
 #define ConvertAngle(a) (fmod((90.0-(a)), 360.0))
 
-#define MASTER_ALPHA_MAX 1.000f
-#define MASTER_ALPHA_MIN 0.101f
+#define MASTER_ALPHA_MAX 0.901f
+#define MASTER_ALPHA_MIN 0.201f
+#define MASTER_ALPHA_DELTA 0.2f
 
 #define DEG2RAD  0.017453292519943295f
 #define MAX_BLEND_RADIUS 3.0f
@@ -47,10 +49,8 @@
 #define SS_ROUND_PROGRESS 0
 #define SS_CIRCLE_DOTS 1
 
-enum _mgsFadeType {
-    kMGSFadeTypeIn,
-    kMGSFadeTypeOut
-} typedef mgsFadeType;
+NSString * const MGSOnFadeCompletion = @"onCompletion";
+NSString * const MGSFadeReverse = @"reverse";
 
 NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians) {
 	NSPoint pt = NSMakePoint(pt0.x, pt0.y);
@@ -67,11 +67,15 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 - (void)alphaTimerExpired:(NSTimer*)theTimer;
 -(BOOL)ispoint:(NSPoint)aPoint inCircleWithCenter:(NSPoint)aCenter radius:(CGFloat)aRadius;
 - (BOOL)isEventInCircle:(NSEvent *)theEvent;
-- (BOOL)viewIsDimmed;
-- (void)scheduleFade:(mgsFadeType)fade;
+- (BOOL)hasMaxAlpha;
+- (void)scheduleFade:(NSDictionary *)options;
+- (void)scheduleFade:(mgsFadeType)fade options:(NSDictionary *)options;
 - (BOOL)isMouseInCircle;
 - (BOOL)hasText;
 - (void)scrollContentBoundsChanged:(NSNotification *)note;
+- (BOOL)validateFade:(mgsFadeType)fade;
+- (void)invalidateExistingFade;
+- (void)applyMaxAlpha;
 @end
 
 @interface MGSActionActivityView (Private)
@@ -200,9 +204,11 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	[self setTarget:nil];
 	[self setAction:@selector(toggleRunState:)];
        
-    _masterAlpha = 1.0f;
+    _masterAlpha = MASTER_ALPHA_MAX;
     
     _useLayers = MGS_VIEW_WANTS_LAYER;
+    _updateCursor = YES;
+    _activeFadeType = kMGSFadeTypeNone;
 }
 
 #pragma mark -
@@ -226,6 +232,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
             
             // get the text view
             _textView = (id)[self superview];
+            [_textView setAutoresizesSubviews:YES];
             
             // set scrollview background drawing behaviour
             [[self enclosingScrollView] setDrawsBackground:NO];
@@ -234,6 +241,9 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
             // see "How Scroll Views Work" in the docs
             [[[self enclosingScrollView] contentView] setPostsBoundsChangedNotifications:YES];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollContentBoundsChanged:) name:NSViewBoundsDidChangeNotification object:[[self enclosingScrollView] contentView]];
+            
+            [_textView setPostsFrameChangedNotifications:YES];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollContentBoundsChanged:) name:NSViewFrameDidChangeNotification object:_textView];
             
             // turn on layer backed views for this view
             // and all subviews.
@@ -323,6 +333,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (void)appendText:(NSString *)text
 {
+    BOOL scheduleFade = NO;
     
     // if our text view is empty then
     // fade out the activity view if mouse not in circle
@@ -331,7 +342,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
         BOOL mouseInCircle = [self isMouseInCircle];
 
         if (!mouseInCircle) {
-            [self scheduleFade:kMGSFadeTypeOut];
+            scheduleFade = YES;
         }
         
         // set scroller to end
@@ -340,6 +351,11 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     
     // append text
     [self.textView setText:text append:YES options:nil];
+    
+    // schedule fade out
+    if (scheduleFade) {
+        [self scheduleFade:kMGSFadeTypeOut options:nil];
+    }
 }
 
 /*
@@ -351,7 +367,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 {
     if (_textView) {
         [_textView setString:@""];
-        _masterAlpha = 1.0f;
+        _masterAlpha = MASTER_ALPHA_MAX;
     }
     //[self setAlphaValue:1.0]; 
 }
@@ -502,6 +518,8 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
         _depressed = YES;
         [self setNeedsDisplay:YES];
         [self displayIfNeeded];
+    } else {
+        [super mouseDown:theEvent];
     }
 }
 
@@ -525,6 +543,8 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     // send the action if appropriate
     if ([self isEventInCircle:theEvent]) {
         [NSApp sendAction:[self action] to:[self target] from:[self window]];
+    } else {
+        [super mouseUp:theEvent];
     }
 }
 
@@ -537,8 +557,8 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (void)mouseEntered:(NSEvent *)theEvent 
 {
-#pragma unused(theEvent)
-    
+    // this is the recommended way to pass up the responder chain
+    [super mouseEntered:theEvent];
 }
 
 /*
@@ -554,43 +574,42 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     // is text displayed?
     if ([self hasText]) {
         
-        // if view is dimmed
-        if ([self viewIsDimmed]) {
+        // if view is dimmed if alpha less than max
+        if (![self hasMaxAlpha]) {
             
             // if mouse within circle
-            if (mouseIsInCircle) {
+            if (mouseIsInCircle && _activeFadeType != kMGSFadeTypeIn) {
                 
                 // fade the view in
-                [self scheduleFade:kMGSFadeTypeIn];
+                [self scheduleFade:kMGSFadeTypeIn options:nil];
             } 
         } else {
             
+            // view is not dimmed
+            
             // mouse is outside circle
-            if (!mouseIsInCircle) {
+            if (!mouseIsInCircle && _activeFadeType != kMGSFadeTypeOut) {
                 
                 // fade the view out
-                [self scheduleFade:kMGSFadeTypeOut];
+                [self scheduleFade:kMGSFadeTypeOut options:nil];
             }
         }
     }
     
     // update cursor
-    if (YES) {
-        NSCursor *cursor = nil;
+    if (_updateCursor) {
+
         if (mouseIsInCircle) {
             if ([NSCursor currentCursor] != [NSCursor arrowCursor]) {
-                cursor = [NSCursor arrowCursor];
+                [[NSCursor arrowCursor] set];
             }
-            [cursor set];
         } else {
-            [[self superview] mouseMoved:theEvent];
+            // this is the recommended way to pass up the responder chain
+            [super mouseMoved:theEvent];
         }
         
     }
     
-    if (NO) {
-        [self displayIfNeeded]; 
-    }
 }
 
 /* 
@@ -600,12 +619,12 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (void)mouseExited:(NSEvent *)theEvent 
 {
-#pragma unused(theEvent)
-	
-    if (NO) {
-        [self setNeedsDisplay:YES];
-        [self displayIfNeeded]; 
+    // is text displayed?
+    if ([self hasText]) {
+        [self scheduleFade:kMGSFadeTypeOut options:nil];
     }
+    
+    [super mouseExited:theEvent];
 }
 
 #pragma mark -
@@ -813,21 +832,11 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (NSColor *)alphaColor:(NSColor *)color
 {
-    if (_masterAlpha > 0.99) {
+    if (_masterAlpha >= MASTER_ALPHA_MAX || MGS_VIEW_IMPLEMENT_FADE_USING_CACHE) {
         return color;
     }
     
-    // we want don't want to darken whites
-    if (NO) {
-        CGFloat red, green, blue, alpha;
-        
-        // this method raises if the color is not registered with an NSColorSpace.
-        [color getRed:&red green:&green blue:&blue alpha:&alpha];
-        if (red > 0.8 && blue > 0.8 && green > 0.8) {
-            return color;
-        }
-    }
-    
+    // modify color
     CGFloat newAlpha = _masterAlpha * [color alphaComponent];
     NSColor *paleColor = [color colorWithAlphaComponent:newAlpha];
     
@@ -842,7 +851,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 - (void)alphaTimerExpired:(NSTimer*)theTimer
 {
    
-    if ([self wantsLayer] && NO) {
+    if ([self wantsLayer]) {
        
         // change the backing layer alpha
         CGFloat layerAlpha = [[self layer] opacity];
@@ -850,13 +859,25 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
         [self setAlphaValue:layerAlpha];
         
     } else {
-        
+
         BOOL fadeComplete = NO;
         
         NSDictionary *fadeInfo = [theTimer userInfo];
+        
+        mgsFadeType fadeType = [[fadeInfo objectForKey:@"fadeType"] integerValue];
         CGFloat startAlpha = [[fadeInfo objectForKey:@"startAlpha"] floatValue];
         CGFloat endAlpha = [[fadeInfo objectForKey:@"endAlpha"] floatValue];
         CGFloat alphaDelta = [[fadeInfo objectForKey:@"alphaDelta"] floatValue];
+        NSDictionary *options = [fadeInfo objectForKey:@"options"];
+        
+        // validate the fade
+        if (![self validateFade:fadeType]) {
+            
+            // invalidate this fade
+            [self invalidateExistingFade];
+            
+            return;
+        }
         
         // mutate the master alpha value
         if (startAlpha < endAlpha) {
@@ -870,37 +891,91 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
                 fadeComplete = YES;
             }
         }
-        
+
+
         // on fade completion
         if (fadeComplete) {
             
             // keep alpha within limits
             _masterAlpha = endAlpha;
             
-            // invalidate the timer
-            [theTimer invalidate];
-            _alphaTimer = nil;
+            // invalidate the existing fade
+            [self invalidateExistingFade];
+           
+#ifdef MGS_VIEW_DEBUG
+            NSLog(@"Fade will be complete.");
+#endif    
+            // look for onCompletion object
+            NSString *onCompletion = [options objectForKey:MGSOnFadeCompletion];
+            
+            // reverse the fade
+            if ([onCompletion isEqualToString:MGSFadeReverse]) {
+                
+                mgsFadeType reverseFade = kMGSFadeTypeNone;
+                
+                switch (fadeType) {
+                    case kMGSFadeTypeNone:
+                        break;
+                        
+                    case kMGSFadeTypeIn:
+                        reverseFade = kMGSFadeTypeOut;
+                        break;
+                        
+                    case kMGSFadeTypeOut:
+                        reverseFade = kMGSFadeTypeIn;
+                        break;
+                }
+                
+                // build the options dictionary
+                NSDictionary *fadeOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             [NSNumber numberWithInteger:reverseFade], @"fadeType", nil];
+                
+                // delay the fade
+                NSTimeInterval fadeDelay = 2.0f;
+                
+                // schedule the fade
+                [self performSelector:@selector(scheduleFade:) withObject:fadeOptions afterDelay:fadeDelay];
+            } 
         }
         
-        // we need to redraw the cache with the new master alpha applied
-        [self clearDisplayCache];
-        _useImageCache = false;   
+        // if not implementing fade using alpha then
+        // invalidate the cache
+        if (!MGS_VIEW_IMPLEMENT_FADE_USING_CACHE) {
+            [self clearDisplayCache];
+            //_useImageCache = false;   
+        }
+        
         [self setNeedsDisplay:YES];
+
+#ifdef MGS_VIEW_DEBUG
+        NSLog(@"Fade alpha delta");
+#endif
         
     }
 }
 
 /*
  
- - viewIsDimmed
+ - hasMaxAlpha
  
  */
-- (BOOL)viewIsDimmed
+- (BOOL)hasMaxAlpha
 {
-    return (_masterAlpha < 0.99f);
+    return (_masterAlpha >= MASTER_ALPHA_MAX);
 }
 
-
+/*
+ 
+ - applyMaxAlpha
+ 
+ */
+- (void)applyMaxAlpha
+{
+    if (![self hasMaxAlpha]) {
+        _masterAlpha = MASTER_ALPHA_MAX;
+        [self setNeedsDisplay:YES];
+    }
+}
 #pragma mark -
 #pragma mark Animation
 /*
@@ -970,7 +1045,66 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  - scheduleFade:
  
  */
-- (void)scheduleFade:(mgsFadeType)fade
+- (void)scheduleFade:(NSDictionary *)options
+{
+    mgsFadeType fadeType = [[options objectForKey:@"fadeType"] integerValue];
+    
+    [self scheduleFade:fadeType options:options];
+}
+
+/*
+ 
+ - validateFade:
+ 
+ */
+- (BOOL)validateFade:(mgsFadeType)fade
+{
+    // validate the fade request
+    BOOL fadeIsValid = YES;
+    switch (fade) {
+        case kMGSFadeTypeNone:
+            break;
+            
+        case kMGSFadeTypeIn:
+            
+            // cannot fade in if no text
+            if (![self hasText]) {
+                return NO;
+            }
+            break;
+            
+        case kMGSFadeTypeOut:
+            
+            // cannot fade out if no text
+            if (![self hasText]) {
+                fadeIsValid = NO;
+            }
+            
+            // fade out is only valid for certain activities
+            if (!(_activity == MGSPausedTaskActivity || _activity == MGSProcessingTaskActivity)) {
+                fadeIsValid = NO;
+            }
+            break;
+            
+        default:
+            NSAssert(NO, @"invalid fade type");
+            
+    }
+    
+    if (!fadeIsValid) {
+        [self applyMaxAlpha];
+    }
+    
+    return fadeIsValid;
+
+}
+
+/*
+ 
+ - invalidateExistingFade
+ 
+ */
+- (void)invalidateExistingFade
 {
     // invalidate any existing timer
     if (_alphaTimer) {
@@ -978,13 +1112,55 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
         _alphaTimer = nil;
     }
     
+    _activeFadeType = kMGSFadeTypeNone;
+}
+
+/*
+ 
+ - scheduleFade:options:
+ 
+ */
+- (void)scheduleFade:(mgsFadeType)fade options:(NSDictionary *)options
+{
+    // do not re-schedule an active fade
+    if (fade == _activeFadeType) {
+        
+#ifdef MGS_VIEW_DEBUG
+        NSLog(@"Fade request ignored. A fade of the current type is already active.");
+#endif
+        
+        return;
+    }
+    
+    // invalidate any existing fade
+    [self invalidateExistingFade];
+    
+    // validate the fade
+    if (![self validateFade:fade]) {
+        return;
+    }
+        
     // configure the fade
-    CGFloat startAlpha = 1.0f, endAlpha = 1.0f;
+    CGFloat startAlpha = MASTER_ALPHA_MAX, endAlpha = MASTER_ALPHA_MAX;
     switch (fade) {
+            
+        case kMGSFadeTypeNone:
+            return;
+            
         case kMGSFadeTypeIn:
             
+#ifdef MGS_VIEW_DEBUG
+            NSLog(@"Fade in ...");
+#endif
+            
             // if already at max alpha then do not attempt fade
-            if (_masterAlpha >= MASTER_ALPHA_MAX) return;
+            if (_masterAlpha >= MASTER_ALPHA_MAX) {
+                
+#ifdef MGS_VIEW_DEBUG
+                NSLog(@"Fade aborted");
+#endif
+                return;
+            }
             
             // fade in from current alpha to max alpha
             startAlpha = _masterAlpha;
@@ -993,8 +1169,18 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
             
         case kMGSFadeTypeOut:
             
+#ifdef MGS_VIEW_DEBUG
+            NSLog(@"Fade out ...");
+#endif
             // if already at min alpha then do not attempt fade
-            if (_masterAlpha <= MASTER_ALPHA_MIN) return;
+            if (_masterAlpha <= MASTER_ALPHA_MIN) {
+                
+#ifdef MGS_VIEW_DEBUG
+                NSLog(@"Fade aborted");
+#endif
+                return;
+            }
+
 
             // fade out from current alpha to min alpha
             startAlpha = _masterAlpha;
@@ -1007,14 +1193,19 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     }
     
     // build fade info
+    if (!options) options = [NSDictionary new];
     NSDictionary *fadeInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                [NSNumber numberWithInteger:fade], @"fadeType",               
                 [NSNumber numberWithFloat:startAlpha], @"startAlpha", 
                 [NSNumber numberWithFloat:endAlpha], @"endAlpha",
-                [NSNumber numberWithFloat:0.1f], @"alphaDelta",
+                [NSNumber numberWithFloat:MASTER_ALPHA_DELTA], @"alphaDelta",
+                options, @"options",
                 nil];
 
     // schedule new timer
     _alphaTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(alphaTimerExpired:) userInfo:fadeInfo repeats:YES];
+    
+    _activeFadeType = fade;
     
 }
 #pragma mark -
@@ -1077,8 +1268,23 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 		case MGSPausedTaskActivity:	
 		case MGSProcessingTaskActivity:
 			_useImageCache = YES;
+            
+            // fade in and then out if not at max alpha
+            if (![self hasMaxAlpha]) {
+                NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:MGSFadeReverse, MGSOnFadeCompletion, nil];
+                [self scheduleFade:kMGSFadeTypeIn options:options];
+            }
 			break;
 			
+        case MGSReadyTaskActivity:
+        case MGSTerminatedTaskActivity:
+            
+            // fade in if not at max alpha
+            if (![self hasMaxAlpha]) {
+                [self scheduleFade:kMGSFadeTypeIn options:nil];
+            }
+            break;
+            
 		default:
 			_useImageCache = NO;
 			break;
@@ -1430,12 +1636,24 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 - (void)drawSpinner
 {
 	if ([self isSpinning]) {
-		
+		NSColor *color = nil;
+        
 		if (_activity == MGSPausedTaskActivity) {
-			[[self alphaColor:_pausedSpinnerColor] set];
+            color = [self alphaColor:_pausedSpinnerColor] ;
 		} else {
-			[_spinnerColor set];
+            color = [self alphaColor:_spinnerColor];
 		}
+        
+        // modify color
+        if (MGS_VIEW_IMPLEMENT_FADE_USING_CACHE) {
+            //CGFloat newAlpha = _masterAlpha * [color alphaComponent];
+            //color = [color colorWithAlphaComponent:newAlpha];
+        }
+        
+        // set color
+        [color set];
+        
+        // draw spinner
 		[_bezierPath appendBezierPathWithOvalInRect:_animatedCircleRect];
 		[_bezierPath fill];
 
@@ -1534,7 +1752,10 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 {
 	//MLog(DEBUGLOG, @"%@: rect drawn from cache", [self className]);
 	//MLog(DEBUGLOG, @"%@: rect origin.x =%f, origin.y = %f, size.width = %f, size.height = %f", [self className], rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-
-	[_imageCache drawInRect:rect fromRect:rect operation:NSCompositeSourceOver fraction:1.0];
+    CGFloat alpha = 1.0f;
+    if (MGS_VIEW_IMPLEMENT_FADE_USING_CACHE) {
+        alpha = _masterAlpha;
+    }
+	[_imageCache drawInRect:rect fromRect:rect operation:NSCompositeSourceOver fraction:alpha];
 }
 @end

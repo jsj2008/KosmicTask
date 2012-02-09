@@ -50,7 +50,7 @@
 	if ([cell isKindOfClass:[MGSCapsuleTextCell class]]) {
 		
 		// set capsule cell properties
-		[(MGSCapsuleTextCell *)cell setCapsuleHasShadow:YES];
+		[(MGSCapsuleTextCell *)cell setCapsuleHasShadow:NO];
 		
 		// configure activity view
 		_activityView.delegate = self;
