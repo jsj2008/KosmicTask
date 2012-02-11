@@ -913,6 +913,10 @@ commonExit:
 	
 	// get std error.
 	// shell error/logging sent via stderr
+    //
+    // logging should now be sent via a separate request in which
+    // case it will not appear in the result dict
+    //
 	NSString *stdErrString = [[payload dictionary] objectForKey:MGSScriptKeyStdError];
 	if (stdErrString) {
 		stdErrString = [NSString stringWithFormat:@"\n\nSTDERR output:\n\n%@", stdErrString];
@@ -942,7 +946,8 @@ commonExit:
 	result.object = resultObject;
 	result.attachments = netRequest.responseMessage.attachments;
 	result.resultScriptString = resultScriptString;	
-	
+	result.resultLogString = [_outputViewController logString];
+    
 	// add result string to progress
 	[self actionSpecifier].requestProgress.resultString = [result shortResultString];
 	

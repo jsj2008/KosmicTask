@@ -112,6 +112,7 @@ enum _mgsFadeType {
 
 - (void)appendText:(NSString *)text;
 - (void)clearText;
+- (NSString *)text;
 
 @property MGSTaskActivity activity;
 @property eMGSMotherRunMode runMode;

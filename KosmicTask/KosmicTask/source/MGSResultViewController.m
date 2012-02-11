@@ -63,6 +63,7 @@ static BOOL applicationMenuConfigured = NO;
 @synthesize resultMenu = _resultMenu;
 @synthesize resultString = _resultString;
 @synthesize resultScriptString = _resultScriptString;
+@synthesize resultLogString = _resultLogString;
 @synthesize openFileAfterSave = _openFileAfterSave;
 
 #pragma mark Instance handling
@@ -113,11 +114,12 @@ static BOOL applicationMenuConfigured = NO;
 
 	// set up bindings
 
-	//
+	//=======================================================================================
 	// bind text view to result string
 	//
 	// note that we enable editing even though we don't store the edits back into the result.
 	//
+    //=======================================================================================
 	[_textView setLineWrap:NO];
 	// glyph generation crash was occurring when 2MB text loaded into two textviews in
 	// two separate windows.
@@ -132,12 +134,26 @@ static BOOL applicationMenuConfigured = NO;
 		withKeyPath:@"resultString" 
 			options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption, nil]];
 	
-	//
+    //=======================================================================================
+    //
+    // bind logtext view to result log string
+    //
+    //=======================================================================================
+    [_logTextView setLineWrap:YES];
+	[[_logTextView layoutManager] setBackgroundLayoutEnabled:YES];
+	[[_logTextView layoutManager] setAllowsNonContiguousLayout:YES];
+	
+	[_logTextView bind:NSAttributedStringBinding 
+		   toObject:self 
+		withKeyPath:@"resultLogString" 
+			options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:NO], NSConditionallySetsEditableBindingOption, nil]];
+    
+	//=======================================================================================
 	// bind treecontroller to outline view
 	//
 	// note that we could bind directly to result.resultString etc rather than to self.resultString etc.
 	// the extra level of redirection may come in handy
-	//
+	//=======================================================================================
 	_treeController = [[NSTreeController alloc] init];
 	[_treeController setChildrenKeyPath:@"childNodes"];
 	
@@ -152,18 +168,19 @@ static BOOL applicationMenuConfigured = NO;
 	//
 	[[_outlineView tableColumnWithIdentifier:@"value"] bind:@"value" toObject:_treeController withKeyPath:@"arrangedObjects.representedObject" options:nil];
 	
-	//
+	//=======================================================================================
 	// image browser view
-	//
+	//=======================================================================================
 	_imageBrowserViewController = [MGSImageBrowserViewController new];
 	[_imageBrowserViewController view];	// load it
 	NSTabViewItem *item = [_tabView tabViewItemAtIndex:kMGSMotherResultViewIcon];
 	[item setView:[_imageBrowserViewController view]];
 	
-	//
+	//=======================================================================================
 	// setup script view 
 	//
 	// no line wrap
+    //=======================================================================================
 	[_scriptView setLineWrap:NO];
 	[[_scriptView layoutManager] setBackgroundLayoutEnabled:YES];
 	[[_scriptView layoutManager] setAllowsNonContiguousLayout:YES];
@@ -176,11 +193,11 @@ static BOOL applicationMenuConfigured = NO;
     [_scriptViewScrollView setHasVerticalRuler:YES];
     [_scriptViewScrollView setRulersVisible:YES];
 	
-	//
+	//=======================================================================================
 	// bind script view to result scipt string
 	//
 	// note that we enable editing even though we don't store the edits back into the result.
-	//
+	//=======================================================================================
 	[_scriptView bind:NSAttributedStringBinding 
 				toObject:self 
 				withKeyPath:@"resultScriptString" 
@@ -190,23 +207,29 @@ static BOOL applicationMenuConfigured = NO;
 	// set additional drag views for splitview
 	// scrollview is subclass PlacardScrollView
 	// outline placard
-	NSView *scrollView= [[_outlineView superview] superview];	// clipview then scrollview
+	NSView *scrollView= [_outlineView enclosingScrollView];
 	if ([scrollView isKindOfClass:[PlacardScrollView class]]) {
 		[(PlacardScrollView *)scrollView setSide:PlacardRightCorner];
 	}
 	
 	// textview placard
-	scrollView= [[_textView superview] superview];	// clipview then scrollview
+	scrollView= [_textView enclosingScrollView];
 	if ([scrollView isKindOfClass:[PlacardScrollView class]]) {
 		[(PlacardScrollView *)scrollView setSide:PlacardRightCorner];
 	}
 	
 	// scriptview placard
-	scrollView= [[_scriptView superview] superview];	// clipview then scrollview
+	scrollView= [_scriptView enclosingScrollView];
 	if ([scrollView isKindOfClass:[PlacardScrollView class]]) {
 		[(PlacardScrollView *)scrollView setSide:PlacardRightCorner];
 	}
 	
+    // log textview placard
+	scrollView = [_logTextView enclosingScrollView];
+	if ([scrollView isKindOfClass:[PlacardScrollView class]]) {
+		[(PlacardScrollView *)scrollView setSide:PlacardRightCorner];
+	}
+
 	// build required menus
 	[self buildMenus];
 
@@ -258,7 +281,10 @@ static BOOL applicationMenuConfigured = NO;
 
 	// assign result script string
 	self.resultScriptString = _result.resultScriptString;
-	
+
+    // assign result log string
+	self.resultLogString = _result.resultLogString;
+    
 	// result dictionary is an alias for the object
 	self.resultDictionary = _result.object;
 	
@@ -311,7 +337,19 @@ static BOOL applicationMenuConfigured = NO;
 }
 /*
  
- set result string
+ set result log
+ 
+ */
+- (void)setResultLogString:(NSAttributedString *)aString
+{
+	[[_logTextView undoManager] removeAllActions];
+	[[_logTextView undoManager] disableUndoRegistration];
+	_resultLogString = aString;
+	[[_logTextView undoManager] enableUndoRegistration];
+}
+/*
+ 
+ set result script string
  
  */
 - (void)setResultScriptString:(NSAttributedString *)aString
@@ -338,7 +376,11 @@ static BOOL applicationMenuConfigured = NO;
 		case kMGSMotherResultViewList:
 			saveTextView = _textView;
 			break;
-			
+		
+        case kMGSMotherResultViewLog:
+			saveTextView = _logTextView;
+			break;
+            
 			// script string result
 		case kMGSMotherResultViewScript:
 			saveTextView = _scriptView;
@@ -368,7 +410,11 @@ static BOOL applicationMenuConfigured = NO;
 		case kMGSMotherResultViewList:
 			saveString = self.resultString;
 			break;
-			
+        
+        case kMGSMotherResultViewLog:
+			saveString = self.resultLogString;
+			break;
+            
 			// script string result
 		case kMGSMotherResultViewScript:
 			saveString = self.resultScriptString;
@@ -408,6 +454,8 @@ static BOOL applicationMenuConfigured = NO;
  */
 - (void)setViewMode:(eMGSMotherResultView)mode
 {
+    NSAssert(mode >= kMGSMotherResultViewFirst && mode <= kMGSMotherResultViewLast, @"Invalid view mode");
+    
 	_viewMode = mode;	
 	eMGSMotherViewConfig viewConfig = [self viewConfig];
 	
@@ -457,7 +505,11 @@ static BOOL applicationMenuConfigured = NO;
 		case kMGSMotherResultViewIcon:
 			viewConfig = kMGSMotherViewConfigIcon;
 			break;
-			
+
+        case kMGSMotherResultViewLog:
+			viewConfig = kMGSMotherViewConfigLog;
+			break;
+
 		default:
 			NSAssert(NO, @"bad view mode");
 			break;
@@ -533,7 +585,11 @@ static BOOL applicationMenuConfigured = NO;
 		case kMGSMotherResultViewIcon:
 			view = [_imageBrowserViewController imageBrowser];
 			break;
-			
+
+        case kMGSMotherResultViewLog:
+			view = _logTextView;
+			break;
+
 		default:
 			NSAssert(NO, @"bad view");
 			break;
@@ -588,7 +644,10 @@ static BOOL applicationMenuConfigured = NO;
 			
 		case kMGS_MENU_TAG_VIEW_SCRIPT:
 			viewMode = kMGSMotherResultViewScript; 
-			break;
+
+        case kMGS_MENU_TAG_VIEW_LOG:
+			viewMode = kMGSMotherResultViewLog; 
+            break;
 			
 		default:
 			NSAssert(NO, @"invalid View as menu tag");
@@ -674,7 +733,11 @@ static BOOL applicationMenuConfigured = NO;
 				case kMGS_MENU_TAG_VIEW_SCRIPT:
 					if (_viewMode == kMGSMotherResultViewScript) state = NSOnState; 
 					break;
-					
+
+                case kMGS_MENU_TAG_VIEW_LOG:
+					if (_viewMode == kMGSMotherResultViewLog) state = NSOnState; 
+					break;
+
 				default:
 					NSAssert(NO, @"invalid View as menu tag");
 			}
@@ -807,11 +870,11 @@ static BOOL applicationMenuConfigured = NO;
 	NSView *activeView = [self viewControl];
 
 
-	 NSView *scrollView = activeView;
+    NSView *scrollView = [activeView enclosingScrollView];
 	
-	while ([scrollView isKindOfClass:[NSScrollView class]] == NO && scrollView != [self view]) {
-		scrollView = [scrollView superview];	// clipview then scrollview
-	}
+	//while ([scrollView isKindOfClass:[NSScrollView class]] == NO && scrollView != [self view]) {
+		//scrollView = [scrollView superview];	// clipview then scrollview
+	//}
 	
 	
 	//NSView *scrollView= [[activeView superview] superview];	// clipview then scrollview

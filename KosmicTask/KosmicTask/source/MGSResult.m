@@ -39,6 +39,7 @@
 @synthesize object = _object;
 @synthesize action = _action;
 @synthesize resultScriptString = _resultScriptString;
+@synthesize resultLogString = _resultLogString;
 @synthesize attachments = _attachments;
 @synthesize progressArray = _progressArray;
 @synthesize viewMode = _viewMode;

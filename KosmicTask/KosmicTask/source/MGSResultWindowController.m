@@ -107,7 +107,11 @@ static int toolbarID = 0;
 		case kMGSMotherViewConfigScript:
 			viewMode = kMGSMotherResultViewScript;
 			break;
-			
+
+        case kMGSMotherViewConfigLog:
+			viewMode = kMGSMotherResultViewLog;
+			break;
+            
 		default:
 			return;
 	}

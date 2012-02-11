@@ -31,4 +31,5 @@ typedef enum _MGSViewMenuViewAsTag {
 	kMGS_MENU_TAG_VIEW_ICON,
 	kMGS_MENU_TAG_VIEW_LIST,
 	kMGS_MENU_TAG_VIEW_SCRIPT,
+    kMGS_MENU_TAG_VIEW_LOG,
 } eMGSViewMenuViewAsTag;

@@ -212,6 +212,9 @@
 	return _dragThumbImage;
 }
 
+#pragma mark -
+#pragma mark Display string
+
 /*
  
  - addDisplayString:
@@ -230,6 +233,17 @@
 {
     [_activityView clearText];
 }
+
+/*
+ 
+ - displayString
+ 
+ */
+- (NSString *)displayString
+{
+    return [_activityView text];
+}
+#pragma mark -
 #pragma mark MGSActionActivityViewDelegate methods
 
 /*

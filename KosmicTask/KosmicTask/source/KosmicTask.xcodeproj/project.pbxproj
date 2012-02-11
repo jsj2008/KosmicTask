@@ -204,7 +204,6 @@
 		AB2C728F14D2F42000C524B5 /* lua in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB2C71D614D2F32200C524B5 /* lua */; };
 		AB2C729014D2F42000C524B5 /* luac in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB2C71D814D2F32200C524B5 /* luac */; };
 		AB2C729314D2F45600C524B5 /* LuaCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2C71F114D2F34400C524B5 /* LuaCocoa.framework */; };
-		AB2C729414D2F48600C524B5 /* lua.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2C71D214D2F32200C524B5 /* lua.framework */; };
 		AB2CD02F122013CA005E2379 /* perl5 in Copy Perl resources */ = {isa = PBXBuildFile; fileRef = AB2CD01012201370005E2379 /* perl5 */; };
 		AB2D050B0CDE8171006632AF /* MGSMotherServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2D050A0CDE8171006632AF /* MGSMotherServer.m */; };
 		AB2D9B02128AFEE8005B0484 /* MGSAppleScriptLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2D9B01128AFEE8005B0484 /* MGSAppleScriptLanguage.m */; };
@@ -438,6 +437,7 @@
 		AB562706118DB3320012487B /* KosmicTaskKshRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB562550118DB1040012487B /* KosmicTaskKshRunner */; };
 		AB56270B118DB3500012487B /* KosmicTaskZshRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB56259F118DB1090012487B /* KosmicTaskZshRunner */; };
 		AB562714118DB36E0012487B /* KosmicTaskTclshRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB5625EE118DB10F0012487B /* KosmicTaskTclshRunner */; };
+		AB56E12914E5D446004FE37B /* LuaCocoa.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2C71F114D2F34400C524B5 /* LuaCocoa.framework */; };
 		AB58C61C0D425B690021E247 /* iTableColumnHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB58C61A0D425B690021E247 /* iTableColumnHeaderCell.m */; };
 		AB58C61D0D425B690021E247 /* metal_column_header.png in Resources */ = {isa = PBXBuildFile; fileRef = AB58C61B0D425B690021E247 /* metal_column_header.png */; };
 		AB58C6580D4265920021E247 /* NSTableView_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB58C6570D4265920021E247 /* NSTableView_Mugginsoft.m */; };
@@ -2988,7 +2988,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AB2C729414D2F48600C524B5 /* lua.framework in Copy Frameworks */,
+				AB56E12914E5D446004FE37B /* LuaCocoa.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
