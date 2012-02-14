@@ -47,8 +47,7 @@ typedef enum _eMGSMotherResultView {
 	kMGSMotherResultViewIcon = 1,
 	kMGSMotherResultViewList = 2,
     kMGSMotherResultViewLog = 3,
-	kMGSMotherResultViewScript = 4,
-	kMGSMotherResultViewLast = kMGSMotherResultViewScript,
+	kMGSMotherResultViewLast = kMGSMotherResultViewLog,
 }  eMGSMotherResultView;
 
 typedef enum _eMGSMainBrowserMode {

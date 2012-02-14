@@ -37,7 +37,6 @@
 	// result presentation
 	NSArray *_resultTreeArray;
 	NSAttributedString *_resultString;
-	NSAttributedString * _resultScriptString;
 	NSAttributedString *_resultLogString;
     
 	IBOutlet NSTabView *_tabView;
@@ -55,10 +54,6 @@
 	IBOutlet NSTextField *_resultFooterContentTextField;
 	IBOutlet NSButton *_viewModeImageButton;
 	IBOutlet NSSegmentedControl *_viewModeSegmentedControl;
-	
-    IBOutlet NSScrollView *_scriptViewScrollView;
-    IBOutlet NSView *_scriptView;
-    MGSScriptViewController *_scriptViewController;
     
 	NSView *_dragThumbView;
 	eMGSMotherResultView _viewMode;
@@ -85,7 +80,6 @@
 - (IBAction)showPrevViewMode:(id)sender;
 - (NSAttributedString *)saveResultString;
 - (NSTextView *)saveResultTextView;
-- (void)addLogString:(NSString *)value;
 
 //@property NSString *title;
 @property (copy) NSImage *titleImage;
@@ -96,7 +90,6 @@
 @property eMGSMotherResultView viewMode;
 @property (assign) NSMenu *resultMenu;
 @property (copy) NSAttributedString *resultString;
-@property (copy) NSAttributedString *resultScriptString;
 @property (copy) NSAttributedString *resultLogString;
 @property BOOL openFileAfterSave;
 

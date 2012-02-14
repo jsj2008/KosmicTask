@@ -31,5 +31,6 @@
 - (void)setRunMode:(eMGSMotherRunMode)mode;
 - (void)addDisplayString:(NSString *)value;
 - (void)clearDisplayString;
+- (NSString *)displayString;
 
 @end

@@ -946,9 +946,12 @@ commonExit:
 	result.object = resultObject;
 	result.attachments = netRequest.responseMessage.attachments;
 	result.resultScriptString = resultScriptString;	
-	result.resultLogString = [_outputViewController logString];
-    
-	// add result string to progress
+    NSString *logString = [_outputViewController logString];
+    if (logString){
+        result.resultLogString = [[NSAttributedString alloc] initWithString:logString attributes:nil];
+    }
+	
+    // add result string to progress
 	[self actionSpecifier].requestProgress.resultString = [result shortResultString];
 	
 	//

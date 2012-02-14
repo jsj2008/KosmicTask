@@ -64,7 +64,6 @@ static BOOL applicationMenuConfigured = NO;
 @synthesize viewMode = _viewMode;
 @synthesize resultMenu = _resultMenu;
 @synthesize resultString = _resultString;
-@synthesize resultScriptString = _resultScriptString;
 @synthesize resultLogString = _resultLogString;
 @synthesize openFileAfterSave = _openFileAfterSave;
 
@@ -82,7 +81,6 @@ static BOOL applicationMenuConfigured = NO;
 		_nibLoaded = NO;
 		_resultTreeArray = nil;
 		_resultString = nil;
-		_resultScriptString = nil;
 		_openFileAfterSave = NO;
 	}
 	return self;
@@ -194,12 +192,6 @@ static BOOL applicationMenuConfigured = NO;
 		[(PlacardScrollView *)scrollView setSide:PlacardRightCorner];
 	}
 	
-	// scriptview placard
-	scrollView= [_scriptView enclosingScrollView];
-	if ([scrollView isKindOfClass:[PlacardScrollView class]]) {
-		[(PlacardScrollView *)scrollView setSide:PlacardRightCorner];
-	}
-	
     // log textview placard
 	scrollView = [_logTextView enclosingScrollView];
 	if ([scrollView isKindOfClass:[PlacardScrollView class]]) {
@@ -221,57 +213,6 @@ static BOOL applicationMenuConfigured = NO;
 	
 	_nibLoaded = YES;
 	
-    //=======================================================================================
-	// setup script view 
-	//
-	// no line wrap
-    //=======================================================================================
-	if (NO) {
-      /*      
-        [_scriptView setLineWrap:NO];
-        [[_scriptView layoutManager] setBackgroundLayoutEnabled:YES];
-        [[_scriptView layoutManager] setAllowsNonContiguousLayout:YES];
-        
-        // add line numbering
-        _lineNumberView = [[MarkerLineNumberView alloc] initWithScrollView:_scriptViewScrollView];
-        [_lineNumberView setBackgroundColor:[NSColor colorWithCalibratedWhite: 0.85f alpha: 1.0f]];
-        [_scriptViewScrollView setVerticalRulerView:_lineNumberView];
-        [_scriptViewScrollView setHasHorizontalRuler:NO];
-        [_scriptViewScrollView setHasVerticalRuler:YES];
-        [_scriptViewScrollView setRulersVisible:YES];
-        
-        //=======================================================================================
-        // bind script view to result script string
-        //
-        // note that we enable editing even though we don't store the edits back into the result.
-        //=======================================================================================
-        [_scriptView bind:NSAttributedStringBinding 
-                 toObject:self 
-              withKeyPath:@"resultScriptString" 
-                  options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption, nil]];	
-        
-       */
-    }
-    
-	// create scriptview controller
-    _scriptViewController = [MGSScriptViewController new];
-    [_scriptViewController view]; // load the view
-    
-    [[_scriptViewScrollView superview] replaceSubview:_scriptViewScrollView withViewFrameAsOld:[_scriptViewController view]];
-    _scriptView = nil;
-	// this will send viewDidLoad to delegate
-	//[super awakeFromNib];
-}
-
-#pragma mark -
-#pragma mark Tasklogging
-/*
- 
- - addLogString:
- 
- */
-- (void)addLogString:(NSString *)value {
-  
 }
 
 #pragma mark -
@@ -293,7 +234,7 @@ static BOOL applicationMenuConfigured = NO;
 	_imageBrowserViewController.attachments = _result.attachments;
 
 	// assign result script string
-	self.resultScriptString = _result.resultScriptString;
+	//self.resultScriptString = _result.resultScriptString;
 
     // assign result log string
 	self.resultLogString = _result.resultLogString;
@@ -307,9 +248,7 @@ static BOOL applicationMenuConfigured = NO;
 	NSString *footerText = [NSString stringWithFormat:NSLocalizedString(@"Text: %@", @"Result view text footer text"), [NSString mgs_stringFromFileSize:[self.result.resultString length]]];
 	footerText = [NSString stringWithFormat:NSLocalizedString(@"%@    Files: %i files, %@",  @"Result view files footer text"), footerText, [self.result.attachments count], [NSString mgs_stringFromFileSize:[self.result.attachments validatedLength]]];
 	[_resultFooterContentTextField setStringValue:footerText];
-    
-    // the scriptview controller requires the task spec
-    [_scriptViewController setTaskSpec:[aResult action]];
+
 }
 
 /*
@@ -363,18 +302,6 @@ static BOOL applicationMenuConfigured = NO;
 	_resultLogString = aString;
 	[[_logTextView undoManager] enableUndoRegistration];
 }
-/*
- 
- set result script string
- 
- */
-- (void)setResultScriptString:(NSAttributedString *)aString
-{
-	[[_scriptView undoManager] removeAllActions];
-	[[_scriptView undoManager] disableUndoRegistration];
-	_resultScriptString = aString;
-	[[_scriptView undoManager] enableUndoRegistration];
-}
 
 /*
  
@@ -395,11 +322,6 @@ static BOOL applicationMenuConfigured = NO;
 		
         case kMGSMotherResultViewLog:
 			saveTextView = _logTextView;
-			break;
-            
-			// script string result
-		case kMGSMotherResultViewScript:
-			saveTextView = _scriptView;
 			break;
 			
 			//nothing to save
@@ -431,11 +353,6 @@ static BOOL applicationMenuConfigured = NO;
 			saveString = self.resultLogString;
 			break;
             
-			// script string result
-		case kMGSMotherResultViewScript:
-			saveString = self.resultScriptString;
-			break;
-			
 			//nothing to save
 		default:
 			break;
@@ -514,10 +431,6 @@ static BOOL applicationMenuConfigured = NO;
 			viewConfig = kMGSMotherViewConfigDocument;
 			break;
 			
-		case kMGSMotherResultViewScript:
-			viewConfig = kMGSMotherViewConfigScript;
-			break;
-			
 		case kMGSMotherResultViewIcon:
 			viewConfig = kMGSMotherViewConfigIcon;
 			break;
@@ -594,10 +507,6 @@ static BOOL applicationMenuConfigured = NO;
 			view = _textView;
 			break;
 			
-		case kMGSMotherResultViewScript:
-			view = _scriptView;
-			break;
-			
 		case kMGSMotherResultViewIcon:
 			view = [_imageBrowserViewController imageBrowser];
 			break;
@@ -657,9 +566,6 @@ static BOOL applicationMenuConfigured = NO;
 		case kMGS_MENU_TAG_VIEW_LIST:
 			viewMode = kMGSMotherResultViewList; 
 			break;
-			
-		case kMGS_MENU_TAG_VIEW_SCRIPT:
-			viewMode = kMGSMotherResultViewScript; 
 
         case kMGS_MENU_TAG_VIEW_LOG:
 			viewMode = kMGSMotherResultViewLog; 
@@ -746,10 +652,6 @@ static BOOL applicationMenuConfigured = NO;
 					if (_viewMode == kMGSMotherResultViewList) state = NSOnState; 
 					break;
 					
-				case kMGS_MENU_TAG_VIEW_SCRIPT:
-					if (_viewMode == kMGSMotherResultViewScript) state = NSOnState; 
-					break;
-
                 case kMGS_MENU_TAG_VIEW_LOG:
 					if (_viewMode == kMGSMotherResultViewLog) state = NSOnState; 
 					break;

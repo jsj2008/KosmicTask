@@ -33,7 +33,6 @@
 #define SEG_ICON 1
 #define SEG_LIST 2
 #define SEG_LOG 3
-#define SEG_SCRIPT 4
 
 
 NSString *MGSRunStatusContext = @"MGSRunStatusContext";
@@ -372,9 +371,6 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 				
             case SEG_LOG:
 				break;
-			
-            case SEG_SCRIPT:
-				break;
                 
 			default:
 				NSAssert(NO, @"invalid view mode segment");
@@ -564,9 +560,6 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 			mode = kMGSMotherResultViewLog;
 			break;
 		
-        case SEG_SCRIPT:
-			mode = kMGSMotherResultViewScript;
-			break;
 
 		default:
 			NSAssert(NO, @"bad segment");
@@ -1018,10 +1011,6 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 			
         case kMGSMotherResultViewLog:
 			idx = SEG_LOG;
-			break;
-        
-        case kMGSMotherResultViewScript:
-			idx = SEG_SCRIPT;
 			break;
 
 		default:
