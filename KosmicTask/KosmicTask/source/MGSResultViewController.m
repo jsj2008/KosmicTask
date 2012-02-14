@@ -32,6 +32,8 @@
 #import "MGSNotifications.h"
 #import "NSObject_Mugginsoft.h"
 #import "MGSPreferences.h"
+#import "MGSScriptViewController.h"
+#import "NSView_Mugginsoft.h"
 
 #import <ORCDiscount/ORCDiscount.h>
 
@@ -176,32 +178,6 @@ static BOOL applicationMenuConfigured = NO;
 	NSTabViewItem *item = [_tabView tabViewItemAtIndex:kMGSMotherResultViewIcon];
 	[item setView:[_imageBrowserViewController view]];
 	
-	//=======================================================================================
-	// setup script view 
-	//
-	// no line wrap
-    //=======================================================================================
-	[_scriptView setLineWrap:NO];
-	[[_scriptView layoutManager] setBackgroundLayoutEnabled:YES];
-	[[_scriptView layoutManager] setAllowsNonContiguousLayout:YES];
-	
-	// add line numbering
-	_lineNumberView = [[MarkerLineNumberView alloc] initWithScrollView:_scriptViewScrollView];
-	[_lineNumberView setBackgroundColor:[NSColor colorWithCalibratedWhite: 0.85f alpha: 1.0f]];
-    [_scriptViewScrollView setVerticalRulerView:_lineNumberView];
-    [_scriptViewScrollView setHasHorizontalRuler:NO];
-    [_scriptViewScrollView setHasVerticalRuler:YES];
-    [_scriptViewScrollView setRulersVisible:YES];
-	
-	//=======================================================================================
-	// bind script view to result scipt string
-	//
-	// note that we enable editing even though we don't store the edits back into the result.
-	//=======================================================================================
-	[_scriptView bind:NSAttributedStringBinding 
-				toObject:self 
-				withKeyPath:@"resultScriptString" 
-				options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption, nil]];	
 	
 	//
 	// set additional drag views for splitview
@@ -245,7 +221,44 @@ static BOOL applicationMenuConfigured = NO;
 	
 	_nibLoaded = YES;
 	
-	
+    //=======================================================================================
+	// setup script view 
+	//
+	// no line wrap
+    //=======================================================================================
+	if (NO) {
+      /*      
+        [_scriptView setLineWrap:NO];
+        [[_scriptView layoutManager] setBackgroundLayoutEnabled:YES];
+        [[_scriptView layoutManager] setAllowsNonContiguousLayout:YES];
+        
+        // add line numbering
+        _lineNumberView = [[MarkerLineNumberView alloc] initWithScrollView:_scriptViewScrollView];
+        [_lineNumberView setBackgroundColor:[NSColor colorWithCalibratedWhite: 0.85f alpha: 1.0f]];
+        [_scriptViewScrollView setVerticalRulerView:_lineNumberView];
+        [_scriptViewScrollView setHasHorizontalRuler:NO];
+        [_scriptViewScrollView setHasVerticalRuler:YES];
+        [_scriptViewScrollView setRulersVisible:YES];
+        
+        //=======================================================================================
+        // bind script view to result script string
+        //
+        // note that we enable editing even though we don't store the edits back into the result.
+        //=======================================================================================
+        [_scriptView bind:NSAttributedStringBinding 
+                 toObject:self 
+              withKeyPath:@"resultScriptString" 
+                  options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption, nil]];	
+        
+       */
+    }
+    
+	// create scriptview controller
+    _scriptViewController = [MGSScriptViewController new];
+    [_scriptViewController view]; // load the view
+    
+    [[_scriptViewScrollView superview] replaceSubview:_scriptViewScrollView withViewFrameAsOld:[_scriptViewController view]];
+    _scriptView = nil;
 	// this will send viewDidLoad to delegate
 	//[super awakeFromNib];
 }
@@ -294,6 +307,9 @@ static BOOL applicationMenuConfigured = NO;
 	NSString *footerText = [NSString stringWithFormat:NSLocalizedString(@"Text: %@", @"Result view text footer text"), [NSString mgs_stringFromFileSize:[self.result.resultString length]]];
 	footerText = [NSString stringWithFormat:NSLocalizedString(@"%@    Files: %i files, %@",  @"Result view files footer text"), footerText, [self.result.attachments count], [NSString mgs_stringFromFileSize:[self.result.attachments validatedLength]]];
 	[_resultFooterContentTextField setStringValue:footerText];
+    
+    // the scriptview controller requires the task spec
+    [_scriptViewController setTaskSpec:[aResult action]];
 }
 
 /*

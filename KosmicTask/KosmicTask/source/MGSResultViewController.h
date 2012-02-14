@@ -23,6 +23,7 @@
 @class MGSImageBrowserViewController;
 @class MarkerLineNumberView;
 @class MGSPopupButton;
+@class MGSScriptViewController;
 
 @interface MGSResultViewController : MGSViewController <NSOpenSavePanelDelegate, MGSResultViewDelegate> {
 
@@ -56,7 +57,8 @@
 	IBOutlet NSSegmentedControl *_viewModeSegmentedControl;
 	
     IBOutlet NSScrollView *_scriptViewScrollView;
-    IBOutlet OSAScriptView *_scriptView;
+    IBOutlet NSView *_scriptView;
+    MGSScriptViewController *_scriptViewController;
     
 	NSView *_dragThumbView;
 	eMGSMotherResultView _viewMode;
