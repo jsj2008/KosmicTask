@@ -13,7 +13,9 @@
 #define SEG_DOCUMENT 0
 #define SEG_ICON 1
 #define SEG_LIST 2
-#define SEG_SCRIPT 3
+#define SEG_LOG 3
+#define SEG_SCRIPT 4
+
 
 // class extension
 @interface MGSResultToolViewController()
@@ -71,7 +73,11 @@
 		case SEG_SCRIPT:
 			viewConfig = kMGSMotherViewConfigScript;
 			break;		
-			
+
+        case SEG_LOG:
+			viewConfig = kMGSMotherViewConfigLog;
+			break;
+            
 		default:
 			NSAssert(NO, @"bad segment");
 			return;
@@ -125,7 +131,11 @@
 		case kMGSMotherViewConfigScript:
 			segment = SEG_SCRIPT;
 			break;		
-			
+
+        case kMGSMotherViewConfigLog:
+			segment = SEG_LOG;
+			break;
+            
 		default:
 			NSAssert(NO, @"bad view mode");
 			return;

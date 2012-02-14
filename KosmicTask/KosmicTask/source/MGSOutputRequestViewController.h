@@ -97,5 +97,5 @@ extern NSString *MGSRunStatusContext;
 - (IBAction)syncPartnerSelectedIndex:(id)sender;
 - (void)syncToPartnerSelectedIndex;
 - (void)addLogString:(NSString *)value;
-
+- (NSString *)logString;
 @end

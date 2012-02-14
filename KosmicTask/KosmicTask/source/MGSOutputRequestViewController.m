@@ -32,7 +32,9 @@
 #define SEG_DOCUMENT 0
 #define SEG_ICON 1
 #define SEG_LIST 2
-#define SEG_SCRIPT 3
+#define SEG_LOG 3
+#define SEG_SCRIPT 4
+
 
 NSString *MGSRunStatusContext = @"MGSRunStatusContext";
 static NSString *MGSActionProgressContext = @"MGSActionProgressContext";
@@ -368,9 +370,12 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 			case SEG_DOCUMENT:
 				break;
 				
-			case SEG_SCRIPT:
+            case SEG_LOG:
 				break;
-				
+			
+            case SEG_SCRIPT:
+				break;
+                
 			default:
 				NSAssert(NO, @"invalid view mode segment");
 				break;
@@ -555,10 +560,14 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 			mode = kMGSMotherResultViewDocument;
 			break;
 			
-		case SEG_SCRIPT:
+		case SEG_LOG:
+			mode = kMGSMotherResultViewLog;
+			break;
+		
+        case SEG_SCRIPT:
 			mode = kMGSMotherResultViewScript;
 			break;
-			
+
 		default:
 			NSAssert(NO, @"bad segment");
 			return;
@@ -742,9 +751,17 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
  
  */
 - (void)addLogString:(NSString *)value {
-    [_resultViewController addLogString:value];
-    
     [_actionActivityViewController addDisplayString:value];
+}
+
+/*
+ 
+ - logString
+ 
+ */
+- (NSString *)logString
+{
+    return [_actionActivityViewController displayString];
 }
 
 #pragma mark -
@@ -999,10 +1016,14 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 			idx = SEG_DOCUMENT;
 			break;
 			
-		case kMGSMotherResultViewScript:
+        case kMGSMotherResultViewLog:
+			idx = SEG_LOG;
+			break;
+        
+        case kMGSMotherResultViewScript:
 			idx = SEG_SCRIPT;
 			break;
-			
+
 		default:
 			NSAssert(NO, @"bad view mode");
 			break;

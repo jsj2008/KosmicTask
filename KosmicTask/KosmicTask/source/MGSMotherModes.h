@@ -37,6 +37,7 @@ typedef enum _eMGSMotherViewConfig {
 	kMGSMotherViewConfigIcon = 7,
 	kMGSMotherViewConfigList = 8,
 	kMGSMotherViewConfigScript = 9,
+    kMGSMotherViewConfigLog = 10,
 }  eMGSMotherViewConfig;
 
 // mother result view toggles
@@ -45,7 +46,8 @@ typedef enum _eMGSMotherResultView {
 	kMGSMotherResultViewDocument = kMGSMotherResultViewFirst,
 	kMGSMotherResultViewIcon = 1,
 	kMGSMotherResultViewList = 2,
-	kMGSMotherResultViewScript = 3,
+    kMGSMotherResultViewLog = 3,
+	kMGSMotherResultViewScript = 4,
 	kMGSMotherResultViewLast = kMGSMotherResultViewScript,
 }  eMGSMotherResultView;
 

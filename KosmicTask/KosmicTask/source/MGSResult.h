@@ -16,7 +16,8 @@
 	id _object;										// the result object
 	MGSTaskSpecifier *_action;					// action associated with the result
 	NSAttributedString *_resultScriptString;		// result object string as returned by the script component
-	MGSNetAttachments *_attachments;				// attachments
+	NSAttributedString *_resultLogString;           // log string
+    MGSNetAttachments *_attachments;				// attachments
 	NSMutableArray *_progressArray;					// progress array 
 	eMGSMotherResultView _viewMode;					// view mode
 	NSMutableAttributedString * __weak _resultString;		// make this weak so that it becomes deallocated when no longer reqd
@@ -26,6 +27,7 @@
 @property id object;
 @property (assign) MGSTaskSpecifier *action;
 @property (copy) NSAttributedString *resultScriptString;
+@property (copy) NSAttributedString *resultLogString;
 @property MGSNetAttachments *attachments;
 @property (copy) NSMutableArray *progressArray;
 @property eMGSMotherResultView viewMode;

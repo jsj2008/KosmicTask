@@ -386,6 +386,18 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     return NO;
 }
 
+
+/*
+ 
+- text
+ 
+ */
+- (NSString *)text
+{
+    return [_textView string];
+}
+#pragma mark -
+#pragma mark NSView notifications
 /*
  
  - scrollContentBoundsChanged:

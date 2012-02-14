@@ -23,6 +23,7 @@
 @class MGSImageBrowserViewController;
 @class MarkerLineNumberView;
 @class MGSPopupButton;
+@class MGSScriptViewController;
 
 @interface MGSResultViewController : MGSViewController <NSOpenSavePanelDelegate, MGSResultViewDelegate> {
 
@@ -37,11 +38,12 @@
 	NSArray *_resultTreeArray;
 	NSAttributedString *_resultString;
 	NSAttributedString * _resultScriptString;
-	
+	NSAttributedString *_resultLogString;
+    
 	IBOutlet NSTabView *_tabView;
 	IBOutlet NSOutlineView *_outlineView;
 	IBOutlet NSTextView *_textView;
-	IBOutlet OSAScriptView *_scriptView;
+    IBOutlet NSTextView *_logTextView;
 	IBOutlet NSMenu *_resultMenu;
 	IBOutlet NSMenu *_resultViewMenu;
 	IBOutlet NSMenu *_sendMenu;
@@ -49,12 +51,15 @@
 	IBOutlet NSPopUpButton *_saveFormatPopupButton;
 	IBOutlet NSPopUpButton *_displayFormatPopupButton;
 	IBOutlet NSView *_textViewDragThumb;
-	IBOutlet NSScrollView *_scriptViewScrollView;
 	IBOutlet MGSPopupButton *_actionGearPopupButton;
 	IBOutlet NSTextField *_resultFooterContentTextField;
 	IBOutlet NSButton *_viewModeImageButton;
 	IBOutlet NSSegmentedControl *_viewModeSegmentedControl;
 	
+    IBOutlet NSScrollView *_scriptViewScrollView;
+    IBOutlet NSView *_scriptView;
+    MGSScriptViewController *_scriptViewController;
+    
 	NSView *_dragThumbView;
 	eMGSMotherResultView _viewMode;
 	
@@ -92,6 +97,7 @@
 @property (assign) NSMenu *resultMenu;
 @property (copy) NSAttributedString *resultString;
 @property (copy) NSAttributedString *resultScriptString;
+@property (copy) NSAttributedString *resultLogString;
 @property BOOL openFileAfterSave;
 
 @end
