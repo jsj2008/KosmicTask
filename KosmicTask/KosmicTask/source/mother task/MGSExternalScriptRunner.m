@@ -280,13 +280,25 @@ static NSString * const MGSExternalScriptRunnerException = @"MGSExternalScriptRu
 		}
 		[task setStandardOutput: outputPipe];
 		
-		// configure stderr
-		NSPipe *errorPipe = [NSPipe pipe];
-		if (!errorPipe) {
-			[NSException raise:MGSExternalScriptRunnerException format:@"Cannot allocate error pipe"];
-		}
-		[task setStandardError: errorPipe];
-		
+        // we may not wish to capture stderr.
+        // the NSTask process instance will inherit the stdin/out/err of the
+        // parent process, which is what we require for real time logging - 
+        // we don't want to accumulate the stderr output into an NSData instance.
+        //
+        // note that the same logic can apply to stdout. by default the NSTask
+        // will inherit its parents stdout. 
+        BOOL captureStdErr = NO;
+        NSPipe *errorPipe = nil;
+        
+		// configure stderr if required
+        if (captureStdErr) {
+            errorPipe = [NSPipe pipe];
+            if (!errorPipe) {
+                [NSException raise:MGSExternalScriptRunnerException format:@"Cannot allocate error pipe"];
+            }
+            [task setStandardError: errorPipe];
+        }
+    
 		// set the session ID for the group.
 		// the child task will inherit it!
 		// this will create a session group.
@@ -369,24 +381,27 @@ static NSString * const MGSExternalScriptRunnerException = @"MGSExternalScriptRu
 			[fileHandle waitForDataInBackgroundAndNotify];
 		}
 
-		// read stdErr async
-		if ((fileHandle = [errorPipe fileHandleForReading])) {
-			errData = [NSMutableData data];
-			[[NSNotificationCenter defaultCenter] addObserver:errData 
-													 selector:@selector(mgs_fileHandleDataAvailable:) 
-														 name:NSFileHandleDataAvailableNotification object:fileHandle];
-			[fileHandle waitForDataInBackgroundAndNotify];
-		}
-				
+		// read stdErr async if required
+        if (errorPipe) {
+            if ((fileHandle = [errorPipe fileHandleForReading])) {
+                errData = [NSMutableData data];
+                [[NSNotificationCenter defaultCenter] addObserver:errData 
+                                                         selector:@selector(mgs_fileHandleDataAvailable:) 
+                                                             name:NSFileHandleDataAvailableNotification object:fileHandle];
+                [fileHandle waitForDataInBackgroundAndNotify];
+            }
+        }	
 		// wait for task
 		[task waitUntilExit];
 		
 		// complete error data read
-		if ((fileHandle = [errorPipe fileHandleForReading])) {
-			[[NSNotificationCenter defaultCenter] removeObserver:errData name:NSFileHandleDataAvailableNotification object:fileHandle];
-			[errData appendData:[fileHandle readDataToEndOfFile]];
+        if (errorPipe) {
+            if ((fileHandle = [errorPipe fileHandleForReading])) {
+                [[NSNotificationCenter defaultCenter] removeObserver:errData name:NSFileHandleDataAvailableNotification object:fileHandle];
+                [errData appendData:[fileHandle readDataToEndOfFile]];
+            }
 		}
-		
+        
 		// complete output data read
 		if ((fileHandle = [outputPipe fileHandleForReading])) {
 			[[NSNotificationCenter defaultCenter] removeObserver:outData name:NSFileHandleDataAvailableNotification object:fileHandle];
