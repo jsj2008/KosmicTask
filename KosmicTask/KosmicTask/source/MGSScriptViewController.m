@@ -115,6 +115,11 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	[_fragaria embedInView:_fragariaHostView];
 	_fragariaTextView = [_fragaria objectForKey:ro_MGSFOTextView];
 	
+    // turn off auto text replacement for items such as ...
+    // as it can cause certain scripts to fail to build e.g: Python
+    [_fragariaTextView setAutomaticDataDetectionEnabled:NO];
+	[_fragariaTextView setAutomaticTextReplacementEnabled:NO];
+     
 	if (_delegate && [_delegate respondsToSelector:@selector(scriptViewLoaded:)]) {
 		[_delegate scriptViewLoaded:self];
 	}
