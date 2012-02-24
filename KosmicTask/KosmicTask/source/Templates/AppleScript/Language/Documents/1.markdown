@@ -77,8 +77,17 @@ AppleScript powered tasks can create temporary files by targeting the **KosmicTa
 Logging and Debugging
 ----------------------
 
-Diagnostic and logging information can be written to a task's error stream using the log command. 
+Diagnostic and logging information can be written to a task's error stream using the `log` command. 
 
 	-- send value to log
 	log "Goodbye, kosmos!"
+
+Note that if the `log` command is used within a `tell` block then the command must be targeted at the enclosing script object using the `me` keyword.
+	
+	tell application "Finder"
+
+		-- log command must target the script object not the Finder
+		tell me to log "Accessing the Finder..."
+
+	end tell
 
