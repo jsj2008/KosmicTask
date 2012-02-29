@@ -50,6 +50,16 @@ NSString *resultHeader = @"kosmic";
 
 /*
  
+ + nameKeys
+ 
+ */
++ (NSArray *)nameKeys
+{
+	return [NSArray arrayWithObjects: @"kosmicname", nil];
+}
+
+/*
+ 
  + errorKeys
  
  */
@@ -119,10 +129,13 @@ NSString *resultHeader = @"kosmic";
 + (NSArray *)dictKeyStyleFilterKeys
 {
 	// dictionary objects with matching keys will have key only removed from styled output
-	NSMutableArray *filter = [NSMutableArray arrayWithArray:[self dataKeys]];
-	[filter addObjectsFromArray:[self errorKeys]];
+    // note that the order is important here as the keyed data will be output
+    // in the order that the keys appear in below
+	NSMutableArray *filter = [NSMutableArray arrayWithArray:[self nameKeys]];
+	[filter addObjectsFromArray:[self dataKeys]];
 	[filter addObjectsFromArray:[self infoKeys]];
-	
+	[filter addObjectsFromArray:[self errorKeys]];
+
 	return filter;
 }
 

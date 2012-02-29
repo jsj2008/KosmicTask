@@ -23,5 +23,6 @@
 + (NSArray *)dictStyleFilterKeys;
 + (NSArray *)dictKeyStyleFilterKeys;
 + (NSString *)formatResultKey:(NSString *)key;
++ (NSArray *)nameKeys;
 
 @end

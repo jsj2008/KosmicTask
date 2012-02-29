@@ -344,9 +344,22 @@ NSString *MGSArrayOddAttributesStyleName = @"MGSArrayOddAttributesStyleName";
 		NSString *keySuffix = [styleDict objectForKey:MGSDictKeySuffixStyleName];
 		
 		// validate keys all NSString instances
-		NSArray *keys = [(NSDictionary *)anObject allKeys];
-		keys = [keys mgs_sortedArrayUsingBestSelector];
-		
+		NSArray *allKeys = [(NSDictionary *)anObject allKeys];
+        
+        // sort keys?
+        NSMutableArray *keys = nil;
+        BOOL sortKeys = YES;
+        
+        // sorting keys may not be desirable as user may have ordered the keys for display.
+        // however it seems that for many languages the order that the keys are inserted
+        // or created has little or no bearing on the order in which thet are rendered.
+        // TODO: make sorting optional
+        if (sortKeys) {
+            keys = [NSMutableArray arrayWithArray:[allKeys mgs_sortedArrayUsingBestSelector]];
+        } else {
+            keys = [NSMutableArray arrayWithArray:allKeys];
+        }
+        
 		// increment level for objects in collection
 		[self incrementStyleLevel:styleDict];
 		
@@ -369,7 +382,35 @@ NSString *MGSArrayOddAttributesStyleName = @"MGSArrayOddAttributesStyleName";
 			[[self class] parseCSS:inlineCSS intoAttributes:inlineAttributes];
 		}
 		
-		// iterate
+        // move keys to be discarded to the top of the sorted keys array.
+        NSDictionary *filterDict = [styleDict objectForKey:MGSDictKeyFilterStyleName];
+        NSArray *filterKeys = [filterDict objectForKey:MGSStyleFilter];
+        
+        // we need to move the filter keys to the start of the keys array in reverse order
+        NSEnumerator *enumerator = [filterKeys reverseObjectEnumerator];
+                
+        // look for filter key in our keys.
+        // if found move it to the start of the list
+        for (NSString* filterKey in enumerator) {
+            
+            // this is slow but I don't really want to force
+            // all the keys to lower case as the user may have
+            // deliberateky used upper and lower case keys
+            for (NSString *key in [keys copy]) {
+                
+                // if we find the filter key then move it to
+                // to the start of the list
+                if ([key caseInsensitiveCompare:filterKey] == NSOrderedSame) {
+                    [keys removeObject:key];
+                    [keys insertObject:key atIndex:0];
+                    break;
+                }
+            }
+
+        }
+        
+		// iterate over keys in sorted order
+        // append to our output string
 		for (id key in keys) {
 			
 			//
@@ -455,7 +496,10 @@ NSString *MGSArrayOddAttributesStyleName = @"MGSArrayOddAttributesStyleName";
 			[attributes addEntriesFromDictionary:inlineAttributes];
 			[objectStyleDict setObject:attributes forKey:MGSComputedAttributesStyleName];
 			
+            // get string representation of our object
 			NSAttributedString *valueDesc = [self object:objectForKey descriptionWithStyle:objectStyleDict];
+            
+            // append to our result string
 			[mString appendAttributedString:valueDesc];
 		}
 	}
