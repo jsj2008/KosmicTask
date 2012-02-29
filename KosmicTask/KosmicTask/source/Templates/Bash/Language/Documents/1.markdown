@@ -1,6 +1,4 @@
-
-[Bash](http://www.gnu.org/software/bash/manual/html_node/index.html) is the default shell on OS X 10.6
-
+[Bash](http://www.gnu.org/software/bash/manual/html_node/index.html) is the default shell on OS X 10.6 and above.
 
 Calling the Task Run Function
 -----------------------------
@@ -67,7 +65,30 @@ Bash powered tasks can create temporary files simply by creating files in the cu
 Logging and Debugging
 ---------------------
 
-Diagnostic and logging information can be written to a task's error stream on /dev/stderr. 
+Diagnostic and logging information can be written to a task's error stream on `/dev/stderr`. 
 
 	# send log value to stderr
 	echo "Goodbye, kosmos!" >/dev/stderr
+
+An alternate form is.
+
+	# send log value to stderr
+	echo "Goodbye, kosmos!" >&2
+
+In some cases it may be desirable to redirect all or large portions of the script's output to the log. This can be achieved by redirecting `stdout` to `stderr` as follows.
+
+	# link file descriptor 3 with stdout
+	exec 3<&1
+	
+	# redirect stdout to stderr 
+	exec 1<&2
+
+	# echo value to log via redirected stdout
+	echo "Goodbye, kosmos!" 
+
+	# restore stdout and close file descriptor 3
+	exec 1<&3 3<&-
+
+	# send result to stdout
+	echo "Hello, kosmos!"
+

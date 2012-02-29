@@ -15,5 +15,21 @@
 # send result to stdout
 echo "Hello, kosmos!"
 
-# send log value to stderr using >/dev/stderr or >&2
+# send log value to stderr
 echo "Goodbye, kosmos!" >/dev/stderr
+
+# or we can
+# link file descriptor 4 with stdin
+exec 6<&1
+
+# redirect stdout to stderr 
+exec 1<&2
+
+# echo log value to redirected stdout
+echo "Goodbye again, kosmos!" 
+
+# restore stdout and close file descriptor 6
+exec 1<&6 6<&-
+
+# send another result to stdout
+echo "Hello again, kosmos!"
