@@ -21,7 +21,7 @@ static NSString * const MGSExternalScriptRunnerException = @"MGSExternalScriptRu
 
 @implementation MGSExternalScriptRunner
 
-@synthesize stderrData;
+@synthesize stderrData, captureStdErr;
 
 /*
  
@@ -67,6 +67,9 @@ static NSString * const MGSExternalScriptRunnerException = @"MGSExternalScriptRu
 		if (!executableData) return NO;
 	}
 	
+    // during execution do not capture stderr
+    self.captureStdErr = NO;
+    
 	// shell the task
 	NSString *resultString = [self externalTask:[self launchPath] env:[self launchEnvironment] data:executableData parameters:paramArray options:options];
 	
@@ -110,6 +113,9 @@ static NSString * const MGSExternalScriptRunnerException = @"MGSExternalScriptRu
 		return NO;
 	}
 	
+    // during build we need to capture stderr
+    self.captureStdErr = YES;
+
 	// shell the task
 	NSString *resultString = [self externalTask:[self buildPath] env:[self buildEnvironment] data:sourceData parameters:paramArray options:options];
 	
@@ -287,11 +293,10 @@ static NSString * const MGSExternalScriptRunnerException = @"MGSExternalScriptRu
         //
         // note that the same logic can apply to stdout. by default the NSTask
         // will inherit its parents stdout. 
-        BOOL captureStdErr = NO;
         NSPipe *errorPipe = nil;
         
 		// configure stderr if required
-        if (captureStdErr) {
+        if (self.captureStdErr) {
             errorPipe = [NSPipe pipe];
             if (!errorPipe) {
                 [NSException raise:MGSExternalScriptRunnerException format:@"Cannot allocate error pipe"];
