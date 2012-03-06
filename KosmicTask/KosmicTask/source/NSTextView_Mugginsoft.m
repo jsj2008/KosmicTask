@@ -81,9 +81,13 @@ static char toggleKey;
         horizontallyResizable = YES;
 	}
 
+#ifdef MGS_DEBUG_TEXT_VIEW
+    
     NSLog(@"Container size: %@", NSStringFromSize(containerSize));
     NSLog(@"Max size: %@", NSStringFromSize(maxSize));
     NSLog(@"Min size: %@", NSStringFromSize(minSize));
+
+#endif
     
     // assign wrap properties
     [self setMinSize:contentSize];

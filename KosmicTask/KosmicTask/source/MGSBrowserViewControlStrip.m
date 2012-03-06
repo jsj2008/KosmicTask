@@ -34,6 +34,7 @@
 		_segmentToSelectWhenNotHidden = BROWSER_TASK_SEGMENT_INDEX;
 		browserViewVisible = YES;	// all views are loaded initially
 		
+        
 	}
 	
 	return self;
@@ -190,7 +191,13 @@
 						  [NSNumber numberWithInteger:viewState], MGSNoteViewStateKey,
 						  nil];
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteViewConfigChangeRequest object:self userInfo:dict];
-	
+
+#ifdef MGS_DEBUG_BUTTON_STATE	
+    
+    NSLog(@"groupToggle showsStateBy: %d showsHighlightsBy: %d", [[groupToggle cell] showsStateBy], [[groupToggle cell] highlightsBy]);
+
+#endif
+    
 }
 
 #pragma mark NSNotificationCenter callbacks

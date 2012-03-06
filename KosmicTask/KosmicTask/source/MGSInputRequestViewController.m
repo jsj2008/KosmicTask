@@ -110,9 +110,22 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	// curiously this causes the class to fail if the button type is changed !
 	// make sure that the button mode is toggle otherwise the binding will fail.
 	// cannot assert this. [[NSButton cell] setButtonType:NSToggleButton] exist but no -buttonType method exists.
+    /*
+     even though a template image is set i cannot get the following button
+     to display the highlighted template in the on state.
+     a similar button the browser control strip does work as expected
+     but for some reason I cannot get the desired behaviour here.
+     even duplicating the browser control strip button and using it here fails.
+     */
     [[lockButton cell] setButtonType:NSToggleButton];
 	[lockButton bind:NSValueBinding toObject:self withKeyPath:@"keepActionDisplayed" options:nil];
 
+#ifdef MGS_DEBUG_BUTTON_STATE
+    
+    NSLog(@"LockButton showsStateBy: %d showsHighlightsBy: %d", [[lockButton cell] showsStateBy], [[lockButton cell] highlightsBy]);
+    
+#endif
+    
 	// bind the sync result button
 	bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSValueTransformer valueTransformerForName:NSNegateBooleanTransformerName], NSValueTransformerBindingOption, nil];
 	[syncActionButton bind:NSEnabledBinding toObject:self withKeyPath:@"indexMatchesPartnerIndex" options:bindingOptions];
