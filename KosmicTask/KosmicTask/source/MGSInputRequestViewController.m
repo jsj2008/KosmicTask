@@ -36,7 +36,8 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 - (void)markAsReadyIfNoResults;
 @end
 
-
+#pragma mark -
+#pragma mark Properties
 @implementation MGSInputRequestViewController
 @synthesize delegate = _delegate;
 @synthesize action = _action;
@@ -54,6 +55,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 @synthesize selectedIndex = _selectedIndex;
 @synthesize isProcessing = _isProcessing;
 
+#pragma mark -
 #pragma mark Instance control
 
 /* 
@@ -108,6 +110,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	// curiously this causes the class to fail if the button type is changed !
 	// make sure that the button mode is toggle otherwise the binding will fail.
 	// cannot assert this. [[NSButton cell] setButtonType:NSToggleButton] exist but no -buttonType method exists.
+    [[lockButton cell] setButtonType:NSToggleButton];
 	[lockButton bind:NSValueBinding toObject:self withKeyPath:@"keepActionDisplayed" options:nil];
 
 	// bind the sync result button
@@ -126,6 +129,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	[self updateIndexMatchesPartnerIndex];
 }
 
+#pragma mark -
 #pragma mark KVO
 /*
  
@@ -213,6 +217,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	} 
 }
 
+#pragma mark -
 #pragma mark Result partner handling
 /*
  
@@ -260,6 +265,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	}
 }
 
+#pragma mark -
 #pragma mark Action selection
 /*
  
@@ -365,6 +371,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	[self setSelectedActionIndex:idx];
 }
 
+#pragma mark -
 #pragma mark Notification callbacks
 /*
  
@@ -383,6 +390,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	}
 }
 
+#pragma mark -
 #pragma mark Interface handling
 
 /*
@@ -418,6 +426,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	[detachButton setHidden:!value];
 }
 
+#pragma mark -
 #pragma mark Parameter handling
 /*
  
@@ -429,6 +438,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	[_parameterViewManager resetToDefaultValue];
 }
 
+#pragma mark -
 #pragma mark Can do operation
 /*
  
@@ -478,6 +488,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	return YES;
 }
 
+#pragma mark -
 #pragma mark Operation
 /*
  
@@ -495,6 +506,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	}
 }
 
+#pragma mark -
 #pragma mark Window handling
 /*
  
@@ -530,6 +542,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	return NO;
 }
 
+#pragma mark -
 #pragma mark Splitview handling
 /*
  
@@ -543,6 +556,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 
 @end
 
+#pragma mark -
 @implementation MGSInputRequestViewController (Private)
 /*
  
