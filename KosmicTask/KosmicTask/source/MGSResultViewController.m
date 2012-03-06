@@ -120,7 +120,7 @@ static BOOL applicationMenuConfigured = NO;
 	// note that we enable editing even though we don't store the edits back into the result.
 	//
     //=======================================================================================
-	[_textView setLineWrap:NO];
+	[_textView setLineWrap:YES];
 	// glyph generation crash was occurring when 2MB text loaded into two textviews in
 	// two separate windows.
 	// crash was occurring during background layout.

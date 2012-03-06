@@ -57,28 +57,43 @@ static char toggleKey;
  */
 - (void)setLineWrap:(BOOL)wrap
 {
+    // get control properties
 	NSScrollView *textScrollView = [self enclosingScrollView];
-	NSSize contentSize = [textScrollView contentSize];
-	[self setMinSize:contentSize];
 	NSTextContainer *textContainer = [self textContainer];
-	
-	if (wrap) {
-		
-		[textScrollView setHasHorizontalScroller:YES];
-		[textContainer setContainerSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
-		[textContainer setWidthTracksTextView: YES];
-		[self setMaxSize:NSMakeSize([self frame].size.width, CGFLOAT_MAX)];
-		[self setHorizontallyResizable: NO];
-		
-	} else {
-		
-		[textScrollView setHasHorizontalScroller:YES];
-		[textContainer setContainerSize:NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX)];
-		[textContainer setWidthTracksTextView: NO];
-		[self setMaxSize:NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX)];
-		[self setHorizontallyResizable: YES];
+
+    // content view is clipview
+	NSSize contentSize = [textScrollView contentSize];  
+    
+    // define wrap properties
+    BOOL hasHorizontalScroller = YES;
+    NSSize containerSize = NSMakeSize(contentSize.width, CGFLOAT_MAX);
+    BOOL widthTracksTextView = YES;
+	NSSize maxSize =  containerSize; // NSMakeSize([self frame].size.width, CGFLOAT_MAX);
+	NSSize minSize =  containerSize;
+    BOOL horizontallyResizable = NO;
+    
+    // define non wrap properties
+	if (!wrap) {
+        containerSize = NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX);
+        widthTracksTextView = NO;
+        maxSize =  containerSize;
+        minSize = contentSize;
+        horizontallyResizable = YES;
 	}
-	
+
+    NSLog(@"Container size: %@", NSStringFromSize(containerSize));
+    NSLog(@"Max size: %@", NSStringFromSize(maxSize));
+    NSLog(@"Min size: %@", NSStringFromSize(minSize));
+    
+    // assign wrap properties
+    [self setMinSize:contentSize];
+    [textScrollView setHasHorizontalScroller:hasHorizontalScroller];
+    [textContainer setContainerSize:containerSize];
+    [textContainer setWidthTracksTextView:widthTracksTextView];
+    [self setMaxSize:maxSize];
+    [self setHorizontallyResizable: horizontallyResizable];
+
+    // invalidate the glyph layout
 	[[self layoutManager] textContainerChangedGeometry:textContainer];
 	
 	// associate toggle status - saves having to subclass
