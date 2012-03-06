@@ -192,8 +192,10 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	[positionTextField bind:NSValueBinding toObject:self withKeyPath:@"resultPositionString" options:bindingOptions];
 	
 	// task result lock button
+    [[taskResultLockButton cell] setButtonType:NSToggleButton];
+    [[taskResultLockButton cell] setBackgroundStyle:NSBackgroundStyleRaised];
 	[taskResultLockButton bind:NSValueBinding toObject:self withKeyPath:@"taskResultDisplayLocked" options:nil];
-	
+    
 	// result observing
 	[_resultController addObserver:self forKeyPath:@"selectionIndex" options:NSKeyValueObservingOptionNew context:MGSResultSelectionIndexContext]; 
 	

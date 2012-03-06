@@ -34,7 +34,12 @@
 		_segmentToSelectWhenNotHidden = BROWSER_TASK_SEGMENT_INDEX;
 		browserViewVisible = YES;	// all views are loaded initially
 		
-        
+        [[groupToggle cell] setButtonType:NSToggleButton];
+        [[groupToggle cell] setBackgroundStyle:NSBackgroundStyleRaised];
+
+        [[sidebarToggle cell] setButtonType:NSToggleButton];
+        [[sidebarToggle cell] setBackgroundStyle:NSBackgroundStyleRaised];
+       
 	}
 	
 	return self;
@@ -194,7 +199,12 @@
 
 #ifdef MGS_DEBUG_BUTTON_STATE	
     
-    NSLog(@"groupToggle showsStateBy: %d showsHighlightsBy: %d", [[groupToggle cell] showsStateBy], [[groupToggle cell] highlightsBy]);
+    NSLog(@"groupToggle showsStateBy: %d showsHighlightsBy: %d bezelStyle: %d backgroundStyle: %d interiorBackgroundStyle: %d", 
+            [[groupToggle cell] showsStateBy], 
+            [[groupToggle cell] highlightsBy],
+            [[groupToggle cell] bezelStyle],
+          [[groupToggle cell] backgroundStyle],
+          [[groupToggle cell] interiorBackgroundStyle]);
 
 #endif
     

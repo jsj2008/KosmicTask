@@ -107,22 +107,23 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 									[NSString stringWithFormat:format, 0, 0], NSNullPlaceholderBindingOption, nil];
 	[positionTextField bind:NSValueBinding toObject:self withKeyPath:@"actionPositionString" options:bindingOptions];
 	
-	// curiously this causes the class to fail if the button type is changed !
-	// make sure that the button mode is toggle otherwise the binding will fail.
-	// cannot assert this. [[NSButton cell] setButtonType:NSToggleButton] exist but no -buttonType method exists.
-    /*
-     even though a template image is set i cannot get the following button
-     to display the highlighted template in the on state.
-     a similar button the browser control strip does work as expected
-     but for some reason I cannot get the desired behaviour here.
-     even duplicating the browser control strip button and using it here fails.
+	/*
+     In order for the binding to take NSToggleButton must be set.
+     In order ofr the template to be highlighted in the on state NSBackgroundStyleRaised
+     must be applied.
      */
     [[lockButton cell] setButtonType:NSToggleButton];
+    [[lockButton cell] setBackgroundStyle:NSBackgroundStyleRaised];
 	[lockButton bind:NSValueBinding toObject:self withKeyPath:@"keepActionDisplayed" options:nil];
 
 #ifdef MGS_DEBUG_BUTTON_STATE
     
-    NSLog(@"LockButton showsStateBy: %d showsHighlightsBy: %d", [[lockButton cell] showsStateBy], [[lockButton cell] highlightsBy]);
+    NSLog(@"LockButton showsStateBy: %d showsHighlightsBy: %d bezelStyle: %d backgroundStyle: %d interiorBackgroundStyle: %d", 
+            [[lockButton cell] showsStateBy], 
+            [[lockButton cell] highlightsBy], 
+            [[lockButton cell] bezelStyle],
+            [[lockButton cell] backgroundStyle],
+            [[lockButton cell] interiorBackgroundStyle]);
     
 #endif
     
