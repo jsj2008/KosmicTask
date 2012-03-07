@@ -109,11 +109,15 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	
 	/*
      In order for the binding to take NSToggleButton must be set.
-     In order ofr the template to be highlighted in the on state NSBackgroundStyleRaised
+     In order for the template to be highlighted in the on state NSBackgroundStyleRaised
      must be applied.
      */
+    
+    // configure toggle button which highlights template image in On state
     [[lockButton cell] setButtonType:NSToggleButton];
     [[lockButton cell] setBackgroundStyle:NSBackgroundStyleRaised];
+    [lockButton setFocusRingType:NSFocusRingTypeNone];
+    
 	[lockButton bind:NSValueBinding toObject:self withKeyPath:@"keepActionDisplayed" options:nil];
 
 #ifdef MGS_DEBUG_BUTTON_STATE

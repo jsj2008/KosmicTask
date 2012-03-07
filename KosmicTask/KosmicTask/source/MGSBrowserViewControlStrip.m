@@ -34,11 +34,15 @@
 		_segmentToSelectWhenNotHidden = BROWSER_TASK_SEGMENT_INDEX;
 		browserViewVisible = YES;	// all views are loaded initially
 		
+        // configure toggle button which highlights template image in On state
         [[groupToggle cell] setButtonType:NSToggleButton];
         [[groupToggle cell] setBackgroundStyle:NSBackgroundStyleRaised];
-
+        [groupToggle setFocusRingType:NSFocusRingTypeNone];
+        
+        // configure toggle button which highlights template image in On state
         [[sidebarToggle cell] setButtonType:NSToggleButton];
         [[sidebarToggle cell] setBackgroundStyle:NSBackgroundStyleRaised];
+        [sidebarToggle setFocusRingType:NSFocusRingTypeNone];
        
 	}
 	

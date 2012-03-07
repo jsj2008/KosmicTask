@@ -192,8 +192,11 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	[positionTextField bind:NSValueBinding toObject:self withKeyPath:@"resultPositionString" options:bindingOptions];
 	
 	// task result lock button
+    // configure toggle button which highlights template image in On state
     [[taskResultLockButton cell] setButtonType:NSToggleButton];
     [[taskResultLockButton cell] setBackgroundStyle:NSBackgroundStyleRaised];
+    [taskResultLockButton setFocusRingType:NSFocusRingTypeNone]; 
+    
 	[taskResultLockButton bind:NSValueBinding toObject:self withKeyPath:@"taskResultDisplayLocked" options:nil];
     
 	// result observing
