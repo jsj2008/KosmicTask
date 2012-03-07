@@ -915,10 +915,16 @@ commonExit:
 	// shell error/logging sent via stderr
     //
     // logging should now be sent via a separate request in which
-    // case it will not appear in the result dict
+    // case it will not appear in the result dict. if it does however
+    // we want to direct it to the logging view of the output request.
     //
 	NSString *stdErrString = [[payload dictionary] objectForKey:MGSScriptKeyStdError];
 	if (stdErrString) {
+        
+        // add log string to output view
+        [_outputViewController addLogString:stdErrString];
+        
+        /*
 		stdErrString = [NSString stringWithFormat:@"\n\nSTDERR output:\n\n%@", stdErrString];
 		
 		NSString *errorKey = [[MGSResultFormat errorKeys] objectAtIndex:0];
@@ -929,7 +935,7 @@ commonExit:
 			resultObject = [NSArray arrayWithObjects:resultObject, stdErrorDict, nil];
 		} else {
 			resultObject = stdErrorDict;
-		}
+		}*/
 	}
 	
 	// supply default result object if none defined

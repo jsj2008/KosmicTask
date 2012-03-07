@@ -140,16 +140,23 @@ static MGSClientRequestManager *_sharedController = nil;
 	// we want the owner to receive status updates as the request proceeds.
 	netRequest.sendUpdatesToOwner = YES;
 	
+    // use child request logging
+    BOOL useChildRequestLogging = YES;
+    
     /*=======================================
      create a child logging request
      *=======================================
      */
-    NSMutableDictionary *logDictionary = [self scriptDictForCommand:MGSScriptCommandLogMesgUUID parameter:netRequest.requestMessage.messageUUID];
-   
-    // create child request
-    MGSNetRequest *logRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:logDictionary];
-    logRequest.requestType = kMGSRequestTypeLogging;
-    [netRequest addChildRequest:logRequest];
+    if (useChildRequestLogging) {
+        NSMutableDictionary *logDictionary = [self scriptDictForCommand:MGSScriptCommandLogMesgUUID parameter:netRequest.requestMessage.messageUUID];
+       
+        // create child request
+        MGSNetRequest *logRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:logDictionary];
+        logRequest.requestType = kMGSRequestTypeLogging;
+        
+        // add the child request
+        [netRequest addChildRequest:logRequest];
+    }
     
 	// send the request 
 	[self sendRequestOnClient:netRequest];
