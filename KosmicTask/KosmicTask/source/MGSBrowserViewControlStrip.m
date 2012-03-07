@@ -38,12 +38,16 @@
         [[groupToggle cell] setButtonType:NSToggleButton];
         [[groupToggle cell] setBackgroundStyle:NSBackgroundStyleRaised];
         [groupToggle setFocusRingType:NSFocusRingTypeNone];
-        
+        [groupToggle setBezelStyle:NSRoundRectBezelStyle];
+        [groupToggle setBordered:NO];
+
         // configure toggle button which highlights template image in On state
         [[sidebarToggle cell] setButtonType:NSToggleButton];
         [[sidebarToggle cell] setBackgroundStyle:NSBackgroundStyleRaised];
         [sidebarToggle setFocusRingType:NSFocusRingTypeNone];
-       
+        [sidebarToggle setBezelStyle:NSRoundRectBezelStyle];
+        [sidebarToggle setBordered:NO];
+
 	}
 	
 	return self;

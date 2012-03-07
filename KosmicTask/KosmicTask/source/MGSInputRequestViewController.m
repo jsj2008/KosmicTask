@@ -117,6 +117,8 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
     [[lockButton cell] setButtonType:NSToggleButton];
     [[lockButton cell] setBackgroundStyle:NSBackgroundStyleRaised];
     [lockButton setFocusRingType:NSFocusRingTypeNone];
+    [lockButton setBezelStyle:NSRoundRectBezelStyle];
+    [lockButton setBordered:NO];
     
 	[lockButton bind:NSValueBinding toObject:self withKeyPath:@"keepActionDisplayed" options:nil];
 

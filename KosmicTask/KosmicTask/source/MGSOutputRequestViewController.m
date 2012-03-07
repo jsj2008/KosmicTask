@@ -196,6 +196,8 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
     [[taskResultLockButton cell] setButtonType:NSToggleButton];
     [[taskResultLockButton cell] setBackgroundStyle:NSBackgroundStyleRaised];
     [taskResultLockButton setFocusRingType:NSFocusRingTypeNone]; 
+    [taskResultLockButton setBezelStyle:NSRoundRectBezelStyle];
+    [taskResultLockButton setBordered:NO];
     
 	[taskResultLockButton bind:NSValueBinding toObject:self withKeyPath:@"taskResultDisplayLocked" options:nil];
     
