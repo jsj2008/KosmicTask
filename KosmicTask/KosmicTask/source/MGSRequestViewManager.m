@@ -91,7 +91,11 @@ static MGSRequestViewManager *_sharedInstance = nil;
  */
 - (void)removeObject:(MGSRequestViewController *)controller
 {
+    // remove from our collection
 	[_controllers removeObject:controller];
+    
+    // call dispose
+    [controller dispose];
 }
 
 /*

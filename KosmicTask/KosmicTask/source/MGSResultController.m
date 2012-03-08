@@ -81,4 +81,15 @@
 	[super finalize];
 }
 
+/*
+ 
+ - dispose
+ 
+ */
+- (void)dispose
+{
+    for (MGSResult *result in [self arrangedObjects]) {
+        [result dispose];
+    }
+}
 @end

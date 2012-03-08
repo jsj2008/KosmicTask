@@ -574,6 +574,17 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	return [_splitDragView frame];
 }
 
+#pragma mark -
+#pragma mark Resource management
+/*
+ 
+ - dispose
+ 
+ */
+- (void)dispose
+{
+}
+
 @end
 
 #pragma mark -

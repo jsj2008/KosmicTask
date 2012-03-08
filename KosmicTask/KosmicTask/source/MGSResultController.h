@@ -15,6 +15,7 @@
 
 }
 
+- (void)dispose;
 //- (MGSResult *)addResult:(id)resultObject forAction:(MGSTaskSpecifier *)action;
 //- (void)setSelectedResult:(MGSResult *)result;
 

@@ -176,12 +176,14 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 
 /*
  
- dispose
+ - dispose
  
  */
 - (void)dispose
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_inputViewController dispose];
+    [_outputViewController dispose];
 }
 #pragma mark KVO
 /*

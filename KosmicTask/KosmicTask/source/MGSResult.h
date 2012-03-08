@@ -36,5 +36,5 @@
 - (NSMutableAttributedString *)resultString;
 - (NSString *)shortResultString;
 - (NSArray *)resultTreeArray;
-
+- (void)dispose;
 @end

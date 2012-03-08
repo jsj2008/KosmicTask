@@ -849,6 +849,18 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 }
 
 #pragma mark -
+#pragma mark Resource management
+/*
+ 
+ - dispose
+ 
+ */
+- (void)dispose
+{
+    [_resultController dispose];
+}
+
+#pragma mark -
 #pragma mark MGSRequestProgress delegate methods
 
 /*

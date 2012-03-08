@@ -65,6 +65,7 @@ extern NSString *MGSIsProcessingContext;
 - (IBAction)showNextAction:(id)sender;
 - (BOOL)canExecute;
 - (BOOL)canDetachActionAsWindow;
+- (void)dispose;
 
 @property BOOL isProcessing;
 @property BOOL allowDetach;

@@ -219,16 +219,6 @@
 	return _resultTree;
 }
 
-/*
- 
- finalize
- 
- */
-- (void)finalize
-{
-	MLog(DEBUGLOG, @"finalized");
-	[super finalize];
-}
 
 /*
  
@@ -248,6 +238,45 @@
 	
 	// remove CRLF otherwise text may wrap
 	return [stringValue mgs_stringWithOccurrencesOfCrLfRemoved];
+}
+
+#pragma mark -
+#pragma mark attachments
+
+/*
+ 
+ - setAttachements:
+ 
+ */
+- (void)setAttachments:(MGSNetAttachments *)theAttachments
+{
+    _attachments = theAttachments;
+    [_attachments incrementReferenceCount];
+}
+
+#pragma mark -
+#pragma mark memory management
+/*
+ 
+ finalize
+ 
+ */
+- (void)finalize
+{
+	MLog(DEBUGLOG, @"finalized");
+	[super finalize];
+}
+
+#pragma mark -
+#pragma mark resource management
+/*
+ 
+ - dispose
+ 
+ */
+- (void)dispose
+{
+    [_attachments decrementReferenceCount];
 }
 
 @end

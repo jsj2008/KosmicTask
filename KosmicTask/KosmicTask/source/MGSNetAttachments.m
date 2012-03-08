@@ -14,7 +14,12 @@
 
 static NSString *MGSAttachmentSeparator = @";";
 
+// class extension
+@interface MGSNetAttachments()
+@property NSUInteger referenceCount;
+@end
 
+// Private category
 @interface MGSNetAttachments(Private)
 - (BOOL)scanHeaderRepresentation:(NSString *)rep;
 @end
@@ -25,6 +30,7 @@ static NSString *MGSAttachmentSeparator = @";";
 @synthesize attachmentPreviewImages = _attachmentPreviewImages;
 @synthesize browserImagesController = _browserImagesController;
 @synthesize delegate;
+@synthesize referenceCount = _referenceCount;
 
 /*
  
@@ -66,6 +72,9 @@ static NSString *MGSAttachmentSeparator = @";";
 				return nil;
 			}
 		}
+        
+        _disposed= NO;
+        _referenceCount = 0;
 	}
 	
 	return self;
@@ -385,25 +394,69 @@ static NSString *MGSAttachmentSeparator = @";";
 	return _operationQueue;
 }
 
+#pragma mark -
+#pragma mark GC memory management
 /*
  
- finalize
+ - incrementReferenceCount
  
  */
-- (void)finalize
+- (void)incrementReferenceCount
 {
-	MLog(DEBUGLOG, @"MGSNetAttachments finalized.");
+    self.referenceCount++;
+}
+/*
+ 
+ - decrementReferenceCount
+ 
+ */
+- (void)decrementReferenceCount
+{
+    if (self.referenceCount <= 0) {
+        MLogInfo(@"Reference count is already 0.");
+        return;
+    }
+    
+    --self.referenceCount;
+    
+    // if reference count is 0 we dispose of our resources
+    if (self.referenceCount == 0) {
+        [self dispose];
+    }
+}
+/*
+ 
+ - dispose
+ 
+ This method used to be -finalize but resurrection errors were occuring
+ in MGSNetAttachment. Hence we manually call dispose when required.
+ 
+ -finalize cannot safely access its ivars and pass them to other objects 
+ as the objects and its ivars may get collected in the same collection cycle.
+ if the already finalized ivar then gets referenced by another object during
+ the finalization of self we get a resurrection error.
+ 
+ 
+ */
+- (void)dispose
+{
+    if (_disposed) {
+		MLogInfo(@"Dispose already called");
+		return;
+	}
+	_disposed = YES;
 	
 	// dispose of our attachments
 	for (MGSNetAttachment *attachment in _attachments) {
 		[attachment dispose];
 	}
 	
+    // delete the storage facility
 	if (_storageFacility) {
 		[_storageFacility deleteStorageFacility];
 	}
 	
-	[super finalize];
+    MLog(DEBUGLOG, @"MGSNetAttachments disposed.");
 }
 
 @end

@@ -91,7 +91,7 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	if ((self = [super init])) {
 		_validatedLength = 0;
 		_requiredLength = 0;
-		_filePath = filePath;
+		_filePath = [filePath copy];
 		_readHandle = nil;
 		_writeHandle = nil;
 		_permitFileRemoval = NO;
@@ -339,7 +339,7 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	
 	/*
 	 
-	 if file is on the temp storage path the permit its removal
+	 if file is on the temp storage path then permit its removal
 	 
 	 */
 	if ([_filePath hasPrefix:[[MGSTempStorage sharedController] storageFacility]]) {
