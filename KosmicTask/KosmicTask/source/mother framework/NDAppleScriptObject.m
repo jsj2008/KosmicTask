@@ -322,11 +322,10 @@ const NSString			* NDAppleScriptPartialResult = @"Error Partial Result";
 	return self;
 }
 
+#pragma mark -
+#pragma mark Memory management
 /*
- * JM 18-03-08
- * GC mod
- * avoid activity in finalize
- * call dispose manually.
+ * - dispose
  */
 -(void)dispose
 {
@@ -350,11 +349,15 @@ const NSString			* NDAppleScriptPartialResult = @"Error Partial Result";
 	_disposed = YES;
 }
 
-
+/*
+ 
+ - finalize
+ 
+ */
 - (void)finalize
 {
 	if (!_disposed) {
-		[self dispose];
+		NSLog(@"Object finalized without prior call to dispose.");
 	}
 	
 	[super finalize];
