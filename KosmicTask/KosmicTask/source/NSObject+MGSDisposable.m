@@ -9,7 +9,16 @@
 #import "NSObject+MGSDisposable.h"
 #import <objc/runtime.h>
 
+// enable logging
+#define MGS_DISPOSAL_LOG
+
+// disable logging
+// comment the line below to enable logging
+#undef MGS_DISPOSAL_LOG
+
 static char mgsDisposableKey;
+NSString * const MGSAllowDisposalKey = @"MGSAllowDisposal";
+NSString * const MGSAllowDisposaValue = @"Yes";
 
 @implementation NSObject (MGSDisposable)
 
@@ -20,6 +29,11 @@ static char mgsDisposableKey;
  */
 - (void)mgsMakeDisposable
 {
+    
+#ifdef MGS_DISPOSAL_LOG
+    [self mgsLogSelector:_cmd];
+#endif 
+    
     // check if already disposable
     if ([self isMgsDisposable]) {
         return;
@@ -73,6 +87,11 @@ static char mgsDisposableKey;
  */
 - (void)mgsRetainDisposable
 {
+    
+#ifdef MGS_DISPOSAL_LOG
+    [self mgsLogSelector:_cmd];
+#endif 
+    
     if (![self isMgsDisposable]) return;
     if ([self isMgsDisposed]) return;
     
@@ -91,6 +110,11 @@ static char mgsDisposableKey;
  */
 - (void)mgsReleaseDisposable
 {
+    
+#ifdef MGS_DISPOSAL_LOG
+    [self mgsLogSelector:_cmd];
+#endif   
+    
     if (![self isMgsDisposable]) return;
     if ([self isMgsDisposed]) return;
     
@@ -99,13 +123,13 @@ static char mgsDisposableKey;
         return;
     }
 
-    // dispose prior to reference count update
+    // dispose when reference count == 1
     if (refCount == 1) {
+        [self mgsAssociateValue:MGSAllowDisposaValue withKey:MGSAllowDisposalKey];
         [self mgsDispose];
+    } else {
+        [self mgsAssociateValue:[NSNumber numberWithUnsignedInteger:--refCount] withKey:&mgsDisposableKey];
     }
-    
-    [self mgsAssociateValue:[NSNumber numberWithUnsignedInteger:--refCount] withKey:&mgsDisposableKey];
-    
 }
 
 /*
@@ -115,11 +139,28 @@ static char mgsDisposableKey;
  */
 - (void)mgsDispose
 {
+    
+#ifdef MGS_DISPOSAL_LOG
+    [self mgsLogSelector:_cmd];
+#endif
+    
     // we must be disposable
     if (![self isMgsDisposable]) return;
     
-    // log if already disposed
+    // log and quit if already disposed
     if ([self isMgsDisposedWithLogIfTrue]) return;
+    
+    // disposal is only valid when the allow disposal key is found
+    if (![self mgsAssociatedValueForKey:MGSAllowDisposalKey]) {
+        NSLog(@"Disposal is not valid at this time.");
+        return;
+    }
+    
+    // mark this object as disposed
+    [self mgsAssociateValue:[NSNumber numberWithUnsignedInteger:0] withKey:&mgsDisposableKey];
+    
+    // remove the allow disposal key
+    [self mgsAssociateValue:nil withKey:MGSAllowDisposalKey];
 }
 
 /*
@@ -169,5 +210,14 @@ static char mgsDisposableKey;
 	return objc_getAssociatedObject(self, key);
 }
 
+/*
+ 
+ - mgsLogSelector:
+ 
+ */
+- (void)mgsLogSelector:(SEL)sel
+{
+     NSLog(@"%@ received %@.", self, NSStringFromSelector(sel));
+}
 
 @end

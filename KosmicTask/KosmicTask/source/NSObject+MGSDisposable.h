@@ -21,4 +21,5 @@
 - (void)mgsAssociateValue:(id)value withKey:(void *)key;
 - (void)mgsWeaklyAssociateValue:(id)value withKey:(void *)key;
 - (id)mgsAssociatedValueForKey:(void *)key;
+- (void)mgsLogSelector:(SEL)sel;
 @end

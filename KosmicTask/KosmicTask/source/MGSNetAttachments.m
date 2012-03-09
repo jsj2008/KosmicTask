@@ -66,6 +66,8 @@ static NSString *MGSAttachmentSeparator = @";";
 		//[_browserImagesController bind:NSContentArrayBinding toObject:self withKeyPath:@"attachmentPreviewImages" options:nil];
 		[_browserImagesController setContent:_attachmentPreviewImages];
 		
+        [self mgsMakeDisposable];
+        
 		if (headerRepresentation) {
 			if (![self scanHeaderRepresentation:headerRepresentation]) {
 				return nil;
@@ -391,10 +393,10 @@ static NSString *MGSAttachmentSeparator = @";";
 }
 
 #pragma mark -
-#pragma mark resource management
+#pragma mark MGSDisposable category
 /*
  
- - dispose
+ - mgsDispose
  
  This method used to be -finalize but resurrection errors were occuring
  in MGSNetAttachment. Hence we manually call dispose when required.
@@ -406,10 +408,10 @@ static NSString *MGSAttachmentSeparator = @";";
  
  
  */
-- (void)dispose
+- (void)mgsDispose
 {
     // check if already disposed
-    if (self.disposedWithLogIfTrue) {
+    if ([self isMgsDisposedWithLogIfTrue]) {
 		return;
 	}
 	
@@ -423,9 +425,11 @@ static NSString *MGSAttachmentSeparator = @";";
 		[_storageFacility deleteStorageFacility];
 	}
 	
+#ifdef MGS_LOG_DISPOSE
     MLog(DEBUGLOG, @"MGSNetAttachments disposed.");
+#endif
     
-    [super dispose];
+    [super mgsDispose];
 }
 
 @end

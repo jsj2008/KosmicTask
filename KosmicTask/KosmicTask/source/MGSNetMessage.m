@@ -600,30 +600,10 @@ static unsigned long int messageSequenceCounter = 0;
 	MLog(DEBUGLOG, @"MGSNetMessage disposed");
 #endif
     
-    // we no longer need to retain the attachments
-    [self.attachments releaseDisposable];
+    // release the disposable attachments
+    [self.attachments mgsReleaseDisposable];
     
     [super mgsDispose];
-}
-
-#pragma mark -
-#pragma mark Memory management
-/*
- 
- - finalize
- 
- */
-- (void)finalize
-{
-    if (!_disposed) {
-        MLogInfo(@"%@: -finalize received without prior -dispose.", self);
-    }
-    
-#ifdef MGS_LOG_FINALIZE
-	MLog(MEMORYLOG, @"MGSNetMessage finalized");
-#endif
-    
-	[super finalize];
 }
 
 #pragma mark -

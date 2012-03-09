@@ -245,13 +245,14 @@
 
 /*
  
- - setAttachements:
+ - setAttachments:
  
  */
 - (void)setAttachments:(MGSNetAttachments *)theAttachments
 {
+    [_attachments mgsReleaseDisposable];
     _attachments = theAttachments;
-    [_attachments retainDisposable];
+    [_attachments mgsRetainDisposable];
 }
 
 #pragma mark -
@@ -286,7 +287,7 @@
         return;
     }
     _disposed = YES;
-    [_attachments releaseDisposable];
+    [_attachments mgsReleaseDisposable];
 }
 
 @end

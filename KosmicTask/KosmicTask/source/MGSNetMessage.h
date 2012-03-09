@@ -57,7 +57,6 @@ extern NSString *MGSApplicationKeyRealTimeLogging;
 	MGSNetHeader *_header;					// header
 	unsigned long long _totalBytes;			// message length including attachments
 	unsigned long long _bytesTransferred;	// the number of bytes that have been transferred over the network
-    BOOL _disposed;
 }
 
 @property NSInteger expectedLength;
