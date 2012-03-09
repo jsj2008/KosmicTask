@@ -22,6 +22,7 @@
 	eMGSMotherResultView _viewMode;					// view mode
 	NSMutableAttributedString * __weak _resultString;		// make this weak so that it becomes deallocated when no longer reqd
 	NSArray * __weak _resultTree;					// make weak
+    BOOL _disposed;
 }
 
 @property id object;

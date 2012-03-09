@@ -40,6 +40,10 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AB00FB7D0D43AE9B00F535EE /* MGSHistoryTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00FB7C0D43AE9B00F535EE /* MGSHistoryTableView.m */; };
+		AB019244150A2EBC00DA7747 /* MGSDisposableObject.h in Headers */ = {isa = PBXBuildFile; fileRef = AB019242150A2EBA00DA7747 /* MGSDisposableObject.h */; };
+		AB019245150A2EBC00DA7747 /* MGSDisposableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AB019243150A2EBB00DA7747 /* MGSDisposableObject.m */; };
+		AB019248150A540600DA7747 /* NSObject+MGSDisposable.h in Headers */ = {isa = PBXBuildFile; fileRef = AB019246150A540500DA7747 /* NSObject+MGSDisposable.h */; };
+		AB019249150A540600DA7747 /* NSObject+MGSDisposable.m in Sources */ = {isa = PBXBuildFile; fileRef = AB019247150A540500DA7747 /* NSObject+MGSDisposable.m */; };
 		AB01939211C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AB01939011C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.h */; };
 		AB01939311C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01939111C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.m */; };
 		AB01939A11C79A3700446FE5 /* MGSLanguageDocumentResourcesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AB01939811C79A3600446FE5 /* MGSLanguageDocumentResourcesManager.h */; };
@@ -3400,6 +3404,10 @@
 		8D1107320486CEB800E47090 /* KosmicTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KosmicTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB00FB7B0D43AE9B00F535EE /* MGSHistoryTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSHistoryTableView.h; sourceTree = "<group>"; };
 		AB00FB7C0D43AE9B00F535EE /* MGSHistoryTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSHistoryTableView.m; sourceTree = "<group>"; };
+		AB019242150A2EBA00DA7747 /* MGSDisposableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSDisposableObject.h; sourceTree = "<group>"; };
+		AB019243150A2EBB00DA7747 /* MGSDisposableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSDisposableObject.m; sourceTree = "<group>"; };
+		AB019246150A540500DA7747 /* NSObject+MGSDisposable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MGSDisposable.h"; sourceTree = "<group>"; };
+		AB019247150A540500DA7747 /* NSObject+MGSDisposable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MGSDisposable.m"; sourceTree = "<group>"; };
 		AB01939011C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLanguageTemplateResourcesManager.h; sourceTree = "<group>"; };
 		AB01939111C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLanguageTemplateResourcesManager.m; sourceTree = "<group>"; };
 		AB01939811C79A3600446FE5 /* MGSLanguageDocumentResourcesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLanguageDocumentResourcesManager.h; sourceTree = "<group>"; };
@@ -6258,6 +6266,10 @@
 		29B97314FDCFA39411CA2CEA /* mother */ = {
 			isa = PBXGroup;
 			children = (
+				AB019246150A540500DA7747 /* NSObject+MGSDisposable.h */,
+				AB019247150A540500DA7747 /* NSObject+MGSDisposable.m */,
+				AB019242150A2EBA00DA7747 /* MGSDisposableObject.h */,
+				AB019243150A2EBB00DA7747 /* MGSDisposableObject.m */,
 				AB3F6FE5130C86DF00342F11 /* HG submodule project */,
 				AB3F5EEF130C7C5300342F11 /* MGSPythonScriptManager.m */,
 				AB777ED1130C7087000973D4 /* Git submodule projects - do not edit directly */,
@@ -8883,6 +8895,8 @@
 				AB2E6D7C12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h in Headers */,
 				ABC5BC70131E674E0020003D /* NSIndexPath+Mugginsoft.h in Headers */,
 				AB1E1AF013E1BBC4003643AC /* EMKeychain.h in Headers */,
+				AB019244150A2EBC00DA7747 /* MGSDisposableObject.h in Headers */,
+				AB019248150A540600DA7747 /* NSObject+MGSDisposable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11617,6 +11631,8 @@
 				AB2E6D7D12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m in Sources */,
 				ABC5BC71131E674E0020003D /* NSIndexPath+Mugginsoft.m in Sources */,
 				AB1E1AF113E1BBC4003643AC /* EMKeychain.m in Sources */,
+				AB019245150A2EBC00DA7747 /* MGSDisposableObject.m in Sources */,
+				AB019249150A540600DA7747 /* NSObject+MGSDisposable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

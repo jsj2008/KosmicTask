@@ -251,7 +251,7 @@
 - (void)setAttachments:(MGSNetAttachments *)theAttachments
 {
     _attachments = theAttachments;
-    [_attachments incrementReferenceCount];
+    [_attachments retainDisposable];
 }
 
 #pragma mark -
@@ -263,7 +263,9 @@
  */
 - (void)finalize
 {
-    
+    if (!_disposed) {
+        MLogInfo(@"%@-finalize receieved without prior -dispose.", self);
+    }
 #ifdef MGS_LOG_FINALIZE 
 	MLog(DEBUGLOG, @"finalized");
 #endif
@@ -280,7 +282,11 @@
  */
 - (void)dispose
 {
-    [_attachments decrementReferenceCount];
+    if (_disposed) {
+        return;
+    }
+    _disposed = YES;
+    [_attachments releaseDisposable];
 }
 
 @end

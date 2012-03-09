@@ -16,7 +16,6 @@ static NSString *MGSAttachmentSeparator = @";";
 
 // class extension
 @interface MGSNetAttachments()
-@property NSUInteger referenceCount;
 @end
 
 // Private category
@@ -30,7 +29,7 @@ static NSString *MGSAttachmentSeparator = @";";
 @synthesize attachmentPreviewImages = _attachmentPreviewImages;
 @synthesize browserImagesController = _browserImagesController;
 @synthesize delegate;
-@synthesize referenceCount = _referenceCount;
+
 
 /*
  
@@ -72,9 +71,6 @@ static NSString *MGSAttachmentSeparator = @";";
 				return nil;
 			}
 		}
-        
-        _disposed= NO;
-        _referenceCount = 0;
 	}
 	
 	return self;
@@ -395,52 +391,7 @@ static NSString *MGSAttachmentSeparator = @";";
 }
 
 #pragma mark -
-#pragma mark memory management
-/*
- 
- - finalize
- 
- */
-- (void)finalize
-{
-    if (!_disposed) {
-        MLogInfo(@"MGSNetAttachments. MEMORY LEAK. Dispose has not been called.");
-    }
-    
-    [super finalize];
-}
-
-
-#pragma mark -
-#pragma mark resourcey management
-/*
- 
- - incrementReferenceCount
- 
- */
-- (void)incrementReferenceCount
-{
-    self.referenceCount++;
-}
-/*
- 
- - decrementReferenceCount
- 
- */
-- (void)decrementReferenceCount
-{
-    if (self.referenceCount <= 0) {
-        MLogInfo(@"Reference count is already 0.");
-        return;
-    }
-    
-    --self.referenceCount;
-    
-    // if reference count is 0 we dispose of our resources
-    if (self.referenceCount == 0) {
-        [self dispose];
-    }
-}
+#pragma mark resource management
 /*
  
  - dispose
@@ -457,11 +408,10 @@ static NSString *MGSAttachmentSeparator = @";";
  */
 - (void)dispose
 {
-    if (_disposed) {
-		MLogInfo(@"Dispose already called");
+    // check if already disposed
+    if (self.disposedWithLogIfTrue) {
 		return;
 	}
-	_disposed = YES;
 	
 	// dispose of our attachments
 	for (MGSNetAttachment *attachment in _attachments) {
@@ -474,6 +424,8 @@ static NSString *MGSAttachmentSeparator = @";";
 	}
 	
     MLog(DEBUGLOG, @"MGSNetAttachments disposed.");
+    
+    [super dispose];
 }
 
 @end

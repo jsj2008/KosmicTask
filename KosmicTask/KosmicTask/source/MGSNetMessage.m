@@ -122,12 +122,12 @@ static unsigned long int messageSequenceCounter = 0;
 
 /*
  
- init
+ - init
  
  */
-- (MGSNetMessage *) init
+- (MGSNetMessage *)init
 {
-	return [[MGSNetMessage alloc] initWithTemplate:nil];
+	return [self initWithTemplate:nil];
 }
 
 /*
@@ -161,6 +161,8 @@ static unsigned long int messageSequenceCounter = 0;
 		[_messageDict setObject:[[self class] netOrigin] forKey:MGSMessageKeyOrigin];
 		
 		_header = [[MGSNetHeader alloc] init];	
+        
+        [self mgsMakeDisposable];
 	}
 	return self;
 }
@@ -580,13 +582,42 @@ static unsigned long int messageSequenceCounter = 0;
 	return _messageDict;
 }
 
+#pragma mark -
+#pragma mark MGSDisposal category
 /*
  
- finalize
+ - mgsDispose
+ 
+ */
+- (void)mgsDispose
+{
+    // check if we are already disposed
+    if ([self isMgsDisposedWithLogIfTrue]) {
+        return;
+    }
+
+#ifdef MGS_LOG_DISPOSE
+	MLog(DEBUGLOG, @"MGSNetMessage disposed");
+#endif
+    
+    // we no longer need to retain the attachments
+    [self.attachments releaseDisposable];
+    
+    [super mgsDispose];
+}
+
+#pragma mark -
+#pragma mark Memory management
+/*
+ 
+ - finalize
  
  */
 - (void)finalize
 {
+    if (!_disposed) {
+        MLogInfo(@"%@: -finalize received without prior -dispose.", self);
+    }
     
 #ifdef MGS_LOG_FINALIZE
 	MLog(MEMORYLOG, @"MGSNetMessage finalized");
@@ -595,6 +626,8 @@ static unsigned long int messageSequenceCounter = 0;
 	[super finalize];
 }
 
+#pragma mark -
+#pragma mark Attachment management
 /*
  
  attachments

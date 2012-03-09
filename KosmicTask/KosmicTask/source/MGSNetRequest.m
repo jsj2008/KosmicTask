@@ -31,6 +31,8 @@ static NSThread *networkThread = nil;
 @interface MGSNetRequest()
 + (void)runNetworkThread;
 @property (readwrite) NSUInteger flags;
+@property (readwrite) MGSNetMessage *requestMessage;
+@property (readwrite) MGSNetMessage *responseMessage;
 @end
 
 @interface MGSNetRequest(Private)
@@ -209,8 +211,11 @@ static NSThread *networkThread = nil;
  */
 - (void)resetMessages
 {
-	_requestMessage = [[MGSNetMessage alloc] init];		// request will be received from client
-	_responseMessage = [[MGSNetMessage alloc] init];	// reply will be sent to client
+	self.requestMessage = [[MGSNetMessage alloc] init];		// request will be received from client
+    [self.requestMessage mgsReleaseDisposable];
+    
+	self.responseMessage = [[MGSNetMessage alloc] init];	// reply will be sent to client
+    [self.responseMessage mgsReleaseDisposable];
 }
 
 /*
@@ -466,6 +471,32 @@ static NSThread *networkThread = nil;
 }
 
 #pragma mark -
+#pragma mark Message handling
+/*
+ 
+ - setRequestMessage:
+ 
+ */
+- (void)setRequestMessage:(MGSNetMessage *)value
+{
+    [_requestMessage mgsReleaseDisposable];
+    _requestMessage = value;
+    [_requestMessage mgsRetainDisposable];
+}
+
+/*
+ 
+ - setResponseMessage:
+ 
+ */
+- (void)setResponseMessage:(MGSNetMessage *)value
+{
+    [_responseMessage mgsReleaseDisposable];
+    _responseMessage = value;
+    [_responseMessage mgsRetainDisposable];
+}
+
+#pragma mark -
 #pragma mark Request child handling
 
 /*
@@ -544,8 +575,9 @@ static NSThread *networkThread = nil;
 		[self disconnect];
 	}
 	_status = kMGSStatusNotConnected;
-	_responseMessage = [[MGSNetMessage alloc] init];
-	
+	self.responseMessage = [[MGSNetMessage alloc] init];
+	[self.responseMessage mgsReleaseDisposable];
+    
 	if (self.prevRequest) {
 		self.prevRequest.nextRequest = nil;
 		self.prevRequest = nil;
@@ -781,10 +813,21 @@ static NSThread *networkThread = nil;
  */
 - (void)dispose
 {
+    
+#ifdef MGS_LOG_DISPOSE
 	MLog(DEBUGLOG, @"MGSNetRequest disposed");
-	
+#endif
+    
+    if (disposed) {
+        return;
+    }
+    
 	disposed = YES;
 	
+    // call dispose on messages
+    [_requestMessage mgsReleaseDisposable];
+    [_responseMessage mgsReleaseDisposable];
+    
 	// remove temporary paths
 	for (NSString *path in temporaryPaths) {
 		NSError *error = nil;
@@ -807,7 +850,7 @@ static NSThread *networkThread = nil;
 #endif
     
 	if (!disposed) {
-		MLogInfo(@"Request did not receive -dispose prior to -finalize");
+		MLogInfo(@"%@: -finalize received without prior -dispose.", self);
 	}
 	[super finalize];
 }
@@ -1094,9 +1137,12 @@ error_exit:
     _requestType = kMGSRequestTypeWorker;
 	_status = kMGSStatusNotConnected;
 	
-	_requestMessage = [[MGSNetMessage alloc] init];			// request will be received from client
-	_responseMessage = [[MGSNetMessage alloc] init];	// reply will be sent to client
-	
+	self.requestMessage = [[MGSNetMessage alloc] init];		// request will be received from client
+    [self.requestMessage mgsReleaseDisposable];
+    
+	self.responseMessage = [[MGSNetMessage alloc] init];	// reply will be sent to client
+	[self.responseMessage mgsReleaseDisposable];
+    
 	_readTimeout = -1.0;	// don't timeout
 	_writeTimeout = -1.0;	// don't timeout
 	_requestID = requestSequenceID++;

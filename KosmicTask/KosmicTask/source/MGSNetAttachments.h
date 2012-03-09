@@ -8,25 +8,25 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSNetAttachment.h"
+#import "MGSDisposableObject.h"
 
 @class MGSNetAttachment;
 @class MGSTempStorage;
 
-@interface MGSNetAttachments : NSObject <MGSNetAttachment> {
+@interface MGSNetAttachments : MGSDisposableObject <MGSNetAttachment> {
 	NSMutableArray *_attachments;
 	NSOperationQueue *_operationQueue;
 	NSMutableArray *_attachmentPreviewImages;
 	NSArrayController *_browserImagesController;
 	id delegate;
 	MGSTempStorage *_storageFacility;
-    BOOL _disposed;
-    NSUInteger _referenceCount;
+
 }
 @property (readonly) NSOperationQueue *operationQueue;
 @property (readonly) NSMutableArray *attachmentPreviewImages;
 @property (readonly) NSArrayController *browserImagesController;
 @property (assign) id delegate;
-@property (readonly) NSUInteger referenceCount;
+
 
 + (NSString *)defaultHeaderRepresentation;
 - (MGSNetAttachment *)addAttachment:(MGSNetAttachment *)attachment;
@@ -43,7 +43,4 @@
 - (unsigned long long)validatedLength;
 - (unsigned long long)requiredLength;
 - (MGSTempStorage *)storageFacility;
-- (void)incrementReferenceCount;
-- (void)decrementReferenceCount;
-- (void)dispose;
 @end
