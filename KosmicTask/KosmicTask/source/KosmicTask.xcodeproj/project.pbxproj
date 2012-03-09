@@ -41,8 +41,9 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AB00FB7D0D43AE9B00F535EE /* MGSHistoryTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00FB7C0D43AE9B00F535EE /* MGSHistoryTableView.m */; };
 		AB019244150A2EBC00DA7747 /* MGSDisposableObject.h in Headers */ = {isa = PBXBuildFile; fileRef = AB019242150A2EBA00DA7747 /* MGSDisposableObject.h */; };
-		AB019248150A540600DA7747 /* NSObject+MGSDisposable.h in Headers */ = {isa = PBXBuildFile; fileRef = AB019246150A540500DA7747 /* NSObject+MGSDisposable.h */; };
-		AB019249150A540600DA7747 /* NSObject+MGSDisposable.m in Sources */ = {isa = PBXBuildFile; fileRef = AB019247150A540500DA7747 /* NSObject+MGSDisposable.m */; };
+		AB01924E150ABE7200DA7747 /* NSObject+MGSDisposable.h in Headers */ = {isa = PBXBuildFile; fileRef = AB01924B150ABE7200DA7747 /* NSObject+MGSDisposable.h */; };
+		AB01924F150ABE7200DA7747 /* NSObject+MGSDisposable.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01924C150ABE7200DA7747 /* NSObject+MGSDisposable.m */; };
+		AB019250150ABE7200DA7747 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AB01924D150ABE7200DA7747 /* README.md */; };
 		AB01939211C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AB01939011C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.h */; };
 		AB01939311C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB01939111C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.m */; };
 		AB01939A11C79A3700446FE5 /* MGSLanguageDocumentResourcesManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AB01939811C79A3600446FE5 /* MGSLanguageDocumentResourcesManager.h */; };
@@ -3405,8 +3406,10 @@
 		AB00FB7C0D43AE9B00F535EE /* MGSHistoryTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSHistoryTableView.m; sourceTree = "<group>"; };
 		AB019242150A2EBA00DA7747 /* MGSDisposableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSDisposableObject.h; path = ../MGSDisposableObject.h; sourceTree = "<group>"; };
 		AB019243150A2EBB00DA7747 /* MGSDisposableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSDisposableObject.m; path = ../MGSDisposableObject.m; sourceTree = "<group>"; };
-		AB019246150A540500DA7747 /* NSObject+MGSDisposable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+MGSDisposable.h"; path = "../NSObject+MGSDisposable.h"; sourceTree = "<group>"; };
-		AB019247150A540500DA7747 /* NSObject+MGSDisposable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+MGSDisposable.m"; path = "../NSObject+MGSDisposable.m"; sourceTree = "<group>"; };
+		AB01924B150ABE7200DA7747 /* NSObject+MGSDisposable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+MGSDisposable.h"; path = "../../../../../../github/Mugginsoft/MGSDisposable/NSObject+MGSDisposable.h"; sourceTree = "<group>"; };
+		AB01924C150ABE7200DA7747 /* NSObject+MGSDisposable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+MGSDisposable.m"; path = "../../../../../../github/Mugginsoft/MGSDisposable/NSObject+MGSDisposable.m"; sourceTree = "<group>"; };
+		AB01924D150ABE7200DA7747 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../../../../../../github/Mugginsoft/MGSDisposable/README.md; sourceTree = "<group>"; };
+		AB019252150AC33700DA7747 /* Mugginsoft github clones.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Mugginsoft github clones.rtf"; sourceTree = SOURCE_ROOT; };
 		AB01939011C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLanguageTemplateResourcesManager.h; sourceTree = "<group>"; };
 		AB01939111C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLanguageTemplateResourcesManager.m; sourceTree = "<group>"; };
 		AB01939811C79A3600446FE5 /* MGSLanguageDocumentResourcesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLanguageDocumentResourcesManager.h; sourceTree = "<group>"; };
@@ -6032,7 +6035,7 @@
 		09A68B230CDC9B110022898B /* Application framework */ = {
 			isa = PBXGroup;
 			children = (
-				AB01924A150AADED00DA7747 /* Memory management */,
+				AB019251150AC2C700DA7747 /* Mugginsoft github clones */,
 				ABB1109D0E266DAE00A93854 /* MGSArrayController.h */,
 				ABB749310D525C6F004F8A2C /* MGSBonjour.h */,
 				AB98B0EA10C54DDD00C214B3 /* MGSBundleInfo.h */,
@@ -6407,12 +6410,22 @@
 		AB01924A150AADED00DA7747 /* Memory management */ = {
 			isa = PBXGroup;
 			children = (
-				AB019246150A540500DA7747 /* NSObject+MGSDisposable.h */,
-				AB019247150A540500DA7747 /* NSObject+MGSDisposable.m */,
+				AB01924B150ABE7200DA7747 /* NSObject+MGSDisposable.h */,
+				AB01924C150ABE7200DA7747 /* NSObject+MGSDisposable.m */,
+				AB01924D150ABE7200DA7747 /* README.md */,
 				AB019242150A2EBA00DA7747 /* MGSDisposableObject.h */,
 				AB019243150A2EBB00DA7747 /* MGSDisposableObject.m */,
 			);
 			name = "Memory management";
+			sourceTree = "<group>";
+		};
+		AB019251150AC2C700DA7747 /* Mugginsoft github clones */ = {
+			isa = PBXGroup;
+			children = (
+				AB01924A150AADED00DA7747 /* Memory management */,
+				AB019252150AC33700DA7747 /* Mugginsoft github clones.rtf */,
+			);
+			name = "Mugginsoft github clones";
 			sourceTree = "<group>";
 		};
 		AB01938B11C7988900446FE5 /* Resources management */ = {
@@ -8903,7 +8916,7 @@
 				ABC5BC70131E674E0020003D /* NSIndexPath+Mugginsoft.h in Headers */,
 				AB1E1AF013E1BBC4003643AC /* EMKeychain.h in Headers */,
 				AB019244150A2EBC00DA7747 /* MGSDisposableObject.h in Headers */,
-				AB019248150A540600DA7747 /* NSObject+MGSDisposable.h in Headers */,
+				AB01924E150ABE7200DA7747 /* NSObject+MGSDisposable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10789,6 +10802,7 @@
 				AB9B8D930D96FC310044D4BC /* AuthenticateWindow.xib in Resources */,
 				ABAFC8C40DF9CA1F00349FC3 /* NumberInputView.xib in Resources */,
 				AB1E1AF213E1BBC4003643AC /* README.md in Resources */,
+				AB019250150ABE7200DA7747 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11638,7 +11652,7 @@
 				AB2E6D7D12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m in Sources */,
 				ABC5BC71131E674E0020003D /* NSIndexPath+Mugginsoft.m in Sources */,
 				AB1E1AF113E1BBC4003643AC /* EMKeychain.m in Sources */,
-				AB019249150A540600DA7747 /* NSObject+MGSDisposable.m in Sources */,
+				AB01924F150ABE7200DA7747 /* NSObject+MGSDisposable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
