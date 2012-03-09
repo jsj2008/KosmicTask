@@ -144,6 +144,8 @@ static BOOL permitExecution = YES;
  */
 - (void)finalize
 {	
+    // is this advisable in finalize?
+#warning finalize code warning
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 #ifdef MGS_LOG_FINALIZE 

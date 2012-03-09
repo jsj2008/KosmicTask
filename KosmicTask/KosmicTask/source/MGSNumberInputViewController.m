@@ -405,7 +405,12 @@ const char MGSIncrementValueBindingContext;
  */
 - (void)finalize
 {
-	// unbind
+	
+// trying to unbbind here requires that we access an ivar.
+// this may get coolected in the same iteration as self leading
+// to the possibility of resurrection.
+#ifdef MGS_UNBIND_IN_FINALIZE
+    // unbind
 	@try {
 		for (NSString *key in [_bindings allKeys]) {
 			NSDictionary *binding = [_bindings objectForKey:key];
@@ -415,6 +420,7 @@ const char MGSIncrementValueBindingContext;
 	@catch (NSException *e) {
 		MLog(RELEASELOG, @"%@", [e reason]);
 	}
+#endif
 	
 	[super finalize];
 }

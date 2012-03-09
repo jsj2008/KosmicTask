@@ -117,8 +117,10 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 - (void)finalize
 {
 	// disconnect must have been called on the socket
-	BOOL disconnectCalled = [self disconnectCalled];
-	NSAssert(disconnectCalled, @"disconnect not called on socket");
+	if (![self disconnectCalled]) {
+        MLogInfo(@"disconnect not called on socket");
+    }
+    
 	[super finalize];
 }
 
