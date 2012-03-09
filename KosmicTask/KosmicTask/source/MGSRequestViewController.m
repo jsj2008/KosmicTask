@@ -157,9 +157,12 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
  finalize
  
  */
-- (void) finalize
+- (void)finalize
 {
+#ifdef MGS_LOG_FINALIZE
 	MLog(DEBUGLOG, @"finalized");
+#endif
+    
 	[super finalize];
 }
 

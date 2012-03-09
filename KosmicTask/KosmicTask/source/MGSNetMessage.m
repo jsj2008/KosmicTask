@@ -585,9 +585,13 @@ static unsigned long int messageSequenceCounter = 0;
  finalize
  
  */
-- (void) finalize
+- (void)finalize
 {
+    
+#ifdef MGS_LOG_FINALIZE
 	MLog(MEMORYLOG, @"MGSNetMessage finalized");
+#endif
+    
 	[super finalize];
 }
 

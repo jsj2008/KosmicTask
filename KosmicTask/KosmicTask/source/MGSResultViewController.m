@@ -95,9 +95,12 @@ static BOOL applicationMenuConfigured = NO;
  finalize
  
  */
-- (void) finalize
+- (void)finalize
 {
+#ifdef MGS_LOG_FINALIZE
 	MLog(MEMORYLOG, @"finalized");
+#endif
+    
 	[super finalize];
 }
 

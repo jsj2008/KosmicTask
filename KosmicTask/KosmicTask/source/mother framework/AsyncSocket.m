@@ -312,14 +312,12 @@ Resurrection occurs when a finalize method stores self in a non-garbage object. 
 // by a nongarbage object.
 // To avoid this dispose must be before finalization occurs.
 // The design goal is to have an empty finalizer.
-- (void) finalize
+- (void)finalize
 {
 	// disconnect must be called for all instances
-	if (!disconnectCalled) {	// to allow breakpoint below
-		NSString *text = [NSString stringWithFormat:@"AsyncSocket finalize without prior dispose call: %@", self];
-		NSAssert (disconnectCalled, text);
+	if (!disconnectCalled) {
+		NSLog(@"-finalize received without prior disconnect."];
 	}
-	//NSLog(@"AsyncSocket finalized");
 	[super finalize];
 }
 #pragma mark -

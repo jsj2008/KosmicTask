@@ -102,13 +102,14 @@ static ESSTimeTrialClass *myClass = nil;
 
 #ifdef __OBJC_GC__
 
-- (void) finalize
+- (void)finalize
 {
-	if (timerIsRunning)
+    // accessing ivars in finalize is NOT recommended
+	/*if (timerIsRunning)
 	{
 		[timer invalidate];
 		timer = nil;
-	}
+	}*/
 	[super finalize];
 }
 

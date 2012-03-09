@@ -638,11 +638,12 @@ errorExit:;
  - finalize
  
  */
-- (void) finalize
+- (void)finalize
 {
-	if (NO) {
-		MLog(DEBUGLOG, @"MGSScript finalized");
-	}
+#ifdef MGS_LOG_FINALIZE
+    MLog(DEBUGLOG, @"MGSScript finalized");
+#endif
+    
 	[super finalize];
 }
 

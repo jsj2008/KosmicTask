@@ -799,10 +799,13 @@ static NSThread *networkThread = nil;
  finalize
  
  */
-- (void) finalize
+- (void)finalize
 {
+    
+#ifdef MGS_LOG_FINALIZE
 	MLog(DEBUGLOG, @"MGSNetRequest finalized");
-	
+#endif
+    
 	if (!disposed) {
 		MLogInfo(@"Request did not receive -dispose prior to -finalize");
 	}
