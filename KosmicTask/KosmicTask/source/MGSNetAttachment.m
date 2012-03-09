@@ -310,6 +310,24 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	return YES;
 }
 
+#pragma mark -
+#pragma mark memory management
+/*
+ 
+ - finalize
+ 
+ */
+- (void)finalize
+{
+    if (!_disposed) {
+        MLogInfo(@"MGSNetAttachment. MEMORY LEAK. Dispose has not been called.");
+    }
+    
+    [super finalize];
+}
+
+#pragma mark -
+#pragma mark resource management
 /*
  
  dispose
@@ -324,6 +342,9 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	}
 	_disposed = YES;
 	
+    // call dispose to clean up resources
+    [_browserImage dispose];
+
 	//
 	// note that the same attachment may exist in the request and response messages.
 	// a file is sent via the request, processed and returned via the response.

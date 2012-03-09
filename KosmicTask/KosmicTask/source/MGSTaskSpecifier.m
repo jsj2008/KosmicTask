@@ -145,8 +145,11 @@ static BOOL permitExecution = YES;
 - (void)finalize
 {	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
+
+#ifdef MGS_LOG_FINALIZE 
 	MLog(MEMORYLOG, @"%@ finalized", [[self class] description]);
+#endif
+    
 	[super finalize];
 }
 

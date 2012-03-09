@@ -75,13 +75,38 @@
 	_imageRepresentation = path;
 }
 
+#pragma mark -
+#pragma mark memory management
 /*
  
- finalize
+ -finalize
  
  */
 - (void)finalize
 {
+    if (!_disposed) {
+        MLogInfo(@"MGSBrowserImage. MEMORY LEAK. Dispose has not been called.");
+    }
+    
+    [super finalize];
+}
+
+#pragma mark -
+#pragma mark resource management
+/*
+ 
+ - dispose
+ 
+ */
+- (void)dispose
+{
+    if (_disposed) {
+        MLogInfo(@"Dispose has already been called");
+        return;
+    }
+    
+    _disposed = YES;
+    
 	if (_permitFileRemoval) {
 		if ([[NSFileManager defaultManager] fileExistsAtPath:_imageRepresentation]) {
 			if (![[NSFileManager defaultManager] removeItemAtPath:_imageRepresentation error:NULL]) {
@@ -93,7 +118,5 @@
 	} else {
 		MLog(DEBUGLOG, @"no preview deletion required: %@", _imageRepresentation);
 	}
-	
-	[super finalize];
 }
 @end

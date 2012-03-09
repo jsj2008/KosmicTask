@@ -28,17 +28,6 @@ void offsetPoint (NSPoint *point, CGFloat x, CGFloat y)
 	return self;
 }
 
-// this is NOT advised.
-// don't remove observer to self in finalize
-// this was causing horrible crashes when mutiple edit windows were opened
-// and closed
-/*- (void)finalize;
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[super finalize];
-}*/
-
-
 // NSView override
 // setup/remove key window notifications
 // CAUSED big problem.

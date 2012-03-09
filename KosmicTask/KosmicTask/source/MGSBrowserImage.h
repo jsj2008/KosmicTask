@@ -19,6 +19,7 @@
 	NSString *_imageSubtitle;
 	BOOL _permitFileRemoval;
 	NSString *_filePath;
+    BOOL _disposed;
 }
 
 // implement the IKImageBrowserItem informal protocol
@@ -31,5 +32,6 @@
 @property (copy) NSString *imageSubtitle;	
 @property (readonly) NSString *filePath;
 
+- (void)dispose;
 //- (void)setNSImageRepresentation:(NSImage *)image;
 @end

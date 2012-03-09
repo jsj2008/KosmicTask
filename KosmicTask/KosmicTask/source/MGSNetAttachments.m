@@ -395,7 +395,24 @@ static NSString *MGSAttachmentSeparator = @";";
 }
 
 #pragma mark -
-#pragma mark GC memory management
+#pragma mark memory management
+/*
+ 
+ - finalize
+ 
+ */
+- (void)finalize
+{
+    if (!_disposed) {
+        MLogInfo(@"MGSNetAttachments. MEMORY LEAK. Dispose has not been called.");
+    }
+    
+    [super finalize];
+}
+
+
+#pragma mark -
+#pragma mark resourcey management
 /*
  
  - incrementReferenceCount
