@@ -74,7 +74,7 @@
 - (BOOL)isDisposedWithLogIfTrue
 {
     if (self.disposed) {
-		NSLog(@"Dispose already called");
+		NSLog(@"%@. Dispose already called.", self);
 	}
     
     return self.disposed;
