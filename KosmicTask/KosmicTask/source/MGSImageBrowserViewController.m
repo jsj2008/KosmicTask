@@ -265,8 +265,8 @@ NSString *KeyPath_FileCountString = @"fileCountString";
 		// get next index
 		selectionIndex = [[_imageBrowser selectionIndexes] indexGreaterThanIndex:selectionIndex];
         
-        // call dispose to clean up resources
-        [browserImage dispose];
+        // release disposable resources
+        [browserImage releaseDisposable];
 	}
 
 	// open files in default apps if required
@@ -350,8 +350,8 @@ NSString *KeyPath_FileCountString = @"fileCountString";
 	MGSBrowserImage *browserImage = [self imageBrowser:_imageBrowser itemAtIndex:[indexes firstIndex]];
 	NSString *fileName = browserImage.imageTitle;
 
-    // call dispose to clean up resources
-    [browserImage dispose];
+    // release disposable resources
+    [browserImage releaseDisposable];
 
 	if (!fileName) fileName = @"";
 	
@@ -448,8 +448,8 @@ NSString *KeyPath_FileCountString = @"fileCountString";
 		MLogInfo(@"Failed to save file to %@", path);
 	}
     
-    // call dispose to clean up resources
-    [browserImage dispose];
+    // release disposable resources
+    [browserImage releaseDisposable];
 
 }
 
@@ -633,8 +633,8 @@ NSString *KeyPath_FileCountString = @"fileCountString";
 		MGSBrowserImage *browserImage = [self imageBrowser:_imageBrowser itemAtIndex:idx];
 		NSString *filePath = [browserImage.filePath copy];
 		
-        // call dispose to clean up resources
-        [browserImage dispose];
+        // release disposable resources
+        [browserImage releaseDisposable];
         
 		// queue showing of finder quicklook
 		[[NSApp delegate] queueShowFinderQuickLook:filePath];

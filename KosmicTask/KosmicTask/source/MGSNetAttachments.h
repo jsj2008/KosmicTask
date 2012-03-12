@@ -8,12 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSNetAttachment.h"
-#import "NSObject+MGSDisposable.h"
+#import "MGSDisposableObject.h"
 
 @class MGSNetAttachment;
 @class MGSTempStorage;
 
-@interface MGSNetAttachments : NSObject <MGSNetAttachment> {
+@interface MGSNetAttachments : MGSDisposableObject <MGSNetAttachment> {
 	NSMutableArray *_attachments;
 	NSOperationQueue *_operationQueue;
 	NSMutableArray *_attachmentPreviewImages;

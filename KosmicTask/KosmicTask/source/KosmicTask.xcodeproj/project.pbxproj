@@ -501,6 +501,7 @@
 		AB66CFB811957DDC00926541 /* MGSExternalScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = AB27AF1A1189EFF600132977 /* MGSExternalScriptRunner.m */; };
 		AB67A57511C78B02006001AE /* MGSResourceBrowserNode.m in Sources */ = {isa = PBXBuildFile; fileRef = AB17265F11C6B9A90035B91B /* MGSResourceBrowserNode.m */; };
 		AB67E6EA122FB303002DD432 /* MGSPropertiesOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67E6E8122FB303002DD432 /* MGSPropertiesOutlineView.m */; };
+		AB686709150E4D2A00421ACF /* MGSDisposableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = AB019243150A2EBB00DA7747 /* MGSDisposableObject.m */; };
 		AB69B0AA118AFDAB00903D1D /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
 		AB69B0AB118AFDAB00903D1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AB69B10F118AFE1C00903D1D /* MGSPerlLanguagePlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5CDAA0118AF20B00C545CD /* MGSPerlLanguagePlugIn.m */; };
@@ -6035,6 +6036,7 @@
 		09A68B230CDC9B110022898B /* Application framework */ = {
 			isa = PBXGroup;
 			children = (
+				AB686708150E49F100421ACF /* Memory and resource management */,
 				AB019251150AC2C700DA7747 /* Mugginsoft github clones */,
 				ABB1109D0E266DAE00A93854 /* MGSArrayController.h */,
 				ABB749310D525C6F004F8A2C /* MGSBonjour.h */,
@@ -7190,6 +7192,13 @@
 				AB4267C6125BC1B000C0D649 /* MGSJavaLanguage.h */,
 			);
 			name = Java;
+			sourceTree = "<group>";
+		};
+		AB686708150E49F100421ACF /* Memory and resource management */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Memory and resource management";
 			sourceTree = "<group>";
 		};
 		AB691A291223210F00B1EA05 /* Java */ = {
@@ -11653,6 +11662,7 @@
 				ABC5BC71131E674E0020003D /* NSIndexPath+Mugginsoft.m in Sources */,
 				AB1E1AF113E1BBC4003643AC /* EMKeychain.m in Sources */,
 				AB01924F150ABE7200DA7747 /* NSObject+MGSDisposable.m in Sources */,
+				AB686709150E4D2A00421ACF /* MGSDisposableObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

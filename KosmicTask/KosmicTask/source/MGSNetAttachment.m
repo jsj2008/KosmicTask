@@ -96,7 +96,6 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 		_writeHandle = nil;
 		_permitFileRemoval = NO;
 		_tempFile = NO;
-		_disposed = NO;
 		
 		// must validate
 		if (![self validate]) {
@@ -311,22 +310,6 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 }
 
 #pragma mark -
-#pragma mark memory management
-/*
- 
- - finalize
- 
- */
-- (void)finalize
-{
-    if (!_disposed) {
-        MLogInfo(@"MGSNetAttachment. MEMORY LEAK. Dispose has not been called.");
-    }
-    
-    [super finalize];
-}
-
-#pragma mark -
 #pragma mark resource management
 /*
  
@@ -335,15 +318,9 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
  */
 - (void)dispose
 {
-
-	if (_disposed) {
-		MLog(DEBUGLOG, @"Dispose already called for attachment: %@", _filePath);
-		return;
-	}
-	_disposed = YES;
 	
-    // call dispose to clean up resources
-    [_browserImage dispose];
+    // release disposable resources
+    [_browserImage releaseDisposable];
 
 	//
 	// note that the same attachment may exist in the request and response messages.
@@ -352,30 +329,30 @@ static NSString *MGSAttachmentKeyFileName = @"FileName";
 	// so when finalization occurs one message will always be finalized first, deleting the shared temp file.
 	// so better to check for existence first.
 	//
-	if (![[NSFileManager defaultManager] fileExistsAtPath:_filePath]) {
-		
-		// our temp file has already been removed
-		return;
-	}
-	
-	/*
-	 
-	 if file is on the temp storage path then permit its removal
-	 
-	 */
-	if ([_filePath hasPrefix:[[MGSTempStorage sharedController] storageFacility]]) {
-		_permitFileRemoval = YES;
-	}
-	
-	if (_permitFileRemoval) {
-		if ([[NSFileManager defaultManager] removeItemAtPath:_filePath error:NULL]) {
-			MLog(DEBUGLOG, @"Deleted attachment file: %@", _filePath);
-		} else {
-			MLog(RELEASELOG, @"Could not delete attachment file: %@", _filePath);
-		}
-	} else {
-		MLog(DEBUGLOG, @"Deletion not requested for attachment file: %@", _filePath);
-	}
+	if ([[NSFileManager defaultManager] fileExistsAtPath:_filePath]) {
+        
+        /*
+         
+         if file is on the temp storage path then permit its removal
+         
+         */
+        if ([_filePath hasPrefix:[[MGSTempStorage sharedController] storageFacility]]) {
+            _permitFileRemoval = YES;
+        }
+        
+        if (_permitFileRemoval) {
+            if ([[NSFileManager defaultManager] removeItemAtPath:_filePath error:NULL]) {
+                MLog(DEBUGLOG, @"Deleted attachment file: %@", _filePath);
+            } else {
+                MLog(RELEASELOG, @"Could not delete attachment file: %@", _filePath);
+            }
+        } else {
+            MLog(DEBUGLOG, @"Deletion not requested for attachment file: %@", _filePath);
+        }
+    
+    }
+    
+    [super dispose];
 }
 
 /*

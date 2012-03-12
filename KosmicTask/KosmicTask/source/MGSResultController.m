@@ -92,7 +92,7 @@
 - (void)dispose
 {
     for (MGSResult *result in [self arrangedObjects]) {
-        [result dispose];
+        [result releaseDisposable];
     }
 }
 @end

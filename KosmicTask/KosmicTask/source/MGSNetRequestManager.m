@@ -45,12 +45,13 @@
 	 */
 	if ([_netRequests containsObject:netRequest]) {
 		[_netRequests removeObject:netRequest];
-	}
+
+		MLog(DEBUGLOG, @"removeRequest: request handler count is now %i", [_netRequests count]);
+    }
 	
-	// we are done with this request
-	[netRequest dispose];
+	// release disposable resources
+	[netRequest releaseDisposable];
 	
-	MLog(DEBUGLOG, @"removeRequest: request handler count is now %i", [_netRequests count]);
 }
 
 /*

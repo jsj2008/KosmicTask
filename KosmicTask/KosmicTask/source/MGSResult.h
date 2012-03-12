@@ -8,11 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSMotherModes.h"
+#import "MGSDisposableObject.h"
 
 @class MGSTaskSpecifier;
 @class MGSNetAttachments;
 
-@interface MGSResult : NSObject {
+@interface MGSResult : MGSDisposableObject {
 	id _object;										// the result object
 	MGSTaskSpecifier *_action;					// action associated with the result
 	NSAttributedString *_resultScriptString;		// result object string as returned by the script component
@@ -22,7 +23,6 @@
 	eMGSMotherResultView _viewMode;					// view mode
 	NSMutableAttributedString * __weak _resultString;		// make this weak so that it becomes deallocated when no longer reqd
 	NSArray * __weak _resultTree;					// make weak
-    BOOL _disposed;
 }
 
 @property id object;
@@ -37,5 +37,4 @@
 - (NSMutableAttributedString *)resultString;
 - (NSString *)shortResultString;
 - (NSArray *)resultTreeArray;
-- (void)dispose;
 @end

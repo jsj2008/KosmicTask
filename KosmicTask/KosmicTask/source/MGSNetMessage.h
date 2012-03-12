@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSNetMessageDictionary.h"
-#import "NSObject+MGSDisposable.h"
+#import "MGSDisposableObject.h"
 
 @class MGSError;
 @class MGSNetHeader;
@@ -49,7 +49,7 @@ extern NSString *MGSNetMessageCommandNegotiate;
 extern NSString *MGSApplicationKeyUsername;
 extern NSString *MGSApplicationKeyRealTimeLogging;
 
-@interface MGSNetMessage : NSObject {
+@interface MGSNetMessage : MGSDisposableObject {
 	NSMutableDictionary *_messageDict;		// message content is this dictionary
 	NSInteger _expectedLength;				// expected length of the dictionary
 	MGSError *_packetError;						// error

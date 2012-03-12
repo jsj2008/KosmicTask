@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MGSDisposableObject.h"
 
 @class MGSError;
 @class MGSNetAttachment;
@@ -18,7 +19,7 @@
 - (void)attachmentPreviewAvailable:(MGSNetAttachment *)sender;
 @end
 
-@interface MGSNetAttachment : NSObject {
+@interface MGSNetAttachment : MGSDisposableObject {
 	unsigned long long _validatedLength;	// validated length of the file
 	unsigned long long _requiredLength;		// required length of the file
 	NSString *_filePath;  
@@ -26,7 +27,6 @@
 	NSFileHandle *_writeHandle;
 	BOOL _permitFileRemoval;
 	BOOL _tempFile;
-	BOOL _disposed;
 	MGSBrowserImage *_browserImage;
 	id _delegate;
 	NSUInteger _index;

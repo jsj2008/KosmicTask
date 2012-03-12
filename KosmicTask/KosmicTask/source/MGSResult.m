@@ -250,28 +250,9 @@
  */
 - (void)setAttachments:(MGSNetAttachments *)theAttachments
 {
-    [_attachments mgsReleaseDisposable];
+    [_attachments releaseDisposable];
     _attachments = theAttachments;
-    [_attachments mgsRetainDisposable];
-}
-
-#pragma mark -
-#pragma mark memory management
-/*
- 
- finalize
- 
- */
-- (void)finalize
-{
-    if (!_disposed) {
-        MLogInfo(@"%@-finalize receieved without prior -dispose.", self);
-    }
-#ifdef MGS_LOG_FINALIZE 
-	MLog(DEBUGLOG, @"finalized");
-#endif
-    
-	[super finalize];
+    [_attachments retainDisposable];
 }
 
 #pragma mark -
@@ -283,11 +264,13 @@
  */
 - (void)dispose
 {
-    if (_disposed) {
+    if ([self isDisposedWithLogIfTrue]) {
         return;
     }
-    _disposed = YES;
-    [_attachments mgsReleaseDisposable];
+
+    [_attachments releaseDisposable];
+    
+    [super dispose];
 }
 
 @end

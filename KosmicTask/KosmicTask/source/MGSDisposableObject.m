@@ -38,7 +38,7 @@
  */
 - (void)retainDisposable
 {
-    if ([self disposedWithLogIfTrue]) {
+    if ([self isDisposedWithLogIfTrue]) {
         return;
     }
     self.disposalCount++;
@@ -50,7 +50,7 @@
  */
 - (void)releaseDisposable
 {
-    if ([self disposedWithLogIfTrue]) {
+    if ([self isDisposedWithLogIfTrue]) {
         return;
     }
 
@@ -68,10 +68,10 @@
 }
 /*
  
- - disposedWithLogIfTrue
+ - isDisposedWithLogIfTrue
  
  */
-- (BOOL)disposedWithLogIfTrue
+- (BOOL)isDisposedWithLogIfTrue
 {
     if (self.disposed) {
 		NSLog(@"Dispose already called");
@@ -92,7 +92,11 @@
  */
 - (void)dispose
 {
-    if ([self disposedWithLogIfTrue]) {
+    if ([self isDisposedWithLogIfTrue]) {
+        return;
+    }
+    if (self.disposalCount != 0) {
+        NSLog(@"Cannot dispose. Disposal count is not zero.");
         return;
     }
 	self.disposed = YES;
@@ -110,7 +114,7 @@
 - (void)finalize
 {
     if (!self.disposed) {
-        NSLog(@"%@. MEMORY LEAK. Dispose has not been called.", self);
+        NSLog(@"%@. This object may be leaking disposable resources. -dispose has not been called prior to -finalize.", self);
     }
     
     [super finalize];

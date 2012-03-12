@@ -7,6 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MGSDisposableObject.h"
+
 @class MGSError;
 
 #define MGS_STANDARD_TIMEOUT 60
@@ -90,7 +92,7 @@ typedef enum _eMGSRequestStatus {
 @end
 
 
-@interface MGSNetRequest : NSObject {
+@interface MGSNetRequest : MGSDisposableObject {
     eMGSRequestType _requestType;
 	MGSNetMessage *_requestMessage;		// request message sent from client to server
 	MGSNetMessage *_responseMessage;	// response message from server to client
@@ -107,7 +109,6 @@ typedef enum _eMGSRequestStatus {
 	NSString *_ownerString;				// owner string associated with request
 	BOOL _allowUserToAuthenticate;		// allow user to authenticate the request
 	NSMutableArray *temporaryPaths;		// paths to be removed when the request is finalised
-	BOOL disposed;
 	BOOL _sendUpdatesToOwner;			// flag send updates to owner
 	MGSNetRequest *_prevRequest;		// previous request
 	MGSNetRequest *_nextRequest;		// next request

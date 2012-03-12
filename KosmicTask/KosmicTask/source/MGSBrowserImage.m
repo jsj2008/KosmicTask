@@ -76,22 +76,6 @@
 }
 
 #pragma mark -
-#pragma mark memory management
-/*
- 
- -finalize
- 
- */
-- (void)finalize
-{
-    if (!_disposed) {
-        MLogInfo(@"MGSBrowserImage. MEMORY LEAK. Dispose has not been called.");
-    }
-    
-    [super finalize];
-}
-
-#pragma mark -
 #pragma mark resource management
 /*
  
@@ -100,12 +84,9 @@
  */
 - (void)dispose
 {
-    if (_disposed) {
-        MLogInfo(@"Dispose has already been called");
+    if ([self isDisposedWithLogIfTrue]) {
         return;
     }
-    
-    _disposed = YES;
     
 	if (_permitFileRemoval) {
 		if ([[NSFileManager defaultManager] fileExistsAtPath:_imageRepresentation]) {
@@ -118,5 +99,7 @@
 	} else {
 		MLog(DEBUGLOG, @"no preview deletion required: %@", _imageRepresentation);
 	}
+    
+    [super dispose];
 }
 @end

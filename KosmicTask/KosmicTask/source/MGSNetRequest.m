@@ -212,10 +212,10 @@ static NSThread *networkThread = nil;
 - (void)resetMessages
 {
 	self.requestMessage = [[MGSNetMessage alloc] init];		// request will be received from client
-    [self.requestMessage mgsReleaseDisposable];
+    [self.requestMessage releaseDisposable];
     
 	self.responseMessage = [[MGSNetMessage alloc] init];	// reply will be sent to client
-    [self.responseMessage mgsReleaseDisposable];
+    [self.responseMessage releaseDisposable];
 }
 
 /*
@@ -479,9 +479,9 @@ static NSThread *networkThread = nil;
  */
 - (void)setRequestMessage:(MGSNetMessage *)value
 {
-    [_requestMessage mgsReleaseDisposable];
+    [_requestMessage releaseDisposable];
     _requestMessage = value;
-    [_requestMessage mgsRetainDisposable];
+    [_requestMessage retainDisposable];
 }
 
 /*
@@ -491,9 +491,9 @@ static NSThread *networkThread = nil;
  */
 - (void)setResponseMessage:(MGSNetMessage *)value
 {
-    [_responseMessage mgsReleaseDisposable];
+    [_responseMessage releaseDisposable];
     _responseMessage = value;
-    [_responseMessage mgsRetainDisposable];
+    [_responseMessage retainDisposable];
 }
 
 #pragma mark -
@@ -576,7 +576,7 @@ static NSThread *networkThread = nil;
 	}
 	_status = kMGSStatusNotConnected;
 	self.responseMessage = [[MGSNetMessage alloc] init];
-	[self.responseMessage mgsReleaseDisposable];
+	[self.responseMessage releaseDisposable];
     
 	if (self.prevRequest) {
 		self.prevRequest.nextRequest = nil;
@@ -818,23 +818,28 @@ static NSThread *networkThread = nil;
 	MLog(DEBUGLOG, @"MGSNetRequest disposed");
 #endif
     
-    if (disposed) {
+    if ([self isDisposedWithLogIfTrue]) {
         return;
     }
     
-	disposed = YES;
-	
     // call dispose on messages
-    [_requestMessage mgsReleaseDisposable];
-    [_responseMessage mgsReleaseDisposable];
+    [_requestMessage releaseDisposable];
+    [_responseMessage releaseDisposable];
     
 	// remove temporary paths
 	for (NSString *path in temporaryPaths) {
-		NSError *error = nil;
-		if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
-			MLogInfo(@"Cannot delete request temp path : %@\nerror : %@", path, [error localizedDescription]);
-		}
+        
+        // check for existence
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        
+            NSError *error = nil;
+            if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
+                MLogInfo(@"Cannot delete request temp path : %@\nerror : %@", path, [error localizedDescription]);
+            }
+        }
 	}
+    
+    [super dispose];
 }
 
 /*
@@ -849,9 +854,6 @@ static NSThread *networkThread = nil;
 	MLog(DEBUGLOG, @"MGSNetRequest finalized");
 #endif
     
-	if (!disposed) {
-		MLogInfo(@"%@: -finalize received without prior -dispose.", self);
-	}
 	[super finalize];
 }
 
@@ -1138,10 +1140,10 @@ error_exit:
 	_status = kMGSStatusNotConnected;
 	
 	self.requestMessage = [[MGSNetMessage alloc] init];		// request will be received from client
-    [self.requestMessage mgsReleaseDisposable];
+    [self.requestMessage releaseDisposable];
     
 	self.responseMessage = [[MGSNetMessage alloc] init];	// reply will be sent to client
-	[self.responseMessage mgsReleaseDisposable];
+	[self.responseMessage releaseDisposable];
     
 	_readTimeout = -1.0;	// don't timeout
 	_writeTimeout = -1.0;	// don't timeout
@@ -1149,7 +1151,6 @@ error_exit:
 	self.allowUserToAuthenticate = YES;
 	_sendUpdatesToOwner = NO;
 	temporaryPaths = [NSMutableArray new];
-	disposed = NO;
     _childRequests = [NSMutableArray new];
 }
 

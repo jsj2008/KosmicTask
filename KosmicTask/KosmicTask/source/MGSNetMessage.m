@@ -162,7 +162,6 @@ static unsigned long int messageSequenceCounter = 0;
 		
 		_header = [[MGSNetHeader alloc] init];	
         
-        [self mgsMakeDisposable];
 	}
 	return self;
 }
@@ -586,13 +585,13 @@ static unsigned long int messageSequenceCounter = 0;
 #pragma mark MGSDisposal category
 /*
  
- - mgsDispose
+ - dispose
  
  */
-- (void)mgsDispose
+- (void)dispose
 {
     // check if we are already disposed
-    if ([self isMgsDisposedWithLogIfTrue]) {
+    if ([self isDisposedWithLogIfTrue]) {
         return;
     }
 
@@ -601,9 +600,9 @@ static unsigned long int messageSequenceCounter = 0;
 #endif
     
     // release the disposable attachments
-    [self.attachments mgsReleaseDisposable];
+    [self.attachments releaseDisposable];
     
-    [super mgsDispose];
+    [super dispose];
 }
 
 #pragma mark -

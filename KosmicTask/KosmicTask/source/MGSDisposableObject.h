@@ -15,12 +15,12 @@
 }
 
 @property (readonly) NSUInteger disposalCount;
-@property (readonly) BOOL disposed;
+@property (readonly, getter=isDisposed) BOOL disposed;
 
 - (void)retainDisposable;
 - (void)releaseDisposable;
 - (void)dispose;
-- (BOOL)disposedWithLogIfTrue;
+- (BOOL)isDisposedWithLogIfTrue;
 
 @end
 

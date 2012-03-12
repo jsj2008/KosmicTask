@@ -8,8 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Quartz/Quartz.h>
+#import "MGSDisposableObject.h"
 
-@interface MGSBrowserImage : NSObject {
+@interface MGSBrowserImage : MGSDisposableObject {
 	NSString *_imageRepresentationType;
 	NSString *_imageRepresentation;
 	NSString *_imageUID;
@@ -19,7 +20,6 @@
 	NSString *_imageSubtitle;
 	BOOL _permitFileRemoval;
 	NSString *_filePath;
-    BOOL _disposed;
 }
 
 // implement the IKImageBrowserItem informal protocol
@@ -32,6 +32,4 @@
 @property (copy) NSString *imageSubtitle;	
 @property (readonly) NSString *filePath;
 
-- (void)dispose;
-//- (void)setNSImageRepresentation:(NSImage *)image;
 @end
