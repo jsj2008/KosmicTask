@@ -133,7 +133,9 @@ static BOOL permitExecution = YES;
  */
 - (void)dispose
 {
+#ifdef MGS_LOG_DISPOSE 
 	MLog(MEMORYLOG, @"%@ dispose called", [[self class] description]);
+#endif
 }
 
 

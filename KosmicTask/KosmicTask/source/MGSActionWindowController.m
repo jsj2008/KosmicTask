@@ -159,10 +159,6 @@
 		[delegate actionWindowWillClose:self];
 	}
 	
-	// it is advised not to unregister from notification centre in finalize method 
-	// so implement a dispose to clean up notifications etc
-	[self.requestViewController dispose];
-	
 	// remove our request view controller from singleton handler
 	[[MGSRequestViewManager sharedInstance] removeObject:self.requestViewController];
 }

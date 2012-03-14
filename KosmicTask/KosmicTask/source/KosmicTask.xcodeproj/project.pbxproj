@@ -14170,15 +14170,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 62;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "MGSKosmicTaskRunner-Info.plist";
@@ -14198,9 +14195,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 62;
 				FRAMEWORK_VERSION = A;
@@ -15691,7 +15685,6 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "Mugginsoft LLP";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/shared/Development/**",
@@ -16585,7 +16578,6 @@
 					"\"$(SRCROOT)/../../cint/cint/lib\"",
 				);
 				PRODUCT_NAME = KosmicTask;
-				SDKROOT = macosx;
 				SYMROOT = /Users/Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -16612,10 +16604,6 @@
 					"\"$(SRCROOT)/../../cint/cint/lib\"",
 				);
 				PRODUCT_NAME = KosmicTask;
-				SDKROOT = macosx;
-				STRIPFLAGS = "-S -x -r";
-				STRIP_INSTALLED_PRODUCT = YES;
-				STRIP_STYLE = all;
 				SYMROOT = /Users/Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -16629,7 +16617,6 @@
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 62;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -16679,7 +16666,6 @@
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 62;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -16709,7 +16695,7 @@
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;
 				SEPARATE_STRIP = YES;
-				STRIP_STYLE = debugging;
+				STRIPFLAGS = "-x";
 				VALID_ARCHS = i386;
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
