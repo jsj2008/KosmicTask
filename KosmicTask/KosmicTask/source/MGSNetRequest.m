@@ -790,6 +790,26 @@ static NSThread *networkThread = nil;
 }
 
 #pragma mark -
+#pragma mark MGSDisposableObject
+
+/*
+ 
+ - releaseDisposable
+ 
+ */
+- (void)releaseDisposable
+{
+
+#ifdef MGS_LOG_ME
+    if (self.disposalCount == 1) {
+        NSLog(@"%@ about to be disposed", self);
+    }
+#endif
+    
+    [super releaseDisposable];
+}
+
+#pragma mark -
 #pragma mark Temporary path management
 
 /*

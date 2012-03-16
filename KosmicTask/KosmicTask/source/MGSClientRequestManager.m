@@ -160,6 +160,8 @@ static MGSClientRequestManager *_sharedController = nil;
     
 	// send the request 
 	[self sendRequestOnClient:netRequest];
+    
+    [netRequest releaseDisposable];
 }
 
 /*
@@ -214,6 +216,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	
 	// send the request 
 	[self sendRequestOnClient:task.netRequest];
+    
+    [task.netRequest releaseDisposable];
 }
 
 /*
@@ -260,6 +264,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	
 	// send the request 
 	[self sendRequestOnClient:task.netRequest];
+    
+    [netRequest releaseDisposable];
 }
 
 /*
@@ -275,6 +281,8 @@ static MGSClientRequestManager *_sharedController = nil;
 
 	// send the request 
 	[self sendRequestOnClient:netRequest];
+    
+    [netRequest releaseDisposable];
 }
 
 /*
@@ -288,6 +296,8 @@ static MGSClientRequestManager *_sharedController = nil;
 
 	// send the request 
 	[self sendRequestOnClient:netRequest];
+    
+    [netRequest releaseDisposable];
 }
 
 /*
@@ -302,6 +312,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	// send the request 
 	[self sendRequestOnClient:netRequest];
 	
+    [netRequest releaseDisposable];
+    
 	return netRequest;
 }
 
@@ -328,6 +340,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	// send the request 
 	[self sendRequestOnClient:netRequest];
 	
+    [netRequest releaseDisposable];
+    
 	return netRequest;
 }
 
@@ -355,6 +369,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
+    
+    [netRequest releaseDisposable];
 }
 
 /*
@@ -382,6 +398,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
+    
+    [netRequest releaseDisposable];
 }
 
 /*
@@ -408,6 +426,8 @@ static MGSClientRequestManager *_sharedController = nil;
 
 	// send the request 
 	[self sendRequestOnClient:netRequest];
+    
+    [netRequest releaseDisposable];
 }
 
 //=============================================================
@@ -444,6 +464,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
+    
+    [netRequest releaseDisposable];
 }
 
 //=============================================================
@@ -482,6 +504,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	// send the request 
 	[self sendRequestOnClient:netRequest];
 	
+    [netRequest releaseDisposable];
+    
 	return netRequest;
 }
 
@@ -518,6 +542,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
+    
+    [netRequest releaseDisposable];
 }
 
 /*
@@ -546,6 +572,8 @@ static MGSClientRequestManager *_sharedController = nil;
 	// send the request 
 	[self sendRequestOnClient:netRequest];
 	
+    [netRequest releaseDisposable];
+    
 	return netRequest;
 }
 

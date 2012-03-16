@@ -112,6 +112,9 @@ static MGSServerRequestManager *_sharedController = nil;
 	// add to request array
 	[self addRequest:request];
 	
+    // release disposable resources
+    [request releaseDisposable];
+    
 	return request;
 }
 

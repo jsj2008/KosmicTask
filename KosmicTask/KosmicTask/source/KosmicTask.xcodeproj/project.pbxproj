@@ -204,6 +204,8 @@
 		AB2A4604119C02FD00A0D67F /* MGSPythonScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = AB27B048118A0F1600132977 /* MGSPythonScriptRunner.m */; };
 		AB2A468D119C094B00A0D67F /* MGSRubyScriptRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5CDAA7118AF2DD00C545CD /* MGSRubyScriptRunner.m */; };
 		AB2A469B119C0A2500A0D67F /* pyflakes in Copy Python resources */ = {isa = PBXBuildFile; fileRef = AB408CD111917A0F00A8037A /* pyflakes */; };
+		AB2BE8551512C20E00A5C847 /* MGSAuthenticateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9B8D960D9701360044D4BC /* MGSAuthenticateWindowController.m */; };
+		AB2BE8561512C2D100A5C847 /* AuthenticateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9B8D910D96FC310044D4BC /* AuthenticateWindow.xib */; };
 		AB2C728F14D2F42000C524B5 /* lua in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB2C71D614D2F32200C524B5 /* lua */; };
 		AB2C729014D2F42000C524B5 /* luac in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB2C71D814D2F32200C524B5 /* luac */; };
 		AB2C729314D2F45600C524B5 /* LuaCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2C71F114D2F34400C524B5 /* LuaCocoa.framework */; };
@@ -741,8 +743,6 @@
 		AB9B82550DCB631200FA42EC /* ArrowInCircleUp15Template.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB9B82530DCB631200FA42EC /* ArrowInCircleUp15Template.tif */; };
 		AB9B8D5A0D96EC480044D4BC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9B8D590D96EC480044D4BC /* Security.framework */; };
 		AB9B8D610D96F2E80044D4BC /* serverauthenticate.h in Headers */ = {isa = PBXBuildFile; fileRef = AB9B8D600D96F2E80044D4BC /* serverauthenticate.h */; };
-		AB9B8D930D96FC310044D4BC /* AuthenticateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9B8D910D96FC310044D4BC /* AuthenticateWindow.xib */; };
-		AB9B8DA90D9719180044D4BC /* MGSAuthenticateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9B8D960D9701360044D4BC /* MGSAuthenticateWindowController.m */; };
 		AB9BBB040CE794A900DCA3BD /* MGSMotherServerLocalController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9BBB030CE794A900DCA3BD /* MGSMotherServerLocalController.m */; };
 		AB9CB55F118AD4D1006F19F1 /* KosmicTaskAppleScriptRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = 091835EF0D0C34DF008604BD /* KosmicTaskAppleScriptRunner */; };
 		AB9CB683118AE4F0006F19F1 /* KosmicTaskAppleScriptCocoaRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB27B296118A18D400132977 /* KosmicTaskAppleScriptCocoaRunner */; };
@@ -10807,7 +10807,6 @@
 			files = (
 				AB3A3B9313CF963800141100 /* ResourceDocument.css in Resources */,
 				AB226F661039B9C000CF213D /* Trial.ktlic in Resources */,
-				AB9B8D930D96FC310044D4BC /* AuthenticateWindow.xib in Resources */,
 				ABAFC8C40DF9CA1F00349FC3 /* NumberInputView.xib in Resources */,
 				AB1E1AF213E1BBC4003643AC /* README.md in Resources */,
 			);
@@ -11032,6 +11031,7 @@
 				ABD949171313C32F0065980E /* ToggleViewTemplateUp.tif in Resources */,
 				ABE6B6871327A3EC0041CBFE /* KosmicTask EULA.pdf in Resources */,
 				ABE6B6891327A3EC0041CBFE /* release-notes.txt in Resources */,
+				AB2BE8561512C2D100A5C847 /* AuthenticateWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11566,7 +11566,6 @@
 				AB9AC4C10D95ABBD00767691 /* GSSauthenticate.c in Sources */,
 				AB9AC4C70D95AFFE00767691 /* MGSAuthentication.m in Sources */,
 				AB9AC9A50D95B18C00767691 /* NetworkHelper.c in Sources */,
-				AB9B8DA90D9719180044D4BC /* MGSAuthenticateWindowController.m in Sources */,
 				AB02FF080D98379E0015D575 /* NSWindowController_Mugginsoft.m in Sources */,
 				ABA4ADBF0D9925AC0022D465 /* MGSNotifications.m in Sources */,
 				AB9F1A730D9BFAE100F0DF68 /* MGSSecurity.m in Sources */,
@@ -11881,6 +11880,7 @@
 				AB4DA70B1411703900869CDC /* NSBundle_Mugginsoft.m in Sources */,
 				AB9A7EB114D9F69F0026EDB1 /* MGSActionActivityTextView.m in Sources */,
 				AB9A7EB214DAE7170026EDB1 /* MGSTextView.m in Sources */,
+				AB2BE8551512C20E00A5C847 /* MGSAuthenticateWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

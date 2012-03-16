@@ -30,6 +30,7 @@
 #import "MGSNotifications.h"
 #import "MGSKeyChain.h"
 #import <QuartzCore/CoreAnimation.h>
+#import "MGSClientRequestManager.h"
 
 static int numberOfShakes = 4;
 static float durationOfShake = 0.5f;
@@ -529,7 +530,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 	[[_netRequest requestMessage] setAuthenticationDictionary:responseDict];
 	
 	// resend the request with self as owner
-	[_netRequest sendRequestOnClient];
+	[[MGSClientRequestManager sharedController] sendRequestOnClient:_netRequest];
 	
 	return;
 	

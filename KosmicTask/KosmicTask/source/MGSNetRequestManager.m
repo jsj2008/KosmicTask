@@ -48,9 +48,13 @@
 
 		MLog(DEBUGLOG, @"removeRequest: request handler count is now %i", [_netRequests count]);
     }
-	
-	// release disposable resources
-	[netRequest releaseDisposable];
+    
+#ifdef MGS_LOG_ME
+    NSLog(@"%@:%@ calling %@ -releaseDisposable", self, netRequest, NSStringFromSelector(_cmd));
+#endif
+    
+	// release disposable resources.
+    [netRequest releaseDisposable];
 	
 }
 
@@ -72,6 +76,9 @@
 {
 	[_netRequests addObject:netRequest];
 	MLog(DEBUGLOG, @"addRequest: request handler count is now %i", [_netRequests count]);
+    
+    // retain disposable resources
+	[netRequest retainDisposable];
 }
 
 /*

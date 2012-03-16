@@ -23,10 +23,37 @@
     self = [super init];
     if (self) {
         disposed = NO;
-        disposalCount = 1;
+        self.disposalCount = 1;
     }
     
     return self; 
+}
+
+#pragma mark -
+#pragma mark accessors
+
+/*
+ 
+ - setDisposalCount
+ 
+ */
+- (void)setDisposalCount:(NSUInteger)value
+{
+    disposalCount = value;
+    
+#ifdef MGS_LOG_ME
+    NSLog(@"%@ -disposalCount: %u", self, disposalCount);
+#endif
+    
+    // if disposalCount is 0 we dispose of our resources
+    if (self.disposalCount == 0) {
+        
+#ifdef MGS_LOG_ME
+        NSLog(@"%@ calling -dispose", self);
+#endif        
+        [self dispose];
+    }
+    
 }
 
 #pragma mark -
@@ -60,11 +87,6 @@
     }
     
     --self.disposalCount;
-    
-    // if disposalCount is 0 we dispose of our resources
-    if (self.disposalCount == 0) {
-        [self dispose];
-    }
 }
 /*
  
@@ -92,6 +114,10 @@
  */
 - (void)dispose
 {
+#ifdef MGS_LOG_ME
+    NSLog(@"%@ base class received -dispose", self);
+#endif 
+    
     if ([self isDisposedWithLogIfTrue]) {
         return;
     }
