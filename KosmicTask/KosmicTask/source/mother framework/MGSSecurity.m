@@ -23,7 +23,7 @@ static NSDictionary *identityOptions = nil;
 + (SecIdentityRef)findOrCreateSelfSignedIdentityInKeychain:(SecKeychainRef)keychain;
 + (void)addSelfSignedCertToKeychain:(SecKeychainRef)keychain;
 + (SecCertificateRef)getSelfSignedCertificateInKeychain:(SecKeychainRef)keychain;
-+ secErrorString:(OSStatus)err;
++ (NSString *)secErrorString:(OSStatus)err;
 @end
 
 @implementation MGSSecurity 

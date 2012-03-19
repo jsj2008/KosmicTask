@@ -53,5 +53,5 @@
 //- (id)initWithNetClient:(MGSNetClient *)netClient;
 //- (id)initWithNetRequest:(MGSNetRequest *)netRequest;
 - (BOOL)authenticateRequest:(MGSNetRequest *)netRequest challenge:(NSDictionary *)challengeDict;
-- (void)closeWindow;
+- (IBAction)closeWindow;
 @end

@@ -19,7 +19,7 @@
 
 @implementation MGSMainSplitview
 
-- initWithFrame:(NSRect)newFrame {
+- (id)initWithFrame:(NSRect)newFrame {
     self = [super initWithFrame:newFrame];
     if (self) {
         //[self updateSubviewsTransition]; 
