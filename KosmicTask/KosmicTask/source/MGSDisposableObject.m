@@ -42,14 +42,14 @@
     disposalCount = value;
     
 #ifdef MGS_LOG_ME
-    NSLog(@"%@ -disposalCount: %u", self, disposalCount);
+    NSLog(@"%@ -disposalCount: %u", [self className], disposalCount);
 #endif
     
     // if disposalCount is 0 we dispose of our resources
     if (self.disposalCount == 0) {
         
 #ifdef MGS_LOG_ME
-        NSLog(@"%@ calling -dispose", self);
+        NSLog(@"%@ calling -dispose", [self className]);
 #endif        
         [self dispose];
     }
@@ -96,7 +96,7 @@
 - (BOOL)isDisposedWithLogIfTrue
 {
     if (self.disposed) {
-		NSLog(@"%@. Dispose already called.", self);
+		NSLog(@"%@. Dispose already called.", [self className]);
 	}
     
     return self.disposed;
@@ -115,7 +115,7 @@
 - (void)dispose
 {
 #ifdef MGS_LOG_ME
-    NSLog(@"%@ base class received -dispose", self);
+    NSLog(@"%@ base class received -dispose", [self className]);
 #endif 
     
     if ([self isDisposedWithLogIfTrue]) {
@@ -140,7 +140,7 @@
 - (void)finalize
 {
     if (!self.disposed) {
-        NSLog(@"%@. This object may be leaking disposable resources. -dispose has not been called prior to -finalize.", self);
+        NSLog(@"%@. This object may be leaking disposable resources. -dispose has not been called prior to -finalize.", [self className]);
     }
     
     [super finalize];

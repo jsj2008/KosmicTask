@@ -1212,7 +1212,6 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	// so implement a dispose to clean up notifications etc
 	[actionEditViewController dispose];
 	[scriptEditViewController dispose];
-	[self.requestViewController dispose];
 	
 	// remove our request view controller from singleton handler
 	[[MGSRequestViewManager sharedInstance] removeObject:self.requestViewController];
