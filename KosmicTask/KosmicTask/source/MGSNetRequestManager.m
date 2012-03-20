@@ -37,6 +37,13 @@
  */
 - (void)removeRequest:(MGSNetRequest *)netRequest
 {
+#define MGS_LOG_DISPOSE
+#ifdef MGS_LOG_DISPOSE
+    if (netRequest.requestType == kMGSRequestTypeLogging) {
+        NSLog(@"Logging request disposal count = %i", netRequest.disposalCount);
+    }
+#endif
+    
 	/*
 	 
 	 this function is called for all requests in a request chain so the negotiate
@@ -47,7 +54,12 @@
 		[_netRequests removeObject:netRequest];
 
 		MLog(DEBUGLOG, @"removeRequest: request handler count is now %i", [_netRequests count]);
+        
+#ifdef MGS_LOG_DISPOSE
+        NSLog(@"removeRequest: request handler count is now %i", [_netRequests count]);
+#endif
     }
+    
     
 #ifdef MGS_LOG_ME
     NSLog(@"%@:%@ calling %@ -releaseDisposable", self, netRequest, NSStringFromSelector(_cmd));
@@ -56,6 +68,11 @@
 	// release disposable resources.
     [netRequest releaseDisposable];
 	
+#ifdef MGS_LOG_DISPOSE
+    if (netRequest.requestType == kMGSRequestTypeLogging) {
+        NSLog(@"Logging request disposal count = %i", netRequest.disposalCount);
+    }
+#endif
 }
 
 /*
@@ -89,6 +106,11 @@
 - (void)sendRequestOnClient:(MGSNetRequest *)request
 {
 	[self addRequest:request];
+    
+    // the above call will retain our disposable resource
+    // hence we need to release it here
+    [request releaseDisposable];
+    
 	[request sendRequestOnClient];
 	
 	// do we want to track the negotiate request ?

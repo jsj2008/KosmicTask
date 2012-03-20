@@ -874,6 +874,11 @@ static NSThread *networkThread = nil;
 	MLog(DEBUGLOG, @"MGSNetRequest finalized");
 #endif
     
+    if (!self.disposed) {
+        NSLog(@"%@", self.requestMessage.messageDict);
+        return;
+    }
+    
 	[super finalize];
 }
 
