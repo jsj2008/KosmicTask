@@ -335,17 +335,19 @@ static MGSClientRequestManager *_sharedController = nil;
 
 /*
  
- request terminate an task
+ request terminate a task
  
  */
 - (void)requestTerminateTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner
 {
+    // get UUID of task to terminate
+	NSString *terminateUUID = [task.netRequest.requestMessage messageUUID];
+    
 	// create a dictionary requesting script termination
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
 	[dict setObject:MGSScriptCommandTerminateMessageUUID forKey:MGSScriptKeyCommand];
 	
 	// create array of command parameters
-	NSString *terminateUUID = [task.netRequest.requestMessage messageUUID];
 	NSArray *array = [NSArray arrayWithObject:terminateUUID];
 	[dict setObject:array forKey:MGSScriptKeyCommandParamaters];
 	

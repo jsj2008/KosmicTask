@@ -37,13 +37,7 @@
  */
 - (void)removeRequest:(MGSNetRequest *)netRequest
 {
-#define MGS_LOG_DISPOSE
-#ifdef MGS_LOG_DISPOSE
-    if (netRequest.requestType == kMGSRequestTypeLogging) {
-        NSLog(@"Logging request disposal count = %i", netRequest.disposalCount);
-    }
-#endif
-    
+   
 	/*
 	 
 	 this function is called for all requests in a request chain so the negotiate
@@ -55,13 +49,13 @@
 
 		MLog(DEBUGLOG, @"removeRequest: request handler count is now %i", [_netRequests count]);
         
-#ifdef MGS_LOG_DISPOSE
+#ifdef MGS_LOG_REQUEST_QUEUE
         NSLog(@"removeRequest: request handler count is now %i", [_netRequests count]);
 #endif
     }
     
     
-#ifdef MGS_LOG_ME
+#ifdef MGS_LOG_DISPOSE
     NSLog(@"%@:%@ calling %@ -releaseDisposable", self, netRequest, NSStringFromSelector(_cmd));
 #endif
     
@@ -77,7 +71,31 @@
 
 /*
  
- count
+ - terminateRequest:
+ 
+ */
+- (void)terminateRequest:(MGSNetRequest *)netRequest
+{
+    // disconnect the request
+    if (netRequest.isSocketConnected) {
+        [netRequest disconnect];
+    }
+    
+    // remove request from queue
+    [self removeRequest:netRequest];
+    
+    // remove child requests
+    for (MGSNetRequest *childRequest in netRequest.childRequests) {
+        if (childRequest.isSocketConnected) {
+            [childRequest disconnect];
+        }
+        [self removeRequest:childRequest];
+    }
+}
+
+/*
+ 
+ - requestCount
  
  */
 -(NSUInteger)requestCount
@@ -86,7 +104,7 @@
 }
 /*
  
- add request
+ - addRequest:
  
  */
 - (void)addRequest:(MGSNetRequest *)netRequest

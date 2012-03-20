@@ -990,11 +990,11 @@ errorExit:;
 	MGSScriptTask *scriptTask = [_scriptTasks objectForKey:UUID];
 	if (scriptTask) {
 		
-		// terminate the task
-		[scriptTask terminate];
-		
 		// remove the originating request
-		[[MGSServerRequestManager sharedController] removeRequest:scriptTask.netRequest];
+		[[MGSServerRequestManager sharedController] terminateRequest:scriptTask.netRequest];
+		
+        // terminate the task
+		[scriptTask terminate];
 		
 		MLog(DEBUGLOG, @"**** task terminated: %@ ****", UUID);
 		return YES;

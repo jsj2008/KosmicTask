@@ -560,7 +560,7 @@ static BOOL permitExecution = YES;
 		case MGSRequestProgressSending:
 		case MGSRequestProgressSuspendedSending:
 			[self setLocalRunStatus:MGSTaskRunStatusTerminatedByUser];
-			[[self netRequest] disconnect];
+			[[MGSClientRequestManager sharedController] terminateRequest:self.netRequest];
 			break;
 			
 			// waiting for reply
@@ -568,6 +568,7 @@ static BOOL permitExecution = YES;
 		case MGSRequestProgressWaitingForReply:
 		case MGSRequestProgressSuspended:
 			[self setLocalRunStatus:MGSTaskRunStatusTerminatedByUser];
+			[[MGSClientRequestManager sharedController] terminateRequest:self.netRequest];
 			[[MGSClientRequestManager sharedController] requestTerminateTask:self withOwner:owner];
 			break;
 			
@@ -576,7 +577,7 @@ static BOOL permitExecution = YES;
 		case MGSRequestProgressReceivingReply:
 		case MGSRequestProgressSuspendedReceiving:	
 			[self setLocalRunStatus:MGSTaskRunStatusTerminatedByUser];
-			[[self netRequest] disconnect];
+			[[MGSClientRequestManager sharedController] terminateRequest:self.netRequest];
 			break;
 
 			// ignore terminate requests at these times

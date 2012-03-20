@@ -415,6 +415,10 @@ static NSThread *networkThread = nil;
 - (void)setSocketDisconnected
 {
 	self.status = kMGSStatusDisconnected;
+    
+#ifdef MGS_LOG_DISCONNECT
+    NSLog(@"socket disconnected for request: %@", self.requestMessage.messageDict);
+#endif
 }
 
 /*
@@ -1135,7 +1139,12 @@ error_exit:
 {
 	if ([self isSocketConnected]) {
 		[_netSocket disconnect];
-		[self setSocketDisconnected];
+        
+        // the socket should update the request status
+        // but we need to make sure that this occurs now
+        if (self.status != kMGSStatusDisconnected) {
+            [self setSocketDisconnected];
+        }
 	} else {
 		MLogInfo(@"Attempting to disconnect an already disconnected socket");
 	}
