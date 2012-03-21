@@ -49,7 +49,7 @@ extern NSString *MGSNetMessageCommandNegotiate;
 extern NSString *MGSApplicationKeyUsername;
 extern NSString *MGSApplicationKeyRealTimeLogging;
 
-@interface MGSNetMessage : MGSDisposableObject {
+@interface MGSNetMessage : MGSDisposableObject <NSCopying> {
 	NSMutableDictionary *_messageDict;		// message content is this dictionary
 	NSInteger _expectedLength;				// expected length of the dictionary
 	MGSError *_packetError;						// error

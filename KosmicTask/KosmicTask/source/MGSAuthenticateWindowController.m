@@ -525,6 +525,9 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 
     // we want to resend the netrequest
 	[_netRequest prepareToResend];
+    
+    // send a copy of the request
+    _netRequest = [_netRequest copy];
 	
 	// add the response dict to the request
 	[[_netRequest requestMessage] setAuthenticationDictionary:responseDict];

@@ -59,10 +59,16 @@ NSString *MGSApplicationKeyRealTimeLogging = @"RealTimeLogging";
 
 static unsigned long int messageSequenceCounter = 0;
 
+// class extension
+@interface MGSNetMessage()
+@property (assign) NSMutableDictionary *messageDict;
+@end
+
 @interface MGSNetMessage(Private)
 - (void)setErrorCode:(NSInteger)code description:(NSString *)description;
 - (void)addAttachmentsPropertyListRepresentation;
 @end
+
 
 @implementation MGSNetMessage
 
@@ -71,6 +77,7 @@ static unsigned long int messageSequenceCounter = 0;
 @synthesize header = _header;
 @synthesize totalBytes = _totalBytes;
 @synthesize bytesTransferred = _bytesTransferred;
+@synthesize messageDict = _messageDict;
 
 #pragma mark -
 #pragma mark Class methods
@@ -581,6 +588,23 @@ static unsigned long int messageSequenceCounter = 0;
 	return _messageDict;
 }
 
+#pragma mark -
+#pragma mark NSCopying
+/*
+ 
+ - copyWithZone:
+ 
+ */
+- (id)copyWithZone:(NSZone *)zone
+{
+#pragma unused(zone)
+    
+    MGSNetMessage *copy = [[MGSNetMessage alloc] init];
+    copy.messageDict = [self.messageDict mutableCopy];
+    
+    return copy;
+}
+   
 #pragma mark -
 #pragma mark MGSDisposal category
 /*

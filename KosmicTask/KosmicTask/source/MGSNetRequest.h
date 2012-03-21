@@ -92,7 +92,7 @@ typedef enum _eMGSRequestStatus {
 @end
 
 
-@interface MGSNetRequest : MGSDisposableObject {
+@interface MGSNetRequest : MGSDisposableObject <NSCopying> {
     eMGSRequestType _requestType;
 	MGSNetMessage *_requestMessage;		// request message sent from client to server
 	MGSNetMessage *_responseMessage;	// response message from server to client

@@ -474,6 +474,7 @@ static NSThread *networkThread = nil;
 
 }
 
+
 #pragma mark -
 #pragma mark Message handling
 /*
@@ -564,29 +565,6 @@ static NSThread *networkThread = nil;
 	
 }
 
-/*
- 
- - prepareToResend
- 
- */
-- (void)prepareToResend
-{
-	// it doesn't make sense to resend a negotiator
-	if ([self.requestMessage isNegotiateMessage]) {
-	}
-	
-	if ([self isSocketConnected]) {
-		[self disconnect];
-	}
-	_status = kMGSStatusNotConnected;
-	self.responseMessage = [[MGSNetMessage alloc] init];
-	[self.responseMessage releaseDisposable];
-    
-	if (self.prevRequest) {
-		self.prevRequest.nextRequest = nil;
-		self.prevRequest = nil;
-	}
-}
 
 /*
  
@@ -649,6 +627,60 @@ static NSThread *networkThread = nil;
 	} while ((request = request.nextRequest));
 	
 	return nil;
+}
+#pragma mark -
+#pragma mark NSCopying
+
+/*
+ 
+ - prepareToResend
+ 
+ */
+- (void)prepareToResend
+{
+
+	if ([self isSocketConnected]) {
+		[self disconnect];
+	}
+	_status = kMGSStatusNotConnected;
+}
+
+/*
+ 
+ - copyWithZone:
+ 
+ Creates a copy of a request suitable for sending.
+ Once sent requests are disposed of and cannot be reused.
+ 
+ */
+- (id)copyWithZone:(NSZone *)zone
+{
+#pragma unused(zone)
+    
+    MGSNetRequest *copy = nil;
+    if (self.netClient) {
+        
+        // make a copy
+        copy = [[[self class] alloc] initWithNetClient:self.netClient];
+
+        // copy the request message.
+        // we don't copy the response.
+        copy.requestMessage = [self.requestMessage copy];
+        [copy.requestMessage releaseDisposable];
+        
+        // copy appropriate properties
+        copy.delegate = self.delegate;
+        copy.owner = self.owner;
+        copy.ownerObject = self.ownerObject;
+        copy.ownerString = self.ownerString;
+        copy.allowUserToAuthenticate = self.allowUserToAuthenticate;
+        copy.sendUpdatesToOwner = self.sendUpdatesToOwner;
+        
+    } else {
+        // TODO: implement for server
+    }
+    
+    return copy;
 }
 
 #pragma mark -
@@ -809,26 +841,16 @@ static NSThread *networkThread = nil;
         NSLog(@"%@ about to be disposed", self);
     }
 #endif
+ 
+#ifdef MGS_LOG_DISPOSE 
+    if ([self isDisposedWithLogIfTrue]) {
+        NSLog(@"%@ -%@ called on request: i%@", [self className], NSStringFromSelector(_cmd), _requestMessage.messageDict);
+    }
+#endif
     
     [super releaseDisposable];
+    
 }
-
-#pragma mark -
-#pragma mark Temporary path management
-
-/*
- 
- - addTemporaryPath
- 
- */
-- (void)addScratchPath:(NSString *)path
-{
-	if ([path isKindOfClass:[NSString class]]) {
-		[temporaryPaths addObject:path];
-	}
-}
-
-#pragma mark Object destruction
 
 /*
  
@@ -837,12 +859,16 @@ static NSThread *networkThread = nil;
  */
 - (void)dispose
 {
-    
 #ifdef MGS_LOG_DISPOSE
 	MLog(DEBUGLOG, @"MGSNetRequest disposed");
 #endif
     
     if ([self isDisposedWithLogIfTrue]) {
+        
+#ifdef MGS_LOG_DISPOSE      
+        NSLog(@"%@ -%@ called on request: i%@", [self className], NSStringFromSelector(_cmd), _requestMessage.messageDict);
+#endif
+        
         return;
     }
     
@@ -855,7 +881,7 @@ static NSThread *networkThread = nil;
         
         // check for existence
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        
+            
             NSError *error = nil;
             if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
                 MLogInfo(@"Cannot delete request temp path : %@\nerror : %@", path, [error localizedDescription]);
@@ -884,6 +910,22 @@ static NSThread *networkThread = nil;
     }
     
 	[super finalize];
+}
+
+
+#pragma mark -
+#pragma mark Temporary path management
+
+/*
+ 
+ - addTemporaryPath
+ 
+ */
+- (void)addScratchPath:(NSString *)path
+{
+	if ([path isKindOfClass:[NSString class]]) {
+		[temporaryPaths addObject:path];
+	}
 }
 
 //========================================

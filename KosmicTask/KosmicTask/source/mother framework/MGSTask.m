@@ -47,6 +47,7 @@
 // class extension
 @interface MGSTask()
 - (void)signalDescendents:(int)signal;
+- (void)closePipes;
 @end
 
 @interface MGSTask(Private)
@@ -279,16 +280,41 @@
  */
 - (void)terminate
 {
-	// kill children
-	[self signalDescendents:SIGKILL];
-	
-	// should the task termination observer be removed here ?
-	[_task terminate];
-	
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[self cleanup];
+    if (_task.isRunning) {
+        
+        // close pipes
+        [self closePipes];
+        
+        // kill children
+        [self signalDescendents:SIGKILL];
+        
+        // should the task termination observer be removed here ?
+        [_task terminate];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+            
+        [self cleanup];
+    }
 }
 
+/*
+ 
+ - closePipes
+ 
+ */
+- (void)closePipes
+{
+    // docs sat we don't have to close pipes explicitly as
+    // this will occur at dellocation.
+    // In a GC enviornment though we may not want to wait
+    // for -finalize to be called.
+    [[_inputPipe fileHandleForReading] closeFile];
+    [[_outputPipe fileHandleForReading] closeFile];
+    [[_errorPipe fileHandleForReading] closeFile];
+    _inputPipe = nil;
+    _outputPipe = nil;
+    _errorPipe = nil;
+}
 /*
  
  - processDescendents

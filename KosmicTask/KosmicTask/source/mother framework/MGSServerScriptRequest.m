@@ -596,9 +596,6 @@ errorExit:;	// the trailing ; prevents compiler complaining (can also { } subseq
 	// terminate task associated with request if any still active
 	[self terminateRequestUUID:[netRequest UUID]];
 	
-	// remove request if still present
-	[[MGSServerRequestManager sharedController] removeRequest:netRequest];
-	
 	return YES;
 }
 
@@ -990,6 +987,9 @@ errorExit:;
 	MGSScriptTask *scriptTask = [_scriptTasks objectForKey:UUID];
 	if (scriptTask) {
 		
+        // remove task
+        [_scriptTasks removeObjectForKey:UUID];
+
 		// remove the originating request
 		[[MGSServerRequestManager sharedController] terminateRequest:scriptTask.netRequest];
 		
