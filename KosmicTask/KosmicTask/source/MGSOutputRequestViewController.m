@@ -388,7 +388,17 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 		}
 	}
 	
-	
+    // if log only available then display it
+    if (newViewModeSegment == SEG_DOCUMENT || viewModeSegment == SEG_DOCUMENT) {
+        
+        if ([result.object isKindOfClass:[NSString class]] || !result.object) {
+            if ([(NSString *)result.object length] == 0 && [result.resultLogString length] > 0) {
+                newViewModeSegment = SEG_LOG; 
+            }
+            
+        }
+    }
+    
 	// set segment selection state and call click action
 	if (newViewModeSegment > -1) {
 		[self selectViewSegment:newViewModeSegment];
