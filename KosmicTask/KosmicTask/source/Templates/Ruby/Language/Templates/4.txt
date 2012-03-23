@@ -20,6 +20,9 @@ require 'osx/cocoa'
 include OSX
 OSX.require_framework 'ScriptingBridge'
 
+# log application access
+$stderr.puts "Accessing Finder ..."
+
 # get application reference - see the Ruby Usage document for more info
 app = OSX::SBApplication.applicationWithBundleIdentifier_("com.apple.finder")
 

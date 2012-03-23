@@ -32,12 +32,18 @@ script KosmicTask
 				-- the file will be automatically deleted when the task ends.
 				set picPosixPath to (taskController's resultFileWithName_("capture.png")) as string
 			
+				-- log command
+				log "Running screencapture command..."
+			
 				-- do screen capture via shell
 				do shell script "screencapture -t png " & quoted form of picPosixPath
 
 				set end of paths to picPosixPath
 			
-				delay 0.5
+				-- log wait
+				log "Running waiting..."
+				
+				delay 1
 			
 			end repeat
 			

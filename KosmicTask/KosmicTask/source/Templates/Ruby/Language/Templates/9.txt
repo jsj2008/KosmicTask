@@ -14,7 +14,10 @@
 
 # file created in task current directory will be automatically deleted
 file = "capture.png"
-    
+
+# log command
+$stderr.puts "Running screencapture command..."
+   
 # capture sceen shot to file
 system "screencapture -t png " + file
     

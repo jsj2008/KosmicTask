@@ -18,16 +18,22 @@ for i in (1..5)
 
 	if i > 1
 		files += ", "
-	end if
+	end
 	
+	# log command
+	$stderr.puts "Running screencapture command..."
+
 	# file created in task current directory will be automatically deleted
 	file = "capture-#{i}.png"
    
    	# capture sceen shot to file
     system "screencapture -t png " + file
-       
+          
     files += file
-    
+     
+    # log wait
+	$stderr.puts "Waiting..."
+
     sleep 1.0
 end
 

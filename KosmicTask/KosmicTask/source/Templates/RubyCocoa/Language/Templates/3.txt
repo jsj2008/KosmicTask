@@ -20,6 +20,9 @@ require 'appscript'
 
 def kosmictask()
 	
+	# log application access
+	$stderr.puts "Accessing Finder..."
+	
 	# get application
 	app = Appscript.app('Finder')
 

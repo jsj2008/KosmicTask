@@ -14,6 +14,9 @@ Notes:
 -- files create in the current directory will be deleted when the task ends
 local file = "capture.png"
 
+-- log command
+io.stderr:write("Running screencapture command...\n")
+
 -- capture screen
 os.execute("screencapture -t png " .. file)
 

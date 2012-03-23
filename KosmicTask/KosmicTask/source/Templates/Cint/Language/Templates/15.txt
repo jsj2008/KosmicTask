@@ -29,11 +29,17 @@ int main()
 		char command[100];
 		sprintf(command, "screencapture -t png %s", file);
 	
+		// log command
+		fprintf(stderr, "Running screencapture command...");
+	
 		// execute command
 		system(command);
 		
 		strcat(files, file);
 		
+		// log wait
+		fprintf(stderr, "Waiting...");
+	
 		sleep(1);
 	
 	}

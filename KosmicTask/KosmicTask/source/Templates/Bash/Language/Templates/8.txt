@@ -26,11 +26,17 @@ do
 	# filename
 	FILE="capture-$i.png"
 
+	# log command
+	echo "Running screencapture command..." >/dev/stderr
+
 	# capture screen
 	screencapture -t png $FILE
 	
 	# add to files list
 	FILES="$FILES $FILE"
+	
+	# log wait
+	echo "Waiting..." >/dev/stderr
 	
 	sleep 1
 done

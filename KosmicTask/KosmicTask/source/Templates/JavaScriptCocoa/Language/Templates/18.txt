@@ -15,6 +15,9 @@ class KosmicTask < NSObject
     // start method
     - (void)start
     {
+    	// log timer
+		log("Timer started...");
+		
     	var selector = @selector(timerFired:)
   		this.timer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(1, this, selector, nil, true)
   		this.count = 0
@@ -26,9 +29,14 @@ class KosmicTask < NSObject
     // callback method
     - (void)timerFired:(NSTimer *)timer
     {
+    	// log timer expired
+		log("Timer expired...");
+		
         this.count++
         if (this.count == 5) {
         	timer.invalidate
+        	
+        	// stop the task
         	KosmicTaskController.stopTask("timer expired " + this.count + " times")
         }
     }

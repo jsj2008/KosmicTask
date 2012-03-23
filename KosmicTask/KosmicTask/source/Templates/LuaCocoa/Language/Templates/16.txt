@@ -24,6 +24,9 @@ KosmicTask["start"] =
 {
 	function(self)
 	
+		-- log timer start
+		io.stderr:write("Timer started...\n")
+
 		local selector = LuaCocoa.toselector("timerFired:")
 	
 		-- schedule the timer and create instance variables
@@ -43,6 +46,9 @@ KosmicTask["timerFired_"] =
 {
 	function(self, timer)
 	
+		-- log timer expired
+		io.stderr:write("Timer expired...\n")
+		
 		self.__ivars.count = self.__ivars.count + 1
 		
 		-- stop task and return result

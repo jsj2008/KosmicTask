@@ -22,6 +22,9 @@ OSX.require_framework 'ScriptingBridge'
 
 def kosmictask()
 
+	# log application access
+	$stderr.puts "Accessing Finder..."
+	
 	# get application reference
 	app = OSX::SBApplication.applicationWithBundleIdentifier_("com.apple.finder")
 

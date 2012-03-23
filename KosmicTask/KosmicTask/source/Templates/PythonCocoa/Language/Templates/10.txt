@@ -15,6 +15,7 @@
 #
 import os
 import Foundation
+import sys
 
 # KosmicTask controller
 taskController = Foundation.NSClassFromString("KosmicTaskController")
@@ -30,6 +31,9 @@ def kosmictask():
    	#
 	path = taskController.resultFileWithName_('capture.png');
     
+    # log command
+	print >> sys.stderr, "Running screencapture command..."
+	
 	# capture sceen shot to file
 	os.system("screencapture -t png " + path)
 

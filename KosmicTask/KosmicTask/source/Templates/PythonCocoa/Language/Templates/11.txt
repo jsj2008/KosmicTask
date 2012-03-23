@@ -11,9 +11,13 @@
 #
 #
 import ScriptingBridge
+import sys
 
 def kosmictask():
-		
+	
+	# log application access
+	print >> sys.stderr, "Accessing Finder..."
+	
 	# get application - for more information see the Python Usage document
 	app = ScriptingBridge.SBApplication.applicationWithBundleIdentifier_("com.apple.finder")
 

@@ -16,6 +16,7 @@
 import os
 import Foundation
 import time
+import sys
 
 # KosmicTask controller
 taskController = Foundation.NSClassFromString("KosmicTaskController")
@@ -35,13 +36,19 @@ def kosmictask():
    		#
 		path = taskController.resultFileWithName_('capture.png');
     
+        # log command
+		print >> sys.stderr, "Running screencapture command..."
+	
 		# capture sceen shot to file
 		os.system("screencapture -t png " + path)
 
 		# append the current path
 		paths.append(path)	
 
-		time.sleep(0.5)		
+    	# log wait
+		print >> sys.stderr, "Waiting..."
+	
+		time.sleep(1.0)		
 		count = count + 1
 		
 	# form our result dictionary

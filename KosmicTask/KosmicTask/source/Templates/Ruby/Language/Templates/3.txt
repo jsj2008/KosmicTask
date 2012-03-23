@@ -18,6 +18,9 @@
 
 require 'appscript'
 
+# log application access
+$stderr.puts "Accessing Finder ..."
+
 # get application - for more information see the Ruby Usage document
 app = Appscript.app('Finder')
 

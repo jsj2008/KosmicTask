@@ -11,9 +11,13 @@
 #
 #
 import appscript
+import sys
 
 def kosmictask():
 		
+	# log application access
+	print >> sys.stderr, "Accessing Finder..."
+
 	# get application - for more information see the Python Usage document
 	app = appscript.app('Finder')
 

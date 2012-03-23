@@ -22,6 +22,9 @@ function kosmicTask()
 	local path = taskController:resultFileWithName_('capture.png')
 	path = tostring(path) -- get a native lua string
 	
+	-- log command
+	io.stderr:write("Running screencapture command...\n")
+
 	-- execute
 	os.execute("screencapture -t png " .. path)
 	

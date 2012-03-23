@@ -28,6 +28,9 @@ class KosmicTask < OSX::NSObject
 	#
 	def kosmictask()
 	
+		# log timer start
+		$stderr.puts "Timer started..."
+	
 		OSX::NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(2, self, :timerFired, nil, true)
 	
 		# keep task running
@@ -38,6 +41,9 @@ class KosmicTask < OSX::NSObject
 	# task timer expired
 	#
 	def timerFired(timer)
+		
+		# log timer expired
+		$stderr.puts "Timer expired..."
 		
 		timer.invalidate()
 		

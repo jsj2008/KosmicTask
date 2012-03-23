@@ -18,6 +18,9 @@ use warnings;
 # files created in the current directory will be deleted when the task ends
 $FILE="capture.png";
 
+# log command
+print STDERR "Running screencapture command...\n";
+
 # capture screen
 `screencapture -t png $FILE`;
 

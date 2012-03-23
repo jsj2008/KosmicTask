@@ -28,12 +28,18 @@ on KosmicTask()
 			-- the shell script below will expect a POSIX path
 			set picPosixPath to POSIX path of file resultFile
 		
+			-- log command
+			log "Running screencapture command..." & return
+		
 			-- do screen capture via shell
 			do shell script "screencapture -t png " & quoted form of picPosixPath
 			
 			set end of resultFiles to resultFile
 			
-			delay 0.5
+			-- log wait
+			log "Waiting..." & return
+			
+			delay 1
 		end repeat
 		
 		-- feedback

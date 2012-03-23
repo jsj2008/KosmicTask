@@ -19,10 +19,16 @@ function kosmicTask()
 	 	// this file will be automatically deleted when the task ends.
 		var path = KosmicTaskController.resultFileWithName('capture.png');
 		
+		// log command
+		log("Running screencapture command...");
+	
 		// capture screen shot to file
 		var task = NSTask.launchedTaskWithLaunchPath_arguments('/usr/sbin/screenCapture', ['-t', 'png', path]);
 		task.waitUntilExit;
 	
+		// log wait
+		log("Waiting...");
+		
 		// sleep this thread (JavaScript lacks a native sleep function)
 		var future = NSDate.dateWithTimeIntervalSinceNow(1);
         NSThread.sleepUntilDate(future);

@@ -16,8 +16,8 @@ property NSTimer : class "NSTimer"
 script KosmicTask
 	property parent : class "NSObject"
 	
-	property delayRepeat : 1
-	property delayTime : 0
+	property delayRepeat : 3
+	property delayTime : 2
 	property repeatCounter : 0
 	
 	(*
@@ -25,13 +25,13 @@ script KosmicTask
 	task entry point
 	
 	*)
-	on kosmicTask(theDelay, theRepeat)
+	on kosmicTask()
 		
-		set delayTime to theDelay
-		set delayRepeat to theRepeat
+		-- log timer started
+		log "Timer started..."
 		
 		-- create the timer
-		set theTimer to NSTimer's scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(theDelay, me, "timerFired:", "", true)
+		set theTimer to NSTimer's scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(delayTime, me, "timerFired:", "", true)
 		
 		-- keep our task running
 		taskController's keepTaskRunning()
@@ -44,8 +44,13 @@ script KosmicTask
 	
 	*)
 	on timerFired_(theTimer)
-		
+
+		-- log timer expired
+		log "Timer expired."
+				
+		-- increment the counter
 		set repeatCounter to repeatCounter + 1
+		
 		if repeatCounter = delayRepeat then
 			
 			-- invalidate the timer

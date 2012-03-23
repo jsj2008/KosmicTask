@@ -26,11 +26,17 @@ while ( $i <= 5)
 	# filename
 	set file = "capture-$i.png"
 
+	# log command
+	echo "Running screencapture command..." >/dev/stderr
+	
 	# capture screen
 	screencapture -t png $file
 	
 	# add to files list
 	set files = "$files $file"
+	
+	# log wait
+	echo "Waiting..." >/dev/stderr
 	
 	sleep 1
 	

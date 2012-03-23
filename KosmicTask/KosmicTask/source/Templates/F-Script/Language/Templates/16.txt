@@ -1,8 +1,8 @@
 "
 
-Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+Created by Mugginsoft on 22 Mar 2012 12:44:03
 
-Script: {{ script }}
+Script: F-Script Cocoa
 
 Credits:
 
@@ -15,14 +15,24 @@ Notes:
 	{ 	
 		" instance variables "
 		timer
-		
+		delayRepeat
+		delayTime
+		repeatCounter
+	
    		" start "
    		- start
    		{
+   			delayRepeat := 3.
+   			delayTime := 2.
+   			repeatCounter := 0.
+   			
+   			" log timer "
+			stderr print:'Timer started...\n'.
+		
        		" schedule the timer "
        		" note that the target is a block and the selector is a block in compact form "
        		" #value is equivalent to [:a | a value] "
-			timer := NSTimer scheduledTimerWithTimeInterval: 2 target:[self timerFired:timer] selector: #value  userInfo: nil repeats: false.
+			timer := NSTimer scheduledTimerWithTimeInterval: 2 target:[self timerFired:timer] selector: #value  userInfo: nil repeats: true.
 						
 			" use kosmicTaskController to keep our task alive"
 			KosmicTaskController keepTaskRunning.
@@ -31,8 +41,19 @@ Notes:
    		" timer fired "
    		- (void)timerFired:(NSTimer *)aTimer
    		{
-   			" stop our task and return result "
-   			KosmicTaskController stopTask: 'timer expired'.
+   			" log timer expired"
+			stderr print:'Timer expired...\n'.
+			
+   			repeatCounter := repeatCounter + 1.
+   			
+   			repeatCounter >= delayRepeat ifTrue:
+   			[
+   				" "
+   				timer invalidate.
+   				
+   				" stop our task and return result "
+   				KosmicTaskController stopTask: 'Task completed.'.
+   			]
    		}
 	}.
 

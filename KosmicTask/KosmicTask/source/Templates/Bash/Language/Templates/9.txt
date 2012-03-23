@@ -14,10 +14,18 @@
 
 for i in {1..10}
 do
+	# log wait
+	echo "Running sleep command in a subprocess." >/dev/stderr
 
-	# run task as a subprocess
-	sleep 30 &
+	# run sleep command as a subprocess
+	sleep 5 &
 done	
+
+# log wait
+echo "Waiting for all subprocesses to end..." >/dev/stderr
 
 # wait for all subprocesses to end
 wait
+
+# log all subprocesses complete
+echo "All subprocesses ended." >/dev/stderr

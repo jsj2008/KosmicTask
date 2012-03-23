@@ -37,12 +37,18 @@ def kosmictask()
     	#
     	path = $taskController.resultFileWithName_("capture.png");
     
+    	# log command
+		$stderr.puts "Running screencapture command..."
+	
    		# capture sceen shot to file
     	system "screencapture -t png " + path
     
     	# push path onto end of our array
     	paths.push(path)
     	
+    	# log wait
+		$stderr.puts "Waiting..."
+	
     	sleep 1.0
     end
     

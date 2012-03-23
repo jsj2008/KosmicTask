@@ -27,12 +27,18 @@ for ($i = 1; $i <= 5; $i++) {
 	# filename
 	$FILE = "capture-$i.png";
 	
+	# log command
+	print STDERR "Running screencapture command...\n";
+
 	# capture screen
 	`screencapture -t png $FILE`;
 
 	# add to files list
 	$FILES = "$FILES $FILE";
 	
+	# log wait
+	print STDERR "Waiting...\n";
+
 	sleep 1;
 }
 

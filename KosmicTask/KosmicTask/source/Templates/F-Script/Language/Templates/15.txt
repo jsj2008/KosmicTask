@@ -17,6 +17,9 @@ Notes:
  	" this file will be automatically deleted when the task ends."
 	path := taskController resultFileWithName: 'capture.png'.
 	
+	" log command "
+	stderr print:'Running sceencapture command...\n'.
+		
 	" capture screen shot to file "
 	task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/screenCapture' arguments:{'-t', 'png', path}.
 	task waitUntilExit.

@@ -23,6 +23,8 @@ script KosmicTask
 	on KosmicTask()
 		
 		try
+			-- log application access
+			log "Accessing Finder..."
 			
 			-- target application
 			tell application "Finder"

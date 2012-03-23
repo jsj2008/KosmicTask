@@ -14,6 +14,9 @@ LuaCocoa.import("ScriptingBridge")
 
 function kosmicTask()
 
+	-- log application access
+	io.stderr:write("Accessing Finder...\n")
+
 	-- use the ScriptingBridge framework to access the application
 	local finder_application = SBApplication:applicationWithBundleIdentifier_("com.apple.finder")
 	

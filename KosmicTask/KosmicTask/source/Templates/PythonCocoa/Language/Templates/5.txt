@@ -15,6 +15,7 @@
 #
 import AppKit
 import Foundation
+import sys
 
 # KosmicTask controller
 taskController = Foundation.NSClassFromString("KosmicTaskController")
@@ -26,6 +27,9 @@ class KosmicTask (Foundation.NSObject):
 	#
 	def kosmictask(self):
 
+    	# start timer
+		print >> sys.stderr, "Timer started..."
+	
 		# schedule the timer
 		AppKit.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(2, self, "timerFired:", "", 1)
 

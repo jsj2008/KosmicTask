@@ -16,6 +16,9 @@
 # files created in the current directory will be deleted when the task ends
 FILE="capture.png"
 
+# log command
+echo "Running screencapture command..." >/dev/stderr
+
 # capture screen
 screencapture -t png $FILE
 

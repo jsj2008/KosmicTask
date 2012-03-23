@@ -21,9 +21,15 @@ for i=0,4 do
 	-- filename
 	file = "capture-" .. i+1 .. ".png";
 
+	-- log command
+	io.stderr:write("Running screencapture command...\n")
+
 	-- execute
 	os.execute("screencapture -t png " .. file)
 	
+	-- log wait
+	io.stderr:write("Waiting...\n")
+
 	-- sleep this thread
 	os.execute("sleep 1")
 	

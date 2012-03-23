@@ -22,6 +22,9 @@ class KosmicTask {
 		char command[100];
 		sprintf(command, "screencapture -t png %s", file);
 	
+	  	// log command
+  		clog << "Running screencapture command…\n";
+  		
 		// execute command
 		system(command);
 	

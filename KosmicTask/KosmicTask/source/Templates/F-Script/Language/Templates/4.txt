@@ -13,6 +13,9 @@ Notes:
 	"load the ScriptingBridge framework"
 	(NSBundle bundleWithPath:'/System/Library/Frameworks/ScriptingBridge.framework') load.
 
+	" log application access "
+	stderr print:'Accessing Finder...\n'.
+	
 	" use the ScriptingBridge framework to access the application "
 	Finder := SBApplication applicationWithBundleIdentifier:'com.apple.finder'.
 	

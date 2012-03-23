@@ -12,10 +12,14 @@
 # sys.argv[1] .. sys.argv[numArgs]
 #
 import os
+import sys
 
 # capture screen image to file
 # files create in the current directory will be deleted when the task ends
 file = "capture.png"
+
+# log command
+print >> sys.stderr, "Running screencapture command..."
 
 # capture screen
 os.system("screencapture -t png " + file)

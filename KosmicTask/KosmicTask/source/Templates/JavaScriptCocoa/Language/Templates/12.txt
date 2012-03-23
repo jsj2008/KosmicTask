@@ -15,6 +15,9 @@ loadFramework("ScriptingBridge")
 	
 function kosmicTask() 
 {
+	// log application access
+	log("Accessing Finder...");
+	
 	// use the ScriptingBridge framework to access the application
 	var Finder = SBApplication.applicationWithBundleIdentifier('com.apple.finder')
 	

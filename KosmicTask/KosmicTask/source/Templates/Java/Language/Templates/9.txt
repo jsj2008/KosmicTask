@@ -23,11 +23,17 @@ class kosmicTask
     			// build filename
     			String filename = "capture-" + i + ".png";
     			
+    			// log command
+				System.err.println("Running screencapture command...");
+			
     			// execute cmd
     			// files created in the current directory will be deleted when the task ends
     			String cmd = String.format("screencapture -t png %s", filename);
     			Runtime.getRuntime().exec(cmd);
     			
+    			// log wait
+				System.err.println("Waiting...");
+
     			// sleep 1 second
     			Thread.sleep(1000);
     			

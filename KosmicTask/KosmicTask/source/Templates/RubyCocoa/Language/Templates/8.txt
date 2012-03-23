@@ -33,6 +33,9 @@ def kosmictask()
     #
     path = $taskController.resultFileWithName_("capture.png");
     
+	# log command
+	$stderr.puts "Running screencapture command..."
+	
     # capture sceen shot to file
     system "screencapture -t png " + path
     

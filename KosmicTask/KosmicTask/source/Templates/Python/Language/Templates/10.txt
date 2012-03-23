@@ -13,6 +13,7 @@
 #
 import os
 import time
+import sys
 
 # capture screen image to file
 # files created in the current directory will be deleted when the task ends
@@ -26,12 +27,18 @@ for i in range(5):
 	# filename
 	file = "capture-" + str(i+1) + ".png";
 	
+	# log command
+	print >> sys.stderr, "Running screencapture command..."
+
 	# capture screen
 	os.system("screencapture -t png " + file)
 
 	# add to files list
 	files = files + file
 	
+	# log wait
+	print >> sys.stderr, "Waiting..."
+
 	time.sleep(1)
 
 
