@@ -137,6 +137,11 @@ requiredResourceDoubleClicked, selectedLanguageProperty;
 	[fragaria embedInView:editorHostView];
 	editorTextView = [fragaria objectForKey:ro_MGSFOTextView];
 	
+    // turn off auto text replacement for items such as ...
+    // as it can cause certain scripts to fail to build e.g: Python
+    [editorTextView setAutomaticDataDetectionEnabled:NO];
+	[editorTextView setAutomaticTextReplacementEnabled:NO];
+    
 	[[MGSLanguagePluginController sharedController] resolvePluginResources];
 	 
 	// KVO
