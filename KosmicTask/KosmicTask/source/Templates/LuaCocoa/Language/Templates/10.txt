@@ -49,6 +49,7 @@ function kosmicTask()
 	-- return file contenst in dictionary
 	local result = {}
 	result.kosmicFile = paths
+	result.kosmicName = command
 	result.kosmicInfo = #paths .. " files returned"
 	
 	return result

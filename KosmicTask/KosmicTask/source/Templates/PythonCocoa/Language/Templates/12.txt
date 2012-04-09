@@ -63,6 +63,7 @@ def kosmictask():
 			
 		# form result dictionary
 		result["kosmicFile"] = paths
+		result["kosmicName"] = command
 		result["kosmicInfo"] = "files returned"
 		
 	except Exception as ex:

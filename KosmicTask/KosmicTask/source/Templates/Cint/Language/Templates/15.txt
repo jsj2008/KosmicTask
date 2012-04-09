@@ -59,7 +59,7 @@ int main()
 	}
 	
 	// return a YAML inline format dictionary with array of filenames
-	printf("--- {kosmicFile: [%s] , kosmicInfo: files returned}", files);
+	printf("--- {kosmicName: %s, kosmicFile: [%s] , kosmicInfo: files returned}", command, files);
 	
     return 0;
 }

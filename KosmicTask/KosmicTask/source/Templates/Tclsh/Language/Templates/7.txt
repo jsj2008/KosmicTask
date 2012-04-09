@@ -29,7 +29,7 @@ proc runTask {} {
 	}
 	    
 	# return a YAML inline format dictionary with filename
-	set result "{kosmicFile: $file, kosmicInfo: file returned}"
+	set result "{kosmicFile: $file, kosmicName: $command, kosmicInfo: file returned}"
 	
 	return $result
 

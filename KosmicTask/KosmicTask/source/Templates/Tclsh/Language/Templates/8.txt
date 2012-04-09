@@ -46,7 +46,7 @@ proc runTask {} {
 	}
 	
 	# return a YAML inline format dictionary with a properly escaped array of filenames
-	set result "{kosmicFile: \[$files] , kosmicInfo: files returned}"
+	set result "{kosmicFile: \[$files] , kosmicName: $command, kosmicInfo: files returned}"
 	
 	return $result
 }

@@ -35,6 +35,7 @@ function kosmicTask()
 	-- return file content in dictionary
 	local result = {}
 	result.kosmicFile = path 
+	result.kosmicName = command
 	result.kosmicInfo = "file returned"
 	
 	return result

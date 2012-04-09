@@ -27,7 +27,7 @@ function kosmicTask()
 		task.waitUntilExit;
 	
 		// form result dictionary 
-		var result = {kosmicFile: path};
+		var result = {kosmicName: command, kosmicFile: path, kosmicInfo: "file returned"};
 	
 	} catch(e) {
 		

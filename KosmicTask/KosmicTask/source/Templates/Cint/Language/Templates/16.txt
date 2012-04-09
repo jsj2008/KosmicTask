@@ -50,6 +50,7 @@ class KosmicTask {
 			}
 			
 			// form YAML block result
+			result += "kosmicName: " + command + "\n"; 
 			result += "kosmicFile: " + file + "\n"; 
 			result += "kosmicInfo: file returned";
   			

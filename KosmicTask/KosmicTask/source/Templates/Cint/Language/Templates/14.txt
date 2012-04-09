@@ -39,7 +39,7 @@ int main()
 	}
 	
 	// return a YAML inline format dictionary
-	printf("--- {kosmicFile: %s, kosmicInfo: file returned}", file);
+	printf("--- {kosmicName: %s, kosmicFile: %s, kosmicInfo: file returned}", command, file);
 	
     return 0;
 }

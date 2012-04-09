@@ -38,7 +38,7 @@ script KosmicTask
 			do shell script theCommand & " -t png " & quoted form of picPosixPath
 			
 			-- return result
-			return {kosmicFile:picPosixPath, kosmicInfo:"file returned"}
+			return {kosmicName:theCommand, kosmicFile:picPosixPath, kosmicInfo:"file returned"}
 			
 		on error errorMessage number errorNumber
 			

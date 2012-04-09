@@ -30,7 +30,7 @@ begin
  	end
  	
 	# return a YAML inline format dictionary with filename
-	result = "{kosmicFile: %s, kosmicInfo: file returned}" % file
+	result = "{kosmicFile: %s, kosmicName: %s, kosmicInfo: file returned}" % [file, command]
 	
 rescue => e
 

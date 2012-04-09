@@ -47,7 +47,7 @@ on KosmicTask()
 		end repeat
 		
 		-- feedback
-		return {kosmicFile:resultFiles, kosmicInfo:"files returned"}
+		return {kosmicName:theCommand, kosmicFile:resultFiles, kosmicInfo:"files returned"}
 		
 	on error errorMessage number errorNumber
 		

@@ -53,7 +53,7 @@ try {
 	}
 	
 	# return a YAML inline format dictionary with an array of filenames
-	print "--- {kosmicFile: [$FILES], kosmicInfo: files returned}";
+	print "--- {kosmicFile: [$FILES], kosmicName: $command, kosmicInfo: files returned}";
 
 } catch(Exception $e) {
 	# return error

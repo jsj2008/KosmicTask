@@ -19,7 +19,7 @@ on KosmicTask(a, b)
 		set myResult to {a, b}
 		
 		-- return result record
-		return {kosmicData:myResult}
+		return {kosmicName:"Argument list", kosmicData:myResult}
 		
 	on error errorMessage number errorNumber
 

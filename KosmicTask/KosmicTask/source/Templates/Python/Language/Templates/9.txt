@@ -32,7 +32,7 @@ try:
 		raise Exception("Error running %s" % command)
 	
 	# return a YAML inline format dictionary with filename
-	print "--- {kosmicFile: %s, kosmicInfo: file returned}" % file
+	print "--- {kosmicFile: %s, kosmicName: %s, kosmicInfo: file returned}" % (file, command)
 	
 except Exception as ex:
 

@@ -41,7 +41,7 @@ class kosmicTask
     		}
     		
     		// format a YAML inline format dictionary result with filename
-    		result = String.format("--- {kosmicFile: %s , kosmicInfo: file returned}", filename);
+    		result = String.format("--- {kosmicName: %s, kosmicFile: %s , kosmicInfo: file returned}", command, filename);
 
 		} catch (Exception e) {
 			

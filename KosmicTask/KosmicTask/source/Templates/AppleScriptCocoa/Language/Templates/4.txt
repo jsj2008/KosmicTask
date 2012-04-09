@@ -13,7 +13,7 @@ script KosmicTask
 	property parent : class "NSObject"
 	
 	-- script properties
-	property myResult : missing value 
+	property myResult : missing value
 	
 	(*
 	 
@@ -29,17 +29,17 @@ script KosmicTask
 			-- target application
 			tell application "Finder"
 				set myResult to name
-			end tell			
+			end tell
 			
 			-- myResult is complete, task will end
-			return {kosmicData:myResult}
+			return {kosmicName:"Application name", kosmicData:myResult}
 			
 		on error errorMessage number errorNumber
-
+			
 			return {kosmicError:errorMessage}
-
+			
 		end try
-
-	end KosmicTask
 		
+	end KosmicTask
+	
 end script

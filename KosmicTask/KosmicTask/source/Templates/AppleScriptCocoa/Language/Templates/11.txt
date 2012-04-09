@@ -52,7 +52,7 @@ script KosmicTask
 			end repeat
 			
 			-- return result
-			return {kosmicFile:paths, kosmicInfo:"files returned"}
+			return {kosmicName:theCommand, kosmicFile:paths, kosmicInfo:"files returned"}
 			
 		on error errorMessage number errorNumber
 			

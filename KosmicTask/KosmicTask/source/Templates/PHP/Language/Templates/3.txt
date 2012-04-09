@@ -35,7 +35,7 @@ try {
 	}
 	
 	# return a YAML inline format dictionary with filename
-	echo "--- {kosmicFile: $file, kosmicInfo: file returned}";
+	echo "--- {kosmicFile: $file, kosmicName: $command, kosmicInfo: file returned}";
 
 } catch(Exception $e) {
 	# return error

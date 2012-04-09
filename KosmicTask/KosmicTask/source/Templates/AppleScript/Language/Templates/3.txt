@@ -23,7 +23,7 @@ on KosmicTask()
 		end tell
 		
 		-- return result record
-		return {kosmicData:myResult}
+		return {kosmicName:"Application name", kosmicData:myResult}
 		
 	on error errorMessage number errorNumber
 

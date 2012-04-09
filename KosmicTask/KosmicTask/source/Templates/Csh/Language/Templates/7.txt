@@ -40,11 +40,12 @@ echo "---"
 if ( $type == 1 ) then 
 
 	# return a YAML inline format dictionary
-	echo "{kosmicFile: $file, kosmicInfo: file returned}"
+	echo "{kosmicName: $command, kosmicFile: $file, kosmicInfo: file returned}"
 
 else
 
 	# return a YAML block format dictionary
+	echo "kosmicName: $command"
 	echo "kosmicFile: $file"
 	echo "kosmicInfo: file returned"
 

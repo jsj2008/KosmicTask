@@ -34,4 +34,4 @@ if [ $? != 0 ]; then
 
 # return a YAML inline format dictionary
 echo "---"
-echo "{kosmicFile: $FILE , kosmicInfo: file returned}"
+echo "{kosmicFile: $FILE , kosmicName: $COMMAND, kosmicInfo: file returned}"

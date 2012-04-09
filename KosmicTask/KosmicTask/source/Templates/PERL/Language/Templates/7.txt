@@ -34,4 +34,4 @@ if ($STATUS != 0) {
 }
 
 # return a YAML inline format dictionary with filename
-print "--- {kosmicFile: $FILE, kosmicInfo: file returned}";
+print "--- {kosmicFile: $FILE, kosmicName: $COMMAND, kosmicInfo: file returned}";
