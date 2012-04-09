@@ -1,5 +1,5 @@
 #
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+# Created by Mugginsoft on 26 Mar 2012 10:10:27
 #
 # Credits:
 #
@@ -22,25 +22,39 @@ taskController = Foundation.NSClassFromString("KosmicTaskController")
 
 def kosmictask():
 
-	# create path to temp result file from taskController.
-	# this file will be automatically deleted when the task ends.
-	#
-	# an alternative would be:
-	# fileno, path = tempfile.mkstemp(suffix='.png', prefix='capture')
-	# os.close(fileno)
-   	#
-	path = taskController.resultFileWithName_('capture.png');
-    
-    # log command
-	print >> sys.stderr, "Running screencapture command..."
-	
-	# capture sceen shot to file
-	os.system("screencapture -t png " + path)
-
-	# form our result dictionary
+	# define result dictionary
 	result = {}
-	result["kosmicFile"] = path
-	result["kosmicInfo"] = "file returned"
+
+	# define command
+	command = 'screencapture'
 	
-	# return object
+	try:
+		# create path to temp result file from taskController.
+		# this file will be automatically deleted when the task ends.
+		#
+		# an alternative would be:
+		# fileno, path = tempfile.mkstemp(suffix='.png', prefix='capture')
+		# os.close(fileno)
+	   	#
+		path = taskController.resultFileWithName_('capture.png');
+	    
+	    # log command
+		print >> sys.stderr, "Running %s command..." % command
+		
+		# execute command
+		status = os.system("%s -t png %s" % (command, path))
+		if status <> 0:
+			raise Exception("Error running %s" % command)
+
+		# form result dictionary
+		result["kosmicFile"] = path
+		result["kosmicInfo"] = "file returned"
+		
+	except Exception as ex:
+
+		# form error dictionary
+		result["kosmicError"] = ex.args
+	
+	# return result
 	return result
+	

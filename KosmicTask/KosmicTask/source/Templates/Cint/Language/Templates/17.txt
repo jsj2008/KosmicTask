@@ -10,45 +10,72 @@ Notes:
 
 */
 #include <iostream>
+#include <string>
 #include <unistd>
 
 class KosmicTask {  
 	public:           
   	
   	KosmicTask() { 
-  		char files[1000];
+  		 		
+  		// define result
+  		string result = "kosmicFile:\n";
   		
-		for (int i = 1; i <= 5; i++) {
-		
-			if (i > 1) {
-				strcat(files, ", ");
+  		// define error
+  		string error = "An error has occurred";
+  		
+  		// define command
+		string command = "screencapture";
+			
+		try {
+			
+			for (int i = 1; i <= 5; i++) {
+						
+				// log command
+		  		clog << "Running " << command << " command...\n";
+		  		
+				// capture screen image to file
+				// files created in the current directory will be deleted when the task ends
+				ostringstream fileStream;
+				fileStream << "capture-" << i << ".png";
+				string file = fileStream.str();
+				
+		  		// build command buffer
+				string cmdbuf = command + " -t png " + file;
+	  		
+				// execute command
+				int status = system(cmdbuf.c_str());
+			
+				// check for errors
+				if (status != 0) {
+									
+					error = "Error running " + command;
+									
+					// throw exception
+					throw error;	
+				}		
+				
+				// append file as YAML block array element
+				result += " - " + file + "\n";
+			
+				 // log wait
+	  			clog << "Waiting...\n";
+	  		
+				sleep(1);
 			}
-		
-			// capture screen image to file
-			// files created in the current directory will be deleted when the task ends
-			char file[100];
-			sprintf(file, "capture-%i.png", i);
+			
+			result += "kosmicInfo: files returned";
 	
-			char command[100];
-			sprintf(command, "screencapture -t png %s", file);
+		} catch (...) {
+  			
+			// form error result
+			result = "kosmicError: " + error; 
+  			
+  		}
 	
-		  	// log command
-  			clog << "Running screencapture command...\n";
-  		
-			// execute command
-			system(command);
-		
-			strcat(files, file);
-		
-			  // log wait
-  			clog << "Waiting…\n";
-  		
-			sleep(1);
-	
-		}
-	
-		// return a YAML inline format dictionary with array of filenames
-		printf("--- {kosmicFile: [%s], kosmicInfo: file returned}", files);
+		// print result
+		cout << "---\n";
+  		cout << result;
   	}   
 
 };

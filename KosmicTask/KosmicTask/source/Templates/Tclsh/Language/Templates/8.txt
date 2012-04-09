@@ -1,5 +1,5 @@
 #
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+# Created by Mugginsoft on 27 Mar 2012 14:36:41
 #
 # Credits:
 #
@@ -12,34 +12,50 @@
 # [lindex $argv 0] .. [lindex $argv [expr $argc - 1]]
 # 
 
-set files ""
+proc runTask {} {
 
-for { set i 1 } { $i <= 5 } { incr i } {
+	set files ""
 	
-	if {$i > 1} {
-		append files ", "
+	# define command
+	set command "screencapture"
+		
+	for { set i 1 } { $i <= 5 } { incr i } {
+		
+		if {$i > 1} {
+			append files ", "
+		}
+		
+		# file created in task current directory will be automatically deleted
+		set file "capture-$i.png"
+	 
+	 	# log command
+		puts stderr "Running $command command..."
+	
+		# execute command
+		if {[catch {exec $command -t png $file}]} {
+			error "Error running $command"
+		}
+	
+		append files "$file"
+		
+		# log wait
+		puts stderr "Waiting..."
+	
+		# sleep 1 second
+		after 1000
 	}
 	
-	# file created in task current directory will be automatically deleted
-	set file "capture-$i.png"
- 
- 	# log command
-	puts stderr "Running screencapture command..."
-
-	# capture sceen shot to file
-	exec screencapture -t png $file
-
-	append files "$file"
+	# return a YAML inline format dictionary with a properly escaped array of filenames
+	set result "{kosmicFile: \[$files] , kosmicInfo: files returned}"
 	
-	# log wait
-	puts stderr "Waiting..."
-
-	# sleep 1 second
-	after 1000
+	return $result
 }
 
-# return a YAML inline format dictionary with a properly escaped array of filenames
-set result "{kosmicFile: \[$files] , kosmicInfo: file returned}"
+# run task function and catch errors
+if {[catch runTask result] == 1} {
+	set result "{kosmicError: $errorInfo}"	
+}
 
+# print result
 puts "---"
 puts $result

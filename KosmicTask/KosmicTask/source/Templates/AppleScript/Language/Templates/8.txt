@@ -24,11 +24,14 @@ on KosmicTask()
 		-- the shell script below will expect a POSIX path
 		set picPosixPath to POSIX path of file resultFile
 		
+		-- define command
+		set theCommand to "screencapture"
+			
 		-- log command
-		log "Running screencapture command..." & return
+		log "Running " & theCommand & " command..." & return
 		
-		-- do screen capture via shell
-		do shell script "screencapture -t png " & quoted form of picPosixPath
+		-- execute command
+		do shell script theCommand & " -t png " & quoted form of picPosixPath
 		
 		-- feedback
 		return {kosmicFile:resultFile, kosmicInfo:"file returned"}

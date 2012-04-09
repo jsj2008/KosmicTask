@@ -1,5 +1,5 @@
 #
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+# Created by Mugginsoft on 27 Mar 2012 14:13:18
 #
 # Credits:
 #
@@ -12,17 +12,34 @@
 # [lindex $argv 0] .. [lindex $argv [expr $argc - 1]]
 # 
 
-# file created in task current directory will be automatically deleted
-set file "capture.png"
+proc runTask {} {
+	
+	# file created in task current directory will be automatically deleted
+	set file "capture.png"
+	
+	# define command
+	set command "screencapture"
+	
+	# log command
+	puts stderr "Running $command command..."
+	
+	# execute command
+	if {[catch {exec $command -t png $file}]} {
+		error "Error running $command"
+	}
+	    
+	# return a YAML inline format dictionary with filename
+	set result "{kosmicFile: $file, kosmicInfo: file returned}"
+	
+	return $result
 
-# log command
-puts stderr "Running screencapture command..."
+}
 
-# capture sceen shot to file
-exec screencapture -t png $file
-    
-# return a YAML inline format dictionary with filename
-set result "{kosmicFile: $file, kosmicInfo: file returned}"
+# run task function and catch errors
+if {[catch runTask result] == 1} {
+	set result "{kosmicError: $errorInfo}"		
+}
 
+# print result
 puts "---"
 puts $result

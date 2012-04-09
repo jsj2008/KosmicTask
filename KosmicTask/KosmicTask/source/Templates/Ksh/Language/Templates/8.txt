@@ -16,6 +16,9 @@
 # files created in the current directory will be deleted when the task ends
 FILES=""
 
+#define command
+COMMAND="screencapture"
+
 for i in {1..5}
 do
 
@@ -27,11 +30,18 @@ do
 	FILE="capture-$i.png"
 
 	# log command
-	echo "Running screencapture command..." >/dev/stderr
+	echo "Running $COMMAND command..." >/dev/stderr
 
-	# capture screen
-	screencapture -t png $FILE
+	# execute command
+	$COMMAND -t png $FILE
 	
+	# check for errors
+	if [ $? != 0 ]; then
+	{
+    	echo "--- {kosmicError: Error running $COMMAND}"
+    	exit 1
+	} fi
+
 	# add to files list
 	FILES="$FILES $FILE"
 	
@@ -43,4 +53,4 @@ done
 
 # return a YAML inline format dictionary with an array of filenames
 echo "---"
-echo "{kosmicFile: [$FILES], kosmicInfo: file returned}"
+echo "{kosmicFile: [$FILES], kosmicInfo: files returned}"

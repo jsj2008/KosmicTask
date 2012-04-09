@@ -1,5 +1,5 @@
 #
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+# Created by Mugginsoft on 27 Mar 2012 13:00:02
 #
 # Credits:
 #
@@ -23,44 +23,62 @@ $taskController = OSX.NSClassFromString("KosmicTaskController")
 
 def kosmictask()
 
-	# paths array
+	# define paths
 	paths = Array.new()
 	
-	for i in (1..5)
-		# create path to temp result file from taskController.
-		# this file will be automatically deleted when the task ends.
-		#
-		# an alternative would be:
-		# f = Tempfile.new('kosmictask')
-    	# f.close
-    	# path = f.path + ".png"
-    	#
-    	path = $taskController.resultFileWithName_("capture.png");
-    
-    	# log command
-		$stderr.puts "Running screencapture command..."
-	
-   		# capture sceen shot to file
-    	system "screencapture -t png " + path
-    
-    	# push path onto end of our array
-    	paths.push(path)
-    	
-    	# log wait
-		$stderr.puts "Waiting..."
-	
-    	sleep 1.0
-    end
-    
-	# create our result hash
+	# define result 
 	result = Hash.new()
 	
-	# add keyed array of file paths
-	result["kosmicFile"] = paths;
+   	# define command
+	command = "screencapture"
 
-	# add keyed info
-	result["kosmicInfo"] = "file returned"
+	begin
+
+		for i in (1..5)
+			# create path to temp result file from taskController.
+			# this file will be automatically deleted when the task ends.
+			#
+			# an alternative would be:
+			# f = Tempfile.new('kosmictask')
+	    	# f.close
+	    	# path = f.path + ".png"
+	    	#
+	    	path = $taskController.resultFileWithName_("capture.png");
+	    		
+	    	# log command
+			$stderr.puts "Running #{command} command..."
 		
+	   		# execute command
+			status = system("%s -t png %s" % [command, path])
+		 	if !status 
+		 		raise "Error running #{command}" 
+		 	end
+	    
+	    	# push path onto end of our array
+	    	paths.push(path)
+	    	
+	    	# log wait
+			$stderr.puts "Waiting..."
+		
+	    	sleep 1.0
+	    end
+	    
+		# create our result hash
+		result = Hash.new()
+		
+		# add keyed array of file paths
+		result["kosmicFile"] = paths;
+	
+		# add keyed info
+		result["kosmicInfo"] = "files returned"
+		
+	rescue => e
+	
+		# return error
+		result['kosmicError'] = e.message
+	end
+
+	
 	return result
 end
 		

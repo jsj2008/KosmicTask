@@ -11,21 +11,31 @@ Notes:
 */
 function kosmicTask() 
 {
+	try {
+	 	// form our image file result path
+	 	// this file will be automatically deleted when the task ends.
+		var path = KosmicTaskController.resultFileWithName('capture.png');
+		
+		// define command
+		var command = "screencapture";
+		
+		// log command
+		log("Running " + command + " command...");
 	
- 	// form our image file result path
- 	// this file will be automatically deleted when the task ends.
-	var path = KosmicTaskController.resultFileWithName('capture.png');
+		// execute command
+		var task = NSTask.launchedTaskWithLaunchPath_arguments('/usr/sbin/' + command, ['-t', 'png', path]);
+		task.waitUntilExit;
 	
-	// log command
-	log("Running screencapture command...");
-
-	// capture screen shot to file
-	var task = NSTask.launchedTaskWithLaunchPath_arguments('/usr/sbin/screenCapture', ['-t', 'png', path]);
-	task.waitUntilExit;
-
-	// form result dictionary 
-	var result = {kosmicFile: path};
-			
+		// form result dictionary 
+		var result = {kosmicFile: path};
+	
+	} catch(e) {
+		
+		// form error dictionary 
+		var result = {kosmicError: e.reason};
+		
+	}
+	
 	return result
 
 }

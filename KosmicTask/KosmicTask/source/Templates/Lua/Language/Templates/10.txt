@@ -9,35 +9,55 @@ Credits:
 Notes:
 
 ]]
--- files string
-local files = ""
 
-for i=0,4 do
+function runTask()
+	
+	-- define files 
+	local files = ""
+	
+	-- define command
+	local command = "screencapture"
 
-	if i > 0 then
-		files = files .. ", "
+	for i=0,4 do
+	
+		if i > 0 then
+			files = files .. ", "
+		end
+		
+		-- filename
+		file = "capture-" .. i+1 .. ".png";
+	
+		-- log command
+		io.stderr:write("Running " .. command .. " command...\n")
+		
+		-- execute command
+		local status = os.execute(command .. " -t png " .. file)
+		
+		-- check execution status
+		if status ~= 0 then
+			error ("Error running " .. command)
+		end
+	
+		-- log wait
+		io.stderr:write("Waiting...\n")
+	
+		-- sleep this thread
+		os.execute("sleep 1")
+		
+		files = files .. file
 	end
 	
-	-- filename
-	file = "capture-" .. i+1 .. ".png";
-
-	-- log command
-	io.stderr:write("Running screencapture command...\n")
-
-	-- execute
-	os.execute("screencapture -t png " .. file)
+	-- return a YAML inline format dictionary with array of filenames
+	local result = string.format("--- {kosmicFile: [%s], kosmicInfo: files returned}", files)
 	
-	-- log wait
-	io.stderr:write("Waiting...\n")
-
-	-- sleep this thread
-	os.execute("sleep 1")
-	
-	files = files .. file
+	print(result)
 end
 
--- return a YAML inline format dictionary with array of filenames
-local result = string.format("--- {kosmicFile: [%s], kosmicInfo: file returned}", files)
+-- call function
+local status, err = pcall(runTask)
 
-print(result)
-
+-- check for errors
+if err then
+	local result = string.format("--- {kosmicError: '%s'}", err)
+	print(result)
+end

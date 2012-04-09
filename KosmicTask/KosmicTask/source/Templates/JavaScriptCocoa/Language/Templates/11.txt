@@ -11,34 +11,47 @@ Notes:
 */
 function kosmicTask() 
 {
-	var paths = [];
-	
-	for (i=0; i < 5; i++) {
+	try {
 		
-	 	// form our image file result path
-	 	// this file will be automatically deleted when the task ends.
-		var path = KosmicTaskController.resultFileWithName('capture.png');
+		// define paths array	
+		var paths = [];
+	
+		// define command
+		var command = "screencapture";
 		
-		// log command
-		log("Running screencapture command...");
-	
-		// capture screen shot to file
-		var task = NSTask.launchedTaskWithLaunchPath_arguments('/usr/sbin/screenCapture', ['-t', 'png', path]);
-		task.waitUntilExit;
-	
-		// log wait
-		log("Waiting...");
-		
-		// sleep this thread (JavaScript lacks a native sleep function)
-		var future = NSDate.dateWithTimeIntervalSinceNow(1);
-        NSThread.sleepUntilDate(future);
-
-		// save our file path
-		paths.push(path);
-	}
-	
-	// form result dictionary 
-	var result = {kosmicFile: paths};
+		for (i=0; i < 5; i++) {
 			
+		 	// form our image file result path
+		 	// this file will be automatically deleted when the task ends.
+			var path = KosmicTaskController.resultFileWithName('capture.png');
+			
+			// log command
+			log("Running " + command + " command...");
+		
+			// execute command
+			var task = NSTask.launchedTaskWithLaunchPath_arguments('/usr/sbin/' + command, ['-t', 'png', path]);
+			task.waitUntilExit;
+		
+			// log wait
+			log("Waiting...");
+			
+			// sleep this thread (JavaScript lacks a native sleep function)
+			var future = NSDate.dateWithTimeIntervalSinceNow(1);
+	        NSThread.sleepUntilDate(future);
+	
+			// save our file path
+			paths.push(path);
+		}
+		
+		// form result dictionary 
+		var result = {kosmicFile: paths};
+	
+	} catch(e) {
+		
+		// form error dictionary 
+		var result = {kosmicError: e.reason};
+		
+	}
+		
 	return result
 }

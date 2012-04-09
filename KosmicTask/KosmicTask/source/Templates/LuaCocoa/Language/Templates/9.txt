@@ -22,15 +22,19 @@ function kosmicTask()
 	local path = taskController:resultFileWithName_('capture.png')
 	path = tostring(path) -- get a native lua string
 	
+	-- define command
+	local command = "screencapture"
+	
 	-- log command
-	io.stderr:write("Running screencapture command...\n")
+	io.stderr:write("Running " .. command .." command...\n")
 
-	-- execute
-	os.execute("screencapture -t png " .. path)
+	-- execute command
+	local task = NSTask:launchedTaskWithLaunchPath_arguments_('/usr/sbin/' .. command, {'-t', 'png', path})
+	task:waitUntilExit()
 	
 	-- return file content in dictionary
 	local result = {}
-	result.kosmicFile = path
+	result.kosmicFile = path 
 	result.kosmicInfo = "file returned"
 	
 	return result

@@ -16,14 +16,27 @@ int main()
 	// capture screen image to file
 	// files created in the current directory will be deleted when the task ends
 	char *file = "capture.png";
-	char command[100];
-	sprintf(command, "screencapture -t png %s", file);
+	
+	// define command
+	char *command = "screencapture";
 	
 	// log command
-	fprintf(stderr, "Running screencapture command...");
-
+	fprintf(stderr, "Running %s command...\n", command);
+	
+	// build command
+	char cmdbuf[1024];
+	sprintf(cmdbuf, "%s -t png %s", command, file);
+	
 	// execute command
-	system(command);
+	int status = system(cmdbuf);
+	
+	// check for errors
+	if (status != 0) {
+		
+		// return error
+		printf("--- {kosmicError: 'Error running %s'}", command);
+		return 1;	
+	}
 	
 	// return a YAML inline format dictionary
 	printf("--- {kosmicFile: %s, kosmicInfo: file returned}", file);

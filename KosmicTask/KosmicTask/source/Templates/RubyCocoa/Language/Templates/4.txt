@@ -22,9 +22,28 @@ OSX.require_framework "AddressBook"
 
 def kosmictask()
 
-	person = OSX::ABAddressBook.sharedAddressBook().me()
-	firstName = person.valueForProperty_(OSX::KABFirstNameProperty)
-
-	return firstName
+	begin
+	
+		# log framework access
+		$stderr.puts "Accessing AddressBook..."
+		
+		# access AddressBook
+		person = OSX::ABAddressBook.sharedAddressBook().me()
+		
+		# get property
+		firstName = person.valueForProperty_(OSX::KABFirstNameProperty)
+	
+		# define result
+		result = firstName
+		
+	rescue => e
+					
+		# define error result
+		result = {'kosmicError' => e.message}
+	
+	end
+	
+	# return result
+	return result		
 end
 

@@ -16,11 +16,21 @@
 # files created in the current directory will be deleted when the task ends
 FILE="capture.png"
 
-# log command
-echo "Running screencapture command..." >/dev/stderr
+# define the command
+COMMAND=screencapture
 
-# capture screen
-screencapture -t png $FILE
+# log command
+echo "Running $COMMAND command..." >/dev/stderr
+
+# execute command
+$COMMAND -t png $FILE
+
+# check for errors
+if [ $? != 0 ]; then
+{
+    echo "--- {kosmicError: Error running $COMMAND}"
+    exit 1
+} fi
 
 # return a YAML inline format dictionary
 echo "---"

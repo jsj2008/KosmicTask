@@ -14,7 +14,12 @@ Notes:
 
 int main() 
 {
+	// filnames buffer
 	char files[1000];
+	
+	// define command
+	char *command = "screencapture";
+	
 	for (int i = 1; i <= 5; i++) {
 		
 		if (i > 1) {
@@ -26,26 +31,35 @@ int main()
 		char file[100];
 		sprintf(file, "capture-%i.png", i);
 	
-		char command[100];
-		sprintf(command, "screencapture -t png %s", file);
-	
 		// log command
-		fprintf(stderr, "Running screencapture command...");
+		fprintf(stderr, "Running %s command...\n", command);
+		
+		// build command
+		char cmdbuf[100];
+		sprintf(cmdbuf, "%s -t png %s", command, file);
 	
 		// execute command
-		system(command);
+		int status = system(cmdbuf);
 		
+		// check for errors
+		if (status != 0) {
+			
+			// return error
+			printf("--- {kosmicError: 'Error running %s'}", command);
+			return 1;	
+		}
+	
 		strcat(files, file);
 		
 		// log wait
-		fprintf(stderr, "Waiting...");
+		fprintf(stderr, "Waiting...\n");
 	
 		sleep(1);
 	
 	}
 	
 	// return a YAML inline format dictionary with array of filenames
-	printf("--- {kosmicFile: [%s] , kosmicInfo: file returned}", files);
+	printf("--- {kosmicFile: [%s] , kosmicInfo: files returned}", files);
 	
     return 0;
 }

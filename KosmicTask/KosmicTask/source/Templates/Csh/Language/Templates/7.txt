@@ -16,11 +16,20 @@
 # files created in the current directory will be deleted when the task ends
 set file="capture.png"
 
-# log command
-echo "Running screencapture command..." >/dev/stderr
+# define command
+set command="screencapture"
 
-# capture screen
-screencapture -t png $file
+# log command
+echo "Running $command command..." >/dev/stderr
+
+# execute command
+$command -t png $file
+
+# check for errors
+if ($status != 0) then
+	echo "--- {kosmicError: Error running $command}"
+    exit 1
+endif
 
 set type = 1
 
@@ -40,3 +49,4 @@ else
 	echo "kosmicInfo: file returned"
 
 endif
+

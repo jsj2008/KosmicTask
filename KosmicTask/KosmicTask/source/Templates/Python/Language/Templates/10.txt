@@ -15,32 +15,44 @@ import os
 import time
 import sys
 
-# capture screen image to file
-# files created in the current directory will be deleted when the task ends
-files = ""
+try:
 
-for i in range(5): 
+	# capture screen image to file
+	# files created in the current directory will be deleted when the task ends
+	files = ""
+
+	# define command
+	command = 'screencapture'
 	
-	if i > 0:
-		files += ", "
+	for i in range(5): 
+		
+		if i > 0:
+			files += ", "
+		
+		# filename
+		file = "capture-" + str(i+1) + ".png";
+		
+		# log command
+		print >> sys.stderr, "Running %s command..." % command
 	
-	# filename
-	file = "capture-" + str(i+1) + ".png";
+		# execute command
+		status = os.system("%s -t png %s" % (command, file))
+		if status <> 0:
+			raise Exception("Error running %s" % command)
 	
-	# log command
-	print >> sys.stderr, "Running screencapture command..."
-
-	# capture screen
-	os.system("screencapture -t png " + file)
-
-	# add to files list
-	files = files + file
+		# add to files list
+		files = files + file
+		
+		# log wait
+		print >> sys.stderr, "Waiting..."
 	
-	# log wait
-	print >> sys.stderr, "Waiting..."
+		time.sleep(1)
+	
+	
+	# return a YAML inline format dictionary with array of filenames
+	print "--- {kosmicFile: [%s], kosmicInfo: files returned}" % files
+	
+except Exception as ex:
 
-	time.sleep(1)
-
-
-# return a YAML inline format dictionary with array of filenames
-print "--- {kosmicFile: [%s], kosmicInfo: file returned}" % files
+	# return error
+	print "--- {kosmicError: '%s'}" % ex

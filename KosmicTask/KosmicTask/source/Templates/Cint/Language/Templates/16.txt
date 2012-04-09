@@ -10,26 +10,58 @@ Notes:
 
 */
 #include <iostream>
+#include <string>
 
 class KosmicTask {  
 	public:           
   	
   	KosmicTask() { 
   		
-  		// capture screen image to file
-		// files created in the current directory will be deleted when the task ends
-		char *file = "capture.png";
-		char command[100];
-		sprintf(command, "screencapture -t png %s", file);
-	
-	  	// log command
-  		clog << "Running screencapture command…\n";
+  		// define result
+  		string result = "---\n";
   		
-		// execute command
-		system(command);
+  		// define error
+  		string error = "An error has occurred";
+  		
+  		try {
+	  		// capture screen image to file
+			// files created in the current directory will be deleted when the task ends
+			string file = "capture.png";
+			
+			// define command
+			string command = "screencapture";
 	
-		// return a YAML inline format dictionary
-		printf("--- {kosmicFile: %s , kosmicInfo: file returned}", file); 
+		  	// log command
+	  		clog << "Running " << command << " command...\n";
+	  			
+	  		// build command buffer
+			string cmdbuf = command + " -t png " + file;
+
+			// execute command
+			int status = system(cmdbuf.c_str());
+		
+			// check for errors
+			if (status != 0) {
+								
+				error = "Error running " + command;
+								
+				// throw exception
+				throw error;	
+			}
+			
+			// form YAML block result
+			result += "kosmicFile: " + file + "\n"; 
+			result += "kosmicInfo: file returned";
+  			
+  		} catch (...) {
+  			
+			// form error result
+			result += "kosmicError: " + error; 
+  			
+  		}
+  		
+  		// print result
+  		cout << result;
   	}   
 
 };

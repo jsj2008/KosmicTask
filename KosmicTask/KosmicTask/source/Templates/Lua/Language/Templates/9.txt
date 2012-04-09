@@ -10,16 +10,37 @@ Notes:
 
 ]]
 
--- capture screen image to file
--- files create in the current directory will be deleted when the task ends
-local file = "capture.png"
+function runTask()
 
--- log command
-io.stderr:write("Running screencapture command...\n")
+	-- capture screen image to file
+	-- files create in the current directory will be deleted when the task ends
+	local file = "capture.png"
+	
+	-- define command
+	local command = "screencapture"
+	
+	-- log command
+	io.stderr:write("Running " .. command .. " command...\n")
+	
+	-- execute command
+	local status = os.execute(command .. " -t png " .. file)
+	
+	-- check execution status
+	if status ~= 0 then
+		error ("Error running " .. command)
+	end
+	
+	-- return a YAML inline format dictionary with filename
+	local result = string.format("--- {kosmicFile: %s, kosmicInfo: file returned}", file)
+	print(result)
 
--- capture screen
-os.execute("screencapture -t png " .. file)
+end
 
--- return a YAML inline format dictionary with filename
-local result = string.format("--- {kosmicFile: %s, kosmicInfo: file returned}", file)
-print(result)
+-- call function
+local status, err = pcall(runTask)
+
+-- check for errors
+if err then
+	local result = string.format("--- {kosmicError: '%s'}", err)
+	print(result)
+end

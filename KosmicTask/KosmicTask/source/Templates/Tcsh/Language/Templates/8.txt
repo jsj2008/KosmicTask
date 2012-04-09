@@ -17,6 +17,9 @@
 set files = ""
 set i = 1
 
+# define command
+set command = "screencapture"
+
 while ( $i <= 5)
 
 	if ( $i > 1) then
@@ -27,10 +30,16 @@ while ( $i <= 5)
 	set file = "capture-$i.png"
 
 	# log command
-	echo "Running screencapture command..." >/dev/stderr
+	echo "Running $command command..." >/dev/stderr
 
-	# capture screen
-	screencapture -t png $file
+	# execute command
+	$command -t png $file
+
+	# check for errors
+	if ( $? != 0 ) then
+		echo "--- {kosmicError: Error runnning $command}"
+		exit 1
+	endif
 	
 	# add to files list
 	set files = "$files $file"
@@ -45,4 +54,4 @@ end
 
 # return a YAML inline format dictionary
 echo "---"
-echo "{kosmicFile: [$files] , kosmicInfo: file returned}"
+echo "{kosmicFile: [$files] , kosmicInfo: files returned}"

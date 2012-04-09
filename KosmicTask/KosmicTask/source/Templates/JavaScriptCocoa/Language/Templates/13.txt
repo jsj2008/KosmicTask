@@ -15,11 +15,20 @@ loadFramework("AddressBook")
 	
 function kosmicTask() 
 {
-	// access the me object in the shared address book
-	var person = ABAddressBook.sharedAddressBook.me
+	try {
+		
+		// access the me object in the shared address book
+		var person = ABAddressBook.sharedAddressBook.me
 	
-	// get the first name property
-	result = person.valueForProperty(kABFirstNameProperty)
+		// get the first name property
+		var result = person.valueForProperty(kABFirstNameProperty)
+	
+	} catch(e) {
+		
+		// form error dictionary 
+		var result = {kosmicError: e.reason};
+		
+	}
 	
 	return result
 }

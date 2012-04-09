@@ -1,5 +1,5 @@
 #
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+# Created by Mugginsoft on 26 Mar 2012 10:17:27
 #
 # Credits:
 #
@@ -27,15 +27,21 @@ class KosmicTask (Foundation.NSObject):
 	#
 	def kosmictask(self):
 
-    	# start timer
-		print >> sys.stderr, "Timer started..."
+		try:
+		
+	    	# start timer
+			print >> sys.stderr, "Timer started..."
+		
+			# schedule the timer
+			AppKit.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(2, self, "timerFired:", "", 1)
 	
-		# schedule the timer
-		AppKit.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(2, self, "timerFired:", "", 1)
+			# keep the task running
+			taskController.keepTaskRunning()
+			
+		except Exception as ex:
 
-		# keep the task running
-		taskController.keepTaskRunning()
-	
+			# return error
+			return {'kosmicError': ex.args}
 		return
 		
 	#

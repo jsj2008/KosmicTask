@@ -17,14 +17,28 @@
 #
 #
 require 'osx/cocoa'
+require "KosmicTaskController"
+
 include OSX
 OSX.require_framework 'ScriptingBridge'
 
-# log application access
-$stderr.puts "Accessing Finder ..."
+begin
 
-# get application reference - see the Ruby Usage document for more info
-app = OSX::SBApplication.applicationWithBundleIdentifier_("com.apple.finder")
+	# log application access
+	$stderr.puts "Accessing Finder ..."
+	
+	# get application reference - see the Ruby Usage document for more info
+	app = OSX::SBApplication.applicationWithBundleIdentifier_("com.apple.finder")
+	
+	# query application
+	puts app.name
 
-# query application
-puts app.name
+rescue => e
+
+	# define error result
+	result = {'kosmicError' => e.message}
+	
+	# print native object as YAML
+	KosmicTaskController.printObject(result)
+	
+end

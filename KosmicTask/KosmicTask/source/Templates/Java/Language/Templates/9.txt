@@ -12,24 +12,40 @@ Notes:
 import java.io.*;
 class kosmicTask
 { 
-	public static  void main(String args[]) throws InterruptedException
+	public static  void main(String args[]) throws Exception
     {
-    	try {
+  		// define result
+    	String result = "";
+
+   		try {
+ 
+    		// define filenames
 			String filenames = "";
 			
+			// define command
+    		String command = "screencapture";
+    		
     		for (int i = 1; i <= 5; i++) {
+    			
     			if (i > 1) filenames += ", ";
     			
     			// build filename
     			String filename = "capture-" + i + ".png";
     			
     			// log command
-				System.err.println("Running screencapture command...");
+				System.err.println("Running " + command + " command...");
 			
-    			// execute cmd
-    			// files created in the current directory will be deleted when the task ends
-    			String cmd = String.format("screencapture -t png %s", filename);
-    			Runtime.getRuntime().exec(cmd);
+	     		// execute command
+	       		String cmd = command + " -t png " + filename;
+	    		Process process = Runtime.getRuntime().exec(cmd);
+	    		
+	    		// wait for process to end
+	    		process.waitFor();
+	    		
+	    		// check for errors
+	    		if (process.exitValue() != 0) {
+	    			throw new Exception("Error running " + command);
+	    		}
     			
     			// log wait
 				System.err.println("Waiting...");
@@ -40,14 +56,17 @@ class kosmicTask
     			filenames += filename ;
     		}
     		
-    		// return a YAML inline format dictionary with array of filenames
-    		String result = String.format("--- {kosmicFile: [%s] , kosmicInfo: file returned}", filenames);
+    		// format a YAML inline format dictionary reult with filename
+    		result = String.format("--- {kosmicFile: [%s] , kosmicInfo: files returned}", filenames);
 
-			System.out.println(result);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			
-			System.out.println("exception: " + e.getMessage());
+			// format an error result
+			result = String.format("--- {kosmicError: '%s' }", e.getMessage());
 		}
 		
+		// print result
+		System.out.println(result);
+
 	}
 }

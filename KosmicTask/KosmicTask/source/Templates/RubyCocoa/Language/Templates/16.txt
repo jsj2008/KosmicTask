@@ -22,12 +22,23 @@ OSX.require_framework 'ScriptingBridge'
 
 def kosmictask()
 
-	# log application access
-	$stderr.puts "Accessing Finder..."
-	
-	# get application reference
-	app = OSX::SBApplication.applicationWithBundleIdentifier_("com.apple.finder")
+	begin
 
-	# query application
-	return app.name
+		# log application access
+		$stderr.puts "Accessing Finder..."
+		
+		# get application reference
+		app = OSX::SBApplication.applicationWithBundleIdentifier_("com.apple.finder")
+	
+		# define result
+		result = app.name
+	
+	rescue => e
+	
+		# define error result
+		result = {'kosmicError' => e.message}
+			
+	end
+
+	return result
 end

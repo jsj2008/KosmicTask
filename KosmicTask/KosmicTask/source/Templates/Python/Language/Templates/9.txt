@@ -1,5 +1,5 @@
 #
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+# Created by Mugginsoft on 26 Mar 2012 09:29:16
 #
 # Credits:
 #
@@ -14,15 +14,27 @@
 import os
 import sys
 
-# capture screen image to file
-# files create in the current directory will be deleted when the task ends
-file = "capture.png"
+try:
 
-# log command
-print >> sys.stderr, "Running screencapture command..."
+	# capture screen image to file
+	# files create in the current directory will be deleted when the task ends
+	file = "capture.png"
+	
+	# define command
+	command = 'screencapture'
+	
+	# log command
+	print >> sys.stderr, "Running %s command..." % command
+	
+	# execute command
+	status = os.system("%s -t png %s" % (command, file))
+	if status <> 0:
+		raise Exception("Error running %s" % command)
+	
+	# return a YAML inline format dictionary with filename
+	print "--- {kosmicFile: %s, kosmicInfo: file returned}" % file
+	
+except Exception as ex:
 
-# capture screen
-os.system("screencapture -t png " + file)
-
-# return a YAML inline format dictionary with filename
-print "--- {kosmicFile: %s, kosmicInfo: file returned}" % file
+	# return error
+	print "--- {kosmicError: '%s'}" % ex

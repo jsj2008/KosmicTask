@@ -14,15 +14,27 @@
 
 # capture screen image to file
 # files created in the current directory will be deleted when the task ends
-set file="capture.png"
+set file = "capture.png"
+
+# define command
+set command = "screencapture"
 
 # log command
-echo "Running screencapture command..." >/dev/stderr
+echo "Running $command command..." >/dev/stderr
 
-# capture screen
-screencapture -t png $file
+# execute command
+$command -t png $file
 
+# check for errors
+if ( $? != 0 ) then
+	echo "--- {kosmicError: Error runnning $command}"
+	exit 1
+endif
+
+# select return type
 set type = 1
+
+# write document header
 echo "---"
 
 # select format type (result is the same)

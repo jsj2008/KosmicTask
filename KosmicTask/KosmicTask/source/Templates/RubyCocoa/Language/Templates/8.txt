@@ -23,31 +23,45 @@ $taskController = OSX.NSClassFromString("KosmicTaskController")
 
 def kosmictask()
 
-	# create path to temp result file from taskController.
-	# this file will be automatically deleted when the task ends.
-	#
-	# an alternative would be:
-	# f = Tempfile.new('kosmictask')
-    # f.close
-    # path = f.path + "capture.png"
-    #
-    path = $taskController.resultFileWithName_("capture.png");
-    
-	# log command
-	$stderr.puts "Running screencapture command..."
-	
-    # capture sceen shot to file
-    system "screencapture -t png " + path
-    
-	# create our result hash
+	# define result 
 	result = Hash.new()
-	
-	# add keyed file path
-	result["kosmicFile"] = path
-
-	# add keyed info
-	result["kosmicInfo"] = "file returned"
 		
+	begin
+	
+		# create path to temp result file from taskController.
+		# this file will be automatically deleted when the task ends.
+		#
+		# an alternative would be:
+		# f = Tempfile.new('kosmictask')
+	    # f.close
+	    # path = f.path + "capture.png"
+	    #
+	    path = $taskController.resultFileWithName_("capture.png");
+	    
+	    # define command
+		command = "screencapture"
+	
+		# log command
+		$stderr.puts "Running #{command} command..."
+		
+	    # execute command
+		status = system("%s -t png %s" % [command, path])
+	 	if !status 
+	 		raise "Error running #{command}" 
+	 	end
+	    
+		# add keyed file path
+		result['kosmicFile'] = path
+	
+		# add keyed info
+		result['kosmicInfo'] = "file returned"
+	
+	rescue => e
+	
+		# return error
+		result['kosmicError'] = e.message
+	end
+
 	return result
 end
 		

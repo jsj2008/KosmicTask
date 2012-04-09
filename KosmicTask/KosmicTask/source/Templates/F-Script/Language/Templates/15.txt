@@ -17,11 +17,14 @@ Notes:
  	" this file will be automatically deleted when the task ends."
 	path := taskController resultFileWithName: 'capture.png'.
 	
+	" define command "
+	command := 'screencapture'.
+	
 	" log command "
-	stderr print:'Running sceencapture command...\n'.
+	stderr print:'Running ' ++ command ++ ' command...\n'.
 		
-	" capture screen shot to file "
-	task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/screenCapture' arguments:{'-t', 'png', path}.
+	" execute command "
+	task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/' ++ command arguments:{'-t', 'png', path}.
 	task waitUntilExit.
 
 	" form result dictionary "

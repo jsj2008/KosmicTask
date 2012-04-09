@@ -20,17 +20,22 @@ function kosmicTask()
 	-- allocate our paths table
 	local paths = {}
 	
+	-- define command
+	local command = "screencapture"
+	
 	for i=1,5 do
+	
 		-- get our image file result path
 	 	-- this file will be automatically deleted when the task ends.
 		local path = taskController:resultFileWithName_('capture.png')
 		path = tostring(path) -- get a native lua string
 		
 		-- log command
-		io.stderr:write("Running screencapture command...\n")
+		io.stderr:write("Running " .. command .. " command...\n")
 
-		-- execute
-		os.execute("screencapture -t png " .. path)
+		-- execute command
+		local task = NSTask:launchedTaskWithLaunchPath_arguments_('/usr/sbin/' .. command, {'-t', 'png', path})
+		task:waitUntilExit()
 		
 		-- log wait
 		io.stderr:write("Waiting...\n")

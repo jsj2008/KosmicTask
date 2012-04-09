@@ -1,5 +1,5 @@
 #
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+# Created by Mugginsoft on 27 Mar 2012 12:42:55
 #
 # Credits:
 #
@@ -17,12 +17,25 @@
 #
 
 require 'appscript'
+require "KosmicTaskController"
 
-# log application access
-$stderr.puts "Accessing Finder ..."
+begin
 
-# get application - for more information see the Ruby Usage document
-app = Appscript.app('Finder')
+	# log application access
+	$stderr.puts "Accessing Finder ..."
+	
+	# get application - for more information see the Ruby Usage document
+	app = Appscript.app('Finder')
+	
+	# query application
+	puts app.name.get
 
-# query application
-puts app.name.get
+rescue => e
+
+	# define error result
+	result = {'kosmicError' => e.message}
+	
+	# print native object as YAML
+	KosmicTaskController.printObject(result)
+	
+end

@@ -16,6 +16,9 @@ Notes:
  	" define our paths array "
  	paths := {}.
  	
+ 	" define command "
+	command := 'screencapture'.
+	
  	" loop "
  	0 to: 5 do:
  	[ :count |
@@ -25,14 +28,14 @@ Notes:
 		path := taskController resultFileWithName: 'capture.png'.
 	
 		" log command "
-		stderr print:'Running sceencapture command...\n'.
+		stderr print:'Running ' ++ command ++ ' command...\n'.
 	
-		" capture screen shot to file "
-		task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/screenCapture' arguments:{'-t', 'png', path}.
+		" execute command "
+		task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/' ++ command arguments:{'-t', 'png', path}.
 		task waitUntilExit.
 		
 		" log wait "
-		stderr print:'Waiting…\n'.
+		stderr print:'Waiting...\n'.
 		
 		" sleep this thread "
 		future := NSDate dateWithTimeIntervalSinceNow: 1 .

@@ -1,5 +1,5 @@
 #
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+# Created by Mugginsoft on 27 Mar 2012 12:30:18
 #
 # Credits:
 #
@@ -12,33 +12,51 @@
 # ARGV[0] .. ARGV[numArgs]
 #
 
-files = ""
+require "KosmicTaskController"
 
-for i in (1..5)
+# define command
+command = "screencapture"
 
-	if i > 1
-		files += ", "
+# define result dictionary
+result = {}
+
+#define files array
+files = []
+
+begin
+
+	for i in (1..5)
+	
+		# log command
+		$stderr.puts "Running #{command} command..." 
+	
+		# file created in task current directory will be automatically deleted
+		file = "capture-#{i}.png"
+	   
+	   	# execute command
+		status = system("%s -t png %s" % [command, file])
+	 	if !status 
+	 		raise "Error running #{command}" 
+	 	end
+	    
+	    # retain file      
+	    files.push file
+	     
+	    # log wait
+		$stderr.puts "Waiting..."
+	
+	    sleep 1.0
 	end
 	
-	# log command
-	$stderr.puts "Running screencapture command..."
+	# form result
+	result["kosmicFile"] = files
+	result["kosmicInfo"] = "files returned"
 
-	# file created in task current directory will be automatically deleted
-	file = "capture-#{i}.png"
-   
-   	# capture sceen shot to file
-    system "screencapture -t png " + file
-          
-    files += file
-     
-    # log wait
-	$stderr.puts "Waiting..."
+rescue => e
 
-    sleep 1.0
+	# define error 
+	result["kosmicError"] = e.message
 end
 
-# return a YAML inline format dictionary with array of filenames
-result = "{kosmicFile: [" + files + "] , kosmicInfo: file returned}"
-
-puts "---"
-puts result
+# print native object as YAML
+KosmicTaskController.printObject(result)

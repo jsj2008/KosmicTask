@@ -23,12 +23,17 @@ import AppKit
 # import our system framework by name
 import AddressBook
 
-def kosmictask(a , b):
+def kosmictask():
+
+	try:
 	
-	AppKit.NSLog("task parameters are %@ and %@", a, b)
-	
-	person = AddressBook.ABAddressBook.sharedAddressBook().me()
-	firstName = person.valueForProperty_(AddressBook.kABFirstNameProperty)
-	
-	# return object
-	return firstName
+		person = AddressBook.ABAddressBook.sharedAddressBook().me()
+		firstName = person.valueForProperty_(AddressBook.kABFirstNameProperty)
+		
+		# return object
+		return firstName
+
+	except Exception as ex:
+
+		# return error
+		return {'kosmicError': ex.args}

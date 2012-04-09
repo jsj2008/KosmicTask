@@ -12,27 +12,45 @@ Notes:
 import java.io.*;
 class kosmicTask
 { 
-	public static void main(String args[])
+	public static void main(String args[]) throws Exception
     {
+    	// define result
+    	String result = "";
+    	
     	try {
+    		// define filename.
+    		// files created in the current directory will be deleted when the task ends.
     		String filename = "filename.png";
     		
+    		// define command
+    		String command = "screencapture";
+    		
     		// log command
-			System.err.println("Running screencapture command...");
+			System.err.println("Running " + command + " command...");
 		
     		// execute command
-    		// files created in the current directory will be deleted when the task ends
-    		String cmd = String.format("screencapture -t png %s", filename);
-    		Runtime.getRuntime().exec(cmd);
-    	
-    		// return a YAML inline format dictionary with filename
-    		String result = String.format("--- {kosmicFile: %s , kosmicInfo: file returned}", filename);
+       		String cmd = command + " -t png " + filename;
+    		Process process = Runtime.getRuntime().exec(cmd);
+    		
+    		// wait for process to end
+    		process.waitFor();
+    		
+    		// check for errors
+    		if (process.exitValue() != 0) {
+    			throw new Exception("Error running " + command);
+    		}
+    		
+    		// format a YAML inline format dictionary result with filename
+    		result = String.format("--- {kosmicFile: %s , kosmicInfo: file returned}", filename);
 
-			System.out.println(result);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			
-			System.out.println("exception: " + e.getMessage());
+			// format an error result
+			result = String.format("--- {kosmicError: '%s' }", e.getMessage());
 		}
+		
+		// print result
+		System.out.println(result);
 		
 	}
 }

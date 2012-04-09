@@ -18,6 +18,9 @@ use warnings;
 # files created in the current directory will be deleted when the task ends
 $FILES="";
 
+# define command
+$COMMAND="screencapture";
+
 for ($i = 1; $i <= 5; $i++) {
 	
 	if ($i > 1) {
@@ -28,10 +31,16 @@ for ($i = 1; $i <= 5; $i++) {
 	$FILE = "capture-$i.png";
 	
 	# log command
-	print STDERR "Running screencapture command...\n";
+	print STDERR "Running $COMMAND command...\n";
 
-	# capture screen
-	`screencapture -t png $FILE`;
+	# execute command
+	$STATUS=system("$COMMAND -t png $FILE");
+	
+	# check for errors
+	if ($STATUS != 0) {
+		print "--- {kosmicError: 'Error running $COMMAND'}";
+		exit 1;
+	}
 
 	# add to files list
 	$FILES = "$FILES $FILE";
@@ -43,4 +52,4 @@ for ($i = 1; $i <= 5; $i++) {
 }
 
 # return a YAML inline format dictionary with array of file names
-print "--- {kosmicFile: [$FILES], kosmicInfo: file returned}";
+print "--- {kosmicFile: [$FILES], kosmicInfo: files returned}";

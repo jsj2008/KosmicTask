@@ -24,7 +24,11 @@ script KosmicTask
 		
 		try
 			
+			-- define paths list
 			set paths to {}
+			
+			-- define command
+			set theCommand to "screencapture"
 			
 			repeat 5 times
 			
@@ -33,22 +37,22 @@ script KosmicTask
 				set picPosixPath to (taskController's resultFileWithName_("capture.png")) as string
 			
 				-- log command
-				log "Running screencapture command..."
+				log "Running " & theCommand & " command..."
 			
-				-- do screen capture via shell
-				do shell script "screencapture -t png " & quoted form of picPosixPath
+				-- execute command
+				do shell script theCommand & " -t png " & quoted form of picPosixPath
 
 				set end of paths to picPosixPath
 			
 				-- log wait
-				log "Running waiting..."
+				log "Waiting..."
 				
 				delay 1
 			
 			end repeat
 			
 			-- return result
-			return {kosmicFile:paths, kosmicInfo:"file returned"}
+			return {kosmicFile:paths, kosmicInfo:"files returned"}
 			
 		on error errorMessage number errorNumber
 			

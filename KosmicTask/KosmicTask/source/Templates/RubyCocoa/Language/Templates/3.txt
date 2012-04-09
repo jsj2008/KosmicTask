@@ -19,13 +19,24 @@
 require 'appscript'
 
 def kosmictask()
-	
-	# log application access
-	$stderr.puts "Accessing Finder..."
-	
-	# get application
-	app = Appscript.app('Finder')
 
-	# query application
-	return app.name.get
+	begin
+		
+		# log application access
+		$stderr.puts "Accessing Finder..."
+		
+		# get application
+		app = Appscript.app('Finder')
+	
+		# define result
+		result = app.name.get
+		
+	rescue => e
+	
+		# define error result
+		result = {'kosmicError' => e.message}
+			
+	end
+	
+	return result
 end

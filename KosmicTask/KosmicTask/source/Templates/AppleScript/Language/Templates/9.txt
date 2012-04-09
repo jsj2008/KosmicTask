@@ -15,7 +15,11 @@ on KosmicTask()
 	
 	try
 		
+		-- define files list
 		set resultFiles to {}
+		
+		-- define command
+		set theCommand to "screencapture"
 		
 		repeat 5 times
 		
@@ -29,10 +33,10 @@ on KosmicTask()
 			set picPosixPath to POSIX path of file resultFile
 		
 			-- log command
-			log "Running screencapture command..." & return
-		
-			-- do screen capture via shell
-			do shell script "screencapture -t png " & quoted form of picPosixPath
+			log "Running " & theCommand & " command..." & return
+			
+			-- execute command
+			do shell script theCommand & " -t png " & quoted form of picPosixPath
 			
 			set end of resultFiles to resultFile
 			
@@ -43,7 +47,7 @@ on KosmicTask()
 		end repeat
 		
 		-- feedback
-		return {kosmicFile:resultFiles, kosmicInfo:"file returned"}
+		return {kosmicFile:resultFiles, kosmicInfo:"files returned"}
 		
 	on error errorMessage number errorNumber
 		
