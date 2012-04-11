@@ -55,7 +55,7 @@ extern NSString *const MGSNetSocketException;
 	NSUInteger _flags;
 }
 
-@property MGSNetRequest *netRequest;
+@property (assign) MGSNetRequest *netRequest;
 @property MGSAsyncSocket *socket;
 
 
