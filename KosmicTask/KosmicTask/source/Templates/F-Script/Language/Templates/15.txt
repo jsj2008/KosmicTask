@@ -10,25 +10,35 @@ Notes:
 
 "
 [
-	" get our kosmicTaskController "
-	taskController := KosmicTaskController.
- 	
- 	" form our image file result path"
- 	" this file will be automatically deleted when the task ends."
-	path := taskController resultFileWithName: 'capture.png'.
-	
 	" define command "
 	command := 'screencapture'.
 	
-	" log command "
-	stderr print:'Running ' ++ command ++ ' command...\n'.
+	[
+		" get our kosmicTaskController "
+		taskController := KosmicTaskController.
+	 	
+	 	" form our image file result path"
+	 	" this file will be automatically deleted when the task ends."
+		path := taskController resultFileWithName: 'capture.png'.
 		
-	" execute command "
-	task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/' ++ command arguments:{'-t', 'png', path}.
-	task waitUntilExit.
-
-	" form result dictionary "
-	result := #{'kosmicName' -> command, 'kosmicFile' -> path}.
+		
+		" log command "
+		stderr print:'Running ' ++ command ++ ' command...\n'.
 			
+		" execute command "
+		task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/' ++ command arguments:{'-t', 'png', path}.
+		task waitUntilExit.
+	
+		" form result dictionary "
+		result := #{'kosmicName' -> command, 'kosmicFile' -> path}.
+	
+	] onException:[:e | 
+	
+		" form error dictionary "
+		result := #{'kosmicError' -> ('Error running ' ++ command)}.
+
+	].
+	
+	" return result "
 	result.
-] 
+]

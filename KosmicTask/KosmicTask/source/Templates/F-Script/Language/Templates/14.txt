@@ -19,34 +19,42 @@ Notes:
  	" define command "
 	command := 'screencapture'.
 	
- 	" loop "
- 	0 to: 5 do:
- 	[ :count |
- 	
- 		" form our image file result path"
- 		" this file will be automatically deleted when the task ends."
-		path := taskController resultFileWithName: 'capture.png'.
-	
-		" log command "
-		stderr print:'Running ' ++ command ++ ' command...\n'.
-	
-		" execute command "
-		task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/' ++ command arguments:{'-t', 'png', path}.
-		task waitUntilExit.
+	[
+	 	" loop "
+	 	0 to: 5 do:
+	 	[ :count |
+	 	
+	 		" form our image file result path"
+	 		" this file will be automatically deleted when the task ends."
+			path := taskController resultFileWithName: 'capture.png'.
 		
-		" log wait "
-		stderr print:'Waiting...\n'.
+			" log command "
+			stderr print:'Running ' ++ command ++ ' command...\n'.
 		
-		" sleep this thread "
-		future := NSDate dateWithTimeIntervalSinceNow: 1 .
-        NSThread sleepUntilDate:future.
-        
-		" insert path into array "
-		paths insert: path at: count.  
-	].
+			" execute command "
+			task := NSTask launchedTaskWithLaunchPath:'/usr/sbin/' ++ command arguments:{'-t', 'png', path}.
+			task waitUntilExit.
+			
+			" log wait "
+			stderr print:'Waiting...\n'.
+			
+			" sleep this thread "
+			future := NSDate dateWithTimeIntervalSinceNow: 1 .
+	        NSThread sleepUntilDate:future.
+	        
+			" insert path into array "
+			paths insert: path at: count.  
+		].
+	
+		" form result dictionary "
+		result := #{'kosmicName' -> command, 'kosmicFile' -> paths}.
+		
+	] onException:[:e | 
+	
+		" form error dictionary "
+		result := #{'kosmicError' -> ('Error running ' ++ command)}.
 
-	" form result dictionary "
-	result := #{'kosmicName' -> command, 'kosmicFile' -> paths}.
+	].
 			
 	result.
 ] 

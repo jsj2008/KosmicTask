@@ -38,22 +38,38 @@
 	
 	id executeResult = nil;
 		
-	FSBlock *block = nil;
+    FSBlock *block = nil;
+    FSInterpreterResult *interpreterResult = nil;
 	NSString *source = [NSString stringWithContentsOfFile:scriptPath encoding:NSUTF8StringEncoding error:NULL];
-	
+    BOOL useInterpreter = NO;
+	id keepAlive = nil;
+    
 	// create block and execute 
 	// see http://www.fscript.org/documentation/EmbeddingFScriptIntoCocoa/index.htm
 	@try {
-		block = [source asBlock];
-		executeResult = [block valueWithArguments:arguments];
-		
+        if (useInterpreter) {
+            interpreterResult = [[FSInterpreter interpreter] execute:source];
+            executeResult = [interpreterResult result];
+            
+            keepAlive = executeResult;
+        } else {
+            
+            // this fails if the block has an exception handler unless the code is formatted like so
+            // [[1/0 ] onException:[:e| sys beep. stderr print:e description]]
+
+            block = [source asBlock];
+            executeResult = [block valueWithArguments:arguments];
+            
+            keepAlive = block;
+		}
+        
 	} @catch (NSException* e) {		
 		self.error =[e reason];
 	}
 	
 	// if we are keeping the task alive then the block is the return value
 	if ([[KosmicTaskController sharedController] keepTaskAlive]) {
-		return block;
+		return keepAlive;
 	} 
 	
 	return executeResult;
