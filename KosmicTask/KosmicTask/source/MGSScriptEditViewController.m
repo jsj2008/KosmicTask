@@ -178,6 +178,9 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	consoleSuccessOptions = [NSDictionary dictionaryWithObjectsAndKeys:
 											   attributes, @"attributes",
 											   nil];
+    
+    // inintialsie the build result
+    self.buildStderrResult = @"";
 }
 
 
@@ -441,6 +444,9 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 		self.buildResult = buildStderrResult;
 	}
 	
+    // disable stderr segment if no stderr content
+    BOOL stderrEnabled = !([result isEqualToString:@""] || !result);
+    [buildResultSegment setEnabled:stderrEnabled forSegment:MGS_BUILD_RESULT_INDEX_STDERR];
 }
 
 /*
