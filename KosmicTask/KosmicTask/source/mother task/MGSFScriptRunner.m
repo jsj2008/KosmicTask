@@ -13,6 +13,8 @@
 #import "MGSFScriptManager.h"
 #import "MGSF_ScriptLanguage.h"
 
+#define DEBUG_SCRIPT_RUNNER
+
 @implementation MGSFScriptRunner
 
 /*
@@ -27,7 +29,10 @@
 	if ((self = [super initWithDictionary:dictionary])) {
 		self.scriptExecutableExtension = @"fs";
 		self.scriptSourceExtension = @"fs";
-		
+
+#ifdef DEBUG_SCRIPT_RUNNER
+        NSLog(@"Preprocessor DEBUG enabled");
+#endif    
 	}
 	return self;
 }
@@ -71,6 +76,9 @@
 	NSString *source = [self scriptSourceWithError:YES];
 	if (!source) return NO;
 	
+    NSString *errorMsg = nil;
+    NSRange errorRange = NSMakeRange(0, 0);
+    
 	@try {
 
 		// make a block. raises on compilation or syntax error
@@ -103,9 +111,37 @@
          If you then use the error range provided by FSInterpreterResult,
          remember to decrement the location by one.
          */
+        BOOL useBlockOnError = YES;
+
+        if (useBlockOnError) {
+            FSBlock *errorBlock = [@"[:msg :start :end | {msg, start, end}]" asBlock];
+            id result = [source asBlockOnError:errorBlock];
+            
+            // check for errors
+            if ([result isKindOfClass:[NSArray class]]) {
+                if ([result count] == 3) {
+
+#ifdef DEBUG_SCRIPT_RUNNER
+                    // this will be visible under the stderr tab in the editor
+                    NSLog(@"Build error = %@", result);
+#endif
+                    // get error info from result
+                    errorMsg = [result objectAtIndex:0];
+                    NSUInteger firstCharIndex = [[result objectAtIndex:1] unsignedIntegerValue];
+                    NSUInteger lastCharIndex = [[result objectAtIndex:2] unsignedIntegerValue];
+                    errorRange =  NSMakeRange(firstCharIndex, lastCharIndex - firstCharIndex);
+                } else {
+                    errorMsg = @"Bad result from NSString -asBlockOnError:";
+                }
+            }
+        } else {
+            
+            // this raises on error.
+            // not recommended as it require access to private API
+            FSBlock *block = [source asBlock];
+            (void)block;
+        }
         
-		FSBlock *block = [source asBlock];
-		(void)block;
 	}
 	@catch (NSException* e) {
 		NSDictionary *userInfo = [e userInfo];
@@ -122,19 +158,26 @@
 		BlockStackElem *blockStackElem = [blockStack objectAtIndex:0];
 
 		// report error
-		self.error = [NSString stringWithFormat:@"%@", [blockStackElem errorStr]];
+		errorMsg = [NSString stringWithFormat:@"%@", [blockStackElem errorStr]];
 
 		// get error range
 		NSUInteger firstCharIndex = [blockStackElem firstCharIndex];
 		NSUInteger lastCharIndex = [blockStackElem lastCharIndex];
-		
-		// volatile helps avoid compile warning
-		volatile NSRange range =  NSMakeRange(firstCharIndex, lastCharIndex - firstCharIndex);
-		self.errorInfo = [NSMutableDictionary dictionaryWithCapacity:2];
-		[self.errorInfo setObject:NSStringFromRange(range) forKey:MGSRangeErrorKey];
-		[self.errorInfo setObject:self.error forKey:NSLocalizedFailureReasonErrorKey];	// required
+		errorRange =  NSMakeRange(firstCharIndex, lastCharIndex - firstCharIndex);
 	}
-				
+	
+	// handle errors
+    if (errorMsg) {
+		self.error = errorMsg;
+        self.errorInfo = [NSMutableDictionary dictionaryWithCapacity:2];
+		[self.errorInfo setObject:NSStringFromRange(errorRange) forKey:MGSRangeErrorKey];
+		[self.errorInfo setObject:self.error forKey:NSLocalizedFailureReasonErrorKey];	// required
+        
+#ifdef DEBUG_SCRIPT_RUNNER
+        NSLog(@"self.errorInfo = %@", self.errorInfo);
+#endif        
+    }
+    
 	return [self processBuildResult:resultString];
 }
 @end
