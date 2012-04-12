@@ -65,6 +65,9 @@
 - (void)setEditMode:(NSInteger)mode;
 - (void)setEditable:(BOOL)editable;
 - (void)setSelectedRange:(NSRange)range;
+- (void)setSelectedRange:(NSRange)range options:(NSDictionary *)options;
+- (void)setSelectedRanges:(NSArray *)ranges;
+- (void)setSelectedRanges:(NSArray *)ranges options:(NSDictionary *)options;
 - (void)dispose;
 - (void)printDocument:(id)sender;
 - (BOOL)documentPrintable;

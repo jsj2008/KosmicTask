@@ -97,7 +97,7 @@ typedef enum _MGSTaskActivity {
 @property MGSNetClientProxy *representedNetClient;
 @property NSTimeInterval elapsedTime;
 @property NSTimeInterval remainingTime;
-@property MGSNetRequest *netRequest;
+@property (assign) MGSNetRequest *netRequest;
 @property (assign) MGSRequestProgress *requestProgress;
 @property MGSTaskStatus taskStatus;
 @property MGSResult *result;

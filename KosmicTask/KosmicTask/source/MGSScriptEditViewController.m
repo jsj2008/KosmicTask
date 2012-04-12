@@ -32,7 +32,7 @@
 #define MIN_TOP_SPLITVIEW_HEIGHT 200
 #define MIN_BOTTOM_SPLITVIEW_HEIGHT 50
 
-#define MGS_DEBUG_CONTROLLER
+//#define MGS_DEBUG_CONTROLLER
 
 NSString * const MGSIgnoreBuildError = @"MGSIgnoreBuildError";
 
@@ -185,7 +185,7 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
     self.buildStderrResult = @"";
     
 #ifdef MGS_DEBUG_CONTROLLER
-    NSLog(@"Preprocessor DEBUG defined.");
+    NSLog(@"%@ Preprocessor DEBUG defined.", [self className]);
 #endif
 }
 
@@ -827,7 +827,7 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 
 	/*
 	 
-	 Get compiled data
+	 Get compiled data if flagged
 	 
 	 */		
 	if ((buildResultFlags & kMGSCompiledScript)) {
@@ -885,7 +885,11 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	 
 	 */
 	if ([errors count] == 0) {
-		
+
+        //
+        // we have no build errors
+        //
+
 		NSAssert(self.buildStatusFlags == MGS_BUILD_NO_WARNINGS, @"invalid build status");
 		
 		self.scriptBuilt = YES;
@@ -903,9 +907,12 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 		}
 	} else {
 
+        //
+        // we have build errors
+        //
+        
 		NSAssert(self.buildStatusFlags != MGS_BUILD_NO_WARNINGS, @"invalid build status");
-		
-		
+				
 		NSMutableString *errorString = [NSMutableString new];
 
 		// we may be requested to ignore build warnings
@@ -967,7 +974,14 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 		 in this case we allow script execution, even though it may fail
 		 
 		 */
-		if (ignoreBuildWarning && !(self.buildStatusFlags & MGS_BUILD_FLAG_FATAL_ERROR)) {
+        BOOL fatalError = ((self.buildStatusFlags & MGS_BUILD_FLAG_FATAL_ERROR) > 0 ? YES : NO);
+        BOOL buildSuccess = (ignoreBuildWarning && !fatalError);
+        
+        // the build has errors, even if non fatal.
+        // it doesn't make sense to mark the script as successfully built.
+        buildSuccess = NO;
+        
+		if (buildSuccess) {
 			
 			self.scriptBuilt = YES;
 			self.buildSheetMessage = NSLocalizedString(@"See build console for details.", @"script compiling complete");
@@ -975,18 +989,32 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 		} else {
 			
 			self.scriptBuilt = NO;
-			self.buildSheetMessage = self.buildConsoleResult;
-			
-			for (MGSError *mgsError in errors) {
-
-				// get the error range
-				NSString *rangeString = [[mgsError userInfo] objectForKey:MGSRangeErrorKey];
-				if (rangeString) {
-					NSRange range = NSRangeFromString(rangeString);
-					[scriptViewController setSelectedRange:range];
-				}
-			}
+			self.buildSheetMessage = self.buildConsoleResult;			
 		}
+        
+        // highlight error ranges
+        NSMutableArray *ranges = [NSMutableArray arrayWithCapacity:[errors count]];
+        for (MGSError *mgsError in errors) {
+            
+            // get the error range
+            NSString *rangeString = [[mgsError userInfo] objectForKey:MGSRangeErrorKey];
+            if (rangeString) {
+                NSRange range = NSRangeFromString(rangeString);
+                [ranges addObject:[NSValue valueWithRange:range]];
+            }
+        }
+        if ([ranges count] > 0) {
+            NSDictionary *rangeOptions = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     [NSNumber numberWithBool:YES], @"scrollVisible", nil];
+            [scriptViewController setSelectedRanges:ranges options:rangeOptions];
+        }
+        
+        // dismiss the build sheet if required
+        BOOL dismissBuildSheet = NO;
+        if (dismissBuildSheet) {
+            [_buildTaskSheetController OKToCloseWindow:self];
+        }
+
 	}
 		
 	// get std error.
@@ -1043,7 +1071,6 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	[textStorage endEditing];
 	endRange.length = [text length];
     [consoleTextView scrollRangeToVisible:endRange];
-
 }
 	 
 /*

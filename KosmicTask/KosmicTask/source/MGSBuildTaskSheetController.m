@@ -238,7 +238,7 @@ static NSInteger MGS_ignoreBuildWarningsCheckboxState = NSOffState;
 		NSString *scriptName = [[_taskSpec script] name];
 		NSString *serviceName = _taskSpec.netClient.serviceShortName;
 
-		title = NSLocalizedString(@"Failed to build task \"%@\" on %@.", @"build task failure sheet message text");
+		title = NSLocalizedString(@"Errors building task \"%@\" on %@.", @"build task failure sheet message text");
 		title = [NSString stringWithFormat:title, scriptName, serviceName];
 	}
 		

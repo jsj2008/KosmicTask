@@ -336,19 +336,52 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 
 /*
  
- set selected range
+ -setSelectedRange:
  
  */
 - (void)setSelectedRange:(NSRange)range
 {
+	[self setSelectedRange:range options:nil];
+}
+/*
+ 
+ -setSelectedRange:
+ 
+ */
+- (void)setSelectedRange:(NSRange)range options:(NSDictionary *)options
+{
+    NSArray *ranges = [NSArray arrayWithObject:[NSValue valueWithRange:range]];
+	[self setSelectedRanges:ranges options:options];
+}
+/*
+ 
+ -setSelectedRanges:
+ 
+ */
+- (void)setSelectedRanges:(NSArray *)ranges 
+{
+    [self setSelectedRanges:ranges options:nil];
+}
+/*
+ 
+ -setSelectedRanges:options
+ 
+ */
+- (void)setSelectedRanges:(NSArray *)ranges options:(NSDictionary *)options
+{
 	@try {
-		[_currentTextView setSelectedRange:range];
+		[_currentTextView setSelectedRanges:ranges];
+        
+        BOOL scrollVisible = [[options objectForKey:@"scrollVisible"] boolValue];
+        if (scrollVisible) {
+            NSRange range = [[ranges objectAtIndex:0] rangeValue];
+            [_currentTextView scrollRangeToVisible:range];
+        }
 	}
 	@catch (NSException * e) {
 		MLog(DEBUGLOG, @"%@", [e name]);
 	}
 }
-
 /*
  
  - setRTFData:
