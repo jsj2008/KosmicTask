@@ -32,6 +32,8 @@
 #define MIN_TOP_SPLITVIEW_HEIGHT 200
 #define MIN_BOTTOM_SPLITVIEW_HEIGHT 50
 
+#define MGS_DEBUG_CONTROLLER
+
 NSString * const MGSIgnoreBuildError = @"MGSIgnoreBuildError";
 
 const char MGSErrorCheckboxContext;
@@ -181,6 +183,10 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
     
     // inintialsie the build result
     self.buildStderrResult = @"";
+    
+#ifdef MGS_DEBUG_CONTROLLER
+    NSLog(@"Preprocessor DEBUG defined.");
+#endif
 }
 
 
@@ -751,12 +757,12 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 		
 		// record error
 		[errors addObject:netRequest.error];
+        
+#ifdef MGS_DEBUG_CONTROLLER
+        NSLog(@"NetRequest.error = %@", netRequest.error);
+#endif
 	}
 	
-	// get payload error dict.
-	// this indicates that an error occurred in in the compiler process.
-	NSDictionary *payloadErrorDictionary =  [[payload dictionary] objectForKey:MGSScriptKeyNSErrorDict];
-
 	/*
 	 
 	 Get Compiled Source
@@ -855,8 +861,15 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	 process payload error dictionary
 	 
 	 */
+	// get payload error dict.
+	// this indicates that an error occurred in in the compiler process.
+	NSDictionary *payloadErrorDictionary =  [[payload dictionary] objectForKey:MGSScriptKeyNSErrorDict];
+    
 	if (payloadErrorDictionary) {
-		
+
+#ifdef MGS_DEBUG_CONTROLLER
+        NSLog(@"[payload dictionary] = %@", netRequest.error);
+#endif		
 		// process payload
 		// this might require some work as payload error seems to duplicate request error.
 		// but will this always be the case ?

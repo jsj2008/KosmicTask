@@ -13,7 +13,7 @@
 #import "MGSFScriptManager.h"
 #import "MGSF_ScriptLanguage.h"
 
-#define DEBUG_SCRIPT_RUNNER
+//#define DEBUG_SCRIPT_RUNNER
 
 @implementation MGSFScriptRunner
 
