@@ -41,6 +41,8 @@ static NSInteger MGS_ignoreBuildWarningsCheckboxState = NSOffState;
 	return MGS_ignoreBuildWarningsCheckboxState;
 }
 
+#pragma mark -
+#pragma mark Initialisation
 /*
  
  init
@@ -66,8 +68,12 @@ static NSInteger MGS_ignoreBuildWarningsCheckboxState = NSOffState;
 	NSFont *resultFont = [NSFont fontWithName:@"Menlo" size: 10];
 	[_resultTextField setFont:resultFont];
 	[_resultTextField setTextColor:[NSColor blackColor]];
+    
+    _minFrameSize = [[self window] frame].size;
 }
 
+# pragma mark -
+# pragma mark Accessors
 /*
  
  - setTaskSpecifier:
@@ -94,6 +100,29 @@ static NSInteger MGS_ignoreBuildWarningsCheckboxState = NSOffState;
 	} 
 }
 
+/*
+ 
+ - buildWarningsCheckBoxState
+ 
+ */
+
+- (NSInteger)buildWarningsCheckBoxState
+{
+	return MGS_ignoreBuildWarningsCheckboxState;
+}
+
+/*
+ 
+ - setBuildWarningsCheckBoxState:
+ 
+ */
+- (void)setBuildWarningsCheckBoxState:(NSInteger)state
+{
+	MGS_ignoreBuildWarningsCheckboxState = state; 
+}
+
+#pragma mark -
+#pragma mark Actions
 /*
  
  build:
@@ -124,25 +153,6 @@ static NSInteger MGS_ignoreBuildWarningsCheckboxState = NSOffState;
 		// execute task
 		[[MGSClientRequestManager sharedController] requestExecuteTask:_taskSpec withOwner:self];
 	}
-}
-
-/*
- 
- - buildTimerExpired
- 
- */
-- (void)buildTimerExpired:(NSTimer*)theTimer
-{
-	#pragma unused(theTimer)
-	
-	[_buildTimer invalidate];
-	_buildTimer = nil;
-	
-	if (_windowHasQuit || _responseReceived) {
-		return;
-	}
-	
-	[_cancelButton setEnabled:YES];
 }
 
 /*
@@ -177,7 +187,29 @@ static NSInteger MGS_ignoreBuildWarningsCheckboxState = NSOffState;
 	[self closeWindowWithReturnCode:NSCancelButton];
 }
 
+#pragma mark -
+#pragma mark Callbacks
+/*
+ 
+ - buildTimerExpired
+ 
+ */
+- (void)buildTimerExpired:(NSTimer*)theTimer
+{
+#pragma unused(theTimer)
+	
+	[_buildTimer invalidate];
+	_buildTimer = nil;
+	
+	if (_windowHasQuit || _responseReceived) {
+		return;
+	}
+	
+	[_cancelButton setEnabled:YES];
+}
 
+#pragma mark -
+#pragma mark NetRequest handling
 /*
  
  reply to save edits request
@@ -234,6 +266,7 @@ static NSInteger MGS_ignoreBuildWarningsCheckboxState = NSOffState;
 		// NO
 		
 		[_resultTextField setTextColor:[NSColor redColor]];
+		[_resultTextView setTextColor:[NSColor redColor]];
 		
 		NSString *scriptName = [[_taskSpec script] name];
 		NSString *serviceName = _taskSpec.netClient.serviceShortName;
@@ -247,10 +280,49 @@ static NSInteger MGS_ignoreBuildWarningsCheckboxState = NSOffState;
 		[_titleTextField setStringValue:title];
 	}
 	
-	// update the sheet result
-	[_resultTextField setAlignment:NSJustifiedTextAlignment];
 	if (buildMessage) {
-		[_resultTextField setStringValue:buildMessage];
+        
+        // swap in the text view
+        NSScrollView *scrollView = [_resultTextView enclosingScrollView];
+        [scrollView setFrame:[_resultTextField frame]];
+        [[_resultTextField superview] replaceSubview:_resultTextField with:scrollView];
+        
+        // update the sheet result
+        [_resultTextView setAlignment:NSJustifiedTextAlignment];
+		[_resultTextView setString:buildMessage];
+        [_resultTextView scrollRangeToVisible:NSMakeRange([buildMessage length], 0)];
+        [_resultTextView scrollRangeToVisible:NSMakeRange(0,0)];
+        
+        NSSize textViewFrame = [_resultTextView frame].size;
+        CGFloat textHeight = textViewFrame.height;
+        
+        CGFloat heightDelta = textHeight - [scrollView frame].size.height + 2;
+        if (heightDelta > 0) {
+            NSRect sheetFrame = [[self window] frame];
+            sheetFrame.size.height += heightDelta;
+            sheetFrame.origin.y -= heightDelta;
+            
+            // we don't want the build sheet to grow 
+            // so that it appears below the bottom of our modal window
+            if ([[self delegate] respondsToSelector:@selector(view)]) {
+                NSWindow *modalWindow = [[[self delegate] view] window];
+                if (modalWindow) {
+                    NSRect windowFrame = [modalWindow frame];
+                    CGFloat windowBottomY = windowFrame.origin.y;
+                    CGFloat sheetBottomY = sheetFrame.origin.y;
+                    
+                    if (sheetBottomY < windowBottomY) {
+                        sheetFrame.size.height -= (windowBottomY - sheetBottomY); 
+                    }
+                }
+                                
+             } 
+            
+            // animate the sheet resize
+            [scrollView setHasVerticalScroller:NO];
+            [[self window] setFrame:sheetFrame display:YES animate:YES];
+            [scrollView setHasVerticalScroller:YES];
+       }
 	}
 	
 	// update button statuses
@@ -276,7 +348,8 @@ static NSInteger MGS_ignoreBuildWarningsCheckboxState = NSOffState;
 #endif
 }
 
-
+#pragma mark -
+#pragma mark Window handling
 /*
  
  close window
@@ -291,25 +364,5 @@ static NSInteger MGS_ignoreBuildWarningsCheckboxState = NSOffState;
 	[NSApp endSheet:[self window] returnCode:returnCode];
 }
 
-/*
- 
- - buildWarningsCheckBoxState
- 
- */
- 
-- (NSInteger)buildWarningsCheckBoxState
-{
-	return MGS_ignoreBuildWarningsCheckboxState;
-}
-
-/*
- 
- - setBuildWarningsCheckBoxState:
- 
- */
-- (void)setBuildWarningsCheckBoxState:(NSInteger)state
-{
-	MGS_ignoreBuildWarningsCheckboxState = state; 
-}
 @end
 

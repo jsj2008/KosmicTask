@@ -14,6 +14,7 @@
 @interface MGSBuildTaskSheetController : NSWindowController <MGSNetRequestOwner> {
 	IBOutlet NSTextField *_titleTextField;
 	IBOutlet NSTextField *_resultTextField;
+    IBOutlet NSTextView *_resultTextView;
 	IBOutlet NSButton *_cancelButton;
 	IBOutlet NSButton *_OKButton;
 	IBOutlet NSButton *_ignoreBuildWarningsCheckbox;
@@ -26,6 +27,7 @@
 	BOOL _responseReceived;
 	
 	NSTimer *_buildTimer;
+    NSSize _minFrameSize;
 }
 
 @property (assign) MGSTaskSpecifier *taskSpecifier;
