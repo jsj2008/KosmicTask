@@ -147,7 +147,9 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	
 	// bind build result segment 
 	[buildResultSegment bind:NSSelectedIndexBinding toObject:self withKeyPath:@"buildResultIndex" options:nil];
-	
+	if ([buildResultSegment segmentCount] > 1) {
+        [buildResultSegment setSegmentCount:1];
+    }
 	// bind build status field
 	[buildStatusTextField bind:NSValueBinding toObject:self withKeyPath:@"buildStatus" options:nil];
 	 
@@ -181,7 +183,7 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 											   attributes, @"attributes",
 											   nil];
     
-    // inintialsie the build result
+    // initialsie the build result
     self.buildStderrResult = @"";
     
 #ifdef MGS_DEBUG_CONTROLLER
@@ -240,6 +242,11 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 		[self updateLanguageDependentProperties];
 		
 		self.scriptBuilt = NO;
+        
+        // initialise the build result
+        self.buildStderrResult = @"";
+        self.buildConsoleResult = @"";
+        self.buildResultIndex = MGS_BUILD_RESULT_INDEX_CONSOLE;
 		
 		settingsOutlineViewController.languagePropertyManager = [[_taskSpec.script languagePlugin] languagePropertyManager];
 
@@ -373,6 +380,12 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	
 	[_taskSpec addObserver:self forKeyPath:@"script.scriptType" options:NSKeyValueObservingOptionNew context:(void *)&MGSScriptTypeContext];
 	[_taskSpec addObserver:self forKeyPath:@"script.languagePropertyManager" options:NSKeyValueObservingOptionNew context:(void *)&MGSScriptLanguagePropertyManagerContext];
+    
+    // initialise the build result
+    self.buildStderrResult = @"";
+    self.buildConsoleResult = @"";
+    self.buildResultIndex = MGS_BUILD_RESULT_INDEX_CONSOLE;
+    
 }
 
 /*
@@ -445,14 +458,30 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 - (void)setBuildStderrResult:(NSString *)result
 {
 	buildStderrResult = result;
+
+    // make stderr segment available
+    BOOL stderrAvailable = !([result isEqualToString:@""] || !result);
+    if (stderrAvailable) {
+        
+        // add segment if required
+        if ([buildResultSegment segmentCount] == 1) {
+            [buildResultSegment setSegmentCount:2];
+            [buildResultSegment setLabel:@"stderr" forSegment:1];
+            [buildResultSegment setWidth:[buildResultSegment widthForSegment:0] forSegment:1];
+
+            if (self.buildResultIndex == MGS_BUILD_RESULT_INDEX_STDERR) {
+                self.buildResult = buildStderrResult;
+            }
+        }
+    } else {
+        if (self.buildResultIndex == MGS_BUILD_RESULT_INDEX_STDERR) {
+            self.buildResultIndex = MGS_BUILD_RESULT_INDEX_CONSOLE;
+        }
+        
+        // remove segment if required
+        [buildResultSegment setSegmentCount:1];
+    }
 	
-	if (self.buildResultIndex == MGS_BUILD_RESULT_INDEX_STDERR) {
-		self.buildResult = buildStderrResult;
-	}
-	
-    // disable stderr segment if no stderr content
-    BOOL stderrEnabled = !([result isEqualToString:@""] || !result);
-    [buildResultSegment setEnabled:stderrEnabled forSegment:MGS_BUILD_RESULT_INDEX_STDERR];
 }
 
 /*
@@ -1245,7 +1274,7 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	MGSScript *script = [_taskSpec script];
 	
 	// update the build result output
-	NSString *mesgFormat = NSLocalizedString(@"building script '%@' as %@ on %@ ... ", @"script compiling message");
+	NSString *mesgFormat = NSLocalizedString(@"Building script '%@' as %@ on %@ ... ", @"script compiling message");
 	NSString *mesg = [NSString stringWithFormat:mesgFormat, [script name], [script scriptType], [[_taskSpec netClient] serviceShortName]];
 	self.buildConsoleResult = mesg;
 	self.buildStderrResult = @"";

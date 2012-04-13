@@ -1987,6 +1987,7 @@ errorExit:;
 		// TODO: iterate through dict children and look for matching sub keys
 		//
 		id kosmicFileObject = nil;
+        NSString *kosmicFileObjectKey = nil;
 		NSString *kosmicFileKeyName = nil;
 		NSArray *kosmicFileKeyNames = [MGSResultFormat fileDataKeys];
 		
@@ -1994,6 +1995,7 @@ errorExit:;
 			for (NSString *key in [resultObjectDict allKeys]) {
 				if ([[key lowercaseString] isEqualToString:kosmicFileKeyName]) {
 					kosmicFileObject = [resultObjectDict objectForKey:key];
+                    kosmicFileObjectKey = key;
 					goto for_done;
 				}
 			}
@@ -2126,7 +2128,7 @@ errorExit:;
 					//
 					MGSNetAttachment *attachment = [netAttachments addAttachmentToExistingReadableFile:filePath];
 					
-					// if filepath was not valid then rasie error
+					// if filepath was not valid then raise error
 					if (attachment) {
 						newDictObject = [NSString stringWithFormat:@"%@", [attachment lastPathComponent]];
 						newKey = [attachment validatedTitle];
@@ -2143,7 +2145,7 @@ errorExit:;
 					
 				} else {
 					MLog(RELEASELOG, @"Task returned object of invalid type in record: %@", [item className]);
-					error = @"The task result includes an file type";
+					error = @"The task result includes an invalid file type";
 					goto errorExit;
 					newDictObject = item;
 				}
@@ -2158,10 +2160,12 @@ errorExit:;
 			}
 		}
 		
-		// remove the mother object from the result dict
-		// and replace with new dict
+		// remove the kosmicFileObjectKey from the result dict
+		// and replace with new dict.
+        // we remove the keyed object explicitly as the key character
+        // case may be different (we allow for variable key case)
 		if (kosmicFileObject && kosmicFileKeyName && kosmicFileArray) {
-			[resultObjectDict removeObjectForKey:kosmicFileKeyName];
+			[resultObjectDict removeObjectForKey:kosmicFileObjectKey];
 			[resultObjectDict setObject:newMotherDict forKey:kosmicFileKeyName];
 		}
 	}

@@ -30,7 +30,7 @@ Notes:
 		task waitUntilExit.
 	
 		" form result dictionary "
-		result := #{'kosmicName' -> command, 'kosmicFile' -> path}.
+		result := #{'kosmicName' -> command, 'kosmicFile' -> path, 'kosmicInfo' -> 'file returned'}.
 	
 	] onException:[:e | 
 	

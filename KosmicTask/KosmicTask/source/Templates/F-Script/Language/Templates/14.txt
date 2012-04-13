@@ -47,7 +47,7 @@ Notes:
 		].
 	
 		" form result dictionary "
-		result := #{'kosmicName' -> command, 'kosmicFile' -> paths}.
+		result := #{'kosmicName' -> command, 'kosmicFile' -> paths, 'kosmicInfo' -> 'files returned'}.
 		
 	] onException:[:e | 
 	
