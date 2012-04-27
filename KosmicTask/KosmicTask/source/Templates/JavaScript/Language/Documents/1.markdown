@@ -1,6 +1,12 @@
 
 [JavaScript](https://developer.mozilla.org/en/JavaScript) is typically used as a client side script within web browsers. It may also be used for general purpose scripting duties.
 
+Implementation
+--------------
+The JavaScript implementation used by KosmicTask is supplied by the OS X JavaScript Core framework. JavaScript powered tasks do not run within the context of a webview and so do not have access to an HTML [DOM](https://developer.apple.com/library/mac/#documentation/AppleApplications/Conceptual/SafariJSProgTopics/WebKitJavaScript.html#//apple_ref/doc/uid/30001232-SW1) object or to other [WebKit](https://developer.apple.com/library/mac/#documentation/AppleApplications/Conceptual/SafariJSProgTopics/Concepts/AboutJavaScript.html) supplied objects such as [XMLHttpRequest](https://developer.apple.com/library/mac/#documentation/AppleApplications/Conceptual/SafariJSProgTopics/Articles/XHR.html).
+
+JavaScript powered tasks that require URL loading capabilities should be scripted as [JavaScript Cocoa (JSCocoa)](http://www.mugginsoft.com/kosmictask/help/languages/javascript-cocoa) applets. JSCocoa provides to all the [Foundation](http://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/ObjC_classic/_index.html) framework classes and thus greatly extends JavaScript scripting capabilities.
+
 Limitations
 -----------
 

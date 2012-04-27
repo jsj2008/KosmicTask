@@ -1,0 +1,69 @@
+/*
+
+Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+
+Script: {{ script }}
+
+Credits:
+
+Notes:
+
+*/
+function kosmicTask(theAddress) 
+{
+	// define default result
+	var theResult = {};
+
+	// define default address
+	if (theAddress == null) {
+		theAddress = "http://www.mugginsoft.com/about";
+	}
+	
+	var theText = null;
+	
+	try {	
+		
+		/*
+		
+		JSCocoa supports two ways to call ObjC methods.
+		The first uses JavaScript property syntax.
+		
+		*/
+		
+		// define url
+		var theUrl = NSURL.URLWithString_(theAddress);
+		
+		// define the request
+		var theRequest = NSMutableURLRequest.requestWithURL_cachePolicy_timeoutInterval(theUrl, NSURLRequestReloadIgnoringLocalCacheData, 60);
+		theRequest.setHTTPMethod_("GET");
+		
+		/*
+		
+		The second way to call ObjC methods is by using the Objective-J syntax.
+		Code syntax is now very similar to native Objective-C.
+		
+		*/
+		// get response data
+		var theResponse = null;
+	    var theResponseData = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:nil];
+		
+		// validate the response
+	    if (theResponseData == nil) {
+	    	throw ("Empty response from " + theAddress);
+	    } 
+	    
+	    // convert data to text
+	    theText = [[NSString alloc] initWithData:theResponseData encoding:NSUTF8StringEncoding];
+	    
+	    // set result data
+	    theResult.kosmicData = theText;
+    } catch(e) {
+		
+		// form error dictionary 
+		theResult.kosmicError = e;
+		
+	}
+	
+	// return result
+	return theResult;
+}

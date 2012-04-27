@@ -1,15 +1,15 @@
 
-JavaScript Cocoa tasks access the Cocoa framework via the [JSCocoa](http://inexdo.com/JSCocoa) bridge. 
+JavaScript Cocoa tasks access the Cocoa framework via the [JSCocoa][jscocoa] bridge. 
 
-JSCocoa provides a bridge between the JavaScript and Objective-C programming languages. 
+JSCocoa provides a bridge between the JavaScript and [Objective-C][objective-c] programming languages. 
 
 
-Limitations 
-------------
+Using JSCocoa to Overcome Native JavaScript Limitations 
+--------------------------------------------------------
 
 Native JavaScript prohibits access to the operating system.
 
-However, using JSCocoa it is possible to escape the sandbox and access the operating system directly, for example, to permit file access or launch new processes using NSTask.
+However, using JSCocoa it is possible to escape the sandbox and access the operating system directly, for example, to permit file access or launch new processes using [NSTask][nstask].
 
 	function kosmicTask() 
 	{
@@ -29,6 +29,46 @@ However, using JSCocoa it is possible to escape the sandbox and access the opera
 	
 	}
 
+Method Syntax
+-------------
+
+JSCocoa supports two ways to call methods on Cocoa classes and objects. The first uses JavaScript property syntax. Cocoa method signatures are converted to function names by replacing : (colon) with _ (underscore). The trailing underscore on function names may be omitted.
+
+	// define url
+	var theUrl = NSURL.URLWithString_(theAddress);
+		
+	// define the request - note trailing underscore omitted
+	var theRequest = NSMutableURLRequest.requestWithURL_cachePolicy_timeoutInterval(theUrl, NSURLRequestReloadIgnoringLocalCacheData, 60);
+	theRequest.setHTTPMethod_("GET");
+		
+The second way to call Cocoa methods is by using [Objective-J](http://en.wikipedia.org/wiki/Objective-J) syntax. Code syntax is now very similar to native [Objective-C](http://en.wikipedia.org/wiki/Objective-C), the language normally used to create native applications on OS X.
+
+	// get response data
+	var theResponse = null;
+	var theResponseData = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:nil];
+		
+	// convert data to text
+	theText = [[NSString alloc] initWithData:theResponseData encoding:NSUTF8StringEncoding]; 
+
+From an Objective-C developer's perspective this second approach is clearly superior. It also makes transcribing Objective-C code from existing source and example code much easier.  
+
+
+String Format Specifier Usage
+-----------------------------
+
+Many Cocoa classes support variable length argument lists that may include both object references and primitive data types such as numbers and char arrays. JSCocoa converts all such arguments to JavaScript values which may then be referenced as objects. For instance, this means that when using [format specifiers](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/Strings/Articles/formatSpecifiers.html) with [NSString][nsstring] all arguments, regardless of their type, must use the `%@` format specifier.
+
+	// These FAIL as the %i (and all other non object) format specifier is not supported.
+	// They will return a large number representing the address of 
+	// an object that contains the original value.
+	var theString = [NSString stringWithFormat:"%i", 100];
+	theString = [NSString stringWithFormat:"%i", [thePostData length]];
+
+	// These SUCCEED thanks to the use of the %@ object specifier.
+	var theString = [NSString stringWithFormat:"%@", 100];
+	theString = [NSString stringWithFormat:"%@", [thePostData length]];
+
+The rule is simple. Just use the `%@` format specifier and no others.
 
 Calling the Task Run Function
 -----------------------------
@@ -195,3 +235,8 @@ Syntax Checking
 Syntax checking is provided by [JSLint](http://www.jslint.com/) which is included as part of JSCocoa.
 
 Note that JSLint will rewrite the syntax used to implement Cocoa class creation. The rewritten code may be referenced in any build error reports.
+
+[nsstring]: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Strings/introStrings.html#//apple_ref/doc/uid/10000035i
+[jscocoa]: http://inexdo.com/JSCocoa
+[objective-c]: http://en.wikipedia.org/wiki/Objective-C
+[nstask]: https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSTask_Class/Reference/Reference.html
