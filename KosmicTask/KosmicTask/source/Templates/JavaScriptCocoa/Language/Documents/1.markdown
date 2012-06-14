@@ -228,6 +228,106 @@ JavaScript Cocoa tasks can access system framework classes using the **loadFrame
 		return result
 	}
 
+Using Pointers
+--------------
+Numerous Cocoa classes take pointers to objects as arguments. JSCocoa uses an `outArgument` to pass pointers into methods. This syntax supports both basic types, structs and objects. 
+ 
+	var scanner = NSScanner.scannerWithString('4.56 123')
+	var extractedFloat = new outArgument
+	scanner.scanFloat(extractedFloat)
+	log(extractedFloat)
+	
+If a Cocoa object is returned within an `outArgument` then its value can be obtained using `.outValue`.
+
+	function kosmicTask() 
+	{
+		// define a scanner
+		var theScanner = [NSScanner scannerWithString:"Hello brave new kosmos\n"]
+	
+		// scan over Hello
+		[theScanner scanString:"Hello" intoString:nil]
+	
+		// define out argument
+		var outString = new outArgument
+	
+		// scan up to end of line and save text in outString
+		[theScanner scanUpToString:"\n" intoString:outString]
+	
+		// the NSString result is available via the outValue property
+		return outString.outValue
+	}
+	
+The JSCocoaController Object
+----------------------------
+JSCocoa defines a Cocoa controller object that gives access to the JSCocoa execution context and various utilties. The controller object can be accessed explicitly or via the global `__jsc__` variable:
+
+	function kosmicTask() 
+	{
+		// get the JSCocoa controller.
+		// this is also always available as __jsc__ 
+		var jsc = JSCocoaController.sharedController
+		
+		// define an NSArray
+		var nsArray = [NSArray arrayWithObjects:"Hello", "brave", "new", "kosmos"]
+		
+		// convert to JS array using local jsc var
+		log("JS array using jsc = " + jsc.toJS(nsArray))
+		
+		// convert to JS array using global __jsc__ var
+		log("JS array using __jsc__ = " + __jsc__.toJS(nsArray))
+		
+	}
+
+JSCocoa is very flexible about type handling and it is not usual to have to convert objects explictly to JavaScript (but see below).
+	
+Serializing Cocoa Objects to JSON
+---------------------------------
+JavaScript serializes native objects using `JSON.stringify(object)`. JSCocoa does not currently support calling `stringify` on objects that are Cocoa objects or contain Cocoa objects. The solution to this problem is to convert the Cocoa object to JavaScript using `.toJS()`.
+
+	function kosmicTask() 
+	{
+		// get the JSCocoa controller.
+		// this is also always available as __jsc__ 
+		var jsc = JSCocoaController.sharedController
+
+		// define an NSArray instance
+		var theNSArray = [NSArray arrayWithObjects:@"Hello", @"brave", @"new", @"kosmos"]
+		//return JSON.stringify(theNSArray) // this does not give us a valid JSON representation
+	
+		// convert to JS array
+		var theJSArray = jsc.toJS(theNSArray)
+	
+		// stringify the JS array
+		return JSON.stringify(theJSArray)
+	}
+
+A similar approach using NSDictionary currently fails however and returns a JS object with no defined properties.
+
+	function kosmicTask() 
+	{
+    	// get the JSCocoa controller.
+    	// this is also always available as __jsc__ 
+    	var jsc = JSCocoaController.sharedController
+
+    	// define an NSDictionary instance
+    	var theNSDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Hello", @"brave", @"new", @"kosmos"]
+    	//return JSON.stringify(theNSDict) // this does not give us a valid JSON representation
+
+    	// convert to JS dict
+    	var theJSDict = jsc.toJS(theNSDict)
+
+    	// stringify the JS dict
+    	// note that at present this generates an empty object as toJS returns a
+    	// JS array as opposed to a JS object
+    	return JSON.stringify(theJSDict)
+	}
+
+`.toJs()` returns a JS array with the dictionary keys as named properties. `JSON.stringify` is defined to only return index elements during the serialization of an array object and omits any named parameters - hence the problem. A JS object, such as `var myObj = {}` is required to correctly serialize named parameters. So at present NSDictionary objects cannot be used to build objects that will be later stringified.
+
+Learn More
+----------
+One useful way to learn about JSCocoa is to browse the project [test][test] suite. These short scripts test most of JSCocoa's functionality and are a great way of learning about the language's functionality and syntax.
+
 
 Syntax Checking
 ---------------
@@ -240,3 +340,4 @@ Note that JSLint will rewrite the syntax used to implement Cocoa class creation.
 [jscocoa]: http://inexdo.com/JSCocoa
 [objective-c]: http://en.wikipedia.org/wiki/Objective-C
 [nstask]: https://developer.apple.com/library/mac/#documentation/Cocoa/Reference/Foundation/Classes/NSTask_Class/Reference/Reference.html
+[test]: https://github.com/parmanoir/jscocoa/tree/master/Tests
