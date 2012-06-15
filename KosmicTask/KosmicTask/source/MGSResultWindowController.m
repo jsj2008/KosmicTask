@@ -173,7 +173,9 @@ window did resign key
 {
 	#pragma unused(notification)
 	
-	[[self window] endEditing];
+	if (![[self window] endEditing:NO]) {
+        
+    }
 }
 
 

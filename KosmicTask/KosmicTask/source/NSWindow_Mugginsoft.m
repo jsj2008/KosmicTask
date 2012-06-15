@@ -16,21 +16,23 @@
  end all editing in window
  
  */
--(void)endEditing
+- (BOOL)endEditing:(BOOL)force
 {
 	id firstResponder = [self firstResponder];
 	
 	// gracefully end all editing in a window named aWindow 
-	if ([self makeFirstResponder:self]) 
-	{ 
+	if ([self makeFirstResponder:self])  { 
 		// All editing is now ended and delegate messages sent etc. 
-	} 
-	else 
-	{ 
+	} else if (force) { 
 		// For some reason the text object being edited will not resign 
-		// first responder status so force an end to editing anyway 
+		// first responder status so force an end to editing anyway.
+        // This is probably a bad idea as the first responder is probably refusing to resign
+        // its status because of a pending or failed validation.
+        // forcing the edit can leave our model in an invalid state.
 		[self endEditingFor:nil]; 
-	}
+	} else {
+        return NO;
+    }
 	
 	// restore the first responder once editing completed.
 	// this is required in situations where this message is sent from
@@ -38,6 +40,8 @@
 	// a panel, such as the find panel, may be being displayed.
 	// it will require the window's firstResponder to be maintained.
 	[self makeFirstResponder:firstResponder];
+    
+    return YES;
 }
 
 // from http://www.cocoabuilder.com/archive/message/cocoa/2004/11/11/121369

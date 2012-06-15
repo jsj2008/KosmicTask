@@ -194,9 +194,12 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 		return;
 	}
 
-	// commit any pending edits
-	[[[self view] window] endEditing];
-	
+	// commit any pending edits.
+    // if the commit fails we probably have validation issues.
+	if (![[[self view] window] endEditing:NO]) {
+        return;
+    }
+    
 	// create mutable copy of action
 	MGSTaskSpecifier *action = [requestViewController.actionSpecifier mutableDeepCopyAsNewInstance];
 

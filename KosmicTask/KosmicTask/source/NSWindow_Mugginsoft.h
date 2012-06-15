@@ -10,7 +10,7 @@
 
 
 @interface NSWindow (Mugginsoft)
--(void)endEditing;
+- (BOOL)endEditing:(BOOL)force;
 - (NSImageView*) addIconToTitleBar:(NSImage*) icon;
 - (float) titleBarHeight;
 - (float) toolbarHeight;

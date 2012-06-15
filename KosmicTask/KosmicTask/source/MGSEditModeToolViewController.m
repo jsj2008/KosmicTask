@@ -72,9 +72,14 @@ const char MGSTaskProcessingContext;
 		return;
 	}
 	
-	// end editing in window
-	[[[self view] window] endEditing];
-	
+	// end editing in window if changing mode
+    if (_lastSegmentedClicked != -1) {
+        if (![[[self view] window] endEditing:NO]) {
+            [sender setSelectedSegment:_lastSegmentedClicked];
+            return;
+        }
+	}
+    
 	NSString *text = @"";
 	
 	switch (mode) {

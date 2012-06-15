@@ -80,7 +80,7 @@
 - (void)setAction:(MGSTaskSpecifier *)anAction
 {
 	_action = anAction;
-	
+    
 	MGSNetClient *netClient = [_action netClient];
 	
 	// bind group content values
@@ -93,12 +93,22 @@
 	// bind controller to script
 	MGSScript *script = [_action script];
 	[self setRepresentedObject:script];	
-	
+
+    // if we bind directly to the model we loose the facilities provided by NSObjectController
+    // such as automatic KVC validation
+    _objectController = [[NSObjectController alloc] initWithContent:script];
+
+    // binding options
+    NSDictionary *bindingOptions1 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     [NSNumber numberWithBool:YES], NSValidatesImmediatelyBindingOption, 
+                                     [NSNumber numberWithBool:NO], NSAlwaysPresentsApplicationModalAlertsBindingOption, 
+                                     nil];
+    
 	// set up bindings for main view
-	[name bind:NSValueBinding toObject:self withKeyPath:@"representedObject.name" options:nil];
+	[name bind:NSValueBinding toObject:_objectController withKeyPath:@"selection.name" options:bindingOptions1];
 	[description bind:NSValueBinding toObject:self withKeyPath:@"representedObject.description" options:nil];
 	[longDescription bind:NSDataBinding toObject:self withKeyPath:@"representedObject.longDescription" options:nil];
-	[group bind:NSValueBinding toObject:self withKeyPath:@"representedObject.group" options:nil];
+	[group bind:NSValueBinding toObject:self withKeyPath:@"representedObject.group" options:bindingOptions1];
 	[scriptType bind:NSSelectedValueBinding toObject:self withKeyPath:@"representedObject.scriptType" options:nil];
 	
 	// set up bindings for bottom view

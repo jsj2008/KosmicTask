@@ -223,6 +223,10 @@ typedef enum _MGSScriptRepresentation {
 // validation
 - (BOOL)validateOSVersion;
 
+// KVC validation
+- (BOOL)validateName:(id *)value error:(out NSError **)outError;
+- (BOOL)validateGroup:(id *)value error:(out NSError **)outError;
+
 - (void)updateLanguagePropertyManager:(MGSLanguagePropertyManager *)manager;
 
 // key

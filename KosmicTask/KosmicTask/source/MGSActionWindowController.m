@@ -172,7 +172,7 @@
 {
 	#pragma unused(notification)
 	
-	[[self window] endEditing];
+	[[self window] endEditing:NO];
 }
 
 #pragma mark Menu handling

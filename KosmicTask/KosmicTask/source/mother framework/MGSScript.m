@@ -662,6 +662,80 @@ errorExit:;
 	[super setValue:value forKeyPath:keyPath];
 	self.modelDataKVCModified = YES;
 }
+- (void)setValue:(id)value forKey:(NSString *)key
+{
+    [super setValue:value forKey:key];
+}
+#pragma mark -
+#pragma mark KVC validation
+
+/*
+ 
+ if the validates immediately bindings option is defined on the controller then these methods will be called.
+  
+ */
+/*
+ 
+ - validateValue:forKey:error:
+ 
+ */
+- (BOOL)validateValue:(id *)ioValue forKey:(NSString *)inKey error:(NSError **)outError 
+{
+    return [super validateValue:ioValue forKey:inKey error:outError];
+}
+
+/*
+ 
+ - validateName:forKey:error:
+ 
+ */ 
+- (BOOL)validateName:(id *)inValue error:(out NSError **)outError
+{
+    NSString *value = (NSString *)*inValue;
+    value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    // value must be defined
+    if (!value || [value length] == 0) {
+        
+        // note that an error sheet is displayed regardless of whether we define a custom
+        // error message or not
+        if (outError != NULL) {
+            NSString *errorString = NSLocalizedString(@"Task name must be defined.", 
+                                                      @"KVC validation: task name not defined error");
+            NSDictionary *userInfoDict =
+            [NSDictionary dictionaryWithObject:errorString forKey:NSLocalizedDescriptionKey];
+            *outError = [[NSError alloc] initWithDomain:MGSErrorDomainMotherFramework
+                                                   code:MGSErrorCodeTaskNameNotDefined
+                                               userInfo:userInfoDict];
+        }
+        return NO;
+    }
+    
+    return YES;
+}
+
+/*
+ 
+ - validateValue:forKey:error:
+ 
+ */ 
+- (BOOL)validateGroup:(id *)inValue error:(out NSError **)outError
+{
+    
+#pragma unused(outError)
+    NSString *value = (NSString *)*inValue;
+    value = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    // value must be defined
+    if (!value || [value length] == 0) {
+        
+        // we don't return an error here as validating
+        *inValue =  NSLocalizedString(@"Default", 
+                                      @"KVC validation: default group name supplied");
+    }
+    
+    return YES;
+}
 
 #pragma mark -
 #pragma mark Author
@@ -964,7 +1038,7 @@ errorExit:;
 	[self setOnRun:onRunMode];
 
 	// an assertion raised here stops any new tasks from being created!
-	// so jsut log the condition here
+	// so just log the condition here
 	if (![self onRun]) {
 		MLogInfo(@"script onRun property is nil - the script is not properly initialised.");
 	}
@@ -978,6 +1052,7 @@ errorExit:;
 	[self setExternalExecutorPath:[[languagePropertyManager propertyForKey:MGS_LP_ExternalExecutorPath] value]];
 	[self setExecutorOptions:[[languagePropertyManager propertyForKey:MGS_LP_ExecutorOptions] value]];
 }
+
 
 #pragma mark -
 #pragma mark MGSLanguageProperty proxies

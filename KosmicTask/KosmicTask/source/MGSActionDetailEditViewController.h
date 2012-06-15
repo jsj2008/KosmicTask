@@ -48,6 +48,7 @@
 	IBOutlet NSPopUpButton *userInteractionMode;
 	
 	MGSTaskSpecifier *_action;
+    NSObjectController *_objectController;
 }
 
 - (void)setAction:(MGSTaskSpecifier *)anAction;

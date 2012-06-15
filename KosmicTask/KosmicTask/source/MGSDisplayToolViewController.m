@@ -342,7 +342,10 @@ NSString *MGSActionProgressContext = @"MGSActionProgress";
 		// but there's no easy way to get it.
 		// so make the window itself firstResponder.
 		// any active edits should be commited to the bound model.
-		[[[self view] window] endEditing];
+        // if end editing fails it is probably because the active control failed validation
+		if (![[[self view] window] endEditing:NO]) {
+            return;
+        }
 		
 		// post execute notification
 		[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteExecuteSelectedTask object:window userInfo:nil];

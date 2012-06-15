@@ -82,6 +82,9 @@ extern NSString *MGSErrorDomainMotherScriptTask;
 // application errors
 #define MGSErrorCodeCannotConnectToService 6000
 
+// validation errors
+#define MGSErrorCodeTaskNameNotDefined 7000
+#define MGSErrorCodeTaskGroupNotDefined 7001
 
 @interface MGSError : NSError {
 	NSDate *_date;

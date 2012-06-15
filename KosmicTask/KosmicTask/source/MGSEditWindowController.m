@@ -57,7 +57,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (void)saveActionSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)resourceSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)showTemplateSheet_:(id)sender;
-- (void)changeEditMode:(eMGSMotherEditMode)mode;
+- (BOOL)changeEditMode:(eMGSMotherEditMode)mode;
 @end
 
 @interface MGSEditWindowController(Private)
@@ -599,7 +599,9 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			NSAssert(NO, @"invalid menu tag");
 	}
 	
-	[self changeEditMode: mode];
+	if (![self changeEditMode: mode]) {
+        // the edit mode is not changed
+    }
 }
 
 /*
@@ -607,7 +609,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
  - changeEditMode:
  
  */
-- (void)changeEditMode:(eMGSMotherEditMode)mode
+- (BOOL)changeEditMode:(eMGSMotherEditMode)mode
 {
 	// make window the first responder.
 	// this should conclude any current edits.
@@ -616,7 +618,9 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	// both manual updating and bindings rely on the first responder resiging to commit edits.
 	// when the user manual changes edit mode this will occur.
 	// when changing the mode programatically we need to prompt the first responder to resign its status.
-	[[self window] endEditing];
+	if (![[self window] endEditing:NO]) {
+        return NO;
+    }
 	
 	// post notification requesting edit mode change
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:mode], MGSNoteModeKey,
@@ -626,6 +630,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	// send change request
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteWindowEditModeChangeRequest object:[self window] userInfo:dict];
 	
+    return YES;
 }
 
 #pragma mark -
@@ -690,7 +695,10 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	
 	// change to run mode
 	if (_editMode != kMGSMotherEditModeRun) {
-		[self changeEditMode:kMGSMotherEditModeRun];
+		if (![self changeEditMode:kMGSMotherEditModeRun]) {
+            #warning What if the end edit fails due a validation issue?
+            return;
+        }
 	}
 	
 	// super implementation will execute
@@ -706,7 +714,9 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 {	
 #pragma unused(sender)
 	if (_editMode != kMGSMotherEditModeScript) {
-		[self changeEditMode:kMGSMotherEditModeScript];
+		if (![self changeEditMode:kMGSMotherEditModeScript]) {
+            return;
+        }
 	}
 }
 
@@ -862,7 +872,15 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	
 	if (_silentClose) return;
 	
-	[[self window] endEditing];
+    // although this works it can screw up things like bindings validation
+    // which display error results in a sheet as key window status is lost
+    // when the sheet is displayed which results in this method being called.
+    // this in turn changes the firstResponder which means that when the bindings validation
+    // sheet exits the validate controller is no longer the first responder.
+    // so we send NO to ensure that the first responder is not forced to change
+    if (![[self window] endEditing:NO]) {
+        
+    }
 }
 
 
@@ -878,16 +896,20 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	}
 	
 	if (_silentClose) return YES;
-	
+    
 	// commit any edits.
-	// this is klutzy. see line below.
+	// if a pending edits not committed then we do not proceed
 	if (![self commitPendingEdits]) {
 		return NO;
 	}
 
 	// make window the first responder.
-	// this should conclude and current edits.
-	[[self window] endEditing];
+	// this should conclude any current edits.
+    // the No argument means tha the first responder will not be forced to change
+    // indicating that a valdiation is pending, in which cause we return.
+	if (![[self window] endEditing:NO]) {
+        return NO;
+    }
 	
 	// if not dirty then no save required
 	if (NO == [[self window] isDocumentEdited]) {
