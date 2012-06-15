@@ -523,7 +523,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 				break;
 				
 			case kMGS_MENU_TAG_VIEW_EDIT_MODE_RUN:
-				if (scriptEditViewController.scriptBuilt) {
+				if (scriptEditViewController.canExecuteScript) {
 					if (_editMode == kMGSMotherEditModeRun) state = NSOnState;
 				} else {
 					enabled = NO;
