@@ -103,12 +103,12 @@
                                      [NSNumber numberWithBool:YES], NSValidatesImmediatelyBindingOption, 
                                      [NSNumber numberWithBool:NO], NSAlwaysPresentsApplicationModalAlertsBindingOption, 
                                      nil];
-    
+
 	// set up bindings for main view
 	[name bind:NSValueBinding toObject:_objectController withKeyPath:@"selection.name" options:bindingOptions1];
-	[description bind:NSValueBinding toObject:self withKeyPath:@"representedObject.description" options:nil];
+	[description bind:NSValueBinding toObject:_objectController withKeyPath:@"selection.description" options:nil];
 	[longDescription bind:NSDataBinding toObject:self withKeyPath:@"representedObject.longDescription" options:nil];
-	[group bind:NSValueBinding toObject:self withKeyPath:@"representedObject.group" options:bindingOptions1];
+	[group bind:NSValueBinding toObject:_objectController withKeyPath:@"selection.group" options:bindingOptions1];
 	[scriptType bind:NSSelectedValueBinding toObject:self withKeyPath:@"representedObject.scriptType" options:nil];
 	
 	// set up bindings for bottom view

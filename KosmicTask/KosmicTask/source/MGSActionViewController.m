@@ -167,8 +167,12 @@
 
 	if (_mode == MGSParameterModeInput) {
 		//MGSScriptParameterHandler *parameterHandler = [script parameterHandler];
-		
-		[_descriptionViewController setStringValue:[script description]];
+		NSString *description = [script description];
+        description = [description stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if (!description || [description length] == 0) {
+            description = [script name]; 
+        }
+		[_descriptionViewController setStringValue:description];
 		_actionInputFooterViewController.actionSpecifier = _task;
 	}
 	

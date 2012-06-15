@@ -86,10 +86,11 @@ const char MGSLangSettingsOnRunContext;
 	[script setObject:MGSScriptIdentifier forKey:MGSScriptKeyIdentifier];
 	[script setObject:MGS_SCRIPT_FILE_VERSION forKey:MGSScriptKeyFileVersion];
 	
-	[script setName: NSLocalizedString(@"Untitled", @"New task name")];	
-	[script setDescription: NSLocalizedString(@"New task", @"New task description")];
-	[script setGroup: NSLocalizedString(@"New", @"New task group")];
-	
+    // name and group must be defined and not nil or zero length
+	[script setName: NSLocalizedString(@"Untitled", @"Default task name")];	
+	[script setGroup: NSLocalizedString(@"Default", @"Default task group")];
+	[script setDescription: NSLocalizedString(@"", @"Default task description")];	
+    
 	[script setPublished:NO];
 	[script setScriptStatus:MGSScriptStatusNew];
 	
@@ -312,7 +313,9 @@ errorExit:;
  */
 + (BOOL)validateDictionary:(NSDictionary *)dict 
 {
-	return [[self class] validateDictionary:dict atPath:nil];
+	BOOL isValid = [[self class] validateDictionary:dict atPath:nil];
+    
+    return isValid;
 }
 
 /*
@@ -870,6 +873,14 @@ errorExit:;
 	}
 	
 	return YES;
+}
+
+#pragma mark -
+#pragma mark Name
+
+- (void)setName:(NSString *)aString
+{
+	[super setName:aString];
 }
 
 #pragma mark -
@@ -2399,7 +2410,7 @@ errorExit:;
 		error = [NSString stringWithFormat:NSLocalizedString(@"Script representation is invalid for UUID: %@", @"Script representation is invalid"), UUID];
 		goto errorExit;
 	}
-
+    
 	// save path
 	NSString *savePath = [self UUIDWithPath:path];
 	NSString *rollbackPath = [savePath stringByAppendingPathExtension:@"tmp"];
@@ -2710,7 +2721,6 @@ errorExit:;
 {
 	return [[self languagePlugin] validateOSVersion];
 }
-
 
 @end
 
