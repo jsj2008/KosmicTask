@@ -187,8 +187,8 @@
 	NSAssert(MGSParameterModeInput == _mode, @"dynamic description requires input mode");
 	
 	// if no script parameter then description will be nil leading to an NSException
-	NSString *text = @"???";
-	if ([self representedObject]) {
+	NSString *text = NSLocalizedString(@"No description available", @"Task parameter: no parameter description");
+	if ([[self representedObject] description]) {
 		text = [[self representedObject] description];
 	}
 	
