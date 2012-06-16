@@ -290,7 +290,11 @@
  */
 - (void)setDefaultValue:(id)value
 {
-	[_plist setObject:value forKey:MGSScriptKeyDefault];
+    if (value) {
+        [_plist setObject:value forKey:MGSScriptKeyDefault];
+    } else {
+        [_plist removeObjectForKey:MGSScriptKeyDefault];        
+    }
 }
 
 /*
