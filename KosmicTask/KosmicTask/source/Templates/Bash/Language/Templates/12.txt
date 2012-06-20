@@ -19,7 +19,7 @@ echo "Hello, kosmos!"
 echo "Goodbye, kosmos!" >/dev/stderr
 
 # or we can
-# link file descriptor 4 with stdin
+# link file descriptor 6 with stdin
 exec 6<&1
 
 # redirect stdout to stderr 
