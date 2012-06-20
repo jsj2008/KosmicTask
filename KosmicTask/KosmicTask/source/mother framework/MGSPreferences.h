@@ -57,6 +57,7 @@ extern NSString *MGSResultViewColor;
 extern NSString *MGSResultViewFontName;
 extern NSString *MGSResultViewFontSize;
 extern NSString *MGSUseSeparateNetworkThread;
+extern NSString *MGSSendCocoaTaskCRashReports;
 
 @interface MGSPreferences : NSObject {
 

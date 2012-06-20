@@ -47,7 +47,6 @@
  */
 - (BOOL)execute
 {
-	
 	// execute
 	return [self executeWithManager:[MGSJSCocoaScriptManager sharedManager]];
 }

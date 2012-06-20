@@ -501,8 +501,21 @@
      
      */
     for (MGSLanguagePlugin *plugin in [[MGSLanguagePluginController sharedController] instances]) {
-        NSString *process = plugin.taskProcessName;
-        UKCrashReporterCheckForCrash(process, nil);
+        
+        // determine if plugin is a Cocoa lang
+        MGSLanguageProperty *langProp = [[plugin languagePropertyManager] propertyForKey:MGS_LP_IsCocoaBridge] ;
+        BOOL isCocoaLang = [[langProp value] boolValue];
+        
+        // do we want to send Cocoa crash reports
+        BOOL sendCocoaCrashReport = [[NSUserDefaults standardUserDefaults] boolForKey:MGSSendCocoaTaskCRashReports];
+        
+        // Cocoa based languages can be crashed relatively easily causing
+        // crash reports to be returned that relate to problems with the user's task script
+        // rather than with the applciation.
+        if (!isCocoaLang || sendCocoaCrashReport) {
+            NSString *process = plugin.taskProcessName;
+            UKCrashReporterCheckForCrash(process, nil);
+        }
     }
     
 }
@@ -1668,11 +1681,13 @@
 	// see: http://projects.mugginsoft.net/view.php?id=866
 	[appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSUseSeparateNetworkThread];
 	
+    // send crash reports for Cocoa tasks
+    [appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSSendCocoaTaskCRashReports];
+    
 	//
 	// register app defaults
 	//
 	[userDefaults registerDefaults:appDefaults];
-
 
 	//
 	// see MGSFragariaPreferences.h for details
