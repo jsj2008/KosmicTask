@@ -118,16 +118,18 @@
 	 on 10.6 ae.bundle is installed into /library/ruby/site/1.8/universal-darwin10.0
      on 10.6 ae.bundle is installed into /library/ruby/site/1.8/universal-darwin11.0
      
-	 installing ae.bundle into the APPSCRIPT_PATH_10_6 path along with the other
-	 components seems to work: ie lib-osx10.6
+	 we copy these components to make our app-script resource ie lib-osx10.6
 	 _aem
 	 _appscript
-	 ae.bundle
 	 aem.rb
 	 appscript.rp
 	 kae.rb
 	 osax.rb
-	 
+	 universal-darwinxx
+     
+     in order to load the ae.bundle in universal-darwinxx we need to add it to the ruby lib path.
+     subdirectory searching does not seem to be supported.
+     
 	 GEMS
 	 
 	 also using the gem installation (as opposed to a download, build, install)
@@ -139,9 +141,15 @@
 	 when installing the gem it still has to compile ae.bundle
 	 
 	 */
+    NSString *darwinVer = @"universal-darwin11.0";
+    if ([GTMSystemVersion isSnowLeopard]) {
+        darwinVer = @"universal-darwin10.0";
+    }
+    NSString *bundlePath = [[self appscriptPath] stringByAppendingPathComponent:darwinVer];
 	NSMutableDictionary *env = [super launchEnvironment];
 	NSArray *paths = [NSArray arrayWithObjects:
 					  [self appscriptPath],
+                      bundlePath,
 					  [self pathToResource:@"Ruby"],
 					  nil];
 	[self updateEnvironment:env pathkey:ENV_RUBY_LIB paths:paths];
