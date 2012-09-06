@@ -822,7 +822,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 			break;
 			
 		default:
-			NSAssert1(NO, @"invalid host status %@", _hostStatus);
+			NSAssert1(NO, @"invalid host status %u", _hostStatus);
 			break;
 			
 	}
@@ -1150,7 +1150,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 			break;
 			
 		default:
-			NSAssert1(NO, @"invalid host status %@", _hostStatus);
+			NSAssert1(NO, @"invalid host status %u", _hostStatus);
 			break;
 			
 	}
@@ -1193,7 +1193,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 			break;
 			
 		default:
-			NSAssert1(NO, @"invalid host status %@", _hostStatus);
+			NSAssert1(NO, @"invalid host status %u", _hostStatus);
 			break;
 			
 	}
@@ -1292,7 +1292,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 			break;
 			
 		default:
-			NSAssert1(NO, @"invalid host status %@", _hostStatus);
+			NSAssert1(NO, @"invalid host status %u", _hostStatus);
 			return;
 			
 	}
