@@ -1341,7 +1341,7 @@ errorExit:;
 			[results addObject:searchResultDict];
 		}
 	} @catch(NSException *e) {
-		error = [NSString stringWithFormat:@"An exception occurred processing search results", [e reason]];
+		error = [NSString stringWithFormat:@"An exception occurred processing search results: %@", [e reason]];
 	}
 	
 	// return our search result
