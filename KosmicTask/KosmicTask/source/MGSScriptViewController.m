@@ -442,9 +442,10 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
                 // change the font of the attributed string to match
                 // default Fragaria font.
                 // this is required to keep the line numbering metrics right
+#ifdef MGS_CHNAGE_FONT_IN_EDITOR
                 NSFont *font = [NSFont fontWithName:@"Menlo" size:11];
                 [textView changeFont:font];
-                                
+#endif
                 [[textView undoManager] removeAllActions];
             }
 

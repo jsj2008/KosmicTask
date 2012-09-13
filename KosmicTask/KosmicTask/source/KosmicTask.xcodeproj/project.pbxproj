@@ -786,6 +786,7 @@
 		AB9E8FE40DE1CC0B00501378 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AB9E8FE70DE1CC1C00501378 /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
 		AB9E90560DE1D22A00501378 /* Export Plugin RTF.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = AB9E8FD40DE1CA0C00501378 /* Export Plugin RTF.plugin */; };
+		AB9EA8D71602249900FD0726 /* NSMutableAttributedString+Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9EA8D61602249900FD0726 /* NSMutableAttributedString+Mugginsoft.m */; };
 		AB9EE58C0E0407FE004AF953 /* TabClose_Front.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9EE5890E0407FE004AF953 /* TabClose_Front.png */; };
 		AB9EE58D0E0407FE004AF953 /* TabClose_Front_Pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9EE58A0E0407FE004AF953 /* TabClose_Front_Pressed.png */; };
 		AB9EE58E0E0407FE004AF953 /* TabClose_Front_Rollover.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9EE58B0E0407FE004AF953 /* TabClose_Front_Rollover.png */; };
@@ -4265,6 +4266,8 @@
 		AB9E8FB70DE1C91600501378 /* MGSRTFExportPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSRTFExportPlugin.m; sourceTree = "<group>"; };
 		AB9E8FD40DE1CA0C00501378 /* Export Plugin RTF.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Export Plugin RTF.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB9E8FD50DE1CA0C00501378 /* Export Plugin RTF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Export Plugin RTF-Info.plist"; sourceTree = "<group>"; };
+		AB9EA8D51602249900FD0726 /* NSMutableAttributedString+Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+Mugginsoft.h"; sourceTree = "<group>"; };
+		AB9EA8D61602249900FD0726 /* NSMutableAttributedString+Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+Mugginsoft.m"; sourceTree = "<group>"; };
 		AB9EDEA80E1D337500A09057 /* NSDictionary_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionary_Mugginsoft.h; sourceTree = "<group>"; };
 		AB9EDEA90E1D337500A09057 /* NSDictionary_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionary_Mugginsoft.m; sourceTree = "<group>"; };
 		AB9EE5890E0407FE004AF953 /* TabClose_Front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabClose_Front.png; sourceTree = "<group>"; };
@@ -7462,6 +7465,8 @@
 				AB65AC7111CB957E000F5F1B /* NSTreeController-DMExtensions.m */,
 				AB11DBB7159A485700FC81D3 /* NSScrollView+Mugginsoft.h */,
 				AB11DBB8159A485700FC81D3 /* NSScrollView+Mugginsoft.m */,
+				AB9EA8D51602249900FD0726 /* NSMutableAttributedString+Mugginsoft.h */,
+				AB9EA8D61602249900FD0726 /* NSMutableAttributedString+Mugginsoft.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -11957,6 +11962,7 @@
 				AB2BE8551512C20E00A5C847 /* MGSAuthenticateWindowController.m in Sources */,
 				AB375BF615371C4E00C2A050 /* MGSVisibleSegmentedCell.m in Sources */,
 				AB11DBB9159A485700FC81D3 /* NSScrollView+Mugginsoft.m in Sources */,
+				AB9EA8D71602249900FD0726 /* NSMutableAttributedString+Mugginsoft.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

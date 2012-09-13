@@ -28,6 +28,7 @@
 #import "MGSSettingsOutlineViewController.h"
 #import "MGSLanguagePluginController.h"
 #import "MGSEditWindowController.h"
+#import "NSMutableAttributedString+Mugginsoft.h"
 
 #define MIN_TOP_SPLITVIEW_HEIGHT 200
 #define MIN_BOTTOM_SPLITVIEW_HEIGHT 50
@@ -819,7 +820,11 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 			if (rtfSource) {
 			
                 // attributed string source
-				NSAttributedString *attributedSource = [[NSAttributedString alloc] initWithRTF:rtfSource documentAttributes:nil];
+				NSMutableAttributedString *attributedSource = [[NSMutableAttributedString alloc] initWithRTF:rtfSource documentAttributes:nil];
+                
+                // normalise the font name and size
+                NSFont *font = [NSFont fontWithName:@"Menlo" size:11];
+                [attributedSource changeFont:font];
                 
                 // the editor may require the attributed source that results from the build
                 [[[_taskSpec script] scriptCode] setAttributedSourceFromBuild:attributedSource];
