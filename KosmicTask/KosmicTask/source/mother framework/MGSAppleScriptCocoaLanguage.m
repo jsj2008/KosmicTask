@@ -50,7 +50,7 @@
 		self.initScriptTypeFamily = @"AppleScript";
 		self.initTaskRunnerClassName = @"MGSAppleScriptCocoaRunner";
 		self.initTaskProcessName = @"KosmicTaskAppleScriptCocoaRunner";
-		self.initBuildResultFlags = kMGSScriptSource | kMGSCompiledScript;
+		self.initBuildResultFlags = kMGSScriptSourceRTF | kMGSCompiledScript;
 		
 		self.initValidForOSVersion = [self validateOSVersion:10 minor:6 bugFix:0];
 	}

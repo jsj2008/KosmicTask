@@ -115,6 +115,7 @@
 	// get script attributed source
 	NSAttributedString *attributedSource = [script richTextSource];
 
+#define MGS_RETURN_SOURCE_AS_RTF
 #ifdef MGS_RETURN_SOURCE_AS_RTF
 	
 	// get RTF
