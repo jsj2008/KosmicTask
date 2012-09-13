@@ -16,4 +16,5 @@
 - (IBAction)toggleLineWrapping:(id)sender;
 - (IBAction)increaseFontSize:(id)sender;
 - (IBAction)decreaseFontSize:(id)sender;
+- (void)changeFont:(NSFont *)newFont;
 @end

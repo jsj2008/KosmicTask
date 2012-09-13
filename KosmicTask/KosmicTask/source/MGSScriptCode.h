@@ -17,7 +17,10 @@ typedef enum _MGSScriptCodeRepresentation {
 } MGSScriptCodeRepresentation;
 
 @interface MGSScriptCode : MGSDictionary {
+    NSAttributedString *_attributedSourceFromBuild;
 }
+
+@property (assign) NSAttributedString *attributedSourceFromBuild;
 
 - (void)setDict:(NSMutableDictionary *)dict;
 - (void)setRepresentation:(MGSScriptCodeRepresentation)value;

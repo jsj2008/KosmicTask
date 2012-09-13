@@ -11,6 +11,7 @@
 
 @implementation MGSScriptCode
 
+@synthesize attributedSourceFromBuild = _attributedSourceFromBuild;
 /* 
  
  set dictionary
@@ -127,7 +128,27 @@
 	}
 	[self setRtfSource:rtfSource];
 }
-		 
+/*
+ 
+ - setAttributedSourceFromBuild:
+ 
+ */
+- (void)setAttributedSourceFromBuild:(NSAttributedString *)attributedSource
+{
+    // not this is implemented a property.
+    // we don't want to persist this.
+	_attributedSourceFromBuild = attributedSource;
+}
+/*
+ 
+ - attributedSourceFromBuild:
+ 
+ */
+- (NSAttributedString *)attributedSourceFromBuild
+{
+	return _attributedSourceFromBuild;
+}
+
 /*
  
  - compiledData

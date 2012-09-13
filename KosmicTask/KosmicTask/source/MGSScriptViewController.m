@@ -288,15 +288,22 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 		if (!ignoreScriptSourceChange) {
 		
 			NSString *source = [[[_taskSpec script] scriptCode] source];
+            NSAttributedString *sourceFromBuild = [[[_taskSpec script] scriptCode] attributedSourceFromBuild];
+            
 			if (source && [source length] > 0) {
 
-// when using the AppleScriptKit editor we did retrieve and display attributed data
-#ifdef MGS_ASSIGN_ATTRIBUTED_SOURCE
-				[self setAttributedString:[[NSAttributedString alloc] initWithString:source]];
-#else
-				[self setString:source];
-#endif
-				// the source has bee updated so send a text change notification
+                // if the build provided attributed source (as in the case of AppleScript)
+                // thenn use it directly
+                if (sourceFromBuild) {
+                    [self setAttributedString:sourceFromBuild];
+                    
+                    // we can discard the build source
+                    [[[_taskSpec script] scriptCode] setAttributedSourceFromBuild:nil];
+                } else {
+                    [self setString:source];
+                }
+
+				// the source has been updated so send a text change notification
 				[self textDidChange:nil];
 
 			}
@@ -422,9 +429,25 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 		
 		if (_currentTextView == _fragariaTextView) {
 			
-			// regardless of the original source markup we want the
-			// text view to apply its own syntax colouring
-			[self setString:[source string]];
+            if ([_fragaria isSyntaxColoured]) {
+                // regardless of the original source markup we want the
+                // text view to apply its own syntax colouring
+                [self setString:[source string]];
+            } else {
+                
+                // use the attributed string as is.
+                // in the case of AppleScript it will include syntac colouring
+                [[textView textStorage] setAttributedString:source];
+                
+                // change the font of the attributed string to match
+                // default Fragaria font.
+                // this is required to keep the line numbering metrics right
+                NSFont *font = [NSFont fontWithName:@"Menlo" size:11];
+                [textView changeFont:font];
+                                
+                [[textView undoManager] removeAllActions];
+            }
+
 		} else {
 			[[textView textStorage] setAttributedString:source];
 			[[textView undoManager] removeAllActions];
@@ -606,16 +629,15 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 			
 			// select appropriate NSTextView
 #ifdef MGS_USE_OSA_EDITOR
-				MGSLanguagePlugin *languagePlugin = [[_taskSpec script] languagePlugin];
-				if ([languagePlugin isOSALanguage]) {
-					_currentTextView = _osaTextView;
-					displayView = _osaHostView;
-				} else {
-					_currentTextView = _fragariaTextView;
-					displayView = _fragariaHostView;
-					
-				}
-			}
+            MGSLanguagePlugin *languagePlugin = [[_taskSpec script] languagePlugin];
+            if ([languagePlugin isOSALanguage]) {
+                _currentTextView = _osaTextView;
+                displayView = _osaHostView;
+            } else {
+                _currentTextView = _fragariaTextView;
+                displayView = _fragariaHostView;
+            }
+        
 #else
 			_currentTextView = _fragariaTextView;
 			displayView = _fragariaHostView;
@@ -664,6 +686,11 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	if (_currentTextView == _fragariaTextView) {
 		MGSLanguagePlugin *languagePlugin = [[_taskSpec script] languagePlugin];
 		[_fragaria setObject:[languagePlugin syntaxDefinition] forKey:MGSFOSyntaxDefinitionName];
+        
+        // if the language build returns RTF then we don't want Fragaria to
+        // syntax highlight
+        BOOL syntaxColoured = !([languagePlugin buildResultFlags] & kMGSScriptSourceRTF);
+        [_fragaria setSyntaxColoured:syntaxColoured];
 	}
 }
 

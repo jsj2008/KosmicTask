@@ -807,7 +807,9 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 			
 		NSString *stringSource = nil;
 		
+        //
 		// RTF source
+        //
 		if ((buildResultFlags & kMGSScriptSourceRTF)) {
 			
 			// get compiled script RTF source from request dict
@@ -816,7 +818,14 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 			// validate rtfSource if reqd
 			if (rtfSource) {
 			
-				stringSource = [[[NSAttributedString alloc] initWithRTF:rtfSource documentAttributes:nil] string];
+                // attributed string source
+				NSAttributedString *attributedSource = [[NSAttributedString alloc] initWithRTF:rtfSource documentAttributes:nil];
+                
+                // the editor may require the attributed source that results from the build
+                [[[_taskSpec script] scriptCode] setAttributedSourceFromBuild:attributedSource];
+            
+                // string source
+                stringSource = [attributedSource string];
 			
 			} else {
 				
@@ -829,7 +838,9 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 		
 		} 
 		
+        //
 		// string source
+        //
 		if ((buildResultFlags & kMGSScriptSource) && !stringSource) {
 		
 			// get string source from request dict
@@ -1261,6 +1272,9 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	// clear any existing compiled data that exists
 	[[[_taskSpec script] scriptCode] setCompiledData:nil withFormat:nil];
 
+    // clear any attributed source from last build
+    [[[_taskSpec script] scriptCode] setAttributedSourceFromBuild:nil];
+    
 	// if we cannot build then execute
 	if (!self.canBuildScript) {
 		

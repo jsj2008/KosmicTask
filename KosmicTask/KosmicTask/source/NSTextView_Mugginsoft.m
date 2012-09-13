@@ -181,4 +181,36 @@ static char toggleKey;
 	[self didChangeText];
 	
 }
+
+- (void)changeFont:(NSFont *)plainFont
+{
+    NSFont *boldFont = [[NSFontManager sharedFontManager] convertFont:plainFont toHaveTrait:NSBoldFontMask];
+    NSTextStorage * textStorage = [self textStorage];
+    [textStorage beginEditing];
+    [textStorage enumerateAttribute:NSFontAttributeName
+                            inRange:NSMakeRange(0, [textStorage length])
+                            options:0
+                         usingBlock:^(id value,
+                                      NSRange range,
+                                      BOOL * stop)
+        {
+            #pragma unused(stop)
+            #pragma unused(value)
+
+            NSFont *newFont = plainFont;
+            NSFont *font = value;
+            if ([[NSFontManager sharedFontManager] traitsOfFont:font] & NSBoldFontMask) {
+                newFont = boldFont;
+            }
+            [textStorage removeAttribute:NSFontAttributeName
+                        range:range];
+            [textStorage addAttribute:NSFontAttributeName
+                     value:newFont
+                     range:range];
+        }
+    ];
+    [textStorage endEditing];
+    [self didChangeText];
+}
+
 @end

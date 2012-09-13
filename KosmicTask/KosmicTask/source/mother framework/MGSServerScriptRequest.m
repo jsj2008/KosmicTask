@@ -1624,18 +1624,19 @@ errorExit:;
 		goto errorExit;
 	}
 	
-	// return source
-#ifdef MGS_RETURN_SOURCE_AS_RTF
+	// return source.
+    // if language normally returns RTF from a build then do the same here
+    if ([[script languagePlugin] buildResultFlags] & kMGSScriptSourceRTF) {
 	
-	[replyDict setObject:scriptSourceRTF forKey:MGSScriptKeyCompiledScriptSourceRTF];
+        [replyDict setObject:rtfData forKey:MGSScriptKeyCompiledScriptSourceRTF];
 	
-#else
+    } else {
 	
-	NSAttributedString *attributedSource = [[NSAttributedString alloc] initWithRTF:rtfData documentAttributes:nil];
-	NSString *source = [attributedSource string];
-	[replyDict setObject:source forKey:MGSScriptKeyScriptSource];
+        NSAttributedString *attributedSource = [[NSAttributedString alloc] initWithRTF:rtfData documentAttributes:nil];
+        NSString *source = [attributedSource string];
+        [replyDict setObject:source forKey:MGSScriptKeyScriptSource];
 	
-#endif
+    }
 	
 	[[netRequest responseMessage] setMessageObject:replyDict forKey:MGSScriptKeyKosmicTask];
 	[self sendValidRequestReply:netRequest];	
