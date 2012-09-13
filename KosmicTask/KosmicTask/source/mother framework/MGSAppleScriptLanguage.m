@@ -47,7 +47,7 @@
 		self.initScriptType = @"AppleScript";
 		self.initTaskRunnerClassName = @"MGSAppleScriptRunner";
 		self.initTaskProcessName = @"KosmicTaskAppleScriptRunner";
-		self.initBuildResultFlags = kMGSScriptSource | kMGSCompiledScript;
+		self.initBuildResultFlags = kMGSScriptSourceRTF | kMGSCompiledScript;
 	}
 	
 	return self;

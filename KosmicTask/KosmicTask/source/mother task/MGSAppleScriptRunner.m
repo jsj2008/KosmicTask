@@ -417,7 +417,8 @@ OSErr MGSCustomSendProc( const AppleEvent *anAppleEvent, AppleEvent *aReply, AES
 			// get script source.
 			// compilation may have changed the source representation.
 			NSAttributedString *attributedSource = (NSAttributedString *)[appleScriptObject attributedSource];
-			
+
+#define MGS_RETURN_SOURCE_AS_RTF
 #ifdef MGS_RETURN_SOURCE_AS_RTF
 			
 			NSRange range = NSMakeRange(0, [attributedSource length]);
