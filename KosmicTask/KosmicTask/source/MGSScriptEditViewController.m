@@ -822,9 +822,10 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
                 // attributed string source
 				NSMutableAttributedString *attributedSource = [[NSMutableAttributedString alloc] initWithRTF:rtfSource documentAttributes:nil];
                 
-                // normalise the font name and size
-                NSFont *font = [NSFont fontWithName:@"Menlo" size:11];
-                [attributedSource changeFont:font];
+                // normalise the font name and size.
+                // the string returned by the build may be formatted in a different
+                // font to the one required by the editor.
+                [scriptViewController applyDefaultFormatting:attributedSource];
                 
                 // the editor may require the attributed source that results from the build
                 [[[_taskSpec script] scriptCode] setAttributedSourceFromBuild:attributedSource];

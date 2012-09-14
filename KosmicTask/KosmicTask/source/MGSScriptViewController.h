@@ -76,5 +76,6 @@
 - (void)shiftLeftAction:(id)sender;
 - (NSUndoManager *)undoManager;
 - (void)textDidEndEditing:(NSNotification *)aNotification;
+- (void)applyDefaultFormatting:(NSMutableAttributedString *)attributedString;
 
 @end

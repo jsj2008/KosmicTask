@@ -1684,6 +1684,9 @@
     // send crash reports for Cocoa tasks
     [appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSSendCocoaTaskCRashReports];
     
+    // Fragaria
+    [appDefaults setObject:[NSArchiver archivedDataWithRootObject:[NSFont fontWithName:@"Menlo" size:11]] forKey:MGSFragariaPrefsTextFont];
+
 	//
 	// register app defaults
 	//
@@ -1692,9 +1695,9 @@
 	//
 	// see MGSFragariaPreferences.h for details
 	//
-	[userDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSPrefsAutocompleteSuggestAutomatically];	
-	[userDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSPrefsLineWrapNewDocuments];	
-
+	[userDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSFragariaPrefsAutocompleteSuggestAutomatically];
+	[userDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSFragariaPrefsLineWrapNewDocuments];
+    
 	// the app defaults will not be visible to server so 
 	// register these through MGSPreferences.
 	// unlike NSUserDefaults these defaults will be actually written out

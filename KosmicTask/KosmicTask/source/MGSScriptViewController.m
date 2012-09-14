@@ -398,7 +398,6 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 {
 	
 	_requestID = NO_REQUEST_OUTSTANDING;
-	NSAttributedString *source = nil;
 	
 	if (sourceScript && [sourceScript length] == 0) {
 		sourceScript = nil;
@@ -410,8 +409,8 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	}
 
 	// get source string from data
-	source = [[NSAttributedString alloc] initWithRTF:sourceScript documentAttributes:nil];
-	
+	NSMutableAttributedString *source = [[NSMutableAttributedString alloc] initWithRTF:sourceScript documentAttributes:nil];
+	[self applyDefaultFormatting:source];
 	[self setAttributedString:source];
 	
 	return YES;
@@ -427,6 +426,11 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	NSTextView *textView = _currentTextView;
 	if (source != nil) {
 		
+        BOOL undo = NO;
+        if (_stringHasBeenSet) {
+            undo = YES;
+        }
+        
 		if (_currentTextView == _fragariaTextView) {
 			
             if ([_fragaria isSyntaxColoured]) {
@@ -437,12 +441,14 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
                 
                 // use the attributed string as is.
                 // in the case of AppleScript it will include syntac colouring
-                [[textView textStorage] setAttributedString:source];
+                [_fragaria setAttributedString:source options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                   [NSNumber numberWithBool:undo], @"undo",
+                                                   nil]];
                 
+#ifdef MGS_CHANGE_FONT_IN_EDITOR
                 // change the font of the attributed string to match
                 // default Fragaria font.
                 // this is required to keep the line numbering metrics right
-#ifdef MGS_CHNAGE_FONT_IN_EDITOR
                 NSFont *font = [NSFont fontWithName:@"Menlo" size:11];
                 [textView changeFont:font];
 #endif
@@ -453,6 +459,8 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 			[[textView textStorage] setAttributedString:source];
 			[[textView undoManager] removeAllActions];
 		}
+            
+        _stringHasBeenSet = YES;
 	}	
 }
 
@@ -502,9 +510,20 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
  */
 - (NSAttributedString *)scriptAttributedSource
 {
-	// get attributed string
-	NSAttributedString *scriptSource = [_fragaria attributedStringWithTemporaryAttributesApplied];
-
+	// get attributed string.
+    // if document is syntax coloured then we need to preserve the
+    // document temporary attributes
+	NSAttributedString *scriptSource = nil;;
+    if ([_fragaria isSyntaxColoured]) {
+        scriptSource = [_fragaria attributedStringWithTemporaryAttributesApplied];
+    } else {
+        
+        // if the editor is not syntax colouring then the source
+        // may have been coloured during the build, in which
+        // case we simply want the attributed string as is
+        scriptSource = [_fragaria attributedString];
+    }
+    
 	if (NO) {
 		NSLog(@"Att enum start");
 		[scriptSource enumerateAttributesInRange: NSMakeRange(0, [scriptSource length])
@@ -552,6 +571,30 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 {
 #pragma unused(sender)
 	[[_fragaria textMenuController] shiftLeftAction:self];
+}
+
+#pragma mark -
+#pragma mark Font handling
+
+/*
+ 
+ - applyDefaultFormatting:
+ 
+ */
+- (void)applyDefaultFormatting:(NSMutableAttributedString *)attributedString
+{
+    // normalise the font name and size
+    //NSFont *font = [NSFont fontWithName:@"Menlo" size:11];
+    
+    // Fragaria uses NSUserDefaultsController and passes in initial values.
+    // These initial values are not available to NSUserDefaults so they
+    // have to be initialised first.
+    //id values = [[NSUserDefaultsController sharedUserDefaultsController] values];
+    //NSFont *font = [NSUnarchiver unarchiveObjectWithData:[values valueForKey:MGSFragariaPrefsTextFont]];
+
+    NSData *fontData = [[NSUserDefaults standardUserDefaults] objectForKey:MGSFragariaPrefsTextFont];
+    NSFont *font = [NSUnarchiver unarchiveObjectWithData:fontData];
+    [attributedString changeFont:font];
 }
 #pragma mark -
 #pragma mark Edit behaviour

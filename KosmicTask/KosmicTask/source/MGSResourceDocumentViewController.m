@@ -57,10 +57,10 @@ const char MGSContextResourceDocFileType;
 	[fragaria setObject:@"html" forKey:MGSFOSyntaxDefinitionName];
 	
 	// embed in our host view
-	BOOL lineWrapPref = [[NSUserDefaults standardUserDefaults] boolForKey:MGSPrefsLineWrapNewDocuments];
-	[[NSUserDefaults standardUserDefaults] setBool:YES forKey:MGSPrefsLineWrapNewDocuments];
+	BOOL lineWrapPref = [[NSUserDefaults standardUserDefaults] boolForKey:MGSFragariaPrefsLineWrapNewDocuments];
+	[[NSUserDefaults standardUserDefaults] setBool:YES forKey:MGSFragariaPrefsLineWrapNewDocuments];
 	[fragaria embedInView:editorHostView];
-	[[NSUserDefaults standardUserDefaults] setBool:lineWrapPref forKey:MGSPrefsLineWrapNewDocuments];
+	[[NSUserDefaults standardUserDefaults] setBool:lineWrapPref forKey:MGSFragariaPrefsLineWrapNewDocuments];
 	
 	// bind it
 	NSTextView *editorTextView = [fragaria objectForKey:ro_MGSFOTextView];
