@@ -72,45 +72,53 @@ static char toggleKey;
     // get control properties
 	NSScrollView *textScrollView = [self enclosingScrollView];
 	NSTextContainer *textContainer = [self textContainer];
-
+    
     // content view is clipview
-	NSSize contentSize = [textScrollView contentSize];  
+	NSSize contentSize = [textScrollView contentSize];
     
-    // define wrap properties
-    BOOL hasHorizontalScroller = YES;
-    NSSize containerSize = NSMakeSize(contentSize.width, CGFLOAT_MAX);
-    BOOL widthTracksTextView = YES;
-	NSSize maxSize =  containerSize; // NSMakeSize([self frame].size.width, CGFLOAT_MAX);
-	NSSize minSize =  containerSize;
-    BOOL horizontallyResizable = NO;
+    if (wrap) {
+        
+        // setup text container
+        [textContainer setContainerSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
+        [textContainer setWidthTracksTextView:YES];
+        [textContainer setHeightTracksTextView:NO];
+        
+        // setup text view
+        [self setFrameSize:contentSize];
+        [self setHorizontallyResizable: NO];
+        [self setVerticallyResizable: YES];
+        [self setMinSize:NSMakeSize(10, contentSize.height)];
+        [self setMaxSize:NSMakeSize(10, CGFLOAT_MAX)];
+        
+        // setup scroll view
+        [textScrollView setHasHorizontalScroller:NO];
+        [textScrollView setHasVerticalScroller:YES];
+    } else {
+        
+        // setup text container
+        [textContainer setContainerSize:NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX)];
+        [textContainer setWidthTracksTextView:NO];
+        [textContainer setHeightTracksTextView:NO];
+        
+        // setup text view
+        [self setFrameSize:contentSize];
+        [self setHorizontallyResizable: YES];
+        [self setVerticallyResizable: YES];
+        [self setMinSize:contentSize];
+        [self setMaxSize:NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX)];
+        
+        // setup scroll view
+        [textScrollView setHasHorizontalScroller:YES];
+        [textScrollView setHasVerticalScroller:YES];
+    }
     
-    // define non wrap properties
-	if (!wrap) {
-        containerSize = NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX);
-        widthTracksTextView = NO;
-        maxSize =  containerSize;
-        minSize = contentSize;
-        horizontallyResizable = YES;
-	}
-
-#ifdef MGS_DEBUG_TEXT_VIEW
     
-    NSLog(@"Container size: %@", NSStringFromSize(containerSize));
-    NSLog(@"Max size: %@", NSStringFromSize(maxSize));
-    NSLog(@"Min size: %@", NSStringFromSize(minSize));
-
-#endif
-    
-    // assign wrap properties
-    [self setMinSize:contentSize];
-    [textScrollView setHasHorizontalScroller:hasHorizontalScroller];
-    [textContainer setContainerSize:containerSize];
-    [textContainer setWidthTracksTextView:widthTracksTextView];
-    [self setMaxSize:maxSize];
-    [self setHorizontallyResizable: horizontallyResizable];
-
     // invalidate the glyph layout
 	[[self layoutManager] textContainerChangedGeometry:textContainer];
+    
+    // redraw the display and reposition scrollers
+    [textScrollView display];
+    [textScrollView reflectScrolledClipView:textScrollView.contentView];
 	
 	// associate toggle status - saves having to subclass
 	[self mgs_associateValue:[NSNumber numberWithBool:wrap] withKey:&toggleKey];
