@@ -10,11 +10,11 @@
 
 
 @interface NSTextView (Mugginsoft)
-- (void)addStringAndScrollToVisible:(NSString *)string;
-- (void)addString:(NSString *)string;
-- (void)setLineWrap:(BOOL)wrap;
-- (IBAction)toggleLineWrapping:(id)sender;
-- (IBAction)increaseFontSize:(id)sender;
-- (IBAction)decreaseFontSize:(id)sender;
+- (void)mgs_addStringAndScrollToVisible:(NSString *)string;
+- (void)mgs_addString:(NSString *)string;
+- (void)mgs_setLineWrap:(BOOL)wrap;
+- (IBAction)mgs_toggleLineWrapping:(id)sender;
+- (IBAction)mgs_increaseFontSize:(id)sender;
+- (IBAction)mgs_decreaseFontSize:(id)sender;
 - (void)changeFont:(NSFont *)newFont;
 @end

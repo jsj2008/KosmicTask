@@ -40,7 +40,7 @@
 	[[self window] setDelegate:self];
 	[[self window] setExcludedFromWindowsMenu:YES];	// don't want this in the menu
 	
-	[textView setLineWrap:NO];
+	[textView mgs_setLineWrap:NO];
 	[[textView layoutManager] setBackgroundLayoutEnabled:YES];
 	[[textView layoutManager] setAllowsNonContiguousLayout:YES];
 	
@@ -168,10 +168,10 @@
 	if (logChanges) {
 		float scrollerValue = [textViewScroller floatValue];
 		if ((NSInteger)scrollerValue == 1) {
-			[textView addStringAndScrollToVisible:logChanges];
+			[textView mgs_addStringAndScrollToVisible:logChanges];
 			[textViewScroller setFloatValue:1.0f];	// force to 1.0 otherwise it can fall to 0.99xx which spoils operation
 		} else {
-			[textView addString:logChanges];
+			[textView mgs_addString:logChanges];
 		}
 	}
 

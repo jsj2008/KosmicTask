@@ -537,6 +537,8 @@
 		AB6C37C60D7C157B00B9B34E /* MGSActionParameterEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6C37C50D7C157B00B9B34E /* MGSActionParameterEditViewController.m */; };
 		AB6C38990D7C2FFE00B9B34E /* MGSScriptEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6C38980D7C2FFE00B9B34E /* MGSScriptEditViewController.m */; };
 		AB6C389F0D7C30E500B9B34E /* ScriptEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6C389D0D7C30E500B9B34E /* ScriptEditView.xib */; };
+		AB6C87651610EB4600488AF2 /* PencilAndPaper.icns in Resources */ = {isa = PBXBuildFile; fileRef = AB8C0BB50D5719FF00904607 /* PencilAndPaper.icns */; };
+		AB6C87671610ED3900488AF2 /* FontsAndColours.icns in Resources */ = {isa = PBXBuildFile; fileRef = AB6C87661610ED1E00488AF2 /* FontsAndColours.icns */; };
 		AB6C96390E485D45005AE567 /* AsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AB6C96350E485D45005AE567 /* AsyncSocket.h */; };
 		AB6C963A0E485D45005AE567 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6C96360E485D45005AE567 /* AsyncSocket.m */; };
 		AB6C963E0E485D6B005AE567 /* MGSAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AB6C963C0E485D6B005AE567 /* MGSAsyncSocket.h */; };
@@ -2449,6 +2451,13 @@
 			remoteGlobalIDString = AB9E8FD30DE1CA0C00501378;
 			remoteInfo = "Export Plugin RTF";
 		};
+		ABA1C0EE161442A200C8723F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ABCA4DAF16137FC000E4849B;
+			remoteInfo = Fragaria;
+		};
 		ABA1EFA6120D78250079E65B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3967,6 +3976,7 @@
 		AB6C38970D7C2FFE00B9B34E /* MGSScriptEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptEditViewController.h; sourceTree = "<group>"; };
 		AB6C38980D7C2FFE00B9B34E /* MGSScriptEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSScriptEditViewController.m; sourceTree = "<group>"; };
 		AB6C389E0D7C30E500B9B34E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ScriptEditView.xib; sourceTree = "<group>"; };
+		AB6C87661610ED1E00488AF2 /* FontsAndColours.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = FontsAndColours.icns; sourceTree = "<group>"; };
 		AB6C96340E485D45005AE567 /* AsyncSocket Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "AsyncSocket Documentation.html"; sourceTree = "<group>"; };
 		AB6C96350E485D45005AE567 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		AB6C96360E485D45005AE567 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
@@ -4924,7 +4934,6 @@
 		ABF0D012120C227F006ABDB2 /* TWAIN.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TWAIN.framework; path = /System/Library/Frameworks/TWAIN.framework; sourceTree = "<absolute>"; };
 		ABF0D014120C227F006ABDB2 /* vecLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vecLib.framework; path = /System/Library/Frameworks/vecLib.framework; sourceTree = "<absolute>"; };
 		ABF0D016120C227F006ABDB2 /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = /System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = "<absolute>"; };
-		ABF0D019120C227F006ABDB2 /* XgridFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XgridFoundation.framework; path = /System/Library/Frameworks/XgridFoundation.framework; sourceTree = "<absolute>"; };
 		ABF0D1C8120C6A19006ABDB2 /* MGSFScriptManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFScriptManager.h; sourceTree = "<group>"; };
 		ABF0D1C9120C6A19006ABDB2 /* MGSFScriptManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFScriptManager.m; sourceTree = "<group>"; };
 		ABF0D2E4120CB32C006ABDB2 /* jsl */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = jsl; path = "../../JavaScript/jsl-0.3.0-mac/jsl"; sourceTree = SOURCE_ROOT; };
@@ -5899,6 +5908,7 @@
 		09976D430CDCA25000E78D55 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AB6C87661610ED1E00488AF2 /* FontsAndColours.icns */,
 				ABA98D300EE19BFD00794818 /* ActionTaskTemplate.tif */,
 				AB6AE4170E5E0AD100B88D0E /* AddDocument24.png */,
 				09976D460CDCA39600E78D55 /* Advanced.png */,
@@ -6340,7 +6350,6 @@
 				ABF0D012120C227F006ABDB2 /* TWAIN.framework */,
 				ABF0D014120C227F006ABDB2 /* vecLib.framework */,
 				ABF0D016120C227F006ABDB2 /* VideoDecodeAcceleration.framework */,
-				ABF0D019120C227F006ABDB2 /* XgridFoundation.framework */,
 				AB3167A4128D42280037EF1C /* SenTestingKit.framework */,
 			);
 			name = mother;
@@ -6949,7 +6958,8 @@
 			isa = PBXGroup;
 			children = (
 				AB3F662D130C845F00342F11 /* Fragaria Document Based App.app */,
-				AB3F662F130C845F00342F11 /* Fragaria.app */,
+				AB3F662F130C845F00342F11 /* Fragaria GC.app */,
+				ABA1C0EF161442A200C8723F /* Fragaria.app */,
 				AB3F6631130C845F00342F11 /* MGSFragaria.framework */,
 			);
 			name = Products;
@@ -10641,14 +10651,14 @@
 		AB3F662D130C845F00342F11 /* Fragaria Document Based App.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = "Fragaria Document Based App.app";
+			path = "Fragaria Doc.app";
 			remoteRef = AB3F662C130C845F00342F11 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AB3F662F130C845F00342F11 /* Fragaria.app */ = {
+		AB3F662F130C845F00342F11 /* Fragaria GC.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = Fragaria.app;
+			path = "Fragaria GC.app";
 			remoteRef = AB3F662E130C845F00342F11 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -10797,6 +10807,13 @@
 			fileType = wrapper.cfbundle;
 			path = KosmicTask.qlgenerator;
 			remoteRef = AB92318C11A695E70093EDE3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABA1C0EF161442A200C8723F /* Fragaria.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Fragaria.app;
+			remoteRef = ABA1C0EE161442A200C8723F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ABADD7EE13E5BD040033E038 /* FeedbackReporter.framework */ = {
@@ -11110,6 +11127,8 @@
 				ABE6B6871327A3EC0041CBFE /* KosmicTask EULA.pdf in Resources */,
 				ABE6B6891327A3EC0041CBFE /* release-notes.txt in Resources */,
 				AB2BE8561512C2D100A5C847 /* AuthenticateWindow.xib in Resources */,
+				AB6C87651610EB4600488AF2 /* PencilAndPaper.icns in Resources */,
+				AB6C87671610ED3900488AF2 /* FontsAndColours.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

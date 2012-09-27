@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "DBPrefsWindowController.h"
 #import "MGSNetRequest.h"
+#import <MGSFragaria/MGSFragaria.h>
 
 extern NSString * MGSDefaultStartAtLogin;
 
@@ -20,10 +21,15 @@ extern NSString * MGSDefaultStartAtLogin;
 	IBOutlet NSView *securityPrefsView;
 	IBOutlet NSView *tabsPrefsView;
 	IBOutlet NSView *internetPrefsView;
+    IBOutlet NSView *textEditingPrefsView;
+    IBOutlet NSView *fontsAndColoursPrefsView;
 	IBOutlet NSMatrix *userNameDisclosureRadioButtons;
 	IBOutlet NSObjectController *internetSharingObjectController;
 	IBOutlet NSTextField *externalPort;
-	
+    
+    MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewController;
+    MGSFragariaTextEditingPrefsViewController *textEditingPrefsViewController;
+    
 	MGSDebugController *debugController;
 	
 	IBOutlet NSButton *useSSLCheckbox;
@@ -42,4 +48,5 @@ extern NSString * MGSDefaultStartAtLogin;
 - (void)retrieveServerPreferences;
 - (void)showInternetPreferences;
 - (IBAction)showSSLCertficate:(id)sender;
+- (IBAction)revertToStandardSettings:(id)sender;
 @end

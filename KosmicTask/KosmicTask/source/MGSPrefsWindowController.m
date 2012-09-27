@@ -41,9 +41,16 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	_internetTabIdentifier = NSLocalizedString(@"Internet", @"Preferences tab name");
 	
 	[self addView:generalPrefsView label:NSLocalizedString(@"General", @"Preferences tab name")];
-	[self addView:tabsPrefsView label:NSLocalizedString(@"Tabs", @"Preferences tab name") image:[NSImage imageNamed: @"TabsPreference"]];
-	[self addView:securityPrefsView label:NSLocalizedString(@"Security", @"Preferences tab name") image:[[[MGSImageManager sharedManager] locked] copy]];
-	[self addView:internetPrefsView label:_internetTabIdentifier image:[NSImage imageNamed: @"NSNetwork"]];
+	
+    [self addView:tabsPrefsView label:NSLocalizedString(@"Tabs", @"Preferences tab name") image:[NSImage imageNamed: @"TabsPreference"]];
+	
+    [self addView:textEditingPrefsView label:NSLocalizedString(@"Text Editing", @"Text editing tab name") image:[NSImage imageNamed: @"PencilAndPaper.icns"]];
+	
+    [self addView:fontsAndColoursPrefsView label:NSLocalizedString(@"Fonts & Colours", @"Fonts & colours tab name") image:[NSImage imageNamed: @"FontsAndColours.icns"]];
+    
+    [self addView:securityPrefsView label:NSLocalizedString(@"Security", @"Preferences tab name") image:[[[MGSImageManager sharedManager] locked] copy]];
+	
+    [self addView:internetPrefsView label:_internetTabIdentifier image:[NSImage imageNamed: @"NSNetwork"]];
 }
 
 /*
@@ -98,6 +105,14 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
  */
 - (IBAction)showWindow:(id)sender
 {
+    // load view controllers
+    textEditingPrefsViewController = [MGSFragariaPreferences sharedInstance].textEditingPrefsViewController;
+    
+    fontsAndColoursPrefsViewController = [MGSFragariaPreferences sharedInstance].fontsAndColoursPrefsViewController;
+    
+    textEditingPrefsView = textEditingPrefsViewController.view;
+    fontsAndColoursPrefsView = fontsAndColoursPrefsViewController.view;
+    
 	[super showWindow:sender];
 	
 	// precautionary sync
@@ -396,5 +411,28 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	#pragma unused(sender)
 	
 	[MGSSecurity showCertificate];
+}
+
+/*
+ 
+ - changeFont:
+ 
+ */
+- (void)changeFont:(id)sender
+{
+    /* NSFontManager will send this method up the responder chain */
+    [fontsAndColoursPrefsViewController changeFont:sender];
+}
+
+/*
+ 
+ - revertToStandardSettings:
+ 
+ */
+- (IBAction)revertToStandardSettings:(id)sender
+{
+#pragma unused(sender)
+    
+	[[NSUserDefaultsController sharedUserDefaultsController] revertToInitialValues:nil];
 }
 @end

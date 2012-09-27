@@ -13,7 +13,12 @@ static char toggleKey;
 
 @implementation NSTextView (Mugginsoft)
 
-- (void)addStringAndScrollToVisible:(NSString *)string
+/*
+ 
+ - mgs_addStringAndScrollToVisible:
+ 
+ */
+- (void)mgs_addStringAndScrollToVisible:(NSString *)string
 {
 	NSRange endRange;
 
@@ -33,7 +38,12 @@ static char toggleKey;
 	}
 }
 
-- (void)addString:(NSString *)string
+/*
+ 
+ - mgs_addString:
+ 
+ */
+- (void)mgs_addString:(NSString *)string
 {
 	NSRange endRange;
 
@@ -52,10 +62,12 @@ static char toggleKey;
 
 /*
  
+ - mgs_setLineWrap:
+ 
  see /developer/examples/appkit/TextSizingExample
  
  */
-- (void)setLineWrap:(BOOL)wrap
+- (void)mgs_setLineWrap:(BOOL)wrap
 {
     // get control properties
 	NSScrollView *textScrollView = [self enclosingScrollView];
@@ -106,26 +118,26 @@ static char toggleKey;
 
 /*
  
- - toggleLineWrapping
+ - mgs_toggleLineWrapping
  
  */
-- (IBAction)toggleLineWrapping:(id)sender
+- (IBAction)mgs_toggleLineWrapping:(id)sender
 {
 #pragma unused(sender)
 	NSNumber *wrap = [self mgs_associatedValueForKey:&toggleKey];
 	if (wrap) {
-		[self setLineWrap:![wrap boolValue]];
+		[self mgs_setLineWrap:![wrap boolValue]];
 	}
 }
 
 /*
  
- - increaseFontSize:
+ - mgs_increaseFontSize:
  
  see http://stackoverflow.com/questions/2245308/how-to-change-only-font-size-for-the-whole-styled-text-in-nstextview
  
  */
-- (IBAction)increaseFontSize:(id)sender
+- (IBAction)mgs_increaseFontSize:(id)sender
 {
 #pragma unused(sender)
 	NSTextStorage *textStorage = [self textStorage];
@@ -151,10 +163,10 @@ static char toggleKey;
 
 /*
  
- - decreaseFontSize:
+ - mgs_decreaseFontSize:
  
  */
-- (IBAction)decreaseFontSize:(id)sender
+- (IBAction)mgs_decreaseFontSize:(id)sender
 {
 	#pragma unused(sender)
 	

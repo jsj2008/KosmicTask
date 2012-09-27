@@ -123,7 +123,7 @@ static BOOL applicationMenuConfigured = NO;
 	// note that we enable editing even though we don't store the edits back into the result.
 	//
     //=======================================================================================
-	[_textView setLineWrap:YES];
+	[_textView mgs_setLineWrap:YES];
 	// glyph generation crash was occurring when 2MB text loaded into two textviews in
 	// two separate windows.
 	// crash was occurring during background layout.
@@ -142,7 +142,7 @@ static BOOL applicationMenuConfigured = NO;
     // bind logtext view to result log string
     //
     //=======================================================================================
-    [_logTextView setLineWrap:YES];
+    [_logTextView mgs_setLineWrap:YES];
 	[[_logTextView layoutManager] setBackgroundLayoutEnabled:YES];
 	[[_logTextView layoutManager] setAllowsNonContiguousLayout:YES];
 	
@@ -376,8 +376,8 @@ static BOOL applicationMenuConfigured = NO;
 {
 #pragma unused(sender)
 	NSResponder *responder = [[[self view] window] firstResponder];
-	if ([responder respondsToSelector:@selector(toggleLineWrapping:)]) {
-		[(NSTextView *)responder toggleLineWrapping:sender];		
+	if ([responder respondsToSelector:@selector(mgs_toggleLineWrapping:)]) {
+		[(NSTextView *)responder mgs_toggleLineWrapping:sender];		
 	}
 }
 
