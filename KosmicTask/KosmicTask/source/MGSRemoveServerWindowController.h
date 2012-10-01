@@ -11,7 +11,7 @@
 
 @interface MGSRemoveServerWindowController : NSWindowController {
 	IBOutlet NSArrayController *arrayController;
-	IBOutlet NSSegmentedControl *removeSegment;
+	IBOutlet NSButton *disconnectButton;
 	
 	id _delegate;
 }

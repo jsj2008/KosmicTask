@@ -11,8 +11,6 @@
 #import "MGSNetClient.h"
 
 
-#define MGSRemoveSegment 0
-
 @implementation MGSRemoveServerWindowController
 @synthesize delegate = _delegate;
 
@@ -64,7 +62,7 @@
 		} else {
 			enableRemove = NO;
 		}
-		[removeSegment setEnabled:enableRemove forSegment:MGSRemoveSegment];
+		[disconnectButton setEnabled:enableRemove];
 	}
 	
 }
