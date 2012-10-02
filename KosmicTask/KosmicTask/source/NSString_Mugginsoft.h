@@ -23,6 +23,8 @@
 - (BOOL)mgs_isUUID;
 - (NSString *)mgs_StringByReplacingCharactersInSet:(NSCharacterSet *) set withString:(NSString *) string;
 - (NSString *)mgs_stringByRemovingNewLinesAndTabs;
+- (BOOL)mgs_isURL;
+- (BOOL)mgs_isURLorIP;
 @end
 
 @interface NSMutableString (Mugginsoft)

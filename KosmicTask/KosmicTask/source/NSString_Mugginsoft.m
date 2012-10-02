@@ -208,6 +208,35 @@
 
 /*
  
+ - mgs_isURL
+ 
+ */
+- (BOOL)mgs_isURL
+{
+    // http://stackoverflow.com/questions/8249420/alter-regex-to-allow-ip-address-when-checking-url
+	NSString *regex = @"/^(http(s?):\\/\\/)?(www\\.)?+[a-zA-Z0-9\\.\\-\\_]+(\\.[a-zA-Z]{2,20})+(\\/[a-zA-Z0-9\\_\\-\\s\\.\\/\\?\\%\\#\\&\\=]*)?$/i";
+	
+	// supported non standard regex format is at http://www.icu-project.org/userguide/regexp.html
+	NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+	return [regextest evaluateWithObject:self];
+}
+
+/*
+ 
+ - mgs_isURLorIP
+ 
+ */
+- (BOOL)mgs_isURLorIP
+{
+    // http://stackoverflow.com/questions/8249420/alter-regex-to-allow-ip-address-when-checking-url
+	NSString *regex = @"^(http(s?):\\/\\/)?(((www\\.)?+[a-zA-Z0-9\\.\\-\\_]+(\\.[a-zA-Z]{2,20})+)|(\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b))(\\/[a-zA-Z0-9\\_\\-\\s\\.\\/\\?\\%\\#\\&\\=]*)?$";
+	
+	// supported non standard regex format is at http://www.icu-project.org/userguide/regexp.html
+	NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+	return [regextest evaluateWithObject:self];
+}
+/*
+ 
  string by replacing characters in set
  
  the following exception was occurring when displaying app dictionaries.

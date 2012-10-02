@@ -90,8 +90,18 @@ const char MGSContextFavoritesSelectionIndex;
  */
 - (void)setAddress:(NSString *)value
 {
-    
     _address = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [self validateConnectionValues];
+}
+
+/*
+ 
+ - setPortNnumber:
+ 
+ */
+- (void)setPortNnumber:(NSInteger)value
+{
+    _portNumber = value;
     [self validateConnectionValues];
 }
 
@@ -107,7 +117,12 @@ const char MGSContextFavoritesSelectionIndex;
     if ([self.address length] == 0) {
         valid = NO;
     }
-    
+    if (![self.address mgs_isURLorIP]) {
+        valid = NO;
+    }
+    if (self.portNumber <= 1024 || self.portNumber > 65535) {
+        valid = NO;
+    }
     self.connectionIsValid = valid;
 }
 
@@ -215,13 +230,9 @@ const char MGSContextFavoritesSelectionIndex;
 	
 	[self commitEditing];
 	
-	if (!_address || [_address length] == 0) {
-		return;
-	}
-    
-	if (!_displayName || [_displayName length] == 0) {
-		_displayName = [_address copy];
-	}
+    if (![self connectionIsValid]) {
+        return;
+    }
 	
 	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:_address, MGSNetClientKeyAddress,
 						  [NSNumber numberWithInteger:_portNumber], MGSNetClientKeyPortNumber,
