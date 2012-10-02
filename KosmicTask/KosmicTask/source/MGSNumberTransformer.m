@@ -18,11 +18,11 @@
 
 + (BOOL)allowsReverseTransformation 
 { 
-	return NO; 
+	return YES;
 }
 
 - (id)transformedValue:(id)value {
-	return [NSString stringWithFormat:@"%@", value];
+	return [NSString stringWithFormat:@"%@", value];   // no formatting required
 }
 
 @end

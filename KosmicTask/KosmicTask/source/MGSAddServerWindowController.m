@@ -13,6 +13,7 @@
 #import "MGSClientRequestManager.h"
 #import "NSWindowController_Mugginsoft.h"
 #import "MGSNetRequestPayload.h"
+#import "NSString_Mugginsoft.h"
 
 NSString *MGSDefaultFavoriteConnections = @"MGSFavoriteConnections";
 
@@ -21,8 +22,8 @@ const char MGSContextFavoritesSelectionIndex;
 
 // class interface extension
 @interface MGSAddServerWindowController()
-- (NSDictionary *)favoriteItem;
-- (void)updateSelectedObject;
+- (NSMutableDictionary *)connection;
+- (void) validateConnectionValues;
 @end
 
 @implementation MGSAddServerWindowController
@@ -33,7 +34,7 @@ const char MGSContextFavoritesSelectionIndex;
 @synthesize portNumber = _portNumber;
 @synthesize delegate = _delegate;
 @synthesize secureConnection = _secureConnection;
-
+@synthesize connectionIsValid = _connectionIsValid;
 /*
  
  init
@@ -42,11 +43,11 @@ const char MGSContextFavoritesSelectionIndex;
 - (id)init
 {
 	self = [super initWithWindowNibName:@"ConnectToServer"];
-	//_tableRowSelected = NO;
-	_delegate = nil;
-	_netClient = nil;
-	_mutatingSelectedObjects = NO;
-	
+
+    if (self) {
+        
+    }
+    
 	return self;
 }
 
@@ -57,22 +58,69 @@ const char MGSContextFavoritesSelectionIndex;
  */
 - (void)windowDidLoad
 {
-	//[self setRemoveSegmentEnabledState];
-	
-	// something wrong here - perhaps fact that addressTextFieldis already bound to
-	//[addressTextField addObserver:self forKeyPath:@"stringValue" options:NSKeyValueObservingOptionNew context:nil];
-	//[displayNameTextField addObserver:self forKeyPath:@"stringValue" options:NSKeyValueObservingOptionNew context:nil];
-	//[reconnectCheckBox addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionNew context:nil];
-	
+    // get default connections. an array of immutable dictionaries
+    NSArray *defConnections = (id)[[NSUserDefaults standardUserDefaults] objectForKey:@"MGSFavoriteConnections"];
+    
+    // make a mutable array of mutable dictionaries
+    _connections = [NSMutableArray arrayWithCapacity:10];
+    
+    // array controller content is the connections array
+    arrayController.content = _connections;
+    
+    // we need an array of mutable dict so that bindings can update it in the table view
+    for (NSDictionary *defConnection in defConnections) {
+        NSMutableDictionary *connection = [[NSMutableDictionary alloc] initWithDictionary:defConnection];
+        [arrayController addObject:connection];
+    }
+    
+    // the content outlet of objectController references this object.
+    // so when the object fields are updated the roperties on this object are updated.
+    
 	// defaults
-	self.portNumber = MOTHER_IANA_REGISTERED_PORT;
-	self.secureConnection = YES;
-	self.keepConnected = NO;
+    [self clearSelection:self];
 	
 	// KVO
 	[arrayController addObserver:self forKeyPath:@"selectedObjects" options:NSKeyValueObservingOptionNew context:(void *)&MGSContextFavoritesSelectedObjects];
 }
 
+/*
+ 
+ - setAddress:
+ 
+ */
+- (void)setAddress:(NSString *)value
+{
+    
+    _address = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [self validateConnectionValues];
+}
+
+/*
+ 
+ - validateConnectionValues
+ 
+ */
+- (void) validateConnectionValues
+{
+    BOOL valid = YES;
+    
+    if ([self.address length] == 0) {
+        valid = NO;
+    }
+    
+    self.connectionIsValid = valid;
+}
+
+/*
+ 
+ - setConnectionIsValid:
+ 
+ */
+- (void)setConnectionIsValid:(BOOL)value
+{
+    _connectionIsValid = value;
+    [favoritesSegment setEnabled:_connectionIsValid forSegment:MGSAddFavorite];
+}
 /*
  
  show window
@@ -94,21 +142,24 @@ const char MGSContextFavoritesSelectionIndex;
 {
 	#pragma unused(sender)
 	
-	self.address = @"";
-	self.displayName = @"";
+    self.address = @"";
+    self.displayName = @"";
+	self.portNumber = MOTHER_IANA_REGISTERED_PORT;
+	self.secureConnection = YES;
 	self.keepConnected = NO;
+
 	[arrayController setSelectedObjects:nil];
 }
 
 /*
  
- update properties
+ - commitEditing
  
  */
-- (void)updatePropertes
+- (void)commitEditing
 {
 	[objectController commitEditing];
-	//[arrayController commitEditing];
+    [arrayController commitEditing];
 }
 
 /*
@@ -126,19 +177,10 @@ const char MGSContextFavoritesSelectionIndex;
 	#pragma unused(context)
 	#pragma unused(object)
 	
-	BOOL enableRemove;
+	BOOL enableRemove = NO;
 	
 	// selected favorites changed
 	if (context == &MGSContextFavoritesSelectedObjects) {
-					  
-		if (_mutatingSelectedObjects) {
-			return;
-		}
-		
-		// update selected object
-		_mutatingSelectedObjects = YES;
-		[self updateSelectedObject];
-		_mutatingSelectedObjects = NO;
 		
 		NSArray *array = [arrayController selectedObjects];
 		if ([array count] > 0) {
@@ -150,12 +192,8 @@ const char MGSContextFavoritesSelectionIndex;
 			self.secureConnection = [[dict objectForKey:@"secureConnection"] boolValue];
 			self.keepConnected = [[dict objectForKey:@"keepConnected"] boolValue];
 			enableRemove = YES;
-			
-			_selectedObject = dict;
-		} else {
-			enableRemove = NO;
-			_selectedObject = nil;
 		}
+        
 		[favoritesSegment setEnabled:enableRemove forSegment:MGSRemoveFavorite];
 	
 	// favorites selection index
@@ -167,14 +205,6 @@ const char MGSContextFavoritesSelectionIndex;
 }
 
 /*
-- (void)setRemoveSegmentEnabledState
-{
-	BOOL enableRemove = ([[arrayController arrangedObjects] count] > 0 ? YES : NO);
-	[favoritesSegment setEnabled:enableRemove forSegment:MGSRemoveFavorite];
-}
-*/
-
-/*
  
  connect
  
@@ -183,14 +213,12 @@ const char MGSContextFavoritesSelectionIndex;
 {
 	#pragma unused(sender)
 	
-	//[viewController commitEditing];
-	//[self closeWindow];
-
-	[self updateSelectedObject];
+	[self commitEditing];
 	
 	if (!_address || [_address length] == 0) {
 		return;
 	}
+    
 	if (!_displayName || [_displayName length] == 0) {
 		_displayName = [_address copy];
 	}
@@ -270,8 +298,12 @@ const char MGSContextFavoritesSelectionIndex;
  */
 - (void)closeWindow
 {
-	[self updateSelectedObject];
+    // commit editing
+	[self commitEditing];
 	
+    // persist our connections
+    [[NSUserDefaults standardUserDefaults] setObject:arrayController.arrangedObjects forKey:@"MGSFavoriteConnections"];
+    
 	// save persistent clients.
 	// this data will be used to instantiate MGSNetClient instances
 	NSMutableArray *persistentClients = [NSMutableArray arrayWithCapacity:2];
@@ -309,7 +341,7 @@ const char MGSContextFavoritesSelectionIndex;
 {
 	#pragma unused(sender)
 	
-	[self updatePropertes];
+	[self commitEditing];
 	
 	int selectedSegment = [favoritesSegment selectedSegment];
 	
@@ -317,12 +349,12 @@ const char MGSContextFavoritesSelectionIndex;
 			
 		// add favorite
 		case MGSAddFavorite:;
-			NSDictionary *item = [self favoriteItem];
+			NSDictionary *item = [self connection];
 			if (!item) {
 				return;
 			}
-			[arrayController insertObject:item atArrangedObjectIndex:0];
-			
+			[arrayController addObject:item];
+			[arrayController setSelectedObjects:[NSArray arrayWithObject:item]];
 			break;
 		
 		// remove favorite
@@ -342,10 +374,10 @@ const char MGSContextFavoritesSelectionIndex;
 
 /*
  
- - favoriteItem
+ - connection
  
  */
-- (NSDictionary *)favoriteItem
+- (NSMutableDictionary *)connection
 {
 	if (!_address) return nil;
 	if (!_displayName) _displayName = @"";
@@ -356,46 +388,14 @@ const char MGSContextFavoritesSelectionIndex;
 	
 	if ([_address length] == 0) return nil;
 	
-	NSDictionary *item = [NSMutableDictionary dictionaryWithObjectsAndKeys: [_address copy], @"address",
+	NSMutableDictionary *item = [NSMutableDictionary dictionaryWithObjectsAndKeys: [_address copy], @"address",
 						  [_displayName copy], @"displayName", 
 						  [NSNumber numberWithInteger:_portNumber], @"portNumber",
 						  [NSNumber numberWithBool:_secureConnection], @"secureConnection",
 						  [NSNumber numberWithBool:_keepConnected], @"keepConnected",
+                          [NSString mgs_stringWithNewUUID], @"uuid", // make our dict unique
 						  nil];
 	
 	return item;
 }
-/*
- 
- - updateSelectedObject
- 
- */
-- (void)updateSelectedObject
-{
-	if (!_selectedObject) {
-		return;
-	}
-	
-	// update our properties
-	[self updatePropertes];
-	
-	NSUInteger selectedIndex = [[arrayController arrangedObjects] indexOfObject:_selectedObject];
-	if (selectedIndex == NSNotFound) {
-		return;
-	}
-	
-	// get current favorite item
-	NSDictionary *item = [self favoriteItem];
-	if (!item) {
-		return;
-	}
-
-	// remove old item and insert new at same location.
-	// this gets noticed by KVO. just updating the item content doesn't.
-	[arrayController removeObject:_selectedObject];
-	[arrayController insertObject:item atArrangedObjectIndex:selectedIndex];
-	
-	_selectedObject = nil;
-}
-
 @end

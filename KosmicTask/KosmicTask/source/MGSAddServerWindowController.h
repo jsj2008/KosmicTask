@@ -28,7 +28,9 @@
 	id <MGSAddServerDelegate, NSObject> _delegate;
 	MGSNetClient *_netClient;
 	id _selectedObject;
-	
+    BOOL _connectionIsValid;
+    
+    NSMutableArray *_connections;
 	IBOutlet NSObjectController *objectController;
 	IBOutlet NSViewController *viewController;
 	IBOutlet NSArrayController *arrayController;
@@ -38,8 +40,6 @@
 	IBOutlet NSButton *reconnectCheckBox;
 	IBOutlet NSProgressIndicator *progressIndicator;
 	IBOutlet NSBox *failedBox;
-	
-	BOOL _mutatingSelectedObjects;
 }
 
 - (void)closeWindow;
@@ -48,8 +48,6 @@
 - (IBAction)clearSelection:(id)sender;
 - (IBAction)processFavorite:(id)sender;
 
-//- (void)setRemoveSegmentEnabledState;
-- (void)updatePropertes;
 
 @property (copy) NSString *address;
 @property (copy) NSString *displayName;
@@ -57,4 +55,6 @@
 @property BOOL secureConnection;
 @property NSInteger portNumber;
 @property id delegate;
+@property BOOL connectionIsValid;
+
 @end
