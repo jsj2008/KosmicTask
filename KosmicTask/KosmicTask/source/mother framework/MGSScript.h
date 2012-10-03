@@ -27,7 +27,7 @@ typedef enum _MGSScriptRepresentation {
 	MGSScriptRepresentationSave = 5,		// save representation - a complete rep minus any ephemeral keys
 	MGSScriptRepresentationExecute = 6,		// execute representation - sufficient keys to execute the script
 	MGSScriptRepresentationPreview = 7,		// preview representation - sufficient keys to preview the script
-	MGSScriptRepresentationNegotiate = 8,	// preview representation - sufficient keys to negotiate the script
+	MGSScriptRepresentationNegotiate = 8,	// negotiate representation - sufficient keys to negotiate the script
 } MGSScriptRepresentation;
 
 @class MGSScriptParameterManager;

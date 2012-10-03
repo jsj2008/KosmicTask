@@ -29,13 +29,15 @@
 	BOOL _invertedLeftBannerImage;
 	MGSTextPanelViewController *_descriptionViewController;
 	MGSActionInputFooterViewController *_actionInputFooterViewController;
+    NSColor *_parameterCountLabelColourDisabled;
+    NSColor *_parameterCountLabelColourEnabled;
 }
 
 @property (assign) MGSTaskSpecifier *action;
 @property BOOL invertedLeftBannerImage;
 
 -(id)initWithMode:(MGSParameterMode)mode ;
-- (void)updateBanner;
+- (void)updateParameterCountDisplay;
 - (MGSActionView *)actionView;
 - (void)setFrameSize:(NSSize)size;
 - (void)setHighlighted:(BOOL)value;

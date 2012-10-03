@@ -20,6 +20,11 @@
 #import "NSView_Mugginsoft.h"
 #import "MGSImageManager.h"
 
+// class extension
+@interface MGSActionViewController ()
+- (void)setParameterCountLabelColour:(NSColor *)color;
+@end
+
 @interface MGSActionViewController (Private)
 @end
 
@@ -98,16 +103,26 @@
 		[self setCanDragMiddleView:NO];
 	}
 	
-	//[[bannerRightLabel cell] setBackgroundColor:[MGSImageAndTextCell countColorGreen]];
-	[[self.bannerRightLabel cell] setBackgroundColor:[NSColor colorWithCalibratedRed:0.25f green:0.25f blue:0.25f alpha:1.0f]];
-	
+    _parameterCountLabelColourDisabled = [NSColor colorWithCalibratedRed:0.25f green:0.25f blue:0.25f alpha:1.0f];
+    _parameterCountLabelColourEnabled = [MGSImageAndTextCell countColor];
+	[self setParameterCountLabelColour:_parameterCountLabelColourDisabled];
+    
 	// needed to ensure correct view repositioning 
 	[self cacheMiddleViewTopYOffset];
 }
 
 /*
  
- set resey enabled
+ - setParameterCountLabelColour:
+ 
+ */
+- (void)setParameterCountLabelColour:(NSColor *)color
+{
+    [[self.bannerRightLabel cell] setBackgroundColor:color];
+}
+/*
+ 
+ - setResetEnabled
  
  */
 - (void)setResetEnabled:(BOOL)newValue
@@ -161,7 +176,7 @@
 	
 	_task = task;
 	[self.bannerLeftLabel bind:NSValueBinding toObject:self withKeyPath:@"action.script.name" options:nil];
-	[self updateBanner];
+	[self updateParameterCountDisplay];
 
 	MGSScript *script = [_task script];
 
@@ -179,7 +194,7 @@
 	// left image shows script bundle status
 	[leftBannerImageView setImage:[script isBundled] ? [NSImage imageNamed:@"NSActionTemplate"]:[NSImage imageNamed:@"NSUserTemplate"] ];
 
-	// right image enabled ststus shows if script representation can
+	// right image enabled status shows if script representation can
 	// be executed. initially a non executable preview representation will
 	// be displayed while an executable representation is retrieved from the server
 	BOOL executableRepresentation = [script canConformToRepresentation:MGSScriptRepresentationExecute];
@@ -213,7 +228,7 @@
  update the banner
  
  */
-- (void)updateBanner
+- (void)updateParameterCountDisplay
 {
 	MGSScript *script = [_task script];
 	MGSScriptParameterManager *parameterHandler = [script parameterHandler];
@@ -224,6 +239,14 @@
 	// right label is parameter count
 	[self.bannerRightLabel setStringValue:[NSString stringWithFormat:@"%i", [parameterHandler count]]];
 	
+    // if we have an executable representation then we can execure the script
+    BOOL executableRepresentation = [script canConformToRepresentation:MGSScriptRepresentationExecute];
+    NSColor *parameterLabelColor = _parameterCountLabelColourDisabled;
+    if (executableRepresentation) {
+        parameterLabelColor =_parameterCountLabelColourEnabled;
+    }
+    [self setParameterCountLabelColour:parameterLabelColor];
+    
 	// if parameters exist then show connector
 	[[self actionView] setHasConnector: parameterCount > 0 ? YES : NO];
 }
