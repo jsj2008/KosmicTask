@@ -9,7 +9,7 @@
 #import "MAAttachedWindow.h"
 #import "MGSAttachedWindowController.h"
 #import "MGSAttachedViewController.h"
-
+#import "MGSImageAndTextCell.h"
 
 static MGSAttachedWindowController *_sharedController = nil;
 
@@ -72,8 +72,8 @@ static MGSAttachedWindowController *_sharedController = nil;
 	[_attachedWindow setAlphaValue:0.0f];
 	//[_attachedWindow setBorderColor:[borderColorWell color]];
 	//[textField setTextColor:[borderColorWell color]];
-	//[_attachedWindow setBackgroundColor:[backgroundColorWell color]];
-	[_attachedWindow setViewMargin:7.0f];
+	[_attachedWindow setBackgroundColor:[MGSImageAndTextCell countColor]];
+	[_attachedWindow setViewMargin:15.0f];
 	//[_attachedWindow setBorderWidth:[borderWidthSlider floatValue]];
 	[_attachedWindow setCornerRadius:3.0f];
 	[_attachedWindow setHasArrow:YES];

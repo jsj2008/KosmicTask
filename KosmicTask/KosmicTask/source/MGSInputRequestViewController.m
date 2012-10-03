@@ -20,6 +20,7 @@
 #import "MGSNullBindingProxy.h"
 #import "MGSNotifications.h"
 #import "MGSPreferences.h"
+#import "MGSAttachedWindowController.h"
 
 NSString *MGSIsProcessingContext =@"IsProcessing";
 static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexContext";
@@ -477,6 +478,36 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 		return NO;
 	}
 	
+    // we can only execute if we have an execute epresentation
+    if (![[_action script] canConformToRepresentation:MGSScriptRepresentationExecute]) {
+        
+        // get mouse click rect in window coordinate system
+		NSWindow *window =[[self view] window];
+        NSRect viewRect = [[window contentView] frame];
+        
+        NSEvent *event = [NSApp currentEvent];
+        switch (event.type) {
+            case NSLeftMouseUp:
+                {
+                    NSPoint eventPoint = [event locationInWindow];
+                    NSPoint viewPoint = [[window contentView] convertPoint:eventPoint fromView:nil];
+                    viewRect = NSMakeRect(viewPoint.x, viewPoint.y, 0, 0);
+                }
+                break;
+                
+            default:
+                break;
+        }
+        NSString *windowText = NSLocalizedString(@"Cannot run task yet.\n\nWaiting for parameters to load...", @"Child window prompt : Cannot execute task.");
+
+        [[MGSAttachedWindowController sharedController]
+         showForWindow:window
+         atCentreOfRect:viewRect
+         withText:windowText];
+        
+        return NO;
+    }
+    
 	// validate the parameters
 	MGSParameterViewController *viewController;
 	if (![_parameterViewManager validateParameters:&viewController]) {

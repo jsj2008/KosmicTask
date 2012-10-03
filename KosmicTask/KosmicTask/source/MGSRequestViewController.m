@@ -557,7 +557,7 @@ commonExit:
 
 	if ([_inputViewController canExecute]) {
 		
-		// do want to automicatically keep executed actions displayed
+		// do want to automatically keep executed actions displayed
 		BOOL keepExecutedActionsDisplayed = [[NSUserDefaults standardUserDefaults] boolForKey:MGSKeepExecutedTasksDisplayed];
 		
 		if (!haveAutomatedKeepActionDisplayed && keepExecutedActionsDisplayed) {
