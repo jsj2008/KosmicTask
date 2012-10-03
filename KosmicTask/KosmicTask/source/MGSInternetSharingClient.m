@@ -15,6 +15,7 @@
 // class extension
 @interface MGSInternetSharingClient()
 - (void)response:(NSNotification *)note;
+@property NSString *portStatusText;
 @end
 
 @implementation MGSInternetSharingClient
@@ -22,6 +23,7 @@
 static id _sharedInstance = nil;
 
 @synthesize startStopButtonText = _startStopButtonText;
+@synthesize portStatusText = _portStatusText;
 
 /*
  
@@ -208,15 +210,18 @@ static id _sharedInstance = nil;
 	switch (self.mappingStatus) {
 		case kMGSInternetSharingPortTryingToMap:
 			_startStopButtonText = NSLocalizedString(@"...", @"Trying to map router port");
+            self.portStatusText = NSLocalizedString(@"...", @"Trying to map router port");
 			break;
 			
 		case kMGSInternetSharingPortMapped:
-			_startStopButtonText = NSLocalizedString(@"Stop", @"Router port mapped");
+			_startStopButtonText = NSLocalizedString(@"Close", @"Router port mapped");
+            self.portStatusText = NSLocalizedString(@"open", @"Port is open");
 			break;
 			
 		case kMGSInternetSharingPortNotMapped:
 		default:
-			_startStopButtonText = NSLocalizedString(@"Start", @"Router port not mapped");
+			_startStopButtonText = NSLocalizedString(@"Open", @"Router port not mapped");
+            self.portStatusText = NSLocalizedString(@"closed", @"Port is closed");
 			break;
 			
 	}

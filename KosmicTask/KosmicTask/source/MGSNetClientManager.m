@@ -438,7 +438,7 @@ static MGSNetClientManager *_sharedController = nil;
 		return;
 	}
 	
-	// we can only add a static client if it is connected.
+	// we can only add a static client if it is not connected.
 	if (![netClient isConnected]) {
 		
 		// become the delegate.

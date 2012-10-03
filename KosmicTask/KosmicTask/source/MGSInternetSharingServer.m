@@ -11,6 +11,10 @@
 #import "MGSDistributedNotifications.h"
 #import "NSDictionary_Mugginsoft.h"
 
+@interface MGSInternetSharingServer()
+- (void)savePreferences;
+@end
+
 @implementation MGSInternetSharingServer
 
 /*
@@ -68,7 +72,7 @@
  
  request notification
  
- the sender of this winotification will be waiting for a response
+ the sender of this notification will be waiting for a response
  
  */
 - (void)request:(NSNotification *)note
@@ -127,6 +131,9 @@
 			[self postStatusNotification];
 			break;
 	}
+    
+    // save preferences in case server crashes
+    [self savePreferences];
 	
 }
 
@@ -265,6 +272,17 @@
 	// remove observers
 	[[NSDistributedNotificationCenter defaultCenter] removeObserver:self];
 	
+    [self savePreferences];
+    
+}
+
+/*
+ 
+ - savePreferences
+ 
+ */
+- (void)savePreferences
+{
 	// write out preferences
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.enableInternetAccessAtLogin] forKey:MGSEnableInternetAccessAtLogin];
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.allowInternetAccess] forKey:MGSAllowInternetAccess];

@@ -34,6 +34,7 @@ typedef enum _MGSInternetSharingMappingStatus {
 @interface MGSInternetSharing : NSObject {
 @private
 	NSImage *_statusImage;
+    NSImage *_allowInternetAccessStatusImage;
 	NSInteger _externalPort;
 	NSInteger _listeningPort;
 	BOOL _allowInternetAccess;
@@ -52,6 +53,7 @@ typedef enum _MGSInternetSharingMappingStatus {
 }
 
 @property (readonly) NSImage *statusImage;
+@property (readonly) NSImage *allowInternetAccessStatusImage;
 @property NSInteger externalPort;
 @property NSInteger listeningPort;
 @property BOOL allowInternetAccess;

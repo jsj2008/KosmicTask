@@ -14,9 +14,11 @@
 	NSString *_startStopButtonText;
 	NSImage *_appIconImage;
 	NSImage *_appActiveSharingIconImage;
+    NSString *_portStatusText;
 }
 
-@property (readonly)NSString *startStopButtonText;
+@property (readonly) NSString *startStopButtonText;
+@property (readonly) NSString *portStatusText;
 
 - (void)requestStatusUpdate;
 + (id)sharedInstance;

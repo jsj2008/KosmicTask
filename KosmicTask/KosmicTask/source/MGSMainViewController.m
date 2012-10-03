@@ -175,7 +175,7 @@ static char MGSSeletedDetailViewSegmentContext;
 	[self historyViewChanged:_historyViewController];	// load the history view
 	
 	// bind
-	[internetSharingButton bind:NSImageBinding toObject:[MGSInternetSharingClient sharedInstance] withKeyPath:@"statusImage" options:nil];
+	[internetSharingButton bind:NSImageBinding toObject:[MGSInternetSharingClient sharedInstance] withKeyPath:@"allowInternetAccessStatusImage" options:nil];
 
 	// load user defaults
 	[self loadUserDefaults];

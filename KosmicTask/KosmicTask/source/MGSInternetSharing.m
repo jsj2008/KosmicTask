@@ -13,6 +13,11 @@
 #import "MGSPreferences.h"
 #import "MGSMotherServer.h"
 
+// class extension
+@interface MGSInternetSharing()
+@property () NSImage *allowInternetAccessStatusImage;
+@end
+
 @interface MGSInternetSharing(Private)
 @end
 
@@ -40,6 +45,8 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 @synthesize inactiveStatusImage = _inactiveStatusImage;
 @synthesize activeStatusLargeImage = _activeStatusLargeImage;
 @synthesize inactiveStatusLargeImage = _inactiveStatusLargeImage;
+@synthesize allowInternetAccessStatusImage = _allowInternetAccessStatusImage;
+
 /*
  
  init
@@ -49,19 +56,19 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 {
 	if ((self = [super init])) {
 		
-		self.listeningPort = MOTHER_IANA_REGISTERED_PORT;
-		self.externalPort = MOTHER_IANA_REGISTERED_PORT;
-		self.allowInternetAccess = NO;
-		self.enableInternetAccessAtLogin = NO;
-		self.IPAddressString = NSLocalizedString(@"not available", @"Internet sharing IP address not available");
-		self.gatewayName = NSLocalizedString(@"not available", @"Internet sharing gateway name not available");
-		self.mappingStatus = kMGSInternetSharingPortNotMapped;
+		_listeningPort = MOTHER_IANA_REGISTERED_PORT;
+		_externalPort = MOTHER_IANA_REGISTERED_PORT;
+		_allowInternetAccess = NO;
+		_enableInternetAccessAtLogin = NO;
+		_IPAddressString = NSLocalizedString(@"not available", @"Internet sharing IP address not available");
+		_gatewayName = NSLocalizedString(@"not available", @"Internet sharing gateway name not available");
+		_mappingStatus = kMGSInternetSharingPortNotMapped;
 		_noteObjectString = [[MGSPortMapper class] className];
-		self.responseReceived = NO;
-		self.activeStatusImage = [[[MGSImageManager sharedManager] greenDot] copy];
-		self.inactiveStatusImage = [[[MGSImageManager sharedManager] redDot] copy];
-		self.activeStatusLargeImage = [[[MGSImageManager sharedManager] greenDotLarge] copy];
-		self.inactiveStatusLargeImage = [[[MGSImageManager sharedManager] redDotLarge] copy];
+		_responseReceived = NO;
+		_activeStatusImage = [[[MGSImageManager sharedManager] greenDot] copy];
+		_inactiveStatusImage = [[[MGSImageManager sharedManager] redDot] copy];
+		_activeStatusLargeImage = [[[MGSImageManager sharedManager] greenDotLarge] copy];
+		_inactiveStatusLargeImage = [[[MGSImageManager sharedManager] redDotLarge] copy];
 	}
 	
 	return self;
@@ -148,6 +155,20 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 	[self didChangeValueForKey:@"statusString"];
 	[self didChangeValueForKey:@"statusImage"];
 	[self didChangeValueForKey:@"isActive"];
+}
+
+/*
+ 
+ - setAllowInternetAccess:
+ 
+ */
+-(void)setAllowInternetAccess:(BOOL)value {
+    _allowInternetAccess = value;
+    if (_allowInternetAccess) {
+        self.allowInternetAccessStatusImage = _activeStatusImage;
+    } else {
+        self.allowInternetAccessStatusImage = _inactiveStatusImage;
+    }
 }
 
 /*
