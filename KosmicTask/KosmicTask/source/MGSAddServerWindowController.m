@@ -275,7 +275,7 @@ const char MGSContextFavoritesSelectionIndex;
 	
 	// if no error in payload then heartbeat reply was received.
 	// assume host is valid and contactable
-	if (nil == payload.requestError) {
+	if (nil == payload.requestError && nil == netRequest.error) {
 	
 		[netClient setHostStatus:MGSHostStatusAvailable];
 		
