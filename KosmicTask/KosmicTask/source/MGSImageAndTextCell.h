@@ -67,6 +67,9 @@
 
 + (NSColor *)countColor;
 + (NSColor *)countColorGreen;
++ (NSColor *)countColorDarkGrey;
++ (NSColor *)countColorRed;
++ (NSColor *)countColorDarkRed;
 
 - (void)setImage:(NSImage *)anImage;
 - (NSImage*)image;
