@@ -160,8 +160,8 @@ static NSThread *networkThread = nil;
 	
 	// set request timeouts
 	if ([command isEqualToString:MGSNetMessageCommandHeartbeat]) {
-		netRequest.readTimeout = 30.0;                                    
-		netRequest.writeTimeout = 30.0;
+		netRequest.readTimeout = 15.0;
+		netRequest.writeTimeout = 15.0;
 	}
 	/*
 	 else if ([command isEqualToString:MGSNetMessageCommandParseScript]) {
