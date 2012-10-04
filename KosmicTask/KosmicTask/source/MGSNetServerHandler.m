@@ -69,12 +69,12 @@ static MGSNetServerHandler *_sharedController = nil;
 		_serviceName = [MGSBonjour serviceName];
 		_netServer = [[MGSNetServer alloc] init];
 		_LMTimer = nil;
-        _netServices = [NSMutableArray  arrayWithCapacity:10];
+        //_netServices = [NSMutableArray  arrayWithCapacity:10];
         _IPv4BonjourAddresses = [NSMutableSet setWithCapacity:10];
         _IPv6BonjourAddresses = [NSMutableSet setWithCapacity:10];
         _BonjourAddresses = [NSMutableSet setWithCapacity:10];
         _netServer.allowedAddresses = _BonjourAddresses;
-        //NSMutableDictionary *_addressesForHostName = [NSMutableDictionary dictionaryWithCapacity:10];
+        NSMutableDictionary *_addressesForHostName = [NSMutableDictionary dictionaryWithCapacity:10];
 	}
 	return self;
 }
@@ -213,7 +213,7 @@ errorExit:;
 	
     // resolve the address.
     // normally we do this prior to accessing the service but in this
-    //case we need to know the IP in advance for request filtering purposes.
+    // case we need to know the IP in advance for request filtering purposes.
     //[_netServices addObject:netService];
     [netService setDelegate:self];
     [netService resolveWithTimeout:5];
@@ -255,17 +255,16 @@ errorExit:;
 #pragma unused(netServiceBrowser)
 #pragma unused(moreServicesComing)
 	
-    // the netService seems not todefine its addresses at this stage.
-    // hostName is valid so we need to retain the addresses keyed by the hostName.
+    // the netService seems not to define its addresses at this stage.
+    // hostName is also valid so we need to retain the addresses keyed by the description.
     NSSet *addresses = [netService mgs_addressStrings];
     if ([addresses count] == 0) {
         
-        // this fails as the netService object is different.
-        // compare NSNetService objects with isEqual:
-        //NSSet *keyedAddresses = [_addressesForHostName objectForKey:[NSValue valueWithPointer:netService]];
-        //if (keyedAddresses) {
-        //    addresses = keyedAddresses;
-        //}
+         // TODO: this fails - the description includes the object address
+        NSSet *keyedAddresses = [_addressesForHostName objectForKey:[netService description]];
+        if (keyedAddresses) {
+            addresses = keyedAddresses;
+        }
     }
 
     // TODO: figure out to get the addresses out of here.
@@ -281,7 +280,7 @@ errorExit:;
     MLogDebug(@"Remove: IPv6 Bonjour addresses:%@", _IPv6BonjourAddresses);
     MLogDebug(@"Remove: Bonjour addresses:%@", _BonjourAddresses);
     
-    //[_addressesForHostName removeObjectForKey:[NSValue valueWithPointer:netService]];
+    [_addressesForHostName removeObjectForKey:[netService description]];
     //[_netServices removeObject:netService];
 
 }
@@ -311,7 +310,7 @@ errorExit:;
     // key all addresses by service pointer as non copyable.
     // should be okay as we have retained a ref to the sender
     // http://stackoverflow.com/questions/3509118/using-non-copyable-object-as-key-for-nsmutabledictionary
-    //[_addressesForHostName setObject:[sender mgs_addressStrings] forKey:[NSValue valueWithPointer:sender]];
+    [_addressesForHostName setObject:[sender mgs_addressStrings] forKey:[sender description]];
     
     MLogDebug(@"Resolve: IPv4 Bonjour addresses:%@", _IPv4BonjourAddresses);
     MLogDebug(@"Resolve: IPv6 Bonjour addresses:%@", _IPv6BonjourAddresses);

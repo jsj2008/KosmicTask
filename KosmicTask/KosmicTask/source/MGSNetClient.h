@@ -94,12 +94,6 @@ typedef enum _MGSScriptAccess {
 	NSInteger _badHeartbeatCount;		// consecutive number of times that host has not responded to heartbeat
 	NSString *_hostUserName;			// name of host user
 	BOOL _hostViaBonjour;				// host found via bonjour
-    NSData *_IPv4AddressData;           // IP v4 socket address structure
-    NSData *_IPv6AddressData;           // IP v6 socket address structure
-    NSString *_IPv4AddressString;       // IP v4 socket address string
-    NSString *_IPv6AddressString;       // IP v6 socket address string
-    NSString *_addressString;           // default socket address string
-    BOOL _useIPv6;                      // use IPv6
     BOOL _isResolving;					// YES if resolving address
 	BOOL _useSSL;						// YES if SSL encryption is active
 	BOOL _securePublicTasks;			// YES if public tasks are to be secured
@@ -168,10 +162,6 @@ typedef enum _MGSScriptAccess {
 @property NSUInteger initialRequestRetryCount;
 @property BOOL validatedConnection;
 @property BOOL securePublicTasks;
-@property (readonly) NSString *IPv4AddressString;       // IP v4 socket address string
-@property (readonly) NSString *IPv6AddressString;       // IP v6 socket address string
-@property (readonly) NSString *addressString;           // default socket address string
-@property (readonly) BOOL useIPv6;
 @end
 
 

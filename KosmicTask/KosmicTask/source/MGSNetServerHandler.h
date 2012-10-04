@@ -20,11 +20,11 @@
 	id _delegate;
 	NSTimer * _LMTimer;
     NSNetServiceBrowser *_serviceBrowser;
-    NSMutableArray *_netServices;
+    //NSMutableArray *_netServices;
     NSMutableSet *_IPv4BonjourAddresses;
     NSMutableSet *_IPv6BonjourAddresses;
     NSMutableSet *_BonjourAddresses;
-    //NSMutableDictionary *_addressesForHostName;
+    NSMutableDictionary *_addressesForHostName;
 }
 + (id)sharedController;
 

@@ -368,14 +368,8 @@ static NSThread *networkThread = nil;
         
         NSString *hostName = [_netClient hostName]; // DNS host name
         
-        // if client defines an addressString then use it.
-        // this should prevent additional DNS lookups and should
-        // allow selection of IPv4 or IPv6 by the client.
-        
-        // at pesent a scoket error occurs if we use the IPv6 address directly.
-        if (_netClient.addressString && !_netClient.useIPv6) {
-            hostName = _netClient.addressString;
-        }
+        // interfaces as cached in the netclient macy change (wireless may be siwyched off).
+        // so it is safer to yse the hostName and like the os choose the interface and the IP version
 		if ([netSocket connectToHost:hostName onPort:[_netClient hostPort] forRequest:self]) {
 			
 			_netSocket = netSocket;

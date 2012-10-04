@@ -60,9 +60,6 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 - (NSString *)hostFromAddress4:(struct sockaddr_in *)pSockaddr4;
 - (NSString *)hostFromAddress6:(struct sockaddr_in6 *)pSockaddr6;
 
-@property NSString *IPv4AddressString;       // IP v4 socket address string
-@property NSString *IPv6AddressString;       // IP v6 socket address string
-@property NSString *addressString;       // default socket address string
 @end
 
 //
@@ -92,10 +89,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 @synthesize validatedConnection = _validatedConnection;
 @synthesize sendExecuteValidation = _sendExecuteValidation;
 @synthesize securePublicTasks = _securePublicTasks;
-@synthesize IPv4AddressString = _IPv4AddressString;
-@synthesize IPv6AddressString = _IPv6AddressString;
-@synthesize addressString = _addressString;
-@synthesize useIPv6 = _useIPv6;
+
 
 /*
  
@@ -145,7 +139,6 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 		_authenticationDictionary = nil;
 		_serviceName = @"";
 		_serviceShortName = @"";
-        _useIPv6 = YES;
 		_hostType = MGSHostTypeUnknown;
 		self.hostStatus = MGSHostStatusNotYetAvailable;
 		_badHeartbeatCount = 0;
@@ -676,7 +669,11 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	// it is recommended that the service address is always
 	// resolved rather than cached.
 	// the host name and IP can change but as long as the
-	// service name remains constant the host will be resolved
+	// service name remains constant the host will be resolved.
+    //
+    // note that we open our connection by hostname (which resolve the ip itself) so resolving
+    // is only required here to confirm the port number
+    
 	_isResolving = YES;
 	[_netService resolveWithTimeout:_bonjourResolveTimeout];
 	
@@ -1217,8 +1214,12 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	
 }
 
-	
-// resolve the host address and name from the netservice
+
+/*
+ 
+ - getHostPort
+ 
+ */
 - (void)getHostPort
 {
 	NSAssert(_netService, @"net service is nil");
@@ -1227,6 +1228,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
     
     NSAssert(addresses && [addresses count] > 0, @"invalid netservice addresses");
 
+    MLog(DEBUGLOG, @"service is on host: %@", [_netService hostName]);
 
     // note that we may find that there are two addresses.
     // one for IPv4 and one for IPv6.
@@ -1237,11 +1239,11 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
     uint16_t portIPv6 = 0;
 
     // we may have more than one ipv4 or ipv6 address active when
-    // say LAN and wireless connections are both acrtive on a machine
+    // say LAN and wireless connections are both active on a machine
 	for (NSData *addressData in addresses) {
         // address is held as a struct in an NSData
 	
-         // extract port number
+        // extract port number - should be the same on all addresses
         // note that we could have used this structure to form our AsyncSocket
         // rather than the netService host name and socket.
         struct sockaddr	*address = (struct sockaddr *)[addressData bytes];
@@ -1249,14 +1251,13 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
         // IPv4
         if(address->sa_family == AF_INET) {
             portIPv4	= ntohs(((struct sockaddr_in *)address)->sin_port);
-            _IPv4AddressData = addressData;
-            self.IPv4AddressString = [self hostFromAddress4:(struct sockaddr_in *)address];
-            
+            MLogDebug(@"IPv4 address: %@ port: %d", [self hostFromAddress4:(struct sockaddr_in *)address], portIPv4);
+            port = portIPv4;
         // IPv6
         } else if(address->sa_family == AF_INET6) {
             portIPv6	= ntohs(((struct sockaddr_in6 *)address)->sin6_port);
-            _IPv6AddressData = addressData;
-            self.IPv6AddressString = [self hostFromAddress6:(struct sockaddr_in6 *)address];
+            MLogDebug(@"IPv6 address: %@ port: %d", [self hostFromAddress6:(struct sockaddr_in6 *)address], portIPv6);
+            port = portIPv6;
         } else {
 #ifdef MGS_THROW
             @throw [NSException exceptionWithName:@"MGSUnknownAddressFamily"
@@ -1266,39 +1267,6 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
             MLog(DEBUGLOG, @"The address family is unknown");
         }
 	}
-    if (_IPv4AddressData && !_IPv6AddressData) {
-        port = portIPv4;
-    } else if (!_IPv4AddressData && _IPv6AddressData) {
-        port = portIPv6;
-    } else {
-        if (portIPv4 != portIPv6) {
-#ifdef MGS_THROW
-            @throw [NSException exceptionWithName:@"MGSIPv4AndIPv6PortMismatch"
-                                           reason:@"IPv4 and IPv6 ports do not match."
-                                         userInfo:nil];
-#endif
-            MLog(DEBUGLOG, @"IPv4 and IPv6 ports do not match.");
-            portIPv4 = 0;   //invalidate port
-            portIPv6 = 0;   //invalidate port
-        }
-        port = portIPv6;
-    }
-    
-
-	MLog(DEBUGLOG, @"service is on host: %@", [_netService hostName]);
-	if (self.IPv4AddressString) {
-        if (!_useIPv6) {
-            self.addressString = self.IPv4AddressString;
-        }
-        MLog(DEBUGLOG, @"service on IPv4: %@", self.IPv4AddressString);
-    }
-	if (self.IPv6AddressString) {
-        if (_useIPv6) {
-            self.addressString = self.IPv6AddressString;
-        }
-        MLog(DEBUGLOG, @"service on IPv6: %@", self.IPv6AddressString);
-    }
-	MLog(DEBUGLOG, @"service is on port: %d", port);
 
 	// assign host port
 	_hostPort = port;
