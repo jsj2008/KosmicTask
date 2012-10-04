@@ -20,7 +20,7 @@
 	id _delegate;
 	NSTimer * _LMTimer;
     NSNetServiceBrowser *_serviceBrowser;
-    //NSMutableArray *_netServices;
+    NSMutableArray *_resolvedNetServices;
     NSMutableSet *_IPv4BonjourAddresses;
     NSMutableSet *_IPv6BonjourAddresses;
     NSMutableSet *_BonjourAddresses;

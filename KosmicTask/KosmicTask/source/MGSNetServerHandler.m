@@ -69,12 +69,12 @@ static MGSNetServerHandler *_sharedController = nil;
 		_serviceName = [MGSBonjour serviceName];
 		_netServer = [[MGSNetServer alloc] init];
 		_LMTimer = nil;
-        //_netServices = [NSMutableArray  arrayWithCapacity:10];
+        _resolvedNetServices = [NSMutableArray  arrayWithCapacity:10];
         _IPv4BonjourAddresses = [NSMutableSet setWithCapacity:10];
         _IPv6BonjourAddresses = [NSMutableSet setWithCapacity:10];
         _BonjourAddresses = [NSMutableSet setWithCapacity:10];
         _netServer.allowedAddresses = _BonjourAddresses;
-        NSMutableDictionary *_addressesForHostName = [NSMutableDictionary dictionaryWithCapacity:10];
+         _addressesForHostName = [NSMutableDictionary dictionaryWithCapacity:10];
 	}
 	return self;
 }
@@ -214,7 +214,6 @@ errorExit:;
     // resolve the address.
     // normally we do this prior to accessing the service but in this
     // case we need to know the IP in advance for request filtering purposes.
-    //[_netServices addObject:netService];
     [netService setDelegate:self];
     [netService resolveWithTimeout:5];
     
@@ -255,20 +254,26 @@ errorExit:;
 #pragma unused(netServiceBrowser)
 #pragma unused(moreServicesComing)
 	
+    NSNetService *resolvedNetService = nil;
+    
     // the netService seems not to define its addresses at this stage.
     // hostName is also valid so we need to retain the addresses keyed by the description.
+    // also the netService instance here is a different object to the resolved one we have
+    // retained. but -isEqual can be used on the NSNetService instances
     NSSet *addresses = [netService mgs_addressStrings];
     if ([addresses count] == 0) {
         
-         // TODO: this fails - the description includes the object address
-        NSSet *keyedAddresses = [_addressesForHostName objectForKey:[netService description]];
-        if (keyedAddresses) {
-            addresses = keyedAddresses;
+        NSUInteger index = [_resolvedNetServices indexOfObject:netService]; // use isEqual: to find match
+        if (index != NSNotFound) {
+            resolvedNetService = [_resolvedNetServices objectAtIndex:index];
+
+            NSSet *keyedAddresses = [_addressesForHostName objectForKey:[NSValue valueWithPointer: resolvedNetService]];
+            if (keyedAddresses) {
+                addresses = keyedAddresses;
+            }
         }
     }
 
-    // TODO: figure out to get the addresses out of here.
-    // we have to retain a ref to the netservice but it cannot be a key in our dict.
     if (addresses) {
         [_IPv4BonjourAddresses minusSet:addresses];
         [_IPv6BonjourAddresses minusSet:addresses];
@@ -280,8 +285,10 @@ errorExit:;
     MLogDebug(@"Remove: IPv6 Bonjour addresses:%@", _IPv6BonjourAddresses);
     MLogDebug(@"Remove: Bonjour addresses:%@", _BonjourAddresses);
     
-    [_addressesForHostName removeObjectForKey:[netService description]];
-    //[_netServices removeObject:netService];
+    if (resolvedNetService) {
+        [_addressesForHostName removeObjectForKey:[NSValue valueWithPointer: resolvedNetService]];
+        [_resolvedNetServices removeObject:resolvedNetService];
+    }
 
 }
 
@@ -310,13 +317,12 @@ errorExit:;
     // key all addresses by service pointer as non copyable.
     // should be okay as we have retained a ref to the sender
     // http://stackoverflow.com/questions/3509118/using-non-copyable-object-as-key-for-nsmutabledictionary
-    [_addressesForHostName setObject:[sender mgs_addressStrings] forKey:[sender description]];
+    [_addressesForHostName setObject:[sender mgs_addressStrings] forKey:[NSValue valueWithPointer:sender]];
+    [_resolvedNetServices addObject:sender];
     
     MLogDebug(@"Resolve: IPv4 Bonjour addresses:%@", _IPv4BonjourAddresses);
     MLogDebug(@"Resolve: IPv6 Bonjour addresses:%@", _IPv6BonjourAddresses);
     MLogDebug(@"Resolve: Bonjour addresses:%@", _BonjourAddresses);
-    
-    //[_netServices removeObject:sender];
 }
 /*
  
@@ -328,7 +334,6 @@ errorExit:;
     #pragma unused(errorDict)
     #pragma unused(sender)
     
-    //[_netServices removeObject:sender];
 }
 
 
