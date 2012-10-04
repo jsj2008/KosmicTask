@@ -38,7 +38,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
  */
 - (void)setupToolbar
 {
-	_internetTabIdentifier = NSLocalizedString(@"Internet", @"Preferences tab name");
+	_internetTabIdentifier = NSLocalizedString(@"Network", @"Preferences tab name");
 	
 	[self addView:generalPrefsView label:NSLocalizedString(@"General", @"Preferences tab name")];
 	
