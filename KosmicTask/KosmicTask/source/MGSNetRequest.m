@@ -353,7 +353,30 @@ static NSThread *networkThread = nil;
 		//
 		// see http://projects.mugginsoft.net/view.php?id=866
 		//
-		if ([netSocket connectToHost:[_netClient hostName] onPort:[_netClient hostPort] forRequest:self]) {
+        
+        //
+        // note that we connect to the hostname not the host IP (which we have).
+        // this means that another DNS lookup will likely have to occur.
+        // it also means that the network stack we use will determine whether we
+        // connect via IPv4 or IPv6.
+        
+        // if our host name is a bonjour host (.local) we will likely get ap IPv6 connection.
+        // a TLD address or explicit IPv4 address wil give us an IPv4 connection.
+        // so, in the case of Bonjour we could likely force all connections to be on IPv4
+        // by using the IPv4 address we probably obtained (as all modern Bonjour hosts run Ipv4 + 6)
+        // when looking up the port number.
+        
+        NSString *hostName = [_netClient hostName]; // DNS host name
+        
+        // if client defines an addressString then use it.
+        // this should prevent additional DNS lookups and should
+        // allow selection of IPv4 or IPv6 by the client.
+        
+        // at pesent a scoket error occurs if we use the IPv6 address directly.
+        if (_netClient.addressString && !_netClient.useIPv6) {
+            hostName = _netClient.addressString;
+        }
+		if ([netSocket connectToHost:hostName onPort:[_netClient hostPort] forRequest:self]) {
 			
 			_netSocket = netSocket;
 			

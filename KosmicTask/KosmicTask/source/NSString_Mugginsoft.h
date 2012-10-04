@@ -25,6 +25,7 @@
 - (NSString *)mgs_stringByRemovingNewLinesAndTabs;
 - (BOOL)mgs_isURL;
 - (BOOL)mgs_isURLorIP;
++ (NSString *)mgs_StringWithSockAddrData:(NSData *)addressData;
 @end
 
 @interface NSMutableString (Mugginsoft)

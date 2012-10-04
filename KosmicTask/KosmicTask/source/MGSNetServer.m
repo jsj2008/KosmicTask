@@ -10,6 +10,9 @@
 #import "MGSNetServer.h"
 #import "MGSNetServerSocket.h"
 #import "MGSAsyncSocket.h"
+#import <netinet/in.h>
+#import "MGSPreferences.h"
+#import "NSString_Mugginsoft.h"
 
 //
 // each instance of MGSNetServer communicates with 
@@ -18,6 +21,7 @@
 @implementation MGSNetServer
 
 @synthesize netService = _netService;
+@synthesize allowedAddresses = _allowedAddresses;
 
 /*
  This method sets up the accept socket, but does not actually start it.
@@ -86,12 +90,47 @@
 {
 	#pragma unused(sock)
 	
-	MLog(DEBUGLOG, @"Server socket %d accepting connection.", [_serverSockets count] + 1);
-	
-	MGSNetServerSocket *serverSocket = [[MGSNetServerSocket alloc] initWithAcceptSocket:newSocket];
-	[serverSocket setDelegate:self];
-	
-	[_serverSockets addObject:serverSocket];
+    // if we have a socket remaining from an invalid address
+    // then we can disconnect it now.
+    if (_socketForInvalidAddress) {
+        [_socketForInvalidAddress disconnect];
+        _socketForInvalidAddress = nil;
+    }
+
+    // are remote connections allowed
+    BOOL allowRemoteConnections = [[MGSPreferences standardUserDefaults] boolForKey:MGSAllowInternetAccess];
+
+    // we can only accept from outside the subnet if remote connections are allowed.
+    // we do this by comparing the connection address with a list of addresses
+    // obtained from Bonjour on the local network.
+    //
+    //
+    // For IPv4 it is possible to do network prefix/subnet comparisons to see if the address
+    // is in the subnet but for IPv6 it is harder. There may be no DHCP6 server and there may be no
+    // reliable netork prefix - I think!
+    if (!allowRemoteConnections) {
+        
+        // what is the remote address
+        NSString *address = [NSString mgs_StringWithSockAddrData:[newSocket connectedAddress]];
+        
+        // do we allow connection from this address?
+        if (![self.allowedAddresses containsObject:address]) {
+            
+            // the socket is in the process of being constructed so disconnecting now would be
+            // inappropiate. so we cache the socket and disconnect it at the next available opportunity.
+            _socketForInvalidAddress = newSocket;
+        }
+    }
+    
+    // if socket allowed then use it
+    if (!_socketForInvalidAddress) {
+        MLog(DEBUGLOG, @"Server socket %d accepting connection.", [_serverSockets count] + 1);
+        
+        MGSNetServerSocket *serverSocket = [[MGSNetServerSocket alloc] initWithAcceptSocket:newSocket];
+        [serverSocket setDelegate:self];
+        
+        [_serverSockets addObject:serverSocket];
+    }
 }
 @end
 

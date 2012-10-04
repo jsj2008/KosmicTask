@@ -116,6 +116,9 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
  */
 - (void)finalize
 {
+
+    // we really don't want to access any objects in fiablize!
+    
 	// disconnect must have been called on the socket
 	if (![self disconnectCalled]) {
         MLogInfo(@"disconnect not called on socket");

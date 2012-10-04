@@ -62,7 +62,7 @@
  */
 - (BOOL)connectToHost:(NSString*)host onPort:(UInt16)port forRequest:(MGSNetRequest *)netRequest
 {
-
+    
 	NSAssert(netRequest, @"net request is nil");
 	self.netRequest = netRequest;
 
@@ -87,7 +87,7 @@
 			// reads and writes can be queued before the connect completes
 			netRequest.status = kMGSStatusConnecting;
 			
-			MLog(DEBUGLOG, @"Client connecting to host: %@ port: %u.", host, port);
+			MLog(DEBUGLOG, @"Client connecting to host: %@ port: %u. (URL: %@)", host, port, netRequest.netClient.hostName);
 			return YES;
 		}
 		else

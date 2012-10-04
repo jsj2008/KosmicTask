@@ -8,6 +8,9 @@
 
 #import "NSString_Mugginsoft.h"
 #import "MGSTempStorage.h"
+#import <sys/socket.h>
+#import <netinet/in.h>
+#import <arpa/inet.h>
 
 /*
  
@@ -285,6 +288,42 @@
 	return [NSString stringWithString:string];
 }
 
+/*
+ 
+ - mgs_StringWithSockAddrData:
+ 
+ */
++ (NSString *)mgs_StringWithSockAddrData:(NSData *)addressData
+{
+    char addr[256];
+    NSString *address = nil;
+    BOOL addressIsValid = NO;
+    
+    struct sockaddr *sa = (struct sockaddr *)[addressData bytes];
+    
+    if(sa->sa_family == AF_INET6) {
+        struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)sa;
+        
+        if(inet_ntop(AF_INET6, &sin6->sin6_addr, addr, sizeof(addr)))
+        {
+            addressIsValid = YES;
+        }
+    } else if(sa->sa_family == AF_INET) {
+        struct sockaddr_in *sin = (struct sockaddr_in *)sa;
+        
+        if(inet_ntop(AF_INET, &sin->sin_addr, addr, sizeof(addr)))
+        {
+            addressIsValid = YES;
+        }
+    }
+    
+    if (addressIsValid) {
+        address = [NSString stringWithCString:addr encoding:NSASCIIStringEncoding];
+    }
+    
+    return address;
+}
+
 @end
 
 @implementation NSMutableString (Mugginsoft)
@@ -306,6 +345,8 @@
 		range.length = [self length] - replaceRange.location;
 	}
 }
+
+
 
 @end
 

@@ -12,9 +12,11 @@
 #import "NSNetService_errors.h"
 #import <sys/socket.h>
 #import <netinet/in.h>
+#import <arpa/inet.h>
 #import "MGSBonjour.h"
 #import "MGSPreferences.h"
 #import "MGSLM.h"
+#import "NSNetService+Mugginsoft.h"
 
 #define LMTestInterval 1 * 60
 
@@ -23,6 +25,7 @@ static MGSNetServerHandler *_sharedController = nil;
 // class extension
 @interface MGSNetServerHandler()
 - (void)serverDo:(NSTimer*)theTimer;
+- (void)listenForServers;
 @end
 
 @interface MGSNetServerHandler (Private)
@@ -56,16 +59,22 @@ static MGSNetServerHandler *_sharedController = nil;
 - (MGSNetServerHandler *)init
 {
 	if ((self = [super init])) {
-		self.domain = MGSBonjourDomain;
-		self.serviceType = MGSBonjourServiceType;
+		_domain = MGSBonjourDomain;
+		_serviceType = MGSBonjourServiceType;
 		
 		// note that the service name must be different for each server
 		// on the network otherwise an NSNetServicesCollisionError will occur
 		// see http://developer.apple.com/qa/qa2001/qa1228.html
 		// for notes on service naming
-		self.serviceName = [MGSBonjour serviceName];
+		_serviceName = [MGSBonjour serviceName];
 		_netServer = [[MGSNetServer alloc] init];
 		_LMTimer = nil;
+        _netServices = [NSMutableArray  arrayWithCapacity:10];
+        _IPv4BonjourAddresses = [NSMutableSet setWithCapacity:10];
+        _IPv6BonjourAddresses = [NSMutableSet setWithCapacity:10];
+        _BonjourAddresses = [NSMutableSet setWithCapacity:10];
+        _netServer.allowedAddresses = _BonjourAddresses;
+        //NSMutableDictionary *_addressesForHostName = [NSMutableDictionary dictionaryWithCapacity:10];
 	}
 	return self;
 }
@@ -81,6 +90,8 @@ static MGSNetServerHandler *_sharedController = nil;
 	// publish the service that is available on this port
 	[self publishServerServiceOnPort:portNumber];
 	
+    [self listenForServers];
+    
 	// start the licence manager timer
 	if (!_LMTimer) {
 		_LMTimer = [NSTimer scheduledTimerWithTimeInterval:LMTestInterval target:self selector:@selector(serverDo:) userInfo:nil repeats:YES];
@@ -88,7 +99,6 @@ static MGSNetServerHandler *_sharedController = nil;
 
 	return YES;
 }
-
 /*
  
  licence manager timer has expired
@@ -153,6 +163,176 @@ errorExit:;
 	}
 	
 }
+
+#pragma mark -
+#pragma mark Bonjour listener
+
+/*
+ 
+ - listenForServers
+ 
+ */
+- (void)listenForServers
+{
+    /*
+     
+     rationale:
+     
+     we want to kknow if a request comes from the local domain or beyond.
+     subnet filtering is an option but there are problems with IPv6 (as used by Bonjour)
+     as the host prefixes may not agree , esp if DHCP6 or an IPv^ router is not used ie:
+     on my local LAN the IPv6 addresses all have different 64 bit host prefixes.
+     
+     so we just tray and track the Bonjour connection status instead.
+     
+     */
+    _serviceBrowser = [[NSNetServiceBrowser alloc] init];
+	[_serviceBrowser setDelegate:self];
+	[_serviceBrowser searchForServicesOfType:_serviceType inDomain:_domain];
+}
+
+/*
+ 
+ - netServiceBrowserWillSearch:
+ 
+ */
+- (void)netServiceBrowserWillSearch:(NSNetServiceBrowser *)netServiceBrowser
+{
+	MLog(DEBUGLOG, @"Service search starting: %@", netServiceBrowser);
+}
+/*
+ 
+ - netServiceBrowser:didFindService:moreComing:
+ 
+ */
+- (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser
+		   didFindService:(NSNetService *)netService moreComing:(BOOL)moreServicesComing
+{
+#pragma unused(netServiceBrowser)
+#pragma unused(moreServicesComing)
+	
+    // resolve the address.
+    // normally we do this prior to accessing the service but in this
+    //case we need to know the IP in advance for request filtering purposes.
+    //[_netServices addObject:netService];
+    [netService setDelegate:self];
+    [netService resolveWithTimeout:5];
+    
+	MLog(DEBUGLOG, @"Service found: %@", netService);
+}
+/*
+ 
+ - netServiceBrowser:moreComing:didNotSearch:
+ 
+ */
+- (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didNotSearch:(NSDictionary *)errorInfo
+{
+#pragma unused(netServiceBrowser)
+	
+	MLog(DEBUGLOG, @"Service did not search: %@", errorInfo);
+	
+	_serviceBrowser  = nil;
+}
+
+/*
+ 
+ - netServiceBrowserDidStopSearch:
+ 
+ */
+- (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)netServiceBrowser
+{
+	MLog(DEBUGLOG, @"Service search stopped: %@", netServiceBrowser);
+}
+
+/*
+ 
+ - netServiceBrowser:didRemoveService:moreComing:
+ 
+ */
+- (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser
+		 didRemoveService:(NSNetService *)netService moreComing:(BOOL)moreServicesComing
+{
+#pragma unused(netServiceBrowser)
+#pragma unused(moreServicesComing)
+	
+    // the netService seems not todefine its addresses at this stage.
+    // hostName is valid so we need to retain the addresses keyed by the hostName.
+    NSSet *addresses = [netService mgs_addressStrings];
+    if ([addresses count] == 0) {
+        
+        // this fails as the netService object is different.
+        // compare NSNetService objects with isEqual:
+        //NSSet *keyedAddresses = [_addressesForHostName objectForKey:[NSValue valueWithPointer:netService]];
+        //if (keyedAddresses) {
+        //    addresses = keyedAddresses;
+        //}
+    }
+
+    // TODO: figure out to get the addresses out of here.
+    // we have to retain a ref to the netservice but it cannot be a key in our dict.
+    if (addresses) {
+        [_IPv4BonjourAddresses minusSet:addresses];
+        [_IPv6BonjourAddresses minusSet:addresses];
+        [_BonjourAddresses minusSet:addresses];
+    }
+    
+	MLog(DEBUGLOG, @"Removing service: %@", netService);
+    MLogDebug(@"Remove: IPv4 Bonjour addresses:%@", _IPv4BonjourAddresses);
+    MLogDebug(@"Remove: IPv6 Bonjour addresses:%@", _IPv6BonjourAddresses);
+    MLogDebug(@"Remove: Bonjour addresses:%@", _BonjourAddresses);
+    
+    //[_addressesForHostName removeObjectForKey:[NSValue valueWithPointer:netService]];
+    //[_netServices removeObject:netService];
+
+}
+
+#pragma mark -
+#pragma mark NSNetServiceDelegate protocol
+
+/*
+ 
+ - netServiceDidResolveAddress:
+ 
+ */
+- (void)netServiceDidResolveAddress:(NSNetService *)sender
+{
+    MLog(DEBUGLOG, @"Service address resolved: %@", sender);
+
+    // get IPv4 addresses
+    NSSet *IPv4Addresses = [sender mgs_IPv4AddressStrings];
+    [_IPv4BonjourAddresses unionSet:IPv4Addresses];
+    [_BonjourAddresses unionSet:IPv4Addresses];
+    
+    // get IPv6 addresses
+    NSSet *IPv6Addresses = [sender mgs_IPv6AddressStrings];
+    [_IPv6BonjourAddresses unionSet:IPv6Addresses];
+    [_BonjourAddresses unionSet:IPv6Addresses];
+
+    // key all addresses by service pointer as non copyable.
+    // should be okay as we have retained a ref to the sender
+    // http://stackoverflow.com/questions/3509118/using-non-copyable-object-as-key-for-nsmutabledictionary
+    //[_addressesForHostName setObject:[sender mgs_addressStrings] forKey:[NSValue valueWithPointer:sender]];
+    
+    MLogDebug(@"Resolve: IPv4 Bonjour addresses:%@", _IPv4BonjourAddresses);
+    MLogDebug(@"Resolve: IPv6 Bonjour addresses:%@", _IPv6BonjourAddresses);
+    MLogDebug(@"Resolve: Bonjour addresses:%@", _BonjourAddresses);
+    
+    //[_netServices removeObject:sender];
+}
+/*
+ 
+ - netService:didNotResolve:
+ 
+ */
+- (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict
+{
+    #pragma unused(errorDict)
+    #pragma unused(sender)
+    
+    //[_netServices removeObject:sender];
+}
+
+
 @end
 
 //

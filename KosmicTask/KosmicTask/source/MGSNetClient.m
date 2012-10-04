@@ -16,6 +16,7 @@
 #import "MGSMotherModes.h"
 #import <sys/socket.h>
 #import <netinet/in.h>
+#import <arpa/inet.h>
 #import "NSNetService_errors.h"
 #import "MGSNetRequestPayload.h"
 #import "MGSNetMessage.h"
@@ -56,6 +57,12 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 - (void)heartbeatReplyNotReceivedForNetClient: (MGSNetClient *)netClient;
 - (void)sendRequestQueue;
 - (void)deleteSessionPassword;
+- (NSString *)hostFromAddress4:(struct sockaddr_in *)pSockaddr4;
+- (NSString *)hostFromAddress6:(struct sockaddr_in6 *)pSockaddr6;
+
+@property NSString *IPv4AddressString;       // IP v4 socket address string
+@property NSString *IPv6AddressString;       // IP v6 socket address string
+@property NSString *addressString;       // default socket address string
 @end
 
 //
@@ -85,6 +92,10 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 @synthesize validatedConnection = _validatedConnection;
 @synthesize sendExecuteValidation = _sendExecuteValidation;
 @synthesize securePublicTasks = _securePublicTasks;
+@synthesize IPv4AddressString = _IPv4AddressString;
+@synthesize IPv6AddressString = _IPv6AddressString;
+@synthesize addressString = _addressString;
+@synthesize useIPv6 = _useIPv6;
 
 /*
  
@@ -134,6 +145,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 		_authenticationDictionary = nil;
 		_serviceName = @"";
 		_serviceShortName = @"";
+        _useIPv6 = YES;
 		_hostType = MGSHostTypeUnknown;
 		self.hostStatus = MGSHostStatusNotYetAvailable;
 		_badHeartbeatCount = 0;
@@ -1212,42 +1224,118 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	NSAssert(_netService, @"net service is nil");
 	
 	NSArray *addresses = [_netService addresses];
-	NSAssert(addresses && [addresses count] > 0, @"invalid netservice addresses");
+    
+    NSAssert(addresses && [addresses count] > 0, @"invalid netservice addresses");
 
+
+    // note that we may find that there are two addresses.
+    // one for IPv4 and one for IPv6.
+    // in either case the port number will be the same.
+    
+    uint16_t port = 0;
+    uint16_t portIPv4 = 0;
+    uint16_t portIPv6 = 0;
+
+    // we may have more than one ipv4 or ipv6 address active when
+    // say LAN and wireless connections are both acrtive on a machine
+	for (NSData *addressData in addresses) {
+        // address is held as a struct in an NSData
 	
-	// address is held as a struct in an NSData
-	NSData *addressData = [addresses objectAtIndex:0];
-	
-	// extract port number
-	// note that we could have used this structure to form our AsyncSocket
-	// rather than the netService host name and socket.
-	struct sockaddr	*address		= (struct sockaddr *)[addressData bytes];
-	//uint16_t		family			= 0;
-	uint16_t		port			= 0;
-	
-	if(address->sa_family == AF_INET) {
-		MLog(DEBUGLOG, @"family is AF_INET");
-		//family	= AF_INET;
-		port	= ntohs(((struct sockaddr_in *)address)->sin_port);
-		
-	} else if(address->sa_family == AF_INET6) {
-		MLog(DEBUGLOG, @"family is AF_INET6");
-		//family	= AF_INET6;
-		port	= ntohs(((struct sockaddr_in6 *)address)->sin6_port);
-		
-	} else {
-		@throw [NSException exceptionWithName:@"MGSUnknownAddressFamily"
-									   reason:@"The address family is unknown"
-									 userInfo:nil];				
+         // extract port number
+        // note that we could have used this structure to form our AsyncSocket
+        // rather than the netService host name and socket.
+        struct sockaddr	*address = (struct sockaddr *)[addressData bytes];
+        
+        // IPv4
+        if(address->sa_family == AF_INET) {
+            portIPv4	= ntohs(((struct sockaddr_in *)address)->sin_port);
+            _IPv4AddressData = addressData;
+            self.IPv4AddressString = [self hostFromAddress4:(struct sockaddr_in *)address];
+            
+        // IPv6
+        } else if(address->sa_family == AF_INET6) {
+            portIPv6	= ntohs(((struct sockaddr_in6 *)address)->sin6_port);
+            _IPv6AddressData = addressData;
+            self.IPv6AddressString = [self hostFromAddress6:(struct sockaddr_in6 *)address];
+        } else {
+#ifdef MGS_THROW
+            @throw [NSException exceptionWithName:@"MGSUnknownAddressFamily"
+                                           reason:@"The address family is unknown"
+                                         userInfo:nil];
+#endif
+            MLog(DEBUGLOG, @"The address family is unknown");
+        }
 	}
-	
-	MLog(DEBUGLOG, @"service is on port %d", port);
-	MLog(DEBUGLOG, @"service is on host %@", [_netService hostName]);
-	
-	// host port
-	_hostPort = port;	
+    if (_IPv4AddressData && !_IPv6AddressData) {
+        port = portIPv4;
+    } else if (!_IPv4AddressData && _IPv6AddressData) {
+        port = portIPv6;
+    } else {
+        if (portIPv4 != portIPv6) {
+#ifdef MGS_THROW
+            @throw [NSException exceptionWithName:@"MGSIPv4AndIPv6PortMismatch"
+                                           reason:@"IPv4 and IPv6 ports do not match."
+                                         userInfo:nil];
+#endif
+            MLog(DEBUGLOG, @"IPv4 and IPv6 ports do not match.");
+            portIPv4 = 0;   //invalidate port
+            portIPv6 = 0;   //invalidate port
+        }
+        port = portIPv6;
+    }
+    
+
+	MLog(DEBUGLOG, @"service is on host: %@", [_netService hostName]);
+	if (self.IPv4AddressString) {
+        if (!_useIPv6) {
+            self.addressString = self.IPv4AddressString;
+        }
+        MLog(DEBUGLOG, @"service on IPv4: %@", self.IPv4AddressString);
+    }
+	if (self.IPv6AddressString) {
+        if (_useIPv6) {
+            self.addressString = self.IPv6AddressString;
+        }
+        MLog(DEBUGLOG, @"service on IPv6: %@", self.IPv6AddressString);
+    }
+	MLog(DEBUGLOG, @"service is on port: %d", port);
+
+	// assign host port
+	_hostPort = port;
 }
 
+/*
+ 
+ - hostFromAddress4:
+ 
+ */
+- (NSString *)hostFromAddress4:(struct sockaddr_in *)pSockaddr4
+{
+	char addrBuf[INET_ADDRSTRLEN];
+	
+	if(inet_ntop(AF_INET, &pSockaddr4->sin_addr, addrBuf, (socklen_t)sizeof(addrBuf)) == NULL)
+	{
+		[NSException raise:NSInternalInconsistencyException format:@"Cannot convert IPv4 address to string."];
+	}
+	
+	return [NSString stringWithCString:addrBuf encoding:NSASCIIStringEncoding];
+}
+/*
+ 
+ - hostFromAddress6:
+ 
+ */
+- (NSString *)hostFromAddress6:(struct sockaddr_in6 *)pSockaddr6
+{
+	char addrBuf[INET6_ADDRSTRLEN];
+	
+	if(inet_ntop(AF_INET6, &pSockaddr6->sin6_addr, addrBuf, (socklen_t)sizeof(addrBuf)) == NULL)
+	{
+		[NSException raise:NSInternalInconsistencyException format:@"Cannot convert IPv6 address to string."];
+	}
+	
+	return [NSString stringWithCString:addrBuf encoding:NSASCIIStringEncoding];
+}
 
 // assign host image according to current status
 - (void)assignHostImage
@@ -1427,6 +1515,8 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 
 	[self getHostPort];
 	[self sendRequestQueue];
+    
+    // noe that we don't retain a ref to the NSNetService iinstance
 	
 }
 

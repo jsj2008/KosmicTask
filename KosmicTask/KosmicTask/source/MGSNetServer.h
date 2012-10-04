@@ -14,9 +14,13 @@
 @interface MGSNetServer : NSObject <MGSNetSocketDelegate> {
 	MGSAsyncSocket *_acceptorSocket;
 	NSNetService *_netService;
-	NSMutableArray *_serverSockets;	
+	NSMutableArray *_serverSockets;
+    MGSAsyncSocket *_socketForInvalidAddress;
+    NSSet *_allowedAddresses;
 }
 @property NSNetService *netService;
+@property NSSet *allowedAddresses;
 
 - (BOOL)acceptOnPort:(UInt16)portNumber;
+
 @end
