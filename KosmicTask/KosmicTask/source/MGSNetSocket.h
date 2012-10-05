@@ -41,7 +41,7 @@ extern NSString *const MGSNetSocketException;
 
 @required
 - (void)netSocketDisconnect:(MGSNetSocket *)netSocket;
-
+- (BOOL)netSocketShouldConnect:(MGSNetSocket *)netSocket;
 @end
 
 @interface MGSNetSocket : NSObject {

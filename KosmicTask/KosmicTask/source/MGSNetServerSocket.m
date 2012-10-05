@@ -19,7 +19,9 @@
 #import "MGSPreferences.h"
 #import "MGSNetNegotiator.h"
 
-@interface MGSNetServerSocket(Private)
+// class extension
+@interface MGSNetServerSocket()
+- (BOOL)socketShouldConnect;
 @end
 
 //
@@ -61,6 +63,27 @@
 	return self;
 }
 
+/*
+ 
+ - socketShouldConnect
+ 
+ */
+- (BOOL)socketShouldConnect
+{
+    // tell delegate that socket connected
+	if ([self delegate] &&
+		[[self delegate] respondsToSelector:@selector(netSocketShouldConnect:)]) {
+        
+        // should we proceed with this request?
+        // if the host is from an undesirable IP we may not.
+		if (![[self delegate] netSocketShouldConnect:self]) {
+            
+            return NO;
+        }
+    }
+    
+    return YES;
+}
 /*
  
  accept on port
@@ -107,8 +130,10 @@
 	MLog(DEBUGLOG, @"Server socket disconnected.");
 	
 	// mark request as disconnected
-	[self.netRequest setSocketDisconnected];
-	
+	if (self.netRequest) {
+        [self.netRequest setSocketDisconnected];
+	}
+    
 	// tell delegate that socket disconnected
 	if ([self delegate] && 
 		[[self delegate] respondsToSelector:@selector(netSocketDisconnect:)]) {
@@ -116,7 +141,9 @@
 	}
 	
 	// conclude the request
-	[[MGSServerRequestManager sharedController] concludeRequest:self.netRequest];
+    if (self.netRequest) {
+        [[MGSServerRequestManager sharedController] concludeRequest:self.netRequest];
+    }
 }
 
 /*
@@ -133,6 +160,20 @@
 	MLogDebug(@"Socket did connect: local : %@ port: %u - remote : %@ port: %u ", 
 			  sock.localHost, sock.localPort, sock.connectedHost, sock.connectedPort);
 	
+    // screen connection here on in -socketShouldConnect:?
+    if (NO) {
+        if (![self socketShouldConnect]) {
+            
+            // enqueue a disconnect
+            [self.socket performSelector:@selector(disconnect) withObject:nil afterDelay:0];
+            
+            // should be nil anyway
+            self.netRequest = nil;
+            
+            return;
+        }
+    }
+    
 	// create new request
 	self.netRequest = [[MGSServerRequestManager sharedController] requestWithConnectedSocket:self];
 	
@@ -268,25 +309,23 @@
 
 /*
  
- on socket will connect
+ - onSocketWillConnect
  
  */
 -(BOOL)onSocketWillConnect:(MGSAsyncSocket *)sock
 {
 	#pragma unused(sock)
 	
+    // screen connection
+    if (![self socketShouldConnect]) {
+        
+        // returning no will close the socket.
+        // we have not received our connection delegate method yet
+        // so closing the socket should be okay.
+        return NO;
+    }
+    
 	return YES;
-	
-	/* SSL is now negotiated
-	 
-	if (_enableSSLSecurity) {
-		return [self startSecurity];
-	} else {
-		MLog(DEBUGLOG, @"SERVER SSL: disabled");
-		return YES;
-	}
-	
-	 */
 }
 
 #pragma mark -

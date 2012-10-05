@@ -22,6 +22,7 @@
 
 @synthesize netService = _netService;
 @synthesize allowedAddresses = _allowedAddresses;
+@synthesize bannedAddresses = _bannedAddresses;
 
 /*
  This method sets up the accept socket, but does not actually start it.
@@ -58,9 +59,11 @@
 	}	
 }
 
+#pragma mark -
+#pragma mark MGSNetSocketDelegate methods
 /*
  
- socket disconnected
+ - netSocketDisconnect:
  
  */
 - (void)netSocketDisconnect:(MGSNetSocket *)netSocket
@@ -73,33 +76,16 @@
 	MLog(DEBUGLOG, @"Server socket removed. count is %i.", [_serverSockets count]);
 
 }
-
-
-@end
-
-@implementation MGSNetServer(AsyncSocketDelegate)
 /*
- This method is called when a connection is accepted and a new socket is created.
- This is a good place to perform housekeeping and re-assignment -- assigning an
- controller for the new socket, or retaining it. Here, I add it to the array of
- sockets. However, the new socket has not yet connected and no information is
- available about the remote socket, so this is not a good place to screen incoming
- connections. Use onSocket:didConnectToHost:port: for that.
+ 
+ - netSocketShouldConnect:
+ 
  */
--(void) onSocket:(MGSAsyncSocket *)sock didAcceptNewSocket:(MGSAsyncSocket *)newSocket
+- (BOOL)netSocketShouldConnect:(MGSNetSocket *)netSocket
 {
-	#pragma unused(sock)
-	
-    // if we have a socket remaining from an invalid address
-    // then we can disconnect it now.
-    if (_socketForInvalidAddress) {
-        [_socketForInvalidAddress disconnect];
-        _socketForInvalidAddress = nil;
-    }
-
     // are remote connections allowed
     BOOL allowRemoteConnections = [[MGSPreferences standardUserDefaults] boolForKey:MGSAllowInternetAccess];
-
+    
     // we can only accept from outside the subnet if remote connections are allowed.
     // we do this by comparing the connection address with a list of addresses
     // obtained from Bonjour on the local network.
@@ -111,24 +97,50 @@
     if (!allowRemoteConnections) {
         
         // what is the remote address
-        NSString *address = [NSString mgs_StringWithSockAddrData:[newSocket connectedAddress]];
+        NSString *address = [NSString mgs_StringWithSockAddrData:[netSocket.socket connectedAddress]];
         
         // do we allow connection from this address?
         if (![self.allowedAddresses containsObject:address]) {
-            
-            // the socket is in the process of being constructed so disconnecting now would be
-            // inappropiate. so we cache the socket and disconnect it at the next available opportunity.
-            _socketForInvalidAddress = newSocket;
+            return NO;
         }
+        
+        // is this a banned address?
+        if ([self.bannedAddresses containsObject:address]) {
+            return NO;
+        }
+        
     }
-    
+
+    return YES;
+}
+
+@end
+
+@implementation MGSNetServer(AsyncSocketDelegate)
+/*
+ 
+ -onSocket:didAcceptNewSocket:
+ 
+ This method is called by the listening socket when it creates a new socket
+ 
+ This method is called when a connection is accepted and a new socket is created.
+ This is a good place to perform housekeeping and re-assignment -- assigning an
+ controller for the new socket, or retaining it. Here, I add it to the array of
+ sockets. However, the new socket has not yet connected and no information is
+ available about the remote socket, so this is not a good place to screen incoming
+ connections. Use onSocket:didConnectToHost:port: for that.
+ */
+-(void) onSocket:(MGSAsyncSocket *)sock didAcceptNewSocket:(MGSAsyncSocket *)newSocket
+{
+	#pragma unused(sock)
+	
+       
     // if socket allowed then use it
     if (!_socketForInvalidAddress) {
         MLog(DEBUGLOG, @"Server socket %d accepting connection.", [_serverSockets count] + 1);
         
         MGSNetServerSocket *serverSocket = [[MGSNetServerSocket alloc] initWithAcceptSocket:newSocket];
         [serverSocket setDelegate:self];
-        
         [_serverSockets addObject:serverSocket];
     }
 }

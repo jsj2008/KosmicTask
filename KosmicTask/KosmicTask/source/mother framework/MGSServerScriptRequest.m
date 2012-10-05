@@ -983,6 +983,10 @@ errorExit:;
  */
 - (BOOL)terminateRequestUUID:(NSString *)UUID
 {
+    if (!UUID) {
+        return NO;
+    }
+    
 	// terminate task with matching UUID
 	MGSScriptTask *scriptTask = [_scriptTasks objectForKey:UUID];
 	if (scriptTask) {

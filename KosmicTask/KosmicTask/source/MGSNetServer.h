@@ -17,9 +17,11 @@
 	NSMutableArray *_serverSockets;
     MGSAsyncSocket *_socketForInvalidAddress;
     NSSet *_allowedAddresses;
+    NSSet *_bannedAddresses;
 }
 @property NSNetService *netService;
-@property NSSet *allowedAddresses;
+@property (assign)NSSet *allowedAddresses;
+@property (assign)NSSet *bannedAddresses;
 
 - (BOOL)acceptOnPort:(UInt16)portNumber;
 
