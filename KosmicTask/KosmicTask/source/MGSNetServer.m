@@ -85,7 +85,10 @@
 {
     // are remote connections allowed
     BOOL allowRemoteConnections = [[MGSPreferences standardUserDefaults] boolForKey:MGSAllowInternetAccess];
-    
+
+    // what is the socket address
+    NSString *address = [NSString mgs_StringWithSockAddrData:[netSocket.socket connectedAddress]];
+
     // we can only accept from outside the subnet if remote connections are allowed.
     // we do this by comparing the connection address with a list of addresses
     // obtained from Bonjour on the local network.
@@ -96,19 +99,16 @@
     // reliable netork prefix - I think!
     if (!allowRemoteConnections) {
         
-        // what is the remote address
-        NSString *address = [NSString mgs_StringWithSockAddrData:[netSocket.socket connectedAddress]];
         
         // do we allow connection from this address?
         if (![self.allowedAddresses containsObject:address]) {
             return NO;
         }
-        
-        // is this a banned address?
-        if ([self.bannedAddresses containsObject:address]) {
-            return NO;
-        }
-        
+    }
+
+    // is this a banned address?
+    if ([self.bannedAddresses containsObject:address]) {
+        return NO;
     }
 
     return YES;
