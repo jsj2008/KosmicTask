@@ -87,7 +87,7 @@ static id _sharedInstance = nil;
 								 [NSNumber numberWithInteger:kMGSInternetSharingRequestStatus], MGSInternetSharingKeyRequest,
 								 nil];
 	
-	[self postDistributedRequestNotificationWithDict:requestDict];
+	[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
 }
 
 /*
@@ -112,6 +112,7 @@ static id _sharedInstance = nil;
 			self.mappingStatus = [[userInfo objectForKey:MGSInternetSharingKeyMappingStatus] integerValue];
 			self.externalPort = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
 			self.allowInternetAccess = [[userInfo objectForKey:MGSAllowInternetAccess] boolValue];
+			self.allowLocalAccess = [[userInfo objectForKey:MGSAllowLocalAccess] boolValue];
 			self.enableInternetAccessAtLogin = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
 			self.IPAddressString = [userInfo objectForKey:MGSInternetSharingKeyIPAddress];
 			self.gatewayName = [userInfo objectForKey:MGSInternetSharingKeyGatewayName];
@@ -129,7 +130,7 @@ static id _sharedInstance = nil;
 
 /*
  
- set allow internet access
+ - setAllowInternetAccess:
  
  */
 - (void)setAllowInternetAccess:(BOOL)value
@@ -144,7 +145,29 @@ static id _sharedInstance = nil;
 									 [NSNumber numberWithBool:value], MGSAllowInternetAccess,
 									 nil];
 		
-		[self postDistributedRequestNotificationWithDict:requestDict];
+		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
+		
+	}
+}
+
+/*
+ 
+ - setAllowLocalAccess:
+ 
+ */
+- (void)setAllowLocalAccess:(BOOL)value
+{
+	[super setAllowLocalAccess:value];
+	
+	// if not processing response
+	if (!_processingResponse) {
+		
+		NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys:
+									 [NSNumber numberWithInteger:kMGSInternetSharingRequestLocalAccess], MGSInternetSharingKeyRequest,
+									 [NSNumber numberWithBool:value], MGSAllowLocalAccess,
+									 nil];
+		
+		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:NO];
 		
 	}
 }
@@ -166,34 +189,11 @@ static id _sharedInstance = nil;
 									 [NSNumber numberWithBool:value], MGSEnableInternetAccessAtLogin,
 									 nil];
 		
-		[self postDistributedRequestNotificationWithDict:requestDict];
+		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:NO];
 		
 	}
 }
 
-/*
- 
- set external port
- 
- */
-/*
-- (void)setExternalPort:(NSInteger)value
-{
-	[super setExternalPort:value];
-	
-	// if not processing response
-	if (!_processingResponse) {
-		
-		NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys: 
-									 [NSNumber numberWithInteger:kMGSInternetSharingRequestStartRemapPort], MGSInternetSharingKeyRequest,
-									 [NSNumber numberWithInteger:value], MGSExternalPortNumber,
-									 nil];
-		
-		[self postDistributedRequestNotificationWithDict:requestDict];
-		
-	}
-}
-*/
 /*
  
  set mapping status _
@@ -279,7 +279,7 @@ static id _sharedInstance = nil;
 								 [NSNumber numberWithInteger:requestID], MGSInternetSharingKeyRequest,
 								 [NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
 								 nil];
-	[self postDistributedRequestNotificationWithDict:requestDict];
+	[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
 	
 }
 @end

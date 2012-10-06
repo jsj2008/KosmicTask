@@ -8,6 +8,7 @@
 
 #import "NSString_Mugginsoft.h"
 #import "MGSTempStorage.h"
+#import "MGSNetwork.h"
 #import <sys/socket.h>
 #import <netinet/in.h>
 #import <arpa/inet.h>
@@ -229,14 +230,37 @@
  - mgs_isURLorIP
  
  */
-- (BOOL)mgs_isURLorIP
+- (BOOL)mgs_isURLorIPAddress
 {
     // http://stackoverflow.com/questions/8249420/alter-regex-to-allow-ip-address-when-checking-url
+    // IPv4 only
+    /*
 	NSString *regex = @"^(http(s?):\\/\\/)?(((www\\.)?+[a-zA-Z0-9\\.\\-\\_]+(\\.[a-zA-Z]{2,20})+)|(\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b))(\\/[a-zA-Z0-9\\_\\-\\s\\.\\/\\?\\%\\#\\&\\=]*)?$";
-	
+    
 	// supported non standard regex format is at http://www.icu-project.org/userguide/regexp.html
 	NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
 	return [regextest evaluateWithObject:self];
+     */
+    return ([self mgs_isURL] || [self mgs_isIPAddress]);
+}
+/*
+ 
+ - mgs_isIPAddress
+ 
+ */
+- (BOOL)mgs_isIPAddress
+{
+    const char *utf8 = [self UTF8String];
+    int success;
+    
+    struct in_addr dst;
+    success = inet_pton(AF_INET, utf8, &dst);
+    if (success != 1) {
+        struct in6_addr dst6;
+        success = inet_pton(AF_INET6, utf8, &dst6);
+    }
+    
+    return (success == 1 ? TRUE : FALSE);
 }
 /*
  
@@ -295,32 +319,9 @@
  */
 + (NSString *)mgs_StringWithSockAddrData:(NSData *)addressData
 {
-    char addr[256];
-    NSString *address = nil;
-    BOOL addressIsValid = NO;
-    
     struct sockaddr *sa = (struct sockaddr *)[addressData bytes];
     
-    if(sa->sa_family == AF_INET6) {
-        struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)sa;
-        
-        if(inet_ntop(AF_INET6, &sin6->sin6_addr, addr, sizeof(addr)))
-        {
-            addressIsValid = YES;
-        }
-    } else if(sa->sa_family == AF_INET) {
-        struct sockaddr_in *sin = (struct sockaddr_in *)sa;
-        
-        if(inet_ntop(AF_INET, &sin->sin_addr, addr, sizeof(addr)))
-        {
-            addressIsValid = YES;
-        }
-    }
-    
-    if (addressIsValid) {
-        address = [NSString stringWithCString:addr encoding:NSASCIIStringEncoding];
-    }
-    
+    NSString *address = [MGSNetwork sockaddrAddress:sa];
     return address;
 }
 

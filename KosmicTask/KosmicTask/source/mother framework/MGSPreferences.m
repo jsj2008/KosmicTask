@@ -30,6 +30,7 @@ NSString *MGSEnableLoggingToConsoleOnly = @"MGSEnableLoggingToConsoleOnly";
 NSString *MGSTaskResultDisplayLocked = @"MGSTaskResultDisplayLocked";
 NSString *MGSExternalPortNumber = @"MGSExternalPortNumber";
 NSString *MGSAllowInternetAccess = @"MGSAllowInternetAccess";
+NSString *MGSAllowLocalAccess = @"MGSAllowLocalAccess";
 NSString *MGSEnableInternetAccessAtLogin = @"MGSEnableInternetAccessAtLogin";
 NSString *MGSDisplayGroupListWhenSidebarHidden = @"MGSDisplayGroupListWhenSidebarHidden";
 NSString *MGSDeferRemoteClientConnections = @"MGSDeferRemoteClientConnections";
@@ -202,7 +203,12 @@ static MGSPreferences *_standardUserDefaults = nil;
 		[self setObject:[NSNumber numberWithInteger:MOTHER_IANA_REGISTERED_PORT] forKey:MGSExternalPortNumber];
 	}
 
-	// allow internet access 
+	// allow local access 
+	if (![self objectForKey: MGSAllowLocalAccess]) {
+		[self setObject:[NSNumber numberWithBool:YES] forKey:MGSAllowLocalAccess];
+	}
+
+    // allow internet access
 	if (![self objectForKey: MGSAllowInternetAccess]) {
 		[self setObject:[NSNumber numberWithBool:NO] forKey:MGSAllowInternetAccess];
 	}

@@ -117,7 +117,7 @@ const char MGSContextFavoritesSelectionIndex;
     if ([self.address length] == 0) {
         valid = NO;
     }
-    if (![self.address mgs_isURLorIP]) {
+    if (![self.address mgs_isURLorIPAddress]) {
         valid = NO;
     }
     if (self.portNumber <= 1024 || self.portNumber > 65535) {

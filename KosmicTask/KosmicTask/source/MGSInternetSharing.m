@@ -33,6 +33,7 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 @synthesize externalPort = _externalPort;
 @synthesize listeningPort = _listeningPort;
 @synthesize allowInternetAccess = _allowInternetAccess;
+@synthesize allowLocalAccess = _allowLocalAccess;
 @synthesize enableInternetAccessAtLogin = _enableInternetAccessAtLogin;
 @synthesize noteObjectString = _noteObjectString;
 @synthesize mappingStatus = _mappingStatus;
@@ -59,12 +60,13 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 		_listeningPort = MOTHER_IANA_REGISTERED_PORT;
 		_externalPort = MOTHER_IANA_REGISTERED_PORT;
 		_allowInternetAccess = NO;
+        _allowLocalAccess = YES;
 		_enableInternetAccessAtLogin = NO;
 		_IPAddressString = NSLocalizedString(@"not available", @"Internet sharing IP address not available");
 		_gatewayName = NSLocalizedString(@"not available", @"Internet sharing gateway name not available");
 		_mappingStatus = kMGSInternetSharingPortNotMapped;
 		_noteObjectString = [[MGSPortMapper class] className];
-		_responseReceived = NO;
+		_responseReceived = YES;
 		_activeStatusImage = [[[MGSImageManager sharedManager] greenDot] copy];
 		_inactiveStatusImage = [[[MGSImageManager sharedManager] redDot] copy];
 		_activeStatusLargeImage = [[[MGSImageManager sharedManager] greenDotLarge] copy];
@@ -88,10 +90,12 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
  post distributed request notification with dictionary
  
  */
-- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict
+- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict waitOnResponse:(BOOL)wait
 {
-	self.responseReceived = NO;
-	
+	if (wait) {
+        self.responseReceived = NO;
+	}
+    
 	// send out a distributed notification
 	[[NSDistributedNotificationCenter defaultCenter] 
 		postNotificationName: MGSDistNoteInternetSharingRequest
@@ -169,6 +173,15 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
     } else {
         self.allowInternetAccessStatusImage = _inactiveStatusImage;
     }
+}
+
+/*
+ 
+ - setAllowLocalAccess:
+ 
+ */
+-(void)setAllowLocalAccess:(BOOL)value {
+    _allowLocalAccess = value;
 }
 
 /*

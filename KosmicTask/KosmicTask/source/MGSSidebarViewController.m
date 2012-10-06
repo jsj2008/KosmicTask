@@ -1693,7 +1693,11 @@ char MGSScriptDictContext;
 	MGSOutlineViewNode *myNode = [node representedObject];
 	MGSOutlineViewNode *clientNode = [myNode ancestorNodeWithRepresentedClass:[MGSNetClient class]];
 	MGSNetClient *netClient = [clientNode representedObject];
-	NSAssert(netClient, @"net client is nil");
+	if (!netClient) {
+        MLogInfo(@"MGSNetClient is nil");
+        return;
+    }
+    
 	switch ([netClient applicationWindowContext].runMode) {
 		case kMGSMotherRunModeConfigure:
 			[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteEditSelectedTask object:nil userInfo:nil];

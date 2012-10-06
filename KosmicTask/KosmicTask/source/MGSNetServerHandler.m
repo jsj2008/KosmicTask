@@ -72,14 +72,14 @@ static MGSNetServerHandler *_sharedController = nil;
         _resolvedNetServices = [NSMutableArray  arrayWithCapacity:10];
         _IPv4BonjourAddresses = [NSMutableSet setWithCapacity:10];
         _IPv6BonjourAddresses = [NSMutableSet setWithCapacity:10];
-        _allowedAddresses = [NSMutableSet setWithCapacity:10];
+        _localNetworkAddresses = [NSMutableSet setWithCapacity:10];
         _bannedAddresses = [NSMutableSet setWithCapacity:10];
         
         // we should be able to load banned addresses up from a plist or preferences
 #ifdef MUGGINSOFT_DEBUG
-        [_bannedAddresses addObject:@"192.168.10.50"];  // block this IP for connection block testing
+        //[_bannedAddresses addObject:@"192.168.10.50"];  // block this IP for connection block testing
 #endif
-        _netServer.allowedAddresses = _allowedAddresses;
+        _netServer.localNetworkAddresses = _localNetworkAddresses;
         _netServer.bannedAddresses = _bannedAddresses;
         _addressesForHostName = [NSMutableDictionary dictionaryWithCapacity:10];
 	}
@@ -284,13 +284,13 @@ errorExit:;
     if (addresses) {
         [_IPv4BonjourAddresses minusSet:addresses];
         [_IPv6BonjourAddresses minusSet:addresses];
-        [_allowedAddresses minusSet:addresses];
+        [_localNetworkAddresses minusSet:addresses];
     }
     
 	MLog(DEBUGLOG, @"Removing service: %@", netService);
     MLogDebug(@"Remove: IPv4 Bonjour addresses:%@", _IPv4BonjourAddresses);
     MLogDebug(@"Remove: IPv6 Bonjour addresses:%@", _IPv6BonjourAddresses);
-    MLogDebug(@"Remove: Allowed addresses:%@", _allowedAddresses);
+    MLogDebug(@"Remove: Local network addresses:%@", _localNetworkAddresses);
     
     if (resolvedNetService) {
         [_addressesForHostName removeObjectForKey:[NSValue valueWithPointer: resolvedNetService]];
@@ -314,12 +314,12 @@ errorExit:;
     // get IPv4 addresses
     NSSet *IPv4Addresses = [sender mgs_IPv4AddressStrings];
     [_IPv4BonjourAddresses unionSet:IPv4Addresses];
-    [_allowedAddresses unionSet:IPv4Addresses];
+    [_localNetworkAddresses unionSet:IPv4Addresses];
     
     // get IPv6 addresses
     NSSet *IPv6Addresses = [sender mgs_IPv6AddressStrings];
     [_IPv6BonjourAddresses unionSet:IPv6Addresses];
-    [_allowedAddresses unionSet:IPv6Addresses];
+    [_localNetworkAddresses unionSet:IPv6Addresses];
 
     // key all addresses by service pointer as non copyable.
     // should be okay as we have retained a ref to the sender
@@ -329,7 +329,7 @@ errorExit:;
     
     MLogDebug(@"Resolve: IPv4 Bonjour addresses:%@", _IPv4BonjourAddresses);
     MLogDebug(@"Resolve: IPv6 Bonjour addresses:%@", _IPv6BonjourAddresses);
-    MLogDebug(@"Resolve: Allowed addresses:%@", _allowedAddresses);
+    MLogDebug(@"Resolve: Local network addresses:%@", _localNetworkAddresses);
 }
 /*
  

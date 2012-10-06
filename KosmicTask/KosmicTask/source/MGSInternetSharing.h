@@ -23,6 +23,7 @@ typedef enum _MGSInternetSharingRequestID {
 	kMGSInternetSharingRequestStopMapping = 3,
 	kMGSInternetSharingRequestStartAtLogin = 4,
 	kMGSInternetSharingRequestRemapPort = 5,
+    kMGSInternetSharingRequestLocalAccess = 6,
 } MGSInternetSharingRequestID;
 
 typedef enum _MGSInternetSharingMappingStatus {
@@ -38,6 +39,7 @@ typedef enum _MGSInternetSharingMappingStatus {
 	NSInteger _externalPort;
 	NSInteger _listeningPort;
 	BOOL _allowInternetAccess;
+    BOOL _allowLocalAccess;
 	BOOL _enableInternetAccessAtLogin;
 	NSString *_noteObjectString;
 	MGSInternetSharingMappingStatus _mappingStatus;
@@ -57,6 +59,7 @@ typedef enum _MGSInternetSharingMappingStatus {
 @property NSInteger externalPort;
 @property NSInteger listeningPort;
 @property BOOL allowInternetAccess;
+@property BOOL allowLocalAccess;
 @property BOOL enableInternetAccessAtLogin;
 @property (readonly) NSString *noteObjectString;
 @property MGSInternetSharingMappingStatus mappingStatus;
@@ -71,6 +74,6 @@ typedef enum _MGSInternetSharingMappingStatus {
 @property (copy) NSImage *inactiveStatusLargeImage;
 
 - (void)dispose;
-- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict;
+- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict waitOnResponse:(BOOL)wait;
 - (void)postDistributedResponseNotificationWithDict:(NSDictionary *)dict;
 @end

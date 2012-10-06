@@ -24,8 +24,9 @@
 - (NSString *)mgs_StringByReplacingCharactersInSet:(NSCharacterSet *) set withString:(NSString *) string;
 - (NSString *)mgs_stringByRemovingNewLinesAndTabs;
 - (BOOL)mgs_isURL;
-- (BOOL)mgs_isURLorIP;
+- (BOOL)mgs_isURLorIPAddress;
 + (NSString *)mgs_StringWithSockAddrData:(NSData *)addressData;
+- (BOOL)mgs_isIPAddress;
 @end
 
 @interface NSMutableString (Mugginsoft)

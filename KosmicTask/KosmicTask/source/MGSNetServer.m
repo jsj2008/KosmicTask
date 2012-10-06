@@ -13,6 +13,7 @@
 #import <netinet/in.h>
 #import "MGSPreferences.h"
 #import "NSString_Mugginsoft.h"
+#import "MGSNetwork.h"
 
 //
 // each instance of MGSNetServer communicates with 
@@ -21,7 +22,7 @@
 @implementation MGSNetServer
 
 @synthesize netService = _netService;
-@synthesize allowedAddresses = _allowedAddresses;
+@synthesize localNetworkAddresses = _allowedAddresses;
 @synthesize bannedAddresses = _bannedAddresses;
 
 /*
@@ -82,7 +83,7 @@
  
  */
 - (BOOL)netSocketShouldConnect:(MGSNetSocket *)netSocket
-{
+{    
     // are remote connections allowed
     BOOL allowRemoteConnections = [[MGSPreferences standardUserDefaults] boolForKey:MGSAllowInternetAccess];
 
@@ -96,18 +97,37 @@
     //
     // For IPv4 it is possible to do network prefix/subnet comparisons to see if the address
     // is in the subnet but for IPv6 it is harder. There may be no DHCP6 server and there may be no
-    // reliable netork prefix - I think!
+    // reliable network prefix - I think!
     if (!allowRemoteConnections) {
         
         
         // do we allow connection from this address?
-        if (![self.allowedAddresses containsObject:address]) {
+        if (![self.localNetworkAddresses containsObject:address]) {
+            
+            MLogInfo(@"Connection refused for remote IP: %@", address);
+
             return NO;
         }
     }
 
+    // are local connections allowed
+    BOOL allowLocalConnections = [[MGSPreferences standardUserDefaults] boolForKey:MGSAllowLocalAccess];
+    if (!allowLocalConnections) {
+        
+        // only allow local host connections
+        if (![[MGSNetwork localHostAddressesSet] containsObject:address]) {
+            
+            MLogInfo(@"Connection refused for local IP: %@", address);
+            
+            return NO;
+        }
+    }
+    
     // is this a banned address?
     if ([self.bannedAddresses containsObject:address]) {
+        
+        MLogInfo(@"Connection refused for banned IP: %@", address);
+
         return NO;
     }
 

@@ -54,6 +54,7 @@
 		}
 		
 		self.allowInternetAccess = [preferences boolForKey:MGSAllowInternetAccess];
+        self.allowLocalAccess = [preferences boolForKey:MGSAllowLocalAccess];
 		self.enableInternetAccessAtLogin = [preferences boolForKey:MGSEnableInternetAccessAtLogin];
 		
 		if (self.enableInternetAccessAtLogin) {
@@ -72,7 +73,8 @@
  
  request notification
  
- the sender of this notification will be waiting for a response
+ the sender of this notification will expect for a response and may
+ be showing a wait state.
  
  */
 - (void)request:(NSNotification *)note
@@ -93,7 +95,13 @@
 		case kMGSInternetSharingRequestInternetAccess:
 			self.allowInternetAccess = [[userInfo objectForKey:MGSAllowInternetAccess] boolValue];
 			break;
-			
+
+        // local access request
+		case kMGSInternetSharingRequestLocalAccess:
+			self.allowLocalAccess = [[userInfo objectForKey:MGSAllowLocalAccess] boolValue];
+            [self postStatusNotification];
+			break;
+
 		// start mapping request
 		case kMGSInternetSharingRequestStartMapping:;
 			NSInteger externalPort = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
@@ -139,7 +147,17 @@
 
 /*
  
- set allow internet access
+ - setAllowLocalAccess:
+ 
+ */
+- (void)setAllowLocalAccess:(BOOL)value
+{
+	[super setAllowLocalAccess:value];
+}
+
+/*
+ 
+ setAllowInternetAccess:
  
  */
 - (void)setAllowInternetAccess:(BOOL)value
@@ -286,6 +304,7 @@
 	// write out preferences
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.enableInternetAccessAtLogin] forKey:MGSEnableInternetAccessAtLogin];
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.allowInternetAccess] forKey:MGSAllowInternetAccess];
+	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.allowLocalAccess] forKey:MGSAllowLocalAccess];
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithInteger:self.externalPort] forKey:MGSExternalPortNumber];
 	[[MGSPreferences standardUserDefaults] synchronize];
 	
@@ -306,6 +325,7 @@
 			[self gatewayName], MGSInternetSharingKeyGatewayName,
 			[NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
 			[NSNumber numberWithBool:self.allowInternetAccess], MGSAllowInternetAccess,
+            [NSNumber numberWithBool:self.allowLocalAccess], MGSAllowLocalAccess,
 			[NSNumber numberWithBool:self.enableInternetAccessAtLogin], MGSEnableInternetAccessAtLogin,
 			nil];
 	

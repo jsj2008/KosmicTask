@@ -23,6 +23,7 @@ extern NSString *MGSEnableLoggingToConsoleOnly;
 extern NSString *MGSEnableExceptionPanel;
 extern NSString *MGSExternalPortNumber;
 extern NSString *MGSAllowInternetAccess;
+extern NSString *MGSAllowLocalAccess;
 extern NSString *MGSEnableInternetAccessAtLogin;
 extern NSString *MGSTaskResultDisplayLocked;
 extern NSString *MGSDisplayGroupListWhenSidebarHidden;

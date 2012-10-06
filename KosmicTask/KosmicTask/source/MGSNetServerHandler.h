@@ -23,7 +23,7 @@
     NSMutableArray *_resolvedNetServices;
     NSMutableSet *_IPv4BonjourAddresses;
     NSMutableSet *_IPv6BonjourAddresses;
-    NSMutableSet *_allowedAddresses;
+    NSMutableSet *_localNetworkAddresses;
     NSMutableSet *_bannedAddresses;
     NSMutableDictionary *_addressesForHostName;
 }

@@ -20,7 +20,7 @@
     NSSet *_bannedAddresses;
 }
 @property NSNetService *netService;
-@property (assign)NSSet *allowedAddresses;
+@property (assign)NSSet *localNetworkAddresses;
 @property (assign)NSSet *bannedAddresses;
 
 - (BOOL)acceptOnPort:(UInt16)portNumber;

@@ -671,6 +671,9 @@
 		AB8FC24F0D5BA24500583172 /* MGSNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8FC24E0D5BA24500583172 /* MGSNotifications.m */; };
 		AB9029DB0D44A4170077ADE4 /* MGSPath.h in Headers */ = {isa = PBXBuildFile; fileRef = AB9029D90D44A4170077ADE4 /* MGSPath.h */; };
 		AB9029DC0D44A4170077ADE4 /* MGSPath.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9029DA0D44A4170077ADE4 /* MGSPath.m */; };
+		AB9132F91620469100B4B032 /* MGSNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = AB9132F71620469100B4B032 /* MGSNetwork.h */; };
+		AB9132FA1620469100B4B032 /* MGSNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9132F81620469100B4B032 /* MGSNetwork.m */; };
+		AB9132FB1620518100B4B032 /* MGSNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9132F81620469100B4B032 /* MGSNetwork.m */; };
 		AB91F7250D8C18A300ECE09E /* AlertTriangle.icns in Resources */ = {isa = PBXBuildFile; fileRef = AB91F7240D8C18A300ECE09E /* AlertTriangle.icns */; };
 		AB91F8220D8C29ED00ECE09E /* OSAKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA858C40D5CAE910077F640 /* OSAKit.framework */; };
 		AB921D350D550917004E4CA0 /* ComputerShriek.icns in Resources */ = {isa = PBXBuildFile; fileRef = AB921D340D550917004E4CA0 /* ComputerShriek.icns */; };
@@ -4095,6 +4098,8 @@
 		AB9029D90D44A4170077ADE4 /* MGSPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPath.h; sourceTree = "<group>"; };
 		AB9029DA0D44A4170077ADE4 /* MGSPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSPath.m; sourceTree = "<group>"; };
 		AB907C4E106545DB00FF43CE /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
+		AB9132F71620469100B4B032 /* MGSNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNetwork.h; sourceTree = "<group>"; };
+		AB9132F81620469100B4B032 /* MGSNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNetwork.m; sourceTree = "<group>"; };
 		AB91F7240D8C18A300ECE09E /* AlertTriangle.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AlertTriangle.icns; sourceTree = "<group>"; };
 		AB921D340D550917004E4CA0 /* ComputerShriek.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ComputerShriek.icns; sourceTree = "<group>"; };
 		AB921D5E0D550AE9004E4CA0 /* NetworkBall.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = NetworkBall.icns; sourceTree = "<group>"; };
@@ -6153,6 +6158,8 @@
 				ABBB3A560E71775C008BA694 /* Signal Handler */,
 				ABAFC8C00DF9C96400349FC3 /* View controllers */,
 				AB3BD5D81051B9B8003AAB9C /* Views */,
+				AB9132F71620469100B4B032 /* MGSNetwork.h */,
+				AB9132F81620469100B4B032 /* MGSNetwork.m */,
 			);
 			name = "Application framework";
 			path = "mother framework";
@@ -8992,6 +8999,7 @@
 				AB019244150A2EBC00DA7747 /* MGSDisposableObject.h in Headers */,
 				AB01924E150ABE7200DA7747 /* NSObject+MGSDisposable.h in Headers */,
 				AB0B2A41161D882A00702D0E /* NSNetService+Mugginsoft.h in Headers */,
+				AB9132F91620469100B4B032 /* MGSNetwork.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11766,6 +11774,7 @@
 				AB686709150E4D2A00421ACF /* MGSDisposableObject.m in Sources */,
 				AB77742F159A5774002BE674 /* MGSChildScrollView.m in Sources */,
 				AB0B2A42161D882A00702D0E /* NSNetService+Mugginsoft.m in Sources */,
+				AB9132FA1620469100B4B032 /* MGSNetwork.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12078,6 +12087,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB9132FB1620518100B4B032 /* MGSNetwork.m in Sources */,
 				AB27AE731189E8D400132977 /* MGSScriptRunner.m in Sources */,
 				AB27AE741189E8E100132977 /* MGSTaskPlist.m in Sources */,
 				AB27AE751189E8EF00132977 /* NSError_Mugginsoft.m in Sources */,
