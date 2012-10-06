@@ -24,6 +24,8 @@ typedef enum _MGSInternetSharingRequestID {
 	kMGSInternetSharingRequestStartAtLogin = 4,
 	kMGSInternetSharingRequestRemapPort = 5,
     kMGSInternetSharingRequestLocalAccess = 6,
+    kMGSInternetSharingRequestAllowLocalAuthentication = 7,
+    kMGSInternetSharingRequestAllowRemoteAuthentication = 8,
 } MGSInternetSharingRequestID;
 
 typedef enum _MGSInternetSharingMappingStatus {
@@ -36,11 +38,14 @@ typedef enum _MGSInternetSharingMappingStatus {
 @private
 	NSImage *_statusImage;
     NSImage *_allowInternetAccessStatusImage;
+    NSImage *_allowLocalAccessStatusImage;
 	NSInteger _externalPort;
 	NSInteger _listeningPort;
 	BOOL _allowInternetAccess;
     BOOL _allowLocalAccess;
 	BOOL _enableInternetAccessAtLogin;
+    BOOL _allowLocalUsersToAuthenticate;
+    BOOL _allowRemoteUsersToAuthenticate;
 	NSString *_noteObjectString;
 	MGSInternetSharingMappingStatus _mappingStatus;
 	NSString *_statusString;
@@ -56,11 +61,14 @@ typedef enum _MGSInternetSharingMappingStatus {
 
 @property (readonly) NSImage *statusImage;
 @property (readonly) NSImage *allowInternetAccessStatusImage;
+@property (readonly) NSImage *allowLocalAccessStatusImage;
 @property NSInteger externalPort;
 @property NSInteger listeningPort;
 @property BOOL allowInternetAccess;
 @property BOOL allowLocalAccess;
 @property BOOL enableInternetAccessAtLogin;
+@property BOOL allowLocalUsersToAuthenticate;
+@property BOOL allowRemoteUsersToAuthenticate;
 @property (readonly) NSString *noteObjectString;
 @property MGSInternetSharingMappingStatus mappingStatus;
 @property (readonly) NSString *statusString;

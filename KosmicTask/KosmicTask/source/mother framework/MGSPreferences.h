@@ -59,6 +59,8 @@ extern NSString *MGSResultViewFontName;
 extern NSString *MGSResultViewFontSize;
 extern NSString *MGSUseSeparateNetworkThread;
 extern NSString *MGSSendCocoaTaskCRashReports;
+extern NSString *MGSAllowLocalUsersToAuthenticate;
+extern NSString *MGSAllowRemoteUsersToAuthenticate;
 
 @interface MGSPreferences : NSObject {
 

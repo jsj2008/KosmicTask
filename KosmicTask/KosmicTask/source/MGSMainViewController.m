@@ -176,7 +176,8 @@ static char MGSSeletedDetailViewSegmentContext;
 	
 	// bind
 	[internetSharingButton bind:NSImageBinding toObject:[MGSInternetSharingClient sharedInstance] withKeyPath:@"allowInternetAccessStatusImage" options:nil];
-
+	[localSharingButton bind:NSImageBinding toObject:[MGSInternetSharingClient sharedInstance] withKeyPath:@"allowLocalAccessStatusImage" options:nil];
+    
 	// load user defaults
 	[self loadUserDefaults];
 	

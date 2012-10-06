@@ -16,6 +16,7 @@
 // class extension
 @interface MGSInternetSharing()
 @property () NSImage *allowInternetAccessStatusImage;
+@property () NSImage *allowLocalAccessStatusImage;
 @end
 
 @interface MGSInternetSharing(Private)
@@ -47,6 +48,9 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 @synthesize activeStatusLargeImage = _activeStatusLargeImage;
 @synthesize inactiveStatusLargeImage = _inactiveStatusLargeImage;
 @synthesize allowInternetAccessStatusImage = _allowInternetAccessStatusImage;
+@synthesize allowLocalAccessStatusImage = _allowLocalAccessStatusImage;
+@synthesize allowLocalUsersToAuthenticate = _allowLocalUsersToAuthenticate;
+@synthesize allowRemoteUsersToAuthenticate = _allowRemoteUsersToAuthenticate;
 
 /*
  
@@ -61,6 +65,8 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 		_externalPort = MOTHER_IANA_REGISTERED_PORT;
 		_allowInternetAccess = NO;
         _allowLocalAccess = YES;
+        _allowLocalUsersToAuthenticate = YES;
+        _allowRemoteUsersToAuthenticate = NO;
 		_enableInternetAccessAtLogin = NO;
 		_IPAddressString = NSLocalizedString(@"not available", @"Internet sharing IP address not available");
 		_gatewayName = NSLocalizedString(@"not available", @"Internet sharing gateway name not available");
@@ -182,8 +188,32 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
  */
 -(void)setAllowLocalAccess:(BOOL)value {
     _allowLocalAccess = value;
+    if (_allowLocalAccess) {
+        self.allowLocalAccessStatusImage = _activeStatusImage;
+    } else {
+        self.allowLocalAccessStatusImage = _inactiveStatusImage;
+    }
 }
 
+/*
+ 
+ - setAllowRemoteUsersToAuthenticate:
+ 
+ */
+- (void)setAllowRemoteUsersToAuthenticate:(BOOL)value
+{
+    _allowRemoteUsersToAuthenticate = value;
+}
+
+/*
+ 
+ - setAllowLocalUsersToAuthenticate:
+ 
+ */
+- (void)setAllowLocalUsersToAuthenticate:(BOOL)value
+{
+    _allowLocalUsersToAuthenticate = value;
+}
 /*
  
  validate external port

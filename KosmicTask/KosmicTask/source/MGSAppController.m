@@ -325,6 +325,17 @@
 
 /*
  
+ configure local sharing
+ 
+ */
+- (IBAction)configureLocalSharing:(id)sender
+{
+#pragma unused(sender)
+	
+	[[MGSPrefsWindowController sharedPrefsWindowController] showLocalNetworkPreferences];
+}
+/*
+ 
  send log
  
  */

@@ -36,6 +36,7 @@ extern NSString * MGSDefaultStartAtLogin;
 	BOOL _startAtLogin;
 	
 	NSString *_internetTabIdentifier;
+    NSString *_selectedNetworkTabIdentifier;
 }
 
 
@@ -47,6 +48,9 @@ extern NSString * MGSDefaultStartAtLogin;
 - (void)updateServerPreferences;
 - (void)retrieveServerPreferences;
 - (void)showInternetPreferences;
+- (void)showLocalNetworkPreferences;
 - (IBAction)showSSLCertficate:(id)sender;
 - (IBAction)revertToStandardSettings:(id)sender;
+
+@property (assign) NSString *selectedNetworkTabIdentifier;;
 @end

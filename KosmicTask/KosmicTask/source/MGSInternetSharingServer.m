@@ -56,7 +56,9 @@
 		self.allowInternetAccess = [preferences boolForKey:MGSAllowInternetAccess];
         self.allowLocalAccess = [preferences boolForKey:MGSAllowLocalAccess];
 		self.enableInternetAccessAtLogin = [preferences boolForKey:MGSEnableInternetAccessAtLogin];
-		
+		self.allowLocalUsersToAuthenticate = [preferences boolForKey:MGSAllowLocalUsersToAuthenticate];
+		self.allowRemoteUsersToAuthenticate = [preferences boolForKey:MGSAllowRemoteUsersToAuthenticate];
+        
 		if (self.enableInternetAccessAtLogin) {
 			
 			// start mapping
@@ -99,7 +101,16 @@
         // local access request
 		case kMGSInternetSharingRequestLocalAccess:
 			self.allowLocalAccess = [[userInfo objectForKey:MGSAllowLocalAccess] boolValue];
-            [self postStatusNotification];
+			break;
+
+        // allow local authentication
+		case kMGSInternetSharingRequestAllowLocalAuthentication:
+			self.allowLocalUsersToAuthenticate = [[userInfo objectForKey:MGSAllowLocalUsersToAuthenticate] boolValue];
+			break;
+
+        // allow remote authentication
+		case kMGSInternetSharingRequestAllowRemoteAuthentication:
+			self.allowRemoteUsersToAuthenticate = [[userInfo objectForKey:MGSAllowRemoteUsersToAuthenticate] boolValue];
 			break;
 
 		// start mapping request
@@ -122,7 +133,6 @@
 		// start at login request
 		case kMGSInternetSharingRequestStartAtLogin:
 			self.enableInternetAccessAtLogin = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
-			[self postStatusNotification];
 			break;
 		
 		// remap the port	
@@ -153,6 +163,7 @@
 - (void)setAllowLocalAccess:(BOOL)value
 {
 	[super setAllowLocalAccess:value];
+    [self postStatusNotification];
 }
 
 /*
@@ -177,12 +188,35 @@
 
 /*
  
+ - setAllowLocalUsersToAuthenticate:
+ 
+ */
+- (void)setAllowLocalUsersToAuthenticate:(BOOL)value
+{
+    [super setAllowLocalUsersToAuthenticate:value];
+    [self postStatusNotification];
+}
+
+/*
+ 
+ - setAllowRemoteUsersToAuthenticate:
+ 
+ */
+- (void)setAllowRemoteUsersToAuthenticate:(BOOL)value
+{
+    [super setAllowRemoteUsersToAuthenticate:value];
+    [self postStatusNotification];
+}
+
+/*
+ 
  set enable internet access at login
  
  */
 -(void)setEnableInternetAccessAtLogin:(BOOL)value
 {
-	[super setEnableInternetAccessAtLogin:value];	
+	[super setEnableInternetAccessAtLogin:value];
+    [self postStatusNotification];
 }
 
 /*
@@ -304,6 +338,8 @@
 	// write out preferences
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.enableInternetAccessAtLogin] forKey:MGSEnableInternetAccessAtLogin];
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.allowInternetAccess] forKey:MGSAllowInternetAccess];
+	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.allowLocalUsersToAuthenticate] forKey:MGSAllowLocalUsersToAuthenticate];
+	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.allowRemoteUsersToAuthenticate] forKey:MGSAllowRemoteUsersToAuthenticate];
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.allowLocalAccess] forKey:MGSAllowLocalAccess];
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithInteger:self.externalPort] forKey:MGSExternalPortNumber];
 	[[MGSPreferences standardUserDefaults] synchronize];
@@ -327,6 +363,8 @@
 			[NSNumber numberWithBool:self.allowInternetAccess], MGSAllowInternetAccess,
             [NSNumber numberWithBool:self.allowLocalAccess], MGSAllowLocalAccess,
 			[NSNumber numberWithBool:self.enableInternetAccessAtLogin], MGSEnableInternetAccessAtLogin,
+            [NSNumber numberWithBool:self.allowLocalUsersToAuthenticate], MGSAllowLocalUsersToAuthenticate,
+            [NSNumber numberWithBool:self.allowRemoteUsersToAuthenticate], MGSAllowRemoteUsersToAuthenticate,
 			nil];
 	
 	MLog(DEBUGLOG, @"Internet sharing response dict sent by server: %@", [dict propertyListStringValue]);

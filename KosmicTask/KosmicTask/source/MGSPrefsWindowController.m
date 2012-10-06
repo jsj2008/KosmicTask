@@ -29,7 +29,12 @@ NSString *MGSMotherLaunchdPlist = @"com.mugginsoft.kosmictasklaunchd.plist";
 // defaults keys
 NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 
+// class extension
+@interface MGSPrefsWindowController()
+@end
+
 @implementation MGSPrefsWindowController
+@synthesize selectedNetworkTabIdentifier = _selectedNetworkTabIdentifier;
 
 /*
  
@@ -67,6 +72,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 		
 		_startAtLogin = [defaults boolForKey:MGSDefaultStartAtLogin];
 		
+        _selectedNetworkTabIdentifier = @"local";
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:window];
 	}
@@ -125,13 +131,29 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 
 /*
  
- show internet preferences
+ - showInternetPreferences
  
  */
 - (void)showInternetPreferences
 {
 	[self showWindow:self];
 	[[[self window] toolbar] setSelectedItemIdentifier:_internetTabIdentifier];
+	self.selectedNetworkTabIdentifier = @"remote";
+    [self displayViewForIdentifier:_internetTabIdentifier animate:NO];
+    
+    
+}
+
+/*
+ 
+ - showLocalNetworkPreferences
+ 
+ */
+- (void)showLocalNetworkPreferences
+{
+	[self showWindow:self];
+	[[[self window] toolbar] setSelectedItemIdentifier:_internetTabIdentifier];
+    self.selectedNetworkTabIdentifier = @"local";
 	[self displayViewForIdentifier:_internetTabIdentifier animate:NO];
 }
 

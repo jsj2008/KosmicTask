@@ -116,6 +116,8 @@ static id _sharedInstance = nil;
 			self.enableInternetAccessAtLogin = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
 			self.IPAddressString = [userInfo objectForKey:MGSInternetSharingKeyIPAddress];
 			self.gatewayName = [userInfo objectForKey:MGSInternetSharingKeyGatewayName];
+			self.allowLocalUsersToAuthenticate = [[userInfo objectForKey:MGSAllowLocalUsersToAuthenticate] boolValue];
+			self.allowRemoteUsersToAuthenticate = [[userInfo objectForKey:MGSAllowRemoteUsersToAuthenticate] boolValue];
 			break;
 			
 			// unrecognised
@@ -172,6 +174,51 @@ static id _sharedInstance = nil;
 	}
 }
 
+
+
+/*
+ 
+ - setAllowLocalUsersToAuthenticate:
+ 
+ */
+- (void)setAllowLocalUsersToAuthenticate:(BOOL)value
+{
+	[super setAllowLocalUsersToAuthenticate:value];
+	
+	// if not processing response
+	if (!_processingResponse) {
+		
+		NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys:
+									 [NSNumber numberWithInteger:kMGSInternetSharingRequestAllowLocalAuthentication], MGSInternetSharingKeyRequest,
+									 [NSNumber numberWithBool:value], MGSAllowLocalUsersToAuthenticate,
+									 nil];
+		
+		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:NO];
+		
+	}
+}
+
+/*
+ 
+ - setAllowRemoteUsersToAuthenticate:
+ 
+ */
+- (void)setAllowRemoteUsersToAuthenticate:(BOOL)value
+{
+	[super setAllowRemoteUsersToAuthenticate:value];
+	
+	// if not processing response
+	if (!_processingResponse) {
+		
+		NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys:
+									 [NSNumber numberWithInteger:kMGSInternetSharingRequestAllowRemoteAuthentication], MGSInternetSharingKeyRequest,
+									 [NSNumber numberWithBool:value], MGSAllowRemoteUsersToAuthenticate,
+									 nil];
+		
+		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:NO];
+		
+	}
+}
 /*
  
  set enable internet access at login

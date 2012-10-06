@@ -75,6 +75,7 @@
 - (IBAction)toggleRunState:(id)sender;
 - (IBAction)viewMenuModeSelected:(id)sender;
 - (IBAction)configureInternetSharing:(id)sender;
+- (IBAction)configureLocalSharing:(id)sender;
 
 - (void)loadMotherWindow;
 - (void)showMotherWindow;

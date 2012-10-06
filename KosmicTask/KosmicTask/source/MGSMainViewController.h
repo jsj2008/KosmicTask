@@ -38,6 +38,7 @@
 	IBOutlet NSTabView *detailTabView;			// detail tabview shows history, script etc depending on context
 	IBOutlet NSTabView *browserTabView;			// browser tabview shows tasks, search and sharing
 	IBOutlet NSButton *internetSharingButton;
+	IBOutlet NSButton *localSharingButton;
 	IBOutlet MGSBrowserViewControlStrip *_browserViewControlStrip;
 	IBOutlet NSSegmentedControl *detailSegmentedControl;
 	IBOutlet NSSegmentedControl *browserSegmentedControl;
