@@ -165,6 +165,9 @@ static MGSImageManager *_sharedManager = nil;
 @synthesize documentTemplate;
 @synthesize defaultResource;
 @synthesize scriptOutline;
+@synthesize greenDotNoUser;
+@synthesize redDotNoUser;
+@synthesize greenDotUser;
 
 #pragma mark -
 #pragma mark Class Methods
@@ -255,6 +258,10 @@ static MGSImageManager *_sharedManager = nil;
 		defaultResource = [NSImage imageNamed:@"YellowStar16"];
 		
 		scriptOutline = [NSImage imageNamed:@"ActionTaskTemplate.tif"];
+        
+        greenDotNoUser = [NSImage imageNamed:@"DotGreenNoUser.png"];
+        redDotNoUser = [NSImage imageNamed:@"DotRedNoUser.png"];
+        greenDotUser = [NSImage imageNamed:@"DotGreenUser.png"];
 	}
 	return self;
 }

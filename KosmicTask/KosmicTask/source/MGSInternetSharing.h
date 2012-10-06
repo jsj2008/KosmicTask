@@ -53,6 +53,7 @@ typedef enum _MGSInternetSharingMappingStatus {
 	NSString *_gatewayName;
 	BOOL _responseReceived;
 	BOOL _isActive;
+    NSImage *_activeUserStatusImage;
 	NSImage *_activeStatusImage;
 	NSImage *_inactiveStatusImage;
 	NSImage *_activeStatusLargeImage;
@@ -77,6 +78,7 @@ typedef enum _MGSInternetSharingMappingStatus {
 @property BOOL responseReceived;
 @property (readonly) BOOL isActive;
 @property (copy) NSImage *activeStatusImage;
+@property (copy) NSImage *activeUserStatusImage;
 @property (copy) NSImage *inactiveStatusImage;
 @property (copy) NSImage *activeStatusLargeImage;
 @property (copy) NSImage *inactiveStatusLargeImage;

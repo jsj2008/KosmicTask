@@ -17,6 +17,8 @@
 @interface MGSInternetSharing()
 @property () NSImage *allowInternetAccessStatusImage;
 @property () NSImage *allowLocalAccessStatusImage;
+- (void)updateInternetAccessStatusImage;
+- (void)updateLocalAccessStatusImage;
 @end
 
 @interface MGSInternetSharing(Private)
@@ -51,6 +53,7 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 @synthesize allowLocalAccessStatusImage = _allowLocalAccessStatusImage;
 @synthesize allowLocalUsersToAuthenticate = _allowLocalUsersToAuthenticate;
 @synthesize allowRemoteUsersToAuthenticate = _allowRemoteUsersToAuthenticate;
+@synthesize activeUserStatusImage = _activeUserStatusImage;
 
 /*
  
@@ -73,8 +76,9 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 		_mappingStatus = kMGSInternetSharingPortNotMapped;
 		_noteObjectString = [[MGSPortMapper class] className];
 		_responseReceived = YES;
-		_activeStatusImage = [[[MGSImageManager sharedManager] greenDot] copy];
-		_inactiveStatusImage = [[[MGSImageManager sharedManager] redDot] copy];
+		_activeUserStatusImage = [[[MGSImageManager sharedManager] greenDotUser] copy];
+		_activeStatusImage = [[[MGSImageManager sharedManager] greenDotNoUser] copy];
+		_inactiveStatusImage = [[[MGSImageManager sharedManager] redDotNoUser] copy];
 		_activeStatusLargeImage = [[[MGSImageManager sharedManager] greenDotLarge] copy];
 		_inactiveStatusLargeImage = [[[MGSImageManager sharedManager] redDotLarge] copy];
 	}
@@ -174,13 +178,44 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
  */
 -(void)setAllowInternetAccess:(BOOL)value {
     _allowInternetAccess = value;
+    [self updateInternetAccessStatusImage];
+}
+/*
+ 
+ - updateInternetAccessStatusImage
+ 
+ */
+- (void)updateInternetAccessStatusImage
+{
     if (_allowInternetAccess) {
-        self.allowInternetAccessStatusImage = _activeStatusImage;
+        if (_allowRemoteUsersToAuthenticate) {
+            self.allowInternetAccessStatusImage = _activeUserStatusImage;
+        } else {
+            self.allowInternetAccessStatusImage = _activeStatusImage;
+        }
     } else {
         self.allowInternetAccessStatusImage = _inactiveStatusImage;
     }
+    
 }
-
+/*
+ 
+ - updateLocalAccessStatusImage
+ 
+ */
+- (void)updateLocalAccessStatusImage
+{
+    if (_allowLocalAccess) {
+        if (_allowLocalUsersToAuthenticate) {
+            self.allowLocalAccessStatusImage = _activeUserStatusImage;
+        } else {
+            self.allowLocalAccessStatusImage = _activeStatusImage;
+        }
+    } else {
+        self.allowLocalAccessStatusImage = _inactiveStatusImage;
+    }
+    
+}
 /*
  
  - setAllowLocalAccess:
@@ -188,11 +223,7 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
  */
 -(void)setAllowLocalAccess:(BOOL)value {
     _allowLocalAccess = value;
-    if (_allowLocalAccess) {
-        self.allowLocalAccessStatusImage = _activeStatusImage;
-    } else {
-        self.allowLocalAccessStatusImage = _inactiveStatusImage;
-    }
+    [self updateLocalAccessStatusImage];
 }
 
 /*

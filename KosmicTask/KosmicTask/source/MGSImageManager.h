@@ -59,6 +59,9 @@
 	NSImage *documentTemplate;
 	NSImage *defaultResource;
 	NSImage *scriptOutline;
+    NSImage *greenDotNoUser;
+    NSImage *redDotNoUser;
+    NSImage *greenDotUser;
 }
 
 + (id)sharedManager;
@@ -114,4 +117,7 @@
 @property (readonly) NSImage *documentTemplate;
 @property (readonly) NSImage *defaultResource;
 @property (readonly) NSImage *scriptOutline;
+@property (readonly) NSImage *greenDotNoUser;
+@property (readonly) NSImage *redDotNoUser;
+@property (readonly) NSImage *greenDotUser;
 @end

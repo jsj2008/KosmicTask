@@ -341,14 +341,14 @@
 							<object class="NSTextField" id="272731716">
 								<reference key="NSNextResponder" ref="313715184"/>
 								<int key="NSvFlags">290</int>
-								<string key="NSFrame">{{105, 3}, {736, 14}}</string>
+								<string key="NSFrame">{{105, 3}, {704, 14}}</string>
 								<reference key="NSSuperview" ref="313715184"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="397333212"/>
+								<reference key="NSNextKeyView" ref="314037146"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="493044480">
 									<int key="NSCellFlags">69206081</int>
-									<int key="NSCellFlags2">138544128</int>
+									<int key="NSCellFlags2">138545408</int>
 									<string key="NSContents"/>
 									<reference key="NSSupport" ref="26"/>
 									<reference key="NSControlView" ref="272731716"/>
@@ -365,29 +365,29 @@
 								</object>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 							</object>
-							<object class="NSButton" id="397333212">
+							<object class="NSButton" id="314037146">
 								<reference key="NSNextResponder" ref="313715184"/>
 								<int key="NSvFlags">289</int>
-								<string key="NSFrame">{{846, 2}, {64, 17}}</string>
+								<string key="NSFrame">{{823, 2}, {80, 17}}</string>
 								<reference key="NSSuperview" ref="313715184"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="575485308"/>
 								<bool key="NSEnabled">YES</bool>
-								<object class="NSButtonCell" key="NSCell" id="488483227">
+								<object class="NSButtonCell" key="NSCell" id="600918699">
 									<int key="NSCellFlags">-2080374784</int>
 									<int key="NSCellFlags2">134348800</int>
 									<string key="NSContents">Local</string>
-									<object class="NSFont" key="NSSupport" id="306586120">
+									<object class="NSFont" key="NSSupport" id="274968702">
 										<string key="NSName">LucidaGrande</string>
 										<double key="NSSize">11</double>
 										<int key="NSfFlags">16</int>
 									</object>
-									<reference key="NSControlView" ref="397333212"/>
+									<reference key="NSControlView" ref="314037146"/>
 									<int key="NSButtonFlags">146554880</int>
 									<int key="NSButtonFlags2">173</int>
-									<object class="NSCustomResource" key="NSNormalImage" id="426618745">
+									<object class="NSCustomResource" key="NSNormalImage" id="770939690">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">DotRed</string>
+										<string key="NSResourceName">DotRedNoUser</string>
 									</object>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
@@ -399,7 +399,7 @@
 							<object class="NSButton" id="575485308">
 								<reference key="NSNextResponder" ref="313715184"/>
 								<int key="NSvFlags">289</int>
-								<string key="NSFrame">{{918, 2}, {77, 17}}</string>
+								<string key="NSFrame">{{902, 2}, {93, 17}}</string>
 								<reference key="NSSuperview" ref="313715184"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -408,11 +408,11 @@
 									<int key="NSCellFlags">-2080374784</int>
 									<int key="NSCellFlags2">134348800</int>
 									<string key="NSContents">Remote</string>
-									<reference key="NSSupport" ref="306586120"/>
+									<reference key="NSSupport" ref="274968702"/>
 									<reference key="NSControlView" ref="575485308"/>
 									<int key="NSButtonFlags">146554880</int>
 									<int key="NSButtonFlags2">173</int>
-									<reference key="NSNormalImage" ref="426618745"/>
+									<reference key="NSNormalImage" ref="770939690"/>
 									<string key="NSAlternateContents"/>
 									<string key="NSKeyEquivalent"/>
 									<int key="NSPeriodicDelay">400</int>
@@ -1002,7 +1002,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">configureLocalSharing:</string>
 						<reference key="source" ref="314539002"/>
-						<reference key="destination" ref="397333212"/>
+						<reference key="destination" ref="314037146"/>
 					</object>
 					<int key="connectionID">434</int>
 				</object>
@@ -1130,7 +1130,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">localSharingButton</string>
 						<reference key="source" ref="33686818"/>
-						<reference key="destination" ref="397333212"/>
+						<reference key="destination" ref="314037146"/>
 					</object>
 					<int key="connectionID">433</int>
 				</object>
@@ -1544,7 +1544,7 @@
 							<reference ref="20778707"/>
 							<reference ref="272731716"/>
 							<reference ref="575485308"/>
-							<reference ref="397333212"/>
+							<reference ref="314037146"/>
 						</object>
 						<reference key="parent" ref="608908578"/>
 					</object>
@@ -1738,17 +1738,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">430</int>
-						<reference key="object" ref="397333212"/>
+						<reference key="object" ref="314037146"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="488483227"/>
+							<reference ref="600918699"/>
 						</object>
 						<reference key="parent" ref="313715184"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">431</int>
-						<reference key="object" ref="488483227"/>
-						<reference key="parent" ref="397333212"/>
+						<reference key="object" ref="600918699"/>
+						<reference key="parent" ref="314037146"/>
 					</object>
 				</object>
 			</object>
@@ -1993,7 +1993,7 @@
 						<string key="NS.key.0">ToolTip</string>
 						<object class="IBToolTipAttribute" key="NS.object.0">
 							<string key="name">ToolTip</string>
-							<reference key="object" ref="397333212"/>
+							<reference key="object" ref="314037146"/>
 							<string key="toolTip">Configure local network access</string>
 						</object>
 					</object>
@@ -3810,7 +3810,7 @@
 				<string>BracesTemplate</string>
 				<string>CircleArrows16</string>
 				<string>ClockTemplate</string>
-				<string>DotRed</string>
+				<string>DotRedNoUser</string>
 				<string>GroupTemplate</string>
 				<string>LeftViewTemplate</string>
 				<string>NSAddTemplate</string>
@@ -3825,7 +3825,7 @@
 				<string>{128, 128}</string>
 				<string>{16, 16}</string>
 				<string>{128, 128}</string>
-				<string>{16, 16}</string>
+				<string>{32, 16}</string>
 				<string>{128, 128}</string>
 				<string>{128, 128}</string>
 				<string>{8, 8}</string>
