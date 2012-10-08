@@ -13,7 +13,7 @@
 //
 #import "MGSMother.h"
 #import "MGSNetClientSocket.h"
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 #import "MGSPreferences.h"
 #import "MGSNetMessage.h"
 #import "MGSNetHeader.h"
@@ -60,7 +60,7 @@
  note that data can be queued to be sent before the connection completes
  
  */
-- (BOOL)connectToHost:(NSString*)host onPort:(UInt16)port forRequest:(MGSNetRequest *)netRequest
+- (BOOL)connectToHost:(NSString*)host onPort:(UInt16)port forRequest:(MGSClientNetRequest *)netRequest
 {
     
 	NSAssert(netRequest, @"net request is nil");
@@ -177,6 +177,7 @@
 	// message delegate
 	[self delegateReplyWithErrors:mgsError];
 }
+
 @end
 
 @implementation MGSNetClientSocket(Private)
@@ -341,7 +342,7 @@
                  another request references it.
                  
                  */
-                [self.netRequest sendChildRequests];
+                [(MGSClientNetRequest *)self.netRequest sendChildRequests];
 				return;
 				
 			default:
@@ -497,7 +498,8 @@ errorExit:;
 				BOOL disconnect = ![self.netRequest validateOnCompletion:&mgsError];
 				
 				// disconnect if no more requests in queue
-				if (self.netRequest.nextRequest == nil) {
+                MGSClientNetRequest *request = (MGSClientNetRequest *)self.netRequest;
+				if (request.nextRequest == nil) {
 					disconnect = YES;
 				}
 				
@@ -532,7 +534,7 @@ errorExit:;
 				if ([self isConnected]) {
 					
 					// get the next request to send
-					MGSNetRequest *nextRequest = [self.netRequest nextQueuedRequestToSend];		
+					MGSClientNetRequest *nextRequest = [(MGSClientNetRequest *)self.netRequest nextQueuedRequestToSend];		
 					NSAssert(nextRequest == self.netRequest, @"unexpected request");
 					
 					// send the request 

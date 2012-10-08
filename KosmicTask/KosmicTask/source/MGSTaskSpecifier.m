@@ -15,7 +15,7 @@
 #import "MGSResult.h"
 #import "MGSClientRequestManager.h"
 #import "MGSClientTaskController.h"
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 #import "MGSNetClientProxy.h"
 #import "MGSNotifications.h"
 #import "MGSAPLicenceCode.h"
@@ -159,7 +159,7 @@ static BOOL permitExecution = YES;
  - setNetRequest
  
  */
-- (void)setNetRequest:(MGSNetRequest *)aRequest
+- (void)setNetRequest:(MGSClientNetRequest *)aRequest
 {
 	_netRequest = aRequest;
 }

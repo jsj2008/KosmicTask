@@ -246,7 +246,7 @@
 					format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u", min, seconds] : [NSString stringWithFormat:@"%u m %u sec", min, seconds];
 				}
 			} else {
-				format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u:%02u", hour, min, seconds] : [NSString stringWithFormat:@"%u h %u m %u sec", hour, min, seconds, msecs];
+				format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u:%02u", hour, min, seconds] : [NSString stringWithFormat:@"%u h %u m %u sec", hour, min, seconds];
 
 				
 			}

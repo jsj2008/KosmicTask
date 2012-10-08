@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 
 //#define MGSAccessTypeLogin  0
 //#define MGSAccessTypeConfiguration 1

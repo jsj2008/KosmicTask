@@ -11,7 +11,7 @@
 #import "MGSActionWindowController.h"
 #import "MGSResultWindowController.h"
 #import "MGSToolbarController.h"
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 #import "MGSActionExecuteWindowController.h"
 #import "MGSMotherModes.h"
 #import "MGSActionDeleteWindowController.h"

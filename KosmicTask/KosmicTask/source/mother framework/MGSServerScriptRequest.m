@@ -7,7 +7,7 @@
 //
 #import "MGSMother.h"
 #import "MGSServerScriptRequest.h"
-#import "MGSNetRequest.h"
+#import "MGSServerNetRequest.h"
 #import "MGSNetMessage.h"
 #import "MGSScriptPlist.h"
 #import "MGSTaskPlist.h"
@@ -52,41 +52,41 @@ NSString *MGSSearchKeyDictionary = @"Dictionary";
 
 NSUInteger totalExecutionCount = 0;	// number of task execute requests received
 
-static BOOL LicenceValidForRequest(MGSNetRequest *netRequest, MGSError **mgsError);
+static BOOL LicenceValidForRequest(MGSServerNetRequest *netRequest, MGSError **mgsError);
 
 @interface MGSServerScriptRequest()
-- (BOOL)sendValidRequestReply:(MGSNetRequest *)request withNegotiator:(MGSNetNegotiator *)negotiator;
+- (BOOL)sendValidRequestReply:(MGSServerNetRequest *)request withNegotiator:(MGSNetNegotiator *)negotiator;
 @end
 
 @interface MGSServerScriptRequest (Private)
 - (BOOL)initialise;
 - (BOOL)validateScriptFolders;
-- (BOOL)processEditedScriptArray:(NSMutableDictionary *)scriptDict forRequest:(MGSNetRequest *)netRequest;
+- (BOOL)processEditedScriptArray:(NSMutableDictionary *)scriptDict forRequest:(MGSServerNetRequest *)netRequest;
 
 @end
 
 @interface MGSServerScriptRequest (RequestUUID)
-- (BOOL)terminateRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest;
-- (BOOL)suspendRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest;
+- (BOOL)terminateRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest;
+- (BOOL)suspendRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest;
 - (BOOL)suspendRequestUUID:(NSString *)UUID;
-- (BOOL)resumeRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest;
+- (BOOL)resumeRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest;
 - (BOOL)resumeRequestUUID:(NSString *)UUID;
 - (BOOL)terminateRequestUUID:(NSString *)UUID;
-- (BOOL)logRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest;
-- (BOOL)logRequestUUID:(NSString *)UUID forRequest:(MGSNetRequest *)netRequest;
+- (BOOL)logRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest;
+- (BOOL)logRequestUUID:(NSString *)UUID forRequest:(MGSServerNetRequest *)netRequest;
 @end
 
 @interface MGSServerScriptRequest (Script)
-- (BOOL)executeScript:(MGSScript *)script forRequest:(MGSNetRequest *)netRequest;
-- (BOOL)getCompiledSourceForScriptUUID:(NSArray *)UUID forRequest:(MGSNetRequest *)netRequest;
-- (BOOL)compileScript:(MGSScript *)scriptDict forRequest:(MGSNetRequest *)netRequest;
-- (BOOL)getScriptUUID:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest options:(NSDictionary *)options;
+- (BOOL)executeScript:(MGSScript *)script forRequest:(MGSServerNetRequest *)netRequest;
+- (BOOL)getCompiledSourceForScriptUUID:(NSArray *)UUID forRequest:(MGSServerNetRequest *)netRequest;
+- (BOOL)compileScript:(MGSScript *)scriptDict forRequest:(MGSServerNetRequest *)netRequest;
+- (BOOL)getScriptUUID:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest options:(NSDictionary *)options;
 - (MGSScript *)loadScriptWithUUID:(NSString *)UUID  error:(MGSError **)mgsError;
 @end
 
 @interface MGSServerScriptRequest (Search)
-- (BOOL)search:(NSDictionary *)searchDict forRequest:(MGSNetRequest *)netRequest;
-- (void)processSearchQueryResults:(NSMetadataQuery *)mdQuery forSearchDict:(NSDictionary *)searchDict forRequest:(MGSNetRequest *)netRequest;
+- (BOOL)search:(NSDictionary *)searchDict forRequest:(MGSServerNetRequest *)netRequest;
+- (void)processSearchQueryResults:(NSMetadataQuery *)mdQuery forSearchDict:(NSDictionary *)searchDict forRequest:(MGSServerNetRequest *)netRequest;
 - (void) searchQueryNotification:(NSNotification *)note;
 @end
 
@@ -168,7 +168,7 @@ static BOOL LicenceValidForRequest(MGSNetRequest *netRequest, MGSError **mgsErro
  - sendValidRequestReply:withNegotiator:
  
  */
-- (BOOL)sendValidRequestReply:(MGSNetRequest *)request withNegotiator:(MGSNetNegotiator *)negotiator
+- (BOOL)sendValidRequestReply:(MGSServerNetRequest *)request withNegotiator:(MGSNetNegotiator *)negotiator
 {
 	// if the negotiator requests security then that security
 	// will be applied once this reply has been sent.
@@ -195,7 +195,7 @@ static BOOL LicenceValidForRequest(MGSNetRequest *netRequest, MGSError **mgsErro
 // assumes that the request was invalid and
 // sends an error reply at once.
 //=======================================================
-- (BOOL)parseNetRequest:(MGSNetRequest *)netRequest
+- (BOOL)parseNetRequest:(MGSServerNetRequest *)netRequest
 {
 	NSInteger errorCode = MGSErrorCodeParseRequestScript;
 	NSString *errorReason = nil;
@@ -591,7 +591,7 @@ errorExit:;	// the trailing ; prevents compiler complaining (can also { } subseq
  conclude the net request
  
  */
-- (BOOL)concludeNetRequest:(MGSNetRequest *)netRequest
+- (BOOL)concludeNetRequest:(MGSServerNetRequest *)netRequest
 {
 	// terminate task associated with request if any still active
 	[self terminateRequestUUID:[netRequest UUID]];
@@ -692,7 +692,7 @@ validate the script folder
 // return YES on success - reply sent
 // return NO on failure - caller sends error reply
 //=======================================================
-- (BOOL)processEditedScriptArray:(NSMutableDictionary *)scriptDict forRequest:(MGSNetRequest *)netRequest
+- (BOOL)processEditedScriptArray:(NSMutableDictionary *)scriptDict forRequest:(MGSServerNetRequest *)netRequest
 {
 	NSString *errorReason = nil;
 	MGSError *mgsError = nil;
@@ -856,7 +856,7 @@ errorExit:;
  terminate request UUIDs
  
  */
-- (BOOL)terminateRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest
+- (BOOL)terminateRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest
 {
 	// terminate each UUID
 	for (NSString *UUID in UUIDs) {
@@ -877,7 +877,7 @@ errorExit:;
  suspend request UUIDs
  
  */
-- (BOOL)suspendRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest
+- (BOOL)suspendRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest
 {
 	
 	for (NSString *UUID in UUIDs) {
@@ -918,7 +918,7 @@ errorExit:;
  resume request UUIDs
  
  */
-- (BOOL)resumeRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest
+- (BOOL)resumeRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest
 {
 	
 	for (NSString *UUID in UUIDs) {
@@ -939,7 +939,7 @@ errorExit:;
  log request UUIDs
  
  */
-- (BOOL)logRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest
+- (BOOL)logRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest
 {
     // in reality we will only ever log one UUID on the current request
 	for (NSString *UUID in UUIDs) {
@@ -954,7 +954,7 @@ errorExit:;
  log request UUID
  
  */
-- (BOOL)logRequestUUID:(NSString *)UUID forRequest:(MGSNetRequest *)netRequest
+- (BOOL)logRequestUUID:(NSString *)UUID forRequest:(MGSServerNetRequest *)netRequest
 {
     // get task with given UUID
     MGSScriptTask *scriptTask = [_scriptTasks objectForKey:UUID];
@@ -1037,7 +1037,7 @@ errorExit:;
  search
  
  */
-- (BOOL)search:(NSDictionary *)searchDict forRequest:(MGSNetRequest *)netRequest
+- (BOOL)search:(NSDictionary *)searchDict forRequest:(MGSServerNetRequest *)netRequest
 {
 	// standard dec
 	NSString *errorReason = nil;
@@ -1196,7 +1196,7 @@ errorExit:;
         [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:mdQuery];
 		
 		// use query object to get our net request
-		MGSNetRequest *netRequest = nil;
+		MGSServerNetRequest *netRequest = nil;
 		NSDictionary *activeSearch = nil;
 		NSDictionary *searchDict = nil;
 		for (activeSearch in _activeSearches) {
@@ -1237,7 +1237,7 @@ errorExit:;
  process query results for request
  
  */
-- (void)processSearchQueryResults:(NSMetadataQuery *)mdQuery forSearchDict:(NSDictionary *)searchDict forRequest:(MGSNetRequest *)netRequest
+- (void)processSearchQueryResults:(NSMetadataQuery *)mdQuery forSearchDict:(NSDictionary *)searchDict forRequest:(MGSServerNetRequest *)netRequest
 {
 	// standard dec
 	NSString *error = nil;
@@ -1389,7 +1389,7 @@ errorExit:;
  - getScriptUUID:forRequest:options:
  
  */
-- (BOOL)getScriptUUID:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest options:(NSDictionary *)options
+- (BOOL)getScriptUUID:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest options:(NSDictionary *)options
 {
 	// standard dec
 	NSString *error = nil;
@@ -1487,7 +1487,7 @@ errorExit:;
 // return YES on success - reply will be sent when script task terminates
 // return NO on failure - caller sends reply
 //=======================================================
-- (BOOL)executeScript:(MGSScript *)script forRequest:(MGSNetRequest *)netRequest
+- (BOOL)executeScript:(MGSScript *)script forRequest:(MGSServerNetRequest *)netRequest
 {
 	// standard dec
 	NSString *error = nil;
@@ -1586,7 +1586,7 @@ errorExit:;
 // return YES on success - reply sent
 // return NO on failure - caller sends reply
 //=======================================================
-- (BOOL)getCompiledSourceForScriptUUID:(NSArray *)UUIDs forRequest:(MGSNetRequest *)netRequest
+- (BOOL)getCompiledSourceForScriptUUID:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest
 {
 	NSString *error = nil;
 	NSMutableDictionary *replyDict = [NSMutableDictionary dictionaryWithCapacity:2];
@@ -1668,7 +1668,7 @@ errorExit:;
 // return YES on success - reply sent
 // return NO on failure - caller sends reply
 //=======================================================
-- (BOOL)compileScript:(MGSScript *)script forRequest:(MGSNetRequest *)netRequest
+- (BOOL)compileScript:(MGSScript *)script forRequest:(MGSServerNetRequest *)netRequest
 {
 	// GC deemed incompatible with AppleScript under Leopard.
 	// use task to run all AppleScript tasks
@@ -1729,7 +1729,7 @@ errorExit:;
 	NSData *taskData = [NSKeyedArchiver archivedDataWithRootObject:taskDict];
 	NSAssert(taskData, @"script task dictionary nil");
 	
-	MGSNetRequest *netRequest = [options objectForKey:MGSLangPluginNetRequest];
+	MGSServerNetRequest *netRequest = [options objectForKey:MGSLangPluginNetRequest];
 	NSAssert(netRequest, @"net request is nil");
 	
 	// create script task
@@ -1767,7 +1767,7 @@ errorExit:;
 	// int waitx = 1; while (waitx);
 	
 	MGSScriptTask *scriptTask = aTask;
-	MGSNetRequest *netRequest = [scriptTask netRequest];
+	MGSServerNetRequest *netRequest = [scriptTask netRequest];
 	NSString *workingDirectory = nil;
 	NSDictionary *errorDict = nil;
 	
@@ -2247,7 +2247,7 @@ errorExit:;
  can execute request
  
  */
-static BOOL LicenceValidForRequest(MGSNetRequest *netRequest, MGSError **mgsError)
+static BOOL LicenceValidForRequest(MGSServerNetRequest *netRequest, MGSError **mgsError)
 {
 	static NSMutableDictionary *licencedConnections = nil;
 

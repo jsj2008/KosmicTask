@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 #import "MGSMotherModes.h"
 
 @class MGSNetClient;
@@ -51,7 +51,7 @@
     int                     _objectCount;
 	BOOL _observesInputModifications;
 	BOOL haveAutomatedKeepActionDisplayed;
-	MGSNetRequest *displayNetRequest;
+	MGSClientNetRequest *displayNetRequest;
 }
 
 - (IBAction)executeScript:(id)sender;

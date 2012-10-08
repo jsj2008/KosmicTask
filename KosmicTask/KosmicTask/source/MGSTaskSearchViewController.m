@@ -238,7 +238,7 @@
  net request response for net client
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 	// check if all targets had responded
 	if (++(self.searchTargetsResponded) >= self.searchTargetsQueried) {

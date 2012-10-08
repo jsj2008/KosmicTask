@@ -747,7 +747,7 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
  net request owner message
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload options:(NSDictionary *)options
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload options:(NSDictionary *)options
 {
 	BOOL pendingExecuteOnSuccessfulBuild = requestExecuteOnSuccessfulBuild;
 	requestExecuteOnSuccessfulBuild = NO;

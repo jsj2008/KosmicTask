@@ -7,7 +7,7 @@
 //
 #import "MGSMother.h"
 #import "MGSClientRequestManager.h"
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 #import "MGSNetClient.h"
 #import "MGSClientTaskController.h"
 #import "MGSNetMessage.h"
@@ -30,16 +30,16 @@ static MGSClientRequestManager *_sharedController = nil;
 @end
 
 @interface MGSClientRequestManager(Private)
-- (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner withCommand:(NSString *)command withScriptDict:(NSMutableDictionary *)dict;
-- (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner withScriptDict:(NSMutableDictionary *)dict;
-- (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient scriptCommand:(NSString *)scriptCommand withOwner:(id <MGSNetRequestOwner>)owner;
-- (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient command:(NSString *)command withOwner:(id <MGSNetRequestOwner>)owner;
-- (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner 
+- (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner withCommand:(NSString *)command withScriptDict:(NSMutableDictionary *)dict;
+- (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner withScriptDict:(NSMutableDictionary *)dict;
+- (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient scriptCommand:(NSString *)scriptCommand withOwner:(id <MGSNetRequestOwner>)owner;
+- (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient command:(NSString *)command withOwner:(id <MGSNetRequestOwner>)owner;
+- (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner 
 							  withCommand:(NSString *)command 
 								 withDict:(NSMutableDictionary *)dict forKey:(NSString *)key;
-- (void)parseReplyMessage:(MGSNetRequest *)request;
-- (void)parseScriptRequestReply:(MGSNetRequest *)netRequest;
-- (void)netRequestReplyOnClient:(MGSNetRequest *)netRequest;
+- (void)parseReplyMessage:(MGSClientNetRequest *)request;
+- (void)parseScriptRequestReply:(MGSClientNetRequest *)netRequest;
+- (void)netRequestReplyOnClient:(MGSClientNetRequest *)netRequest;
 @end
 
 @implementation MGSClientRequestManager
@@ -105,7 +105,7 @@ static MGSClientRequestManager *_sharedController = nil;
 
 	// execute on the task's client
 	MGSNetClient *netClient = [task netClient];
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 	
 	// add attachments to the request message
 	netRequest.requestMessage.attachments = [script attachmentsWithError:&mgsError];
@@ -151,7 +151,7 @@ static MGSClientRequestManager *_sharedController = nil;
         NSMutableDictionary *logDictionary = [self scriptDictForCommand:MGSScriptCommandLogMesgUUID parameter:netRequest.requestMessage.messageUUID];
        
         // create child request
-        MGSNetRequest *logRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:logDictionary];
+        MGSClientNetRequest *logRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:logDictionary];
         logRequest.requestType = kMGSRequestTypeLogging;
         
         // add the child request
@@ -246,7 +246,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	MGSNetClient *netClient = [task netClient];
 	
 	// create request
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 
 	// check for errors
 	if (mgsError) {
@@ -273,7 +273,7 @@ static MGSClientRequestManager *_sharedController = nil;
 {
 	// retrieve either all scripts or published scripts
 	NSString *command = (published ? MGSScriptCommandListPublished : MGSScriptCommandListAll);
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient scriptCommand:command withOwner:owner];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient scriptCommand:command withOwner:owner];
 
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -286,7 +286,7 @@ static MGSClientRequestManager *_sharedController = nil;
  */
 - (void)requestHeartbeatForNetClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner
 {
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient command:MGSNetMessageCommandHeartbeat withOwner:owner];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient command:MGSNetMessageCommandHeartbeat withOwner:owner];
 
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -297,9 +297,9 @@ static MGSClientRequestManager *_sharedController = nil;
  request net client authentication
  
  */
-- (MGSNetRequest *)requestAuthenticationForNetClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner
+- (MGSClientNetRequest *)requestAuthenticationForNetClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner
 {
-	MGSNetRequest *netRequest =  [self createRequestForClient:netClient command:MGSNetMessageCommandAuthenticate withOwner:owner];
+	MGSClientNetRequest *netRequest =  [self createRequestForClient:netClient command:MGSNetMessageCommandAuthenticate withOwner:owner];
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -312,7 +312,7 @@ static MGSClientRequestManager *_sharedController = nil;
  request net client search
  
  */
-- (MGSNetRequest *)requestSearchNetClient:(MGSNetClient *)netClient searchDict:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner
+- (MGSClientNetRequest *)requestSearchNetClient:(MGSNetClient *)netClient searchDict:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner
 {
 	// create a dictionary requesting script termination
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -325,7 +325,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	[dict setObject:searchDict forKey:MGSScriptKeyCommandDictionary];
 	
 	// create request
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -355,7 +355,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	MGSNetClient *netClient = [task netClient];
 	
 	// create request
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -383,7 +383,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	
 	// create request.
 	// note that we do not overrwite the task net request
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -410,7 +410,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	MGSNetClient *netClient = [task netClient];
 	
 	// create request
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -447,7 +447,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	[netClient.taskController acceptConfigurationChanges];
 
 	// create request
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -463,7 +463,7 @@ static MGSClientRequestManager *_sharedController = nil;
 // 2. to inform server of edits to existing scripts
 //
 //============================================================
-- (MGSNetRequest *)requestSaveTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner
+- (MGSClientNetRequest *)requestSaveTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner
 {
 	MGSNetClient *netClient = task.netClient;
 	
@@ -485,7 +485,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	[dict setObject:scriptDict forKey:MGSScriptKeyScript];
 	
 	// create request
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -522,7 +522,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	[dict setObject:scriptDict forKey:MGSScriptKeyScript];
 	
 	// create request
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 	
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -534,7 +534,7 @@ static MGSClientRequestManager *_sharedController = nil;
  request script for UUID
  
  */
-- (MGSNetRequest *)requestScriptWithUUID:(NSString *)UUID netClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner options:(NSDictionary *)options
+- (MGSClientNetRequest *)requestScriptWithUUID:(NSString *)UUID netClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner options:(NSDictionary *)options
 {
 	// create a dictionary requesting script resume
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -550,7 +550,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	}
 	
 	// create request
-	MGSNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
+	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 
 	// send the request 
 	[self sendRequestOnClient:netRequest];
@@ -558,6 +558,44 @@ static MGSClientRequestManager *_sharedController = nil;
 	return netRequest;
 }
 
+/*
+ 
+ send request on client
+ 
+ */
+- (void)sendRequestOnClient:(MGSClientNetRequest *)request
+{
+	[self addRequest:request];
+    
+    // the above call will retain our disposable resource
+    // hence we need to release it here
+    [request releaseDisposable];
+    
+	[request sendRequestOnClient];
+	
+	// do we want to track the negotiate request ?
+	if (request.prevRequest && NO) {
+		[self addRequest:request.prevRequest];
+	}
+}
+
+/*
+ 
+ - terminateRequest:
+ 
+ */
+- (void)terminateRequest:(MGSClientNetRequest *)netRequest
+{
+    [super terminateRequest:netRequest];
+    
+    // remove child requests
+    for (MGSClientNetRequest *childRequest in netRequest.childRequests) {
+        if (childRequest.isSocketConnected) {
+            [childRequest disconnect];
+        }
+        [self removeRequest:childRequest];
+    }
+}
 @end
 
 @implementation MGSClientRequestManager(Private)
@@ -568,7 +606,7 @@ static MGSClientRequestManager *_sharedController = nil;
  the message will not contain a script dictionary
  
  */
-- (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient command:(NSString *)command withOwner:(id <MGSNetRequestOwner>)owner
+- (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient command:(NSString *)command withOwner:(id <MGSNetRequestOwner>)owner
 {
 	return [self createRequestForClient:netClient withOwner:owner withCommand:command withDict:nil forKey:nil];
 }
@@ -579,7 +617,7 @@ static MGSClientRequestManager *_sharedController = nil;
  the message will contain a script dictionary containing a single command
  
  */
-- (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient scriptCommand:(NSString *)scriptCommand withOwner:(id <MGSNetRequestOwner>)owner
+- (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient scriptCommand:(NSString *)scriptCommand withOwner:(id <MGSNetRequestOwner>)owner
 {
 	// create a dictionary requesting script list
 	NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -594,7 +632,7 @@ static MGSClientRequestManager *_sharedController = nil;
  the message will contain the script dictionary
  
  */
-- (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner withScriptDict:(NSMutableDictionary *)dict
+- (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner withScriptDict:(NSMutableDictionary *)dict
 {
 	return [self createRequestForClient:netClient withOwner:owner withCommand:MGSNetMessageCommandParseKosmicTask withScriptDict:dict];
 }
@@ -605,7 +643,7 @@ static MGSClientRequestManager *_sharedController = nil;
  create request on net client with script dict 
  
  */
-- (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner withCommand:(NSString *)command withScriptDict:(NSMutableDictionary *)dict
+- (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner withCommand:(NSString *)command withScriptDict:(NSMutableDictionary *)dict
 {	
 	return [self createRequestForClient:netClient withOwner:owner withCommand:command withDict:dict forKey:MGSScriptKeyKosmicTask];
 }
@@ -615,7 +653,7 @@ static MGSClientRequestManager *_sharedController = nil;
  create request on net client with command and dictionary
  
  */
-- (MGSNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner 
+- (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner 
 					withCommand:(NSString *)command 
 					   withDict:(NSMutableDictionary *)dict forKey:(NSString *)key
 
@@ -626,7 +664,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	// the request delegate will be set to self (this object).
 	// the delegate object is responsible for the creation and co-ordination
 	// of the request.
-	MGSNetRequest *netRequest = [MGSNetRequest requestWithClient:netClient command:command]; 
+	MGSClientNetRequest *netRequest = [MGSClientNetRequest requestWithClient:netClient command:command];
 	netRequest.delegate = self;	// this object is the delegate
 
 	// the owner object may be informed of the progress of the
@@ -702,7 +740,7 @@ static MGSClientRequestManager *_sharedController = nil;
  parse net request reply for script activity
  
  */
-- (void)parseScriptRequestReply:(MGSNetRequest *)netRequest
+- (void)parseScriptRequestReply:(MGSClientNetRequest *)netRequest
 {
 	NSAssert(netRequest, @"net request is nil");
 	
@@ -837,7 +875,7 @@ static MGSClientRequestManager *_sharedController = nil;
  parse the reply message
  
  */
-- (void)parseReplyMessage:(MGSNetRequest *)netRequest
+- (void)parseReplyMessage:(MGSClientNetRequest *)netRequest
 {
 	NSString *error = nil;
 	NSInteger errorCode = MGSErrorCodeParseRequestMessage;
@@ -976,7 +1014,7 @@ static MGSClientRequestManager *_sharedController = nil;
 		 */
 		if (netRequest.error && netRequest.nextRequest) {
 			netRequest.nextRequest.error = netRequest.error;
-			[self parseReplyMessage:netRequest.nextRequest];
+			[self parseReplyMessage:(MGSClientNetRequest *)netRequest.nextRequest];
 		}
 		
 		return;
@@ -1049,7 +1087,7 @@ invalid_message:
 // all queued requests ultimately send this message
 // on success, error or timeout
 //================================================
--(void) netRequestReplyOnClient:(MGSNetRequest *)netRequest {
+-(void) netRequestReplyOnClient:(MGSClientNetRequest *)netRequest {
 	NSAssert(netRequest, @"net request is nil");
 	
 	// parse the reply

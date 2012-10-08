@@ -8,7 +8,7 @@
 
 #import "MGSClientPowerManagement.h"
 #import "MGSRequestViewManager.h"
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 
 static void MGSClientSleepCallback( void * refCon, io_service_t service, natural_t messageType, void * messageArgument );
 
@@ -31,7 +31,7 @@ static void MGSClientSleepCallback( void * refCon, io_service_t service, natural
  net request response
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 	#pragma unused(netRequest)
 	#pragma unused(payload)

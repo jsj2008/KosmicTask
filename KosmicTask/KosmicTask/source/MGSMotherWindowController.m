@@ -23,6 +23,7 @@
 #import "MGSRemoveServerWindowController.h"
 #import "MGSClientRequestManager.h"
 #import "MGSNetRequestPayload.h"
+#import "MGSClientNetRequest.h"
 #import "MGSActionWindowController.h"
 #import "MGSResult.h"
 #import "MGSResultWindowController.h"
@@ -1209,7 +1210,7 @@ const char MGSContextStartupComplete;
  net request response
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 	NSString *requestCommand = netRequest.kosmicTaskCommand;
 
@@ -1578,7 +1579,7 @@ const char MGSContextStartupComplete;
 	
 	// at this stage the script does not contain its code.
 	// request entire script with UUID
-	MGSNetRequest *netRequest = [[MGSClientRequestManager sharedController] requestScriptWithUUID:UUID netClient:[taskSpec netClient] withOwner:self options:nil];
+	MGSClientNetRequest *netRequest = [[MGSClientRequestManager sharedController] requestScriptWithUUID:UUID netClient:[taskSpec netClient] withOwner:self options:nil];
 	netRequest.ownerString = MGSRequestDuplicateAction;
 	netRequest.ownerObject = taskSpec;
 }
@@ -1947,7 +1948,7 @@ const char MGSContextStartupComplete;
 	
 	// at this stage the script does not contain its code.
 	// request entire script with UUID
-	MGSNetRequest *netRequest = [[MGSClientRequestManager sharedController] requestScriptWithUUID:UUID netClient:[action netClient] withOwner:self options:nil];
+	MGSClientNetRequest *netRequest = [[MGSClientRequestManager sharedController] requestScriptWithUUID:UUID netClient:[action netClient] withOwner:self options:nil];
 	netRequest.ownerString = MGSRequestEditAction;
 	netRequest.ownerObject = action;
 	

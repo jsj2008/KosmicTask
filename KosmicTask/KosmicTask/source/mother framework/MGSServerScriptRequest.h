@@ -10,7 +10,7 @@
 #import "MGSScriptTask.h"
 #import "MGSServerRequestProcessor.h"
 
-@class MGSNetRequest;
+@class MGSServerNetRequest;
 @class MGSServerScriptManager;
 @class MGSServerTaskConfiguration;
 
@@ -27,7 +27,7 @@
 
 - (NSString *) userApplicationSupportPath;
 - (BOOL)loadScriptManagers;
-- (BOOL)concludeNetRequest:(MGSNetRequest *)netRequest;
+- (BOOL)concludeNetRequest:(MGSServerNetRequest *)netRequest;
 
 
 @property (readonly) BOOL initialised;

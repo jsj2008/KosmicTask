@@ -1,19 +1,19 @@
 //
-//  MGSNetRequest+KosmicTask.m
+//  MGSClientNetRequest+KosmicTask.m
 //  KosmicTask
 //
 //  Created by Jonathan on 26/12/2010.
 //  Copyright 2010 mugginsoft.com. All rights reserved.
 //
 
-#import "MGSNetRequest+KosmicTask.h"
+#import "MGSClientNetRequest+KosmicTask.h"
 #import "MGSScript.h"
 #import "MGSNetNegotiator.h"
 #import "MGSNetMessage.h"
 #import "MGSNetClient.h"
 #import "MGSNetMessage+KosmicTask.h"
 
-@implementation MGSNetRequest (KosmicTask)
+@implementation MGSClientNetRequest (KosmicTask)
 
 #pragma mark -
 #pragma mark Negotiation
@@ -58,7 +58,7 @@
 	 */
 	
 	// allocate negotiate request
-	MGSNetRequest *negotiateRequest = [self enqueueNegotiateRequest]; 
+	MGSClientNetRequest *negotiateRequest = [self enqueueNegotiateRequest];
 	NSAssert(negotiateRequest, @"could not allocate negotiate request");
 	
 	/*

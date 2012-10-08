@@ -199,7 +199,7 @@
  reply to save edits request
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 #pragma unused(netRequest)
 	

@@ -69,29 +69,6 @@
 #endif
 }
 
-/*
- 
- - terminateRequest:
- 
- */
-- (void)terminateRequest:(MGSNetRequest *)netRequest
-{
-    // disconnect the request
-    if (netRequest.isSocketConnected) {
-        [netRequest disconnect];
-    }
-    
-    // remove request from queue
-    [self removeRequest:netRequest];
-    
-    // remove child requests
-    for (MGSNetRequest *childRequest in netRequest.childRequests) {
-        if (childRequest.isSocketConnected) {
-            [childRequest disconnect];
-        }
-        [self removeRequest:childRequest];
-    }
-}
 
 /*
  
@@ -118,45 +95,26 @@
 
 /*
  
- send request on client
+ - terminateRequest:
  
  */
-- (void)sendRequestOnClient:(MGSNetRequest *)request
+- (void)terminateRequest:(MGSClientNetRequest *)netRequest
 {
-	[self addRequest:request];
+    // disconnect the request
+    if (netRequest.isSocketConnected) {
+        [netRequest disconnect];
+    }
     
-    // the above call will retain our disposable resource
-    // hence we need to release it here
-    [request releaseDisposable];
+    // remove request from queue
+    [self removeRequest:netRequest];
     
-	[request sendRequestOnClient];
-	
-	// do we want to track the negotiate request ?
-	if (request.prevRequest && NO) {
-		[self addRequest:request.prevRequest];
-	}
-}
-
-/*
- 
- send response on socket
- 
- */
-- (void)sendResponseOnSocket:(MGSNetRequest *)request wasValid:(BOOL)valid
-{
-	@try {
-		// flag request validity
-		[[request responseMessage] addRequestWasValid:valid];
-		
-		// send on socket
-		[request sendResponseOnSocket];
-			
-	} @catch (NSException *e) {
-		
-		[[request netSocket] disconnect];
-		MLogInfo(@"%@", e);
-	}
-		
+    // remove child requests
+    for (MGSNetRequest *childRequest in netRequest.childRequests) {
+        if (childRequest.isSocketConnected) {
+            [childRequest disconnect];
+        }
+        [self removeRequest:childRequest];
+    }
 }
 
 @end

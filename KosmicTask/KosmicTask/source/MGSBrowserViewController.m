@@ -970,7 +970,7 @@ errorExit:;
  net request response payload
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 	NSString *requestCommand = netRequest.kosmicTaskCommand;
 	

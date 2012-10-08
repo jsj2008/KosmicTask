@@ -11,7 +11,7 @@
 
 @class MGSNetClient;
 @class MGSScript;
-@class MGSNetRequest;
+@class MGSClientNetRequest;
 @class MGSRequestProgress;
 @class MGSResult;
 @class MGSError;
@@ -74,7 +74,7 @@ typedef enum _MGSTaskActivity {
 	MGSTaskDisplayType _displayType;	// display in selected or new tab
 	NSInteger _identifier;	// numeric identifier
 	
-	MGSNetRequest *_netRequest;				// currently active request for this task	
+	MGSClientNetRequest *_netRequest;				// currently active request for this task
 	MGSRequestProgress *_requestProgress;	// request progress
 	NSDate *_startTime;
 	NSTimeInterval _allowedTime;
@@ -97,7 +97,7 @@ typedef enum _MGSTaskActivity {
 @property MGSNetClientProxy *representedNetClient;
 @property NSTimeInterval elapsedTime;
 @property NSTimeInterval remainingTime;
-@property (assign) MGSNetRequest *netRequest;
+@property (assign) MGSClientNetRequest *netRequest;
 @property (assign) MGSRequestProgress *requestProgress;
 @property MGSTaskStatus taskStatus;
 @property MGSResult *result;

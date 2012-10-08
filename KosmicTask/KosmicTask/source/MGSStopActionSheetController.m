@@ -235,7 +235,7 @@
  net request responce
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 	#pragma unused(netRequest)
 	#pragma unused(payload)

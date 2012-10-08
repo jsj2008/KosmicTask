@@ -8,8 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSNetRequestManager.h"
+#import "MGSServerNetRequest.h"
 
-@class MGSNetRequest;
 @class MGSAsyncSocket;
 @class MGSServerScriptRequest;
 @class MGSServerPreferencesRequest;
@@ -22,13 +22,14 @@
 }
 
 + (id)sharedController;
-- (MGSNetRequest *)requestWithConnectedSocket:(MGSNetSocket *)socket;
-- (void)parseRequestMessage:(MGSNetRequest *)request;
+- (MGSServerNetRequest *)requestWithConnectedSocket:(MGSNetSocket *)socket;
+- (void)parseRequestMessage:(MGSServerNetRequest *)request;
 - (BOOL)initialise;
-- (void)authenticationFailed:(MGSNetRequest *)netRequest;
-- (void)sendErrorResponse:(MGSNetRequest *)netRequest error:(MGSError *)mgsError isScriptCommand:(BOOL)isScriptCommand;
-- (BOOL)concludeRequest:(MGSNetRequest *)netRequest;
+- (void)authenticationFailed:(MGSServerNetRequest *)netRequest;
+- (void)sendErrorResponse:(MGSServerNetRequest *)netRequest error:(MGSError *)mgsError isScriptCommand:(BOOL)isScriptCommand;
+- (BOOL)concludeRequest:(MGSServerNetRequest *)netRequest;
 - (void)disconnectAllRequests;
+- (void)sendResponseOnSocket:(MGSServerNetRequest *)netRequest wasValid:(BOOL)valid;
 
 @property (readonly) BOOL initialised;
 @end

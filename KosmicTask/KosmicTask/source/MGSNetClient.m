@@ -27,8 +27,8 @@
 #import "MGSScript.h"
 #import "MGSPreferences.h"
 #import "MGSOutlineViewNode.h"
-#import "MGSNetRequest+KosmicTask.h"
-
+#import "MGSClientNetRequest+KosmicTask.h"
+#import "MGSClientNetRequest.h"
 
 const char MGSNetClientRunModeContext;
 
@@ -482,7 +482,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	}
 	
 	// deal with items in queue
-	for (MGSNetRequest *netRequest in [_pendingRequests copy]) {
+	for (MGSClientNetRequest *netRequest in [_pendingRequests copy]) {
 		
 		// on error send reply to delegate
 		NSString *failureReason = NSLocalizedString(@"Service removed for host: %@", @"Host service removed error");
@@ -576,7 +576,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
  connect and send request
  
  */
-- (void)connectAndSendRequest:(MGSNetRequest *)netRequest
+- (void)connectAndSendRequest:(MGSClientNetRequest *)netRequest
 {	
 	NSAssert(netRequest, @"net request is nil");
 	NSAssert(netRequest.delegate, @"net request delegate is nil");
@@ -848,14 +848,14 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 #pragma mark MGSNetSocket delegate messages
 /*
  
- net socket disconnected
+ - netSocketDisconnect:
  
  */
 - (void)netSocketDisconnect:(MGSNetSocket *)netSocket
 {
 	NSAssert([netSocket disconnectCalled], @"disconnect not called on MGSNetClientSocket");
 	
-    MGSNetRequest *netRequest = netSocket.netRequest;
+    MGSClientNetRequest *netRequest = (MGSClientNetRequest *)netSocket.netRequest;
 	netRequest = [netRequest firstRequest];
 	
 	// the request that gets added to the list of executing requests may be the first request in a chain
@@ -878,6 +878,16 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	MLog(DEBUGLOG, @"MGSNetClient: %@ socket removed: executing request count is %i", _serviceName, [_executingRequests count]);
 }
 
+/*
+ 
+ - netSocketShouldConnect:
+ 
+ */
+- (BOOL)netSocketShouldConnect:(MGSNetSocket *)netSocket
+{
+#pragma unused(netSocket)
+    return YES;
+}
 
 #pragma mark Properties
 /*
@@ -914,7 +924,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
  request reply
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 	// validate response
 	MGSNetClient *netClient = netRequest.netClient;
@@ -1081,7 +1091,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	NSAssert(!_isResolving, @"Cannot send request queue while resolving.");
 	
 	// send each queued request
-	for (MGSNetRequest *request in [_pendingRequests copy]) {
+	for (MGSClientNetRequest *request in [_pendingRequests copy]) {
 		
 		// remove item from pending queue
 		[_pendingRequests removeObject:request];
@@ -1391,7 +1401,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 }
 
 // error on request
-- (void) errorOnRequestQueue:(MGSNetRequest *)netRequest code:(NSInteger)code reason:(NSString *)failureReason
+- (void) errorOnRequestQueue:(MGSClientNetRequest *)netRequest code:(NSInteger)code reason:(NSString *)failureReason
 {
 	// remove request from queue
 	[_pendingRequests removeObject:netRequest];
@@ -1425,7 +1435,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	_isResolving = NO;
 	
 	// send reply to each request delegate
-	for (MGSNetRequest *netRequest in [_pendingRequests copy]) {
+	for (MGSClientNetRequest *netRequest in [_pendingRequests copy]) {
 		
 		NSInteger serviceErrorCode = [[errorDict objectForKey:NSNetServicesErrorCode] intValue];
 		NSString *serviceError = [NSNetService errorDictString:errorDict];

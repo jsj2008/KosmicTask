@@ -11,6 +11,7 @@
 #import "MGSClientScriptManager.h"
 #import "MGSPath.h"
 #import "MGSScriptManager.h"
+#import "MGSClientNetRequest.h"
 
 NSString *MGSTaskDictTasksKey = @"Tasks";
 

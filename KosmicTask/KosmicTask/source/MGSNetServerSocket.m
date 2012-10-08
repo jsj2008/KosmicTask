@@ -11,7 +11,7 @@
 #import "MGSMother.h"
 #import "MGSNetServerSocket.h"
 #import "MGSNetHeader.h"
-#import "MGSNetRequest.h"
+#import "MGSServerNetRequest.h"
 #import "MGSNetMessage.h"
 #import "MGSServerRequestManager.h"
 #import "MGSAsyncSocket.h"
@@ -142,7 +142,7 @@
 	
 	// conclude the request
     if (self.netRequest) {
-        [[MGSServerRequestManager sharedController] concludeRequest:self.netRequest];
+        [[MGSServerRequestManager sharedController] concludeRequest:(MGSServerNetRequest *)self.netRequest];
     }
 }
 
@@ -209,7 +209,7 @@
 				MLog(DEBUGLOG, @"Server received request: %@", [self.netRequest.requestMessage messageDict]);
 
 				// parse the request and generate reply
-				[[MGSServerRequestManager sharedController] parseRequestMessage:self.netRequest];
+				[[MGSServerRequestManager sharedController] parseRequestMessage:(MGSServerNetRequest *)self.netRequest];
 				break;
 				
 			default:

@@ -9,15 +9,15 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSTask.h"
 
-@class MGSNetRequest;
+@class MGSServerNetRequest;
 
 
 @interface MGSScriptTask : MGSTask {
-	MGSNetRequest *_netRequest;
-    MGSNetRequest *_logRequest;
+	MGSServerNetRequest *_netRequest;
+    MGSServerNetRequest *_logRequest;
 }
-- (MGSScriptTask *)initWithNetRequest:(MGSNetRequest *)netRequest;
+- (MGSScriptTask *)initWithNetRequest:(MGSServerNetRequest *)netRequest;
 
-@property MGSNetRequest *netRequest;
-@property MGSNetRequest *logRequest;
+@property MGSServerNetRequest *netRequest;
+@property MGSServerNetRequest *logRequest;
 @end

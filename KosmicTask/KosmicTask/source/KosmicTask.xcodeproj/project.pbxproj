@@ -217,8 +217,8 @@
 		AB2D9B02128AFEE8005B0484 /* MGSAppleScriptLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2D9B01128AFEE8005B0484 /* MGSAppleScriptLanguage.m */; };
 		AB2E6CA012C799790071052D /* MGSNetMessage+KosmicTask.h in Headers */ = {isa = PBXBuildFile; fileRef = AB2E6C9E12C799790071052D /* MGSNetMessage+KosmicTask.h */; };
 		AB2E6CA112C799790071052D /* MGSNetMessage+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6C9F12C799790071052D /* MGSNetMessage+KosmicTask.m */; };
-		AB2E6D7C12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h in Headers */ = {isa = PBXBuildFile; fileRef = AB2E6D7A12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h */; };
-		AB2E6D7D12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6D7B12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m */; };
+		AB2E6D7C12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.h in Headers */ = {isa = PBXBuildFile; fileRef = AB2E6D7A12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.h */; };
+		AB2E6D7D12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6D7B12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.m */; };
 		AB2EC96A14D1F3AF00B54313 /* MGTemplateEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC95314D1F10200B54313 /* MGTemplateEngine.framework */; };
 		AB2ECA1014D1F58500B54313 /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2ECA0714D1F53200B54313 /* TCMPortMapper.framework */; };
 		AB2ECA1114D1F5AE00B54313 /* TCMPortMapper.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2ECA0714D1F53200B54313 /* TCMPortMapper.framework */; };
@@ -563,6 +563,8 @@
 		AB79AF7714CA32FE00087932 /* ORCDiscount.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB79AF7414CA2F1000087932 /* ORCDiscount.framework */; };
 		AB7C18D716220DCC00E45BD4 /* RedCross16.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7C18D616220DCC00E45BD4 /* RedCross16.png */; };
 		AB7C18D916220E8900E45BD4 /* GreenTick16.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7C18D816220E8900E45BD4 /* GreenTick16.png */; };
+		AB7C197B1622F52C00E45BD4 /* MGSServerNetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C197A1622F52C00E45BD4 /* MGSServerNetRequest.m */; };
+		AB7C197E1622F57600E45BD4 /* MGSClientNetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C197D1622F57600E45BD4 /* MGSClientNetRequest.m */; };
 		AB7C472F0DA2DEAD0008F562 /* ConnectToServer.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB7C472D0DA2DEAD0008F562 /* ConnectToServer.xib */; };
 		AB7C47320DA2DEE90008F562 /* MGSAddServerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C47310DA2DEE90008F562 /* MGSAddServerWindowController.m */; };
 		AB805ACE0E9804DC0079688F /* CircleArrows16.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB805ACD0E9804DC0079688F /* CircleArrows16.tif */; };
@@ -3611,8 +3613,8 @@
 		AB2D9B01128AFEE8005B0484 /* MGSAppleScriptLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSAppleScriptLanguage.m; sourceTree = "<group>"; };
 		AB2E6C9E12C799790071052D /* MGSNetMessage+KosmicTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MGSNetMessage+KosmicTask.h"; sourceTree = "<group>"; };
 		AB2E6C9F12C799790071052D /* MGSNetMessage+KosmicTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MGSNetMessage+KosmicTask.m"; sourceTree = "<group>"; };
-		AB2E6D7A12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MGSNetRequest+KosmicTask.h"; sourceTree = "<group>"; };
-		AB2E6D7B12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MGSNetRequest+KosmicTask.m"; sourceTree = "<group>"; };
+		AB2E6D7A12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MGSClientNetRequest+KosmicTask.h"; sourceTree = "<group>"; };
+		AB2E6D7B12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MGSClientNetRequest+KosmicTask.m"; sourceTree = "<group>"; };
 		AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MGTemplateEngine.xcodeproj; path = ../../../MGTemplateEngine/MGTemplateEngine.xcodeproj; sourceTree = "<group>"; };
 		AB2FB9680E995C3500BA3246 /* MGSNullBindingProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNullBindingProxy.h; sourceTree = "<group>"; };
 		AB2FB9690E995C3500BA3246 /* MGSNullBindingProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNullBindingProxy.m; sourceTree = "<group>"; };
@@ -4025,6 +4027,10 @@
 		AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YAMLKit.xcodeproj; path = ../../../yamlkit/YAMLKit.xcodeproj; sourceTree = SOURCE_ROOT; };
 		AB7C18D616220DCC00E45BD4 /* RedCross16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RedCross16.png; sourceTree = "<group>"; };
 		AB7C18D816220E8900E45BD4 /* GreenTick16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenTick16.png; sourceTree = "<group>"; };
+		AB7C19791622F52C00E45BD4 /* MGSServerNetRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSServerNetRequest.h; sourceTree = "<group>"; };
+		AB7C197A1622F52C00E45BD4 /* MGSServerNetRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSServerNetRequest.m; sourceTree = "<group>"; };
+		AB7C197C1622F57600E45BD4 /* MGSClientNetRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSClientNetRequest.h; sourceTree = "<group>"; };
+		AB7C197D1622F57600E45BD4 /* MGSClientNetRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSClientNetRequest.m; sourceTree = "<group>"; };
 		AB7C472E0DA2DEAD0008F562 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ConnectToServer.xib; sourceTree = "<group>"; };
 		AB7C47300DA2DEE90008F562 /* MGSAddServerWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSAddServerWindowController.h; sourceTree = "<group>"; };
 		AB7C47310DA2DEE90008F562 /* MGSAddServerWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSAddServerWindowController.m; sourceTree = "<group>"; };
@@ -7786,6 +7792,10 @@
 			children = (
 				AB8572D00D00B84800E337B8 /* MGSNetRequest.h */,
 				AB8572D10D00B84800E337B8 /* MGSNetRequest.m */,
+				AB7C19791622F52C00E45BD4 /* MGSServerNetRequest.h */,
+				AB7C197A1622F52C00E45BD4 /* MGSServerNetRequest.m */,
+				AB7C197C1622F57600E45BD4 /* MGSClientNetRequest.h */,
+				AB7C197D1622F57600E45BD4 /* MGSClientNetRequest.m */,
 				ABB074AE0D72CF15004C70F7 /* MGSNetRequestPayload.h */,
 				ABB074AF0D72CF15004C70F7 /* MGSNetRequestPayload.m */,
 				09DC26FE0D06014A00017672 /* MGSNetHeader.h */,
@@ -7812,8 +7822,8 @@
 				ABC14B280E75946F00BA566D /* MGSInternetSharingServer.m */,
 				AB2E6C9E12C799790071052D /* MGSNetMessage+KosmicTask.h */,
 				AB2E6C9F12C799790071052D /* MGSNetMessage+KosmicTask.m */,
-				AB2E6D7A12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h */,
-				AB2E6D7B12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m */,
+				AB2E6D7A12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.h */,
+				AB2E6D7B12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.m */,
 			);
 			name = "network interface";
 			path = ..;
@@ -9008,7 +9018,7 @@
 				AB01B351122D934F000D16C8 /* MGSLanguagePropertiesResource.h in Headers */,
 				AB2489A112BFF5F200933E98 /* MGSNetNegotiator.h in Headers */,
 				AB2E6CA012C799790071052D /* MGSNetMessage+KosmicTask.h in Headers */,
-				AB2E6D7C12C7B4BA0071052D /* MGSNetRequest+KosmicTask.h in Headers */,
+				AB2E6D7C12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.h in Headers */,
 				ABC5BC70131E674E0020003D /* NSIndexPath+Mugginsoft.h in Headers */,
 				AB1E1AF013E1BBC4003643AC /* EMKeychain.h in Headers */,
 				AB019244150A2EBC00DA7747 /* MGSDisposableObject.h in Headers */,
@@ -11663,6 +11673,7 @@
 				ABB9412611123C7F00DD9A07 /* NSURL+NDCarbonUtilities.m in Sources */,
 				AB4876FD11871887005241D1 /* MGSTask.m in Sources */,
 				AB4876FE118718A0005241D1 /* MGSScriptTask.m in Sources */,
+				AB7C197B1622F52C00E45BD4 /* MGSServerNetRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11787,7 +11798,7 @@
 				AB384879128C0B290046FC72 /* MGSShellLanguage.m in Sources */,
 				AB2489A212BFF5F200933E98 /* MGSNetNegotiator.m in Sources */,
 				AB2E6CA112C799790071052D /* MGSNetMessage+KosmicTask.m in Sources */,
-				AB2E6D7D12C7B4BA0071052D /* MGSNetRequest+KosmicTask.m in Sources */,
+				AB2E6D7D12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.m in Sources */,
 				ABC5BC71131E674E0020003D /* NSIndexPath+Mugginsoft.m in Sources */,
 				AB1E1AF113E1BBC4003643AC /* EMKeychain.m in Sources */,
 				AB01924F150ABE7200DA7747 /* NSObject+MGSDisposable.m in Sources */,
@@ -12019,6 +12030,7 @@
 				AB375BF615371C4E00C2A050 /* MGSVisibleSegmentedCell.m in Sources */,
 				AB11DBB9159A485700FC81D3 /* NSScrollView+Mugginsoft.m in Sources */,
 				AB9EA8D71602249900FD0726 /* NSMutableAttributedString+Mugginsoft.m in Sources */,
+				AB7C197E1622F57600E45BD4 /* MGSClientNetRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

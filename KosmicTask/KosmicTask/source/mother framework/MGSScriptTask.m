@@ -7,7 +7,7 @@
 //
 
 #import "MGSScriptTask.h"
-#import "MGSNetRequest.h"
+#import "MGSServerNetRequest.h"
 #import "MGSNetMessage.h"
 #import "MGSNetHeader.h"
 #import "MLog.h"
@@ -36,7 +36,7 @@
  init with net request
  
  */
-- (MGSScriptTask *)initWithNetRequest:(MGSNetRequest *)netRequest
+- (MGSScriptTask *)initWithNetRequest:(MGSServerNetRequest *)netRequest
 {
 	if ((self = [super init])) {
 		NSAssert(netRequest, @"net request is nil");
@@ -64,7 +64,7 @@
  - setLogRequest:
  
  */
-- (void)setLogRequest:(MGSNetRequest *)request
+- (void)setLogRequest:(MGSServerNetRequest *)request
 {
     _logRequest = request;
     

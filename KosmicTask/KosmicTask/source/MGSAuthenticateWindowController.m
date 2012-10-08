@@ -22,7 +22,7 @@
 #import "NSView_Mugginsoft.h"
 #import "MGSAuthentication.h"
 #import "NSWindowController_Mugginsoft.h"
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 #import "MGSNetMessage.h"
 #import "MGSNotifications.h"
 #import "MGSError.h"
@@ -270,7 +270,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
  The message returns NO if the request cannot be accepted for authentication.
  
  */
--(BOOL)authenticateRequest:(MGSNetRequest *)netRequest challenge:(NSDictionary *)challengeDict
+-(BOOL)authenticateRequest:(MGSClientNetRequest *)netRequest challenge:(NSDictionary *)challengeDict
 
 {
 	// if we are currently handling another request authorisation then we cannot accept this request.
@@ -434,7 +434,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
  if the request fails then this object will receive an authenticate messaage.
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 
 	// we are only interested in responses that correspond to the current request

@@ -135,13 +135,7 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
  */
 - (void)disconnect
 {
-    // disconnect child sockets
-    for (MGSNetRequest *request in self.netRequest.childRequests) {
-        if (NO) {
-            [request disconnect];
-        }
-    }
-	[_socket disconnect];
+    [_socket disconnect];
 }
 
 /*
@@ -514,7 +508,7 @@ cleanup:
 		}
 	}
 	@catch (NSException *e) {
-		error = [NSString stringWithFormat: @"Exception writing network data: ", e];
+		error = [NSString stringWithFormat: @"Exception writing network data: %@", e];
 		throwMe = e;
 		goto cleanup;
 	}
@@ -795,7 +789,7 @@ cleanup:
 		
 	} 
 	@catch (NSException *e) {
-		error = [NSString stringWithFormat: @"Exception sending attachment data:", e];
+		error = [NSString stringWithFormat: @"Exception sending attachment data: %@", e];
 		goto errorExit;
 	}
 	
@@ -939,7 +933,7 @@ errorExit:
                 // get the data string minus the terminator
                 [dataString deleteCharactersInRange:NSMakeRange([dataString length] - [MGSNetChunkTerminator length], [MGSNetChunkTerminator length])];
                                                                    
-                // a zero sized chunk marks the end of the attachmnet stream
+                // a zero sized chunk marks the end of the attachment stream
                 if ([dataString length] == 0) {
                     
                      MLogDebug(@"Chunked attachments received");
@@ -1059,7 +1053,7 @@ errorExit:
 		
 	} 
 	@catch (NSException *e) {
-		error = [NSString stringWithFormat: @"Exception reading attachment data:", e];
+		error = [NSString stringWithFormat: @"Exception reading attachment data: %@", e];
 		goto errorExit;
 	}
 	

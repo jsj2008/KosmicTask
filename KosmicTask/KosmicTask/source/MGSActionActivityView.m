@@ -1490,29 +1490,6 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 				
 			break;
 			
-			case 10000:
-								
-				// glossy text
-				if (NO) {
-					// get required font
-					NSFont *font = [NSFont fontWithName:@"Lucida Grande" size:80.0f];
-					font = [[NSFontManager sharedFontManager] convertFont:font toHaveTrait:NSBoldFontMask];
-
-					// get bezier path rep of our string
-					_bezierPath = [@"KosmicTask" bezierWithFont: font];
-
-					NSRect bounds = [_bezierPath bounds];
-					NSPoint centreBounds = NSMakePoint(bounds.origin.x + bounds.size.width/2, bounds.origin.y + bounds.size.height/2);
-					
-					// centre path
-					[xformTranslate translateXBy:xOrigin - centreBounds.x yBy:yOrigin - centreBounds.y];
-					[_bezierPath transformUsingAffineTransform:xformTranslate];
-				} else {
-					pathDefined = NO;
-				}
-				
-				break;
-				
 			default:
 				pathDefined = NO;
 				break;

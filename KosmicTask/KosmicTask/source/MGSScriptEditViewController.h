@@ -8,9 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <OSAKit/OSAKit.h>
-#import "MGSNetRequest.h"
-
-
+#import "MGSClientNetRequest.h"
 
 /* build initiated */	
 #define MGS_BUILD_FLAG_INITIATED (1 << 0)
@@ -104,10 +102,10 @@ extern NSString * const MGSIgnoreBuildError;
 - (void)dispose;
 - (void)printDocument:(id)sender;
 - (NSView *)initialFirstResponder;
-- (void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload options:(NSDictionary *)options;
 - (void)requestExecute;
 - (BOOL)canSaveScript;
 - (NSUndoManager *)undoManager;
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload options:(NSDictionary *)options;
 
 @property(assign) MGSTaskSpecifier *taskSpec;
 

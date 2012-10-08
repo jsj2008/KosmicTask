@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSNetRequestManager.h"
 
-@class MGSNetRequest;
+@class MGSClientNetRequest;
 @class MGSNetClient;
 @class MGSTaskSpecifier;
 @protocol MGSNetRequestOwner;
@@ -28,7 +28,7 @@
 - (void)requestHeartbeatForNetClient: (MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner;
 
 // request authentication
-- (MGSNetRequest *)requestAuthenticationForNetClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner;
+- (MGSClientNetRequest *)requestAuthenticationForNetClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner;
 
 // save changes for client to host
 - (void)requestSaveConfigurationChangesForNetClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner republish:(BOOL)republish;
@@ -37,7 +37,7 @@
 - (void)requestSaveEditsForNetClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner republish:(BOOL)republish;
 
 // save task to host
-- (MGSNetRequest *)requestSaveTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner;
+- (MGSClientNetRequest *)requestSaveTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner;
 
 // execute an task
 - (void)requestExecuteTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner;
@@ -58,9 +58,10 @@
 - (void)requestBuildTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner;
 
 // request script with UUID on net client
-- (MGSNetRequest *)requestScriptWithUUID:(NSString *)UUID netClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner options:(NSDictionary *)options;
+- (MGSClientNetRequest *)requestScriptWithUUID:(NSString *)UUID netClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner options:(NSDictionary *)options;
 
 // request net client search
-- (MGSNetRequest *)requestSearchNetClient:(MGSNetClient *)netClient searchDict:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner;
+- (MGSClientNetRequest *)requestSearchNetClient:(MGSNetClient *)netClient searchDict:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner;
 
+- (void)sendRequestOnClient:(MGSClientNetRequest *)request;
 @end

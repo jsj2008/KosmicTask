@@ -1,5 +1,5 @@
 //
-//  MGSNetRequest+KosmicTask.h
+//  MGSClientNetRequest+KosmicTask.h
 //  KosmicTask
 //
 //  Created by Jonathan on 26/12/2010.
@@ -7,9 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 
-@interface MGSNetRequest (KosmicTask)
+@interface MGSClientNetRequest (KosmicTask)
 
 - (BOOL)prepareConnectionNegotiation;
 

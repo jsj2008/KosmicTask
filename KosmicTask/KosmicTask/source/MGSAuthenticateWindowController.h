@@ -9,12 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 @class MGSNetClient;
-@class MGSNetRequest;
+@class MGSClientNetRequest;
 
 @interface MGSAuthenticateWindowController : NSWindowController <NSWindowDelegate> {
 	
 	//MGSNetClient *_netClient;
-	MGSNetRequest *_netRequest;
+	MGSClientNetRequest *_netRequest;
 	id _requestOwner;
 	
 	IBOutlet NSTextField *usernameTextField;
@@ -43,7 +43,7 @@
 @property (copy) NSString *windowText;
 @property (readonly) NSDictionary *challenge;
 @property NSWindow *modalForWindow;
-@property (readonly) MGSNetRequest *netRequest;
+@property (readonly) MGSClientNetRequest *netRequest;
 @property BOOL canConnect;
 
 
@@ -52,6 +52,6 @@
 - (IBAction)connect:(id)sender;
 //- (id)initWithNetClient:(MGSNetClient *)netClient;
 //- (id)initWithNetRequest:(MGSNetRequest *)netRequest;
-- (BOOL)authenticateRequest:(MGSNetRequest *)netRequest challenge:(NSDictionary *)challengeDict;
+- (BOOL)authenticateRequest:(MGSClientNetRequest *)netRequest challenge:(NSDictionary *)challengeDict;
 - (IBAction)closeWindow;
 @end

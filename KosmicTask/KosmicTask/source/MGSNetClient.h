@@ -8,10 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSNetClientSocket.h"
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 #import "MGSMotherModes.h"
 
 @class MGSScript;
+@class MGSNetClient;
 @class MGSNetClientContext;
 
 // default keys
@@ -110,7 +111,7 @@ typedef enum _MGSScriptAccess {
 - (id)initWithDictionary:(NSDictionary *)dict;
 
 - (BOOL)canConnect;
-- (void)connectAndSendRequest:(MGSNetRequest *)netRequest;
+- (void)connectAndSendRequest:(MGSClientNetRequest *)netRequest;
 - (BOOL)hasService:(NSNetService *)netService;
 - (void)sendHeartbeat;
 - (void)sendHeartbeatNow;
@@ -137,7 +138,7 @@ typedef enum _MGSScriptAccess {
 - (void)removeContextForWindow:(NSWindow *)window;
 - (MGSNetClientContext *)contextForWindow:(NSWindow *)window;
 - (MGSNetClientContext *)applicationWindowContext;
-- (void)errorOnRequestQueue:(MGSNetRequest *)netRequest code:(NSInteger)code reason:(NSString *)failureReason;
+- (void)errorOnRequestQueue:(MGSClientNetRequest *)netRequest code:(NSInteger)code reason:(NSString *)failureReason;
 - (void)applySecurity;
 
 @property (copy) NSString *serviceShortName;

@@ -10,7 +10,7 @@
 #import "MGSTaskSpecifier.h"
 #import "MGSClientRequestManager.h"
 #import "MGSMotherModes.h"
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 #import "MGSNetRequestPayload.h"
 #import "MGSNotifications.h"
 #import "MGSScript.h"
@@ -758,7 +758,7 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
  net request response
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 	
 	NSString *requestCommand = netRequest.kosmicTaskCommand;

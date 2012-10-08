@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <OSAKit/OSAKit.h>
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 #import "MGSViewDelegateProtocol.h"
 
 @class MGSTaskSpecifier;

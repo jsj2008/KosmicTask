@@ -8,7 +8,7 @@
 
 #import "MGSServerScriptRequest.h"
 #import "MGSServerRequestManager.h"
-#import "MGSNetRequest.h"
+#import "MGSServerNetRequest.h"
 #import "MGSNetMessage.h"
 #import "MGSAsyncSocket.h"
 #import "MGSScriptPlist.h"
@@ -90,7 +90,7 @@ static MGSServerRequestManager *_sharedController = nil;
  */
 - (void)disconnectAllRequests
 {
-	for (MGSNetRequest *netRequest in [_netRequests copy]) {
+	for (MGSServerNetRequest *netRequest in [_netRequests copy]) {
 		[netRequest disconnect];
 	}
 }
@@ -103,10 +103,10 @@ static MGSServerRequestManager *_sharedController = nil;
  request with connected socket
  
  */
-- (MGSNetRequest *)requestWithConnectedSocket:(MGSNetSocket *)socket
+- (MGSServerNetRequest *)requestWithConnectedSocket:(MGSNetSocket *)socket
 {
 	// create request with socket
-	MGSNetRequest *request = [MGSNetRequest requestWithConnectedSocket:socket];
+	MGSServerNetRequest *request = [MGSServerNetRequest requestWithConnectedSocket:socket];
 	[request setDelegate: self];
 	
 	// add to request array
@@ -123,7 +123,7 @@ static MGSServerRequestManager *_sharedController = nil;
  parse the request message
  
  */
-- (void)parseRequestMessage:(MGSNetRequest *)netRequest
+- (void)parseRequestMessage:(MGSServerNetRequest *)netRequest
 {	
 	NSInteger errorCode = MGSErrorCodeParseRequestMessage;
 	
@@ -236,7 +236,7 @@ send_error_reply:;
  send error response 
  
  */
-- (void)sendErrorResponse:(MGSNetRequest *)netRequest error:(MGSError *)mgsError isScriptCommand:(BOOL)isScriptCommand
+- (void)sendErrorResponse:(MGSServerNetRequest *)netRequest error:(MGSError *)mgsError isScriptCommand:(BOOL)isScriptCommand
 {
 	
 	// validate script error command reply
@@ -279,7 +279,7 @@ send_error_reply:;
  authentication failed for request
  
  */
-- (void)authenticationFailed:(MGSNetRequest *)netRequest
+- (void)authenticationFailed:(MGSServerNetRequest *)netRequest
 {
 	[self sendResponseOnSocket:netRequest wasValid:NO];
 }
@@ -289,7 +289,7 @@ send_error_reply:;
  remove request
  
  */
-- (void)removeRequest:(MGSNetRequest *)netRequest
+- (void)removeRequest:(MGSServerNetRequest *)netRequest
 {
 	// remove the request
 	[super removeRequest:netRequest];
@@ -303,9 +303,31 @@ send_error_reply:;
  all requests receive this message wether they run to completion or not.
  
  */
-- (BOOL)concludeRequest:(MGSNetRequest *)netRequest
+- (BOOL)concludeRequest:(MGSServerNetRequest *)netRequest
 {
 	return [_scriptController concludeNetRequest:netRequest];
+}
+
+/*
+ 
+ send response on socket
+ 
+ */
+- (void)sendResponseOnSocket:(MGSServerNetRequest *)request wasValid:(BOOL)valid
+{
+	@try {
+		// flag request validity
+		[[request responseMessage] addRequestWasValid:valid];
+		
+		// send on socket
+		[request sendResponseOnSocket];
+        
+	} @catch (NSException *e) {
+		
+		[[request netSocket] disconnect];
+		MLogInfo(@"%@", e);
+	}
+    
 }
 
 @end

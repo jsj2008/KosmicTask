@@ -247,7 +247,7 @@ NSString*	UKAutoreleasedCPUName( BOOL releaseIt )
 				&& (cpu & 0x0000ff00) >= 0x00002000 && (cpu & 0x000000ff) >= 0x00000020)	// All valid as characters?
 				cpuName = [NSString stringWithFormat: @"Unknown (%d/%s)", cpu, &cpu];
 			else
-				cpuName = [NSString stringWithFormat: @"Unknown (%d)", cpu, &cpu];
+				cpuName = [NSString stringWithFormat: @"Unknown (%d)", cpu];
 		}
 		[cpuName retain];		// Yeah, I know, I'm paranoid.
 	}

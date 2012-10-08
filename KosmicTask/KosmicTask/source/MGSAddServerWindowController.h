@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 
 #define MGSAddFavorite 0
 #define MGSRemoveFavorite 1

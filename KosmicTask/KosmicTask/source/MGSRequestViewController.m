@@ -47,8 +47,8 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 @interface MGSRequestViewController()
 - (void)actionInputModified:(NSNotification *)notification;
 - (void)actionSaved:(NSNotification *)note;
--(void)executeResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload;
--(void)getScriptResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload;
+- (void)executeResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload;
+- (void)getScriptResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload;
 @end
 
 @implementation MGSRequestViewController
@@ -765,7 +765,7 @@ commonExit:
  net request will send
  
  */
--(NSDictionary *)netRequestWillSend:(MGSNetRequest *)netRequest
+-(NSDictionary *)netRequestWillSend:(MGSClientNetRequest *)netRequest
 {
 	#pragma unused(netRequest)
 	
@@ -788,7 +788,7 @@ commonExit:
  receiving
  
  */
--(void)netRequestUpdate:(MGSNetRequest *)netRequest
+-(void)netRequestUpdate:(MGSClientNetRequest *)netRequest
 {		
 	MGSRequestProgress *actionRequestProgress = [self actionSpecifier].requestProgress;
 	eMGSRequestProgress prevProgressValue = actionRequestProgress.value;
@@ -813,7 +813,7 @@ commonExit:
  - netRequestChunkReceived:
  
  */
--(void)netRequestChunkReceived:(MGSNetRequest *)netRequest
+-(void)netRequestChunkReceived:(MGSClientNetRequest *)netRequest
 {
     if (netRequest.requestType == kMGSRequestTypeLogging) {
         
@@ -828,7 +828,7 @@ commonExit:
  - netRequestResponse:payload:
  
  */
--(void)netRequestResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 	MGSNetClient *netClient = netRequest.netClient;
 	NSAssert([[self actionSpecifier] netClient] == netClient, @"net client does not match action specifier");
@@ -859,7 +859,7 @@ commonExit:
  - executeResponse:payload:
  
  */
--(void)executeResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)executeResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 	// display the progress table now rather than waiting for the runloop.
 	// this gives better progress feedback.
@@ -991,7 +991,7 @@ commonExit:
  - getScriptResponse:payload:
  
  */
--(void)getScriptResponse:(MGSNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+-(void)getScriptResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 	// is the response for the current task.
 	// if not, discard it.

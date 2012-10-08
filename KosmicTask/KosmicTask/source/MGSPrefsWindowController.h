@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "DBPrefsWindowController.h"
-#import "MGSNetRequest.h"
+#import "MGSClientNetRequest.h"
 #import <MGSFragaria/MGSFragaria.h>
 
 extern NSString * MGSDefaultStartAtLogin;
