@@ -172,6 +172,19 @@ errorExit:;
 }
 
 #pragma mark -
+#pragma mark Network info methods
+
+/*
+ 
+ - localNetworkIPAddresses
+ 
+ */
+- (NSSet *)localNetworkIPAddresses
+{
+    return _localNetworkAddresses;
+}
+
+#pragma mark -
 #pragma mark Bonjour listener
 
 /*

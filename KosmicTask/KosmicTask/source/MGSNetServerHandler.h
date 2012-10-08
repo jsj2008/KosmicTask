@@ -32,9 +32,12 @@
 // server methods
 - (BOOL)startServerOnPort:(UInt16)portNumber;
 - (void)updateTXTRecord;
+- (NSSet *)localNetworkIPAddresses;
 
 @property (copy) NSString *serviceType;
 @property (copy) NSString *serviceName;
 @property (copy) NSString *domain;
 @property id delegate;
+
+
 @end
