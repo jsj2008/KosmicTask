@@ -168,6 +168,8 @@ static MGSImageManager *_sharedManager = nil;
 @synthesize greenDotNoUser;
 @synthesize redDotNoUser;
 @synthesize greenDotUser;
+@synthesize redCross16;
+@synthesize greenTick16;
 
 #pragma mark -
 #pragma mark Class Methods
@@ -262,6 +264,9 @@ static MGSImageManager *_sharedManager = nil;
         greenDotNoUser = [NSImage imageNamed:@"DotGreenNoUser.png"];
         redDotNoUser = [NSImage imageNamed:@"DotRedNoUser.png"];
         greenDotUser = [NSImage imageNamed:@"DotGreenUser.png"];
+        
+        redCross16 = [NSImage imageNamed:@"RedCross16.png"];
+        greenTick16 = [NSImage imageNamed:@"GreenTick16.png"];
 	}
 	return self;
 }

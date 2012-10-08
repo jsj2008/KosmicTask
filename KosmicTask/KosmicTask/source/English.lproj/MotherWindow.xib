@@ -115,7 +115,6 @@
 								<int key="NSvFlags">256</int>
 								<string key="NSFrameSize">{1015, 144}</string>
 								<reference key="NSSuperview" ref="1029911128"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="432135693"/>
 								<string key="NSClassName">NSView</string>
 							</object>
@@ -139,7 +138,6 @@
 														<int key="NSvFlags">269</int>
 														<string key="NSFrame">{{13, 125}, {151, 29}}</string>
 														<reference key="NSSuperview" ref="218338798"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="3327791"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSTextFieldCell" key="NSCell" id="958711198">
@@ -185,7 +183,6 @@
 														</object>
 														<string key="NSFrame">{{40, 167}, {96, 96}}</string>
 														<reference key="NSSuperview" ref="218338798"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="702488569"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSImageCell" key="NSCell" id="1017499151">
@@ -206,13 +203,11 @@
 												</object>
 												<string key="NSFrameSize">{177, 323}</string>
 												<reference key="NSSuperview" ref="1017696817"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="305699946"/>
 											</object>
 										</object>
 										<string key="NSFrame">{{417, 3}, {177, 323}}</string>
 										<reference key="NSSuperview" ref="432135693"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="218338798"/>
 										<string key="NSOffsets">{0, 0}</string>
 										<object class="NSTextFieldCell" key="NSTitleCell">
@@ -248,7 +243,6 @@
 								</object>
 								<string key="NSFrame">{{0, 153}, {1015, 329}}</string>
 								<reference key="NSSuperview" ref="1029911128"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1017696817"/>
 								<string key="NSClassName">MGSRoundedView</string>
 							</object>
@@ -272,7 +266,6 @@
 														<int key="NSvFlags">293</int>
 														<string key="NSFrame">{{13, 17}, {151, 17}}</string>
 														<reference key="NSSuperview" ref="154517329"/>
-														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="313715184"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSTextFieldCell" key="NSCell" id="922798877">
@@ -293,13 +286,11 @@
 												</object>
 												<string key="NSFrameSize">{177, 148}</string>
 												<reference key="NSSuperview" ref="1056781085"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="300427340"/>
 											</object>
 										</object>
 										<string key="NSFrame">{{419, -4}, {177, 148}}</string>
 										<reference key="NSSuperview" ref="3327791"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="154517329"/>
 										<string key="NSOffsets">{0, 0}</string>
 										<object class="NSTextFieldCell" key="NSTitleCell">
@@ -323,14 +314,12 @@
 								</object>
 								<string key="NSFrame">{{0, 491}, {1015, 144}}</string>
 								<reference key="NSSuperview" ref="1029911128"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1056781085"/>
 								<string key="NSClassName">MGSRoundedView</string>
 							</object>
 						</object>
 						<string key="NSFrame">{{0, 21}, {1015, 635}}</string>
 						<reference key="NSSuperview" ref="608908578"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="475351090"/>
 					</object>
 					<object class="NSCustomView" id="313715184">
@@ -338,12 +327,46 @@
 						<int key="NSvFlags">290</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="NSImageView" id="72473174">
+								<reference key="NSNextResponder" ref="313715184"/>
+								<int key="NSvFlags">289</int>
+								<object class="NSMutableSet" key="NSDragTypes">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<object class="NSArray" key="set.sortedObjects">
+										<bool key="EncodedWithXMLCoder">YES</bool>
+										<string>Apple PDF pasteboard type</string>
+										<string>Apple PICT pasteboard type</string>
+										<string>Apple PNG pasteboard type</string>
+										<string>NSFilenamesPboardType</string>
+										<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
+										<string>NeXT TIFF v4.0 pasteboard type</string>
+									</object>
+								</object>
+								<string key="NSFrame">{{976, 2}, {16, 16}}</string>
+								<reference key="NSSuperview" ref="313715184"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="NSEnabled">YES</bool>
+								<object class="NSImageCell" key="NSCell" id="637746856">
+									<int key="NSCellFlags">134217728</int>
+									<int key="NSCellFlags2">33554432</int>
+									<object class="NSCustomResource" key="NSContents">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">RedCross16</string>
+									</object>
+									<string key="NSCellIdentifier">_NS:9</string>
+									<int key="NSAlign">0</int>
+									<int key="NSScale">2</int>
+									<int key="NSStyle">0</int>
+									<bool key="NSAnimates">NO</bool>
+								</object>
+								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+								<bool key="NSEditable">YES</bool>
+							</object>
 							<object class="NSTextField" id="272731716">
 								<reference key="NSNextResponder" ref="313715184"/>
 								<int key="NSvFlags">290</int>
-								<string key="NSFrame">{{105, 3}, {704, 14}}</string>
+								<string key="NSFrame">{{105, 3}, {692, 14}}</string>
 								<reference key="NSSuperview" ref="313715184"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="314037146"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSTextFieldCell" key="NSCell" id="493044480">
@@ -368,9 +391,8 @@
 							<object class="NSButton" id="314037146">
 								<reference key="NSNextResponder" ref="313715184"/>
 								<int key="NSvFlags">289</int>
-								<string key="NSFrame">{{823, 2}, {80, 17}}</string>
+								<string key="NSFrame">{{802, 2}, {80, 17}}</string>
 								<reference key="NSSuperview" ref="313715184"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="575485308"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="600918699">
@@ -399,10 +421,9 @@
 							<object class="NSButton" id="575485308">
 								<reference key="NSNextResponder" ref="313715184"/>
 								<int key="NSvFlags">289</int>
-								<string key="NSFrame">{{902, 2}, {93, 17}}</string>
+								<string key="NSFrame">{{881, 2}, {93, 17}}</string>
 								<reference key="NSSuperview" ref="313715184"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="72473174"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="253341517">
 									<int key="NSCellFlags">-2080374784</int>
@@ -425,7 +446,6 @@
 								<int key="NSvFlags">268</int>
 								<string key="NSFrame">{{-1, -1}, {100, 23}}</string>
 								<reference key="NSSuperview" ref="313715184"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="272731716"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSSegmentedCell" key="NSCell" id="925831871">
@@ -476,7 +496,6 @@
 						</object>
 						<string key="NSFrameSize">{1015, 21}</string>
 						<reference key="NSSuperview" ref="608908578"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="20778707"/>
 						<string key="NSClassName">MGSWindowFooterView</string>
 					</object>
@@ -495,7 +514,6 @@
 										<int key="NSvFlags">268</int>
 										<string key="NSFrame">{{0, 2}, {25, 25}}</string>
 										<reference key="NSSuperview" ref="142145027"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="258229287"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="718073578">
@@ -520,7 +538,6 @@
 								</object>
 								<string key="NSFrame">{{341, 0}, {26, 30}}</string>
 								<reference key="NSSuperview" ref="670038706"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="750028070"/>
 								<string key="NSClassName">NSView</string>
 							</object>
@@ -529,7 +546,6 @@
 								<int key="NSvFlags">269</int>
 								<string key="NSFrame">{{375, 2}, {264, 25}}</string>
 								<reference key="NSSuperview" ref="670038706"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1029911128"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSSegmentedCell" key="NSCell" id="872651911">
@@ -581,7 +597,6 @@
 										<int key="NSvFlags">268</int>
 										<string key="NSFrame">{{4, 2}, {25, 25}}</string>
 										<reference key="NSSuperview" ref="487727728"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="142145027"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="392364183">
@@ -606,21 +621,18 @@
 								</object>
 								<string key="NSFrameSize">{128, 30}</string>
 								<reference key="NSSuperview" ref="670038706"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="84496357"/>
 								<string key="NSClassName">NSView</string>
 							</object>
 						</object>
 						<string key="NSFrame">{{0, 656}, {1015, 30}}</string>
 						<reference key="NSSuperview" ref="608908578"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="487727728"/>
 						<string key="NSClassName">MGSBrowserViewControlStrip</string>
 					</object>
 				</object>
 				<string key="NSFrameSize">{1015, 686}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="670038706"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -983,6 +995,14 @@
 					<int key="connectionID">357</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">portStatusImageView</string>
+						<reference key="source" ref="68129955"/>
+						<reference key="destination" ref="72473174"/>
+					</object>
+					<int key="connectionID">437</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">showFeedbackWindow:</string>
 						<reference key="source" ref="314539002"/>
@@ -1133,6 +1153,14 @@
 						<reference key="destination" ref="314037146"/>
 					</object>
 					<int key="connectionID">433</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">portStatusImageView</string>
+						<reference key="source" ref="33686818"/>
+						<reference key="destination" ref="72473174"/>
+					</object>
+					<int key="connectionID">438</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1543,6 +1571,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="20778707"/>
 							<reference ref="272731716"/>
+							<reference ref="72473174"/>
 							<reference ref="575485308"/>
 							<reference ref="314037146"/>
 						</object>
@@ -1750,6 +1779,20 @@
 						<reference key="object" ref="600918699"/>
 						<reference key="parent" ref="314037146"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">435</int>
+						<reference key="object" ref="72473174"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="637746856"/>
+						</object>
+						<reference key="parent" ref="313715184"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">436</int>
+						<reference key="object" ref="637746856"/>
+						<reference key="parent" ref="72473174"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1839,6 +1882,8 @@
 					<string>430.IBAttributePlaceholdersKey</string>
 					<string>430.IBPluginDependency</string>
 					<string>431.IBPluginDependency</string>
+					<string>435.IBPluginDependency</string>
+					<string>436.IBPluginDependency</string>
 				</object>
 				<object class="NSArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1999,6 +2044,8 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -2013,1784 +2060,9 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">434</int>
+			<int key="maxID">438</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSActionExecuteWindow</string>
-					<string key="superclassName">NSWindow</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSActionExecuteWindow.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSActionExecuteWindowController</string>
-					<string key="superclassName">NSWindowController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>newDocument:</string>
-							<string>openFile:</string>
-							<string>openResultInNewWindow:</string>
-							<string>openTaskInNewWindow:</string>
-							<string>requestEditTask:</string>
-							<string>requestExecuteTask:</string>
-							<string>requestResumeTask:</string>
-							<string>requestSuspendTask:</string>
-							<string>requestTerminateTask:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>newDocument:</string>
-							<string>openFile:</string>
-							<string>openResultInNewWindow:</string>
-							<string>openTaskInNewWindow:</string>
-							<string>requestEditTask:</string>
-							<string>requestExecuteTask:</string>
-							<string>requestResumeTask:</string>
-							<string>requestSuspendTask:</string>
-							<string>requestTerminateTask:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">newDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">openFile:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">openResultInNewWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">openTaskInNewWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">requestEditTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">requestExecuteTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">requestResumeTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">requestSuspendTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">requestTerminateTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">_actionExecuteWindow</string>
-						<string key="NS.object.0">MGSActionExecuteWindow</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">_actionExecuteWindow</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">_actionExecuteWindow</string>
-							<string key="candidateClassName">MGSActionExecuteWindow</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSActionExecuteWindowController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSActionToolViewController</string>
-					<string key="superclassName">MGSToolViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>deleteAction:</string>
-							<string>duplicateAction:</string>
-							<string>editAction:</string>
-							<string>newAction:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>deleteAction:</string>
-							<string>duplicateAction:</string>
-							<string>editAction:</string>
-							<string>newAction:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">deleteAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">duplicateAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">editAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">newAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSActionToolViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSAppController</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>configureInternetSharing:</string>
-							<string>configureLocalSharing:</string>
-							<string>onlineForum:</string>
-							<string>onlineHelp:</string>
-							<string>onlineSupport:</string>
-							<string>orderFrontCustomAboutPanel:</string>
-							<string>quicklook:</string>
-							<string>saveResult:</string>
-							<string>sendLog:</string>
-							<string>sendResult:</string>
-							<string>showConfigurationPanel:</string>
-							<string>showErrorWindow:</string>
-							<string>showFeedbackWindow:</string>
-							<string>showGuide:</string>
-							<string>showLicenceAgreement:</string>
-							<string>showLicencesWindow:</string>
-							<string>showPreferencesPanel:</string>
-							<string>showReleaseNotes:</string>
-							<string>showResourceBrowserWindow:</string>
-							<string>toggleRunState:</string>
-							<string>viewMenuModeSelected:</string>
-							<string>viewMenuViewAsSelected:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>configureInternetSharing:</string>
-							<string>configureLocalSharing:</string>
-							<string>onlineForum:</string>
-							<string>onlineHelp:</string>
-							<string>onlineSupport:</string>
-							<string>orderFrontCustomAboutPanel:</string>
-							<string>quicklook:</string>
-							<string>saveResult:</string>
-							<string>sendLog:</string>
-							<string>sendResult:</string>
-							<string>showConfigurationPanel:</string>
-							<string>showErrorWindow:</string>
-							<string>showFeedbackWindow:</string>
-							<string>showGuide:</string>
-							<string>showLicenceAgreement:</string>
-							<string>showLicencesWindow:</string>
-							<string>showPreferencesPanel:</string>
-							<string>showReleaseNotes:</string>
-							<string>showResourceBrowserWindow:</string>
-							<string>toggleRunState:</string>
-							<string>viewMenuModeSelected:</string>
-							<string>viewMenuViewAsSelected:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">configureInternetSharing:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">configureLocalSharing:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">onlineForum:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">onlineHelp:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">onlineSupport:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">orderFrontCustomAboutPanel:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">quicklook:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">saveResult:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">sendLog:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">sendResult:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showConfigurationPanel:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showErrorWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showFeedbackWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showGuide:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showLicenceAgreement:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showLicencesWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showPreferencesPanel:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showReleaseNotes:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showResourceBrowserWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">toggleRunState:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">viewMenuModeSelected:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">viewMenuViewAsSelected:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_openFeedbackController</string>
-							<string>_sendToMenuItem</string>
-							<string>_sparkleUpdater</string>
-							<string>_taskMenu</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>OpenFeedback</string>
-							<string>NSMenuItem</string>
-							<string>SUUpdater</string>
-							<string>NSMenu</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_openFeedbackController</string>
-							<string>_sendToMenuItem</string>
-							<string>_sparkleUpdater</string>
-							<string>_taskMenu</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_openFeedbackController</string>
-								<string key="candidateClassName">OpenFeedback</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_sendToMenuItem</string>
-								<string key="candidateClassName">NSMenuItem</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_sparkleUpdater</string>
-								<string key="candidateClassName">SUUpdater</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_taskMenu</string>
-								<string key="candidateClassName">NSMenu</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSAppController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSBrowserViewControlStrip</string>
-					<string key="superclassName">MGSGradientView</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>groupToggleAction:</string>
-							<string>segControlClicked:</string>
-							<string>sidebarToggleAction:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>groupToggleAction:</string>
-							<string>segControlClicked:</string>
-							<string>sidebarToggleAction:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">groupToggleAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">segControlClicked:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">sidebarToggleAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_centreView</string>
-							<string>_delegate</string>
-							<string>_leftView</string>
-							<string>_viewSelectorSegmentedControl</string>
-							<string>groupToggle</string>
-							<string>leftAttachedView</string>
-							<string>sidebarToggle</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSView</string>
-							<string>id</string>
-							<string>NSView</string>
-							<string>NSSegmentedControl</string>
-							<string>NSButton</string>
-							<string>NSView</string>
-							<string>NSButton</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_centreView</string>
-							<string>_delegate</string>
-							<string>_leftView</string>
-							<string>_viewSelectorSegmentedControl</string>
-							<string>groupToggle</string>
-							<string>leftAttachedView</string>
-							<string>sidebarToggle</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_centreView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_delegate</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_leftView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_viewSelectorSegmentedControl</string>
-								<string key="candidateClassName">NSSegmentedControl</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">groupToggle</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">leftAttachedView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">sidebarToggle</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSBrowserViewControlStrip.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSDisplayToolViewController</string>
-					<string key="superclassName">MGSToolViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>terminateAction:</string>
-							<string>toggleActionExecution:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>terminateAction:</string>
-							<string>toggleActionExecution:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">terminateAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">toggleActionExecution:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>actionPath</string>
-							<string>actionStatus</string>
-							<string>elapsedTime</string>
-							<string>hostImage</string>
-							<string>lcdDisplayView</string>
-							<string>playButton</string>
-							<string>remainingTime</string>
-							<string>statusImage</string>
-							<string>stopButton</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSImageView</string>
-							<string>MGSLCDDisplayView</string>
-							<string>MGSPlayButton</string>
-							<string>NSTextField</string>
-							<string>NSImageView</string>
-							<string>MGSStopButton</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>actionPath</string>
-							<string>actionStatus</string>
-							<string>elapsedTime</string>
-							<string>hostImage</string>
-							<string>lcdDisplayView</string>
-							<string>playButton</string>
-							<string>remainingTime</string>
-							<string>statusImage</string>
-							<string>stopButton</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">actionPath</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">actionStatus</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">elapsedTime</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">hostImage</string>
-								<string key="candidateClassName">NSImageView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">lcdDisplayView</string>
-								<string key="candidateClassName">MGSLCDDisplayView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">playButton</string>
-								<string key="candidateClassName">MGSPlayButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">remainingTime</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">statusImage</string>
-								<string key="candidateClassName">NSImageView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">stopButton</string>
-								<string key="candidateClassName">MGSStopButton</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSDisplayToolViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSEditModeToolViewController</string>
-					<string key="superclassName">MGSToolViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">segControlClicked:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">segControlClicked:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">segControlClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>label</string>
-							<string>segmentedButtons</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSTextField</string>
-							<string>NSSegmentedControl</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>label</string>
-							<string>segmentedButtons</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">label</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">segmentedButtons</string>
-								<string key="candidateClassName">NSSegmentedControl</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSEditModeToolViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSGradientFooterView</string>
-					<string key="superclassName">MGSGradientView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSGradientFooterView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSGradientView</string>
-					<string key="superclassName">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSGradientView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSHitTestView</string>
-					<string key="superclassName">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSHitTestView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSLCDDisplayView</string>
-					<string key="superclassName">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSLCDDisplayView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSMainSplitview</string>
-					<string key="superclassName">NSSplitView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSMainSplitview.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSMainViewController</string>
-					<string key="superclassName">NSViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addNewTaskTab:</string>
-							<string>closeTaskTab:</string>
-							<string>detailSegControlClicked:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addNewTaskTab:</string>
-							<string>closeTaskTab:</string>
-							<string>detailSegControlClicked:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">addNewTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">closeTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">detailSegControlClicked:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_browserViewControlStrip</string>
-							<string>browserSegmentedControl</string>
-							<string>browserTabView</string>
-							<string>detailSegmentedControl</string>
-							<string>detailTabView</string>
-							<string>internetSharingButton</string>
-							<string>localSharingButton</string>
-							<string>mainBottomView</string>
-							<string>mainMiddleView</string>
-							<string>mainSplitView</string>
-							<string>mainTopView</string>
-							<string>statusBarLabel</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>MGSBrowserViewControlStrip</string>
-							<string>NSSegmentedControl</string>
-							<string>NSTabView</string>
-							<string>NSSegmentedControl</string>
-							<string>NSTabView</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSView</string>
-							<string>NSView</string>
-							<string>MGSMainSplitview</string>
-							<string>NSView</string>
-							<string>NSTextField</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_browserViewControlStrip</string>
-							<string>browserSegmentedControl</string>
-							<string>browserTabView</string>
-							<string>detailSegmentedControl</string>
-							<string>detailTabView</string>
-							<string>internetSharingButton</string>
-							<string>localSharingButton</string>
-							<string>mainBottomView</string>
-							<string>mainMiddleView</string>
-							<string>mainSplitView</string>
-							<string>mainTopView</string>
-							<string>statusBarLabel</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_browserViewControlStrip</string>
-								<string key="candidateClassName">MGSBrowserViewControlStrip</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">browserSegmentedControl</string>
-								<string key="candidateClassName">NSSegmentedControl</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">browserTabView</string>
-								<string key="candidateClassName">NSTabView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">detailSegmentedControl</string>
-								<string key="candidateClassName">NSSegmentedControl</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">detailTabView</string>
-								<string key="candidateClassName">NSTabView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">internetSharingButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">localSharingButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainBottomView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainMiddleView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainSplitView</string>
-								<string key="candidateClassName">MGSMainSplitview</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainTopView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">statusBarLabel</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSMainViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSMinimalViewToolViewController</string>
-					<string key="superclassName">MGSToolViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">segControlClicked:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">segControlClicked:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">segControlClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">segmentedButtons</string>
-						<string key="NS.object.0">NSSegmentedControl</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">segmentedButtons</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">segmentedButtons</string>
-							<string key="candidateClassName">NSSegmentedControl</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSMinimalViewToolViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSModeToolViewController</string>
-					<string key="superclassName">MGSToolViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>logIn:</string>
-							<string>segControlClicked:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>logIn:</string>
-							<string>segControlClicked:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">logIn:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">segControlClicked:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>label</string>
-							<string>segmentedButtons</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSTextField</string>
-							<string>NSSegmentedControl</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>label</string>
-							<string>segmentedButtons</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">label</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">segmentedButtons</string>
-								<string key="candidateClassName">NSSegmentedControl</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSModeToolViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSMotherWindow</string>
-					<string key="superclassName">MGSActionExecuteWindow</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSMotherWindow.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSMotherWindowController</string>
-					<string key="superclassName">MGSActionExecuteWindowController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addNewTaskTab:</string>
-							<string>addServer:</string>
-							<string>closeTaskTab:</string>
-							<string>deleteDocument:</string>
-							<string>duplicateDocument:</string>
-							<string>findTask:</string>
-							<string>maximizeTaskTab:</string>
-							<string>minimizeTaskTab:</string>
-							<string>publishDocument:</string>
-							<string>removeServer:</string>
-							<string>selectNextTaskTab:</string>
-							<string>selectPrevTaskTab:</string>
-							<string>subviewDoubleClick:</string>
-							<string>toggleTaskTabMaximization:</string>
-							<string>unpublishDocument:</string>
-							<string>viewMenuShowSelected:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addNewTaskTab:</string>
-							<string>addServer:</string>
-							<string>closeTaskTab:</string>
-							<string>deleteDocument:</string>
-							<string>duplicateDocument:</string>
-							<string>findTask:</string>
-							<string>maximizeTaskTab:</string>
-							<string>minimizeTaskTab:</string>
-							<string>publishDocument:</string>
-							<string>removeServer:</string>
-							<string>selectNextTaskTab:</string>
-							<string>selectPrevTaskTab:</string>
-							<string>subviewDoubleClick:</string>
-							<string>toggleTaskTabMaximization:</string>
-							<string>unpublishDocument:</string>
-							<string>viewMenuShowSelected:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">addNewTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">addServer:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">closeTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">deleteDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">duplicateDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">findTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">maximizeTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">minimizeTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">publishDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">removeServer:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">selectNextTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">selectPrevTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">subviewDoubleClick:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">toggleTaskTabMaximization:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">unpublishDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">viewMenuShowSelected:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_feedbackButton</string>
-							<string>_toolbarController</string>
-							<string>leftBottomView</string>
-							<string>leftSplitView</string>
-							<string>leftTopView</string>
-							<string>leftView</string>
-							<string>mainViewController</string>
-							<string>windowLeftView</string>
-							<string>windowMainView</string>
-							<string>windowSplitView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSButton</string>
-							<string>MGSToolbarController</string>
-							<string>NSView</string>
-							<string>NSSplitView</string>
-							<string>NSView</string>
-							<string>NSView</string>
-							<string>MGSMainViewController</string>
-							<string>NSView</string>
-							<string>NSView</string>
-							<string>NSSplitView</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_feedbackButton</string>
-							<string>_toolbarController</string>
-							<string>leftBottomView</string>
-							<string>leftSplitView</string>
-							<string>leftTopView</string>
-							<string>leftView</string>
-							<string>mainViewController</string>
-							<string>windowLeftView</string>
-							<string>windowMainView</string>
-							<string>windowSplitView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_feedbackButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_toolbarController</string>
-								<string key="candidateClassName">MGSToolbarController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">leftBottomView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">leftSplitView</string>
-								<string key="candidateClassName">NSSplitView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">leftTopView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">leftView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">mainViewController</string>
-								<string key="candidateClassName">MGSMainViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">windowLeftView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">windowMainView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">windowSplitView</string>
-								<string key="candidateClassName">NSSplitView</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSMotherWindowController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSPlayButton</string>
-					<string key="superclassName">MGSToggleButton</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSPlayButton.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSPopupButton</string>
-					<string key="superclassName">NSButton</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSPopupButton.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSResultToolViewController</string>
-					<string key="superclassName">MGSToolViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">segControlClicked:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">segControlClicked:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">segControlClicked:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>actionPopupButton</string>
-							<string>segmentedButtons</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>MGSPopupButton</string>
-							<string>NSSegmentedControl</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>actionPopupButton</string>
-							<string>segmentedButtons</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">actionPopupButton</string>
-								<string key="candidateClassName">MGSPopupButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">segmentedButtons</string>
-								<string key="candidateClassName">NSSegmentedControl</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSResultToolViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSRoundedView</string>
-					<string key="superclassName">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSRoundedView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSScriptToolViewController</string>
-					<string key="superclassName">MGSToolViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>compileScript:</string>
-							<string>runScript:</string>
-							<string>showDictionary:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>compileScript:</string>
-							<string>runScript:</string>
-							<string>showDictionary:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">compileScript:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">runScript:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showDictionary:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>compileButton</string>
-							<string>dictionaryButton</string>
-							<string>runButton</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>compileButton</string>
-							<string>dictionaryButton</string>
-							<string>runButton</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">compileButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">dictionaryButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">runButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSScriptToolViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSStopButton</string>
-					<string key="superclassName">NSButton</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSStopButton.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSToggleButton</string>
-					<string key="superclassName">NSButton</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSToggleButton.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSToolViewController</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">view</string>
-						<string key="NS.object.0">NSView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">view</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">view</string>
-							<string key="candidateClassName">NSView</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSToolViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSToolbarController</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">updateSearchFilter:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">updateSearchFilter:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">updateSearchFilter:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>actionViewController</string>
-							<string>displayPanelController</string>
-							<string>editModeViewController</string>
-							<string>minimalViewController</string>
-							<string>modeViewController</string>
-							<string>resultViewController</string>
-							<string>scriptViewController</string>
-							<string>searchField</string>
-							<string>searchView</string>
-							<string>toolbar</string>
-							<string>window</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>MGSActionToolViewController</string>
-							<string>MGSDisplayToolViewController</string>
-							<string>MGSEditModeToolViewController</string>
-							<string>MGSMinimalViewToolViewController</string>
-							<string>MGSModeToolViewController</string>
-							<string>MGSResultToolViewController</string>
-							<string>MGSScriptToolViewController</string>
-							<string>NSSearchField</string>
-							<string>NSView</string>
-							<string>NSToolbar</string>
-							<string>NSWindow</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>actionViewController</string>
-							<string>displayPanelController</string>
-							<string>editModeViewController</string>
-							<string>minimalViewController</string>
-							<string>modeViewController</string>
-							<string>resultViewController</string>
-							<string>scriptViewController</string>
-							<string>searchField</string>
-							<string>searchView</string>
-							<string>toolbar</string>
-							<string>window</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">actionViewController</string>
-								<string key="candidateClassName">MGSActionToolViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">displayPanelController</string>
-								<string key="candidateClassName">MGSDisplayToolViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">editModeViewController</string>
-								<string key="candidateClassName">MGSEditModeToolViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">minimalViewController</string>
-								<string key="candidateClassName">MGSMinimalViewToolViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">modeViewController</string>
-								<string key="candidateClassName">MGSModeToolViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">resultViewController</string>
-								<string key="candidateClassName">MGSResultToolViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">scriptViewController</string>
-								<string key="candidateClassName">MGSScriptToolViewController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">searchField</string>
-								<string key="candidateClassName">NSSearchField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">searchView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">toolbar</string>
-								<string key="candidateClassName">NSToolbar</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">window</string>
-								<string key="candidateClassName">NSWindow</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSToolbarController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSWindowFooterView</string>
-					<string key="superclassName">MGSGradientView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSWindowFooterView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSWindowSplitView</string>
-					<string key="superclassName">NSSplitView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSWindowSplitView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSTextView</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>mgs_decreaseFontSize:</string>
-							<string>mgs_increaseFontSize:</string>
-							<string>mgs_toggleLineWrapping:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>mgs_decreaseFontSize:</string>
-							<string>mgs_increaseFontSize:</string>
-							<string>mgs_toggleLineWrapping:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">mgs_decreaseFontSize:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">mgs_increaseFontSize:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">mgs_toggleLineWrapping:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/NSTextView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">OpenFeedback</string>
-					<string key="superclassName">NSWindowController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>includeEmailAction:</string>
-							<string>presentFeedbackPanelForBug:</string>
-							<string>presentFeedbackPanelForFeature:</string>
-							<string>presentFeedbackPanelForSupport:</string>
-							<string>sendFeedbackAction:</string>
-							<string>wantReplyAction:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>includeEmailAction:</string>
-							<string>presentFeedbackPanelForBug:</string>
-							<string>presentFeedbackPanelForFeature:</string>
-							<string>presentFeedbackPanelForSupport:</string>
-							<string>sendFeedbackAction:</string>
-							<string>wantReplyAction:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">includeEmailAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">presentFeedbackPanelForBug:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">presentFeedbackPanelForFeature:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">presentFeedbackPanelForSupport:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">sendFeedbackAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">wantReplyAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>btnImportance</string>
-							<string>btnIncludeMyEmail</string>
-							<string>btnIsCritical</string>
-							<string>btnSend</string>
-							<string>btnWantPersonalReply</string>
-							<string>cboEmailAddress</string>
-							<string>piStatus</string>
-							<string>tabView</string>
-							<string>txtFeature</string>
-							<string>txtQuestion</string>
-							<string>txtStepsToReproduce</string>
-							<string>txtWhatHappened</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSPopUpButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSComboBox</string>
-							<string>NSProgressIndicator</string>
-							<string>NSTabView</string>
-							<string>NSTextView</string>
-							<string>NSTextView</string>
-							<string>NSTextView</string>
-							<string>NSTextView</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>btnImportance</string>
-							<string>btnIncludeMyEmail</string>
-							<string>btnIsCritical</string>
-							<string>btnSend</string>
-							<string>btnWantPersonalReply</string>
-							<string>cboEmailAddress</string>
-							<string>piStatus</string>
-							<string>tabView</string>
-							<string>txtFeature</string>
-							<string>txtQuestion</string>
-							<string>txtStepsToReproduce</string>
-							<string>txtWhatHappened</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">btnImportance</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">btnIncludeMyEmail</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">btnIsCritical</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">btnSend</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">btnWantPersonalReply</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">cboEmailAddress</string>
-								<string key="candidateClassName">NSComboBox</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">piStatus</string>
-								<string key="candidateClassName">NSProgressIndicator</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">tabView</string>
-								<string key="candidateClassName">NSTabView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">txtFeature</string>
-								<string key="candidateClassName">NSTextView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">txtQuestion</string>
-								<string key="candidateClassName">NSTextView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">txtStepsToReproduce</string>
-								<string key="candidateClassName">NSTextView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">txtWhatHappened</string>
-								<string key="candidateClassName">NSTextView</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/OpenFeedback.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">SUUpdater</string>
-					<string key="superclassName">NSObject</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">checkForUpdates:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">checkForUpdates:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">checkForUpdates:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">delegate</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">delegate</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">delegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/SUUpdater.h</string>
-					</object>
-				</object>
-			</object>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
@@ -3816,6 +2088,7 @@
 				<string>NSAddTemplate</string>
 				<string>NSApplicationIcon</string>
 				<string>NSRemoveTemplate</string>
+				<string>RedCross16</string>
 				<string>SplitDragThumb2</string>
 				<string>ToggleViewTemplate</string>
 				<string>ToggleViewTemplateUp</string>
@@ -3831,6 +2104,7 @@
 				<string>{8, 8}</string>
 				<string>{128, 128}</string>
 				<string>{8, 8}</string>
+				<string>{16, 16}</string>
 				<string>{15, 15}</string>
 				<string>{128, 128}</string>
 				<string>{16, 12}</string>

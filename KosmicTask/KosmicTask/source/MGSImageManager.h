@@ -62,6 +62,8 @@
     NSImage *greenDotNoUser;
     NSImage *redDotNoUser;
     NSImage *greenDotUser;
+    NSImage *redCross16;
+    NSImage *greenTick16;
 }
 
 + (id)sharedManager;
@@ -120,4 +122,6 @@
 @property (readonly) NSImage *greenDotNoUser;
 @property (readonly) NSImage *redDotNoUser;
 @property (readonly) NSImage *greenDotUser;
+@property (readonly) NSImage *redCross16;
+@property (readonly) NSImage *greenTick16;
 @end

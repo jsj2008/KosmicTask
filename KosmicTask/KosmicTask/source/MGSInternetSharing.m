@@ -15,10 +15,12 @@
 
 // class extension
 @interface MGSInternetSharing()
+@property NSImage *statusImage;
 @property () NSImage *allowInternetAccessStatusImage;
 @property () NSImage *allowLocalAccessStatusImage;
 - (void)updateInternetAccessStatusImage;
 - (void)updateLocalAccessStatusImage;
+- (void)updatePortStatusImage;
 @end
 
 @interface MGSInternetSharing(Private)
@@ -54,6 +56,8 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 @synthesize allowLocalUsersToAuthenticate = _allowLocalUsersToAuthenticate;
 @synthesize allowRemoteUsersToAuthenticate = _allowRemoteUsersToAuthenticate;
 @synthesize activeUserStatusImage = _activeUserStatusImage;
+@synthesize activePortStatusImage = _activePortStatusImage;
+@synthesize inactivePortStatusImage = _inactivePortStatusImage;
 
 /*
  
@@ -81,6 +85,8 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 		_inactiveStatusImage = [[[MGSImageManager sharedManager] redDotNoUser] copy];
 		_activeStatusLargeImage = [[[MGSImageManager sharedManager] greenDotLarge] copy];
 		_inactiveStatusLargeImage = [[[MGSImageManager sharedManager] redDotLarge] copy];
+		_activePortStatusImage = [[[MGSImageManager sharedManager] greenTick16] copy];
+		_inactivePortStatusImage = [[[MGSImageManager sharedManager] redCross16] copy];
 	}
 	
 	return self;
@@ -142,32 +148,28 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 	_mappingStatus = mappingStatus;
 	
 	[self willChangeValueForKey:@"statusString"];
-	[self willChangeValueForKey:@"statusImage"];
 	[self willChangeValueForKey:@"isActive"];
 	
 	switch (_mappingStatus) {
 		case kMGSInternetSharingPortTryingToMap:
-			_statusImage = [[[MGSImageManager sharedManager] yellowDot] copy];
 			_statusString = NSLocalizedString(@"Remapping external port ...", @"Trying to map router port");
 			_isActive = NO;
 			break;
 			
 		case kMGSInternetSharingPortMapped:
-			_statusImage = self.activeStatusImage;
 			_statusString = NSLocalizedString(@"External port mapped", @"Router port mapped");
 			_isActive = YES;
 			break;
 			
 		case kMGSInternetSharingPortNotMapped:
 		default:
-			_statusImage = self.inactiveStatusImage;
 			_statusString = NSLocalizedString(@"External port not mapped", @"Router port not mapped");
 			_isActive = NO;
 			break;
 			
 	}
+    [self updatePortStatusImage];
 	[self didChangeValueForKey:@"statusString"];
-	[self didChangeValueForKey:@"statusImage"];
 	[self didChangeValueForKey:@"isActive"];
 }
 
@@ -178,6 +180,9 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
  */
 -(void)setAllowInternetAccess:(BOOL)value {
     _allowInternetAccess = value;
+    if (!_allowInternetAccess && self.allowRemoteUsersToAuthenticate) {
+        self.allowRemoteUsersToAuthenticate = NO;
+    }
     [self updateInternetAccessStatusImage];
 }
 /*
@@ -223,6 +228,10 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
  */
 -(void)setAllowLocalAccess:(BOOL)value {
     _allowLocalAccess = value;
+    if (!_allowLocalAccess && self.allowLocalUsersToAuthenticate) {
+        self.allowLocalUsersToAuthenticate = NO;
+    }
+
     [self updateLocalAccessStatusImage];
 }
 
@@ -234,8 +243,28 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 - (void)setAllowRemoteUsersToAuthenticate:(BOOL)value
 {
     _allowRemoteUsersToAuthenticate = value;
+    [self updatePortStatusImage];
+
 }
 
+/*
+ 
+ - updatePortStatusImage
+  
+ */
+- (void)updatePortStatusImage
+{
+    if (self.allowInternetAccess) {
+        if (self.isActive) {
+            self.statusImage = self.activePortStatusImage;
+        } else {
+            self.statusImage = self.inactivePortStatusImage;
+        }
+    } else {
+        self.statusImage = nil;
+    }
+
+}
 /*
  
  - setAllowLocalUsersToAuthenticate:
