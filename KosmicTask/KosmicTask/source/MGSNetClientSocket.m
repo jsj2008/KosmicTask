@@ -494,23 +494,24 @@ errorExit:;
 					MLog(DEBUGLOG, @"Client received response: %llu bytes", self.netRequest.responseMessage.totalBytes);
 				}
 				
+                MGSClientNetRequest *request = (MGSClientNetRequest *)self.netRequest;
+
 				// disconnect if request does not validate
-				BOOL disconnect = ![self.netRequest validateOnCompletion:&mgsError];
+				BOOL disconnect = ![request validateOnCompletion:&mgsError];
 				
 				// disconnect if no more requests in queue
-                MGSClientNetRequest *request = (MGSClientNetRequest *)self.netRequest;
-				if (request.nextRequest == nil) {
+ 				if (request.nextRequest == nil) {
 					disconnect = YES;
 				}
 				
 				// disconnect if there is an error in the negotiator response 
-				if (self.netRequest.responseMessage.negotiator && 
-					self.netRequest.responseMessage.errorDictionary) {
+				if (request.responseMessage.negotiator &&
+					request.responseMessage.errorDictionary) {
 					disconnect = YES;
 				}
 				
 				// accept the negotiator if present
-				if (!disconnect && self.netRequest.responseMessage.negotiator) {
+				if (!disconnect && request.responseMessage.negotiator) {
 					if (![self acceptRequestNegotiator]) {
 						disconnect = YES;
 					}
@@ -526,7 +527,7 @@ errorExit:;
 				
 				// disconnect if error in request. this error may only become
 				// apparent after the delegate has processed the request.
-				if ([self isConnected] && self.netRequest.error) {
+				if ([self isConnected] && request.error) {
 					[self disconnect];	
 				}
 				
@@ -534,7 +535,7 @@ errorExit:;
 				if ([self isConnected]) {
 					
 					// get the next request to send
-					MGSClientNetRequest *nextRequest = [(MGSClientNetRequest *)self.netRequest nextQueuedRequestToSend];		
+					MGSClientNetRequest *nextRequest = [request nextQueuedRequestToSend];
 					NSAssert(nextRequest == self.netRequest, @"unexpected request");
 					
 					// send the request 

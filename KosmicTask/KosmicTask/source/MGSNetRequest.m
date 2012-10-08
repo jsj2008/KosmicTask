@@ -49,7 +49,6 @@ static NSThread *networkThread = nil;
 @synthesize readTimeout = _readTimeout; // required to be atomic
 @synthesize writeTimeout = _writeTimeout; // required to be atomic
 @synthesize requestID = _requestID;
-@synthesize allowUserToAuthenticate = _allowUserToAuthenticate;
 @synthesize netSocket = _netSocket;
 @synthesize flags = _flags;
 @synthesize chunksReceived = _chunksReceived;
@@ -157,7 +156,6 @@ static NSThread *networkThread = nil;
 	_readTimeout = -1.0;	// don't timeout
 	_writeTimeout = -1.0;	// don't timeout
 	_requestID = requestSequenceID++;
-	self.allowUserToAuthenticate = YES;
 	temporaryPaths = [NSMutableArray new];
 }
 
@@ -175,27 +173,6 @@ static NSThread *networkThread = nil;
     [self.responseMessage releaseDisposable];
 }
 
-/*
- 
- - inheritConnection:
- 
- */
-- (void)inheritConnection:(MGSNetRequest *)request
-{
-	_netSocket = request.netSocket;
-	_netSocket.netRequest = self;
-}
-
-/*
- 
- - sent
- 
- */
-- (BOOL)sent
-{
-	// if the status is received then the request has been sent and a reply received
-	return (self.status == kMGSStatusMessageReceived);
-}
 
 /*
  
@@ -290,21 +267,6 @@ static NSThread *networkThread = nil;
     request.parentRequest = self;
 }
 
-/*
- 
- - prepareToResend
- 
- */
-- (void)prepareToResend
-{
-
-	if ([self isSocketConnected]) {
-		[self disconnect];
-	}
-	_status = kMGSStatusNotConnected;
-}
-
-
 #pragma mark -
 #pragma mark Flags
 
@@ -318,40 +280,6 @@ static NSThread *networkThread = nil;
 	return (self.flags & kCommandBasedNegotiation);
 }
 
-
-#pragma mark -
-#pragma mark Validation
-
-/*
- 
- - validateOnCompletion
- 
- */
-- (BOOL)validateOnCompletion:(MGSError **)mgsError
-{
-	
-	// validate negotiator
-	if (self.requestMessage.negotiator) {
-		if (!self.responseMessage.negotiator) {
-			if (mgsError) {
-				*mgsError = [MGSError clientCode:MGSErrorCodeBadRequestFormat reason:@"Missing negotiator detected. Empty negotiator added to request."];
-				[self.responseMessage applyNegotiator:[[MGSNetNegotiator alloc] init]];
-				*mgsError = nil; // fixed this error
-			}
-		}
-	} else {
-		if (self.responseMessage.negotiator) {
-			if (mgsError) {
-				*mgsError = [MGSError clientCode:MGSErrorCodeBadRequestFormat reason:@"Unexpected negotiator found. Negotiator removed from request."];
-				[self.responseMessage removeNegotiator];
-				*mgsError = nil; // fixed this error
-			}
-			return NO;
-		}
-	}
-	
-	return YES;
-}
 
 
 

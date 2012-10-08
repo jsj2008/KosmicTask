@@ -35,6 +35,7 @@
 @synthesize sendUpdatesToOwner = _sendUpdatesToOwner;
 @synthesize ownerObject = _ownerObject;
 @synthesize ownerString = _ownerString;
+@synthesize allowUserToAuthenticate = _allowUserToAuthenticate;
 /*
  
  request with client
@@ -88,6 +89,7 @@
     [super initialise];
     _childRequests = [NSMutableArray new];
     _sendUpdatesToOwner = NO;
+    _allowUserToAuthenticate = YES;
 }
 
 /*
@@ -322,6 +324,32 @@
 	}
 }
 
+/*
+ 
+ - prepareToResend
+ 
+ */
+- (void)prepareToResend
+{
+    
+	if ([self isSocketConnected]) {
+		[self disconnect];
+	}
+	_status = kMGSStatusNotConnected;
+}
+
+/*
+ 
+ - inheritConnection:
+ 
+ */
+- (void)inheritConnection:(MGSNetRequest *)request
+{
+	_netSocket = request.netSocket;
+	_netSocket.netRequest = self;
+}
+
+
 #pragma mark -
 #pragma mark NSCopying
 
@@ -363,6 +391,41 @@
     
     return copy;
 }
+
+#pragma mark -
+#pragma mark Validation
+
+/*
+ 
+ - validateOnCompletion
+ 
+ */
+- (BOOL)validateOnCompletion:(MGSError **)mgsError
+{
+	
+	// validate negotiator
+	if (self.requestMessage.negotiator) {
+		if (!self.responseMessage.negotiator) {
+			if (mgsError) {
+				*mgsError = [MGSError clientCode:MGSErrorCodeBadRequestFormat reason:@"Missing negotiator detected. Empty negotiator added to request."];
+				[self.responseMessage applyNegotiator:[[MGSNetNegotiator alloc] init]];
+				*mgsError = nil; // fixed this error
+			}
+		}
+	} else {
+		if (self.responseMessage.negotiator) {
+			if (mgsError) {
+				*mgsError = [MGSError clientCode:MGSErrorCodeBadRequestFormat reason:@"Unexpected negotiator found. Negotiator removed from request."];
+				[self.responseMessage removeNegotiator];
+				*mgsError = nil; // fixed this error
+			}
+			return NO;
+		}
+	}
+	
+	return YES;
+}
+
 
 #pragma mark -
 #pragma mark Error handling
@@ -494,6 +557,18 @@
 	return nil;
 	
 }
+
+/*
+ 
+ - sent
+ 
+ */
+- (BOOL)sent
+{
+	// if the status is received then the request has been sent and a reply received
+	return (self.status == kMGSStatusMessageReceived);
+}
+
 
 
 /*

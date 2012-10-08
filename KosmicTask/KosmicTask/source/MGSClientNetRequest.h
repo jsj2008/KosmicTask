@@ -48,12 +48,16 @@
 	id _ownerObject;					// owner object associated with request
 	NSString *_ownerString;				// owner string associated with request
 	BOOL _sendUpdatesToOwner;			// flag send updates to owner
+    BOOL _allowUserToAuthenticate;		// allow user to authenticate the request
 }
 @property (assign) id owner;
 @property (assign) id ownerObject;
 @property (copy)NSString *ownerString;
 @property BOOL sendUpdatesToOwner;
 @property (readonly) MGSNetClient *netClient;
+@property BOOL allowUserToAuthenticate;
+@property (assign) MGSClientNetRequest *prevRequest;			// previous request
+@property (assign) MGSClientNetRequest *nextRequest;			// next request
 
 + (id)requestWithClient:(MGSNetClient *)netClient;
 + (id)requestWithClient:(MGSNetClient *)netClient command:(NSString *)command;
@@ -70,7 +74,9 @@
 - (MGSClientNetRequest *)nextQueuedRequestToSend;
 - (id)nextOwnerInRequestQueue;
 - (void)updateProgress:(MGSRequestProgress *)progress;
+- (void)prepareToResend;
+- (BOOL)validateOnCompletion:(MGSError **)mgsError;
+- (BOOL)sent;
+- (void)inheritConnection:(MGSNetRequest *)request;
 
-@property (assign) MGSClientNetRequest *prevRequest;			// previous request
-@property (assign) MGSClientNetRequest *nextRequest;			// next request
 @end
