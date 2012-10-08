@@ -1384,9 +1384,12 @@ errorExit:;
 						/* if script is scheduled for save then a full representation
 						   will be required in order to execute
 						 */
-						if ([self scheduleSave]) {
-							success = NO;
-						} else if (conform) {
+                        // in the editor we have an unsaved complete rep that we should eb able to edit
+						//if ([self scheduleSave]) {
+						//	success = NO;
+						//}
+                            
+                        if (conform) {
 							success = [_parameterManager conformToRepresentation:MGSScriptParameterRepresentationExecute options:options];
 
 							if (success) {
