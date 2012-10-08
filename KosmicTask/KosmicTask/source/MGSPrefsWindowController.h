@@ -39,7 +39,8 @@ extern NSString * MGSDefaultStartAtLogin;
     NSString *_selectedNetworkTabIdentifier;
 }
 
-
+- (IBAction)showLocalNetworkPreferencesHelp:(id)sender;
+- (IBAction)showRemoteNetworkPreferencesHelp:(id)sender;
 - (IBAction)refreshInternetSharing:(id)sender;
 - (IBAction)toggleInternetSharing:(id)sender;
 - (IBAction) showDebugPanel:(id)sender;

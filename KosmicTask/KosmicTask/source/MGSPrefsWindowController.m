@@ -31,6 +31,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 
 // class extension
 @interface MGSPrefsWindowController()
+
 @end
 
 @implementation MGSPrefsWindowController
@@ -456,5 +457,33 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 #pragma unused(sender)
     
 	[[NSUserDefaultsController sharedUserDefaultsController] revertToInitialValues:nil];
+}
+/*
+ 
+ -  showLocalNetworkPreferencesHelp:
+ 
+ */
+- (IBAction)showLocalNetworkPreferencesHelp:(id)sender
+{
+#pragma unused(sender)
+    
+    NSString *urlString = [NSBundle mainBundleInfoObjectForKey:@"MGSLocalNetworkPrefsHelpURL"];
+    if (!urlString) return;
+    
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];    
+}
+/*
+ 
+ -  showRemoteNetworkPreferencesHelp:
+ 
+ */
+- (IBAction)showRemoteNetworkPreferencesHelp:(id)sender
+{
+#pragma unused(sender)
+    
+    NSString *urlString = [NSBundle mainBundleInfoObjectForKey:@"MGSRemoteNetworkPrefsHelpURL"];
+    if (!urlString) return;
+
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
 }
 @end
