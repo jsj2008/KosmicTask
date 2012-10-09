@@ -87,7 +87,7 @@
     // are remote connections allowed
     BOOL allowRemoteConnections = [[MGSPreferences standardUserDefaults] boolForKey:MGSAllowInternetAccess];
 
-    // what is the socket address
+    // what is the socket connected address
     NSString *address = [NSString mgs_StringWithSockAddrData:[netSocket.socket connectedAddress]];
 
     // we can only accept from outside the subnet if remote connections are allowed.

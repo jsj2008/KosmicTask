@@ -22,6 +22,7 @@
 #import "MGSNetNegotiator.h"
 #import "MGSNetServerHandler.h"
 #import "MGSNetwork.h"
+#import "NSString_Mugginsoft.h"
 
 // class extension
 @interface MGSServerNetRequest()
@@ -76,8 +77,8 @@
     
 	// the client will need to be informed of how timeouts are to be handled.
 	// so pass the request timeout info in the header
-	_responseMessage.header.requestTimeout = (NSInteger)_readTimeout;
-	_responseMessage.header.responseTimeout = (NSInteger)_writeTimeout;
+	_responseMessage.header.requestTimeout = self.readTimeout;
+	_responseMessage.header.responseTimeout = self.writeTimeout;
     
     // identify the request that matches the response
     [_responseMessage setMessageObject:[_requestMessage messageUUID] forKey:MGSMessageKeyRequestUUID];
@@ -197,6 +198,10 @@ error_exit:
 {
 	BOOL success = NO;
 	
+    if (![self canAuthenticate]) {
+        return NO;
+    }
+    
 	// get the authentication dictionary
 	NSDictionary *authDict = [_requestMessage authenticationDictionary];
 	if ([authDict isKindOfClass:[NSDictionary class]]) {
@@ -219,7 +224,8 @@ error_exit:
  */
 - (BOOL)canAuthenticate
 {
-    NSString *requestIPAddress = @"";
+    // what is the socket connected address
+    NSString *requestIPAddress = [NSString mgs_StringWithSockAddrData:[self.netSocket.socket connectedAddress]];
 
     // check if remote network authentication is allowed
     BOOL allowRemoteAuthentication = [[MGSPreferences standardUserDefaults] boolForKey:MGSAllowRemoteUsersToAuthenticate];

@@ -29,6 +29,7 @@ static NSThread *networkThread = nil;
 // class extension
 @interface MGSNetRequest()
 + (void)runNetworkThread;
+- (void)invalidateRWTimers;
 @property (readwrite) NSUInteger flags;
 //@property (readwrite) MGSNetMessage *requestMessage;
 @property (readwrite) MGSNetMessage *responseMessage;
@@ -53,6 +54,10 @@ static NSThread *networkThread = nil;
 @synthesize flags = _flags;
 @synthesize chunksReceived = _chunksReceived;
 @synthesize requestType = _requestType;
+@synthesize writeConnectionTimer = _writeConnectionTimer;
+@synthesize writeTimer = _writeTimer;
+@synthesize readConnectionTimer = _readConnectionTimer;
+@synthesize readTimer = _readTimer;
 
 #pragma mark Class methods
 
@@ -226,6 +231,28 @@ static NSThread *networkThread = nil;
     return nil; // override
 }
 
+#pragma mark -
+#pragma mark Timeout handling
+
+/*
+ 
+ - writeConnectionTimeout:
+ 
+ */
+- (void)writeConnectionTimeout:(NSTimer *)timer
+{
+    [timer invalidate];
+}
+
+/*
+ 
+ - writeTimeout:
+ 
+ */
+- (void)writeTimeout:(NSTimer *)timer
+{
+    [timer invalidate];
+}
 
 #pragma mark -
 #pragma mark Message handling
@@ -392,6 +419,8 @@ static NSThread *networkThread = nil;
         }
 	}
     
+    [self invalidateRWTimers];
+    
     [super dispose];
 }
 
@@ -415,7 +444,23 @@ static NSThread *networkThread = nil;
 	[super finalize];
 }
 
-
+/*
+ 
+ - invalidateRWTimers
+ 
+ */
+- (void)invalidateRWTimers
+{
+    [self.writeConnectionTimer invalidate];
+    [self.writeTimer invalidate];
+    [self.readConnectionTimer invalidate];
+    [self.readTimer invalidate];
+    
+    self.writeConnectionTimer = nil;
+    self.writeTimer = nil;
+    self.readConnectionTimer = nil;
+    self.writeTimer = nil;
+}
 #pragma mark -
 #pragma mark Temporary path management
 
@@ -501,7 +546,12 @@ static NSThread *networkThread = nil;
  */
 - (void)disconnect
 {
-	if ([self isSocketConnected]) {
+    // a socket only reports itself -isSocketConnected as connected if the CFStream
+    // object that it encapsulates has an open status.
+    // if no data has been sent on the stream.
+    // however the socket has still be constructed.
+    //
+	if ([self isSocketConnected] || self.status != kMGSStatusDisconnected) {
 		[_netSocket disconnect];
         
         // the socket should update the request status
@@ -510,8 +560,8 @@ static NSThread *networkThread = nil;
             [self setSocketDisconnected];
         }
 	} else {
-		MLogInfo(@"Attempting to disconnect an already disconnected socket");
-	}
+        MLogDebug(@"Attempting to disconnect already disconnected socket.");
+    }
 }
 
 /*

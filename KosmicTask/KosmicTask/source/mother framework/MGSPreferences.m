@@ -66,6 +66,7 @@ NSString *MGSResultViewFontName = @"MGSResultViewFontName";
 NSString *MGSResultViewFontSize = @"MGSResultViewFontSize";
 NSString *MGSUseSeparateNetworkThread = @"MGSUseSeparateNetworkThread";
 NSString *MGSSendCocoaTaskCRashReports = @"MGSSendCocoaTaskCRashReports";
+NSString *MGSRequestWriteConnectionTimeout = @"MGSRequestWriteConnectionTimeout";
 
 static CFStringRef appID = CFSTR("com.mugginsoft.kosmictask");
 

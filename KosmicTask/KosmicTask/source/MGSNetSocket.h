@@ -12,7 +12,8 @@
 #define NETSOCKET_SERVER 1
 
 enum MGSNetSocketWriteTags {
-    kMGSSocketWriteMessage = 0,
+    kMGSSocketWriteProbe = 0,
+    kMGSSocketWriteMessage,
     kMGSSocketWriteAttachmentData,
     kMGSSocketWriteAttachmentChunk,
     kMGSSocketWriteAttachmentLastChunk,

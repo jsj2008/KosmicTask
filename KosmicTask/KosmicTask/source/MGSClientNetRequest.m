@@ -124,11 +124,27 @@
 	
 	// the server will need to be informed of how timeouts are to be handled.
 	// so pass the request timeout info in the header
-	_requestMessage.header.requestTimeout = (NSInteger)_writeTimeout;
-	_requestMessage.header.responseTimeout = (NSInteger)_readTimeout;
+	_requestMessage.header.requestTimeout = self.writeTimeout;
+	_requestMessage.header.responseTimeout = self.readTimeout;
 	
 	// send request message
 	[_netClient connectAndSendRequest:self];
+    
+    // configure timeouts
+    NSInteger writeConnectionTimeout = [[NSUserDefaults standardUserDefaults] integerForKey:MGSRequestWriteConnectionTimeout];
+    
+    // the socket timeouts operate on the buffer
+    
+    // start the write connection timer
+   if (writeConnectionTimeout > 0) {
+         self.writeConnectionTimer = [NSTimer scheduledTimerWithTimeInterval:writeConnectionTimeout target:self selector:@selector(writeConnectionTimeout:) userInfo:nil repeats:NO];
+    }
+    
+    // start the write timer
+    if (self.writeTimeout > 0) {
+        self.writeTimer = [NSTimer scheduledTimerWithTimeInterval:self.writeTimeout target:self selector:@selector(writeTimeout:) userInfo:nil repeats:NO];
+    }
+    
 }
 
 /*
@@ -349,6 +365,48 @@
 	_netSocket.netRequest = self;
 }
 
+#pragma mark -
+#pragma mark Timeout handling
+
+/*
+ 
+ - writeConnectionTimeout:
+ 
+ */
+- (void)writeConnectionTimeout:(NSTimer *)timer
+{
+    [timer invalidate];
+    self.writeConnectionTimer = nil;
+    
+    unsigned long bytesDone = 0, bytesTotal = 0;
+    
+    // if nothing has been sent on the socket then we timeout
+    [_netSocket progressOfWrite:&bytesDone totalBytes:&bytesTotal];
+    bytesDone += self.requestMessage.bytesTransferred + bytesDone;
+
+    if (bytesDone == 0) {
+        [self disconnect];
+        [self setErrorCode:MGSErrorCodeRequestWriteConnectionTimeout description:NSLocalizedString(@"Request write connection timed out.", @"Request write connection timeout")];
+        [self sendErrorToOwner];
+    }
+}
+
+/*
+ 
+ - writeTimeout:
+ 
+ */
+- (void)writeTimeout:(NSTimer *)timer
+{
+    [timer invalidate];
+    
+    if (self.status < kMGSStatusMessageSent) {
+        [self disconnect];
+        [self setErrorCode:MGSErrorCodeRequestWriteTimeout description:NSLocalizedString(@"Request write timed out.", @"Request write timeout")];
+        [self sendErrorToOwner];
+    }
+
+}
 
 #pragma mark -
 #pragma mark NSCopying

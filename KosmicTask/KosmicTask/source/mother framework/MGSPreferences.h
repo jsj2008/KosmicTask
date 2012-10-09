@@ -61,6 +61,7 @@ extern NSString *MGSUseSeparateNetworkThread;
 extern NSString *MGSSendCocoaTaskCRashReports;
 extern NSString *MGSAllowLocalUsersToAuthenticate;
 extern NSString *MGSAllowRemoteUsersToAuthenticate;
+extern NSString *MGSRequestWriteConnectionTimeout;
 
 @interface MGSPreferences : NSObject {
 

@@ -25,9 +25,12 @@ typedef enum _eMGSRequestStatus {
 	
 	kMGSStatusNotConnected = 0,
 	
+    // these values reflect the socket state.
+    // they say nothing about whether data has actually beet sent over the wire.
+    // eg: the connected state will be reported even if the remote host drops the connection immediately.
 	kMGSStatusResolving = 1,
 	kMGSStatusConnecting = 2,
-	kMGSStatusConnected = 3,
+	kMGSStatusConnected = 3,    // socket reports connection
 	kMGSStatusDisconnected = 4,
 	
 	// message exchange status
@@ -72,14 +75,20 @@ typedef enum _eMGSRequestStatus {
 	eMGSRequestStatus _status;			// request status
 	id _delegate;						// delegate
 	MGSError *_error;					// request error
-	NSTimeInterval _readTimeout;		// request read timeout
-	NSTimeInterval _writeTimeout;		// request write timeout
 	unsigned long int _requestID;		// request sequence counter
 	NSMutableArray *temporaryPaths;		// paths to be removed when the request is finalised
 	NSUInteger _flags;
     NSMutableArray *_chunksReceived;    // chunks received
     NSMutableArray *_childRequests;     // child requests
     MGSNetRequest *_parentRequest;      // parent request
+    
+@private
+	NSInteger _readTimeout;		// request read timeout
+	NSInteger _writeTimeout;		// request write timeout
+    NSTimer *_writeConnectionTimer;
+    NSTimer *_writeTimer;
+    NSTimer *_readConnectionTimer;
+    NSTimer *_readTimer;
 }
 
 + (NSThread *)networkThread;
@@ -103,6 +112,14 @@ typedef enum _eMGSRequestStatus {
 - (BOOL)commandBasedNegotiation;
 - (void)addChildRequest:(MGSNetRequest *)request;
 
+// timeout handling
+- (void)writeConnectionTimeout:(NSTimer *)timer;
+- (void)writeTimeout:(NSTimer *)timer;
+
+@property NSTimer *writeConnectionTimer;
+@property NSTimer *writeTimer;
+@property NSTimer *readConnectionTimer;
+@property NSTimer *readTimer;
 @property (assign) NSMutableArray *childRequests;		// logging request
 @property (assign) MGSNetRequest *parentRequest;			// parent request
 @property (readonly) MGSNetSocket *netSocket;
@@ -111,8 +128,8 @@ typedef enum _eMGSRequestStatus {
 @property eMGSRequestStatus status;
 @property (assign) id delegate;
 @property (assign) MGSError *error;
-@property NSTimeInterval readTimeout;
-@property NSTimeInterval writeTimeout;
+@property NSInteger readTimeout;
+@property NSInteger writeTimeout;
 @property (readonly) unsigned long int requestID;
 @property (readonly) NSUInteger flags;
 @property (readonly) NSMutableArray *chunksReceived;

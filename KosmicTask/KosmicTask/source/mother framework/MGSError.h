@@ -56,6 +56,8 @@ extern NSString *MGSErrorDomainMotherScriptTask;
 #define MGSErrorCodeSecureConnectionRequired 1017
 #define MGSErrorCodeBadRequestFormat 1018
 #define MGSErrorCodeRequestedSecurityNotGranted 1019
+#define MGSErrorCodeRequestWriteConnectionTimeout 1020
+#define MGSErrorCodeRequestWriteTimeout 1021
 
 // script errors
 #define MGSErrorCodeScriptRunner 2000

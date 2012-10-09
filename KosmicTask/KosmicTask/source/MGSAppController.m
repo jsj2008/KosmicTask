@@ -1698,6 +1698,9 @@
     // Fragaria
     [appDefaults setObject:[NSArchiver archivedDataWithRootObject:[NSFont fontWithName:@"Menlo" size:11]] forKey:MGSFragariaPrefsTextFont];
 
+    // request timeouts
+    [appDefaults setObject:[NSNumber numberWithInteger:10] forKey:MGSRequestWriteConnectionTimeout];
+    
 	//
 	// register app defaults
 	//

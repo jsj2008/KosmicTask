@@ -48,7 +48,7 @@
 	id _ownerObject;					// owner object associated with request
 	NSString *_ownerString;				// owner string associated with request
 	BOOL _sendUpdatesToOwner;			// flag send updates to owner
-    BOOL _allowUserToAuthenticate;		// allow user to authenticate the request
+    BOOL _allowUserToAuthenticate;		// allow user to authenticate the request  
 }
 @property (assign) id owner;
 @property (assign) id ownerObject;

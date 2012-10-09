@@ -598,6 +598,34 @@ cleanup:
 	
 	// send the packet data
 	_netRequest.status = kMGSStatusSendingMessage;
+    
+    // send initial short data packet with a short timeout.
+    // this should enable us to detect a local socket error quickly.
+    // note that it does nothing to help us if the remote end just drops the connection.
+    // we need a separate timer for that.
+    NSUInteger probeLength = 4;
+    
+    if ([data length] > probeLength && probeLength > 0) {
+        NSRange probeRange = NSMakeRange(0,probeLength);
+
+        NSData *probeData = [data subdataWithRange:probeRange];
+        if (probeData) {
+            
+            // resize the data
+            [data replaceBytesInRange:probeRange withBytes:NULL length:0];
+            
+            //
+            // write the probe with a limited timeout.
+            // 
+            [_socket writeData:probeData withTimeout:5 tag:kMGSSocketWriteProbe];
+        }
+    }
+    
+    // write the packet data.
+    // if the socket at the remote end fails to respond we need to wait for the timeout
+    // to expire before we will get a callback.
+    // the timeout will only have effect if the data wasn't queued to the local socket buffer.
+    // it says nothing about timing out the overall response of the remote connection
 	[_socket writeData:data withTimeout:_netRequest.writeTimeout tag:kMGSSocketWriteMessage];
 }
 
