@@ -79,7 +79,7 @@
 		if (NO) {
 			[self.socket setRunLoopModes:[NSArray arrayWithObjects:NSRunLoopCommonModes, NSModalPanelRunLoopMode, NSEventTrackingRunLoopMode, nil]];
 		}
-		
+        
 		// connect to host with timeout.
         // without the timeout we never get any response from the socket if the connection fails.
         // the remote end may drop the connection if access is not allowed.
