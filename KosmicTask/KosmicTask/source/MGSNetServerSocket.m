@@ -160,29 +160,15 @@
 	MLogDebug(@"Socket did connect: local : %@ port: %u - remote : %@ port: %u ", 
 			  sock.localHost, sock.localPort, sock.connectedHost, sock.connectedPort);
 	
-    // screen connection here on in -socketShouldConnect:?
-    if (NO) {
-        if (![self socketShouldConnect]) {
-            
-            // enqueue a disconnect
-            [self.socket performSelector:@selector(disconnect) withObject:nil afterDelay:0];
-            
-            // should be nil anyway
-            self.netRequest = nil;
-            
-            return;
-        }
-    }
-    
 	// create new request
 	self.netRequest = [[MGSServerRequestManager sharedController] requestWithConnectedSocket:self];
 	
 	// set timeouts
-
 #pragma mark warning need to consider these timeouts further
-	self.netRequest.readTimeout = 120;
-	self.netRequest.writeTimeout = 120; 
-
+    if (NO) {
+        [self.netRequest setTimeoutForRead:120 write:120];
+    }
+    
 	// queue a read 
 	[self queueReadMessage];
 }
@@ -203,6 +189,13 @@
 
 		switch (self.netRequest.status) {
 				
+                // body read
+            case kMGSStatusReadingMessageBody:
+                
+                // timeouts now available so start the request timer if required
+                [self.netRequest startRequestTimer];
+                break;
+                
 				// messsage received
 			case kMGSStatusMessageReceived:
 				
@@ -322,6 +315,27 @@
         // returning no will close the socket.
         // we have not received our connection delegate method yet
         // so closing the socket should be okay.
+        
+        /*
+         
+         NOTE; closing the connection in this way is a bit brutal.
+         We have already established our TCP connection via connect().
+         We have accepted our socket with accept().
+         The remote end has issued a write() or send() or sendto().
+         Our write may therefore have to timeout as we are not following the write/read/EOF sequence to complete.
+         
+         At present it seems that  the remote end is detecting that 0 bytes have been sent
+         more than likely because socket buffer has not been refreshed.
+         CFSocket() calls select() to see if the socket buffer can accept more data.
+         
+         However the interaction between CFStream -> CFSocket -> native socket is complex.
+         At present the stream is signalling that zero bytes have been sent when the server disconnects like this.
+         We have a timer watching this so it works okay.
+         
+         A better solution might be for the server to send back and invalid connection reply so that the usual 
+         message passing sequence is followed.
+         
+         */
         return NO;
     }
     
@@ -446,8 +460,9 @@
         tag = kMGSSocketWriteAttachmentLastChunk;
     }
     
-	// send the chunk
-	[self.socket writeData:chunk withTimeout:self.netRequest.writeTimeout tag:tag];
+	// send the chunk.
+    // we timeout the whole request not individual writes.
+	[self.socket writeData:chunk withTimeout:-1 tag:tag];
 }
 @end
 

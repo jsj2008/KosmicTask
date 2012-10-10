@@ -98,7 +98,7 @@
  - terminateRequest:
  
  */
-- (void)terminateRequest:(MGSClientNetRequest *)netRequest
+- (void)terminateRequest:(MGSNetRequest *)netRequest
 {
     // disconnect the request
     if (netRequest.isSocketConnected) {

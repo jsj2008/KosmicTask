@@ -274,15 +274,6 @@ send_error_reply:;
 	
 }
 
-/*
- 
- authentication failed for request
- 
- */
-- (void)authenticationFailed:(MGSServerNetRequest *)netRequest
-{
-	[self sendResponseOnSocket:netRequest wasValid:NO];
-}
 
 /*
  
@@ -330,6 +321,38 @@ send_error_reply:;
     
 }
 
+#pragma mark -
+#pragma mark MGSNetRequestDelegate
+
+/*
+ 
+ authentication failed for request
+ 
+ */
+- (void)authenticationFailed:(MGSServerNetRequest *)netRequest
+{
+	[self sendResponseOnSocket:netRequest wasValid:NO];
+}
+
+/*
+ 
+ - requestTimerExpired
+ 
+ */
+- (void)requestTimerExpired:(MGSServerNetRequest *)netRequest
+{
+    MLogDebug(@"Time out : Terminating request: %@", [netRequest UUID]);
+    
+    // conclude our request.
+    // this will terminate any tasks associated with the request
+    // any may remove the request from the request queue
+    [self concludeRequest:netRequest];
+    
+    // if request still available then terminate it
+    if ([self.netRequests containsObject:netRequest]) {
+        [self terminateRequest:netRequest];
+    }
+}
 @end
 
 @implementation MGSServerRequestManager (Private)

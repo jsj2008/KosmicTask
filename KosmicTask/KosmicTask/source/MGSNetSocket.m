@@ -290,7 +290,8 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 					netMessage.expectedLength = length;
 					
 					// Read remaining header data from the socket.
-					[sock readDataToLength:length withTimeout:_netRequest.readTimeout tag:tag];	
+                    // we timeout the request as a whole not the read.
+					[sock readDataToLength:length withTimeout:-1 tag:tag];
 				} else {
 					MLog(RELEASELOG, @"invalid header prefix received %@", dataString);
 					error = @"invalid header prefix";
@@ -314,14 +315,14 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 					NSUInteger length = netMessage.header.contentLength;
 					
 					// get request timeouts from the header
-					_netRequest.readTimeout = netMessage.header.responseTimeout;
-					_netRequest.writeTimeout = netMessage.header.requestTimeout;
+					[_netRequest setTimeoutForRead:netMessage.header.responseTimeout write:netMessage.header.requestTimeout];
 					
 					_netRequest.status = kMGSStatusReadingMessageBody;
 					netMessage.expectedLength = length;
 					
 					// Read payload data from this socket.
-					[sock readDataToLength:length withTimeout:_netRequest.readTimeout tag:tag];	
+                    // we timeout the request as a whole not the read.
+					[sock readDataToLength:length withTimeout:-1 tag:tag];
 				} else {
 					error = @"invalid header received";
 					MLog(RELEASELOG, @"invalid header received %@", dataString);
@@ -566,7 +567,8 @@ cleanup:
 	// will be sent followed by didDisconnect.
 	// allowing the read to detect the socket EOF allows the normal
 	// TCP shutdown sequence to be followed.
-	[_socket readDataToLength:MGSNetHeaderLength withTimeout:_netRequest.readTimeout tag:kMGSSocketReadMessage];
+    // we timeout the request as a whole not the read.
+	[_socket readDataToLength:MGSNetHeaderLength withTimeout:-1 tag:kMGSSocketReadMessage];
 	
 	MLog(DEBUGLOG, @"A read has been queued. Awaiting response...");
 	
@@ -600,9 +602,9 @@ cleanup:
 	_netRequest.status = kMGSStatusSendingMessage;
     
     // send initial short data packet with a short timeout.
-    // this should enable us to detect a local socket error quickly.
+    // this might enable us to detect a local socket error quickly.
     // note that it does nothing to help us if the remote end just drops the connection.
-    // we need a separate timer for that.
+    // maybe a wate of time.
     NSUInteger probeLength = 4;
     
     if ([data length] > probeLength && probeLength > 0) {
@@ -617,16 +619,14 @@ cleanup:
             //
             // write the probe with a limited timeout.
             // 
-            [_socket writeData:probeData withTimeout:5 tag:kMGSSocketWriteProbe];
+            [_socket writeData:probeData withTimeout:20 tag:kMGSSocketWriteProbe];
         }
     }
     
     // write the packet data.
-    // if the socket at the remote end fails to respond we need to wait for the timeout
-    // to expire before we will get a callback.
-    // the timeout will only have effect if the data wasn't queued to the local socket buffer.
-    // it says nothing about timing out the overall response of the remote connection
-	[_socket writeData:data withTimeout:_netRequest.writeTimeout tag:kMGSSocketWriteMessage];
+    // we don't timeout the write.
+    // instead we timeout the entire request
+	[_socket writeData:data withTimeout:-1 tag:kMGSSocketWriteMessage];
 }
 
 /*
@@ -812,8 +812,9 @@ cleanup:
 			goto errorExit;
 		}
 		
-		// send the attachment data
-		[_socket writeData:data withTimeout:_netRequest.writeTimeout tag:kMGSSocketWriteAttachmentData];
+		// send the attachment data.
+        // we don't timeout the write, rather we timeout the entire request.
+		[_socket writeData:data withTimeout:-1 tag:kMGSSocketWriteAttachmentData];
 		
 	} 
 	@catch (NSException *e) {
@@ -884,8 +885,9 @@ errorExit:
         // we are now reading the attachments
         _netRequest.status = kMGSStatusReadingMessageAttachments;
         
-        // read the first chunk size
-        [_socket readDataToData:chunkTerminatorData withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunkSize];
+        // read the first chunk size.
+        // we timeout the request as a whole not the read.
+        [_socket readDataToData:chunkTerminatorData withTimeout:-1 tag:kMGSSocketReadAttachmentChunkSize];
 
         return;
     }
@@ -951,8 +953,9 @@ errorExit:
                 // we want to read the chunk data + the terminator
                 chunkSize += [MGSNetChunkTerminator length];
                 
-                // read the chunk data up to given length
-                [_socket readDataToLength:chunkSize withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunk];
+                // read the chunk data up to given length.
+                // we timeout the request as a whole not the read.
+                [_socket readDataToLength:chunkSize withTimeout:-1 tag:kMGSSocketReadAttachmentChunk];
                 
                 break;
                 
@@ -973,7 +976,8 @@ errorExit:
                     [_netRequest chunkStringReceived:dataString];
                     
                     // read the next chunk size
-                    [_socket readDataToData:chunkTerminatorData withTimeout:self.netRequest.readTimeout tag:kMGSSocketReadAttachmentChunkSize];
+                    // // we timeout the request as a whole not the read.
+                    [_socket readDataToData:chunkTerminatorData withTimeout:-1 tag:kMGSSocketReadAttachmentChunkSize];
                 }
                 
                 break;
@@ -1077,7 +1081,8 @@ errorExit:
 		unsigned long long readLength = remainingLength > ATTACHMENT_DATA_BLOCK_LENGTH ? ATTACHMENT_DATA_BLOCK_LENGTH : remainingLength;
 
 		// read the attachment data
-		[_socket readDataToLength:(NSUInteger)readLength withTimeout:_netRequest.readTimeout tag:kMGSSocketReadAttachmentData];	
+        // we timeout the request as a whole not the read.
+		[_socket readDataToLength:(NSUInteger)readLength withTimeout:-1 tag:kMGSSocketReadAttachmentData];
 		
 	} 
 	@catch (NSException *e) {

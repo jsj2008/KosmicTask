@@ -1646,7 +1646,7 @@ Failed:;
 			NSLog (@"AsyncSocket %p received unexpected CFWriteStream callback, CFStreamEventType %d.", self, type);
 	}
 }
-
+ 
 // This is the callback we set up for CFSocket.
 static void MyCFSocketCallback (CFSocketRef sref, CFSocketCallBackType type, CFDataRef address, const void *pData, void *pInfo)
 {

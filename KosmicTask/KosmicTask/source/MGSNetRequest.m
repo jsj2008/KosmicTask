@@ -30,8 +30,8 @@ static NSThread *networkThread = nil;
 @interface MGSNetRequest()
 + (void)runNetworkThread;
 - (void)invalidateRWTimers;
+- (void)requestDidTimeout:(NSTimer *)timer;
 @property (readwrite) NSUInteger flags;
-//@property (readwrite) MGSNetMessage *requestMessage;
 @property (readwrite) MGSNetMessage *responseMessage;
 @end
 
@@ -49,15 +49,12 @@ static NSThread *networkThread = nil;
 @synthesize error = _error; // required to be atomic
 @synthesize readTimeout = _readTimeout; // required to be atomic
 @synthesize writeTimeout = _writeTimeout; // required to be atomic
+@synthesize timeout = _timeout;
 @synthesize requestID = _requestID;
 @synthesize netSocket = _netSocket;
 @synthesize flags = _flags;
 @synthesize chunksReceived = _chunksReceived;
 @synthesize requestType = _requestType;
-@synthesize writeConnectionTimer = _writeConnectionTimer;
-@synthesize writeTimer = _writeTimer;
-@synthesize readConnectionTimer = _readConnectionTimer;
-@synthesize readTimer = _readTimer;
 
 #pragma mark Class methods
 
@@ -158,8 +155,8 @@ static NSThread *networkThread = nil;
 	self.responseMessage = [[MGSNetMessage alloc] init];	// reply will be sent to client
 	[self.responseMessage releaseDisposable];
     
-	_readTimeout = -1.0;	// don't timeout
-	_writeTimeout = -1.0;	// don't timeout
+	self.timeout = -1;	// don't timeout
+    
 	_requestID = requestSequenceID++;
 	temporaryPaths = [NSMutableArray new];
 }
@@ -190,6 +187,7 @@ static NSThread *networkThread = nil;
 {
 	self.status = kMGSStatusDisconnected;
     
+    [self invalidateRWTimers];
 #ifdef MGS_LOG_DISCONNECT
     NSLog(@"socket disconnected for request: %@", self.requestMessage.messageDict);
 #endif
@@ -236,24 +234,109 @@ static NSThread *networkThread = nil;
 
 /*
  
- - writeConnectionTimeout:
+ - writeConnectionDidTimeout:
  
  */
-- (void)writeConnectionTimeout:(NSTimer *)timer
+- (void)writeConnectionDidTimeout:(NSTimer *)timer
 {
-    [timer invalidate];
+#pragma unused(timer)
+    
+    [self invalidateRWTimers];
 }
 
 /*
  
- - writeTimeout:
+ - startRequestTimer
  
  */
-- (void)writeTimeout:(NSTimer *)timer
+- (void)startRequestTimer
 {
-    [timer invalidate];
+    if (self.timeout > 0) {
+        _requestTimer = [NSTimer scheduledTimerWithTimeInterval:self.timeout target:self selector:@selector(requestDidTimeout:) userInfo:nil repeats:NO];
+        
+        MLogDebug(@"Request timer started: %d secs", self.timeout);
+    }
 }
 
+/*
+ 
+ - startWriteConnectionTimer
+ 
+ */
+- (void)startWriteConnectionTimer
+{
+    // the socket write timeouts operate on the buffer.
+    // so if the buffer pulls in data then it seems to have been sent and the socket timeout does not occur.
+    // however we do seem to be able to detect if any data has being reported as sent.
+    // if it looks as if no data is sent during the writeConnection period then we can disconnect.
+    
+    NSInteger writeConnectionTimeout = [[NSUserDefaults standardUserDefaults] integerForKey:MGSRequestWriteConnectionTimeout];
+    
+    // start the write connection timer
+    if (writeConnectionTimeout > 0) {
+        _writeConnectionTimer = [NSTimer scheduledTimerWithTimeInterval:writeConnectionTimeout target:self selector:@selector(writeConnectionDidTimeout:) userInfo:nil repeats:NO];
+    }
+    
+
+}
+/*
+ 
+ - requestDidTimeout:
+ 
+ */
+- (void)requestDidTimeout:(NSTimer *)timer
+{
+#pragma unused(timer)
+    
+    [self invalidateRWTimers];
+    
+    MLogDebug(@"Request timer expired after %d secs", self.timeout);
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(requestTimerExpired:)]) {
+        [self.delegate requestTimerExpired:self];
+    }
+}
+
+/*
+ 
+ - setTimeoutForRead:write:
+ 
+ */
+- (void)setTimeoutForRead:(NSInteger)rt write:(NSInteger)wt
+{
+    // force read and write timeouts to max value
+    self.timeout = (rt > wt ? rt : wt);
+}
+
+/*
+ 
+ - setTimeout:
+ 
+ */
+- (void)setTimeout:(NSInteger)value
+{
+    // -1 indicates no timeout
+    if (value <= 0) value = -1;
+    
+    _timeout = value;
+    
+    // read and write timeouts are equal
+    _readTimeout = value;
+    _writeTimeout = value;
+}
+/*
+ 
+ - invalidateRWTimers
+ 
+ */
+- (void)invalidateRWTimers
+{
+    [_writeConnectionTimer invalidate];
+    [_requestTimer invalidate];
+    
+    _writeConnectionTimer = nil;
+    _requestTimer = nil;
+}
 #pragma mark -
 #pragma mark Message handling
 /*
@@ -444,23 +527,7 @@ static NSThread *networkThread = nil;
 	[super finalize];
 }
 
-/*
- 
- - invalidateRWTimers
- 
- */
-- (void)invalidateRWTimers
-{
-    [self.writeConnectionTimer invalidate];
-    [self.writeTimer invalidate];
-    [self.readConnectionTimer invalidate];
-    [self.readTimer invalidate];
-    
-    self.writeConnectionTimer = nil;
-    self.writeTimer = nil;
-    self.readConnectionTimer = nil;
-    self.writeTimer = nil;
-}
+
 #pragma mark -
 #pragma mark Temporary path management
 

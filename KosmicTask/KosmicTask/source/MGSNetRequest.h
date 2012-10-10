@@ -64,6 +64,8 @@ typedef enum _eMGSRequestStatus {
 - (void)netRequestReplyOnClient:(MGSNetRequest *)netRequest;
 - (void)sendResponseOnSocket:(MGSNetRequest *)netRequest wasValid:(BOOL)valid;
 - (void)authenticationFailed:(MGSNetRequest *)netRequest;
+- (void)sendRequestOnClient:(MGSNetRequest *)request;
+- (void)requestTimerExpired:(MGSNetRequest *)request;
 @end
 
 
@@ -85,10 +87,9 @@ typedef enum _eMGSRequestStatus {
 @private
 	NSInteger _readTimeout;		// request read timeout
 	NSInteger _writeTimeout;		// request write timeout
+    NSInteger _timeout;
     NSTimer *_writeConnectionTimer;
-    NSTimer *_writeTimer;
-    NSTimer *_readConnectionTimer;
-    NSTimer *_readTimer;
+    NSTimer *_requestTimer;
 }
 
 + (NSThread *)networkThread;
@@ -113,13 +114,12 @@ typedef enum _eMGSRequestStatus {
 - (void)addChildRequest:(MGSNetRequest *)request;
 
 // timeout handling
-- (void)writeConnectionTimeout:(NSTimer *)timer;
-- (void)writeTimeout:(NSTimer *)timer;
+- (void)writeConnectionDidTimeout:(NSTimer *)timer;
+- (void)requestDidTimeout:(NSTimer *)timer;
+- (void)startRequestTimer;
+- (void)setTimeoutForRead:(NSInteger)rt write:(NSInteger)wt;
+- (void)startWriteConnectionTimer;
 
-@property NSTimer *writeConnectionTimer;
-@property NSTimer *writeTimer;
-@property NSTimer *readConnectionTimer;
-@property NSTimer *readTimer;
 @property (assign) NSMutableArray *childRequests;		// logging request
 @property (assign) MGSNetRequest *parentRequest;			// parent request
 @property (readonly) MGSNetSocket *netSocket;
@@ -128,8 +128,9 @@ typedef enum _eMGSRequestStatus {
 @property eMGSRequestStatus status;
 @property (assign) id delegate;
 @property (assign) MGSError *error;
-@property NSInteger readTimeout;
-@property NSInteger writeTimeout;
+@property (readonly) NSInteger readTimeout;
+@property (readonly) NSInteger writeTimeout;
+@property NSInteger timeout;
 @property (readonly) unsigned long int requestID;
 @property (readonly) NSUInteger flags;
 @property (readonly) NSMutableArray *chunksReceived;

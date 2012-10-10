@@ -1700,6 +1700,8 @@
 
     // request timeouts
     [appDefaults setObject:[NSNumber numberWithInteger:10] forKey:MGSRequestWriteConnectionTimeout];
+    [appDefaults setObject:[NSNumber numberWithInteger:15] forKey:MGSHeartbeatRequestTimeout];
+    [appDefaults setObject:[NSNumber numberWithInteger:60] forKey:MGSDefaultRequestTimeout];
     
 	//
 	// register app defaults

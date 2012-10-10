@@ -65,17 +65,6 @@
 	//
 	[netRequest.requestMessage setCommand:command];
 	
-	// set request timeouts
-	if ([command isEqualToString:MGSNetMessageCommandHeartbeat]) {
-		netRequest.readTimeout = 15.0;
-		netRequest.writeTimeout = 15.0;
-	}
-	/*
-	 else if ([command isEqualToString:MGSNetMessageCommandParseScript]) {
-	 netRequest.readTimeout = -1;	// system default
-	 netRequest.writeTimeout = -1;
-	 }
-	 */
 	return netRequest;
 }
 
@@ -131,20 +120,13 @@
 	[_netClient connectAndSendRequest:self];
     
     // configure timeouts
-    NSInteger writeConnectionTimeout = [[NSUserDefaults standardUserDefaults] integerForKey:MGSRequestWriteConnectionTimeout];
     
-    // the socket timeouts operate on the buffer
-    
-    // start the write connection timer
-   if (writeConnectionTimeout > 0) {
-         self.writeConnectionTimer = [NSTimer scheduledTimerWithTimeInterval:writeConnectionTimeout target:self selector:@selector(writeConnectionTimeout:) userInfo:nil repeats:NO];
-    }
-    
-    // start the write timer
-    if (self.writeTimeout > 0) {
-        self.writeTimer = [NSTimer scheduledTimerWithTimeInterval:self.writeTimeout target:self selector:@selector(writeTimeout:) userInfo:nil repeats:NO];
-    }
-    
+    // start the request timer.
+    // this enables us to timeout the entire request if required
+    [self startRequestTimer];
+
+    // start timer to look for 0 writes on connection
+    [self startWriteConnectionTimer];
 }
 
 /*
@@ -370,17 +352,17 @@
 
 /*
  
- - writeConnectionTimeout:
+ - writeConnectionDidTimeout:
  
  */
-- (void)writeConnectionTimeout:(NSTimer *)timer
+- (void)writeConnectionDidTimeout:(NSTimer *)timer
 {
-    [timer invalidate];
-    self.writeConnectionTimer = nil;
+    [super writeConnectionDidTimeout:timer];
     
     unsigned long bytesDone = 0, bytesTotal = 0;
     
     // if nothing has been sent on the socket then we timeout
+    // the request
     [_netSocket progressOfWrite:&bytesDone totalBytes:&bytesTotal];
     bytesDone += self.requestMessage.bytesTransferred + bytesDone;
 
@@ -393,19 +375,12 @@
 
 /*
  
- - writeTimeout:
+ - requestDidTimeout:
  
  */
-- (void)writeTimeout:(NSTimer *)timer
+- (void)requestDidTimeout:(NSTimer *)timer
 {
-    [timer invalidate];
-    
-    if (self.status < kMGSStatusMessageSent) {
-        [self disconnect];
-        [self setErrorCode:MGSErrorCodeRequestWriteTimeout description:NSLocalizedString(@"Request write timed out.", @"Request write timeout")];
-        [self sendErrorToOwner];
-    }
-
+    [super requestDidTimeout:timer];
 }
 
 #pragma mark -
@@ -504,7 +479,10 @@
  */
 - (void)sendErrorToOwner
 {
-	[[self class] sendRequestError:self to:self.owner];
+    // logging requests do not need to communicate with their owner
+    if (self.requestType == kMGSRequestTypeWorker) {
+        [[self class] sendRequestError:self to:self.owner];
+    }
 }
 
 

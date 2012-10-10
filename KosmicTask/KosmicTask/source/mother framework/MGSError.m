@@ -327,6 +327,9 @@ static MGSErrorWindowController *_controller;
         case MGSErrorCodeRequestWriteTimeout:
 			return NSLocalizedString(@"Request data write to server timed out.", @"Request timeout error message");
 
+        case MGSErrorCodeRequestTimeout:
+			return NSLocalizedString(@"Request timed out.", @"Request timeout error message");
+            
 		case MGSErrorCodeBadRequestFormat:
 			return NSLocalizedString(@"Invalid request format.", @"Request format error");
 			

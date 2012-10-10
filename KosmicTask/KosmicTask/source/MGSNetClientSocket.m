@@ -82,8 +82,8 @@
         
 		// connect to host with timeout.
         // without the timeout we never get any response from the socket if the connection fails.
-        // the remote end may drop the connection if access is not allowed.
-		if ([self.socket connectToHost:host onPort:port withTimeout:5 error:&err])
+        // this call corresponds to the connect() call.
+		if ([self.socket connectToHost:host onPort:port withTimeout:10 error:&err])
 		{
 			// actual connect may take time to occur
 			// reads and writes can be queued before the connect completes

@@ -22,6 +22,7 @@
 #import "MGSAuthenticateWindowController.h"
 #import "MGSNetNegotiator.h"
 #import "MGSNetMessage+KosmicTask.h"
+#import "MGSPreferences.h"
 
 static MGSClientRequestManager *_sharedController = nil;
 
@@ -213,7 +214,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	// create request
 	task.netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 	
-	// send the request 
+	// send the request
 	[self sendRequestOnClient:task.netRequest];
 }
 
@@ -256,7 +257,10 @@ static MGSClientRequestManager *_sharedController = nil;
 		
 		return;
 	}
-	
+    
+    NSInteger defaultTimeout = [[NSUserDefaults standardUserDefaults] integerForKey:MGSDefaultRequestTimeout];
+    netRequest.timeout = 3 * defaultTimeout;
+    
 	task.netRequest = netRequest;
 	
 	// send the request 
@@ -288,6 +292,8 @@ static MGSClientRequestManager *_sharedController = nil;
 {
 	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient command:MGSNetMessageCommandHeartbeat withOwner:owner];
 
+    netRequest.timeout = [[NSUserDefaults standardUserDefaults] integerForKey:MGSHeartbeatRequestTimeout];
+    
 	// send the request 
 	[self sendRequestOnClient:netRequest];
 }
@@ -327,7 +333,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	// create request
 	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:dict];
 	
-	// send the request 
+	// send the request
 	[self sendRequestOnClient:netRequest];
     
 	return netRequest;
@@ -581,20 +587,23 @@ static MGSClientRequestManager *_sharedController = nil;
 
 /*
  
- - terminateRequest:
+ - requestTimerExpired:
  
  */
-- (void)terminateRequest:(MGSClientNetRequest *)netRequest
+- (void)requestTimerExpired:(MGSClientNetRequest *)netRequest
 {
-    [super terminateRequest:netRequest];
+    MLogDebug(@"Time out : Terminating request: %@", [netRequest UUID]);
     
-    // remove child requests
-    for (MGSClientNetRequest *childRequest in netRequest.childRequests) {
-        if (childRequest.isSocketConnected) {
-            [childRequest disconnect];
-        }
-        [self removeRequest:childRequest];
+    // terminate the request
+#warning we remove child requests her. will this revive logging GC requests?
+    [self terminateRequest:netRequest];
+    
+    // send error to owner
+    if (netRequest.requestType == kMGSRequestTypeWorker) {
+        [netRequest setErrorCode:MGSErrorCodeRequestTimeout description:@"Request could not be completed."];
+        [netRequest sendErrorToOwner];
     }
+    
 }
 @end
 
@@ -675,33 +684,29 @@ static MGSClientRequestManager *_sharedController = nil;
 	if (owner && [owner respondsToSelector:@selector(netRequestWillSend:)]) {
 		NSDictionary *ownerDict = [owner netRequestWillSend:netRequest];
 		if (ownerDict) {
-			
+			NSInteger rt = -1, wt = -1;
+            
 			// if dictionary defines a read timeout value then use it
 			NSNumber *number = [ownerDict objectForKey:@"ReadTimeout"];
 			if (number && [number isKindOfClass:[NSNumber class]]) {
-				double timeout = [number doubleValue];
-				
-				// a timeout of 0 is used to indicate that the default
-				// timout is to be used
-				if (timeout > 0) {
-					netRequest.readTimeout = timeout;
-				}
+				rt = [number integerValue];
 			}
 
 			// if dictionary defines a write timeout value then use it
 			number = [ownerDict objectForKey:@"WriteTimeout"];
 			if (number && [number isKindOfClass:[NSNumber class]]) {
-				double timeout = [number doubleValue];
-				
-				// a timeout of 0 is used to indicate that the default
-				// timout is to be used
-				if (timeout > 0) {
-					netRequest.writeTimeout = timeout;
-				}
+				wt = [number integerValue];
 			}
 			
+            [netRequest setTimeoutForRead:rt write:wt];
 		}
-	}
+	} else {
+        
+        // use default timeout.
+        // override if required for particular command types.
+        NSInteger defaultTimeout = [[NSUserDefaults standardUserDefaults] integerForKey:MGSDefaultRequestTimeout];
+        netRequest.timeout = defaultTimeout;
+    }
 	
 	// add a dictionary to the request if defined
 	if (dict) {
