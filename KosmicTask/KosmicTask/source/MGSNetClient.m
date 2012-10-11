@@ -585,6 +585,8 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	// already queued
 	if ([netRequest queuedNegotiateRequest]) {
 		[self errorOnRequestQueue:netRequest code:MGSErrorCodeSendRequestMessage reason:@"Request negotiation already queued."];
+        
+        return;
 	}
 	
 	// prepare connection negotiation
@@ -1410,10 +1412,10 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	netRequest.error = [MGSError clientCode:code reason:failureReason]; 
 
 	if (netRequest.delegate &&
-		[netRequest.delegate respondsToSelector:@selector(netRequestReplyOnClient:)]) {
+		[netRequest.delegate respondsToSelector:@selector(requestDidComplete:)]) {
 		
 		// perform this on the next iteration of the run loop.
-		[netRequest.delegate performSelector:@selector(netRequestReplyOnClient:) withObject:netRequest afterDelay:0];
+		[netRequest.delegate performSelector:@selector(requestDidComplete:) withObject:netRequest afterDelay:0];
 	}
 }
 

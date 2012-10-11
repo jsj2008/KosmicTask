@@ -45,6 +45,7 @@ static NSThread *networkThread = nil;
 @synthesize requestMessage = _requestMessage;
 @synthesize responseMessage = _responseMessage;
 @synthesize status = _status;	// required to be atomic
+@synthesize lastStatus = _previousStatus;
 @synthesize delegate = _delegate;
 @synthesize error = _error; // required to be atomic
 @synthesize readTimeout = _readTimeout; // required to be atomic
@@ -55,6 +56,8 @@ static NSThread *networkThread = nil;
 @synthesize flags = _flags;
 @synthesize chunksReceived = _chunksReceived;
 @synthesize requestType = _requestType;
+@synthesize allowRequestTimeout = _allowRequestTimeout;
+@synthesize allowWriteConnectionTimeout = _allowWriteConnectionTimeout;
 
 #pragma mark Class methods
 
@@ -148,7 +151,8 @@ static NSThread *networkThread = nil;
 {
     _requestType = kMGSRequestTypeWorker;
 	_status = kMGSStatusNotConnected;
-	
+	_previousStatus = kMGSStatusNotConnected;
+    
 	self.requestMessage = [[MGSNetMessage alloc] init];		// request will be received from client
     [self.requestMessage releaseDisposable];
     
@@ -159,6 +163,11 @@ static NSThread *networkThread = nil;
     
 	_requestID = requestSequenceID++;
 	temporaryPaths = [NSMutableArray new];
+    
+    _allowRequestTimeout = YES;
+    _allowWriteConnectionTimeout = YES;
+    
+    _childRequests = [NSMutableArray new];
 }
 
 /*
@@ -188,9 +197,11 @@ static NSThread *networkThread = nil;
 	self.status = kMGSStatusDisconnected;
     
     [self invalidateRWTimers];
+
 #ifdef MGS_LOG_DISCONNECT
     NSLog(@"socket disconnected for request: %@", self.requestMessage.messageDict);
 #endif
+    
 }
 
 /*
@@ -241,6 +252,10 @@ static NSThread *networkThread = nil;
 {
 #pragma unused(timer)
     
+#ifdef MGS_LOG_TIMEOUT
+    MLogDebug(@"Request write connection timeout : %@", [self UUID]);
+#endif
+    
     [self invalidateRWTimers];
 }
 
@@ -251,10 +266,29 @@ static NSThread *networkThread = nil;
  */
 - (void)startRequestTimer
 {
+    if (!self.allowRequestTimeout) {
+        
+#ifdef MGS_LOG_TIMEOUT
+        MLogDebug(@"Request timer was not started : %@", [self UUID]);
+#endif
+        return;
+    }
+    
+    if (_requestTimer) {
+        
+#ifdef MGS_LOG_TIMEOUT
+        MLogDebug(@"Request timer already running : %@", [self UUID]);
+#endif
+        return;
+    }
+    
     if (self.timeout > 0) {
         _requestTimer = [NSTimer scheduledTimerWithTimeInterval:self.timeout target:self selector:@selector(requestDidTimeout:) userInfo:nil repeats:NO];
         
+#ifdef MGS_LOG_TIMEOUT
         MLogDebug(@"Request timer started: %d secs", self.timeout);
+#endif
+        
     }
 }
 
@@ -265,6 +299,22 @@ static NSThread *networkThread = nil;
  */
 - (void)startWriteConnectionTimer
 {
+    if (!self.allowWriteConnectionTimeout) {
+        
+#ifdef MGS_LOG_TIMEOUT
+        MLogDebug(@"Request write connection timer was not started : %@", [self UUID]);
+#endif
+        return;
+    }
+
+    if (_writeConnectionTimer) {
+        
+#ifdef MGS_LOG_TIMEOUT
+        MLogDebug(@"Request write connection timer already running : %@", [self UUID]);
+#endif
+        return;
+    }
+
     // the socket write timeouts operate on the buffer.
     // so if the buffer pulls in data then it seems to have been sent and the socket timeout does not occur.
     // however we do seem to be able to detect if any data has being reported as sent.
@@ -274,6 +324,10 @@ static NSThread *networkThread = nil;
     
     // start the write connection timer
     if (writeConnectionTimeout > 0) {
+
+#ifdef MGS_LOG_TIMEOUT
+        MLogDebug(@"Request write connection timer started : %@", [self UUID]);
+#endif
         _writeConnectionTimer = [NSTimer scheduledTimerWithTimeInterval:writeConnectionTimeout target:self selector:@selector(writeConnectionDidTimeout:) userInfo:nil repeats:NO];
     }
     
@@ -289,9 +343,11 @@ static NSThread *networkThread = nil;
 #pragma unused(timer)
     
     [self invalidateRWTimers];
-    
-    MLogDebug(@"Request timer expired after %d secs", self.timeout);
 
+#ifdef MGS_LOG_TIMEOUT
+    MLogDebug(@"Request timer expired after %d secs for UUID: %@", self.timeout, [self UUID]);
+#endif
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(requestTimerExpired:)]) {
         [self.delegate requestTimerExpired:self];
     }
@@ -331,6 +387,11 @@ static NSThread *networkThread = nil;
  */
 - (void)invalidateRWTimers
 {
+    
+#ifdef MGS_LOG_TIMEOUT
+    MLogDebug(@"Request timers invalidated : %@", [self UUID]);
+#endif
+    
     [_writeConnectionTimer invalidate];
     [_requestTimer invalidate];
     
@@ -371,12 +432,55 @@ static NSThread *networkThread = nil;
  - addChildRequest:
  
  */
-- (void)addChildRequest:(MGSNetRequest *)request
+- (void)addChildRequest:(MGSNetRequest *)childRequest
 {
-    [self.childRequests addObject:request];
-    request.parentRequest = self;
+    if (self == childRequest || [self.UUID isEqual:childRequest.UUID]) {
+        MLogDebug(@"Cannot add request as child of self.");
+        return;
+    }
+    
+    if ([_childRequests containsObject:childRequest]) {
+        MLogDebug(@"Request is already added as a child");
+        return;        
+    }
+
+    if (childRequest.parentRequest != nil) {
+        MLogDebug(@"Request already has a parent.");
+        return;
+    }
+
+    [_childRequests addObject:childRequest];
+    childRequest.parentRequest = self;
 }
 
+/*
+ 
+ - childRequests
+ 
+ */
+-(NSMutableArray *)childRequests
+{
+    return _childRequests;
+}
+
+/*
+ 
+ - parentRequest
+ 
+ */
+-(MGSNetRequest *)parentRequest
+{
+    return _parentRequest;
+}
+/*
+ 
+ - setParentRequest:
+ 
+ */
+-(void)setParentRequest:(MGSNetRequest *)value
+{
+    _parentRequest = value;
+}
 #pragma mark -
 #pragma mark Flags
 
@@ -520,7 +624,7 @@ static NSThread *networkThread = nil;
 #endif
     
     if (!self.disposed) {
-        NSLog(@"%@", self.requestMessage.messageDict);
+        NSLog(@"Request was not disposed");
         return;
     }
     

@@ -40,7 +40,6 @@ static MGSClientRequestManager *_sharedController = nil;
 								 withDict:(NSMutableDictionary *)dict forKey:(NSString *)key;
 - (void)parseReplyMessage:(MGSClientNetRequest *)request;
 - (void)parseScriptRequestReply:(MGSClientNetRequest *)netRequest;
-- (void)netRequestReplyOnClient:(MGSClientNetRequest *)netRequest;
 @end
 
 @implementation MGSClientRequestManager
@@ -155,7 +154,7 @@ static MGSClientRequestManager *_sharedController = nil;
         MGSClientNetRequest *logRequest = [self createRequestForClient:netClient withOwner:owner withScriptDict:logDictionary];
         logRequest.requestType = kMGSRequestTypeLogging;
         
-        // add the child request
+        // add the logging request as a child of the execute request
         [netRequest addChildRequest:logRequest];
     }
     
@@ -571,12 +570,15 @@ static MGSClientRequestManager *_sharedController = nil;
  */
 - (void)sendRequestOnClient:(MGSClientNetRequest *)request
 {
-	[self addRequest:request];
+	if (![self addRequest:request]) {
+        return;
+    }
     
     // the above call will retain our disposable resource
     // hence we need to release it here
     [request releaseDisposable];
     
+    // send the request
 	[request sendRequestOnClient];
 	
 	// do we want to track the negotiate request ?
@@ -1092,7 +1094,7 @@ invalid_message:
 // all queued requests ultimately send this message
 // on success, error or timeout
 //================================================
--(void) netRequestReplyOnClient:(MGSClientNetRequest *)netRequest {
+-(void) requestDidComplete:(MGSClientNetRequest *)netRequest {
 	NSAssert(netRequest, @"net request is nil");
 	
 	// parse the reply

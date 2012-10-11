@@ -55,14 +55,12 @@ extern NSString *MGSApplicationKeyRealTimeLogging;
 	MGSError *_packetError;						// error
 	unsigned long int _messageID;			// message sequence counter
 	MGSNetHeader *_header;					// header
-	unsigned long long _totalBytes;			// message length including attachments
 	unsigned long long _bytesTransferred;	// the number of bytes that have been transferred over the network
 }
 
 @property NSInteger expectedLength;
 @property (readonly) MGSError *packetError;
 @property (readonly) MGSNetHeader *header;
-@property (readonly) unsigned long long totalBytes;
 @property unsigned long long bytesTransferred;
 
 //+ (id)messageFromTemplate;
@@ -80,8 +78,9 @@ extern NSString *MGSApplicationKeyRealTimeLogging;
 - (NSMutableDictionary *)messageDict;
 - (void)addRequestWasValid:(bool)valid;
 - (void)setCommand:(NSString *)command;
-
+- (unsigned long long)totalBytes;
 - (NSString *)messageUUID;
+- (unsigned long long)nonAttachmentLength;
 
 // message origin
 - (NSDictionary *)messageOrigin;

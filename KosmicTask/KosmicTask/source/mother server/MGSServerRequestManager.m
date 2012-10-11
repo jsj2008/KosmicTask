@@ -21,7 +21,11 @@
 
 static MGSServerRequestManager *_sharedController = nil;
 
-@interface MGSServerRequestManager (Private)
+// class extension
+@interface MGSServerRequestManager ()
+- (BOOL)concludeRequest:(MGSServerNetRequest *)netRequest;
+- (void)sendErrorResponse:(MGSServerNetRequest *)netRequest error:(MGSError *)mgsError isScriptCommand:(BOOL)isScriptCommand;
+- (BOOL)initialise;
 @end
 
 @implementation MGSServerRequestManager
@@ -274,19 +278,6 @@ send_error_reply:;
 	
 }
 
-
-/*
- 
- remove request
- 
- */
-- (void)removeRequest:(MGSServerNetRequest *)netRequest
-{
-	// remove the request
-	[super removeRequest:netRequest];
-    
-}
-
 /*
  
  conclude request 
@@ -296,7 +287,17 @@ send_error_reply:;
  */
 - (BOOL)concludeRequest:(MGSServerNetRequest *)netRequest
 {
-	return [_scriptController concludeNetRequest:netRequest];
+    // terminate any task associated with the task.
+    // the request itself will be terminated only if a task
+    // is currently associated with the request
+	[_scriptController terminateRequest:netRequest];
+    
+    // terminate
+    if (netRequest.status != kMGSStatusTerminated) {
+        [self terminateRequest:netRequest];
+    }
+    
+    return YES;
 }
 
 /*
@@ -315,8 +316,8 @@ send_error_reply:;
         
 	} @catch (NSException *e) {
 		
-		[[request netSocket] disconnect];
-		MLogInfo(@"%@", e);
+		[self concludeRequest:request];
+		MLogInfo(@"Exception sending response: %@", e);
 	}
     
 }
@@ -326,10 +327,21 @@ send_error_reply:;
 
 /*
  
+ - requestDidComplete
+ 
+ */
+ 
+- (void)requestDidComplete:(MGSServerNetRequest *)netRequest
+{
+  [self concludeRequest:netRequest];
+}
+
+/*
+ 
  authentication failed for request
  
  */
-- (void)authenticationFailed:(MGSServerNetRequest *)netRequest
+- (void)requestAuthenticationFailed:(MGSServerNetRequest *)netRequest
 {
 	[self sendResponseOnSocket:netRequest wasValid:NO];
 }
@@ -348,15 +360,7 @@ send_error_reply:;
     // any may remove the request from the request queue
     [self concludeRequest:netRequest];
     
-    // if request still available then terminate it
-    if ([self.netRequests containsObject:netRequest]) {
-        [self terminateRequest:netRequest];
-    }
 }
 @end
 
-@implementation MGSServerRequestManager (Private)
-
-
-@end
 

@@ -234,7 +234,8 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 		
 		// get data string rep
 		NSString *dataString = nil;
-		
+		_netRequest.lastStatus = _netRequest.status;
+        
 		switch (_netRequest.status) {
 				
 			// no string rep valid
@@ -439,18 +440,25 @@ cleanup:
 		
 		MGSNetMessage *message = [self messageToBeWritten];
 		message.bytesTransferred += (unsigned long long)bytesDone;
-				
+    
+        _netRequest.lastStatus = _netRequest.status;
 		switch (_netRequest.status) {
 				
 			// If sending message content has completed then start sending attachments
 			//
-			// Note that the message header and payload are sent as one data block.
+			// Note that the message header and payload are normally sent as one data block.
 			// The message is usually short so passing it as a single NSData object should be okay.
 			// Attachments are sent in a number of data blocks.
 			// Attachments may be any size. It is not feasible to pass these as an NSData instance.
 			// The attachment data will be written to file as it is read.
 			//
 			case kMGSStatusSendingMessage:
+                // check we have sent all the message data.
+                // we may send it in one or more packets
+                if (message.bytesTransferred < message.nonAttachmentLength) {
+                    return;
+                }
+                
 			case kMGSStatusSendingMessageAttachments:
 				
                 // sending chunked attachments
@@ -499,8 +507,13 @@ cleanup:
 			case kMGSStatusMessageSent:
 				
 				// all request data sent, queue read message
-				[self queueReadMessage];
-				MLog(DEBUGLOG, @"Read queued");
+                
+                // we only want to do this once!
+                if (self.netRequest.lastStatus != kMGSStatusMessageSent) {
+                    [self queueReadMessage];
+                } else {
+                    MLogDebug(@"Unexpected message status: %d", _netRequest.status);
+                }
 				break;
 				
 			default:
@@ -604,10 +617,11 @@ cleanup:
     // send initial short data packet with a short timeout.
     // this might enable us to detect a local socket error quickly.
     // note that it does nothing to help us if the remote end just drops the connection.
-    // maybe a wate of time.
+    // maybe a waste of time.
     NSUInteger probeLength = 4;
+    BOOL useProbe = NO;
     
-    if ([data length] > probeLength && probeLength > 0) {
+    if ([data length] > probeLength && probeLength > 0 && useProbe) {
         NSRange probeRange = NSMakeRange(0,probeLength);
 
         NSData *probeData = [data subdataWithRange:probeRange];
@@ -625,7 +639,9 @@ cleanup:
     
     // write the packet data.
     // we don't timeout the write.
-    // instead we timeout the entire request
+    // instead we timeout the entire request.
+    // note that we segment the data if required and send in individual write requests
+    // in order to have control over the write timeouts.
 	[_socket writeData:data withTimeout:-1 tag:kMGSSocketWriteMessage];
 }
 

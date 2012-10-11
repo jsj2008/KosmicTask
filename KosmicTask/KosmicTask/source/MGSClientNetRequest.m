@@ -76,7 +76,6 @@
 -(void)initialise
 {
     [super initialise];
-    _childRequests = [NSMutableArray new];
     _sendUpdatesToOwner = NO;
     _allowUserToAuthenticate = YES;
 }
@@ -549,8 +548,8 @@
  */
 - (void)sendChildRequests
 {
-    for (MGSClientNetRequest *auxiliaryRequest in self.childRequests) {
-        [[self delegate] sendRequestOnClient:auxiliaryRequest];
+    for (MGSClientNetRequest *childRequest in self.childRequests) {
+        [[self delegate] sendRequestOnClient:childRequest];
     }
 }
 #pragma mark -

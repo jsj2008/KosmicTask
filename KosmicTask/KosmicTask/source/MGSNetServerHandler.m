@@ -76,7 +76,7 @@ static MGSNetServerHandler *_sharedController = nil;
         _bannedAddresses = [NSMutableSet setWithCapacity:10];
         
         // we should be able to load banned addresses up from a plist or preferences
-#ifdef MUGGINSOFT_DEBUG
+#ifdef MGS_DEBUG
         //[_bannedAddresses addObject:@"192.168.10.50"];  // block this IP for connection block testing
 #endif
         _netServer.localNetworkAddresses = _localNetworkAddresses;

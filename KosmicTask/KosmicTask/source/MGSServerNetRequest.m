@@ -172,8 +172,8 @@
 		
 		// tell delegate that authentication has failed.
 		// the delegate can send the appropriate response to the client
-		if (_delegate && [_delegate respondsToSelector:@selector(authenticationFailed:)]) {
-			[_delegate authenticationFailed:self];
+		if (_delegate && [_delegate respondsToSelector:@selector(requestAuthenticationFailed:)]) {
+			[_delegate requestAuthenticationFailed:self];
 		}
 	}
 	

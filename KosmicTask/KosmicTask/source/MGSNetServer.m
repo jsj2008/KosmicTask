@@ -69,7 +69,9 @@
  */
 - (void)netSocketDisconnect:(MGSNetSocket *)netSocket
 {
-	NSAssert([netSocket disconnectCalled], @"server socket not disconnected");
+	if (![netSocket disconnectCalled]) {
+        MLogInfo(@"server socket was not properly disconnected");
+    }
 	
 	// remove the socket
 	[_serverSockets removeObject:netSocket];

@@ -15,8 +15,7 @@
 	NSMutableArray *_netRequests;
 }
 - (NSUInteger)requestCount;
-- (void)removeRequest:(MGSNetRequest *)netRequest;
-- (void)addRequest:(MGSNetRequest *)netRequest;
+- (BOOL)addRequest:(MGSNetRequest *)netRequest;
 - (void)terminateRequest:(MGSNetRequest *)netRequest;
 
 @property (readonly) NSMutableArray *netRequests;

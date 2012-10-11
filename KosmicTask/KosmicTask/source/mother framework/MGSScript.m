@@ -1753,7 +1753,7 @@ errorExit:;
 #pragma mark Timeout
 /*
  
- timeout
+ - timeout
  
  */
 - (float)timeout
@@ -1767,7 +1767,7 @@ errorExit:;
 }
 /*
  
- set timeout
+ - setTimeout:
  
  */
 - (void)setTimeout:(float)timeout

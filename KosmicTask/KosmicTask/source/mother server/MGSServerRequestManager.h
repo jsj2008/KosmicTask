@@ -24,10 +24,6 @@
 + (id)sharedController;
 - (MGSServerNetRequest *)requestWithConnectedSocket:(MGSNetSocket *)socket;
 - (void)parseRequestMessage:(MGSServerNetRequest *)request;
-- (BOOL)initialise;
-- (void)authenticationFailed:(MGSServerNetRequest *)netRequest;
-- (void)sendErrorResponse:(MGSServerNetRequest *)netRequest error:(MGSError *)mgsError isScriptCommand:(BOOL)isScriptCommand;
-- (BOOL)concludeRequest:(MGSServerNetRequest *)netRequest;
 - (void)disconnectAllRequests;
 - (void)sendResponseOnSocket:(MGSServerNetRequest *)netRequest wasValid:(BOOL)valid;
 

@@ -192,13 +192,13 @@
 - (void)delegateReplyWithErrors:(MGSError *)errors
 {
 	if (self.netRequest.delegate &&
-		[self.netRequest.delegate respondsToSelector:@selector(netRequestReplyOnClient:)]) {
+		[self.netRequest.delegate respondsToSelector:@selector(requestDidComplete:)]) {
 		
 		if (errors) {
 			self.netRequest.error = errors;
 		}
 		
-		[self.netRequest.delegate performSelectorOnMainThread:@selector(netRequestReplyOnClient:) 
+		[self.netRequest.delegate performSelectorOnMainThread:@selector(requestDidComplete:) 
 												   withObject:self.netRequest 
 												waitUntilDone:YES];	// wait until done as we may swap the request out for this socket
 	}
@@ -343,8 +343,12 @@
                  We need to make sure that the server has received the parent UUID before
                  another request references it.
                  
+                 We only want to do this once!
+                 
                  */
-                [(MGSClientNetRequest *)self.netRequest sendChildRequests];
+                if (self.netRequest.lastStatus != kMGSStatusReadingMessageHeaderPrefix) {
+                    [(MGSClientNetRequest *)self.netRequest sendChildRequests];
+                } 
 				return;
 				
 			default:
@@ -540,7 +544,7 @@ errorExit:;
 					MGSClientNetRequest *nextRequest = [request nextQueuedRequestToSend];
 					NSAssert(nextRequest == self.netRequest, @"unexpected request");
 					
-					// send the request 
+					// send the next request on the same socket connection 
 					if (nextRequest) {
 						[self sendRequest];	// raises on error
 					} else {

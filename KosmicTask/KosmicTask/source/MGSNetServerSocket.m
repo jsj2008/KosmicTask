@@ -141,8 +141,9 @@
 	}
 	
 	// conclude the request
-    if (self.netRequest) {
-        [[MGSServerRequestManager sharedController] concludeRequest:(MGSServerNetRequest *)self.netRequest];
+    if (self.netRequest.delegate &&
+		[self.netRequest.delegate respondsToSelector:@selector(requestDidComplete:)]) {
+        [self.netRequest.delegate requestDidComplete:self.netRequest];
     }
 }
 
@@ -196,7 +197,7 @@
                 [self.netRequest startRequestTimer];
                 break;
                 
-				// messsage received
+				// message received
 			case kMGSStatusMessageReceived:
 				
 				MLog(DEBUGLOG, @"Server received request: %@", [self.netRequest.requestMessage messageDict]);
@@ -269,19 +270,7 @@
 				
 			// if awaiting header then write has completed
 			case kMGSStatusReadingMessageHeaderPrefix:
-				
-				/*
-				 
-				 generate request list
-				 
-				 */
-				/*
-				MGSNetRequest *nextRequest = [MGSNetRequest requestWithConnectedSocket:self.netRequest.netSocket];
-				nextRequest.prevRequest = self.netRequest;
-				self.netRequest.nextRequest = nextRequest;
-				self.netRequest = nextRequest;
-				*/
-				
+								
 				// reset the request messages as me way receive more requests on this connection
 				[self.netRequest resetMessages];				
 				return;

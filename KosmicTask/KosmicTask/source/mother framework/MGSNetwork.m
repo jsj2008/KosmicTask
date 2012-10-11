@@ -44,7 +44,7 @@
         if (name) {
             [localHostAddresses addObject:name];
 
-#ifdef MUGGINSOFT_DEBUG
+#ifdef MGS_DEBUG
             //NSLog(@"Localhost address found: %@", name);
 #endif
         }

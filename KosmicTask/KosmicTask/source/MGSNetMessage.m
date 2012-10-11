@@ -75,7 +75,6 @@ static unsigned long int messageSequenceCounter = 0;
 @synthesize expectedLength = _expectedLength;
 @synthesize packetError = _packetError;
 @synthesize header = _header;
-@synthesize totalBytes = _totalBytes;
 @synthesize bytesTransferred = _bytesTransferred;
 @synthesize messageDict = _messageDict;
 
@@ -158,7 +157,6 @@ static unsigned long int messageSequenceCounter = 0;
 		NSAssert(_messageDict, @"message template dict not loaded");
 		_expectedLength = -1;
 		_messageID = messageSequenceCounter++;	// unique message int ID
-		_totalBytes = 0;
 		_bytesTransferred = 0;
 		
 		// unique message UUID
@@ -540,7 +538,7 @@ static unsigned long int messageSequenceCounter = 0;
 
 /*
  
- total message bytes 
+ -  totalBytes
  
  */
 - (unsigned long long)totalBytes
@@ -554,6 +552,21 @@ static unsigned long int messageSequenceCounter = 0;
 	unsigned long long messageLength = headerLength + contentLength + attachmentsLength;
 	
 	return messageLength;
+}
+
+/*
+ 
+ -  nonAttachmentLength
+ 
+ */
+- (unsigned long long)nonAttachmentLength
+{
+	unsigned long long headerLength = _header.headerLength;
+	unsigned long long contentLength = _header.contentLength;
+	
+	unsigned long long bytes = headerLength + contentLength;
+	
+	return bytes;
 }
 /*
  

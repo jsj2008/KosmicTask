@@ -13,6 +13,11 @@
 #import "MGSNetClient.h"
 #import "MGSMemoryManagement.h"
 
+// class extension
+@interface MGSNetRequestManager()
+- (void)removeRequest:(MGSNetRequest *)netRequest;
+@end
+
 @implementation MGSNetRequestManager
 
 @synthesize netRequests = _netRequests;
@@ -67,6 +72,7 @@
         NSLog(@"Logging request disposal count = %i", netRequest.disposalCount);
     }
 #endif
+    
 }
 
 
@@ -84,13 +90,20 @@
  - addRequest:
  
  */
-- (void)addRequest:(MGSNetRequest *)netRequest
+- (BOOL)addRequest:(MGSNetRequest *)netRequest
 {
+    if ([_netRequests containsObject:netRequest]) {
+        MLogDebug(@"Request is already in queue");
+        return NO;
+    }
+    
 	[_netRequests addObject:netRequest];
 	MLog(DEBUGLOG, @"addRequest: request handler count is now %i", [_netRequests count]);
     
     // retain disposable resources
 	[netRequest retainDisposable];
+    
+    return YES;
 }
 
 /*
@@ -108,13 +121,12 @@
     // remove request from queue
     [self removeRequest:netRequest];
     
-    // remove child requests
+    // terminate child requests
     for (MGSNetRequest *childRequest in netRequest.childRequests) {
-        if (childRequest.isSocketConnected) {
-            [childRequest disconnect];
-        }
-        [self removeRequest:childRequest];
+        [self terminateRequest:childRequest];
     }
+    
+    netRequest.status = kMGSStatusTerminated;
 }
 
 @end

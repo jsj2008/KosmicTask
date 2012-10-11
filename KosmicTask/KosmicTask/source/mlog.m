@@ -194,8 +194,9 @@ static NSUInteger _logFilePosition = 0;
 		
 		@synchronized(self) {
 			
-		// MUGGINSOFT_DEBUG defined in project preprocessor macros for debug build
-		#ifndef MUGGINSOFT_DEBUG
+		// MGS_DEBUG defined in project preprocessor macros for debug build.
+        // passed as -DMGS_DEBUG om build setting Compiler - Other C flags
+		#ifdef MGS_DEBUG
 			// debug only
 		#endif
 

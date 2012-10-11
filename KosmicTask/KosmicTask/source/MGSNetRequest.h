@@ -20,6 +20,7 @@ typedef enum _eMGSRequestType {
 
 // net request status
 typedef enum _eMGSRequestStatus {
+    kMGSStatusTerminated = -3,
 	kMGSStatusExceptionOnConnecting = -2,
 	kMGSStatusCannotConnect = -1,
 	
@@ -57,14 +58,13 @@ typedef enum _eMGSRequestStatus {
 @class MGSRequestProgress;
 
 // net request delegate protocol
-@protocol MGSNetRequestDelegate
+@protocol MGSNetRequestDelegate <NSObject>
 
 @optional
 - (void)sendRequestOnClient:(MGSNetRequest *)request;
-- (void)netRequestReplyOnClient:(MGSNetRequest *)netRequest;
+- (void)requestDidComplete:(MGSNetRequest *)netRequest;
 - (void)sendResponseOnSocket:(MGSNetRequest *)netRequest wasValid:(BOOL)valid;
-- (void)authenticationFailed:(MGSNetRequest *)netRequest;
-- (void)sendRequestOnClient:(MGSNetRequest *)request;
+- (void)requestAuthenticationFailed:(MGSNetRequest *)netRequest;
 - (void)requestTimerExpired:(MGSNetRequest *)request;
 @end
 
@@ -75,21 +75,24 @@ typedef enum _eMGSRequestStatus {
 	MGSNetMessage *_responseMessage;	// response message from server to client
 	MGSNetSocket *_netSocket;			// netsocket
 	eMGSRequestStatus _status;			// request status
-	id _delegate;						// delegate
+	eMGSRequestStatus _previousStatus;	// previous request status
+	id <MGSNetRequestDelegate> _delegate;// delegate
 	MGSError *_error;					// request error
 	unsigned long int _requestID;		// request sequence counter
 	NSMutableArray *temporaryPaths;		// paths to be removed when the request is finalised
 	NSUInteger _flags;
     NSMutableArray *_chunksReceived;    // chunks received
-    NSMutableArray *_childRequests;     // child requests
-    MGSNetRequest *_parentRequest;      // parent request
     
 @private
+    NSMutableArray *_childRequests;     // child requests
 	NSInteger _readTimeout;		// request read timeout
 	NSInteger _writeTimeout;		// request write timeout
     NSInteger _timeout;
     NSTimer *_writeConnectionTimer;
     NSTimer *_requestTimer;
+    BOOL _allowRequestTimeout;
+    BOOL _allowWriteConnectionTimeout;
+    MGSNetRequest *_parentRequest;      // parent request
 }
 
 + (NSThread *)networkThread;
@@ -120,13 +123,14 @@ typedef enum _eMGSRequestStatus {
 - (void)setTimeoutForRead:(NSInteger)rt write:(NSInteger)wt;
 - (void)startWriteConnectionTimer;
 
-@property (assign) NSMutableArray *childRequests;		// logging request
+@property (readonly) NSMutableArray *childRequests;		// logging request
 @property (assign) MGSNetRequest *parentRequest;			// parent request
 @property (readonly) MGSNetSocket *netSocket;
 @property (assign) MGSNetMessage *requestMessage;
 @property (readonly) MGSNetMessage *responseMessage;
 @property eMGSRequestStatus status;
-@property (assign) id delegate;
+@property eMGSRequestStatus lastStatus;
+@property (assign) id <MGSNetRequestDelegate> delegate;
 @property (assign) MGSError *error;
 @property (readonly) NSInteger readTimeout;
 @property (readonly) NSInteger writeTimeout;
@@ -135,6 +139,8 @@ typedef enum _eMGSRequestStatus {
 @property (readonly) NSUInteger flags;
 @property (readonly) NSMutableArray *chunksReceived;
 @property eMGSRequestType requestType;
+@property BOOL allowRequestTimeout;
+@property BOOL allowWriteConnectionTimeout;
 @end
 
 
