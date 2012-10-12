@@ -36,6 +36,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 
 @implementation MGSPrefsWindowController
 @synthesize selectedNetworkTabIdentifier = _selectedNetworkTabIdentifier;
+@synthesize applyTimeoutToRemoteUserTasks = _applyTimeoutToRemoteUserTasks;
 
 /*
  
@@ -48,6 +49,8 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	
 	[self addView:generalPrefsView label:NSLocalizedString(@"General", @"Preferences tab name")];
 	
+    [self addView:tasksPrefsView label:NSLocalizedString(@"Tasks", @"Preferences tab name") image:[NSImage imageNamed: @"NSAdvanced"]];
+
     [self addView:tabsPrefsView label:NSLocalizedString(@"Tabs", @"Preferences tab name") image:[NSImage imageNamed: @"TabsPreference"]];
 	
     [self addView:textEditingPrefsView label:NSLocalizedString(@"Text Editing", @"Text editing tab name") image:[NSImage imageNamed: @"PencilAndPaper.icns"]];
@@ -281,6 +284,8 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 		return;
 	}
 	
+    [[NSUserDefaultsController sharedUserDefaultsController] commitEditing];
+    
 	// need to sync the changes so that server can retrieve prefs from MGSPreferences
 	[[NSUserDefaults standardUserDefaults] synchronize];
 	
@@ -311,8 +316,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
  the client does not update these preferences directly.
  send them to the server and let it apply them
  
- note that it might have been a lot easier to use 
- distributed notifications for this
+ this seems overly complex
  
  */
 - (void)updateServerPreferences
@@ -346,6 +350,22 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 		[dictionary setObject:[NSNumber numberWithInteger:usernameDisclosureMode] forKey:MGSUsernameDisclosureMode];
 	}
 	
+    // remote user task timeouts
+    if (self.applyTimeoutToRemoteUserTasks != [defaults integerForKey:MGSApplyTimeoutToRemoteUserTasks]) {
+        [dictionary setObject:[NSNumber numberWithBool:self.applyTimeoutToRemoteUserTasks] forKey:MGSApplyTimeoutToRemoteUserTasks];
+    }
+    
+    NSInteger remoteTimeout = [remoteUserTaskTimeout integerValue];
+    if (remoteTimeout != [defaults integerForKey:MGSRemoteUserTaskTimeout]) {
+        [dictionary setObject:[NSNumber numberWithInteger:remoteTimeout] forKey:MGSRemoteUserTaskTimeout];
+    }
+    [remoteUserTaskTimeout setIntegerValue:remoteTimeout];
+    
+    NSInteger remoteTimeoutUnits = [remoteUserTaskTimeoutUnits selectedTag];
+    if (remoteTimeoutUnits != [defaults integerForKey:MGSRemoteUserTaskTimeoutUnits]) {
+        [dictionary setObject:[NSNumber numberWithInteger:remoteTimeoutUnits] forKey:MGSRemoteUserTaskTimeoutUnits];
+    }
+    
 	// send valid changes
 	if ([dictionary count] > 0) {
 		
@@ -379,6 +399,14 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 
 	NSInteger usernameDisclosureMode = [defaults integerForKey:MGSUsernameDisclosureMode];
 	[userNameDisclosureRadioButtons selectCellWithTag:usernameDisclosureMode];
+    
+    self.applyTimeoutToRemoteUserTasks = [defaults integerForKey:MGSApplyTimeoutToRemoteUserTasks];
+    
+    NSInteger remoteTimeout = [defaults integerForKey:MGSRemoteUserTaskTimeout];
+    [remoteUserTaskTimeout setIntegerValue:remoteTimeout];
+    
+    NSInteger remoteTimeoutUnits = [defaults integerForKey:MGSRemoteUserTaskTimeoutUnits];
+    [remoteUserTaskTimeoutUnits selectItemWithTag:remoteTimeoutUnits];
 }
 
 /*
@@ -458,9 +486,12 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
     
 	[[NSUserDefaultsController sharedUserDefaultsController] revertToInitialValues:nil];
 }
+
+#pragma mark -
+#pragma mark Help support
 /*
  
- -  showLocalNetworkPreferencesHelp:
+ - showLocalNetworkPreferencesHelp:
  
  */
 - (IBAction)showLocalNetworkPreferencesHelp:(id)sender
@@ -486,4 +517,20 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
 }
+
+/*
+ 
+ -  showPreferencesHelp:
+ 
+ */
+- (IBAction)showPreferencesHelp:(id)sender
+{
+#pragma unused(sender)
+    
+    NSString *urlString = [NSBundle mainBundleInfoObjectForKey:@"MGSPrefsHelpURL"];
+    if (!urlString) return;
+    
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
+}
+
 @end

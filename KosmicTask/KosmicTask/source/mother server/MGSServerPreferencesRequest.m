@@ -59,6 +59,8 @@
 			continue;
 		}
 		
+        // set the preference
+        [defaults setObject:object forKey:key];
 	}
 				 
 	[defaults synchronize];	// sync so that the client sees the same thing

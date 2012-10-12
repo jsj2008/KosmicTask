@@ -17,7 +17,7 @@ extern NSString * MGSDefaultStartAtLogin;
 
 @interface MGSPrefsWindowController : DBPrefsWindowController <MGSNetRequestOwner> {
 	IBOutlet NSView *generalPrefsView;
-	IBOutlet NSView *advancedPrefsView;
+	IBOutlet NSView *tasksPrefsView;
 	IBOutlet NSView *securityPrefsView;
 	IBOutlet NSView *tabsPrefsView;
 	IBOutlet NSView *internetPrefsView;
@@ -34,11 +34,16 @@ extern NSString * MGSDefaultStartAtLogin;
 	
 	IBOutlet NSButton *useSSLCheckbox;
 	BOOL _startAtLogin;
-	
+	BOOL _applyTimeoutToRemoteUserTasks;
+    
 	NSString *_internetTabIdentifier;
     NSString *_selectedNetworkTabIdentifier;
+    
+    IBOutlet NSTextField *remoteUserTaskTimeout;
+    IBOutlet NSPopUpButton  *remoteUserTaskTimeoutUnits;
 }
 
+- (IBAction)showPreferencesHelp:(id)sender;
 - (IBAction)showLocalNetworkPreferencesHelp:(id)sender;
 - (IBAction)showRemoteNetworkPreferencesHelp:(id)sender;
 - (IBAction)refreshInternetSharing:(id)sender;
@@ -53,5 +58,8 @@ extern NSString * MGSDefaultStartAtLogin;
 - (IBAction)showSSLCertficate:(id)sender;
 - (IBAction)revertToStandardSettings:(id)sender;
 
-@property (assign) NSString *selectedNetworkTabIdentifier;;
+@property (assign) NSString *selectedNetworkTabIdentifier;
+
+@property BOOL applyTimeoutToRemoteUserTasks;
+
 @end

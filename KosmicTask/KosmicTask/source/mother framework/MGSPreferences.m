@@ -70,6 +70,14 @@ NSString *MGSRequestWriteConnectionTimeout = @"MGSRequestWriteConnectionTimeout"
 NSString *MGSHeartbeatRequestTimeout = @"MGSHeartbeatRequestTimeout";
 NSString *MGSDefaultRequestTimeout = @"MGSDefaultRequestTimeout";
 
+NSString *MGSApplyTimeoutToLocalUserTasks = @"MGSApplyTimeoutToLocalUserTasks";
+NSString *MGSLocalUserTaskTimeout = @"MGSLocalUserTaskTimeout";
+NSString *MGSLocalUserTaskTimeoutUnits = @"MGSLocalUserTaskTimeoutUnits";
+
+NSString *MGSApplyTimeoutToRemoteUserTasks = @"MGSApplyTimeoutToRemoteUserTasks";
+NSString *MGSRemoteUserTaskTimeout = @"MGSRemoteUserTaskTimeout";
+NSString *MGSRemoteUserTaskTimeoutUnits = @"MGSRemoteUserTaskTimeoutUnits";
+
 static CFStringRef appID = CFSTR("com.mugginsoft.kosmictask");
 
 static MGSPreferences *_standardUserDefaults = nil;

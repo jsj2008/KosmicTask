@@ -1701,7 +1701,17 @@
     // request timeouts
     [appDefaults setObject:[NSNumber numberWithInteger:30] forKey:MGSRequestWriteConnectionTimeout];
     [appDefaults setObject:[NSNumber numberWithInteger:15] forKey:MGSHeartbeatRequestTimeout];
-    [appDefaults setObject:[NSNumber numberWithInteger:60] forKey:MGSDefaultRequestTimeout];
+    [appDefaults setObject:[NSNumber numberWithInteger:60] forKey:MGSDefaultRequestTimeout]; // for non task execute requests
+    
+    // local task timeouts
+    [appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSApplyTimeoutToLocalUserTasks];
+    [appDefaults setObject:[NSNumber numberWithInteger:60] forKey:MGSLocalUserTaskTimeout];
+    [appDefaults setObject:[NSNumber numberWithInteger:0] forKey:MGSLocalUserTaskTimeoutUnits];
+
+    // remote task timeouts
+    [appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSApplyTimeoutToRemoteUserTasks];
+    [appDefaults setObject:[NSNumber numberWithInteger:60] forKey:MGSRemoteUserTaskTimeout];
+    [appDefaults setObject:[NSNumber numberWithInteger:0] forKey:MGSRemoteUserTaskTimeoutUnits];
     
 	//
 	// register app defaults

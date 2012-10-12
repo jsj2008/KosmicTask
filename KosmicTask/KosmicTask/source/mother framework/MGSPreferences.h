@@ -64,6 +64,12 @@ extern NSString *MGSAllowRemoteUsersToAuthenticate;
 extern NSString *MGSRequestWriteConnectionTimeout;
 extern NSString *MGSHeartbeatRequestTimeout;
 extern NSString *MGSDefaultRequestTimeout;
+extern NSString *MGSApplyTimeoutToLocalUserTasks;
+extern NSString *MGSLocalUserTaskTimeout;
+extern NSString *MGSLocalUserTaskTimeoutUnits;
+extern NSString *MGSApplyTimeoutToRemoteUserTasks;
+extern NSString *MGSRemoteUserTaskTimeout;
+extern NSString *MGSRemoteUserTaskTimeoutUnits;
 
 @interface MGSPreferences : NSObject {
 
