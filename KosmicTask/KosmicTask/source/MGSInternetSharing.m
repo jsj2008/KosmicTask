@@ -18,7 +18,7 @@
 @property NSImage *statusImage;
 @property () NSImage *allowInternetAccessStatusImage;
 @property () NSImage *allowLocalAccessStatusImage;
-- (void)updateInternetAccessStatusImage;
+- (void)updateRemoteAccessStatusImage;
 - (void)updateLocalAccessStatusImage;
 - (void)updatePortStatusImage;
 @end
@@ -59,6 +59,8 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 @synthesize activePortStatusImage = _activePortStatusImage;
 @synthesize inactivePortStatusImage = _inactivePortStatusImage;
 
+#pragma mark -
+#pragma mark Instance
 /*
  
  init
@@ -101,6 +103,8 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 {
 }
 
+#pragma mark -
+#pragma mark Notification processing
 /*
  
  post distributed request notification with dictionary
@@ -135,6 +139,8 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 	 deliverImmediately:YES];
 }
 
+#pragma mark -
+#pragma mark Accessors
 
 /*
  
@@ -183,14 +189,53 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
     if (!_allowInternetAccess && self.allowRemoteUsersToAuthenticate) {
         self.allowRemoteUsersToAuthenticate = NO;
     }
-    [self updateInternetAccessStatusImage];
+    [self updateRemoteAccessStatusImage];
 }
+
 /*
  
- - updateInternetAccessStatusImage
+ - setAllowLocalAccess:
  
  */
-- (void)updateInternetAccessStatusImage
+-(void)setAllowLocalAccess:(BOOL)value {
+    _allowLocalAccess = value;
+    if (!_allowLocalAccess && self.allowLocalUsersToAuthenticate) {
+        self.allowLocalUsersToAuthenticate = NO;
+    }
+
+    [self updateLocalAccessStatusImage];
+}
+
+/*
+ 
+ - setAllowRemoteUsersToAuthenticate:
+ 
+ */
+- (void)setAllowRemoteUsersToAuthenticate:(BOOL)value
+{
+    _allowRemoteUsersToAuthenticate = value;
+    [self updateRemoteAccessStatusImage];
+
+}
+
+/*
+ 
+ - setAllowLocalUsersToAuthenticate:
+ 
+ */
+- (void)setAllowLocalUsersToAuthenticate:(BOOL)value
+{
+    _allowLocalUsersToAuthenticate = value;
+    [self updateLocalAccessStatusImage];
+}
+#pragma mark -
+#pragma mark Status image updating
+/*
+ 
+ - updateRemoteAccessStatusImage
+ 
+ */
+- (void)updateRemoteAccessStatusImage
 {
     if (_allowInternetAccess) {
         if (_allowRemoteUsersToAuthenticate) {
@@ -223,34 +268,8 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 }
 /*
  
- - setAllowLocalAccess:
- 
- */
--(void)setAllowLocalAccess:(BOOL)value {
-    _allowLocalAccess = value;
-    if (!_allowLocalAccess && self.allowLocalUsersToAuthenticate) {
-        self.allowLocalUsersToAuthenticate = NO;
-    }
-
-    [self updateLocalAccessStatusImage];
-}
-
-/*
- 
- - setAllowRemoteUsersToAuthenticate:
- 
- */
-- (void)setAllowRemoteUsersToAuthenticate:(BOOL)value
-{
-    _allowRemoteUsersToAuthenticate = value;
-    [self updatePortStatusImage];
-
-}
-
-/*
- 
  - updatePortStatusImage
-  
+ 
  */
 - (void)updatePortStatusImage
 {
@@ -263,17 +282,12 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
     } else {
         self.statusImage = nil;
     }
+    
+}
 
-}
-/*
- 
- - setAllowLocalUsersToAuthenticate:
- 
- */
-- (void)setAllowLocalUsersToAuthenticate:(BOOL)value
-{
-    _allowLocalUsersToAuthenticate = value;
-}
+#pragma mark -
+#pragma mark Validation
+
 /*
  
  validate external port
@@ -285,7 +299,7 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
  */
 - (BOOL)validateExternalPort:(id *)ioValue error:(NSError **)outError
 {
-	#pragma unused(outError)
+#pragma unused(outError)
 	
 	id object = *ioValue;
 	NSInteger port = [*ioValue integerValue];
@@ -296,6 +310,8 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 	
 	return YES;
 }
+
+
 @end
 
 @implementation MGSInternetSharing(Private)
