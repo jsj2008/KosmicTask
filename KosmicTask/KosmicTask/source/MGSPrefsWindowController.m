@@ -31,12 +31,14 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 
 // class extension
 @interface MGSPrefsWindowController()
-
+- (BOOL)commitEditingAndDiscard:(BOOL)discard;
 @end
 
 @implementation MGSPrefsWindowController
 @synthesize selectedNetworkTabIdentifier = _selectedNetworkTabIdentifier;
 @synthesize applyTimeoutToRemoteUserTasks = _applyTimeoutToRemoteUserTasks;
+@synthesize remoteUserTaskTimeout = _remoteUserTaskTimeout;
+@synthesize remoteUserTaskTimeoutUnits = _remoteUserTaskTimeoutUnits;
 
 /*
  
@@ -45,20 +47,20 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
  */
 - (void)setupToolbar
 {
+	_generalTabIdentifier = NSLocalizedString(@"General", @"Preferences tab name");
+    _tasksTabIdentifier = NSLocalizedString(@"Tasks", @"Preferences tab name");
+    _tabsTabIdentifier = NSLocalizedString(@"Tabs", @"Preferences tab name");
+    _textTabIdentifier = NSLocalizedString(@"Text Editing", @"Text editing tab name");
+    _fontTabIdentifier = NSLocalizedString(@"Fonts & Colours", @"Fonts & colours tab name");
+    _securityTabIdentifier = NSLocalizedString(@"Security", @"Preferences tab name");
 	_internetTabIdentifier = NSLocalizedString(@"Network", @"Preferences tab name");
-	
-	[self addView:generalPrefsView label:NSLocalizedString(@"General", @"Preferences tab name")];
-	
-    [self addView:tasksPrefsView label:NSLocalizedString(@"Tasks", @"Preferences tab name") image:[NSImage imageNamed: @"NSAdvanced"]];
-
-    [self addView:tabsPrefsView label:NSLocalizedString(@"Tabs", @"Preferences tab name") image:[NSImage imageNamed: @"TabsPreference"]];
-	
-    [self addView:textEditingPrefsView label:NSLocalizedString(@"Text Editing", @"Text editing tab name") image:[NSImage imageNamed: @"PencilAndPaper.icns"]];
-	
-    [self addView:fontsAndColoursPrefsView label:NSLocalizedString(@"Fonts & Colours", @"Fonts & colours tab name") image:[NSImage imageNamed: @"FontsAndColours.icns"]];
     
-    [self addView:securityPrefsView label:NSLocalizedString(@"Security", @"Preferences tab name") image:[[[MGSImageManager sharedManager] locked] copy]];
-	
+	[self addView:generalPrefsView label:_generalTabIdentifier];
+    [self addView:tasksPrefsView label:_tasksTabIdentifier image:[NSImage imageNamed: @"NSAdvanced"]];
+    [self addView:tabsPrefsView label:_tabsTabIdentifier image:[NSImage imageNamed: @"TabsPreference"]];	
+    [self addView:textEditingPrefsView label:_textTabIdentifier image:[NSImage imageNamed: @"PencilAndPaper.icns"]];
+    [self addView:fontsAndColoursPrefsView label:_fontTabIdentifier image:[NSImage imageNamed: @"FontsAndColours.icns"]];
+    [self addView:securityPrefsView label:_securityTabIdentifier image:[[[MGSImageManager sharedManager] locked] copy]];
     [self addView:internetPrefsView label:_internetTabIdentifier image:[NSImage imageNamed: @"NSNetwork"]];
 }
 
@@ -273,26 +275,33 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	[super dealloc];
 }
 
+
 /*
  
- window closing
+ - commitEditingAndDiscard:
  
  */
-- (void)windowWillClose:(NSNotification *)notification
+- (BOOL)commitEditingAndDiscard:(BOOL)discard
 {
-	if ([notification object] != [self window]) {
-		return;
-	}
-	
-    [[NSUserDefaultsController sharedUserDefaultsController] commitEditing];
+    BOOL commit = YES;
     
-	// need to sync the changes so that server can retrieve prefs from MGSPreferences
-	[[NSUserDefaults standardUserDefaults] synchronize];
-	
-	// update server
-	[self updateServerPreferences];
-	
-	return;
+    // commit edits, discarding changes on error
+    if (![ownerObjectController commitEditing]) {
+        if (discard) [ownerObjectController discardEditing];
+        commit = NO;
+    }
+    
+    if (![internetSharingObjectController commitEditing]) {
+        if (discard) [internetSharingObjectController discardEditing];
+        commit = NO;
+    }
+    
+    if (![[NSUserDefaultsController sharedUserDefaultsController] commitEditing]) {
+        if (discard) [[NSUserDefaultsController sharedUserDefaultsController] discardEditing];
+        commit = NO;
+    }
+  
+    return commit;
 }
 
 /*
@@ -355,15 +364,12 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
         [dictionary setObject:[NSNumber numberWithBool:self.applyTimeoutToRemoteUserTasks] forKey:MGSApplyTimeoutToRemoteUserTasks];
     }
     
-    NSInteger remoteTimeout = [remoteUserTaskTimeout integerValue];
-    if (remoteTimeout != [defaults integerForKey:MGSRemoteUserTaskTimeout]) {
-        [dictionary setObject:[NSNumber numberWithInteger:remoteTimeout] forKey:MGSRemoteUserTaskTimeout];
+    if (self.remoteUserTaskTimeout != [defaults integerForKey:MGSRemoteUserTaskTimeout]) {
+        [dictionary setObject:[NSNumber numberWithInteger:self.remoteUserTaskTimeout] forKey:MGSRemoteUserTaskTimeout];
     }
-    [remoteUserTaskTimeout setIntegerValue:remoteTimeout];
     
-    NSInteger remoteTimeoutUnits = [remoteUserTaskTimeoutUnits selectedTag];
-    if (remoteTimeoutUnits != [defaults integerForKey:MGSRemoteUserTaskTimeoutUnits]) {
-        [dictionary setObject:[NSNumber numberWithInteger:remoteTimeoutUnits] forKey:MGSRemoteUserTaskTimeoutUnits];
+    if (self.remoteUserTaskTimeoutUnits != [defaults integerForKey:MGSRemoteUserTaskTimeoutUnits]) {
+        [dictionary setObject:[NSNumber numberWithInteger:self.remoteUserTaskTimeoutUnits] forKey:MGSRemoteUserTaskTimeoutUnits];
     }
     
 	// send valid changes
@@ -402,11 +408,9 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
     
     self.applyTimeoutToRemoteUserTasks = [defaults integerForKey:MGSApplyTimeoutToRemoteUserTasks];
     
-    NSInteger remoteTimeout = [defaults integerForKey:MGSRemoteUserTaskTimeout];
-    [remoteUserTaskTimeout setIntegerValue:remoteTimeout];
+    self.remoteUserTaskTimeout = [defaults integerForKey:MGSRemoteUserTaskTimeout];
     
-    NSInteger remoteTimeoutUnits = [defaults integerForKey:MGSRemoteUserTaskTimeoutUnits];
-    [remoteUserTaskTimeoutUnits selectItemWithTag:remoteTimeoutUnits];
+    self.remoteUserTaskTimeoutUnits = [defaults integerForKey:MGSRemoteUserTaskTimeoutUnits];
 }
 
 /*
@@ -488,6 +492,47 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 }
 
 #pragma mark -
+#pragma mark DBPrefsWindowController
+/*
+ 
+ - windowWillClose
+ 
+ */
+- (void)windowWillClose:(NSNotification *)notification
+{
+    
+	if ([notification object] != [self window]) {
+		return;
+	}
+    
+    // commit editing
+    [self commitEditingAndDiscard:YES];
+    
+	// need to sync the changes so that server can retrieve prefs from MGSPreferences
+	[[NSUserDefaults standardUserDefaults] synchronize];
+	
+	// update server
+	[self updateServerPreferences];
+	
+	return;
+}
+
+/*
+ 
+ - displayViewForIdentifier:animate:
+ 
+ */
+- (void)displayViewForIdentifier:(NSString *)identifier animate:(BOOL)animate
+{
+    if (![self commitEditingAndDiscard:NO] && _toolbarIdentifier) {
+        [[[self window] toolbar] setSelectedItemIdentifier:_toolbarIdentifier];
+    } else {
+        [super displayViewForIdentifier:identifier animate:animate];
+    }
+    
+    _toolbarIdentifier = identifier;
+}
+#pragma mark -
 #pragma mark Help support
 /*
  
@@ -531,6 +576,27 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
     if (!urlString) return;
     
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
+}
+
+#pragma mark -
+#pragma mark NSTabViewDelegate
+
+/*
+ 
+ - tabView:shouldSelectTabViewItem:
+ 
+ */
+- (BOOL)tabView:(NSTabView *)tabView shouldSelectTabViewItem:(NSTabViewItem *)tabViewItem
+{
+#pragma unused(tabView)
+#pragma unused(tabViewItem)
+    BOOL select = YES;
+    
+    if (![self commitEditingAndDiscard:NO]) {
+        select = NO;
+    }
+    
+    return select;
 }
 
 @end

@@ -15,7 +15,7 @@ extern NSString * MGSDefaultStartAtLogin;
 
 @class MGSDebugController;
 
-@interface MGSPrefsWindowController : DBPrefsWindowController <MGSNetRequestOwner> {
+@interface MGSPrefsWindowController : DBPrefsWindowController <MGSNetRequestOwner, NSTabViewDelegate> {
 	IBOutlet NSView *generalPrefsView;
 	IBOutlet NSView *tasksPrefsView;
 	IBOutlet NSView *securityPrefsView;
@@ -25,6 +25,7 @@ extern NSString * MGSDefaultStartAtLogin;
     IBOutlet NSView *fontsAndColoursPrefsView;
 	IBOutlet NSMatrix *userNameDisclosureRadioButtons;
 	IBOutlet NSObjectController *internetSharingObjectController;
+    IBOutlet NSObjectController *ownerObjectController;
 	IBOutlet NSTextField *externalPort;
     
     MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewController;
@@ -35,12 +36,22 @@ extern NSString * MGSDefaultStartAtLogin;
 	IBOutlet NSButton *useSSLCheckbox;
 	BOOL _startAtLogin;
 	BOOL _applyTimeoutToRemoteUserTasks;
+    NSInteger _remoteUserTaskTimeout;
+    NSInteger _remoteUserTaskTimeoutUnits;
     
 	NSString *_internetTabIdentifier;
-    NSString *_selectedNetworkTabIdentifier;
+    NSString *_generalTabIdentifier;
+    NSString *_tasksTabIdentifier;
+    NSString *_tabsTabIdentifier;
+    NSString *_textTabIdentifier;
+    NSString *_fontTabIdentifier;
+    NSString *_securityTabIdentifier;
     
-    IBOutlet NSTextField *remoteUserTaskTimeout;
-    IBOutlet NSPopUpButton  *remoteUserTaskTimeoutUnits;
+    NSString *_selectedNetworkTabIdentifier;
+    NSString *_toolbarIdentifier;
+    
+    //IBOutlet NSTextField *remoteUserTaskTimeout;
+    //IBOutlet NSPopUpButton  *remoteUserTaskTimeoutUnits;
 }
 
 - (IBAction)showPreferencesHelp:(id)sender;
@@ -61,5 +72,7 @@ extern NSString * MGSDefaultStartAtLogin;
 @property (assign) NSString *selectedNetworkTabIdentifier;
 
 @property BOOL applyTimeoutToRemoteUserTasks;
+@property NSInteger remoteUserTaskTimeout;
+@property NSInteger remoteUserTaskTimeoutUnits;
 
 @end
