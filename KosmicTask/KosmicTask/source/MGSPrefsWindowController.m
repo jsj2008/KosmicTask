@@ -36,9 +36,9 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 
 @implementation MGSPrefsWindowController
 @synthesize selectedNetworkTabIdentifier = _selectedNetworkTabIdentifier;
-@synthesize applyTimeoutToRemoteUserTasks = _applyTimeoutToRemoteUserTasks;
-@synthesize remoteUserTaskTimeout = _remoteUserTaskTimeout;
-@synthesize remoteUserTaskTimeoutUnits = _remoteUserTaskTimeoutUnits;
+@synthesize applyTimeoutToMachineTasks = _applyTimeoutToMachineTasks;
+@synthesize machineTaskTimeout = _machineTaskTimeout;
+@synthesize machineTaskTimeoutUnits = _machineTaskTimeoutUnits;
 
 /*
  
@@ -359,17 +359,17 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 		[dictionary setObject:[NSNumber numberWithInteger:usernameDisclosureMode] forKey:MGSUsernameDisclosureMode];
 	}
 	
-    // remote user task timeouts
-    if (self.applyTimeoutToRemoteUserTasks != [defaults integerForKey:MGSApplyTimeoutToRemoteUserTasks]) {
-        [dictionary setObject:[NSNumber numberWithBool:self.applyTimeoutToRemoteUserTasks] forKey:MGSApplyTimeoutToRemoteUserTasks];
+    // machine task timeouts
+    if (self.applyTimeoutToMachineTasks != [defaults integerForKey:MGSApplyTimeoutToMachineTasks]) {
+        [dictionary setObject:[NSNumber numberWithBool:self.applyTimeoutToMachineTasks] forKey:MGSApplyTimeoutToMachineTasks];
     }
     
-    if (self.remoteUserTaskTimeout != [defaults integerForKey:MGSRemoteUserTaskTimeout]) {
-        [dictionary setObject:[NSNumber numberWithInteger:self.remoteUserTaskTimeout] forKey:MGSRemoteUserTaskTimeout];
+    if (self.machineTaskTimeout != [defaults integerForKey:MGSMachineTaskTimeout]) {
+        [dictionary setObject:[NSNumber numberWithInteger:self.machineTaskTimeout] forKey:MGSMachineTaskTimeout];
     }
     
-    if (self.remoteUserTaskTimeoutUnits != [defaults integerForKey:MGSRemoteUserTaskTimeoutUnits]) {
-        [dictionary setObject:[NSNumber numberWithInteger:self.remoteUserTaskTimeoutUnits] forKey:MGSRemoteUserTaskTimeoutUnits];
+    if (self.machineTaskTimeoutUnits != [defaults integerForKey:MGSMachineTaskTimeoutUnits]) {
+        [dictionary setObject:[NSNumber numberWithInteger:self.machineTaskTimeoutUnits] forKey:MGSMachineTaskTimeoutUnits];
     }
     
 	// send valid changes
@@ -406,11 +406,11 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	NSInteger usernameDisclosureMode = [defaults integerForKey:MGSUsernameDisclosureMode];
 	[userNameDisclosureRadioButtons selectCellWithTag:usernameDisclosureMode];
     
-    self.applyTimeoutToRemoteUserTasks = [defaults integerForKey:MGSApplyTimeoutToRemoteUserTasks];
+    self.applyTimeoutToMachineTasks = [defaults integerForKey:MGSApplyTimeoutToMachineTasks];
     
-    self.remoteUserTaskTimeout = [defaults integerForKey:MGSRemoteUserTaskTimeout];
+    self.machineTaskTimeout = [defaults integerForKey:MGSMachineTaskTimeout];
     
-    self.remoteUserTaskTimeoutUnits = [defaults integerForKey:MGSRemoteUserTaskTimeoutUnits];
+    self.machineTaskTimeoutUnits = [defaults integerForKey:MGSMachineTaskTimeoutUnits];
 }
 
 /*

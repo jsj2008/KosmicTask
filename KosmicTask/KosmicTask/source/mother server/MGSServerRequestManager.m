@@ -358,6 +358,13 @@ send_error_reply:;
     BOOL sendTimeoutResponse = NO;
     
     // can we send a response at this time?
+    // NOTE: we can send data on the socket at any time
+    // but we don't want to disrupt our request/response sequencing.
+    // if we are sending an error reponse though it may be okay as long
+    // as the writing end has a read queued.
+    //
+    // Obviiusly we cannot send an error response if we are
+    // in the midst of sending a standard response.
     if (netRequest.status == kMGSStatusMessageReceived) {
         
         // send a timeout response for certain commands.

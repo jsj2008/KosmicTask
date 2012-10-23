@@ -274,15 +274,15 @@ error_exit:
     [super setTimeout:value];
     
     // apply server timeout
-    BOOL applyServerTimeout = [[MGSPreferences standardUserDefaults] boolForKey:MGSApplyTimeoutToRemoteUserTasks];
+    BOOL applyServerTimeout = [[MGSPreferences standardUserDefaults] boolForKey:MGSApplyTimeoutToMachineTasks];
     
     if (applyServerTimeout) {
         
         // get the server timeout
-        NSInteger serverTimeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSRemoteUserTaskTimeout];
+        NSInteger serverTimeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSMachineTaskTimeout];
         
         if (serverTimeout > 0) {
-            mgsTimeoutUnits timeoutUnits = [[MGSPreferences standardUserDefaults] integerForKey:MGSRemoteUserTaskTimeoutUnits];
+            mgsTimeoutUnits timeoutUnits = [[MGSPreferences standardUserDefaults] integerForKey:MGSMachineTaskTimeoutUnits];
             NSInteger mul = 0;
             
             switch (timeoutUnits) {

@@ -74,9 +74,9 @@ NSString *MGSApplyTimeoutToLocalUserTasks = @"MGSApplyTimeoutToLocalUserTasks";
 NSString *MGSLocalUserTaskTimeout = @"MGSLocalUserTaskTimeout";
 NSString *MGSLocalUserTaskTimeoutUnits = @"MGSLocalUserTaskTimeoutUnits";
 
-NSString *MGSApplyTimeoutToRemoteUserTasks = @"MGSApplyTimeoutToRemoteUserTasks";
-NSString *MGSRemoteUserTaskTimeout = @"MGSRemoteUserTaskTimeout";
-NSString *MGSRemoteUserTaskTimeoutUnits = @"MGSRemoteUserTaskTimeoutUnits";
+NSString *MGSApplyTimeoutToMachineTasks = @"MGSApplyTimeoutToMachineTasks";
+NSString *MGSMachineTaskTimeout = @"MGSMachineTaskTimeout";
+NSString *MGSMachineTaskTimeoutUnits = @"MGSMachineTaskTimeoutUnits";
 
 static CFStringRef appID = CFSTR("com.mugginsoft.kosmictask");
 

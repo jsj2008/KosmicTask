@@ -74,9 +74,9 @@ extern NSString *MGSDefaultRequestTimeout;
 extern NSString *MGSApplyTimeoutToLocalUserTasks;
 extern NSString *MGSLocalUserTaskTimeout;
 extern NSString *MGSLocalUserTaskTimeoutUnits;
-extern NSString *MGSApplyTimeoutToRemoteUserTasks;
-extern NSString *MGSRemoteUserTaskTimeout;
-extern NSString *MGSRemoteUserTaskTimeoutUnits;
+extern NSString *MGSApplyTimeoutToMachineTasks;
+extern NSString *MGSMachineTaskTimeout;
+extern NSString *MGSMachineTaskTimeoutUnits;
 
 @interface MGSPreferences : NSObject {
 

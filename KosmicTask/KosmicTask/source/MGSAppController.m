@@ -1708,10 +1708,10 @@
     [appDefaults setObject:[NSNumber numberWithInteger:60] forKey:MGSLocalUserTaskTimeout];
     [appDefaults setObject:[NSNumber numberWithInteger:0] forKey:MGSLocalUserTaskTimeoutUnits];
 
-    // remote task timeouts
-    [appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSApplyTimeoutToRemoteUserTasks];
-    [appDefaults setObject:[NSNumber numberWithInteger:60] forKey:MGSRemoteUserTaskTimeout];
-    [appDefaults setObject:[NSNumber numberWithInteger:0] forKey:MGSRemoteUserTaskTimeoutUnits];
+    // machine task timeouts
+    [appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSApplyTimeoutToMachineTasks];
+    [appDefaults setObject:[NSNumber numberWithInteger:60] forKey:MGSMachineTaskTimeout];
+    [appDefaults setObject:[NSNumber numberWithInteger:0] forKey:MGSMachineTaskTimeoutUnits];
     
 	//
 	// register app defaults

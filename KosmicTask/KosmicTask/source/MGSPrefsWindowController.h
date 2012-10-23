@@ -35,9 +35,9 @@ extern NSString * MGSDefaultStartAtLogin;
 	
 	IBOutlet NSButton *useSSLCheckbox;
 	BOOL _startAtLogin;
-	BOOL _applyTimeoutToRemoteUserTasks;
-    NSInteger _remoteUserTaskTimeout;
-    NSInteger _remoteUserTaskTimeoutUnits;
+	BOOL _applyTimeoutToMachineTasks;
+    NSInteger _machineTaskTimeout;
+    NSInteger _machineTaskTimeoutUnits;
     
 	NSString *_internetTabIdentifier;
     NSString *_generalTabIdentifier;
@@ -71,8 +71,8 @@ extern NSString * MGSDefaultStartAtLogin;
 
 @property (assign) NSString *selectedNetworkTabIdentifier;
 
-@property BOOL applyTimeoutToRemoteUserTasks;
-@property NSInteger remoteUserTaskTimeout;
-@property NSInteger remoteUserTaskTimeoutUnits;
+@property BOOL applyTimeoutToMachineTasks;
+@property NSInteger machineTaskTimeout;
+@property NSInteger machineTaskTimeoutUnits;
 
 @end
