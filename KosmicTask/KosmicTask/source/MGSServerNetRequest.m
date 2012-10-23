@@ -65,6 +65,8 @@
 	return self;
 }
 
+#pragma mark -
+#pragma mark Response
 
 /*
  
@@ -96,6 +98,9 @@
     // send response message - raises on error
 	[_netSocket sendResponseChunk:data];
 }
+
+#pragma mark -
+#pragma mark Authentication
 
 /*
  
@@ -257,5 +262,46 @@ error_exit:
     return YES;
 }
 
+#pragma mark -
+#pragma mark Timeout handling
+/*
+ 
+ - setTimeout:
+ 
+ */
+- (void)setTimeout:(NSInteger)value
+{
+    [super setTimeout:value];
+    
+    // apply server timeout
+    BOOL applyServerTimeout = [[MGSPreferences standardUserDefaults] boolForKey:MGSApplyTimeoutToRemoteUserTasks];
+    
+    if (applyServerTimeout) {
+        
+        // get the server timeout
+        NSInteger serverTimeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSRemoteUserTaskTimeout];
+        
+        if (serverTimeout > 0) {
+            mgsTimeoutUnits timeoutUnits = [[MGSPreferences standardUserDefaults] integerForKey:MGSRemoteUserTaskTimeoutUnits];
+            NSInteger mul = 0;
+            
+            switch (timeoutUnits) {
+                case kMGSTimeoutMinutes:
+                    mul = 60;
+                break;
+
+                case kMGSTimeoutHours:
+                    mul = 60 * 60;
+                break;
+
+                default:
+                    mul = 1;
+                break;
+            }
+            serverTimeout *= mul;
+            [super setTimeout:serverTimeout];
+        }
+    }
+}
 
 @end

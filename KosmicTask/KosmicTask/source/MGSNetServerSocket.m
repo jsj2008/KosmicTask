@@ -195,6 +195,7 @@
                 
                 // timeouts now available so start the request timer if required
                 [self.netRequest startRequestTimer];
+                
                 break;
                 
 				// message received
