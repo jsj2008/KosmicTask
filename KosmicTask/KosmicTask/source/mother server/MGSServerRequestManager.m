@@ -196,7 +196,7 @@ static MGSServerRequestManager *_sharedController = nil;
 		// 
 		// if parseNetRequest returns YES then we may assume that the
 		// request is valid and that a reply has or will be generated.
-		// No further action is therfore required.
+		// No further action is therefore required.
 		//
 		// if parseNetRequest returns N0 then the request is invalid
 		// or an error has occurred during processing.
@@ -355,10 +355,44 @@ send_error_reply:;
 {
     MLogDebug(@"Time out : Terminating request: %@", [netRequest UUID]);
     
-    // conclude our request.
-    // this will terminate any tasks associated with the request
-    // any may remove the request from the request queue
-    [self concludeRequest:netRequest];
+    BOOL sendTimeoutResponse = NO;
+    
+    // can we send a response at this time?
+    if (netRequest.status == kMGSStatusMessageReceived) {
+        
+        // send a timeout response for certain commands.
+        NSString *command = netRequest.requestMessage.command;
+        if ([command isEqual:MGSNetMessageCommandParseKosmicTask]) {
+            sendTimeoutResponse = YES;
+        }        
+    }
+    
+    // when timing out task requests it is better
+    // to send a timeout response to the client (if possible) rather than just
+    // disconnecting.
+    // note that this requires NOT concluding the request immediately
+    // but extending the timeout to allow the response to be sent.
+    if ((netRequest.timeoutCount == 1) && sendTimeoutResponse) {
+
+        netRequest.timeout = 10;
+        [netRequest startRequestTimer];
+
+        MGSError *mgsError = [MGSError serverCode:MGSErrorCodeServerRequestTimeout];
+        [netRequest.responseMessage setErrorDictionary:[mgsError dictionary]];
+        [self sendResponseOnSocket:netRequest wasValid:YES];
+    } else {
+    
+        if (netRequest.timeoutCount > 1) {
+#ifdef MGS_LOG_TIMEOUT
+            MLogDebug(@"Request timed out. Attempted to send an error response but this timed out too.");
+#endif
+        }
+        
+        // conclude our request.
+        // this will terminate any tasks associated with the request
+        // and may remove the request from the request queue
+        [self concludeRequest:netRequest];
+    }
     
 }
 @end

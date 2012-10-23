@@ -93,6 +93,7 @@ typedef enum _eMGSRequestStatus {
     BOOL _allowRequestTimeout;
     BOOL _allowWriteConnectionTimeout;
     MGSNetRequest *_parentRequest;      // parent request
+    NSUInteger _timeoutCount;
 }
 
 + (NSThread *)networkThread;
@@ -141,6 +142,8 @@ typedef enum _eMGSRequestStatus {
 @property eMGSRequestType requestType;
 @property BOOL allowRequestTimeout;
 @property BOOL allowWriteConnectionTimeout;
+@property (readonly) NSUInteger timeoutCount;
+
 @end
 
 

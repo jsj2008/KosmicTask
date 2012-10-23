@@ -33,6 +33,7 @@ static NSThread *networkThread = nil;
 - (void)requestDidTimeout:(NSTimer *)timer;
 @property (readwrite) NSUInteger flags;
 @property (readwrite) MGSNetMessage *responseMessage;
+@property (readwrite) NSUInteger timeoutCount;
 @end
 
 @interface MGSNetRequest(Private)
@@ -58,6 +59,7 @@ static NSThread *networkThread = nil;
 @synthesize requestType = _requestType;
 @synthesize allowRequestTimeout = _allowRequestTimeout;
 @synthesize allowWriteConnectionTimeout = _allowWriteConnectionTimeout;
+@synthesize timeoutCount = _timeoutCount;
 
 #pragma mark Class methods
 
@@ -166,6 +168,7 @@ static NSThread *networkThread = nil;
     
     _allowRequestTimeout = YES;
     _allowWriteConnectionTimeout = YES;
+    _timeoutCount = 0;
     
     _childRequests = [NSMutableArray new];
 }
@@ -341,6 +344,9 @@ static NSThread *networkThread = nil;
 - (void)requestDidTimeout:(NSTimer *)timer
 {
 #pragma unused(timer)
+    
+    // we may have a sequence of timeouts
+    self.timeoutCount++;
     
     [self invalidateRWTimers];
 
