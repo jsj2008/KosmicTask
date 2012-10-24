@@ -71,6 +71,8 @@ extern NSString *MGSScriptKeyRunClass;
 extern NSString *MGSScriptKeyOnRun;
 extern NSString *MGSScriptKeyScriptType;
 extern NSString *MGSScriptKeyTimeout;
+extern NSString *MGSScriptKeyTimeoutUnits;
+extern NSString *MGSScriptKeyApplyTimeout;
 extern NSString *MGSScriptKeyBundled;
 extern NSString *MGSScriptKeyLabelIndex;
 extern NSString *MGSScriptKeyRatingIndex;

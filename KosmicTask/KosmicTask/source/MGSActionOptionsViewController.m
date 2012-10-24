@@ -11,11 +11,14 @@
 #import "MGSTaskSpecifier.h"
 #import "NSTextField_Mugginsoft.h"
 #import "MGSNetRequest.h"
+#import "MGSPreferences.h"
 
 @implementation MGSActionOptionsViewController
 
 @synthesize actionSpecifier = _actionSpecifier;
 @synthesize useTimeout = _useTimeout;
+@synthesize timeout = _timeout;
+@synthesize timeoutUnits = _timeoutUnits;
 
 /*
  
@@ -37,11 +40,22 @@
  */
 - (void)awakeFromNib
 {
-	
-	[_timeout bind:NSValueBinding toObject:self withKeyPath:@"actionSpecifier.script.timeout" options:nil];
-	[_timeoutStepper bind:NSValueBinding toObject:self withKeyPath:@"actionSpecifier.script.timeout" 
+	_scriptController = [[NSObjectController alloc] init];
+    
+    // timeout settings
+	[_timeoutField bind:NSValueBinding toObject:_scriptController withKeyPath:@"selection.timeout" options:nil];
+    [_timeoutField bind:NSEnabledBinding toObject:_scriptController withKeyPath:@"selection.applyTimeout" options:nil];
+    
+	[_timeoutStepper bind:NSValueBinding toObject:_scriptController withKeyPath:@"selection.timeout" 
 				  options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO], NSConditionallySetsEnabledBindingOption, nil]];
-	[_useTimeoutButton bind:NSValueBinding toObject:self withKeyPath:@"useTimeout" options:nil]; 
+    [_timeoutStepper bind:NSEnabledBinding toObject:_scriptController withKeyPath:@"selection.applyTimeout" options:nil];
+    
+    [_timeoutUnitsPopUp bind:NSSelectedTagBinding toObject:_scriptController withKeyPath:@"selection.timeoutUnits" options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO], NSConditionallySetsEnabledBindingOption, nil]];
+    [_timeoutUnitsPopUp bind:NSEnabledBinding toObject:_scriptController withKeyPath:@"selection.applyTimeout" options:nil];
+
+    // use timeout
+	[_useTimeoutButton bind:NSValueBinding toObject:_scriptController withKeyPath:@"selection.applyTimeout" options:nil];
+
 }
 
 /*
@@ -51,31 +65,36 @@
  */
 - (void)setActionSpecifier:(MGSTaskSpecifier *)action
 {
+    BOOL updateOptions = YES;
+    
+    if (_actionSpecifier) {
+        
+        if ([_actionSpecifier isEqualUUID:action]) {
+            updateOptions = NO;
+        }
+    }
+    
 	_actionSpecifier = action;
 	MGSScript *script = [action script];
+    [_scriptController setContent:script];
 
-	// options
-	self.useTimeout = [script timeout] > 0 ? YES : NO;
-}
-
-/*
- 
- set use timeout
- 
- */
-- (void)setUseTimeout:(BOOL)value
-{
-	_useTimeout = value;
-	[_timeout setEnabled:value];
-	[_timeoutStepper setEnabled:value];
-	
-	float myTimeout;
-	if (_useTimeout) {
-		myTimeout = MGS_STANDARD_TIMEOUT;
-	} else {
-		myTimeout = 0.0f;
-	}
-	[_actionSpecifier setValue:[NSNumber numberWithFloat:myTimeout] forKeyPath:@"script.timeout"];
+	// update options
+    if (updateOptions) {
+               
+        // use script timeout if defined
+        NSInteger timeout = (NSInteger)[script timeout];
+        if (timeout < 1) {
+            
+            timeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSLocalUserTaskTimeout];
+            NSUInteger timeoutUnits = [[MGSPreferences standardUserDefaults] integerForKey:MGSLocalUserTaskTimeoutUnits];
+            BOOL useTimeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSApplyTimeoutToLocalUserTasks];
+            
+            [script setTimeout:timeout];
+            [script setTimeoutUnits:timeoutUnits];
+            [script setApplyTimeout:useTimeout];
+            
+        }
+    }
 }
 
 @end

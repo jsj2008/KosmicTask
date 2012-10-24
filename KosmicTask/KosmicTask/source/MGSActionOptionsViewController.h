@@ -11,15 +11,22 @@
 @class MGSTaskSpecifier;
 
 @interface MGSActionOptionsViewController : NSViewController {
-	IBOutlet NSTextField *_timeout;
+	IBOutlet NSTextField *_timeoutField;
 	IBOutlet NSStepper *_timeoutStepper;
 	IBOutlet NSButton *_useTimeoutButton;
-	
+	IBOutlet NSPopUpButton *_timeoutUnitsPopUp;
+    
+    NSObjectController *_scriptController;
+    
 	MGSTaskSpecifier *_actionSpecifier;
 	BOOL _useTimeout;
+    NSUInteger _timeout;
+    NSUInteger _timeoutUnits;
 }
 
 
 @property MGSTaskSpecifier *actionSpecifier;
 @property BOOL useTimeout;
+@property NSUInteger timeout;
+@property NSUInteger timeoutUnits;
 @end

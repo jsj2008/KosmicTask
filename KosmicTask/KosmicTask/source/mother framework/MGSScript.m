@@ -1753,6 +1753,35 @@ errorExit:;
 #pragma mark Timeout
 /*
  
+ - timeoutSeconds
+ 
+ */
+- (NSInteger)timeoutSeconds
+{
+    float value = [self timeout];
+    float mul = 0;
+    
+    switch ([self timeoutUnits]) {
+            
+        case kMGSTimeoutHours:
+            mul = 60 * 60;
+            break;
+        
+        case kMGSTimeoutMinutes:
+            mul = 60;
+            break;
+
+        case kMGSTimeoutSeconds:
+        default:
+            mul = 1;
+            break;
+    }
+    
+    return (NSInteger)(value * mul);
+}
+
+/*
+ 
  - timeout
  
  */
@@ -1775,6 +1804,60 @@ errorExit:;
 	[self setObject:[NSNumber numberWithFloat:timeout] forLocalizedKey:MGSScriptKeyTimeout];
 }
 
+/*
+ 
+ - timeoutUnits
+ 
+ */
+- (NSUInteger)timeoutUnits
+{
+	NSNumber *number = [self objectForLocalizedKey:MGSScriptKeyTimeoutUnits];
+	if (number) {
+		return [number unsignedIntegerValue];
+	}
+	
+	return kMGSTimeoutSeconds;
+}
+
+/*
+ 
+ - setTimeoutUnits:
+ 
+ */
+- (void)setTimeoutUnits:(NSUInteger)units
+{
+	[self setObject:[NSNumber numberWithUnsignedInteger:units] forLocalizedKey:MGSScriptKeyTimeoutUnits];
+}
+
+/*
+ 
+ - setApplyTimeout:
+ 
+ */
+- (void)setApplyTimeout:(BOOL)value
+{
+	[self setObject:[NSNumber numberWithBool:value] forLocalizedKey:MGSScriptKeyApplyTimeout];
+}
+
+/*
+ 
+ - applyTimeout
+ 
+ */
+- (BOOL)applyTimeout
+{
+	NSNumber *number = [self objectForLocalizedKey:MGSScriptKeyApplyTimeout];
+	if (number) {
+		return [number boolValue];
+	}
+	
+    // if we have a timeout defined then for compatability we apply it
+    if ((NSInteger)[self timeout] >= 1) {
+        return true;
+    }
+    
+	return false;
+}
 
 /*
  

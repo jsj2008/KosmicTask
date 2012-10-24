@@ -166,6 +166,11 @@ typedef enum _MGSScriptRepresentation {
 // options
 - (float)timeout;
 - (void)setTimeout:(float)timeout;
+- (NSUInteger)timeoutUnits;
+- (void)setTimeoutUnits:(NSUInteger)units;
+- (void)setApplyTimeout:(BOOL)value;
+- (BOOL)applyTimeout;
+- (NSInteger)timeoutSeconds;
 
 - (MGSScriptStatus)scriptStatus;
 - (void)setScriptStatus:(MGSScriptStatus)value;

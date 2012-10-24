@@ -163,6 +163,8 @@ NSString *MGSActionProgressContext = @"MGSActionProgress";
 		@try {
 			[_actionSpecifier removeObserver:self forKeyPath:@"runStatus"];
 			[_actionSpecifier removeObserver:self forKeyPath:@"script.timeout"];
+			[_actionSpecifier removeObserver:self forKeyPath:@"script.timeoutUnits"];
+			[_actionSpecifier removeObserver:self forKeyPath:@"script.applyTimeout"];
 			[_actionSpecifier removeObserver:self forKeyPath:@"requestProgress.value"];
 		} 
 		@catch (NSException *e)
@@ -210,7 +212,9 @@ NSString *MGSActionProgressContext = @"MGSActionProgress";
 	// add observers
 	[_actionSpecifier addObserver:self forKeyPath:@"runStatus" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionRunStatusContext];
 	[_actionSpecifier addObserver:self forKeyPath:@"script.timeout" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionTimeoutContext];
-	[_actionSpecifier addObserver:self forKeyPath:@"requestProgress.value" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionProgressContext];
+	[_actionSpecifier addObserver:self forKeyPath:@"script.timeoutUnits" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionTimeoutContext];
+	[_actionSpecifier addObserver:self forKeyPath:@"script.applyTimeout" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionTimeoutContext];
+    [_actionSpecifier addObserver:self forKeyPath:@"requestProgress.value" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionProgressContext];
 }
 
 
@@ -286,9 +290,10 @@ NSString *MGSActionProgressContext = @"MGSActionProgress";
 		
 		// action timeout changed 
 		
-		float timeout = [[_actionSpecifier script] timeout];
+		float timeout = [[_actionSpecifier script] timeoutSeconds];
 		[remainingTime setStringValue: [_negIntervalTransformer transformedValue:[NSNumber numberWithFloat:timeout]]];
-		[remainingTime setHidden:timeout <= 0 ? YES : NO];
+        
+		[remainingTime setHidden:![[_actionSpecifier script] applyTimeout]];
 		
 	} else if (context == MGSActionProgressContext) {
 		

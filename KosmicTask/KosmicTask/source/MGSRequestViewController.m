@@ -772,7 +772,7 @@ commonExit:
 	// return a configuration dictionary
 	MGSScript *script = [[self actionSpecifier] script];
 	
-	NSInteger timeout = (NSInteger)[script timeout];
+	NSInteger timeout = (NSInteger)[script timeoutSeconds];
 	return [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:timeout], @"ReadTimeout", [NSNumber numberWithInteger:timeout], @"WriteTimeout", nil];
 }
 

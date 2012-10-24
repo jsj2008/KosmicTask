@@ -384,7 +384,7 @@ send_error_reply:;
         netRequest.timeout = 10;
         [netRequest startRequestTimer];
 
-        MGSError *mgsError = [MGSError serverCode:MGSErrorCodeServerRequestTimeout];
+        MGSError *mgsError = [MGSError serverCode:MGSErrorCodeServerRequestTimeout reason:@"Request has been terminated by the task server."];
         [netRequest.responseMessage setErrorDictionary:[mgsError dictionary]];
         [self sendResponseOnSocket:netRequest wasValid:YES];
     } else {

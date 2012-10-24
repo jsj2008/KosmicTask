@@ -1166,7 +1166,7 @@ static BOOL permitExecution = YES;
 		if (_isProcessing) {
 			_startTime = [NSDate date];
 			self.elapsedTime = 0;
-			_allowedTime = [_script timeout];	// will be 0 if no timeout defined
+			_allowedTime = [_script timeoutSeconds];	// will be 0 if no timeout defined
 			self.remainingTime = _allowedTime;
 			_processingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerExpired:) userInfo:nil repeats:YES];
 		} else {
