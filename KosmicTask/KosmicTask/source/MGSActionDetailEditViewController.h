@@ -44,7 +44,8 @@
 	IBOutlet NSStepper *timeoutStepper;
 	IBOutlet NSTextField *timeout;
 	IBOutlet NSButton *useTimeoutButton;
-	BOOL _useTimeout;
+    IBOutlet NSPopUpButton *timeoutUnitsPopUp;
+    
 	IBOutlet NSPopUpButton *userInteractionMode;
 	
 	MGSTaskSpecifier *_action;
@@ -61,7 +62,6 @@
 
 @property MGSTaskSpecifier *action;
 @property NSTextField *nameTextField;
-@property BOOL useTimeout;
 @property (readonly) NSView *infoView;
 
 @end

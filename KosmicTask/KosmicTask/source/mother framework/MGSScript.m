@@ -511,7 +511,7 @@ errorExit:;
 
 /*
  
- init
+ - init
  
  */
 - (id)init
@@ -522,6 +522,7 @@ errorExit:;
 	}
 	return self;
 }
+
 
 #pragma mark -
 #pragma mark MGSTaskRunner dictionary representations
@@ -1858,6 +1859,26 @@ errorExit:;
     
 	return false;
 }
+
+/*
+ 
+ - applyTimeoutDefaults
+ 
+ */
+- (void)applyTimeoutDefaults
+{
+    if ([self timeout] < 1) {
+        
+        NSInteger timeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSLocalUserTaskTimeout];
+        NSUInteger timeoutUnits = [[MGSPreferences standardUserDefaults] integerForKey:MGSLocalUserTaskTimeoutUnits];
+        BOOL useTimeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSApplyTimeoutToLocalUserTasks];
+        
+        [self setTimeout:timeout];
+        [self setTimeoutUnits:timeoutUnits];
+        [self setApplyTimeout:useTimeout];
+    }
+}
+
 
 /*
  

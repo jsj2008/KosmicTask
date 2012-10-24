@@ -80,21 +80,8 @@
 
 	// update options
     if (updateOptions) {
-               
-        // use script timeout if defined
-        NSInteger timeout = (NSInteger)[script timeout];
-        if (timeout < 1) {
-            
-            timeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSLocalUserTaskTimeout];
-            NSUInteger timeoutUnits = [[MGSPreferences standardUserDefaults] integerForKey:MGSLocalUserTaskTimeoutUnits];
-            BOOL useTimeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSApplyTimeoutToLocalUserTasks];
-            
-            [script setTimeout:timeout];
-            [script setTimeoutUnits:timeoutUnits];
-            [script setApplyTimeout:useTimeout];
-            
-        }
-    }
+        [script applyTimeoutDefaults];
+     }
 }
 
 @end

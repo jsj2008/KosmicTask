@@ -21,7 +21,6 @@
 @implementation MGSActionDetailEditViewController
 @synthesize action = _action;
 @synthesize nameTextField = name;
-@synthesize useTimeout = _useTimeout;
 @synthesize infoView;
 
 // NSScrollView : documentView stuck in the bottom-left corner !
@@ -92,8 +91,13 @@
 
 	// bind controller to script
 	MGSScript *script = [_action script];
-	[self setRepresentedObject:script];	
-
+	[self setRepresentedObject:script];
+    
+    // configure timeouts
+    bool applyTimeout = [script applyTimeout];
+    [script applyTimeoutDefaults];
+    script.applyTimeout = applyTimeout; // we don't want to default this
+    
     // if we bind directly to the model we loose the facilities provided by NSObjectController
     // such as automatic KVC validation
     _objectController = [[NSObjectController alloc] initWithContent:script];
@@ -131,37 +135,19 @@
 	[modifiedAuto bind:NSValueBinding toObject:self withKeyPath:@"representedObject.modifiedAuto" options:nil];
 	
 	// options
-	self.useTimeout = [script timeout] > 0 ? YES : NO;
-	
+	[useTimeoutButton bind:NSValueBinding toObject:self withKeyPath:@"representedObject.applyTimeout" options:nil];
 	[timeout bind:NSValueBinding toObject:self withKeyPath:@"representedObject.timeout" options:nil];
-	[timeoutStepper bind:NSValueBinding toObject:self withKeyPath:@"representedObject.timeout" options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO], NSConditionallySetsEnabledBindingOption, nil]];
-	[useTimeoutButton bind:NSValueBinding toObject:self withKeyPath:@"useTimeout" options:nil]; 
-	
-	 // userInteractionMode popup
-	 [userInteractionMode bind:NSSelectedTagBinding toObject:self withKeyPath:@"representedObject.userInteractionMode" options:nil];
-	 
-}
+	[timeout bind:NSEnabledBinding toObject:self withKeyPath:@"representedObject.applyTimeout" options:nil];
 
-/*
- 
- set use timeout
- 
- */
-- (void)setUseTimeout:(BOOL)value
-{
-	_useTimeout = value;
-	[timeout setEnabled:value];
-	[timeoutStepper setEnabled:value];
+	[timeoutStepper bind:NSValueBinding toObject:self withKeyPath:@"representedObject.timeout" options:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO], NSConditionallySetsEnabledBindingOption, nil]];
+	[timeoutStepper bind:NSEnabledBinding toObject:self withKeyPath:@"representedObject.applyTimeout" options:nil];
+
+	[timeoutUnitsPopUp bind:NSSelectedTagBinding toObject:self withKeyPath:@"representedObject.timeoutUnits" options:nil];
+	[timeoutUnitsPopUp bind:NSEnabledBinding toObject:self withKeyPath:@"representedObject.applyTimeout" options:nil];
 	
-	float myTimeout;
-	if (_useTimeout) {
-		myTimeout = MGS_STANDARD_TIMEOUT;
-	} else {
-		myTimeout = 0.0f;
-	}
-	
-	// update model
-	[[self representedObject] setValue:[NSNumber numberWithFloat:myTimeout] forKeyPath:@"timeout"];
+    // userInteractionMode popup
+    [userInteractionMode bind:NSSelectedTagBinding toObject:self withKeyPath:@"representedObject.userInteractionMode" options:nil];
+	 
 }
 
 /*
