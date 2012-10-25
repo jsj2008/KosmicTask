@@ -29,9 +29,13 @@ typedef enum _MGSInternetSharingRequestID {
 } MGSInternetSharingRequestID;
 
 typedef enum _MGSInternetSharingMappingStatus {
-	kMGSInternetSharingPortNotMapped = 0,
-	kMGSInternetSharingPortTryingToMap = 1,
-	kMGSInternetSharingPortMapped = 2,
+    kMGSInternetSharingPortStatusNA = 0,    // port status NA
+    kMGSInternetSharingPortClosed = 1,      // port closed
+	kMGSInternetSharingPortNotMapped = 2,   // port could not be mapped
+	kMGSInternetSharingPortDiscovery = 3,   // port discovery active
+	kMGSInternetSharingPortTryingToMap = 4, // trying to map
+	kMGSInternetSharingPortMapped = 5,      // port mapped (automatic)
+    kMGSInternetSharingPortOpen = 6,        // port open (manual map)
 } MGSInternetSharingMappingStatus;
 
 @interface MGSInternetSharing : NSObject {

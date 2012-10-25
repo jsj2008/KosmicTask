@@ -591,10 +591,10 @@ errorExit:;	// the trailing ; prevents compiler complaining (can also { } subseq
  - terminateRequest
  
  */
-- (void)terminateRequest:(MGSServerNetRequest *)netRequest
+- (BOOL)terminateRequest:(MGSServerNetRequest *)netRequest
 {
 	// terminate task associated with request if any still active
-	[self terminateRequestUUID:[netRequest UUID]];
+	return[self terminateRequestUUID:[netRequest UUID]];
 }
 
 /*

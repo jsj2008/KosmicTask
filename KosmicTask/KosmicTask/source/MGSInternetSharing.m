@@ -79,7 +79,7 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 		_enableInternetAccessAtLogin = NO;
 		_IPAddressString = NSLocalizedString(@"not available", @"Internet sharing IP address not available");
 		_gatewayName = NSLocalizedString(@"not available", @"Internet sharing gateway name not available");
-		_mappingStatus = kMGSInternetSharingPortNotMapped;
+		_mappingStatus = kMGSInternetSharingPortStatusNA;
 		_noteObjectString = [[MGSPortMapper class] className];
 		_responseReceived = YES;
 		_activeUserStatusImage = [[[MGSImageManager sharedManager] greenDotUser] copy];
@@ -147,18 +147,29 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
  set mapping status _
  
  */
-- (void)setMappingStatus:(MGSInternetSharingMappingStatus)mappingStatus
+- (void)setMappingStatus:(MGSInternetSharingMappingStatus)status
 {
 	
 	// mapping status
-	_mappingStatus = mappingStatus;
+	_mappingStatus = status;
 	
 	[self willChangeValueForKey:@"statusString"];
 	[self willChangeValueForKey:@"isActive"];
 	
 	switch (_mappingStatus) {
+            
+        case kMGSInternetSharingPortStatusNA:
+			_statusString = NSLocalizedString(@"Port status unknown", @"Port status unknown");
+			_isActive = NO;
+            break;
+            
+        case kMGSInternetSharingPortDiscovery:
+			_statusString = NSLocalizedString(@"Checking port ...", @"Checking open port status");
+			_isActive = NO;
+            break;
+            
 		case kMGSInternetSharingPortTryingToMap:
-			_statusString = NSLocalizedString(@"Remapping external port ...", @"Trying to map router port");
+			_statusString = NSLocalizedString(@"Mapping external port ...", @"Trying to map router port");
 			_isActive = NO;
 			break;
 			
@@ -166,7 +177,17 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 			_statusString = NSLocalizedString(@"External port mapped", @"Router port mapped");
 			_isActive = YES;
 			break;
-			
+
+        case kMGSInternetSharingPortOpen:
+			_statusString = NSLocalizedString(@"External port open", @"Router port open");
+			_isActive = YES;
+			break;
+
+        case kMGSInternetSharingPortClosed:
+			_statusString = NSLocalizedString(@"External port closed", @"Router port closed");
+			_isActive = NO;
+			break;
+
 		case kMGSInternetSharingPortNotMapped:
 		default:
 			_statusString = NSLocalizedString(@"External port not mapped", @"Router port not mapped");

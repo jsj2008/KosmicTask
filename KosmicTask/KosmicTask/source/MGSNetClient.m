@@ -1415,7 +1415,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 		[netRequest.delegate respondsToSelector:@selector(requestDidComplete:)]) {
 		
 		// perform this on the next iteration of the run loop.
-		[netRequest.delegate performSelector:@selector(requestDidComplete:) withObject:netRequest afterDelay:0];
+		[(NSObject *)(netRequest.delegate) performSelector:@selector(requestDidComplete:) withObject:netRequest afterDelay:0];
 	}
 }
 

@@ -113,7 +113,7 @@
 	
 	#pragma unused(aNotification)
 	
-	if ([_mapping mappingStatus]==TCMPortMappingStatusMapped) {
+	if ([_mapping mappingStatus] == TCMPortMappingStatusMapped) {
 	
 		 MLogInfo(@"Port mapping established: %@", [_mapping description]);
 		

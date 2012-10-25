@@ -38,7 +38,7 @@ static NSString *MGSAttachmentSeparator = @";";
  */
 + (NSString *)defaultHeaderRepresentation
 {
-	return [NSString stringWithFormat:@"%lu", 0];	
+	return [NSString stringWithFormat:@"%lu", (unsigned long)0];
 }
 
 /*

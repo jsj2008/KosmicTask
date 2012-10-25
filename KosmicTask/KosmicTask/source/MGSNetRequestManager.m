@@ -111,7 +111,7 @@
  - terminateRequest:
  
  */
-- (void)terminateRequest:(MGSNetRequest *)netRequest
+- (BOOL)terminateRequest:(MGSNetRequest *)netRequest
 {
     // disconnect the request
     if (netRequest.isSocketConnected) {
@@ -127,6 +127,8 @@
     }
     
     netRequest.status = kMGSStatusTerminated;
+    
+    return YES;
 }
 
 @end

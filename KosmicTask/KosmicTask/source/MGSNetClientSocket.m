@@ -25,6 +25,7 @@
 #import "MGSKeyChain.h"
 #import "MGSScriptPlist.h"
 #import "MGSNetNegotiator.h"
+#import <Foundation/NSThread.h>
 
 @interface MGSNetClientSocket(Socket)
 - (void)onSocket:(MGSAsyncSocket *)sock willDisconnectWithError:(NSError *)err;
@@ -198,7 +199,7 @@
 			self.netRequest.error = errors;
 		}
 		
-		[self.netRequest.delegate performSelectorOnMainThread:@selector(requestDidComplete:) 
+		[(NSObject *)(self.netRequest.delegate) performSelectorOnMainThread:@selector(requestDidComplete:)
 												   withObject:self.netRequest 
 												waitUntilDone:YES];	// wait until done as we may swap the request out for this socket
 	}

@@ -9,10 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSInternetSharing.h"
 #import "MGSPortMapper.h"
+#import "MGSPortChecker.h"
 
-
-@interface MGSInternetSharingServer : MGSInternetSharing <MGSPortMapperDelegate>{
+@interface MGSInternetSharingServer : MGSInternetSharing <MGSPortMapperDelegate, MGSPortCheckerDelegate>{
 	MGSPortMapper *_portMapper;
+    MGSPortChecker *_portChecker;
+    BOOL _attemptPortMapping;
 }
 
 - (id)initWithExternalPort:(NSInteger)externalPort listeningPort:(NSInteger)listeningPort;

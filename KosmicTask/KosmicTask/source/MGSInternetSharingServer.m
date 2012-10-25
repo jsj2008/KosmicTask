@@ -10,9 +10,15 @@
 #import "MGSPreferences.h"
 #import "MGSDistributedNotifications.h"
 #import "NSDictionary_Mugginsoft.h"
+#import "MGSPortChecker.h"
+#import "NSBundle_Mugginsoft.h"
 
 @interface MGSInternetSharingServer()
 - (void)savePreferences;
+- (void)startPortDiscovery;
+- (void)stopPortDiscovery;
+- (void)startPortChecking;
+- (void)stopPortChecking;
 @end
 
 @implementation MGSInternetSharingServer
@@ -58,13 +64,12 @@
 		self.enableInternetAccessAtLogin = [preferences boolForKey:MGSEnableInternetAccessAtLogin];
 		self.allowLocalUsersToAuthenticate = [preferences boolForKey:MGSAllowLocalUsersToAuthenticate];
 		self.allowRemoteUsersToAuthenticate = [preferences boolForKey:MGSAllowRemoteUsersToAuthenticate];
+
+        _attemptPortMapping = self.enableInternetAccessAtLogin;
         
-		if (self.enableInternetAccessAtLogin) {
-			
-			// start mapping
-			[self startPortMapping];
-		}
-		
+        // start port discovery
+        [self startPortDiscovery];
+
 		[self postStatusNotification];
 	}
 	
@@ -90,7 +95,8 @@
 			
 		// status request
 		case kMGSInternetSharingRequestStatus:
-			[self postStatusNotification];
+            _attemptPortMapping = YES;
+			[self startPortDiscovery];
 			break;
 		
 		// internet access request
@@ -116,13 +122,15 @@
 		// start mapping request
 		case kMGSInternetSharingRequestStartMapping:;
 			NSInteger externalPort = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
-			
+			_attemptPortMapping = YES;
+            
 			// if a new port requested then remap
 			if (externalPort != self.externalPort) {
 				self.externalPort = externalPort;
 				[self remapPortMapping];
-			}
-			[self startPortMapping];
+			} else {
+                [self startPortMapping];
+            }
 			break;
 
 		// stop mapping request
@@ -255,9 +263,75 @@
 	
 }
 
+#pragma mark -
+#pragma mark Port discovery
 /*
  
- start port mapping
+ - startPortDiscovery
+ 
+ */
+- (void)startPortDiscovery
+{
+    [self startPortChecking];
+}
+
+/*
+ 
+ - stopPortDiscovery
+ 
+ */
+- (void)stopPortDiscovery
+{
+}
+
+#pragma mark -
+#pragma mark Port checking
+
+/*
+ 
+ - startPortChecking
+ 
+ */
+- (void)startPortChecking
+{
+    if (!_portChecker) {
+        
+        NSString *portCheckerURL = @"http://portcheck.mugginsoft.com";
+        NSString *portCheckerPath = @"sys";
+        
+        NSURL *url = [NSURL URLWithString:portCheckerURL];
+        _portChecker = [[MGSPortChecker alloc] initForURL:url];
+        if (!_portChecker) {
+            [self postStatusNotification];
+            return;
+        }
+        _portChecker.portNumber = self.listeningPort;
+        _portChecker.portQueryTimeout = 10.0;
+        _portChecker.delegate = self;
+        // set correct checker path
+        NSString *path = _portChecker.path;
+        _portChecker.path = [portCheckerPath stringByAppendingPathComponent:path];
+    }
+    self.mappingStatus = kMGSInternetSharingPortDiscovery;
+    [_portChecker start];
+}
+
+/*
+ 
+ - stopPortChecking
+ 
+ */
+- (void)stopPortChecking
+{
+    [_portChecker stop];
+    [self postStatusNotification];
+}
+
+#pragma mark -
+#pragma mark Port mapping
+/*
+ 
+ - startPortMapping
  
  */
 - (void)startPortMapping
@@ -443,7 +517,8 @@
 	}
 }
 
-#pragma mark port mapper delegate methods
+#pragma mark -
+#pragma mark MGSPortMapperDelegate
 
 /*
  
@@ -471,4 +546,56 @@
 	
 	[self postStatusNotification];
 }
+
+#pragma mark -
+#pragma mark MGSPortCheckerDelegate
+
+/*
+ 
+ - portCheckerDidFinishProbing:
+ 
+ */
+
+- (void)portCheckerDidFinishProbing:(MGSPortChecker *)portChecker
+{    
+    switch ([portChecker status]) {
+        case kMGS_PORT_STATUS_NA:
+        break;
+
+        case kMGS_PORT_STATUS_OPEN:
+            self.externalPort = portChecker.portNumber;
+#ifdef MGS_DEBUG
+            NSLog(@"Requested mappingStatus: %d", kMGSInternetSharingPortOpen);
+#endif
+            self.mappingStatus = kMGSInternetSharingPortOpen;
+#ifdef MGS_DEBUG
+            NSLog(@"Persisted mappingStatus: %d", self.mappingStatus);
+#endif
+        break;
+
+        case kMGS_PORT_STATUS_CLOSED:
+        break;
+
+        case kMGS_PORT_STATUS_ERROR:
+        break;
+
+        default:
+        break;
+    }
+    
+    
+    if (self.mappingStatus == kMGSInternetSharingPortOpen) {
+        [self postStatusNotification];
+    } else {
+        self.mappingStatus = kMGSInternetSharingPortClosed;
+        
+        if (_attemptPortMapping) {
+            self.mappingStatus = kMGSInternetSharingPortNotMapped;
+            [self startPortMapping];
+        } else {
+            [self postStatusNotification];
+        }
+    }
+}
+
 @end

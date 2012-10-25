@@ -999,7 +999,7 @@ errorExit:
                 break;
                 
             default:
-                [NSException raise:MGSNetSocketException format:@"Invalid attachment chunked data read tag: %i", tag];
+                [NSException raise:MGSNetSocketException format:@"Invalid attachment chunked data read tag: %ld", tag];
                 break;
                 
         }
