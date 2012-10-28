@@ -15,6 +15,7 @@
 	NSImage *_appIconImage;
 	NSImage *_appActiveSharingIconImage;
     NSString *_portStatusText;
+    NSInvocation *_requestInvocation;
 }
 
 @property (readonly) NSString *startStopButtonText;
@@ -22,5 +23,4 @@
 
 - (void)requestStatusUpdate;
 + (id)sharedInstance;
-- (IBAction)toggleStartStop:(id)sender;
 @end

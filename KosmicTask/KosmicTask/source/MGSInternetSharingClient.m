@@ -15,6 +15,8 @@
 // class extension
 @interface MGSInternetSharingClient()
 - (void)response:(NSNotification *)note;
+- (void)externalPortWasChanged;
+- (void)cancelPortChangeRequest;
 @property NSString *portStatusText;
 @end
 
@@ -25,6 +27,8 @@ static id _sharedInstance = nil;
 @synthesize startStopButtonText = _startStopButtonText;
 @synthesize portStatusText = _portStatusText;
 
+#pragma mark -
+#pragma mark Factory
 /*
  
  shared instance
@@ -39,6 +43,8 @@ static id _sharedInstance = nil;
 	return _sharedInstance;
 }
 
+#pragma mark -
+#pragma mark Instance
 /*
  
  init
@@ -75,7 +81,8 @@ static id _sharedInstance = nil;
 	return self;
 }
 
-
+#pragma mark -
+#pragma mark Notification handling
 /*
  
  request a status update
@@ -85,6 +92,7 @@ static id _sharedInstance = nil;
 {
 	NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys: 
 								 [NSNumber numberWithInteger:kMGSInternetSharingRequestStatus], MGSInternetSharingKeyRequest,
+                                 [NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
 								 nil];
 	
 	[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
@@ -113,11 +121,12 @@ static id _sharedInstance = nil;
 			self.externalPort = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
 			self.allowInternetAccess = [[userInfo objectForKey:MGSAllowInternetAccess] boolValue];
 			self.allowLocalAccess = [[userInfo objectForKey:MGSAllowLocalAccess] boolValue];
-			self.enableInternetAccessAtLogin = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
+			self.automaticallyMapPort = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
 			self.IPAddressString = [userInfo objectForKey:MGSInternetSharingKeyIPAddress];
 			self.gatewayName = [userInfo objectForKey:MGSInternetSharingKeyGatewayName];
 			self.allowLocalUsersToAuthenticate = [[userInfo objectForKey:MGSAllowLocalUsersToAuthenticate] boolValue];
 			self.allowRemoteUsersToAuthenticate = [[userInfo objectForKey:MGSAllowRemoteUsersToAuthenticate] boolValue];
+            self.reachabilityStatus = [[userInfo objectForKey:MGSInternetSharingKeyReachabilityStatus] integerValue];
 			break;
 			
 			// unrecognised
@@ -128,8 +137,47 @@ static id _sharedInstance = nil;
 
 	_processingResponse = NO;
 	self.responseReceived = YES;
+    
+    if (_requestInvocation) {
+        [_requestInvocation invoke];
+        _requestInvocation = nil;
+    }
 }
 
+/*
+ 
+ post distributed request notification with dictionary
+ 
+ */
+- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict waitOnResponse:(BOOL)wait
+{
+    // are we awaiting a reponse?
+    if (!self.responseReceived) {
+        
+        NSMethodSignature *aSignature = [[self class] instanceMethodSignatureForSelector:_cmd];
+        _requestInvocation = [NSInvocation invocationWithMethodSignature:aSignature];
+        _requestInvocation.target = self;
+        [_requestInvocation setArgument:dict atIndex:2];
+        [_requestInvocation setArgument:&wait atIndex:3];
+        [_requestInvocation retainArguments];
+        
+        return;
+    }
+    
+	if (wait) {
+        self.responseReceived = NO;
+	}
+    
+	// send out a distributed notification
+	[[NSDistributedNotificationCenter defaultCenter]
+     postNotificationName: MGSDistNoteInternetSharingRequest
+     object:self.noteObjectString
+     userInfo:dict
+     deliverImmediately:YES];
+}
+
+#pragma mark -
+#pragma mark Accessors
 /*
  
  - setAllowInternetAccess:
@@ -224,21 +272,39 @@ static id _sharedInstance = nil;
  set enable internet access at login
  
  */
-- (void)setEnableInternetAccessAtLogin:(BOOL)value
+- (void)setAutomaticallyMapPort:(BOOL)value
 {
-	[super setEnableInternetAccessAtLogin:value];
-	
+	[super setAutomaticallyMapPort:value];
+    [self cancelPortChangeRequest];
+    
 	// if not processing response
 	if (!_processingResponse) {
 		
 		NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys: 
-									 [NSNumber numberWithInteger:kMGSInternetSharingRequestStartAtLogin], MGSInternetSharingKeyRequest,
+									 [NSNumber numberWithInteger:kMGSInternetSharingRequestMapPort], MGSInternetSharingKeyRequest,
 									 [NSNumber numberWithBool:value], MGSEnableInternetAccessAtLogin,
+                                     [NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
 									 nil];
 		
-		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:NO];
+		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
 		
 	}
+}
+
+/*
+ 
+ - setExternalPort:
+ 
+ */
+- (void)setExternalPort:(NSInteger)externalPort
+{
+    [super setExternalPort:externalPort];
+    [self cancelPortChangeRequest];
+    
+    // delay invoking this method to allow for the case were we change the port
+    // then click the map button.
+    // this approach allows us to coallesce two calls to the server into one.
+    [self performSelector:@selector(externalPortWasChanged) withObject:nil afterDelay:0.1];
 }
 
 /*
@@ -251,7 +317,7 @@ static id _sharedInstance = nil;
 	
 	// mapping status
 	[super setMappingStatus:mappingStatus];
-	
+	/*
 	[self willChangeValueForKey:@"startStopButtonText"];
 	
 	switch (self.mappingStatus) {
@@ -273,21 +339,21 @@ static id _sharedInstance = nil;
 			
 	}
 	[self didChangeValueForKey:@"startStopButtonText"];
-	
+	*/
 	// update application icon to reflect Internet sharing status
-	NSImage *appIconImage;
+	/*NSImage *appIconImage;
 	if (self.isActive) {
 		appIconImage = _appActiveSharingIconImage;
 	} else {
 		appIconImage = _appIconImage;
-	}
+	}*/
 
 	// set application icon
 	// note that whatever is set here seems to get used when creating
 	// miniwindows for other application windows.
 	// so if the orb is displayed here then it will appear in the miniwindows too.
 	// if the sharing is subsequently stopped then the miniwindow display may be out of sync.
-	[NSApp setApplicationIconImage: appIconImage];
+	//[NSApp setApplicationIconImage: appIconImage];
 	// or update dock tile
 	// this seems to cause an icon flash
 	//NSDockTile *dockTile = [NSApp dockTile];
@@ -297,38 +363,55 @@ static id _sharedInstance = nil;
 
 /*
  
- toggle start stop
+ - setReachabilityStatus:
  
  */
-- (IBAction)toggleStartStop:(id)sender
+- (void)setReachabilityStatus:(MGSPortReachability)status
 {
-	#pragma unused(sender)
+	[super setReachabilityStatus:status];
 	
-	MGSInternetSharingRequestID requestID;
-
-	switch (self.mappingStatus) {
-		case kMGSInternetSharingPortTryingToMap:
-			return;
+	switch (self.reachabilityStatus) {
+		case kMGSPortReachabilityNA:
+            self.portStatusText = NSLocalizedString(@"No (?)", @"Reachability not available");
 			break;
 			
-		case kMGSInternetSharingPortMapped:
-			requestID = kMGSInternetSharingRequestStopMapping;
+		case kMGSPortReachable:
+            self.portStatusText = NSLocalizedString(@"Yes", @"Port is reachable");
 			break;
 			
-		case kMGSInternetSharingPortNotMapped:
+		case kMGSPortNotReachable:
 		default:
-			requestID = kMGSInternetSharingRequestStartMapping;
+            self.portStatusText = NSLocalizedString(@"No", @"Port is not reachable");
 			break;
 			
 	}
-		
-	NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys: 
-								 [NSNumber numberWithInteger:requestID], MGSInternetSharingKeyRequest,
-								 [NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
-								 nil];
-	[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
-	
 }
 
+#pragma mark -
+#pragma mark External port change request handling
+/*
+ 
+ - externalPortWasChanged
+ 
+ */
+- (void)externalPortWasChanged
+{
+    if (!_processingResponse) {
+        if (self.automaticallyMapPort) {
+            self.automaticallyMapPort = self.automaticallyMapPort;
+        } else {
+            [self requestStatusUpdate];
+        }
+    }
+}
 
+/*
+ 
+ - cancelPortChangeRequest
+ 
+ */
+- (void)cancelPortChangeRequest
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(externalPortWasChanged) object:nil];
+}
 @end

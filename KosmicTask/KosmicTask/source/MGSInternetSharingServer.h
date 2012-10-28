@@ -10,11 +10,13 @@
 #import "MGSInternetSharing.h"
 #import "MGSPortMapper.h"
 #import "MGSPortChecker.h"
+#import "Reachability.h"
 
 @interface MGSInternetSharingServer : MGSInternetSharing <MGSPortMapperDelegate, MGSPortCheckerDelegate>{
 	MGSPortMapper *_portMapper;
     MGSPortChecker *_portChecker;
-    BOOL _attemptPortMapping;
+    Reachability *_internetReach;
+    BOOL _notificationPending;
 }
 
 - (id)initWithExternalPort:(NSInteger)externalPort listeningPort:(NSInteger)listeningPort;
@@ -25,6 +27,4 @@
 - (NSDictionary *)statusDictionary;
 - (void)request:(NSNotification *)note;
 - (void)postStatusNotification;
-- (MGSInternetSharingMappingStatus)mappingStatus;
-- (NSString *)gatewayName;
 @end

@@ -11,18 +11,16 @@
 #define MGS_MIN_INTERNET_SHARING_PORT 1024
 #define MGS_MAX_INTERNET_SHARING_PORT 49151
 
-NSString *MGSInternetSharingKeyRequest;
-NSString *MGSInternetSharingKeyMappingStatus;
-NSString *MGSInternetSharingKeyIPAddress;
-NSString *MGSInternetSharingKeyGatewayName;
+extern NSString *MGSInternetSharingKeyRequest;
+extern NSString *MGSInternetSharingKeyMappingStatus;
+extern NSString *MGSInternetSharingKeyReachabilityStatus;
+extern NSString *MGSInternetSharingKeyIPAddress;
+extern NSString *MGSInternetSharingKeyGatewayName;
 
 typedef enum _MGSInternetSharingRequestID {
 	kMGSInternetSharingRequestStatus = 0,
 	kMGSInternetSharingRequestInternetAccess = 1,
-	kMGSInternetSharingRequestStartMapping = 2,
-	kMGSInternetSharingRequestStopMapping = 3,
-	kMGSInternetSharingRequestStartAtLogin = 4,
-	kMGSInternetSharingRequestRemapPort = 5,
+	kMGSInternetSharingRequestMapPort = 4,
     kMGSInternetSharingRequestLocalAccess = 6,
     kMGSInternetSharingRequestAllowLocalAuthentication = 7,
     kMGSInternetSharingRequestAllowRemoteAuthentication = 8,
@@ -30,13 +28,16 @@ typedef enum _MGSInternetSharingRequestID {
 
 typedef enum _MGSInternetSharingMappingStatus {
     kMGSInternetSharingPortStatusNA = 0,    // port status NA
-    kMGSInternetSharingPortClosed = 1,      // port closed
+	kMGSInternetSharingPortTryingToMap = 1, // trying to map
 	kMGSInternetSharingPortNotMapped = 2,   // port could not be mapped
-	kMGSInternetSharingPortDiscovery = 3,   // port discovery active
-	kMGSInternetSharingPortTryingToMap = 4, // trying to map
-	kMGSInternetSharingPortMapped = 5,      // port mapped (automatic)
-    kMGSInternetSharingPortOpen = 6,        // port open (manual map)
+	kMGSInternetSharingPortMapped = 3,      // port mapped (automatic)
 } MGSInternetSharingMappingStatus;
+
+typedef enum {
+    kMGSPortReachabilityNA = 0,
+    kMGSPortReachable = 1,
+    kMGSPortNotReachable = 2,
+}  MGSPortReachability;
 
 @interface MGSInternetSharing : NSObject {
 @private
@@ -47,7 +48,7 @@ typedef enum _MGSInternetSharingMappingStatus {
 	NSInteger _listeningPort;
 	BOOL _allowInternetAccess;
     BOOL _allowLocalAccess;
-	BOOL _enableInternetAccessAtLogin;
+	BOOL _automaticallyMapPort;
     BOOL _allowLocalUsersToAuthenticate;
     BOOL _allowRemoteUsersToAuthenticate;
 	NSString *_noteObjectString;
@@ -64,6 +65,7 @@ typedef enum _MGSInternetSharingMappingStatus {
 	NSImage *_inactiveStatusLargeImage;
     NSImage *_activePortStatusImage;
 	NSImage *_inactivePortStatusImage;
+    MGSPortReachability _reachabilityStatus;
 }
 
 @property (readonly) NSImage *statusImage;
@@ -73,11 +75,12 @@ typedef enum _MGSInternetSharingMappingStatus {
 @property NSInteger listeningPort;
 @property BOOL allowInternetAccess;
 @property BOOL allowLocalAccess;
-@property BOOL enableInternetAccessAtLogin;
+@property BOOL automaticallyMapPort;
 @property BOOL allowLocalUsersToAuthenticate;
 @property BOOL allowRemoteUsersToAuthenticate;
 @property (readonly) NSString *noteObjectString;
 @property MGSInternetSharingMappingStatus mappingStatus;
+@property MGSPortReachability reachabilityStatus;
 @property (readonly) NSString *statusString;
 @property (copy) NSString *IPAddressString;
 @property (copy) NSString *gatewayName;
@@ -94,4 +97,5 @@ typedef enum _MGSInternetSharingMappingStatus {
 - (void)dispose;
 - (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict waitOnResponse:(BOOL)wait;
 - (void)postDistributedResponseNotificationWithDict:(NSDictionary *)dict;
+- (NSString *)notAvailableString;
 @end

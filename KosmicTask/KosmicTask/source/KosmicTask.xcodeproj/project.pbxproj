@@ -558,6 +558,8 @@
 		AB734E8A11DBDE51008C9853 /* MGSOriginTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF664DD11D9F69B004F9939 /* MGSOriginTransformer.m */; };
 		AB752DCE12BAAA3800C5C379 /* MGSScriptRunnerApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = AB752DCC12BAAA3800C5C379 /* MGSScriptRunnerApplication.h */; };
 		AB752DCF12BAAA3800C5C379 /* MGSScriptRunnerApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = AB752DCD12BAAA3800C5C379 /* MGSScriptRunnerApplication.m */; };
+		AB7563A21639C1560067BFC6 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = AB7563A01639C1560067BFC6 /* Reachability.h */; };
+		AB7563A31639C1560067BFC6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7563A11639C1560067BFC6 /* Reachability.m */; };
 		AB75EABC0E9C166E0036F83D /* MGSResultFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB75EABB0E9C166E0036F83D /* MGSResultFooterView.m */; };
 		AB77742F159A5774002BE674 /* MGSChildScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB77742D159A4EA2002BE674 /* MGSChildScrollView.m */; };
 		AB7812E20D58875B00C19FAB /* MGSTimeIntervalTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7812E10D58875B00C19FAB /* MGSTimeIntervalTransformer.m */; };
@@ -4021,6 +4023,8 @@
 		AB734E4011DBD92E008C9853 /* MGSApplicationLanguageResourcesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSApplicationLanguageResourcesManager.m; sourceTree = "<group>"; };
 		AB752DCC12BAAA3800C5C379 /* MGSScriptRunnerApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptRunnerApplication.h; sourceTree = "<group>"; };
 		AB752DCD12BAAA3800C5C379 /* MGSScriptRunnerApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSScriptRunnerApplication.m; sourceTree = "<group>"; };
+		AB7563A01639C1560067BFC6 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		AB7563A11639C1560067BFC6 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		AB75EABA0E9C166E0036F83D /* MGSResultFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSResultFooterView.h; sourceTree = "<group>"; };
 		AB75EABB0E9C166E0036F83D /* MGSResultFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSResultFooterView.m; sourceTree = "<group>"; };
 		AB77742C159A4EA2002BE674 /* MGSChildScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSChildScrollView.h; sourceTree = "<group>"; };
@@ -7803,6 +7807,8 @@
 		AB9477DE0CF6F9170001A5E4 /* network interface */ = {
 			isa = PBXGroup;
 			children = (
+				AB7563A01639C1560067BFC6 /* Reachability.h */,
+				AB7563A11639C1560067BFC6 /* Reachability.m */,
 				AB8572D00D00B84800E337B8 /* MGSNetRequest.h */,
 				AB8572D10D00B84800E337B8 /* MGSNetRequest.m */,
 				AB7C19791622F52C00E45BD4 /* MGSServerNetRequest.h */,
@@ -9040,6 +9046,7 @@
 				AB0B2A41161D882A00702D0E /* NSNetService+Mugginsoft.h in Headers */,
 				AB9132F91620469100B4B032 /* MGSNetwork.h in Headers */,
 				AB13E4D816388480001A5921 /* MGSPortChecker.h in Headers */,
+				AB7563A21639C1560067BFC6 /* Reachability.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11822,6 +11829,7 @@
 				AB0B2A42161D882A00702D0E /* NSNetService+Mugginsoft.m in Sources */,
 				AB9132FA1620469100B4B032 /* MGSNetwork.m in Sources */,
 				AB13E4D916388480001A5921 /* MGSPortChecker.m in Sources */,
+				AB7563A31639C1560067BFC6 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

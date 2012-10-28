@@ -31,6 +31,7 @@ NSString *MGSInternetSharingKeyRequest = @"MGSInternetSharingRequest";
 NSString *MGSInternetSharingKeyMappingStatus = @"MGSInternetSharingMappingStatus";
 NSString *MGSInternetSharingKeyIPAddress = @"MGSInternetSharingKeyIPAddress";
 NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName";
+NSString *MGSInternetSharingKeyReachabilityStatus = @"MGSInternetSharingKeyReachabilityStatus";
 
 @implementation MGSInternetSharing
 
@@ -39,7 +40,7 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 @synthesize listeningPort = _listeningPort;
 @synthesize allowInternetAccess = _allowInternetAccess;
 @synthesize allowLocalAccess = _allowLocalAccess;
-@synthesize enableInternetAccessAtLogin = _enableInternetAccessAtLogin;
+@synthesize automaticallyMapPort = _automaticallyMapPort;
 @synthesize noteObjectString = _noteObjectString;
 @synthesize mappingStatus = _mappingStatus;
 @synthesize statusString = _statusString;
@@ -58,6 +59,7 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 @synthesize activeUserStatusImage = _activeUserStatusImage;
 @synthesize activePortStatusImage = _activePortStatusImage;
 @synthesize inactivePortStatusImage = _inactivePortStatusImage;
+@synthesize reachabilityStatus = _reachabilityStatus;
 
 #pragma mark -
 #pragma mark Instance
@@ -76,10 +78,10 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
         _allowLocalAccess = YES;
         _allowLocalUsersToAuthenticate = YES;
         _allowRemoteUsersToAuthenticate = NO;
-		_enableInternetAccessAtLogin = NO;
-		_IPAddressString = NSLocalizedString(@"not available", @"Internet sharing IP address not available");
-		_gatewayName = NSLocalizedString(@"not available", @"Internet sharing gateway name not available");
-		_mappingStatus = kMGSInternetSharingPortStatusNA;
+		_automaticallyMapPort = NO;
+		_IPAddressString = [self notAvailableString];
+		_gatewayName = [self notAvailableString];
+		_mappingStatus = kMGSInternetSharingPortNotMapped;
 		_noteObjectString = [[MGSPortMapper class] className];
 		_responseReceived = YES;
 		_activeUserStatusImage = [[[MGSImageManager sharedManager] greenDotUser] copy];
@@ -156,48 +158,49 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
 	[self willChangeValueForKey:@"statusString"];
 	[self willChangeValueForKey:@"isActive"];
 	
+    _isActive = NO;
+    
 	switch (_mappingStatus) {
             
         case kMGSInternetSharingPortStatusNA:
 			_statusString = NSLocalizedString(@"Port status unknown", @"Port status unknown");
-			_isActive = NO;
-            break;
-            
-        case kMGSInternetSharingPortDiscovery:
-			_statusString = NSLocalizedString(@"Checking port ...", @"Checking open port status");
-			_isActive = NO;
             break;
             
 		case kMGSInternetSharingPortTryingToMap:
-			_statusString = NSLocalizedString(@"Mapping external port ...", @"Trying to map router port");
-			_isActive = NO;
+			_statusString = NSLocalizedString(@"Mapping external port", @"Trying to map router port");
 			break;
-			
-		case kMGSInternetSharingPortMapped:
-			_statusString = NSLocalizedString(@"External port mapped", @"Router port mapped");
-			_isActive = YES;
-			break;
-
-        case kMGSInternetSharingPortOpen:
-			_statusString = NSLocalizedString(@"External port open", @"Router port open");
-			_isActive = YES;
-			break;
-
-        case kMGSInternetSharingPortClosed:
-			_statusString = NSLocalizedString(@"External port closed", @"Router port closed");
-			_isActive = NO;
-			break;
-
+        
+        case kMGSInternetSharingPortMapped:
+			_statusString = NSLocalizedString(@"External port mapped", @"Trying to map router port");
+            
+#define MGS_INTERNET_SHARING_MARK_ACTIVE
+#ifdef MGS_INTERNET_SHARING_MARK_ACTIVE
+            _isActive = YES;
+#endif
+            break;
+            
 		case kMGSInternetSharingPortNotMapped:
 		default:
 			_statusString = NSLocalizedString(@"External port not mapped", @"Router port not mapped");
-			_isActive = NO;
 			break;
 			
 	}
-    [self updatePortStatusImage];
 	[self didChangeValueForKey:@"statusString"];
 	[self didChangeValueForKey:@"isActive"];
+}
+
+/*
+ 
+ - setReachabilityStatus:
+ 
+ */
+- (void)setReachabilityStatus:(MGSPortReachability)status
+{
+	
+	// reachability status
+	_reachabilityStatus = status;
+
+    [self updatePortStatusImage];
 }
 
 /*
@@ -249,6 +252,16 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
     _allowLocalUsersToAuthenticate = value;
     [self updateLocalAccessStatusImage];
 }
+
+/*
+ 
+ - notAvailableString
+ 
+ */
+- (NSString *)notAvailableString
+{
+    return NSLocalizedString(@"not available", @"Internet sharing property not available");
+}
 #pragma mark -
 #pragma mark Status image updating
 /*
@@ -294,16 +307,11 @@ NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName"
  */
 - (void)updatePortStatusImage
 {
-    if (self.allowInternetAccess) {
-        if (self.isActive) {
-            self.statusImage = self.activePortStatusImage;
-        } else {
-            self.statusImage = self.inactivePortStatusImage;
-        }
+    if (self.reachabilityStatus == kMGSPortReachable) {
+        self.statusImage = self.activePortStatusImage;
     } else {
-        self.statusImage = nil;
+        self.statusImage = self.inactivePortStatusImage;
     }
-    
 }
 
 #pragma mark -

@@ -34,6 +34,7 @@ extern NSString * MGSDefaultStartAtLogin;
 	MGSDebugController *debugController;
 	
 	IBOutlet NSButton *useSSLCheckbox;
+    IBOutlet NSButton *autoMappingCheckbox;
 	BOOL _startAtLogin;
 	BOOL _applyTimeoutToMachineTasks;
     NSInteger _machineTaskTimeout;
@@ -58,7 +59,6 @@ extern NSString * MGSDefaultStartAtLogin;
 - (IBAction)showLocalNetworkPreferencesHelp:(id)sender;
 - (IBAction)showRemoteNetworkPreferencesHelp:(id)sender;
 - (IBAction)refreshInternetSharing:(id)sender;
-- (IBAction)toggleInternetSharing:(id)sender;
 - (IBAction) showDebugPanel:(id)sender;
 - (void) setStartAtLogin:(BOOL)value;
 - (BOOL) startAtLogin;
@@ -68,6 +68,7 @@ extern NSString * MGSDefaultStartAtLogin;
 - (void)showLocalNetworkPreferences;
 - (IBAction)showSSLCertficate:(id)sender;
 - (IBAction)revertToStandardSettings:(id)sender;
+- (IBAction)autoMappingAction:(id)sender;
 
 @property (assign) NSString *selectedNetworkTabIdentifier;
 

@@ -15,8 +15,6 @@
 
 @interface MGSInternetSharingServer()
 - (void)savePreferences;
-- (void)startPortDiscovery;
-- (void)stopPortDiscovery;
 - (void)startPortChecking;
 - (void)stopPortChecking;
 @end
@@ -61,20 +59,32 @@
 		
 		self.allowInternetAccess = [preferences boolForKey:MGSAllowInternetAccess];
         self.allowLocalAccess = [preferences boolForKey:MGSAllowLocalAccess];
-		self.enableInternetAccessAtLogin = [preferences boolForKey:MGSEnableInternetAccessAtLogin];
+		self.automaticallyMapPort = [preferences boolForKey:MGSEnableInternetAccessAtLogin];
 		self.allowLocalUsersToAuthenticate = [preferences boolForKey:MGSAllowLocalUsersToAuthenticate];
 		self.allowRemoteUsersToAuthenticate = [preferences boolForKey:MGSAllowRemoteUsersToAuthenticate];
-
-        _attemptPortMapping = self.enableInternetAccessAtLogin;
         
-        // start port discovery
-        [self startPortDiscovery];
+        if (self.automaticallyMapPort) {
+            [self startPortMapping];
+        }
+        
+        // Observe the kNetworkReachabilityChangedNotification. When that notification is posted, the
+        // method "reachabilityChanged" will be called.
+        [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
 
-		[self postStatusNotification];
+        _internetReach = [Reachability reachabilityForInternetConnection];
+        [_internetReach startNotifier];
+        
+        if (!_notificationPending) {
+            [self postStatusNotification];
+        }
+        
 	}
 	
 	return self;
 }
+
+#pragma mark -
+#pragma mark Notification handling
 
 /*
  
@@ -86,145 +96,108 @@
  */
 - (void)request:(NSNotification *)note
 {
+    // we only deal with one request at a time
+    if (_notificationPending) {
+        return;
+    }
+    
 	NSDictionary *userInfo = [note userInfo];
-	
+    
 	// get the request id
 	MGSInternetSharingRequestID requestID = [[userInfo objectForKey:MGSInternetSharingKeyRequest] integerValue];
 	
 	switch (requestID) {
 			
-		// status request
+            // status request
 		case kMGSInternetSharingRequestStatus:
-            _attemptPortMapping = YES;
-			[self startPortDiscovery];
+        {
+			NSInteger port = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
+            if (port == 0) {
+                break;
+            }
+            self.externalPort = port;
+            
+            [self startPortChecking];
+        }
 			break;
-		
-		// internet access request
+            
+            // internet access request
 		case kMGSInternetSharingRequestInternetAccess:
 			self.allowInternetAccess = [[userInfo objectForKey:MGSAllowInternetAccess] boolValue];
-			break;
-
-        // local access request
+            if (self.allowInternetAccess) {
+                self.automaticallyMapPort = NO;
+                [self startPortChecking];
+             } else {
+                self.automaticallyMapPort = NO;
+                [self stopPortMapping];
+           }
+ 			break;
+            
+            // local access request
 		case kMGSInternetSharingRequestLocalAccess:
 			self.allowLocalAccess = [[userInfo objectForKey:MGSAllowLocalAccess] boolValue];
-			break;
-
-        // allow local authentication
+ 			break;
+            
+            // allow local authentication
 		case kMGSInternetSharingRequestAllowLocalAuthentication:
 			self.allowLocalUsersToAuthenticate = [[userInfo objectForKey:MGSAllowLocalUsersToAuthenticate] boolValue];
-			break;
-
-        // allow remote authentication
+ 			break;
+            
+            // allow remote authentication
 		case kMGSInternetSharingRequestAllowRemoteAuthentication:
 			self.allowRemoteUsersToAuthenticate = [[userInfo objectForKey:MGSAllowRemoteUsersToAuthenticate] boolValue];
-			break;
-
-		// start mapping request
-		case kMGSInternetSharingRequestStartMapping:;
-			NSInteger externalPort = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
-			_attemptPortMapping = YES;
-            
-			// if a new port requested then remap
-			if (externalPort != self.externalPort) {
-				self.externalPort = externalPort;
-				[self remapPortMapping];
-			} else {
-                [self startPortMapping];
+ 			break;
+                        
+            // automatically map port
+		case kMGSInternetSharingRequestMapPort:
+        {
+            NSInteger prevPort = self.externalPort;
+			NSInteger port = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
+            if (port == 0) {
+                break;
             }
+            self.externalPort = port;
+			self.automaticallyMapPort = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
+            
+            if (self.automaticallyMapPort) {
+                
+                if ([self mappingStatus] == kMGSInternetSharingPortMapped) {
+                    self.externalPort = prevPort;
+                    MLog(RELEASELOG, @"Cannot complete map port request as mapping is already active.");
+                    break;
+                }
+                
+                // if no port mapper defined then start it up
+                if (!_portMapper) {
+                    [self startPortMapping];
+                 } else {
+                     
+                     // if port has changed then remap, otherwise start
+                     if (prevPort != self.externalPort) {
+                         [self remapPortMapping];
+                         [self startPortMapping];
+                     } else {
+                         [self startPortMapping];
+                     }
+                }
+            } else {
+                [self stopPortMapping];
+            }
+        }
 			break;
-
-		// stop mapping request
-		case kMGSInternetSharingRequestStopMapping:
-			[self stopPortMapping];
-			break;
-		
-		// start at login request
-		case kMGSInternetSharingRequestStartAtLogin:
-			self.enableInternetAccessAtLogin = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
-			break;
-		
-		// remap the port	
-		/*
-		case kMGSInternetSharingRequestStartRemapPort:
-			self.externalPort = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
-			[self remapPortMapping];
-			break;
-		*/
-			
-		// unrecognised
+            
+             // unrecognised
 		default:
 			MLog(RELEASELOG, @"unrecognised internet sharing request id: %i", requestID);
-			[self postStatusNotification];
 			break;
 	}
     
     // save preferences in case server crashes
     [self savePreferences];
 	
-}
-
-/*
- 
- - setAllowLocalAccess:
- 
- */
-- (void)setAllowLocalAccess:(BOOL)value
-{
-	[super setAllowLocalAccess:value];
-    [self postStatusNotification];
-}
-
-/*
- 
- setAllowInternetAccess:
- 
- */
-- (void)setAllowInternetAccess:(BOOL)value
-{
-	[super setAllowInternetAccess:value];
-
-	if (value) {
-		
-		// initialise the mapper
-		[self initialisePortMapping];
-		[self postStatusNotification];
-	} else {
-		[self stopPortMapping];
-		self.enableInternetAccessAtLogin = NO;
-	}
-}
-
-/*
- 
- - setAllowLocalUsersToAuthenticate:
- 
- */
-- (void)setAllowLocalUsersToAuthenticate:(BOOL)value
-{
-    [super setAllowLocalUsersToAuthenticate:value];
-    [self postStatusNotification];
-}
-
-/*
- 
- - setAllowRemoteUsersToAuthenticate:
- 
- */
-- (void)setAllowRemoteUsersToAuthenticate:(BOOL)value
-{
-    [super setAllowRemoteUsersToAuthenticate:value];
-    [self postStatusNotification];
-}
-
-/*
- 
- set enable internet access at login
- 
- */
--(void)setEnableInternetAccessAtLogin:(BOOL)value
-{
-	[super setEnableInternetAccessAtLogin:value];
-    [self postStatusNotification];
+    if (!_notificationPending) {
+        [self postStatusNotification];
+    }
 }
 
 /*
@@ -236,52 +209,74 @@
 {
 	// send out a status distributed notification
 	[self postDistributedResponseNotificationWithDict:[self statusDictionary]];
+    
+    _notificationPending = NO;
 }
 
 /*
  
- initialise port mapping
+ status dictionary
  
  */
-- (void)initialisePortMapping
+- (NSDictionary *)statusDictionary
 {
-	NSAssert(self.listeningPort != 0, @"Cannot start port mapper as listening port not defined"); 
+	NSDictionary *dict =  [NSDictionary dictionaryWithObjectsAndKeys:
+                           [NSNumber numberWithInteger:kMGSInternetSharingRequestStatus], MGSInternetSharingKeyRequest,
+                           [NSNumber numberWithInteger:[self mappingStatus]], MGSInternetSharingKeyMappingStatus,
+                           [NSNumber numberWithInteger:[self reachabilityStatus]], MGSInternetSharingKeyReachabilityStatus,
+                           [self IPAddressString], MGSInternetSharingKeyIPAddress,
+                           [self gatewayName], MGSInternetSharingKeyGatewayName,
+                           [NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
+                           [NSNumber numberWithBool:self.allowInternetAccess], MGSAllowInternetAccess,
+                           [NSNumber numberWithBool:self.allowLocalAccess], MGSAllowLocalAccess,
+                           [NSNumber numberWithBool:self.automaticallyMapPort], MGSEnableInternetAccessAtLogin,
+                           [NSNumber numberWithBool:self.allowLocalUsersToAuthenticate], MGSAllowLocalUsersToAuthenticate,
+                           [NSNumber numberWithBool:self.allowRemoteUsersToAuthenticate], MGSAllowRemoteUsersToAuthenticate,
+                           nil];
 	
-	// lazy allocation
-	if (!_portMapper) {
-		
-		// validate external port
-		if (self.externalPort == 0) {
-			return;
-		}
-		
-		// initialise the mapper
-		_portMapper = [[MGSPortMapper alloc] initWithExternalPort:self.externalPort listeningPort:self.listeningPort];
-		_portMapper.delegate = self;
-		
-	}
+	MLog(DEBUGLOG, @"Internet sharing response dict sent by server: %@", [dict propertyListStringValue]);
 	
+	return dict;
 }
+
 
 #pragma mark -
-#pragma mark Port discovery
-/*
- 
- - startPortDiscovery
- 
- */
-- (void)startPortDiscovery
-{
-    [self startPortChecking];
-}
+#pragma mark Reachability
 
 /*
  
- - stopPortDiscovery
+ - reachabilityChanged:
  
  */
-- (void)stopPortDiscovery
+- (void)reachabilityChanged:(NSNotification* )note
 {
+	Reachability* curReach = [note object];
+	NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+
+    NetworkStatus netStatus = [curReach currentReachabilityStatus];
+    //BOOL connectionRequired= [curReach connectionRequired];
+    
+    // internet reachability has changed.
+    // code is iOS based hence the WWAN reachability.
+    if (curReach == _internetReach) {
+        
+        switch (netStatus)
+        {
+            case NotReachable:
+                break;
+                
+            case ReachableViaWWAN:
+                break;
+                
+            case ReachableViaWiFi:
+                break;
+        }
+        
+    }
+    
+    if (!_notificationPending) {
+        [self startPortChecking];
+    }
 }
 
 #pragma mark -
@@ -294,6 +289,7 @@
  */
 - (void)startPortChecking
 {
+    self.reachabilityStatus = kMGSPortReachabilityNA;
     if (!_portChecker) {
         
         NSString *portCheckerURL = @"http://portcheck.mugginsoft.com";
@@ -302,17 +298,19 @@
         NSURL *url = [NSURL URLWithString:portCheckerURL];
         _portChecker = [[MGSPortChecker alloc] initForURL:url];
         if (!_portChecker) {
-            [self postStatusNotification];
-            return;
+             return;
         }
-        _portChecker.portNumber = self.listeningPort;
         _portChecker.portQueryTimeout = 10.0;
         _portChecker.delegate = self;
         // set correct checker path
         NSString *path = _portChecker.path;
         _portChecker.path = [portCheckerPath stringByAppendingPathComponent:path];
     }
-    self.mappingStatus = kMGSInternetSharingPortDiscovery;
+
+    // we may have changed port
+    _portChecker.portNumber = self.externalPort;
+
+    _notificationPending = YES;
     [_portChecker start];
 }
 
@@ -337,15 +335,14 @@
 - (void)startPortMapping
 {
 	// make sure that we have initialised
-	[self initialisePortMapping];
-	
+    if (!_portMapper) {
+        [self initialisePortMapping];
+	}
+    
 	// start mapping if port mot mapped
 	if ([self mappingStatus] == kMGSInternetSharingPortNotMapped) {
+        _notificationPending = YES;
 		[_portMapper startMapping];
-	} else {
-		
-		// our client will be waiting for a notification.
-		[self postStatusNotification];
 	}
 }
 
@@ -358,10 +355,11 @@
 {
 	if (_portMapper) {
 		if (self.externalPort > 0) {
+             _notificationPending = YES;
 			[_portMapper remapWithExternalPort:self.externalPort listeningPort:self.listeningPort];
 		}
 	} else {
-		[self startPortMapping];
+		MLogInfo(@"Cannot remap. Port mapper is not allocated.");
 	}
 }
 
@@ -372,20 +370,47 @@
  */
 - (void)stopPortMapping
 {
-	// start mapping if port mot mapped
-	if ([self mappingStatus] == kMGSInternetSharingPortMapped) {
-		[_portMapper stopMapping];
-	} else {
-		
-		// our client will be waiting for a notification.
-		[self postStatusNotification];
-	}
+	// stop mapping if port mapped
+    if (_portMapper) {
+        if ([self mappingStatus] == kMGSInternetSharingPortMapped) {
+             _notificationPending = YES;
+            [_portMapper stopMapping];
+        }
+    } else {
+		MLogInfo(@"Cannot stop. Port mapper is not allocated.");        
+    }
 }
-
 
 /*
  
- dispose 
+ initialise port mapping
+ 
+ */
+- (void)initialisePortMapping
+{
+	NSAssert(self.listeningPort != 0, @"Cannot start port mapper as listening port not defined");
+	
+	// lazy allocation
+	if (!_portMapper) {
+		
+		// validate external port
+		if (self.externalPort == 0) {
+			return;
+		}
+		
+		// initialise the mapper
+		_portMapper = [[MGSPortMapper alloc] initWithExternalPort:self.externalPort listeningPort:self.listeningPort];
+		_portMapper.delegate = self;
+		
+	}
+	
+}
+
+#pragma mark -
+#pragma mark Disposal
+/*
+ 
+ dispose
  
  call on termination
  
@@ -402,6 +427,8 @@
     
 }
 
+#pragma mark -
+#pragma mark Preference handling
 /*
  
  - savePreferences
@@ -410,7 +437,7 @@
 - (void)savePreferences
 {
 	// write out preferences
-	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.enableInternetAccessAtLogin] forKey:MGSEnableInternetAccessAtLogin];
+	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.automaticallyMapPort] forKey:MGSEnableInternetAccessAtLogin];
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.allowInternetAccess] forKey:MGSAllowInternetAccess];
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.allowLocalUsersToAuthenticate] forKey:MGSAllowLocalUsersToAuthenticate];
 	[[MGSPreferences standardUserDefaults] setObject:[NSNumber numberWithBool:self.allowRemoteUsersToAuthenticate] forKey:MGSAllowRemoteUsersToAuthenticate];
@@ -421,101 +448,6 @@
 }
 
 
-/*
- 
- status dictionary
- 
- */
-- (NSDictionary *)statusDictionary
-{
-	NSDictionary *dict =  [NSDictionary dictionaryWithObjectsAndKeys: 
-			[NSNumber numberWithInteger:kMGSInternetSharingRequestStatus], MGSInternetSharingKeyRequest,
-			[NSNumber numberWithInteger:[self mappingStatus]], MGSInternetSharingKeyMappingStatus,
-			[self IPAddressString], MGSInternetSharingKeyIPAddress,
-			[self gatewayName], MGSInternetSharingKeyGatewayName,
-			[NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
-			[NSNumber numberWithBool:self.allowInternetAccess], MGSAllowInternetAccess,
-            [NSNumber numberWithBool:self.allowLocalAccess], MGSAllowLocalAccess,
-			[NSNumber numberWithBool:self.enableInternetAccessAtLogin], MGSEnableInternetAccessAtLogin,
-            [NSNumber numberWithBool:self.allowLocalUsersToAuthenticate], MGSAllowLocalUsersToAuthenticate,
-            [NSNumber numberWithBool:self.allowRemoteUsersToAuthenticate], MGSAllowRemoteUsersToAuthenticate,
-			nil];
-	
-	MLog(DEBUGLOG, @"Internet sharing response dict sent by server: %@", [dict propertyListStringValue]);
-	
-	return dict;
-}
-
-/*
- 
- ip address string
- 
- */
-- (NSString *)IPAddressString
-{
-	NSString *address = nil;
-	
-	if (_portMapper) {
-		address = [_portMapper externalIPAddress];
-	}
-	
-	if (!address) {
-		address = NSLocalizedString(@"not available", @"Internet sharing IP address not available");
-	}
-	
-	return address;
-}
-
-
-/*
- 
- gateway name
- 
- */
-- (NSString *)gatewayName
-{
-	NSString *name = nil;
-	
-	if (_portMapper) {
-		name = [_portMapper gatewayName];
-	}
-	
-	if (!name) {
-		name = NSLocalizedString(@"not available", @"Internet sharing gateway name not available");
-	}
-	
-	return name;
-}
-
-
-/*
- 
- mapping status
- 
- */
-- (MGSInternetSharingMappingStatus)mappingStatus
-{
-	if (_portMapper) {
-		switch ([_portMapper mappingStatus])
-		{
-				
-			case TCMPortMappingStatusTrying:
-				return kMGSInternetSharingPortTryingToMap;
-				break;
-				
-			case TCMPortMappingStatusMapped:
-				return kMGSInternetSharingPortMapped;
-				break;
-
-			case TCMPortMappingStatusUnmapped:
-			default:
-				return kMGSInternetSharingPortNotMapped;
-				break;
-		}
-	} else {
-		return kMGSInternetSharingPortNotMapped;
-	}
-}
 
 #pragma mark -
 #pragma mark MGSPortMapperDelegate
@@ -537,6 +469,27 @@
  */
 - (void)portMapperDidFinishWork
 {
+    self.IPAddressString = [self notAvailableString];
+    self.gatewayName = [self notAvailableString];
+    
+    switch ([_portMapper mappingStatus])
+    {
+        case TCMPortMappingStatusTrying:
+            self.mappingStatus = kMGSInternetSharingPortTryingToMap;
+            break;
+            
+        case TCMPortMappingStatusMapped:
+            self.mappingStatus = kMGSInternetSharingPortMapped;
+            self.IPAddressString = [_portMapper externalIPAddress];
+            self.gatewayName = [_portMapper gatewayName];
+            break;
+            
+        case TCMPortMappingStatusUnmapped:
+        default:
+            self.mappingStatus = kMGSInternetSharingPortNotMapped;
+            break;
+    }
+ 
 	NSInteger externalPort = [_portMapper externalPort];
 	
 	// our allocated port may differ from our requested port if the requested port was already mapped
@@ -544,7 +497,7 @@
 		self.externalPort = externalPort;
 	}
 	
-	[self postStatusNotification];
+	[self startPortChecking];
 }
 
 #pragma mark -
@@ -557,45 +510,32 @@
  */
 
 - (void)portCheckerDidFinishProbing:(MGSPortChecker *)portChecker
-{    
+{
+    self.IPAddressString = [self notAvailableString];
+    
     switch ([portChecker status]) {
         case kMGS_PORT_STATUS_NA:
+            self.reachabilityStatus = kMGSPortReachabilityNA;
         break;
 
         case kMGS_PORT_STATUS_OPEN:
+            self.reachabilityStatus = kMGSPortReachable;
             self.externalPort = portChecker.portNumber;
-#ifdef MGS_DEBUG
-            NSLog(@"Requested mappingStatus: %d", kMGSInternetSharingPortOpen);
-#endif
-            self.mappingStatus = kMGSInternetSharingPortOpen;
-#ifdef MGS_DEBUG
-            NSLog(@"Persisted mappingStatus: %d", self.mappingStatus);
-#endif
+            self.IPAddressString = portChecker.gatewayAddress;
         break;
 
         case kMGS_PORT_STATUS_CLOSED:
+            self.reachabilityStatus = kMGSPortNotReachable;
         break;
 
         case kMGS_PORT_STATUS_ERROR:
-        break;
-
         default:
+            self.reachabilityStatus = kMGSPortReachabilityNA;
         break;
     }
     
+    [self postStatusNotification];
     
-    if (self.mappingStatus == kMGSInternetSharingPortOpen) {
-        [self postStatusNotification];
-    } else {
-        self.mappingStatus = kMGSInternetSharingPortClosed;
-        
-        if (_attemptPortMapping) {
-            self.mappingStatus = kMGSInternetSharingPortNotMapped;
-            [self startPortMapping];
-        } else {
-            [self postStatusNotification];
-        }
-    }
 }
 
 @end

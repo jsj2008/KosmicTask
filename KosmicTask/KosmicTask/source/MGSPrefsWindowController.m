@@ -24,6 +24,8 @@
 #import "MGSSecurity.h"
 #import "MGSPath.h"
 
+char MGSAutoMappingContext;
+
 NSString *MGSMotherLaunchdPlist = @"com.mugginsoft.kosmictasklaunchd.plist";
 
 // defaults keys
@@ -85,19 +87,6 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	return self;
 }
 
-
-
-/*
- 
- start or stop internet sharing
- 
- */
-- (IBAction)toggleInternetSharing:(id)sender
-{
-	#pragma unused(sender)
-	[[MGSInternetSharingClient sharedInstance] toggleStartStop:self];
-}
-
 /*
  
  refresh internet sharing
@@ -106,7 +95,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 - (IBAction)refreshInternetSharing:(id)sender
 {
 	#pragma unused(sender)
-	
+	[self commitEditingAndDiscard:NO];
 	[[MGSInternetSharingClient sharedInstance] requestStatusUpdate];
 }
  
@@ -317,6 +306,9 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	
 	//  prefs internet sharing controls bound to internetSharingObjectController
 	[internetSharingObjectController setContent:internetSharingClient];
+    
+    // add observers
+    [internetSharingClient addObserver:self forKeyPath:@"automaticallyMapPort" options:0 context:&MGSAutoMappingContext];
 }
 
 /*
@@ -399,6 +391,9 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 - (void)retrieveServerPreferences
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    BOOL autoMap = [defaults boolForKey:MGSEnableInternetAccessAtLogin];
+	[autoMappingCheckbox setState:autoMap];
 
 	BOOL useSSL = [defaults boolForKey:MGSEnableServerSSLSecurity];
 	[useSSLCheckbox setState:useSSL];
@@ -489,6 +484,39 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 #pragma unused(sender)
     
 	[[NSUserDefaultsController sharedUserDefaultsController] revertToInitialValues:nil];
+}
+
+#pragma mark -
+#pragma mark Observing
+
+/*
+ 
+ - observeValueForKeyPath:ofObject:change:context:
+ 
+ */
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == &MGSAutoMappingContext) {
+        BOOL autoMapping = [[MGSInternetSharingClient sharedInstance] automaticallyMapPort];
+        autoMappingCheckbox.state = (autoMapping ? NSOnState: NSOffState);
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+#pragma mark -
+#pragma mark DBPrefsWindowController
+/*
+ 
+ - autoMappingAction
+ 
+ */
+- (IBAction)autoMappingAction:(id)sender
+{
+    [self commitEditingAndDiscard:NO];
+    
+    MGSInternetSharingClient *internetSharingClient = [MGSInternetSharingClient sharedInstance];
+    internetSharingClient.automaticallyMapPort = ([sender state] == NSOnState ? YES : NO);
 }
 
 #pragma mark -
