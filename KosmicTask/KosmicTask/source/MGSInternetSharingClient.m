@@ -151,9 +151,13 @@ static id _sharedInstance = nil;
  */
 - (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict waitOnResponse:(BOOL)wait
 {
+    BOOL useInvocation = NO;
+    
     // are we awaiting a reponse?
-    if (!self.responseReceived) {
+    if (!self.responseReceived && useInvocation) {
         
+        // this approach fails because when invoked the dict argument
+        // seems to contain a CFType which is invalid for a Plist
         NSMethodSignature *aSignature = [[self class] instanceMethodSignatureForSelector:_cmd];
         _requestInvocation = [NSInvocation invocationWithMethodSignature:aSignature];
         _requestInvocation.target = self;
@@ -164,16 +168,7 @@ static id _sharedInstance = nil;
         return;
     }
     
-	if (wait) {
-        self.responseReceived = NO;
-	}
-    
-	// send out a distributed notification
-	[[NSDistributedNotificationCenter defaultCenter]
-     postNotificationName: MGSDistNoteInternetSharingRequest
-     object:self.noteObjectString
-     userInfo:dict
-     deliverImmediately:YES];
+	[super postDistributedRequestNotificationWithDict:dict waitOnResponse:wait];
 }
 
 #pragma mark -

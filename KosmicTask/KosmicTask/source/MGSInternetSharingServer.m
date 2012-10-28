@@ -151,36 +151,26 @@
             // automatically map port
 		case kMGSInternetSharingRequestMapPort:
         {
-            NSInteger prevPort = self.externalPort;
 			NSInteger port = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
             if (port == 0) {
+                MLog(RELEASELOG, @"Cannot complete map port request. Requested port is 0.");
                 break;
             }
-            self.externalPort = port;
-			self.automaticallyMapPort = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
             
+			self.automaticallyMapPort = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
             if (self.automaticallyMapPort) {
                 
                 if ([self mappingStatus] == kMGSInternetSharingPortMapped) {
-                    self.externalPort = prevPort;
-                    MLog(RELEASELOG, @"Cannot complete map port request as mapping is already active.");
+                    MLog(RELEASELOG, @"Cannot complete map port request. Mapping is already active.");
                     break;
                 }
-                
-                // if no port mapper defined then start it up
-                if (!_portMapper) {
-                    [self startPortMapping];
-                 } else {
-                     
-                     // if port has changed then remap, otherwise start
-                     if (prevPort != self.externalPort) {
-                         [self remapPortMapping];
-                         [self startPortMapping];
-                     } else {
-                         [self startPortMapping];
-                     }
-                }
-            } else {
+            }
+            
+            self.externalPort = port;
+            
+            if (self.automaticallyMapPort) {
+                 [self startPortMapping];
+             } else {
                 [self stopPortMapping];
             }
         }
@@ -239,6 +229,27 @@
 	return dict;
 }
 
+#pragma mark -
+#pragma mark Accessors
+
+/*
+ 
+ - setExternalPort:
+ 
+ */
+- (void)setExternalPort:(NSInteger)port
+{
+    BOOL remap = NO;
+    
+    if (self.externalPort != port) {
+        remap = YES;
+    }
+    super.externalPort = port;
+    
+    if (remap && _portMapper) {
+        [self remapPortMapping];
+    }
+}
 
 #pragma mark -
 #pragma mark Reachability
