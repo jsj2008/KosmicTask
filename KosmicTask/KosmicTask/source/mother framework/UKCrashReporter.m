@@ -153,7 +153,9 @@ BOOL UKValidateCrashLogFolder(NSString *crashLogsFolder)
     // validate
     if ([[NSFileManager defaultManager] fileExistsAtPath:crashLogsFolder isDirectory:&isDirectory]) {
         if (!isDirectory) {
+#ifdef UK_DEBUG
             NSLog(@"Diagnostic reports folder not found at : %@", crashLogsFolder);
+#endif
             valid = NO;
         }
     }
