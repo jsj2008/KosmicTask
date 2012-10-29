@@ -15,6 +15,7 @@
 #import <AddressBook/AddressBook.h>
 
 NSString*	UKCrashReporterFindTenFiveCrashReportPath( NSString* appName, NSString* crashLogsFolder );
+BOOL UKValidateCrashLogFolder(NSString *crashLogsFolder);
 
 // -----------------------------------------------------------------------------
 //	UKCrashReporterCheckForCrash:
@@ -32,12 +33,15 @@ NSString*	UKCrashReporterFindTenFiveCrashReportPath( NSString* appName, NSString
 //		for the developer and *mustn't* interfere with regular operation of the
 //		application.
 //
-// MugginSoft 16 June 08
+// Mugginsoft 16 June 08
 // Added crashedAppName argument to enable crash detection for auxiliary executables.
 // Not sure what will happen if two app components crash at the same time!
 //
-// MugginSoft 18 August 08
+// Mugginsoft 18 August 08
 // Added log file path argument.
+//
+// Mugginsoft 29 October 12
+// Added support for OS X 10.8
 // -----------------------------------------------------------------------------
 
 void	UKCrashReporterCheckForCrash(NSString *crashedAppName, NSString *appLogFilePath)
@@ -57,22 +61,40 @@ void	UKCrashReporterCheckForCrash(NSString *crashedAppName, NSString *appLogFile
 		long	sysvMajor = 0, sysvMinor = 0, sysvBugfix = 0;
 		UKGetSystemVersionComponents( &sysvMajor, &sysvMinor, &sysvBugfix );
 		BOOL	isTenFiveOrBetter = sysvMajor >= 10 && sysvMinor >= 5;
-		
+		BOOL	isTenSixOrBetter = sysvMajor >= 10 && sysvMinor >= 6;
+    
 		// Get the crash log file, its last change date and last report date:
-		// MugginSoft 16 June 08
-		//
 		NSString *		appName = crashedAppName;
 		if (!appName) {
 			appName = [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleExecutable"];
 		}
-		// MugginSoft 16 June 08
-		NSString*		crashLogsFolder = [@"~/Library/Logs/CrashReporter/" stringByExpandingTildeInPath];
+        NSString* crashLogsFolder = nil;
+ 
+        // 10.6 +
+        if (isTenSixOrBetter) {
+            
+            // Note: on 10.6 and 10.7 (but not above)
+            // crash log folder path aliases in the pre 10.6 path point here.
+            crashLogsFolder = [@"~/Library/Logs/DiagnosticReports/" stringByExpandingTildeInPath];
+            if (!UKValidateCrashLogFolder(crashLogsFolder)) {
+                return;
+            }
+        } else {
+    
+            // pre 10.6 crash log folder path
+            crashLogsFolder = [@"~/Library/Logs/CrashReporter/" stringByExpandingTildeInPath];        
+            if (!UKValidateCrashLogFolder(crashLogsFolder)) {
+                return;
+            }
+        }
+    
 		NSString*		crashLogName = [appName stringByAppendingString: @".crash.log"];
 		NSString*		crashLogPath = nil;
 		if( !isTenFiveOrBetter )
 			crashLogPath = [crashLogsFolder stringByAppendingPathComponent: crashLogName];
 		else
 			crashLogPath = UKCrashReporterFindTenFiveCrashReportPath( appName, crashLogsFolder );
+    
 	NSDictionary*	fileAttrs = [[NSFileManager defaultManager] attributesOfItemAtPath:crashLogPath error:NULL];
 		NSDate*			lastTimeCrashLogged = (fileAttrs == nil) ? nil : [fileAttrs fileModificationDate];
 		NSTimeInterval	lastCrashReportInterval = [[NSUserDefaults standardUserDefaults] floatForKey: @"UKCrashReporterLastCrashReportDate"];
@@ -116,6 +138,27 @@ void	UKCrashReporterCheckForCrash(NSString *crashedAppName, NSString *appLogFile
 	NS_ENDHANDLER
 	
 	[pool release];
+}
+
+/*
+ 
+ UKValidateCrashLogFolder
+ 
+ */
+BOOL UKValidateCrashLogFolder(NSString *crashLogsFolder)
+{
+    BOOL valid = YES;
+    BOOL isDirectory = NO;
+    
+    // validate
+    if ([[NSFileManager defaultManager] fileExistsAtPath:crashLogsFolder isDirectory:&isDirectory]) {
+        if (!isDirectory) {
+            NSLog(@"Diagnostic reports folder not found at : %@", crashLogsFolder);
+            valid = NO;
+        }
+    }
+    
+    return valid;
 }
 
 NSString*	UKCrashReporterFindTenFiveCrashReportPath( NSString* appName, NSString* crashLogsFolder )
@@ -286,7 +329,7 @@ NSString*	gCrashLogString = nil;
 	[postRequest setHTTPMethod: @"POST"];
 	[postRequest setValue: contentType forHTTPHeaderField: @"Content-Type"];
 	[postRequest setValue: agent forHTTPHeaderField: @"User-Agent"];
-	NSString *contentLength = [NSString stringWithFormat:@"%lu", [formData length]];
+	NSString *contentLength = [NSString stringWithFormat:@"%u", [formData length]];
 	[postRequest setValue: contentLength forHTTPHeaderField: @"Content-Length"];
 	[postRequest setHTTPBody: formData];
 	
