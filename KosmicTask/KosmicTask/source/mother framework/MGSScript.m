@@ -37,6 +37,8 @@ NSString *MGSScriptOriginUser = @"User";
 
 static NSString *MGSScriptException = @"MGSScriptException";
 
+MGS_INSTANCE_TRACKER_DEFINE;
+
 const char MGSLangSettingsOnRunContext;
 
 // class extension
@@ -519,6 +521,8 @@ errorExit:;
 	if (self) {
 		_modelDataKVCModified = NO;
 		syncingWithLanguageProperties = NO;
+        
+        MGS_INSTANCE_TRACKER_ALLOCATE;
 	}
 	return self;
 }
@@ -647,6 +651,8 @@ errorExit:;
 #ifdef MGS_LOG_FINALIZE
     MLog(DEBUGLOG, @"MGSScript finalized");
 #endif
+    
+    MGS_INSTANCE_TRACKER_DEALLOCATE;
     
 	[super finalize];
 }

@@ -15,6 +15,8 @@
 #import "MGSNetAttachment.h"
 #import "MGSNetNegotiator.h"
 
+MGS_INSTANCE_TRACKER_DEFINE;
+
 enum MGSNetSocketFlags {
 	kSecureConnectionRequested      = 1 <<  0,  // If set, a secure connection has been requested
 	kSecureConnection				= 1 <<  1,  // If set, a secure connection has been established
@@ -74,6 +76,8 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 		_delegate = nil;
 		_sendAttachmentIndex = 0;
 		_readAttachmentIndex = 0;
+        
+        MGS_INSTANCE_TRACKER_ALLOCATE;
 	}
 	
 	return self;
@@ -117,6 +121,8 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
 - (void)finalize
 {
 
+    MGS_INSTANCE_TRACKER_DEALLOCATE;
+    
     // we really don't want to access any objects in fiablize!
     
 	// disconnect must have been called on the socket

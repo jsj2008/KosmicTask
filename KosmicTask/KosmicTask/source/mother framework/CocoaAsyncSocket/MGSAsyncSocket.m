@@ -12,6 +12,8 @@
 #import "MGSAsyncSocket.h"
 #import "MGSMother.h"
 
+MGS_INSTANCE_TRACKER_DEFINE;
+
 @interface AsyncSocket()
 - (void)doSendBytes;
 - (void)doBytesAvailable;
@@ -31,6 +33,8 @@
 		disconnectCalled = NO;
 		readSuspended = NO;
 		writeSuspended = NO;
+        
+        MGS_INSTANCE_TRACKER_ALLOCATE;
 	}
 	
 	return self;
@@ -62,6 +66,8 @@
  */
 - (void)finalize
 {
+    MGS_INSTANCE_TRACKER_DEALLOCATE;
+    
 	// disconnect must be called for all instances
 	if (!disconnectCalled) {
 		MLogInfo (@"AsyncSocket finalize without prior disconnect call: %@", self);

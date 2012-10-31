@@ -26,9 +26,7 @@ enum MGSNetRequestFlags {
 static 	unsigned long int requestSequenceID = 0;		// request sequence counter
 static NSThread *networkThread = nil;
 
-#ifdef MGS_DEBUG
-static NSInteger activeInstances = 0;
-#endif
+MGS_INSTANCE_TRACKER_DEFINE;
 
 // class extension
 @interface MGSNetRequest()
@@ -147,10 +145,7 @@ static NSInteger activeInstances = 0;
     if (self) {
         [self initialise];
 
-#ifdef MGS_DEBUG
-        MLogDebug(@"ALLOC: %@ activeInstances: %u", [self className], ++activeInstances);
-#endif
-        
+        MGS_INSTANCE_TRACKER_ALLOCATE;
     }
     
     return self;
@@ -621,9 +616,7 @@ static NSInteger activeInstances = 0;
 	MLog(DEBUGLOG, @"MGSNetRequest finalized");
 #endif
     
-#ifdef MGS_DEBUG
-    MLogDebug(@"DEALLOC: %@ activeInstances: %u", [self className], --activeInstances);
-#endif
+    MGS_INSTANCE_TRACKER_DEALLOCATE;
     
     if (!self.disposed) {
         NSLog(@"Request was not disposed");

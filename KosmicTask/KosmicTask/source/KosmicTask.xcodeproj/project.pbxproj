@@ -722,6 +722,7 @@
 		AB95E42810C6898900BD0814 /* MGSMetaDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA762380EE9782F00D900A6 /* MGSMetaDataHandler.m */; };
 		AB96E7A00D46121B005814D4 /* AMProgressIndicatorTableColumnController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB96E79E0D46121B005814D4 /* AMProgressIndicatorTableColumnController.m */; };
 		AB96EA430D46A1D6005814D4 /* MGSSidebarOutlineController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB96EA420D46A1D6005814D4 /* MGSSidebarOutlineController.m */; };
+		AB978AC0164177B400ED9CE3 /* MGSInstanceTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = AB978ABF164177B400ED9CE3 /* MGSInstanceTracker.h */; };
 		AB97DF330EE32CFF000CD96E /* CloseTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB97DF320EE32CFF000CD96E /* CloseTemplate.tif */; };
 		AB98459D0D40BC4C0072DDA4 /* MGSTaskSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = AB98459C0D40BC4C0072DDA4 /* MGSTaskSpecifier.m */; };
 		AB9845E10D40C0310072DDA4 /* MGSTaskSpecifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9845E00D40C0310072DDA4 /* MGSTaskSpecifierManager.m */; };
@@ -4176,6 +4177,7 @@
 		AB96EA420D46A1D6005814D4 /* MGSSidebarOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSidebarOutlineController.m; sourceTree = "<group>"; };
 		AB971ED90CEF7BB3007DAF6E /* MGSNetServerHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSNetServerHandler.h; path = ../MGSNetServerHandler.h; sourceTree = "<group>"; };
 		AB971EDA0CEF7BB3007DAF6E /* MGSNetServerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSNetServerHandler.m; path = ../MGSNetServerHandler.m; sourceTree = "<group>"; };
+		AB978ABF164177B400ED9CE3 /* MGSInstanceTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSInstanceTracker.h; sourceTree = "<group>"; };
 		AB97DF320EE32CFF000CD96E /* CloseTemplate.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = CloseTemplate.tif; sourceTree = "<group>"; };
 		AB98459B0D40BC4C0072DDA4 /* MGSTaskSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTaskSpecifier.h; sourceTree = "<group>"; };
 		AB98459C0D40BC4C0072DDA4 /* MGSTaskSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSTaskSpecifier.m; sourceTree = "<group>"; };
@@ -7800,6 +7802,7 @@
 				ABA22FA10E348422003A2E76 /* NSPointFunctions_CocoaDevUsersAdditions.h */,
 				ABB2EE1D10F76B3D009EFB6A /* MGSTrialRestrictions.h */,
 				AB8249A51179DB830068ABE8 /* MGSKosmicTask_vers.h */,
+				AB978ABF164177B400ED9CE3 /* MGSInstanceTracker.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -9047,6 +9050,7 @@
 				AB9132F91620469100B4B032 /* MGSNetwork.h in Headers */,
 				AB13E4D816388480001A5921 /* MGSPortChecker.h in Headers */,
 				AB7563A21639C1560067BFC6 /* Reachability.h in Headers */,
+				AB978AC0164177B400ED9CE3 /* MGSInstanceTracker.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16958,6 +16962,7 @@
 					"-DMGS_DEBUG",
 					"-DMGS_LOG_FINALIZE",
 					"-DUK_DEBUG",
+					"-DMGS_INSTANCE_TRACKER",
 				);
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;
