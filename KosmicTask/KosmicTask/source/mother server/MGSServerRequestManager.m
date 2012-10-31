@@ -26,6 +26,7 @@ static MGSServerRequestManager *_sharedController = nil;
 - (BOOL)concludeRequest:(MGSServerNetRequest *)netRequest;
 - (void)sendErrorResponse:(MGSServerNetRequest *)netRequest error:(MGSError *)mgsError isScriptCommand:(BOOL)isScriptCommand;
 - (BOOL)initialise;
+-(void)sendAccessDeniedResponse:(MGSServerNetRequest *)netRequest;
 @end
 
 @implementation MGSServerRequestManager
@@ -148,10 +149,11 @@ static MGSServerRequestManager *_sharedController = nil;
 		goto send_error_reply;
 	}
 	NSString *command = object;
-		
+	
+    
 	//==========================================================
 	// 
-	// parse request command
+	// parse negotiator
 	//
 	//==========================================================
 	if ([command isEqual:MGSNetMessageCommandNegotiate]) {
@@ -160,15 +162,39 @@ static MGSServerRequestManager *_sharedController = nil;
 		MGSNetNegotiator *requestNegotiator = netRequest.requestMessage.negotiator;
 		MGSNetNegotiator *responseNegotiator = [requestNegotiator copy];
 		[netRequest.responseMessage applyNegotiator:responseNegotiator];
-	
-		// send reply
 		[netRequest.responseMessage setCommand:command];
-		[self sendResponseOnSocket:netRequest wasValid:YES];
-
+        
+        // if we return an error in the negotiator we forestall perhaps having to
+        // setup and then teardown TLS
+        if ([[netRequest netServerSocket] connectionApproved] == NO) {
+            [self sendAccessDeniedResponse:netRequest];
+        } else {
+            [self sendResponseOnSocket:netRequest wasValid:YES];
+        }
+        
 		return;
-		
+	}
+    
+    // validate if access is allowed.
+    // when the socket first connects we screen the IP and flag
+    // if the connection is approved.
+    //
+    // the socket has the option of dropping the connection there and then
+    // or setting the connectionApproved flag accordingly.
+    //
+    if ([[netRequest netServerSocket] connectionApproved] == NO) {
+		[netRequest.responseMessage setCommand:command];
+        [self sendAccessDeniedResponse:netRequest];
+        return;
+    }
+
+	//==========================================================
+	//
+	// parse request command
+	//
+	//==========================================================
 	// heartbeat
-	} else if ([command isEqual:MGSNetMessageCommandHeartbeat]) {
+    if ([command isEqual:MGSNetMessageCommandHeartbeat]) {
 		
 		/*
 		 
@@ -237,18 +263,37 @@ send_error_reply:;
 
 /*
  
- send error response 
+ - sendAccessDeniedResponse:
+ 
+ */
+-(void)sendAccessDeniedResponse:(MGSServerNetRequest *)netRequest
+{
+    NSInteger errorCode = MGSErrorCodeServerAccessDenied;
+    NSString *error = NSLocalizedString(@"Access denied.", @"Error returned by server");
+    MGSError *mgsError = [MGSError serverCode:errorCode reason:error];
+    [self sendErrorResponse:netRequest error:mgsError isScriptCommand:NO];
+}
+
+/*
+ 
+ send error response
  
  */
 - (void)sendErrorResponse:(MGSServerNetRequest *)netRequest error:(MGSError *)mgsError isScriptCommand:(BOOL)isScriptCommand
 {
-	
-	// validate script error command reply
+	// we need an error
+    if (!mgsError) {
+        mgsError = [MGSError serverCode:MGSErrorCodeServerUnknown];
+    }
+
+    MGSNetMessage *responseMessage = [netRequest responseMessage];
+
+	// a script command error is inserted under the MGSScriptKeyKosmicTask
+    // key
 	if (isScriptCommand) {
 		
 		// validate that the request has a suitable reply
 		// and error. if it does not insert a generic error message.
-		MGSNetMessage *responseMessage = [netRequest responseMessage];
 		NSMutableDictionary *messageDict = [responseMessage messageDict];
 		NSMutableDictionary *replyDict = nil;
 		
@@ -263,13 +308,12 @@ send_error_reply:;
 		
 		// make sure that the error dict is defined
 		if ([replyDict objectForKey:MGSScriptKeyNSErrorDict] == nil) {
-			if (!mgsError) {
-				mgsError = [MGSError serverCode:MGSErrorCodeServerUnknown];
-			}
 			[replyDict setObject:[mgsError dictionary] forKey:MGSScriptKeyNSErrorDict];
 		}
 		
-	}
+	} else {
+        [responseMessage setError:mgsError];
+    }
 	
 	// flag request as invalid in reply and send
 	// when the client reads that the request was invalid it

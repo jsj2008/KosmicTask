@@ -26,11 +26,17 @@ enum MGSNetRequestFlags {
 static 	unsigned long int requestSequenceID = 0;		// request sequence counter
 static NSThread *networkThread = nil;
 
+#ifdef MGS_DEBUG
+static NSInteger activeInstances = 0;
+#endif
+
 // class extension
 @interface MGSNetRequest()
 + (void)runNetworkThread;
 - (void)invalidateRWTimers;
 - (void)requestDidTimeout:(NSTimer *)timer;
+- (void)_socketDidDisconnect;
+
 @property (readwrite) NSUInteger flags;
 @property (readwrite) MGSNetMessage *responseMessage;
 @property (readwrite) NSUInteger timeoutCount;
@@ -140,6 +146,11 @@ static NSThread *networkThread = nil;
     self = [super init];
     if (self) {
         [self initialise];
+
+#ifdef MGS_DEBUG
+        MLogDebug(@"ALLOC: %@ activeInstances: %u", [self className], ++activeInstances);
+#endif
+        
     }
     
     return self;
@@ -187,25 +198,6 @@ static NSThread *networkThread = nil;
     [self.responseMessage releaseDisposable];
 }
 
-
-/*
- 
- socket disconnected
- 
- this method is called from multiple threads
- 
- */
-- (void)setSocketDisconnected
-{
-	self.status = kMGSStatusDisconnected;
-    
-    [self invalidateRWTimers];
-
-#ifdef MGS_LOG_DISCONNECT
-    NSLog(@"socket disconnected for request: %@", self.requestMessage.messageDict);
-#endif
-    
-}
 
 /*
  
@@ -629,6 +621,10 @@ static NSThread *networkThread = nil;
 	MLog(DEBUGLOG, @"MGSNetRequest finalized");
 #endif
     
+#ifdef MGS_DEBUG
+    MLogDebug(@"DEALLOC: %@ activeInstances: %u", [self className], --activeInstances);
+#endif
+    
     if (!self.disposed) {
         NSLog(@"Request was not disposed");
         return;
@@ -716,6 +712,36 @@ static NSThread *networkThread = nil;
 
 #pragma mark -
 #pragma mark Connection handling
+
+/*
+ 
+ - socketDidDisconnect
+ 
+ this method may be called from multiple threads
+ 
+ */
+- (void)socketDidDisconnect
+{
+    [self _socketDidDisconnect];
+}
+
+/*
+ 
+ - _socketDidDisconnect
+ 
+ */
+- (void)_socketDidDisconnect
+{
+	self.status = kMGSStatusDisconnected;
+    [self invalidateRWTimers];
+    
+#ifdef MGS_LOG_DISCONNECT
+    NSLog(@"socket disconnected for request: %@", self.requestMessage.messageDict);
+#endif
+    
+}
+
+
 /*
  
  disconnect
@@ -726,7 +752,7 @@ static NSThread *networkThread = nil;
     // a socket only reports itself -isSocketConnected as connected if the CFStream
     // object that it encapsulates has an open status.
     // if no data has been sent on the stream.
-    // however the socket has still be constructed.
+    // however the socket has still been constructed.
     //
 	if ([self isSocketConnected] || self.status != kMGSStatusDisconnected) {
 		[_netSocket disconnect];
@@ -734,7 +760,7 @@ static NSThread *networkThread = nil;
         // the socket should update the request status
         // but we need to make sure that this occurs now
         if (self.status != kMGSStatusDisconnected) {
-            [self setSocketDisconnected];
+            [self socketDidDisconnect];
         }
 	} else {
         MLogDebug(@"Attempting to disconnect already disconnected socket.");

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSNetRequest.h"
+#import "MGSNetServerSocket.h"
 
 @interface MGSServerNetRequest : MGSNetRequest
 
@@ -17,5 +18,6 @@
 - (void)sendResponseChunkOnSocket:(NSData *)data;
 - (BOOL)authenticate;
 - (BOOL)authenticateWithAutoResponseOnFailure:(BOOL)autoResponse;
+- (MGSNetServerSocket *)netServerSocket;
 
 @end

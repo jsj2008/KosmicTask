@@ -50,6 +50,11 @@
 	 
 	 */
 	if ([_netRequests containsObject:netRequest]) {
+        
+        if (netRequest.requestMessage.isNegotiateMessage) {
+            MLogDebug(@"Unexpeectedly found a negotiate request: %@", netRequest.requestMessage);
+        }
+        
 		[_netRequests removeObject:netRequest];
 
 		MLog(DEBUGLOG, @"removeRequest: request handler count is now %i", [_netRequests count]);
@@ -92,8 +97,13 @@
  */
 - (BOOL)addRequest:(MGSNetRequest *)netRequest
 {
+    // negotitate messages are not expected
+    if (netRequest.requestMessage.isNegotiateMessage) {
+        MLogDebug(@"Unexpected negotiate message being added.");
+    }
+    
     if ([_netRequests containsObject:netRequest]) {
-        MLogDebug(@"Request is already in queue");
+        MLogDebug(@"Request is already in queue.");
         return NO;
     }
     

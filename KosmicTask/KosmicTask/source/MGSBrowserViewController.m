@@ -981,7 +981,13 @@ errorExit:;
 		return;
 	}
 
-	// check for errors
+    // check for request error
+    if (netRequest.error) {
+        [netRequest.error log];
+        return;
+    }
+    
+	// check for payload errors
 	if (payload.requestError) {
 		
 		// an error that arrives here may or may not have been logged.
@@ -1016,6 +1022,15 @@ errorExit:;
 		[self reloadGroupTableData];
 	}
 	
+    // client can now be flagged as visible
+    if (!netClient.visible) {
+        
+        if (netClient.taskController.hasScripts) {
+            netClient.visible = YES;
+            [self reloadMachineTableData];
+        }
+    }
+    
 	// tell delegate that a valid client has become available
 	// and that its dictionary has been received.
 	if (netClient.clientStatus == MGSClientStatusNotAvailable) {
@@ -1433,7 +1448,7 @@ errorExit:
 	}
 	
 	// check that we can connect. for Bonjour resolved hosts
-	// a valid connection cannot be attempted until we recieve a TXTrecord stating the SSL mode
+	// a valid connection cannot be attempted until we receive a TXTrecord stating the SSL mode
 	if ([netClient canConnect]) {
 		
 		[self addClientObservations:netClient];
@@ -1936,7 +1951,7 @@ errorExit:
  */
 - (void)reloadMachineTableData
 {
-	// uderlying data does not change here the way it does for the group and action
+	// underlying data does not change here the way it does for the group and action
 	// so using currently selected row index to obtain an object seems okay
 	
 	// rowindex may be -1

@@ -21,6 +21,7 @@
 
 // class extension
 @interface MGSNetServerSocket()
+@property (readwrite) BOOL connectionApproved;
 - (BOOL)socketShouldConnect;
 @end
 
@@ -29,6 +30,8 @@
 // numerous instances of MGSNetClientSocket
 //
 @implementation MGSNetServerSocket
+
+@synthesize connectionApproved = _connectionApproved;
 
 
 /*
@@ -54,7 +57,8 @@
 
 		// use SSL security - presync ensures that value matches latest update from GUI
 		_enableSSLSecurity = [[MGSPreferences standardUserDefaults] boolForKey:MGSEnableServerSSLSecurity withPreSync:YES];
-		
+		_connectionApproved = YES;
+        
 		NSAssert([socket canSafelySetDelegate], @"cannot safely set new socket delegate");
 		[socket setDelegate:self];
 		 
@@ -78,7 +82,18 @@
         // if the host is from an undesirable IP we may not.
 		if (![[self delegate] netSocketShouldConnect:self]) {
             
+        /*
+         
+         we can disconnect unwanted IPS directly on send an access denied error
+         request. the latter seems desirable. we can detected that access is not allowed on the
+         socket and send an error response.
+         
+         */
+#ifdef MGS_DISCONNECT_UNWANTED_IP
             return NO;
+#else
+            self.connectionApproved = NO;
+#endif
         }
     }
     
@@ -131,7 +146,7 @@
 	
 	// mark request as disconnected
 	if (self.netRequest) {
-        [self.netRequest setSocketDisconnected];
+        [self.netRequest socketDidDisconnect];
 	}
     
 	// tell delegate that socket disconnected
@@ -324,6 +339,9 @@
          
          A better solution might be for the server to send back and invalid connection reply so that the usual 
          message passing sequence is followed.
+         
+         A better solution is to allow the soket to connect and send an access denied error response
+         to all requests.
          
          */
         return NO;

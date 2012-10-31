@@ -304,4 +304,16 @@ error_exit:
     }
 }
 
+#pragma mark -
+#pragma mark Socket handling
+
+/*
+ 
+ - netServerSocket
+ 
+ */
+- (MGSNetServerSocket *)netServerSocket
+{
+    return (MGSNetServerSocket *)_netSocket;
+}
 @end

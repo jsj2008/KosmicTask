@@ -26,6 +26,10 @@ NSString *MGSErrorDomainMotherScriptTask = @"KosmicTask Runner";
 
 static MGSErrorWindowController *_controller;
 
+@interface MGSError()
+- (BOOL)shouldLog;
+@end
+
 @implementation MGSError
 
 @synthesize date = _date, flags, machineName = _machineName;
@@ -220,36 +224,9 @@ static MGSErrorWindowController *_controller;
 	error.date = [NSDate date];
     error.machineName = @"Localhost";
     
-	BOOL logToConsole = logIt;
-	
-	// some errors we don't want to log
-	if (logIt) {
-		switch(code) {
-				
-			// don't log user space errors.
-			case MGSErrorCodeScriptBuild:
-				logIt = NO;
-				logToConsole = NO;
-				break;
-
-			case MGSErrorCodeAuthenticationFailure:
-				logIt = NO;
-				logToConsole = NO;
-				break;
-				
-			default:
-				break;
-				
-		}
-	}
-	
-	// log to controller
+	// log to controller and console
 	if (logIt) {
 		[error logToController];
-	}
-	
-	// log to console
-	if (logToConsole) {
 		[error logToConsole];
 	}
 	
@@ -333,6 +310,9 @@ static MGSErrorWindowController *_controller;
         case MGSErrorCodeServerRequestTimeout:
 			return NSLocalizedString(@"Request timed out by task server.", @"Request timeout error message");
 
+        case MGSErrorCodeServerAccessDenied:
+			return NSLocalizedString(@"Access denied.", @"Access denied error message");
+            
 		case MGSErrorCodeBadRequestFormat:
 			return NSLocalizedString(@"Invalid request format.", @"Request format error");
 			
@@ -553,6 +533,8 @@ static MGSErrorWindowController *_controller;
  */
 - (void)logToController
 {
+    if (![self shouldLog]) return;
+    
 	if (!_controller) return;
 	if (self.flags & kLoggedToController) return;
 		
@@ -567,6 +549,7 @@ static MGSErrorWindowController *_controller;
  */
 - (void)logToConsole
 {
+    if (![self shouldLog]) return;
 	if (self.flags & kLoggedToConsole) return;
 	
 	NSString *logErrorFormat = NSLocalizedString(@"ERROR: %@", @"Error log string format"); 
@@ -580,6 +563,32 @@ static MGSErrorWindowController *_controller;
 	MLogInfo(@"%@", logError);
 	
 	self.flags |= kLoggedToConsole;
+}
+
+/*
+ 
+ - shouldLog
+ 
+ */
+- (BOOL)shouldLog
+{
+    BOOL shouldLog = YES;
+    
+    switch(self.code) {
+            
+            
+        case MGSErrorCodeScriptBuild:               // user space build error
+        case MGSErrorCodeAuthenticationFailure:     // auth failure
+        case MGSErrorCodeServerAccessDenied:        // access denied
+            shouldLog = NO;
+            break;
+            
+        default:
+            break;
+            
+    }
+    
+    return shouldLog;
 }
 @end
 

@@ -99,7 +99,7 @@ typedef enum _eMGSRequestStatus {
 + (NSThread *)networkThread;
 -(void)initialise;
 - (void)resetMessages;
-- (void)setSocketDisconnected;
+- (void)socketDidDisconnect;
 - (void)setErrorCode:(NSInteger)code description:(NSString *)description;
 - (BOOL)isReadSuspended;
 - (void)setReadSuspended:(BOOL)newValue;

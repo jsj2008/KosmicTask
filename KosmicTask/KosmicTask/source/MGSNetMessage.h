@@ -99,6 +99,7 @@ extern NSString *MGSApplicationKeyRealTimeLogging;
 - (void)removeNegotiator;
 
 - (MGSError *)error;
+- (void)setError:(MGSError *)error;
 - (NSDictionary *)errorDictionary;
 - (void)setErrorDictionary:(NSDictionary *)dict;
 - (NSArray *)appData;
@@ -111,5 +112,4 @@ extern NSString *MGSApplicationKeyRealTimeLogging;
 
 - (NSDictionary *)authenticationDictionary;
 - (void)setAuthenticationDictionary:(NSDictionary *)dict;
-
 @end

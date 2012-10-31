@@ -60,6 +60,7 @@ extern NSString *MGSErrorDomainMotherScriptTask;
 #define MGSErrorCodeRequestWriteTimeout 1021
 #define MGSErrorCodeRequestTimeout 1022
 #define MGSErrorCodeServerRequestTimeout 1023
+#define MGSErrorCodeServerAccessDenied 1024
 
 // script errors
 #define MGSErrorCodeScriptRunner 2000

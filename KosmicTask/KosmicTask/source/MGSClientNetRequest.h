@@ -78,5 +78,5 @@
 - (BOOL)validateOnCompletion:(MGSError **)mgsError;
 - (BOOL)sent;
 - (void)inheritConnection:(MGSNetRequest *)request;
-
+- (BOOL)prepareConnectionNegotiation;
 @end

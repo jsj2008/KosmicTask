@@ -11,6 +11,5 @@
 
 @interface MGSClientNetRequest (KosmicTask)
 
-- (BOOL)prepareConnectionNegotiation;
 
 @end

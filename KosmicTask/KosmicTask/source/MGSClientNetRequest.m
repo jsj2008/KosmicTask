@@ -21,9 +21,17 @@
 #import "MGSScriptPlist.h"
 #import "MGSNetNegotiator.h"
 #import "MGSNetClient.h"
+#import "MGSNetMessage+KosmicTask.h"
+#import "MGSScript.h"
+
+// subclass extension
+@interface MGSNetRequest()
+- (void)_socketDidDisconnect;
+@end
 
 // class extension
 @interface MGSClientNetRequest()
+
 @end
 
 @implementation MGSClientNetRequest
@@ -36,6 +44,10 @@
 @synthesize ownerObject = _ownerObject;
 @synthesize ownerString = _ownerString;
 @synthesize allowUserToAuthenticate = _allowUserToAuthenticate;
+
+#pragma mark -
+#pragma mark Factory
+
 /*
  
  request with client
@@ -67,6 +79,9 @@
 	
 	return netRequest;
 }
+
+#pragma mark -
+#pragma mark Instance
 
 /*
  
@@ -101,6 +116,8 @@
 	return self;
 }
 
+#pragma mark -
+#pragma mark Send
 /*
  
  - sendRequestOnClient
@@ -198,8 +215,32 @@
 	}
 }
 
+/*
+ 
+ - prepareToResend
+ 
+ */
+- (void)prepareToResend
+{
+    
+	if ([self isSocketConnected]) {
+		[self disconnect];
+	}
+	_status = kMGSStatusNotConnected;
+}
 
-
+/*
+ - sendChildRequests
+ 
+ */
+- (void)sendChildRequests
+{
+    for (MGSClientNetRequest *childRequest in self.childRequests) {
+        [[self delegate] sendRequestOnClient:childRequest];
+    }
+}
+#pragma mark -
+#pragma mark Receive
 /*
  
  -chunkStringReceived
@@ -228,11 +269,26 @@
     
 }
 
+#pragma mark -
+#pragma mark Status and progress
+
+/*
+ 
+ - sent
+ 
+ */
+- (BOOL)sent
+{
+	// if the status is received then the request has been sent and a reply received
+	return (self.status == kMGSStatusMessageReceived);
+}
+
+
 /*
  
  setStatus:
  
- this method is called from multiple threads
+ this method may be called from multiple threads
  
  */
 - (void)setStatus:(eMGSRequestStatus)value
@@ -321,20 +377,8 @@
 	}
 }
 
-/*
- 
- - prepareToResend
- 
- */
-- (void)prepareToResend
-{
-    
-	if ([self isSocketConnected]) {
-		[self disconnect];
-	}
-	_status = kMGSStatusNotConnected;
-}
-
+#pragma mark -
+#pragma mark Connection handling
 /*
  
  - inheritConnection:
@@ -344,6 +388,20 @@
 {
 	_netSocket = request.netSocket;
 	_netSocket.netRequest = self;
+}
+
+/*
+ 
+ - socketDidDisconnect 
+ 
+ */
+- (void)socketDidDisconnect
+{
+    MGSClientNetRequest *q = self.firstRequest;
+    do {
+        [q _socketDidDisconnect];
+        q = q.nextRequest;
+    } while (q);
 }
 
 #pragma mark -
@@ -366,6 +424,10 @@
     bytesDone += self.requestMessage.bytesTransferred + bytesDone;
 
     if (bytesDone == 0) {
+        
+#ifdef MGS_DEBUG
+        MLogDebug(@"Write connection time out for request message: %@ %@", self.netClient, self.requestMessage);
+#endif
         [self disconnect];
         [self setErrorCode:MGSErrorCodeRequestWriteConnectionTimeout description:NSLocalizedString(@"Request write connection timed out.", @"Request write connection timeout")];
         [self sendErrorToOwner];
@@ -539,21 +601,134 @@
 	
 	return negotiateRequest;
 }
-#pragma mark -
-#pragma mark Request child handling
 
 /*
- - sendChildRequests
+ 
+ - prepareConnectionNegotiation
  
  */
-- (void)sendChildRequests
+- (BOOL)prepareConnectionNegotiation
 {
-    for (MGSClientNetRequest *childRequest in self.childRequests) {
-        [[self delegate] sendRequestOnClient:childRequest];
-    }
+	// if we already have a negotiate request
+    // TODO: is this always correct.
+    // are there cases where a non secure negotiator is in place
+    // and a secure one is required.
+    //
+    // see: http://projects.mugginsoft.net/view.php?id=1128
+    //
+	if ([self queuedNegotiateRequest]) {
+		return YES;
+	}
+	
+	// validate the request - raises on error.
+	[self.requestMessage validate];
+	
+	NSString *command = self.requestCommand;
+	
+	/*
+	 
+	 no negotiation required for some commands
+	 
+	 */
+	if ([command isEqualToString:MGSNetMessageCommandHeartbeat]) {
+		return YES;
+	}
+	
+	/*
+	 
+	 Prepare the negotitate request.
+	 This will be sent before the main request to negotitate terms for the exchange.
+	 
+	 */
+	
+	// allocate negotiate request
+	MGSClientNetRequest *negotiateRequest = [self enqueueNegotiateRequest];
+	NSAssert(negotiateRequest, @"could not allocate negotiate request");
+	
+	/*
+	 
+	 If command based negotiation is to be used then we may need
+	 to send additional command data
+	 
+	 */
+	if ([self commandBasedNegotiation]) {
+        
+		// KosmicTask dictionary processing
+		if ([command isEqualToString:MGSNetMessageCommandParseKosmicTask]) {
+			
+			// get the task dictionary from the request
+			NSDictionary *taskDict = [self.requestMessage messageObjectForKey:MGSScriptKeyKosmicTask];
+			
+			// the script object is discretionary
+			MGSScript *script = nil, *negoScript = nil;
+			NSDictionary *scriptDict = [taskDict objectForKey:MGSScriptKeyScript];
+			if (scriptDict) {
+				NSMutableDictionary *scriptDictMutable = [NSMutableDictionary dictionaryWithDictionary:scriptDict];
+				script = [MGSScript scriptWithDictionary:scriptDictMutable];
+			}
+			
+			// if we have a script then get a negotiate representation
+			if (script) {
+				
+				// copy the script?
+				negoScript = [script mutableDeepCopy];
+				
+				// get a negotiate representation of the script
+				if (![negoScript conformToRepresentation:MGSScriptRepresentationNegotiate]) {
+					NSAssert(NO, @"cannot build script negotiate representation");
+				}
+			}
+			
+			// copy taskDict to negotiate task dictionary
+			NSMutableDictionary *negoTaskDict = [NSMutableDictionary dictionaryWithDictionary:taskDict];
+			if (negoScript) {
+				
+				// replace the script object with negotiate script representation
+				[negoTaskDict setObject:[negoScript dict] forKey:MGSScriptKeyScript];
+			}
+			[negotiateRequest.requestMessage setMessageObject:negoTaskDict forKey:MGSScriptKeyKosmicTask];
+			
+		}
+	}
+	
+	// build negotiator
+	MGSNetNegotiator *negotiator = [[MGSNetNegotiator alloc] init];
+	
+	BOOL secure = NO;
+	
+	// if we are sending an authentication dictionary then
+	// we request security
+	if ([self.requestMessage authenticationDictionary] ||
+		[command isEqualToString:MGSNetMessageCommandAuthenticate]) {
+		
+		// we do not encrypt the localhost traffic by default
+		if (![self.netClient isLocalHost]) {
+			secure = YES;
+		}
+	}
+    
+	// use security if requested by client
+	if ([self.netClient useSSL] && ![self.netClient isLocalHost]) {
+		secure = YES;
+	}
+	
+	if (secure) {
+		[negotiator setSecurityType:MGSNetMessageNegotiateSecurityTLS];
+	}
+	
+	// apply negotiator to request message
+	[negotiateRequest.requestMessage applyNegotiator:negotiator];
+	
+	return YES;
+	
 }
+
 #pragma mark -
-#pragma mark Request queue handling
+#pragma mark Children
+
+
+#pragma mark -
+#pragma mark Queue
 
 /*
  
@@ -592,18 +767,6 @@
 	return nil;
 	
 }
-
-/*
- 
- - sent
- 
- */
-- (BOOL)sent
-{
-	// if the status is received then the request has been sent and a reply received
-	return (self.status == kMGSStatusMessageReceived);
-}
-
 
 
 /*

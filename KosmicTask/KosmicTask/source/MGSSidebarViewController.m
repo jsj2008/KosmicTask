@@ -973,17 +973,20 @@ char MGSScriptDictContext;
 {
 	MGSNetClient *netClient = [notification object];
 	NSAssert([netClient isKindOfClass:[MGSNetClient class]], @"net client is not notification object");
-	
-	MGSOutlineViewNode *rootNode = [self rootNodeForNetClient:netClient];
-	[rootNode removeChildNodeWithRepresentedObject:netClient];
-	
-	[self removeClientObservations:netClient];
-	
-	// remove client ref
-	[_netClients removeObject:netClient];
-	
-	// remove client node map
-	[outlineNodeCache removeObjectForKey:[netClient serviceName]];
+
+    if ([_netClients containsObject:netClient]) {
+    
+        MGSOutlineViewNode *rootNode = [self rootNodeForNetClient:netClient];
+        [rootNode removeChildNodeWithRepresentedObject:netClient];
+        
+        [self removeClientObservations:netClient];
+
+        // remove client ref
+        [_netClients removeObject:netClient];
+        
+        // remove client node map
+        [outlineNodeCache removeObjectForKey:[netClient serviceName]];
+    }
 }
 
 /*

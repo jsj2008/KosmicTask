@@ -27,7 +27,6 @@
 #import "MGSScript.h"
 #import "MGSPreferences.h"
 #import "MGSOutlineViewNode.h"
-#import "MGSClientNetRequest+KosmicTask.h"
 #import "MGSClientNetRequest.h"
 
 const char MGSNetClientRunModeContext;
@@ -122,6 +121,8 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 
 //=======================================================
 //
+// - initWithNetService:
+//
 // initialise with NSNetService instance
 //
 // designated initialiser
@@ -131,7 +132,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 - (id)initWithNetService:(NSNetService *)aNetService
 {
 	if ((self = [super init])) {
-		_visible = true;
+		_visible = NO;
 		
 		_taskController = [(MGSClientTaskController *)[MGSClientTaskController alloc] initWithNetClient:self];
 		
@@ -258,6 +259,19 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 			nil];
 }
 
+#pragma mark -
+#pragma mark Accessors
+
+/*
+ 
+ - setVisible:
+ 
+ */
+- (void)setVisible:(BOOL)visible
+{
+    _visible = visible;
+}
+#pragma mark -
 #pragma mark Contexts
 /*
  
@@ -1402,12 +1416,37 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	
 }
 
-// error on request
-- (void) errorOnRequestQueue:(MGSClientNetRequest *)netRequest code:(NSInteger)code reason:(NSString *)failureReason
+/*
+ 
+ - errorOnRequestQueue:code:reason:
+ 
+ */
+- (void)errorOnRequestQueue:(MGSClientNetRequest *)netRequest code:(NSInteger)code reason:(NSString *)failureReason
 {
+    /*
+    
+     This method is called when an error occurs prior to a request being sent.
+     
+     */
+    
+    // we don't expect to see negotiate requests here
+    if (netRequest.requestMessage.isNegotiateMessage ) {
+        
+        MLogDebug(@"This function does not expect to receieve negotiate requests. %@", netRequest.requestMessage);
+        
+        // get the next message if available
+        if (netRequest.nextRequest) {
+            netRequest = netRequest.nextRequest;
+        }
+    }
+    
 	// remove request from queue
-	[_pendingRequests removeObject:netRequest];
-	
+    if ([_pendingRequests containsObject:netRequest]) {
+        [_pendingRequests removeObject:netRequest];
+	} else {
+        MLogDebug(@"Request not founding in pending request queue. %@", netRequest.requestMessage);        
+    }
+    
 	// on error send reply to delegate
 	netRequest.error = [MGSError clientCode:code reason:failureReason]; 
 

@@ -289,7 +289,7 @@
 	MLog(DEBUGLOG, @"Client socket disconnected.");
 	
 	// mark request as disconnected
-	[self.netRequest setSocketDisconnected];
+	[self.netRequest socketDidDisconnect];
 	
 	if ([self delegate] && 
 		[[self delegate] respondsToSelector:@selector(netSocketDisconnect:)]) {
@@ -503,28 +503,55 @@ errorExit:;
 				
                 MGSClientNetRequest *request = (MGSClientNetRequest *)self.netRequest;
 
-				// disconnect if request does not validate
+				// DISCONNECT if request does not validate
 				BOOL disconnect = ![request validateOnCompletion:&mgsError];
-				
-				// disconnect if no more requests in queue
+                
+                if (disconnect) {
+                    MLogInfo(@"ABNORMAL disconnect. The next request is missing.");
+                }
+                
+				// DISCONNECT if no more requests in queue
  				if (request.nextRequest == nil) {
 					disconnect = YES;
+#ifdef MGS_DEBUG
+                    if (disconnect) {
+                        MLogDebug(@"NORMAL disconnect. No next request found.");
+                    }
+#endif
 				}
 				
-				// disconnect if there is an error in the negotiator response 
+				// DISCONNECT if there is an error in the negotiator response 
 				if (request.responseMessage.negotiator &&
 					request.responseMessage.errorDictionary) {
 					disconnect = YES;
+                    
+#ifdef MGS_DEBUG
+                    if (disconnect) {
+                        MLogDebug(@"NEGOTIATOR ERROR disconnect. Error returned in negotiator.");
+                    }
+#endif
+                    
 				}
 				
-				// accept the negotiator if present
-				if (!disconnect && request.responseMessage.negotiator) {
-					if (![self acceptRequestNegotiator]) {
-						disconnect = YES;
-					}
+                // if disconnect not queued
+				if (!disconnect) {
+                    
+                    // process the negotiator
+                    if (request.responseMessage.negotiator) {
+                        if (![self acceptRequestNegotiator]) {
+                            disconnect = YES;
+#ifdef MGS_DEBUG
+                            MLogDebug(@"NEGOTIATOR ACCEPT disconnect. Negotiator was not accepted.");
+#endif
+                        }
+                    }
 				}
 				
-				// disconnect now
+                //
+				// DISCONNECT
+                //
+                // Normally socket disconnection occurs here.
+                //
 				if (disconnect) {
 					[self disconnect];	
 				}
@@ -532,11 +559,16 @@ errorExit:;
 				// message delegate
 				[self delegateReplyWithErrors:mgsError];
 				
-				// disconnect if error in request. this error may only become
+				// DISCONNECT if error in request. this error may only become
 				// apparent after the delegate has processed the request.
 				if ([self isConnected] && request.error) {
 					[self disconnect];	
-				}
+
+#ifdef MGS_DEBUG
+                        MLogDebug(@"REQUEST ERROR disconnect. Error returned in reponse.");
+#endif
+				
+                }
 				
 				// if still connected send the next queued request
 				if ([self isConnected]) {
@@ -549,7 +581,10 @@ errorExit:;
 					if (nextRequest) {
 						[self sendRequest];	// raises on error
 					} else {
-						[self disconnect];;
+                        
+                        // We shouldn't expect to disconnect here
+                        MLogInfo(@"ABNORMAL disconnect. The next request is missing.");
+						[self disconnect];
 					}
 				}
 				

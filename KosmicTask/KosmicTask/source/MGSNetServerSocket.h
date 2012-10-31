@@ -13,9 +13,11 @@
 
 @interface MGSNetServerSocket : MGSNetSocket {
 	BOOL _enableSSLSecurity;
+    BOOL _connectionApproved;
 }
 
 - (id)initWithAcceptSocket:(MGSAsyncSocket *)socket;
 
+@property (readonly) BOOL connectionApproved;
 
 @end

@@ -171,6 +171,14 @@ static unsigned long int messageSequenceCounter = 0;
 	return self;
 }
 
+/*
+ 
+ - description
+ 
+ */
+- (NSString *)description{
+    return [_messageDict description];
+}
 
 #pragma mark -
 #pragma mark Origin
@@ -241,6 +249,53 @@ static unsigned long int messageSequenceCounter = 0;
 {
 	return [[[self messageOrigin] objectForKey:MGSNetMessageOriginKeyIsLocalHost] boolValue];
 }
+
+#pragma mark -
+#pragma mark Message object management
+
+/*
+ 
+ set message dict object
+ 
+ */
+- (void)setMessageObject:(id)object forKey:(NSString *)key
+{
+	// exception occurs if object or key is nil
+	//if (object == nil) object = [NSNull null];
+	//if (key == nil) key = MGSNetMessageKeyNull;
+	
+	[_messageDict setObject:object forKey:key];
+	//MLog(DEBUGLOG, @"message is %@", _messageDict);
+}
+
+/*
+ 
+ set message dict object
+ 
+ */
+- (void)removeMessageObjectForKey:(NSString *)key
+{
+	if (key) {
+		[_messageDict removeObjectForKey:key];
+	}
+}
+/*
+ 
+ -messageObjectForKey:
+ 
+ */
+- (id)messageObjectForKey:(NSString *)key
+{
+	// exception occurs if object or key is nil
+	//if (object == nil) object = [NSNull null];
+	//if (key == nil) key = MGSNetMessageKeyNull;
+	
+	return [_messageDict objectForKey:key];
+	//MLog(DEBUGLOG, @"message is %@", _messageDict);
+}
+
+#pragma mark -
+#pragma mark Accessors
 /*
  
  message UUID
@@ -314,51 +369,61 @@ static unsigned long int messageSequenceCounter = 0;
 
 /*
  
- - negotiator
+ - authenticationDictionary
  
  */
-- (MGSNetNegotiator *)negotiator
+- (NSDictionary *)authenticationDictionary
 {
-	NSDictionary *negotiate = [_messageDict objectForKey:MGSNetMessageKeyNegotiate];
-	if (negotiate) {
-		return [[MGSNetNegotiator alloc] initWithDictionary:negotiate];
+	return [_messageDict objectForKey:MGSNetMessageKeyAuthentication];
+}
+
+/*
+ 
+ - setAuthenticationDictionary:
+ 
+ */
+- (void)setAuthenticationDictionary:(NSDictionary *)dict
+{
+	[self setMessageObject:dict forKey:MGSNetMessageKeyAuthentication];
+}
+
+/*
+ 
+ add request was valid to message
+ 
+ */
+- (void)addRequestWasValid:(bool)valid
+{
+	[self setMessageObject:[NSNumber numberWithBool:valid] forKey:MGSNetMessageKeyRequestWasValid];
+}
+
+#pragma mark -
+#pragma mark Error handling
+/*
+ 
+ - error
+ 
+ */
+- (MGSError *)error
+{
+	MGSError *error = nil;
+	NSDictionary *dict = [self errorDictionary];
+	if (dict) {
+		error = [MGSError errorWithDictionary:dict];
 	}
 	
-	return nil;
+	return error;
 }
 
 /*
  
- - isNegotiateMessage
+ - setError:
  
  */
-- (BOOL)isNegotiateMessage
+- (void)setError:(MGSError *)error
 {
-	return [_messageDict objectForKey:MGSNetMessageKeyNegotiate] ? YES : NO;
+    [self setErrorDictionary:[error dictionary]];
 }
-
-/*
- 
- - applyNegotiator:
- 
- */
-- (void)applyNegotiator:(MGSNetNegotiator *)negotiator
-{
-	NSAssert(negotiator, @"negotiator is nil");
-	
-	[self setMessageObject:[negotiator dictionary] forKey:MGSNetMessageKeyNegotiate];
-}
-
-/*
- 
- - removeNegotiator
- 
- */
-- (void)removeNegotiator
-{
-	[self removeMessageObjectForKey:MGSNetMessageKeyNegotiate];
-}
-
 /*
  
  - errorDictionary
@@ -379,92 +444,8 @@ static unsigned long int messageSequenceCounter = 0;
 	[self setMessageObject:dict forKey:MGSNetMessageKeyError];
 }
 
-/*
- 
- - authenticationDictionary
- 
- */
-- (NSDictionary *)authenticationDictionary
-{
-	return [_messageDict objectForKey:MGSNetMessageKeyAuthentication];
-}
-
-/*
- 
- - setAuthenticationDictionary:
- 
- */
-- (void)setAuthenticationDictionary:(NSDictionary *)dict
-{
-	[self setMessageObject:dict forKey:MGSNetMessageKeyAuthentication];
-}
-/*
- 
- - error
- 
- */
-- (MGSError *)error
-{
-	MGSError *error = nil;
-	NSDictionary *dict = [self errorDictionary];
-	if (dict) {
-		error = [MGSError errorWithDictionary:dict];
-	}
-	
-	return error;
-}
-
-/*
- 
- add request was valid to message
- 
- */
-- (void)addRequestWasValid:(bool)valid
-{
-	[self setMessageObject:[NSNumber numberWithBool:valid] forKey:MGSNetMessageKeyRequestWasValid];
-}
-
-/*
- 
- set message dict object
- 
- */
-- (void)setMessageObject:(id)object forKey:(NSString *)key
-{
-	// exception occurs if object or key is nil
-	//if (object == nil) object = [NSNull null];
-	//if (key == nil) key = MGSNetMessageKeyNull;
-	
-	[_messageDict setObject:object forKey:key];
-	//MLog(DEBUGLOG, @"message is %@", _messageDict);
-}
-
-/*
- 
- set message dict object
- 
- */
-- (void)removeMessageObjectForKey:(NSString *)key
-{
-	if (key) {
-		[_messageDict removeObjectForKey:key];
-	}
-}
-/*
- 
- -messageObjectForKey:
- 
- */
-- (id)messageObjectForKey:(NSString *)key
-{
-	// exception occurs if object or key is nil
-	//if (object == nil) object = [NSNull null];
-	//if (key == nil) key = MGSNetMessageKeyNull;
-	
-	return [_messageDict objectForKey:key];
-	//MLog(DEBUGLOG, @"message is %@", _messageDict);
-}
-
+#pragma mark -
+#pragma mark Network representation
 /*
  
  form the message packet from the underlying dictionary
@@ -568,6 +549,9 @@ static unsigned long int messageSequenceCounter = 0;
 	
 	return bytes;
 }
+
+#pragma mark -
+#pragma mark Dictionary representation
 /*
  
  form message dict from data
@@ -599,6 +583,56 @@ static unsigned long int messageSequenceCounter = 0;
 - (NSMutableDictionary *)messageDict
 {
 	return _messageDict;
+}
+
+#pragma mark -
+#pragma mark Message negotiation
+
+/*
+ 
+ - negotiator
+ 
+ */
+- (MGSNetNegotiator *)negotiator
+{
+	NSDictionary *negotiate = [_messageDict objectForKey:MGSNetMessageKeyNegotiate];
+	if (negotiate) {
+		return [[MGSNetNegotiator alloc] initWithDictionary:negotiate];
+	}
+	
+	return nil;
+}
+
+/*
+ 
+ - isNegotiateMessage
+ 
+ */
+- (BOOL)isNegotiateMessage
+{
+	return [_messageDict objectForKey:MGSNetMessageKeyNegotiate] ? YES : NO;
+}
+
+/*
+ 
+ - applyNegotiator:
+ 
+ */
+- (void)applyNegotiator:(MGSNetNegotiator *)negotiator
+{
+	NSAssert(negotiator, @"negotiator is nil");
+	
+	[self setMessageObject:[negotiator dictionary] forKey:MGSNetMessageKeyNegotiate];
+}
+
+/*
+ 
+ - removeNegotiator
+ 
+ */
+- (void)removeNegotiator
+{
+	[self removeMessageObjectForKey:MGSNetMessageKeyNegotiate];
 }
 
 #pragma mark -

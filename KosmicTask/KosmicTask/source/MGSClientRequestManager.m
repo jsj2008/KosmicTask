@@ -38,8 +38,8 @@ static MGSClientRequestManager *_sharedController = nil;
 - (MGSClientNetRequest *)createRequestForClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner 
 							  withCommand:(NSString *)command 
 								 withDict:(NSMutableDictionary *)dict forKey:(NSString *)key;
-- (void)parseReplyMessage:(MGSClientNetRequest *)request;
-- (void)parseScriptRequestReply:(MGSClientNetRequest *)netRequest;
+- (void)parseResponse:(MGSClientNetRequest *)request;
+- (void)parseTaskCommandReponse:(MGSClientNetRequest *)netRequest;
 @end
 
 @implementation MGSClientRequestManager
@@ -582,6 +582,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	[request sendRequestOnClient];
 	
 	// do we want to track the negotiate request ?
+    // NO
 	if (request.prevRequest && NO) {
 		[self addRequest:request.prevRequest];
 	}
@@ -740,14 +741,14 @@ static MGSClientRequestManager *_sharedController = nil;
 }
 
 #pragma mark -
-#pragma mark Request reply handling
+#pragma mark Response handling
 
 /*
  
- parse net request reply for script activity
+ - parseTaskCommandReponse:
  
  */
-- (void)parseScriptRequestReply:(MGSClientNetRequest *)netRequest
+- (void)parseTaskCommandReponse:(MGSClientNetRequest *)netRequest
 {
 	NSAssert(netRequest, @"net request is nil");
 	
@@ -814,8 +815,11 @@ static MGSClientRequestManager *_sharedController = nil;
 	// Otherwise we must proceed and inform the owner so that
 	// the UI can be updated accordingly
 	//
-	// a negotiate request message will be found here if command based negotiation is enabled
-
+	// a negotiate request message will (?) be found here if command based negotiation is enabled
+    //
+    // this doesn't make much sense as the owner of the request
+    // won't know what to do with a negotiator response. it will require a response
+    // for the actual request it sent, not the prepended negotiator.
 	if (responseMessage.negotiator && !scriptError && !netRequest.error) {
 		return;		
 	}
@@ -879,10 +883,10 @@ static MGSClientRequestManager *_sharedController = nil;
 
 /*
  
- parse the reply message
+ - parseResponse:
  
  */
-- (void)parseReplyMessage:(MGSClientNetRequest *)netRequest
+- (void)parseResponse:(MGSClientNetRequest *)netRequest
 {
 	NSString *error = nil;
 	NSInteger errorCode = MGSErrorCodeParseRequestMessage;
@@ -1008,6 +1012,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	// Process the request command
 	//
 	//====================================================
+    
 	// a negotiate request
 	if ([requestCommand isEqualToString:MGSNetMessageCommandNegotiate]) {
 
@@ -1016,12 +1021,16 @@ static MGSClientRequestManager *_sharedController = nil;
 		 if a network or socket error occurs it can manifest itself here.
 		 
 		 set the error on the next request (which will have initiated the
-		 sending of the negotiate request) and call theis method again
+		 sending of the negotiate request) and call completion
 		 
 		 */
-		if (netRequest.error && netRequest.nextRequest) {
-			netRequest.nextRequest.error = netRequest.error;
-			[self parseReplyMessage:(MGSClientNetRequest *)netRequest.nextRequest];
+		if (netRequest.error) {
+            if (netRequest.nextRequest) {
+                netRequest.nextRequest.error = netRequest.error;
+                [self requestDidComplete:(MGSClientNetRequest *)netRequest.nextRequest];
+            } else {
+                MLogInfo(@"Error in negotiator and no next request found.");
+            }
 		}
 		
 		return;
@@ -1058,10 +1067,10 @@ static MGSClientRequestManager *_sharedController = nil;
 		}
 	}
 	
-	// a script to be parsed
+	// a KosmicTask command
 	else if ([requestCommand isEqual:MGSNetMessageCommandParseKosmicTask]) {
 		
-		[self parseScriptRequestReply:netRequest];
+		[self parseTaskCommandReponse:netRequest];
 
 	// ERROR
 	} else {
@@ -1090,15 +1099,19 @@ invalid_message:
 }
 
 //================================================
+// - requestDidComplete:
 // net request reply received 
 // all queued requests ultimately send this message
 // on success, error or timeout
 //================================================
--(void) requestDidComplete:(MGSClientNetRequest *)netRequest {
+- (void)requestDidComplete:(MGSClientNetRequest *)netRequest {
 	NSAssert(netRequest, @"net request is nil");
 	
-	// parse the reply
-	[self parseReplyMessage:netRequest];
+    // we do not add negotiate messages to our request collection
+    // but they do complete like all other requests
+    
+	// parse the response
+	[self parseResponse:netRequest];
 	
 	// remove the request
 	[self removeRequest:netRequest];
