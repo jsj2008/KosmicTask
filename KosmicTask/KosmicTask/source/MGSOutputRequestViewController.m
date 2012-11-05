@@ -871,6 +871,13 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 - (void)dispose
 {
     [_resultController dispose];
+    _resultController = nil;
+    _progressArrayController = nil;
+    _progressArray = nil;
+    _resultViewController = nil;
+    _actionActivityViewController = nil;
+    _actionController = nil;
+    _action = nil;
 }
 
 #pragma mark -

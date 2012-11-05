@@ -13,8 +13,8 @@
 #ifdef MGS_INSTANCE_TRACKER
 
 #define MGS_INSTANCE_TRACKER_DEFINE static NSInteger _MGSInstanceTracker = 0
-#define MGS_INSTANCE_TRACKER_ALLOCATE MLogDebug(@"ALLOC: %@ activeInstances: %u", [self className], ++_MGSInstanceTracker)
-#define MGS_INSTANCE_TRACKER_DEALLOCATE MLogDebug(@"DEALLOC: %@ activeInstances: %u", [self className], --_MGSInstanceTracker)
+#define MGS_INSTANCE_TRACKER_ALLOCATE MLogInfo(@"ALLOC: %@ activeInstances: %u", [self className], ++_MGSInstanceTracker)
+#define MGS_INSTANCE_TRACKER_DEALLOCATE MLogInfo(@"DEALLOC: %@ activeInstances: %u", [self className], --_MGSInstanceTracker)
 
 #else
 
@@ -24,4 +24,8 @@
 
 #endif
 
-
+#ifdef MGS_LOG_FINALIZE
+#define MGS_INSTANCE_TRACKER_FINALIZE MLogInfo(@"FINALIZED: %@", [self className])
+#else
+#define MGS_INSTANCE_TRACKER_FINALIZE 
+#endif

@@ -614,6 +614,8 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
  */
 - (void)dispose
 {
+    _actionController = nil;
+    _action = nil;
 }
 
 @end

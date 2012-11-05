@@ -37,6 +37,7 @@
 #define MIN_LEFT_SPLITVIEW_WIDTH 320
 #define MIN_RIGHT_SPLITVIEW_WIDTH 440
 
+MGS_INSTANCE_TRACKER_DEFINE;
 
 NSString *MGSInputViewActionContext = @"MGSInputViewActionContext";
 NSString *MGSOutputViewTaskResultDisplayLockedContext = @"MGSOutputViewTaskResultDisplayLockedContext";
@@ -63,6 +64,7 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 @synthesize emptyRequestView = _emptyRequestView;
 @synthesize sendCompletedActionSpecifierToHistory = _sendCompletedActionSpecifierToHistory;
 
+#pragma mark -
 #pragma mark Instance
 /*
  
@@ -71,6 +73,8 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
  */
 - (id)init
 {
+    MGS_INSTANCE_TRACKER_ALLOCATE;
+    
 	return [super initWithNibName:@"RequestView" bundle:nil];
 }
 
@@ -159,9 +163,8 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
  */
 - (void)finalize
 {
-#ifdef MGS_LOG_FINALIZE
-	MLog(DEBUGLOG, @"finalized");
-#endif
+    MGS_INSTANCE_TRACKER_DEALLOCATE;
+    MGS_INSTANCE_TRACKER_FINALIZE;
     
 	[super finalize];
 }
@@ -185,9 +188,17 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 - (void)dispose
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    displayNetRequest = nil;
+    
     [_inputViewController dispose];
     [_outputViewController dispose];
+    
+    _inputViewController = nil;
+    _outputViewController = nil;
 }
+
+#pragma mark -
 #pragma mark KVO
 /*
  
@@ -268,6 +279,8 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 	}
 
 }
+
+#pragma mark -
 #pragma mark Task handling
 //===================================================
 //
@@ -398,6 +411,7 @@ commonExit:
 	return [_inputViewController keepActionDisplayed];
 }
 
+#pragma mark -
 #pragma mark NSNotificationCenter callbacks
 /*
  
@@ -439,7 +453,7 @@ commonExit:
 			userInfo:nil];
 }
 
-
+#pragma mark -
 #pragma mark Properties
 //
 // these values are observed by the PSMTabBarControl
@@ -537,6 +551,7 @@ commonExit:
     return controller;
 }
 
+#pragma mark -
 #pragma mark Task execution
 
 /*
@@ -609,7 +624,7 @@ commonExit:
 	[[self actionSpecifier] resume:nil];
 }
 
-
+#pragma mark -
 #pragma mark Tabs
 
 /*
@@ -624,6 +639,7 @@ commonExit:
 	}
 }
 
+#pragma mark -
 #pragma mark View mode
 
 /*
@@ -873,8 +889,8 @@ commonExit:
 				// this implies that the action is still running on the server.
 				// if the action is flagged as still processing then send a terminate request.
 			case MGSErrorCodeSocketReadTimeoutError:
-				// terminate the action
-#pragma mark warning this is poor design. the server should be timing out the action, not the client.
+				// terminate the action.
+                // both the client and the server time out the task.
 				if ([[self actionSpecifier] isProcessing]) {
 					[[self actionSpecifier] terminate:nil];
 				}

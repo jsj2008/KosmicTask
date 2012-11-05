@@ -94,5 +94,6 @@
     for (MGSResult *result in [self arrangedObjects]) {
         [result releaseDisposable];
     }
+    self.content = nil;
 }
 @end
