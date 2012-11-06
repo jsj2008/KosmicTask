@@ -66,7 +66,7 @@
         _internetReach = [Reachability reachabilityForInternetConnection];
         [_internetReach startNotifier];
         
-        if (!_notificationPending) {
+        if (!_responsePending) {
             [self postStatusNotification];
         }
         
@@ -89,11 +89,15 @@
 - (void)request:(NSNotification *)note
 {
     // we only deal with one request at a time
-    if (_notificationPending) {
+    if (_responsePending) {
         return;
     }
     
 	NSDictionary *userInfo = [note userInfo];
+    
+    
+    // response required
+    BOOL resposeRequired = [[userInfo objectForKey:MGSInternetSharingKeyResponseRequired] boolValue];
     
 	// get the request id
 	MGSInternetSharingRequestID requestID = [[userInfo objectForKey:MGSInternetSharingKeyRequest] integerValue];
@@ -177,7 +181,7 @@
     // save preferences in case server crashes
     [self savePreferences];
 	
-    if (!_notificationPending) {
+    if (resposeRequired && !_responsePending ) {
         [self postStatusNotification];
     }
 }
@@ -192,7 +196,7 @@
 	// send out a status distributed notification
 	[self postDistributedResponseNotificationWithDict:[self statusDictionary]];
     
-    _notificationPending = NO;
+    _responsePending = NO;
 }
 
 /*
@@ -202,20 +206,27 @@
  */
 - (NSDictionary *)statusDictionary
 {
-	NSDictionary *dict =  [NSDictionary dictionaryWithObjectsAndKeys:
+	NSMutableDictionary *dict =  [NSMutableDictionary dictionaryWithObjectsAndKeys:
                            [NSNumber numberWithInteger:kMGSInternetSharingRequestStatus], MGSInternetSharingKeyRequest,
                            [NSNumber numberWithInteger:[self mappingStatus]], MGSInternetSharingKeyMappingStatus,
                            [NSNumber numberWithInteger:[self reachabilityStatus]], MGSInternetSharingKeyReachabilityStatus,
                            [self IPAddressString], MGSInternetSharingKeyIPAddress,
                            [self gatewayName], MGSInternetSharingKeyGatewayName,
                            [NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
-                           [NSNumber numberWithBool:self.allowInternetAccess], MGSAllowInternetAccess,
-                           [NSNumber numberWithBool:self.allowLocalAccess], MGSAllowLocalAccess,
                            [NSNumber numberWithBool:self.automaticallyMapPort], MGSEnableInternetAccessAtLogin,
-                           [NSNumber numberWithBool:self.allowLocalUsersToAuthenticate], MGSAllowLocalUsersToAuthenticate,
-                           [NSNumber numberWithBool:self.allowRemoteUsersToAuthenticate], MGSAllowRemoteUsersToAuthenticate,
                            nil];
 	
+    // sending back the access data is optional
+    if (NO) {
+        NSDictionary *accessDict =  [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [NSNumber numberWithBool:self.allowInternetAccess], MGSAllowInternetAccess,
+                                  [NSNumber numberWithBool:self.allowLocalAccess], MGSAllowLocalAccess,
+                                  [NSNumber numberWithBool:self.allowLocalUsersToAuthenticate], MGSAllowLocalUsersToAuthenticate,
+                                  [NSNumber numberWithBool:self.allowRemoteUsersToAuthenticate], MGSAllowRemoteUsersToAuthenticate,
+                                  nil];
+        [dict addEntriesFromDictionary:accessDict];
+    }
+    
 	MLog(DEBUGLOG, @"Internet sharing response dict sent by server: %@", [dict propertyListStringValue]);
 	
 	return dict;
@@ -277,7 +288,7 @@
         
     }
     
-    if (!_notificationPending) {
+    if (!_responsePending) {
         [self startPortChecking];
     }
 }
@@ -313,7 +324,7 @@
     // we may have changed port
     _portChecker.portNumber = self.externalPort;
 
-    _notificationPending = YES;
+    _responsePending = YES;
     [_portChecker start];
 }
 
@@ -344,7 +355,7 @@
     
 	// start mapping if port mot mapped
 	if ([self mappingStatus] == kMGSInternetSharingPortNotMapped) {
-        _notificationPending = YES;
+        _responsePending = YES;
 		[_portMapper startMapping];
 	}
 }
@@ -358,7 +369,7 @@
 {
 	if (_portMapper) {
 		if (self.externalPort > 0) {
-             _notificationPending = YES;
+             _responsePending = YES;
 			[_portMapper remapWithExternalPort:self.externalPort listeningPort:self.listeningPort];
 		}
 	} else {
@@ -376,7 +387,7 @@
 	// stop mapping if port mapped
     if (_portMapper) {
         if ([self mappingStatus] == kMGSInternetSharingPortMapped) {
-             _notificationPending = YES;
+             _responsePending = YES;
             [_portMapper stopMapping];
         }
     } else {

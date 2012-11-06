@@ -16,6 +16,7 @@ extern NSString *MGSInternetSharingKeyMappingStatus;
 extern NSString *MGSInternetSharingKeyReachabilityStatus;
 extern NSString *MGSInternetSharingKeyIPAddress;
 extern NSString *MGSInternetSharingKeyGatewayName;
+extern NSString *MGSInternetSharingKeyResponseRequired;
 
 typedef enum _MGSInternetSharingRequestID {
 	kMGSInternetSharingRequestStatus = 0,

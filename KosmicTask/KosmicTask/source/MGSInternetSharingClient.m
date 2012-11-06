@@ -95,6 +95,7 @@ static id _sharedInstance = nil;
 	NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys: 
 								 [NSNumber numberWithInteger:kMGSInternetSharingRequestStatus], MGSInternetSharingKeyRequest,
                                  [NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
+                                 [NSNumber numberWithBool:YES], MGSInternetSharingKeyResponseRequired,
 								 nil];
 	
 	[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
@@ -119,19 +120,51 @@ static id _sharedInstance = nil;
 			
 			// status request
 		case kMGSInternetSharingRequestStatus:
-			self.mappingStatus = [[userInfo objectForKey:MGSInternetSharingKeyMappingStatus] integerValue];
-			self.externalPort = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
-			self.allowInternetAccess = [[userInfo objectForKey:MGSAllowInternetAccess] boolValue];
-			self.allowLocalAccess = [[userInfo objectForKey:MGSAllowLocalAccess] boolValue];
-			self.automaticallyMapPort = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
-			self.IPAddressString = [userInfo objectForKey:MGSInternetSharingKeyIPAddress];
-			self.gatewayName = [userInfo objectForKey:MGSInternetSharingKeyGatewayName];
-			self.allowLocalUsersToAuthenticate = [[userInfo objectForKey:MGSAllowLocalUsersToAuthenticate] boolValue];
-			self.allowRemoteUsersToAuthenticate = [[userInfo objectForKey:MGSAllowRemoteUsersToAuthenticate] boolValue];
-            self.reachabilityStatus = [[userInfo objectForKey:MGSInternetSharingKeyReachabilityStatus] integerValue];
-			break;
+        {
+            id obj = nil;
+            
+            if ((obj = [userInfo objectForKey:MGSInternetSharingKeyMappingStatus])) {
+                self.mappingStatus = [obj integerValue];
+            }
+            if ((obj = [userInfo objectForKey:MGSExternalPortNumber])) {
+                self.externalPort = [obj integerValue];
+            }
+            if ((obj = [userInfo objectForKey:MGSAllowInternetAccess])) {
+                self.allowInternetAccess = [obj boolValue];
+            }
+            
+            if ((obj = [userInfo objectForKey:MGSAllowLocalAccess])) {
+                self.allowLocalAccess = [obj boolValue];
+            }
+            
+            if ((obj = [userInfo objectForKey:MGSEnableInternetAccessAtLogin])) {
+                self.automaticallyMapPort = [obj boolValue];
+            }
+            
+            if ((obj = [userInfo objectForKey:MGSInternetSharingKeyIPAddress])) {
+                self.IPAddressString = obj;
+            }
+            
+            if ((obj = [userInfo objectForKey:MGSInternetSharingKeyGatewayName])) {
+                self.gatewayName = obj;
+            }
+            
+            if ((obj = [userInfo objectForKey:MGSAllowLocalUsersToAuthenticate])) {
+                self.allowLocalUsersToAuthenticate = [obj boolValue];
+            }
+            
+            if ((obj = [userInfo objectForKey:MGSAllowRemoteUsersToAuthenticate])) {
+                self.allowRemoteUsersToAuthenticate = [obj boolValue];
+            }
+            
+            if ((obj = [userInfo objectForKey:MGSInternetSharingKeyReachabilityStatus])) {
+                self.reachabilityStatus = [obj integerValue];
+            }
+        }
+        break;
 			
 			// unrecognised
+            
 		default:
 			MLog(RELEASELOG, @"unrecognised internet sharing request id: %i", requestID);
 			break;
@@ -140,9 +173,21 @@ static id _sharedInstance = nil;
 	_processingResponse = NO;
 	self.responseReceived = YES;
     
+    // if we have an outstanding request invocation then invoke it
     if (_requestInvocation) {
-        [_requestInvocation invoke];
+        
+        NSDictionary *dict = nil;
+        [_requestInvocation getArgument:&dict atIndex:2];
+        
+        // dict must be a property list
+        if (![NSPropertyListSerialization propertyList:dict isValidForFormat:NSPropertyListXMLFormat_v1_0]) {
+            MLogInfo(@"Invalid property list detected prior to invocation: %@", dict);
+        } else {
+            [_requestInvocation invoke];
+        }
+        
         _requestInvocation = nil;
+        
     }
 }
 
@@ -153,19 +198,31 @@ static id _sharedInstance = nil;
  */
 - (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict waitOnResponse:(BOOL)wait
 {
-    BOOL useInvocation = NO;
+    BOOL useInvocation = YES;
     
     // are we awaiting a reponse?
     if (!self.responseReceived && useInvocation) {
         
+        // dict must be a property list
+        if (![NSPropertyListSerialization propertyList:dict isValidForFormat:NSPropertyListXMLFormat_v1_0]) {
+            MLogInfo(@"Invalid property list detected: %@", dict);
+            return;
+        }
+
         // this approach fails because when invoked the dict argument
         // seems to contain a CFType which is invalid for a Plist
         NSMethodSignature *aSignature = [[self class] instanceMethodSignatureForSelector:_cmd];
         _requestInvocation = [NSInvocation invocationWithMethodSignature:aSignature];
         _requestInvocation.target = self;
-        [_requestInvocation setArgument:dict atIndex:2];
+        _requestInvocation.selector = _cmd;
+        [_requestInvocation setArgument:&dict atIndex:2];
         [_requestInvocation setArgument:&wait atIndex:3];
         [_requestInvocation retainArguments];
+        
+#define MGS_DEBUG_INVOCATION
+#ifdef MGS_DEBUG_INVOCATION
+        MLogInfo(@"Property list set as argument to invocation: %@", dict);
+#endif       
         
         return;
     }
@@ -186,13 +243,15 @@ static id _sharedInstance = nil;
 	
 	// if not processing response
 	if (!_processingResponse) {
-		
+		BOOL responseRequired = YES;
+        
 		NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys: 
 									 [NSNumber numberWithInteger:kMGSInternetSharingRequestInternetAccess], MGSInternetSharingKeyRequest,
 									 [NSNumber numberWithBool:value], MGSAllowInternetAccess,
+                                     [NSNumber numberWithBool:responseRequired], MGSInternetSharingKeyResponseRequired,
 									 nil];
 		
-		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
+		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:responseRequired];
 		
 	}
 }
@@ -281,6 +340,7 @@ static id _sharedInstance = nil;
 									 [NSNumber numberWithInteger:kMGSInternetSharingRequestMapPort], MGSInternetSharingKeyRequest,
 									 [NSNumber numberWithBool:value], MGSEnableInternetAccessAtLogin,
                                      [NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
+                                     [NSNumber numberWithBool:YES], MGSInternetSharingKeyResponseRequired,
 									 nil];
 		
 		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];

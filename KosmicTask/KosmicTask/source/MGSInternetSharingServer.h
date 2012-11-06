@@ -16,7 +16,7 @@
 	MGSPortMapper *_portMapper;
     MGSPortChecker *_portChecker;
     Reachability *_internetReach;
-    BOOL _notificationPending;
+    BOOL _responsePending;
 }
 
 - (id)initWithExternalPort:(NSInteger)externalPort listeningPort:(NSInteger)listeningPort;

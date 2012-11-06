@@ -32,6 +32,7 @@ NSString *MGSInternetSharingKeyMappingStatus = @"MGSInternetSharingMappingStatus
 NSString *MGSInternetSharingKeyIPAddress = @"MGSInternetSharingKeyIPAddress";
 NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName";
 NSString *MGSInternetSharingKeyReachabilityStatus = @"MGSInternetSharingKeyReachabilityStatus";
+NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyResponseRequired";
 
 @implementation MGSInternetSharing
 
