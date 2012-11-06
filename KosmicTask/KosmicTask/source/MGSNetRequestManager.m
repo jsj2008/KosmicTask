@@ -123,7 +123,12 @@
  */
 - (BOOL)terminateRequest:(MGSNetRequest *)netRequest
 {
-    // disconnect the request
+    // check if already terminated
+    if (netRequest.status == kMGSStatusTerminated) {
+        return YES;
+    }
+    
+    // disconnect the request if required
     if (netRequest.isSocketConnected) {
         [netRequest disconnect];
     }

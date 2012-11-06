@@ -66,6 +66,19 @@
 }
 
 #pragma mark -
+#pragma mark MGSDisposableObject
+
+/*
+ 
+ - dispose
+ 
+ */
+- (void)dispose
+{
+    [super dispose];
+}
+
+#pragma mark -
 #pragma mark Response
 
 /*
