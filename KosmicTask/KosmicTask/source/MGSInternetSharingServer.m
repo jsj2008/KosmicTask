@@ -48,21 +48,13 @@
 		[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(request:) 
 																name:MGSDistNoteInternetSharingRequest object:self.noteObjectString];
 	
-		// read preferences
-		MGSPreferences *preferences = [MGSPreferences standardUserDefaults];
-		
-		if ([preferences objectForKey:MGSExternalPortNumber]) {
-			self.externalPort = [preferences integerForKey:MGSExternalPortNumber];
-		} else {
-			self.externalPort = externalPort; 
+		// set external port
+		MGSPreferences *preferences = [MGSPreferences standardUserDefaults];		
+		if (![preferences objectForKey:MGSExternalPortNumber]) {
+            self.externalPort = externalPort; 
 		}
 		
-		self.allowInternetAccess = [preferences boolForKey:MGSAllowInternetAccess];
-        self.allowLocalAccess = [preferences boolForKey:MGSAllowLocalAccess];
-		self.automaticallyMapPort = [preferences boolForKey:MGSEnableInternetAccessAtLogin];
-		self.allowLocalUsersToAuthenticate = [preferences boolForKey:MGSAllowLocalUsersToAuthenticate];
-		self.allowRemoteUsersToAuthenticate = [preferences boolForKey:MGSAllowRemoteUsersToAuthenticate];
-        
+        // start port mapping
         if (self.automaticallyMapPort) {
             [self startPortMapping];
         }

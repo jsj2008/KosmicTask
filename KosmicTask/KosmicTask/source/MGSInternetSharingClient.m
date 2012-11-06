@@ -52,6 +52,8 @@ static id _sharedInstance = nil;
  */
 - (id)init
 {
+    _processingResponse = YES;  // we don't want to initiate a request during init
+    
 	if ((self = [super init])) {
 		_processingResponse = NO;
 		

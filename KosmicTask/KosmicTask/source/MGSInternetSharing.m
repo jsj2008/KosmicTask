@@ -91,6 +91,20 @@ NSString *MGSInternetSharingKeyReachabilityStatus = @"MGSInternetSharingKeyReach
 		_inactiveStatusLargeImage = [[[MGSImageManager sharedManager] redDotLarge] copy];
 		_activePortStatusImage = [[[MGSImageManager sharedManager] greenTick16] copy];
 		_inactivePortStatusImage = [[[MGSImageManager sharedManager] redCross16] copy];
+        
+		// read preferences
+		MGSPreferences *preferences = [MGSPreferences standardUserDefaults];
+		
+		if ([preferences objectForKey:MGSExternalPortNumber]) {
+			self.externalPort = [preferences integerForKey:MGSExternalPortNumber];
+		}
+		
+		self.allowInternetAccess = [preferences boolForKey:MGSAllowInternetAccess];
+        self.allowLocalAccess = [preferences boolForKey:MGSAllowLocalAccess];
+		self.automaticallyMapPort = [preferences boolForKey:MGSEnableInternetAccessAtLogin];
+		self.allowLocalUsersToAuthenticate = [preferences boolForKey:MGSAllowLocalUsersToAuthenticate];
+		self.allowRemoteUsersToAuthenticate = [preferences boolForKey:MGSAllowRemoteUsersToAuthenticate];
+        
 	}
 	
 	return self;
