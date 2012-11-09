@@ -169,7 +169,11 @@
 			case MGSErrorCodeAuthenticationFailure:
 				message = NSLocalizedString(@"Authentication failure. Please switch to configuration mode to save.", @"save task authentication failure");
 				break;
-				
+
+            case MGSErrorCodeServerAccessDenied:
+				message = NSLocalizedString(@"Access denied. The task cannot be saved.", @"access denied during task save");
+				break;
+
 			default:
 				break;
 		}
