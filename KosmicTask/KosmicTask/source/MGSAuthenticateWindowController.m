@@ -63,6 +63,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 @synthesize modalForWindow = _modalForWindow;
 @synthesize netRequest = _netRequest;
 @synthesize canConnect = _canConnect;
+@synthesize hostName = _hostname;
 
 #pragma mark class methods
 
@@ -298,13 +299,31 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 	
 	self.password = @"";	// ensure any previous password is cleared
 	[self setControlsEnabled:YES];	// controls will be needed if sheet to be shown or already visible
-	
+	    
 	// check for failed authentication
 	//
 	// if the sheet is already visible then a previous authentication has failed.
 	//
 	if (_sheetIsVisible == YES) {
-		
+
+        MGSError *error = netRequest.responseMessage.error;
+
+        NSString *errorMesg = nil;
+        switch (error.code) {
+            case MGSErrorCodeServerAccessDenied:
+                errorMesg = NSLocalizedString(@"Access denied", @"Access to server denied");
+                break;
+                
+            case MGSErrorCodeAuthenticationFailure:
+                errorMesg = NSLocalizedString(@"Authentication failed", @"Server authentication failed");
+                break;
+                
+            default:
+                errorMesg = NSLocalizedString(@"Bad authentication", @"Server authentication failed with unknown error");
+                break;
+        }
+        
+        [errorTextField setStringValue:errorMesg];
 		[authenticationFailedBox setHidden:NO];
 		[[self window] makeFirstResponder: passwordTextField]; // need to set after controls enabled
 		
@@ -385,9 +404,10 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 		self.username = NSUserName();
 	}
 	
+	self.hostName = [[_netRequest netClient] serviceShortName];
 	NSString *format = NSLocalizedString(@"Enter a valid OS X user name and password to gain secure access to KosmicTask on \"%@\".", @"Authentication window text");
-	self.windowText = [NSString stringWithFormat:format, [[_netRequest netClient] serviceShortName]];
-	
+	self.windowText = [NSString stringWithFormat:format, self.hostName];
+    
 	// if no username supplied then make it first responder
 	if ([self.username isEqualToString:@""]) {
 		[[self window] makeFirstResponder: usernameTextField];

@@ -22,11 +22,13 @@
 	IBOutlet NSObjectController *objectController;
 	IBOutlet NSBox *authenticationFailedBox;
 	IBOutlet NSButton *cancelButton;
-	
+	IBOutlet NSTextField *errorTextField;
+    
 	NSString *_username;
 	NSString *_password;
 	BOOL _savePasswordToKeychain;
 	NSString *_windowText;
+    NSString *_hostname;
 	NSDictionary *_challenge;
 	BOOL _sheetIsVisible;
 	BOOL _keychainSearchedForCredentials;
@@ -41,6 +43,7 @@
 @property (copy) NSString *password;
 @property BOOL savePasswordToKeychain;
 @property (copy) NSString *windowText;
+@property (copy) NSString *hostName;
 @property (readonly) NSDictionary *challenge;
 @property NSWindow *modalForWindow;
 @property (readonly) MGSClientNetRequest *netRequest;
