@@ -221,9 +221,19 @@ static MGSPreferences *_standardUserDefaults = nil;
 		[self setObject:[NSNumber numberWithBool:YES] forKey:MGSAllowLocalAccess];
 	}
 
+    // allow local users to autheticate
+	if (![self objectForKey: MGSAllowLocalUsersToAuthenticate]) {
+		[self setObject:[NSNumber numberWithBool:YES] forKey:MGSAllowLocalUsersToAuthenticate];
+	}
+
     // allow internet access
 	if (![self objectForKey: MGSAllowInternetAccess]) {
 		[self setObject:[NSNumber numberWithBool:NO] forKey:MGSAllowInternetAccess];
+	}
+
+    // allow remote users to autheticate
+	if (![self objectForKey: MGSAllowRemoteUsersToAuthenticate]) {
+		[self setObject:[NSNumber numberWithBool:YES] forKey:MGSAllowRemoteUsersToAuthenticate];
 	}
 
 	// enable internet access at login

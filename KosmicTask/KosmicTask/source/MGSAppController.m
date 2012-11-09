@@ -1713,6 +1713,16 @@
     [appDefaults setObject:[NSNumber numberWithInteger:60] forKey:MGSMachineTaskTimeout];
     [appDefaults setObject:[NSNumber numberWithInteger:0] forKey:MGSMachineTaskTimeoutUnits];
     
+    // access control
+    // see MGSPreferences for prefs managed by server
+    if (NO) {
+        [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:MGSAllowLocalAccess];
+        [appDefaults setObject:[NSNumber numberWithBool:YES] forKey:MGSAllowLocalUsersToAuthenticate];
+        [appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSAllowInternetAccess];
+        [appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSAllowRemoteUsersToAuthenticate];
+        [appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSEnableInternetAccessAtLogin];
+    }
+    
 	//
 	// register app defaults
 	//
