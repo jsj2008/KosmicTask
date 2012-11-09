@@ -64,6 +64,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 @synthesize netRequest = _netRequest;
 @synthesize canConnect = _canConnect;
 @synthesize hostName = _hostname;
+@synthesize authenticationInProgress = _authenticationInProgress;
 
 #pragma mark class methods
 
@@ -272,8 +273,10 @@ static MGSAuthenticateWindowController *_sharedController = nil;
  
  */
 -(BOOL)authenticateRequest:(MGSClientNetRequest *)netRequest challenge:(NSDictionary *)challengeDict
-
 {
+    
+    self.authenticationInProgress = NO;
+    
 	// if we are currently handling another request authorisation then we cannot accept this request.
 	// we can accept another authentication request from the current request.
 	if (_netRequest != nil && _netRequest != netRequest) {
@@ -457,6 +460,8 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 -(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 
+    self.authenticationInProgress = NO;
+    
 	// we are only interested in responses that correspond to the current request
 	if (netRequest != self.netRequest) {
 		return;
@@ -555,6 +560,8 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 	// resend the request with self as owner
 	[[MGSClientRequestManager sharedController] sendRequestOnClient:_netRequest];
 	
+    self.authenticationInProgress = YES;
+    
 	return;
 	
 errorExit:;

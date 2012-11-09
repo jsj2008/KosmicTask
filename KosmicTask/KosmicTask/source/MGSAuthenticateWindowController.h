@@ -23,6 +23,7 @@
 	IBOutlet NSBox *authenticationFailedBox;
 	IBOutlet NSButton *cancelButton;
 	IBOutlet NSTextField *errorTextField;
+    IBOutlet NSProgressIndicator *progressIndicator;
     
 	NSString *_username;
 	NSString *_password;
@@ -37,6 +38,7 @@
 	NSModalSession _modalSession;
 	NSWindow *_modalForWindow;
     BOOL _canConnect;
+    BOOL _authenticationInProgress;
 }
 
 @property (copy) NSString *username;
@@ -48,6 +50,7 @@
 @property NSWindow *modalForWindow;
 @property (readonly) MGSClientNetRequest *netRequest;
 @property BOOL canConnect;
+@property BOOL authenticationInProgress;
 
 
 + (id)sharedController;
