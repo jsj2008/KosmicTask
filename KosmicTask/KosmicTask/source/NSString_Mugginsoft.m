@@ -218,11 +218,13 @@
 - (BOOL)mgs_isURL
 {
     // http://stackoverflow.com/questions/8249420/alter-regex-to-allow-ip-address-when-checking-url
-	NSString *regex = @"/^(http(s?):\\/\\/)?(www\\.)?+[a-zA-Z0-9\\.\\-\\_]+(\\.[a-zA-Z]{2,20})+(\\/[a-zA-Z0-9\\_\\-\\s\\.\\/\\?\\%\\#\\&\\=]*)?$/i";
-	
+    NSString *regex = @"^(http(s?)://)?(www\\.)?+[a-zA-Z0-9\\.\\-_]+(\\.[a-zA-Z]{2,6})+(/[a-zA-Z0-9_\\-\\s\\./\\?%#\\&=]*)?$";
+    
 	// supported non standard regex format is at http://www.icu-project.org/userguide/regexp.html
 	NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-	return [regextest evaluateWithObject:self];
+	BOOL isURL = [regextest evaluateWithObject:self];
+    
+    return isURL;
 }
 
 /*
