@@ -160,12 +160,21 @@
 			goto error_exit;
 		}
 	}
-	
-	// authenticate
-	if ([self authenticate]) {
-		return YES;
-	}
-	
+	   
+    // is authentication allowed
+    if ([self canAuthenticate]) {
+
+    	// authenticate
+        if ([self authenticate]) {
+            return YES;
+        }
+        
+        errorCode = MGSErrorCodeAuthenticationFailure;
+
+    } else {
+        errorCode  = MGSErrorCodeServerAccessDenied;
+    }
+
 	//========================================
 	//
 	// authentication has failed
@@ -184,8 +193,8 @@
 			[self.responseMessage setMessageObject:challengeDict forKey:MGSNetMessageKeyChallenge];
 		}
 		
-		// add authentication error to reply
-		mgsError = [MGSError serverCode:MGSErrorCodeAuthenticationFailure];
+		// add error to reply
+		mgsError = [MGSError serverCode:errorCode];
 		[self.responseMessage setErrorDictionary:[mgsError dictionary] ];
 		
 		// tell delegate that authentication has failed.
@@ -216,6 +225,7 @@ error_exit:
 {
 	BOOL success = NO;
 	
+    // is authentication allowed
     if (![self canAuthenticate]) {
         return NO;
     }
