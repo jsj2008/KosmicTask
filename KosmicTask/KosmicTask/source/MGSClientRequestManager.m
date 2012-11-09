@@ -927,9 +927,9 @@ static MGSClientRequestManager *_sharedController = nil;
 		// formulate our response and resend the request
 		//
 		//==================================================================	
-		if ([mgsError code] == MGSErrorCodeAuthenticationFailure) {
+		//if ([mgsError code] == MGSErrorCodeAuthenticationFailure) {
 
-			// if we are authenticating then prompt 
+			// if we are authenticating then prompt user
 			if ([requestCommand isEqualToString:MGSNetMessageCommandAuthenticate]) {
 
 				// request net client not authenticated
@@ -949,7 +949,7 @@ static MGSClientRequestManager *_sharedController = nil;
 				}
 			}
 			
-		}
+		//}
 		
 		netRequest.error = mgsError;
 		
