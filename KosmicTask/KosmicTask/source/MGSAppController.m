@@ -703,12 +703,15 @@
 	NSString *format = NSLocalizedString(@"Build: %@", @"Application build format string");
 	NSString *buildString = [NSString stringWithFormat: format, [NSBundle mainBundleInfoObjectForKey:@"MGSBuildNumber"]];
 	
+#ifdef MGS_SUBVERSION_INFO_AVAILABLE
+    
 	// if subversion revision found then append it
-	NSString *revisionString = [NSBundle mainBundleInfoObjectForKey:@"MGSSubversionRevision"];
-	if (revisionString) {
-		buildString = [NSString stringWithFormat:@"%@ (%@)", buildString, revisionString];
-	}
-	
+    NSString *revisionString = [NSBundle mainBundleInfoObjectForKey:@"MGSSubversionRevision"];
+    if (revisionString) {
+        buildString = [NSString stringWithFormat:@"%@ (%@)", buildString, revisionString];
+    }
+#endif
+    
 	return buildString;
 }
 
