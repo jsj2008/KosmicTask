@@ -107,7 +107,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 								  options:[NSDictionary dictionaryWithObjectsAndKeys:@"serviceShortName", @"name", nil]];
 	}
 }
-
+#pragma mark -
 #pragma mark Instance control
 /*
  
@@ -318,7 +318,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	NSAssert(context, @"net client application context is nil");
 	return context;
 }
-
+#pragma mark -
 #pragma mark Images
 /*
  
@@ -435,8 +435,26 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	[self deleteSessionPassword];
 }
 
-#pragma mark Request, service and connection handling
+#pragma mark -
+#pragma mark Searching
+
 /*
+ 
+ -canSearch
+ 
+ */
+- (BOOL)canSearch
+{
+    BOOL canSearch = NO;
+    
+    if ([self isConnected] && [self visible]) {
+        canSearch = YES;
+    }
+    
+    return canSearch;
+}
+/*
+ 
  
  search the client
  
@@ -445,6 +463,9 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 {
 	[[MGSClientRequestManager sharedController] requestSearchNetClient:self searchDict:searchDict withOwner:owner];
 }
+#pragma mark -
+#pragma mark Request, service and connection handling
+
 
 /*
  
@@ -860,7 +881,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	[self assignHostImage];
 }
 
-
+#pragma mark -
 #pragma mark MGSNetSocket delegate messages
 /*
  
@@ -904,7 +925,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 #pragma unused(netSocket)
     return YES;
 }
-
+#pragma mark -
 #pragma mark Properties
 /*
  
@@ -933,7 +954,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	if (_hostViaBonjour) return 1;					// bonjour host
 	return 2;										// other hosts
 }
-
+#pragma mark -
 #pragma mark MGSNetRequest delegate messages
 /*
  
@@ -965,6 +986,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	
 }
 
+#pragma mark -
 #pragma mark Authentication handling
 /*
  
@@ -1046,6 +1068,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	return (nil == _authenticationDictionary ? NO : YES);
 }
 
+#pragma mark -
 #pragma mark TXT record handling
 /*
  
@@ -1059,6 +1082,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 	}
 }
 
+#pragma mark -
 #pragma mark Operations
 
 /*

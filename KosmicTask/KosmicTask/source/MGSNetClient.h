@@ -130,6 +130,7 @@ typedef enum _MGSScriptAccess {
 - (BOOL)isAuthenticated;
 - (int)hostSortIndex;
 - (void)requestSearch:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner;
+- (bool)canSearch;
 - (NSDictionary *)authenticationDictionaryForRunMode;
 
 // context handling

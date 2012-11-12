@@ -93,19 +93,7 @@ static MGSNetClientManager *_sharedController = nil;
 
 
 #pragma mark -
-#pragma mark Instance Methods
-
-/*
- 
- copy with zone for singleton
- 
- */
-- (id)copyWithZone:(NSZone *)zone
-{
-	#pragma unused(zone)
-	
-    return self;
-}
+#pragma mark Setup
 
 /*
  
@@ -132,6 +120,38 @@ static MGSNetClientManager *_sharedController = nil;
 	}
 	return self;
 }
+
+/*
+ 
+ set delegate
+ 
+ this is a singleton class so defining a delegate for it is not the best design.
+ to stop the delegate being swapped out ensure that it can only be set once.
+ a notifcation mechanism would have been better.
+ 
+ */
+- (void)setDelegate:(id <MGSNetClientManagerDelegate, NSObject> )object
+{
+	NSAssert(!_delegate, @"singleton delegate has already been set");
+	_delegate = object;
+}
+#pragma mark -
+#pragma mark NSCopying
+/*
+
+copy with zone for singleton
+
+*/
+- (id)copyWithZone:(NSZone *)zone
+{
+#pragma unused(zone)
+	
+    return self;
+}
+
+
+#pragma mark
+#pragma mark Persistence
 /*
  
  check for unsaved configuration on net client.
@@ -254,64 +274,80 @@ static MGSNetClientManager *_sharedController = nil;
 	return NSTerminateCancel;
 }
 
-
 /*
  
- set delegate
- 
- this is a singleton class so defining a delegate for it is not the best design.
- to stop the delegate being swapped out ensure that it can only be set once.
- a notifcation mechanism would have been better.
+ restore persistent clients
  
  */
-- (void)setDelegate:(id <MGSNetClientManagerDelegate, NSObject> )object
+- (void)restorePersistentClients
 {
-	NSAssert(!_delegate, @"singleton delegate has already been set");
-	_delegate = object;
-}
-/*
- 
- send heartbeat request to all clients
- 
- */
-- (void)sendHeartbeats:(NSTimer*)theTimer
-{	
-	#pragma unused(theTimer)
+	// retrieve persistent client array from defaults
+	NSArray *persistentClients = [[NSUserDefaults standardUserDefaults] objectForKey:MGSDefaultPersistentConnections];
+	if (nil == persistentClients) return;
 	
-	[_netClients makeObjectsPerformSelector:@selector(sendHeartbeat)];
+	// iterate and reconnect clients
+	for (NSDictionary *dict in persistentClients) {
+		if (NO == [dict isKindOfClass:[NSDictionary class]]) continue;
+		
+		// create client from dictionary client
+		MGSNetClient *netClient = [[MGSNetClient alloc] initWithDictionary:dict];
+		if (!netClient) {
+			continue;
+		}
+		
+		// try and add the client
+		[self addStaticClient:netClient];
+	}
+	
 }
+
+# pragma mark -
+#pragma mark Search requests
 /*
  
  request search all clients
  
  */
-- (void)requestSearchAll:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner
+- (NSInteger)requestSearchAll:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner
 {
+    NSInteger count = 0;
 	for (MGSNetClient *netClient in _netClients) {
-		[netClient requestSearch:searchDict withOwner:owner];
+        if ([netClient canSearch]) {
+            [netClient requestSearch:searchDict withOwner:owner];
+            count++;
+        }
 	}
+    
+    return count;
 }
 /*
  
  request search all but local client
  
  */
-- (void)requestSearchShared:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner
+- (NSInteger)requestSearchShared:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner
 {
+    NSInteger count = 0;
+
 	for (MGSNetClient *netClient in _netClients) {
-		if (![netClient isLocalHost]) {
+		if (![netClient isLocalHost] && [netClient canSearch]) {
 			[netClient requestSearch:searchDict withOwner:owner];
+            count++;
 		}
 	}
+    
+    return count;
 }
 /*
  
  request search local client
  
  */
-- (void)requestSearchLocal:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner
+- (NSInteger)requestSearchLocal:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner
 {
 	[[self localClient] requestSearch:searchDict withOwner:owner];
+    
+    return 1;
 }
 /*
  
@@ -352,6 +388,65 @@ static MGSNetClientManager *_sharedController = nil;
 	return YES;
 }
 
+#pragma mark -
+#pragma mark Client responsiveness
+/*
+ 
+ send heartbeat request to all clients
+ 
+ */
+- (void)sendHeartbeats:(NSTimer*)theTimer
+{
+#pragma unused(theTimer)
+	
+	[_netClients makeObjectsPerformSelector:@selector(sendHeartbeat)];
+}
+
+
+/*
+ 
+ - netClientResponding:
+ 
+ */
+- (void)netClientResponding:(MGSNetClient *)netClient
+{
+	// we only receive this delegate message while a manual connection
+	// is trying to extablish a connection by sending out heartbeats
+	
+	// check if a manual connection
+	if (![netClient hostViaBonjour]) {
+		[self addStaticClient:netClient];
+	} else {
+		NSAssert(NO, @"unexpected response from net client");
+	}
+}
+
+/*
+ 
+ - netClientNotResponding:
+ 
+ */
+- (void)netClientNotResponding:(MGSNetClient *)netClient
+{
+	// we only receive this delegate message while a manual connection
+	// is trying to extablish a connection by sending out heartbeats
+    
+	// we sent a heartbeat to a remote manual host but received no reply
+	
+	// check if a manual connection
+	if (![netClient hostViaBonjour]) {
+		
+		// routine heartbeats are only sent by default to already connected clients.
+		// hence schedule our own here.
+		[self performSelector:@selector(addStaticClient:) withObject:netClient afterDelay:60.0];
+        
+	} else {
+		NSAssert(NO, @"unexpected response from net client");
+	}
+}
+
+#pragma mark -
+#pragma mark Client management
 
 // number of attached clients
 - (NSInteger)clientsCount
@@ -395,19 +490,6 @@ static MGSNetClientManager *_sharedController = nil;
 	return [_netClients indexOfObjectIdenticalTo:client];
 }
 
-/*
- 
- - informDelegateClientListChanged
- 
- */
- 
-- (void)informDelegateClientListChanged
-{
-	// message the delegate
-	if (_delegate && [_delegate respondsToSelector:@selector(netClientHandlerClientListChanged:)]) {
-		[_delegate netClientHandlerClientListChanged:self];
-	}
-}
 
 // sort the array
 - (void)sortUsingDescriptors:(NSArray *)descriptors
@@ -464,47 +546,6 @@ static MGSNetClientManager *_sharedController = nil;
 
 }
 
-/*
- 
- - netClientResponding:
- 
- */
-- (void)netClientResponding:(MGSNetClient *)netClient
-{
-	// we only receive this delegate message while a manual connection
-	// is trying to extablish a connection by sending out heartbeats
-	
-	// check if a manual connection
-	if (![netClient hostViaBonjour]) {
-		[self addStaticClient:netClient];
-	} else {
-		NSAssert(NO, @"unexpected response from net client");
-	}
-}
-
-/*
- 
- - netClientNotResponding:
- 
- */
-- (void)netClientNotResponding:(MGSNetClient *)netClient
-{
-	// we only receive this delegate message while a manual connection
-	// is trying to extablish a connection by sending out heartbeats
-
-	// we sent a heartbeat to a remote manual host but received no reply
-	
-	// check if a manual connection
-	if (![netClient hostViaBonjour]) {
-		
-		// routine heartbeats are only sent by default to already connected clients.
-		// hence schedule our own here.
-		[self performSelector:@selector(addStaticClient:) withObject:netClient afterDelay:60.0];
-
-	} else {
-		NSAssert(NO, @"unexpected response from net client");
-	}
-}
 
 /*
  
@@ -603,32 +644,7 @@ remove a static client
 	return array;
 }
 
-/*
- 
- restore persistent clients
- 
- */
-- (void)restorePersistentClients
-{
-	// retrieve persistent client array from defaults
-	NSArray *persistentClients = [[NSUserDefaults standardUserDefaults] objectForKey:MGSDefaultPersistentConnections];
-	if (nil == persistentClients) return;
-	
-	// iterate and reconnect clients
-	for (NSDictionary *dict in persistentClients) {
-		if (NO == [dict isKindOfClass:[NSDictionary class]]) continue;
-		
-		// create client from dictionary client 
-		MGSNetClient *netClient = [[MGSNetClient alloc] initWithDictionary:dict];
-		if (!netClient) {
-			continue;
-		}
-		
-		// try and add the client
-		[self addStaticClient:netClient];
-	}
-	
-}
+
 
 /*
  
@@ -646,6 +662,22 @@ remove a static client
 	}
 	
 	return nil;
+}
+
+#pragma mark -
+#pragma mark Delegate management
+/*
+ 
+ - informDelegateClientListChanged
+ 
+ */
+
+- (void)informDelegateClientListChanged
+{
+	// message the delegate
+	if (_delegate && [_delegate respondsToSelector:@selector(netClientHandlerClientListChanged:)]) {
+		[_delegate netClientHandlerClientListChanged:self];
+	}
 }
 
 #pragma mark -

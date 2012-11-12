@@ -192,6 +192,11 @@
 			[self sendSearchQueryToSharedClients:searchDict];
 			break;
 
+            // search all clients
+		case MGSSearchAll:
+			[self sendSearchQueryToAllClients:searchDict];
+			break;
+
 			// search other mac
 		case MGSSearchOtherMac:
 			[self sendSearchQuery:searchDict toClientServiceName:_scopeBarViewController.searchTargetIdentifier];
@@ -225,11 +230,24 @@
  */
 - (void)sendSearchQueryToSharedClients:(NSDictionary *)searchDict
 {
-	// net client handler will send a request to each client
-	[[MGSNetClientManager sharedController] requestSearchShared:searchDict withOwner:self];
+	// net client handler will send a request to each visible client
+	NSInteger queries = [[MGSNetClientManager sharedController] requestSearchShared:searchDict withOwner:self];
+	
+	self.searchTargetsQueried = queries;
+}
+
+/*
+ 
+ send search query to all clients
+ 
+ */
+- (void)sendSearchQueryToAllClients:(NSDictionary *)searchDict
+{
+	// net client handler will send a request to each visible client
+	NSInteger queries = [[MGSNetClientManager sharedController] requestSearchAll:searchDict withOwner:self];
 	
 	// retain number of targets queried
-	self.searchTargetsQueried = [[MGSNetClientManager sharedController] clientsCount] - 1;
+	self.searchTargetsQueried = queries;
 }
 
 

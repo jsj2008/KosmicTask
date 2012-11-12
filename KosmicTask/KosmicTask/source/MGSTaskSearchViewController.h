@@ -42,6 +42,7 @@
 @property NSInteger numberOfItemsFound;
 @property NSUInteger numberOfMatches;
 
+- (void)sendSearchQueryToAllClients:(NSDictionary *)searchDict;
 - (void)sendSearchQueryToSharedClients:(NSDictionary *)searchDict;
 - (void)clearSearchResults;
 - (void)search:(NSString *)queryString;

@@ -28,6 +28,7 @@
 
 NSString *MGSThisMacItemIdentifier = @"This Mac ID";
 NSString *MGSSharedItemIdentifier = @"Shared Mac ID";
+NSString *MGSAllItemIdentifier = @"All Mac ID";
 //NSString *MGSAuthorItemIdentifier = @"Author";
 NSString *MGSScriptItemIdentifier = @"Script";
 NSString *MGSContentsItemIdentifier = @"Contents";
@@ -256,6 +257,8 @@ NSString *MGSContentsItemIdentifier = @"Contents";
 				_searchTarget = MGSSearchThisMac;
 			} else if ([identifier isEqualToString:MGSSharedItemIdentifier]) {
 				_searchTarget = MGSSearchShared;
+			} else if ([identifier isEqualToString:MGSAllItemIdentifier]) {
+				_searchTarget = MGSSearchAll;
 			} else {
 				_searchTarget = MGSSearchOtherMac;
 			}
@@ -364,6 +367,12 @@ NSString *MGSContentsItemIdentifier = @"Contents";
 				continue;
 			}
 			
+            // a client may hve connected but if we don't have
+            //a task list for it then it will be flagged as invisible
+            if (![netClient visible]) {
+				continue;
+			}
+
 			// our first item is our local host
 			if ([netClient isLocalHost]) {
 				dict = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -389,7 +398,16 @@ NSString *MGSContentsItemIdentifier = @"Contents";
 					nil];
 			[items addObject:dict];
 		}
-		 
+		
+        // if have more than one client then we want an all item too
+		if ([items count] > 1) {
+			dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                    MGSAllItemIdentifier, ITEM_IDENTIFIER,
+                    NSLocalizedString(@"All", @"scope bar text"), ITEM_NAME,
+					nil];
+			[items addObject:dict];
+		}
+
 		// SCOPE_SEARCH_GROUP_ID
 		[self.groups addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 								NSLocalizedString(@"Search:", @"Scope bar group label text"), GROUP_LABEL, 

@@ -13,6 +13,7 @@
 #define MGSSearchThisMac 0
 #define MGSSearchShared 1
 #define MGSSearchOtherMac 2
+#define MGSSearchAll 3
 
 // search attributes
 #define MGSSearchContent 0
