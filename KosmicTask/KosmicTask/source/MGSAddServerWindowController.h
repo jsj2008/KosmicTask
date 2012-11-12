@@ -28,7 +28,7 @@
 	id <MGSAddServerDelegate, NSObject> _delegate;
 	MGSNetClient *_netClient;
 	id _selectedObject;
-    BOOL _connectionIsValid;
+    BOOL _selectedConnectionIsValid;
     
     NSMutableArray *_connections;
 	IBOutlet NSObjectController *objectController;
@@ -55,6 +55,6 @@
 @property BOOL secureConnection;
 @property NSInteger portNumber;
 @property id delegate;
-@property BOOL connectionIsValid;
+@property BOOL selectedConnectionIsValid;
 
 @end
