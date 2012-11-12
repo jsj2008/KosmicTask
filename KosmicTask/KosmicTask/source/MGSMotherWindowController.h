@@ -22,6 +22,8 @@
 @class MGSNetClient;
 @class MGSActionDeleteWindowController;
 @class MGSWaitViewController;
+@class MGSAddServerWindowController;
+@class MGSRemoveServerWindowController;
 
 @interface MGSMotherWindowController : MGSActionExecuteWindowController <MGSEditWindowDelegate, 
 															MGSActionWindowDelegate, 
@@ -48,7 +50,9 @@
 																
 	MGSSidebarViewController *_sidebarViewController;
 	MGSWaitViewController *_waitViewController;
-
+    MGSAddServerWindowController *_addServerWindowController;
+    MGSRemoveServerWindowController *_removeServerWindowController;
+                                                                
 	
 	NSView *current;
 	eMGSMotherRunMode _runMode;

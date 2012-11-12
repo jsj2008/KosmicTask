@@ -1072,12 +1072,12 @@ const char MGSContextStartupComplete;
 {
 	#pragma unused(sender)
 	
-	MGSAddServerWindowController *addServer = [[MGSAddServerWindowController alloc] init];
-	[addServer window];	// load nib
-	addServer.delegate = [mainViewController browserViewController];
+	_addServerWindowController = [[MGSAddServerWindowController alloc] init];
+	[_addServerWindowController window];	// load nib
+	_addServerWindowController.delegate = [mainViewController browserViewController];
 	
 	// show the sheet
-	[NSApp beginSheet:[addServer window] modalForWindow:[self window] 
+	[NSApp beginSheet:[_addServerWindowController window] modalForWindow:[self window] 
 		modalDelegate:self 
 	   didEndSelector:@selector(addServerSheetDidEnd:returnCode:contextInfo:)
 		  contextInfo:NULL];
@@ -1104,12 +1104,12 @@ const char MGSContextStartupComplete;
 - (IBAction)removeServer:(id)sender
 {
 	#pragma unused(sender)
-	MGSRemoveServerWindowController *removeServer = [[MGSRemoveServerWindowController alloc] init];
-	[removeServer window];	// load nib
-	removeServer.delegate = [mainViewController browserViewController];
+	_removeServerWindowController = [[MGSRemoveServerWindowController alloc] init];
+	[_removeServerWindowController window];	// load nib
+	_removeServerWindowController.delegate = [mainViewController browserViewController];
 	
 	// show the sheet
-	[NSApp beginSheet:[removeServer window] modalForWindow:[self window] 
+	[NSApp beginSheet:[_removeServerWindowController window] modalForWindow:[self window] 
 		modalDelegate:self 
 	   didEndSelector:@selector(removeServerSheetDidEnd:returnCode:contextInfo:)
 		  contextInfo:NULL];
