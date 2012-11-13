@@ -793,6 +793,7 @@ static MGSClientRequestManager *_sharedController = nil;
 		
 		// process errors
 		if (error) {
+            
 			// define error
 			scriptError = [MGSError clientCode:errorCode reason:error log:YES];	// logging will occur when error extracted from dic
 			
@@ -843,7 +844,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	// create the payload
 	MGSNetRequestPayload *payload = [[MGSNetRequestPayload alloc] init];
 	payload.requestID = netRequest.requestID;
-	payload.dictionary = responseScriptDict;
+	payload.dictionary = responseScriptDict;    // may contain an error key
 	
 	
 	// flag error in payload
@@ -932,21 +933,31 @@ static MGSClientRequestManager *_sharedController = nil;
 			// if we are authenticating then prompt user
 			if ([requestCommand isEqualToString:MGSNetMessageCommandAuthenticate]) {
 
-				// request net client not authenticated
-				[netRequest.netClient setAuthenticationDictionary:nil];
-								
-				// look for the challenge dict.
-				// if none found then clear text authentication will be used
-				NSDictionary *challengeDict = [replyMessage messageObjectForKey:MGSNetMessageKeyChallenge];
-				
-				// ask authenticate window controller to accept request.
-				// the controller will prompt the user for authentication details.
-				// note that the authentication controller may not be able to accept the request
-				// if it is active with another request.
-				MGSAuthenticateWindowController *authenticateController = [MGSAuthenticateWindowController sharedController];
-				if ([authenticateController authenticateRequest:netRequest challenge:challengeDict]) {
-					return;
-				}
+                MGSAuthenticateWindowController *authenticateController = [MGSAuthenticateWindowController sharedController];
+
+                if ([mgsError code] == MGSErrorCodeAuthenticationFailure) {
+                    
+                    // request net client not authenticated
+                    [netRequest.netClient setAuthenticationDictionary:nil];
+                                    
+                    // look for the challenge dict.
+                    // if none found then clear text authentication will be used
+                    NSDictionary *challengeDict = [replyMessage messageObjectForKey:MGSNetMessageKeyChallenge];
+                    
+                    // ask authenticate window controller to accept request.
+                    // the controller will prompt the user for authentication details.
+                    // note that the authentication controller may not be able to accept the request
+                    // if it is active with another request.
+                    if ([authenticateController authenticateRequest:netRequest challenge:challengeDict]) {
+                        return;
+                    }
+                        
+                }
+                
+                // we may see MGSErrorCodeServerAccessDenied
+                else {
+                    [authenticateController closeWindow];
+                }
 			}
 			
 		//}

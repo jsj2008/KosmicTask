@@ -132,6 +132,7 @@
  */
 - (void)authenticateNetClient:(MGSNetClient *)netClient forAccess:(NSUInteger)accessType
 {
+    [progressIndicator setHidden:NO];
 	[progressIndicator startAnimation:self];
 	_cancelTimer = nil;
 	_displayTimer = nil;
@@ -194,6 +195,39 @@
 													repeats:NO];
 }
 
+
+/*
+ 
+ cancel the authentication
+ 
+ */
+-(void)cancelAuthentication:(id)sender
+{
+#pragma unused(sender)
+	
+    if (!_authenticationCancelled) {
+        _authenticationCancelled = YES;
+    
+        [self closeWindow];
+    }
+}
+
+/*
+ 
+ authentication dialog display notification
+ this notification is sent before the authentication dialog appears
+ 
+ */
+- (void)authDialogDisplay:(NSNotification *)notification
+{
+#pragma unused(notification)
+	
+	[self closeWindow];
+}
+
+#pragma mark -
+#pragma mark MGSNetRequestOwner protocol
+
 /*
  
  request authentication reply
@@ -213,17 +247,47 @@
         netRequest.owner = nil;
     }
     
+    // get request error
+    NSDictionary *errorDict = netRequest.error.dictionary;
+    
+    // get payload error
+    //
 	// if error in reply then authentication was cancelled by user
 	// within the object which sent this message
-	NSDictionary *errorDict = [payload.dictionary objectForKey:MGSNetMessageKeyError];
+	if (!errorDict){
+        errorDict = [payload.dictionary objectForKey:MGSNetMessageKeyError];
+    }
+    
 	if (errorDict) {
 		
+        BOOL cancel = NO;
 		MGSError *error = [MGSError errorWithDictionary:errorDict];
-		if ([error code] != MGSErrorCodeAuthenticationFailure) {
-			MLog(DEBUGLOG, @"expected error code: %i received: %i", MGSErrorCodeAuthenticationFailure, [error code]);
+        NSString *errorString = @"Error";
+        
+        switch ([error code]) {
+                
+            case MGSErrorCodeAuthenticationFailure:
+                cancel = YES;
+                break;
+
+            case MGSErrorCodeServerAccessDenied:
+                errorString = error.localizedDescription;
+                break;
+
+            default:
+                errorString = error.localizedDescription;
+                break;
 		}
-		
-		[self cancelAuthentication:self];
+
+        if (cancel) {
+            [self cancelAuthentication:self];
+        } else {
+            label.stringValue = errorString;
+            [cancelButton setEnabled:YES];
+            [cancelButton setTitle:NSLocalizedString(@"Close", @"Button text")];
+            [progressIndicator stopAnimation:self];
+            [progressIndicator setHidden:YES];
+        }
 		return;
 	}
 	
@@ -233,33 +297,6 @@
 	if (!_displayTimer) {
 		[self closeWindow];
 	}
-}
-
-/*
- 
- cancel the authentication
- 
- */
--(void)cancelAuthentication:(id)sender
-{
-#pragma unused(sender)
-	
-	_authenticationCancelled = YES;
-    
-	[self closeWindow];
-}
-
-/*
- 
- authentication dialog display notification
- this notification is sent before the authentication dialog appears
- 
- */
-- (void)authDialogDisplay:(NSNotification *)notification
-{
-#pragma unused(notification)
-	
-	[self closeWindow];
 }
 
 #pragma mark -
@@ -297,7 +334,7 @@
 	[_cancelTimer invalidate];
 	_cancelTimer = nil;
 	
-    // enable cncel button
+    // enable cancel button
 	[cancelButton setEnabled:YES];
 }
 

@@ -16,6 +16,7 @@
 
 @interface MGSConfigurationAccessWindowController : NSWindowController <MGSNetRequestOwner> {
 	IBOutlet NSTextField *mainLabel;
+    IBOutlet NSTextField *label;
 	IBOutlet NSButton *cancelButton;
 	IBOutlet NSProgressIndicator *progressIndicator;
 	NSWindow *_modalForWindow;

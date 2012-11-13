@@ -303,16 +303,16 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 	self.password = @"";	// ensure any previous password is cleared
 	[self setControlsEnabled:YES];	// controls will be needed if sheet to be shown or already visible
 	    
+    MGSError *responseError = netRequest.responseMessage.error;
+
 	// check for failed authentication
 	//
 	// if the sheet is already visible then a previous authentication has failed.
 	//
 	if (_sheetIsVisible == YES) {
 
-        MGSError *error = netRequest.responseMessage.error;
-
         NSString *errorMesg = nil;
-        switch (error.code) {
+        switch (responseError.code) {
             case MGSErrorCodeServerAccessDenied:
                 errorMesg = NSLocalizedString(@"Access denied", @"Access to server denied");
                 break;
@@ -336,7 +336,18 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 		
 		// we exit here, leaving the user to re-enter then auth details
 		return YES;
-	}
+	} else {
+        
+        switch (responseError.code) {
+             case MGSErrorCodeAuthenticationFailure:
+                break;
+                
+            case MGSErrorCodeServerAccessDenied:
+            default:
+                return NO;
+        }
+
+    }
 	
 	// validate the challenge if supplied
 	if (_challenge) {
