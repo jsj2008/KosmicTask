@@ -46,6 +46,11 @@
     return [NSColor colorWithCalibratedRed:0.25f green:0.25f blue:0.25f alpha:1.0f];
 }
 
++ (NSColor *)countColorMidGrey
+{
+    return [NSColor colorWithCalibratedRed:0.50f green:0.50f blue:0.50f alpha:1.0f];
+}
+
 + (NSColor *)countColorRed
 {
 	return [NSColor colorWithCalibratedRed:0.976 green:0.259 blue:0.259 alpha:1.0]; 
@@ -55,6 +60,12 @@
 + (NSColor *)countColorDarkRed
 {
 	return [NSColor colorWithCalibratedRed:0.750 green:0.170 blue:0.010 alpha:1.0]; 
+	
+}
+
++ (NSColor *)countColorDarkBlue
+{
+	return [NSColor colorWithCalibratedRed:0.25 green:0.42 blue:0.61 alpha:1.0];
 	
 }
 

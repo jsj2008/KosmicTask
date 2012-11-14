@@ -23,6 +23,7 @@ extern NSString *MGSKeyPathNetClientHostStatus;
 
 typedef enum _MGSTaskRunStatus {
 	MGSTaskRunStatusHostUnavailable,		// host unavailable
+	MGSTaskRunStatusLoading,				// loading representation
 	MGSTaskRunStatusReady,				// ready to execute
 	MGSTaskRunStatusExecuting,			// executing
 	MGSTaskRunStatusSuspended,			// suspended
@@ -53,6 +54,7 @@ typedef enum _MGSTaskDisplayType {
 
 typedef enum _MGSTaskActivity {
 	MGSUnavailableTaskActivity = 0,		// unavailable
+	MGSLoadingTaskActivity,				// loading
 	MGSReadyTaskActivity,				// ready to execute
 	MGSPausedTaskActivity,			// is paused	
 	MGSProcessingTaskActivity,		// is processing

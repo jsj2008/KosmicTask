@@ -103,8 +103,8 @@
 		[self setCanDragMiddleView:NO];
 	}
 	
-    _parameterCountLabelColourDisabled = [MGSImageAndTextCell countColorDarkRed];
-    _parameterCountLabelColourEnabled = [MGSImageAndTextCell countColorGreen];
+    _parameterCountLabelColourDisabled = [MGSImageAndTextCell countColorMidGrey];
+    _parameterCountLabelColourEnabled = [MGSImageAndTextCell countColorDarkBlue];
 	[self setParameterCountLabelColour:_parameterCountLabelColourDisabled];
     
 	// needed to ensure correct view repositioning 

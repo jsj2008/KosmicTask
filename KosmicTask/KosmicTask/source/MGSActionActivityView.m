@@ -1,4 +1,4 @@
-//
+ //
 //  MGSActionActivityView.m
 //  Mother
 //
@@ -81,6 +81,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 @interface MGSActionActivityView (Private)
 - (void)drawPausedInRect:(NSRect)rect;
 - (void)drawReadyInRect:(NSRect)rect;
+- (void)drawLoadingInRect:(NSRect)rect;
 - (void)drawProcessingInRect:(NSRect)rect;
 - (void)saveBezierState;
 - (void)restoreBezierState;
@@ -89,6 +90,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 - (void)drawUnavailableInRect:(NSRect)rect;
 - (NSRect)validateDrawRect:(NSRect)rect;
 - (void)drawRectFromCache:(NSRect)rect;
+- (void)drawSpinnerFromCache:(NSRect)rect;
 - (void)drawSpinner;
 - (void)updateAnimatedRect;
 @end
@@ -142,7 +144,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
  */
 - (void)initialise
 {
-	_activity = MGSReadyTaskActivity;
+	_activity = MGSLoadingTaskActivity;
 	_runMode = kMGSMotherRunModePublic;
 	_respectRunMode = YES;
 	_canClick = YES;
@@ -655,6 +657,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
     
 	_cacheRect = NSZeroRect;
 	_imageCache = nil;
+    _spinnerCache = nil;
 }
 
 
@@ -765,6 +768,9 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 			[self drawTerminatedInRect: rect];
 			break;
 			
+		case MGSLoadingTaskActivity:
+			[self drawLoadingInRect: rect];
+
 		case MGSReadyTaskActivity:
 		default:
 			[self drawReadyInRect: rect];
@@ -1032,12 +1038,24 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 
 /*
  
- animation delay
+ - animationDelayForActivity
  
  */
-- (NSTimeInterval)animationDelay
+- (NSTimeInterval)animationDelayForActivity
 {
-	return animationDelay;
+    NSTimeInterval interval = animationDelay;
+    
+    switch(_activity) {
+        case MGSLoadingTaskActivity:
+            interval = 0.0833;
+        break;
+        
+        default:
+            interval = animationDelay;
+        break;
+    }
+    
+	return interval;
 }
 
 /*
@@ -1052,6 +1070,15 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	//}
 }
 
+/*
+ 
+ - animationDelay
+ 
+ */
+- (NSTimeInterval)animationDelay
+{
+    return animationDelay;
+}
 /*
  
  - scheduleFade:
@@ -1277,9 +1304,11 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	// image cache
 	// only use cache for animated activities
 	switch (_activity) {
-		case MGSPausedTaskActivity:	
+        case MGSLoadingTaskActivity:
+		case MGSPausedTaskActivity:
 		case MGSProcessingTaskActivity:
 			_useImageCache = YES;
+            _useSpinnerCache = YES;
             
             // fade in and then out if not at max alpha
             if (![self hasMaxAlpha]) {
@@ -1363,6 +1392,15 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 	[self drawCentreInRect:rect];
 }
 
+/*
+ 
+ draw loading in rect
+ 
+ */
+- (void)drawLoadingInRect:(NSRect)rect
+{
+	[self drawCentreInRect:rect];
+}
 
 /*
  
@@ -1501,7 +1539,12 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 		
 		// create path
 		switch (_activity) {
-				
+
+            // loading
+            case MGSLoadingTaskActivity:
+                glossyColor = [self alphaColor:_fillColor];
+                //break;
+                
 			// ready/processing
 			case MGSReadyTaskActivity:;
 			case MGSTerminatedTaskActivity:;
@@ -1625,30 +1668,52 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 - (void)drawSpinner
 {
 	if ([self isSpinning]) {
-		NSColor *color = nil;
         
+        if (_useSpinnerCache) {
+            
+             // if spinner cache exists use it to update rect.
+            // otherwise draw into our rect
+            if (_spinnerCache) {
+                [self drawSpinnerFromCache:_animatedCircleRect];
+                 return;
+            }
+            
+            // draw to spinner cache
+            _spinnerCache = [[NSImage alloc] initWithSize:_animatedCircleRect.size];
+            [_spinnerCache lockFocus];
+            
+        }
+        
+        // draw spinner
+		NSColor *color = nil;
 		if (_activity == MGSPausedTaskActivity) {
             color = [self alphaColor:_pausedSpinnerColor] ;
 		} else {
             color = [self alphaColor:_spinnerColor];
 		}
         
-        // modify color
-        if (MGS_VIEW_IMPLEMENT_FADE_USING_CACHE) {
-            //CGFloat newAlpha = _masterAlpha * [color alphaComponent];
-            //color = [color colorWithAlphaComponent:newAlpha];
-        }
-        
         // set color
         [color set];
         
         // draw spinner
-		[_bezierPath appendBezierPathWithOvalInRect:_animatedCircleRect];
-		[_bezierPath fill];
-
+        if (_useSpinnerCache) {
+            [_bezierPath appendBezierPathWithOvalInRect:NSMakeRect(0, 0, _animatedCircleRect.size.width, _animatedCircleRect.size.height)];
+        } else {
+            [_bezierPath appendBezierPathWithOvalInRect:_animatedCircleRect];
+        }
+        [_bezierPath fill];
+        
 		//MLog(DEBUGLOG, @"%@: circle rect origin.x =%f, origin.y = %f, size.width = %f, size.height = %f", [self className], _animatedCircleRect.origin.x, _animatedCircleRect.origin.y, _animatedCircleRect.size.width, _animatedCircleRect.size.height);
 								
 		[self restoreBezierState];
+        _spinnerAlpha = 0.0;
+        
+        if (_useSpinnerCache) {
+            [_spinnerCache unlockFocus];
+            
+            // refresh spinner from cache
+            [self drawSpinnerFromCache:_animatedCircleRect];
+        }
 	}
 	
 }
@@ -1734,7 +1799,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 
 /*
  
- draw rect from cache
+ - drawRectFromCache:
  
  */
 - (void)drawRectFromCache:(NSRect)rect
@@ -1746,5 +1811,20 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
         alpha = _masterAlpha;
     }
 	[_imageCache drawInRect:rect fromRect:rect operation:NSCompositeSourceOver fraction:alpha];
+}
+/*
+ 
+ - drawSpinnerFromCache:
+ 
+ */
+- (void)drawSpinnerFromCache:(NSRect)rect
+{
+    double delta = 0.1;
+    if (_spinnerAlpha + delta > _masterAlpha) {
+        _spinnerAlpha = _masterAlpha;
+    } else {
+        _spinnerAlpha += delta;
+    }
+	[_spinnerCache drawInRect:rect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:_spinnerAlpha];
 }
 @end

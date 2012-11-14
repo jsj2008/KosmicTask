@@ -28,6 +28,7 @@
 #import "MGSNetClientContext.h"
 #import "MGSApplicationMenu.h"
 #import "MGSOutputRequestView.h"
+#import "MGSScript.h"
 
 #define SEG_DOCUMENT 0
 #define SEG_ICON 1
@@ -693,6 +694,9 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 		MGSTaskRunStatus prevStatus = [prevNumber intValue];
 		
 		switch (_action.runStatus) {
+			case MGSTaskRunStatusLoading:
+				break;
+
 			case MGSTaskRunStatusReady:
 				break;
 
@@ -1202,6 +1206,9 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
  */
 - (void)updateActivity
 {
+    BOOL animateTaskLoading = YES;
+    
+    _actionActivityViewController.animateTaskLoading = animateTaskLoading;
 	_actionActivityViewController.activity = _action.activity;
 }
 

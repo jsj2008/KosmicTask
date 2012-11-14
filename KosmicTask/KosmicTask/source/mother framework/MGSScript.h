@@ -162,6 +162,7 @@ typedef enum _MGSScriptRepresentation {
 - (void)setBundled:(BOOL)value;
 - (BOOL)isBundled;
 - (BOOL)canEdit;
+- (BOOL)canExecute;
 
 // options
 - (float)timeout;

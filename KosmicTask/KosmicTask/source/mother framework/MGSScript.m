@@ -882,6 +882,16 @@ errorExit:;
 	return YES;
 }
 
+/*
+ 
+ - canExecute
+ 
+ */
+- (BOOL)canExecute
+{
+    return [self canConformToRepresentation:MGSScriptRepresentationExecute];
+}
+            
 #pragma mark -
 #pragma mark Name
 

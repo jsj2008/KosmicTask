@@ -74,9 +74,11 @@ enum _mgsFadeType {
 	
 	NSRect _cacheRect;
 	NSImage *_imageCache;
+    NSImage *_spinnerCache;
 	NSBitmapImageRep *_imageRep;
 	NSRect _animatedCircleRect;
 	BOOL _useImageCache;
+    BOOL _useSpinnerCache;
 	BOOL _canClick;
 	
 	BOOL _hasDropShadow;
@@ -87,6 +89,7 @@ enum _mgsFadeType {
     MGSTextView *_textView;
     NSScrollView *_textScrollview;
     CGFloat _masterAlpha;
+    CGFloat _spinnerAlpha;
     NSTimer *_alphaTimer;
     BOOL _useLayers;
     BOOL _updateCursor;
@@ -98,6 +101,7 @@ enum _mgsFadeType {
 - (double)doubleValue;
 - (void)setDoubleValue:(double)value;
 
+- (NSTimeInterval)animationDelayForActivity;
 - (NSTimeInterval)animationDelay;
 - (void)setAnimationDelay:(NSTimeInterval)value;
 

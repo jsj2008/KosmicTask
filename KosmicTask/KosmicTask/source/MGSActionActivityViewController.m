@@ -18,12 +18,14 @@
 - (void)updateActivityText;
 - (void)viewDidMoveToWindow;
 - (void)appRunModeChanged:(NSNotification *)notification;
+- (void)startActivityAnimation;
+- (void)stopActivityAnimation;
 @end
 
 @implementation MGSActionActivityViewController
 
 @synthesize activity = _activity;
-
+@synthesize animateTaskLoading = _animateTaskLoading;
 /*
  
  init
@@ -32,9 +34,7 @@
 - (id)init 
 {
 	if ([super initWithNibName:@"ActionActivityView" bundle:nil]) {
-		_activity = MGSUnavailableTaskActivity;
-
-		
+		_activity = MGSUnavailableTaskActivity;		
 	}
 	return self;
 }
@@ -132,24 +132,45 @@
 	
 	// animate graphic
 	if (_activity == MGSProcessingTaskActivity || _activity == MGSPausedTaskActivity) {
-		
-		// start timer if not running
-		if (!_animationTimer) {
-			[_activityView setDoubleValue:0.0];
-			[_activityView setSpinning:YES];
-			_animationTimer = [NSTimer scheduledTimerWithTimeInterval:[_activityView animationDelay] target:self selector:@selector(animate:) userInfo:NULL repeats:YES];
-		}
+        [self startActivityAnimation];        
+    } else if (_activity == MGSLoadingTaskActivity && _animateTaskLoading) {
+		[self performSelector:@selector(startActivityAnimation) withObject:nil afterDelay:0.5];
 	} else {
-		
-		// stop animation
-		if (_animationTimer) {
-			[_activityView setSpinning:NO];
-			[_animationTimer invalidate];
-			_animationTimer = nil;
-		}
+		[self stopActivityAnimation];
 	}
 }
 
+/*
+ 
+ - startActivityAnimation
+ 
+ */
+- (void)startActivityAnimation
+{
+    // start timer if not running
+    if (!_animationTimer) {
+        [_activityView setDoubleValue:0.0];
+        [_activityView setSpinning:YES];
+        _animationTimer = [NSTimer scheduledTimerWithTimeInterval:[_activityView animationDelayForActivity] target:self selector:@selector(animate:) userInfo:NULL repeats:YES];
+    }
+
+}
+
+/*
+ 
+ - stopActivityAnimation
+ 
+ */
+- (void)stopActivityAnimation
+{
+    // stop animation
+    if (_animationTimer) {
+        [_activityView setSpinning:NO];
+        [_animationTimer invalidate];
+        _animationTimer = nil;
+    }
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startActivityAnimation) object:nil];
+}
 /*
  
  update activity view text
@@ -192,7 +213,11 @@
 			case MGSReadyTaskActivity:
 				activityText = NSLocalizedString(@"Ready", @"Ready: Task activity text beneath graphic");
 				break;
-				
+
+            case MGSLoadingTaskActivity:
+				activityText = NSLocalizedString(@"Loading", @"Loading: Task activity text beneath graphic");
+				break;
+
 			case MGSUnavailableTaskActivity:
 			default:
 				activityText = NSLocalizedString(@"Unavailable", @"Unavailable: Task activity text beneath graphic");

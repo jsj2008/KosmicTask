@@ -82,11 +82,11 @@ static BOOL permitExecution = YES;
 		_remainingTime = 0;
 		_allowedTime = 0;
 		_requestProgress = [[MGSRequestProgress alloc] init]; 
-		_requestProgress.value = MGSRequestProgressReady;
+		_requestProgress.value = MGSTaskRunStatusReady;
 		_netRequest = nil;
 		_taskStatus = MGSTaskStatusInit;
 		_result = nil;
-		_runStatus = MGSTaskRunStatusReady;
+		_runStatus = MGSTaskRunStatusLoading;
 		_isProcessing = NO;
 		_activity = MGSReadyTaskActivity;
 		
@@ -309,6 +309,28 @@ static BOOL permitExecution = YES;
 	return [self mutableDeepCopyAsNewInstance];
 }
 
+#pragma mark -
+#pragma mark Result
+/*
+ 
+ - setScript:
+ 
+ */
+- (void)setScript:(MGSScript *)script
+{
+    _script = script;
+    
+    switch (_runStatus) {
+        case MGSTaskRunStatusLoading:
+            if ([_script canExecute]) {
+                [self setLocalRunStatus:MGSTaskRunStatusReady];
+            }
+            break;
+            
+        default:
+            break;
+    }
+}
 #pragma mark -
 #pragma mark Result
 /*
@@ -783,6 +805,7 @@ static BOOL permitExecution = YES;
 	// validate run status
 	switch (_runStatus) {
 		case MGSTaskRunStatusHostUnavailable:		// host unavailable
+		case MGSTaskRunStatusLoading:				// loading
 		case MGSTaskRunStatusReady:				// ready to execute
 		case MGSTaskRunStatusComplete:			// complete with no error
 		case MGSTaskRunStatusCompleteWithError:	// complete with error
@@ -920,7 +943,11 @@ static BOOL permitExecution = YES;
 				break;
 				
 			case MGSHostStatusAvailable:
-				[self setLocalRunStatus:MGSTaskRunStatusReady];
+                if ([self.script canConformToRepresentation:MGSScriptRepresentationExecute]) {
+                    [self setLocalRunStatus:MGSTaskRunStatusReady];                    
+                } else {
+                    [self setLocalRunStatus:MGSTaskRunStatusLoading];
+                }
 				break;
 				
 			case MGSHostStatusNotResponding:
@@ -1002,6 +1029,7 @@ static BOOL permitExecution = YES;
 			return !clientConnected;
 			break;
 			
+		case MGSTaskRunStatusLoading:
 		case MGSTaskRunStatusReady:
 		case MGSTaskRunStatusComplete:
 		case MGSTaskRunStatusCompleteWithError:
@@ -1052,7 +1080,11 @@ static BOOL permitExecution = YES;
 		case MGSTaskRunStatusHostUnavailable:
 			_activity = MGSUnavailableTaskActivity;
 			break;
-			
+
+        case MGSTaskRunStatusLoading:
+			_activity = MGSLoadingTaskActivity;
+			break;
+
 		case MGSTaskRunStatusReady:
 		case MGSTaskRunStatusComplete:
 		case MGSTaskRunStatusCompleteWithError:
@@ -1089,6 +1121,7 @@ static BOOL permitExecution = YES;
 			self.requestProgress.value = MGSRequestProgressCannotConnect;
 			break;
 			
+		case MGSTaskRunStatusLoading:
 		case MGSTaskRunStatusReady:
 			self.elapsedTime = 0;
 			self.remainingTime = 0;

@@ -248,7 +248,9 @@ NSString *MGSActionProgressContext = @"MGSActionProgress";
 				available = NO;
 				break;
 				
-			case MGSTaskRunStatusReady:
+
+            case MGSTaskRunStatusLoading:
+            case MGSTaskRunStatusReady:
 			case MGSTaskRunStatusComplete:
 			case MGSTaskRunStatusCompleteWithError:
 			case MGSTaskRunStatusTerminatedByUser:;

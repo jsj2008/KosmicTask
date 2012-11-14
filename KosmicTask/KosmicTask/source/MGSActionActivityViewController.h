@@ -19,11 +19,12 @@
     
 	MGSTaskActivity _activity;
 	NSTimer *_animationTimer;
-	
+	BOOL _animateTaskLoading;
 }
 
 
 @property MGSTaskActivity activity;
+@property BOOL animateTaskLoading;;
 
 - (void)animate:(NSTimer *)aTimer;
 - (void)updateAnimation;
