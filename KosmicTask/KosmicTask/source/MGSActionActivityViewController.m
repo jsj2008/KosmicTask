@@ -12,6 +12,7 @@
 #import "MLog.h"
 #import "MGSMotherModes.h"
 #import "MGSAppController.h"
+#import "MGSPreferences.h"
 
 // class extension 
 @interface MGSActionActivityViewController()
@@ -134,7 +135,8 @@
 	if (_activity == MGSProcessingTaskActivity || _activity == MGSPausedTaskActivity) {
         [self startActivityAnimation];        
     } else if (_activity == MGSLoadingTaskActivity && _animateTaskLoading) {
-		[self performSelector:@selector(startActivityAnimation) withObject:nil afterDelay:0.5];
+        NSTimeInterval animateDelay = [[NSUserDefaults standardUserDefaults] doubleForKey:MGSTaskLoadingAnimationDelay];
+		[self performSelector:@selector(startActivityAnimation) withObject:nil afterDelay:animateDelay];
 	} else {
 		[self stopActivityAnimation];
 	}
