@@ -77,6 +77,7 @@ extern NSString *MGSLocalUserTaskTimeoutUnits;
 extern NSString *MGSApplyTimeoutToMachineTasks;
 extern NSString *MGSMachineTaskTimeout;
 extern NSString *MGSMachineTaskTimeoutUnits;
+extern NSString *MGSTaskLoadingAnimationDelay;
 
 @interface MGSPreferences : NSObject {
 

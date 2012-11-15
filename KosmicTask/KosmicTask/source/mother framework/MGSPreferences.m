@@ -69,6 +69,7 @@ NSString *MGSSendCocoaTaskCRashReports = @"MGSSendCocoaTaskCRashReports";
 NSString *MGSRequestWriteConnectionTimeout = @"MGSRequestWriteConnectionTimeout";
 NSString *MGSHeartbeatRequestTimeout = @"MGSHeartbeatRequestTimeout";
 NSString *MGSDefaultRequestTimeout = @"MGSDefaultRequestTimeout";
+NSString *MGSTaskLoadingAnimationDelay = @"MGSTaskLoadingAnimationDelay";
 
 NSString *MGSApplyTimeoutToLocalUserTasks = @"MGSApplyTimeoutToLocalUserTasks";
 NSString *MGSLocalUserTaskTimeout = @"MGSLocalUserTaskTimeout";
