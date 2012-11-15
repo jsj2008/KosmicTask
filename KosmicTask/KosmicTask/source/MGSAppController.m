@@ -1680,7 +1680,8 @@
 
 	// animate the UI
 	[appDefaults setObject:[NSNumber numberWithBool:YES] forKey:MGSAnimateUI];
-
+	[appDefaults setObject:[NSNumber numberWithDouble:0.5] forKey:MGSTaskLoadingAnimationDelay];
+    
 	// keep executed tasks displayed
 	[appDefaults setObject:[NSNumber numberWithBool:YES] forKey:MGSKeepExecutedTasksDisplayed];
 	
