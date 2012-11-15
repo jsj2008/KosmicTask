@@ -27,7 +27,7 @@ const char MGSContextFavoritesSelectionIndex;
 - (void)validateSelectedConnectionValues;
 - (void)validateConnectionStatus;
 - (MGSNetClient *)netClientForConnection:(NSDictionary *)connection;
-- (MGSNetClient *)netClientForAddress:(NSString *)address;
+- (MGSNetClient *)netClientForAddress:(NSString *)address port:(NSInteger)port;
 @end
 
 @implementation MGSAddServerWindowController
@@ -164,7 +164,7 @@ const char MGSContextFavoritesSelectionIndex;
     }
     
     // invalidate if connected
-    if ([self netClientForAddress:self.address]) {
+    if ([self netClientForAddress:self.address port:self.portNumber]) {
         valid = NO;
     }
     
@@ -341,6 +341,7 @@ const char MGSContextFavoritesSelectionIndex;
  */
 -(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
+#pragma unused(payload)
 	[self setControlsEnabled:YES];
 
 	[progressIndicator setHidden:YES];
@@ -350,7 +351,7 @@ const char MGSContextFavoritesSelectionIndex;
 	
 	// if no error in payload then heartbeat reply was received.
 	// assume host is valid and contactable
-	if (nil == payload.requestError && nil == netRequest.error) {
+	if (!netRequest.error) {
 	
 		[netClient setHostStatus:MGSHostStatusAvailable];
 		
@@ -359,6 +360,17 @@ const char MGSContextFavoritesSelectionIndex;
 		
 		[self closeWindow];
 	} else {
+        NSString *errorString = nil;
+        switch (netRequest.error.code) {
+            case MGSErrorCodeServerAccessDenied:
+                errorString = netRequest.error.localizedDescription;
+                break;
+                
+            default:
+                errorString = NSLocalizedString(@"Connection failed.", @"Remote connection failed");
+                break;
+        }
+        [failedLabel setStringValue:errorString];
 		[failedBox setHidden:NO];
 	}
 	
@@ -501,19 +513,21 @@ const char MGSContextFavoritesSelectionIndex;
 - (MGSNetClient *)netClientForConnection:(NSDictionary *)connection
 {
     NSString *address = [connection objectForKey:MGSNetClientKeyAddress];
-    MGSNetClient *netClient = [self netClientForAddress:address];
+    NSInteger port = [[connection objectForKey:MGSNetClientKeyPortNumber] integerValue];
+    
+    MGSNetClient *netClient = [self netClientForAddress:address port:port];
     
     return netClient;
 }
 
 /*
  
- - netClientForAddress:
+ - netClientForAddress:port:
  
  */
-- (MGSNetClient *)netClientForAddress:(NSString *)address
+- (MGSNetClient *)netClientForAddress:(NSString *)address port:(NSInteger)port
 {
-    MGSNetClient *netClient = [[MGSNetClientManager sharedController] clientForServiceName:address];
+    MGSNetClient *netClient = [[MGSNetClientManager sharedController] clientForServiceName:address port:port];
     
     return netClient;
 }

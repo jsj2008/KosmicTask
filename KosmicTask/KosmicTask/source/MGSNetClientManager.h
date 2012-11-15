@@ -63,6 +63,7 @@ extern NSString *MGSDefaultPersistentConnections;
 - (void)restorePersistentClients;
 - (NSMutableArray *)hostViaUserDictionaries;
 - (MGSNetClient *)clientForServiceName:(NSString *)serviceName;
+- (MGSNetClient *)clientForServiceName:(NSString *)serviceName port:(NSInteger)port;
 - (NSInteger)requestSearchAll:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner;
 - (NSInteger)requestSearchLocal:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner;
 - (NSInteger)requestSearchShared:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner;

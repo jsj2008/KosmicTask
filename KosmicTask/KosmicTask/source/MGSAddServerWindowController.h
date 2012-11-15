@@ -40,6 +40,7 @@
 	IBOutlet NSButton *reconnectCheckBox;
 	IBOutlet NSProgressIndicator *progressIndicator;
 	IBOutlet NSBox *failedBox;
+    IBOutlet NSTextField *failedLabel;
 }
 
 - (void)closeWindow;

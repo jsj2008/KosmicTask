@@ -664,6 +664,24 @@ remove a static client
 	return nil;
 }
 
+/*
+ 
+ - clientForServiceName:port:
+ 
+ */
+- (MGSNetClient *)clientForServiceName:(NSString *)serviceName port:(NSInteger)port
+{
+	// look for client name match
+	MGSNetClient *netClient;
+	for (netClient in _netClients) {
+		if ([[netClient serviceName] isEqualToString:serviceName] && [netClient hostPort] == port) {
+			return netClient;
+		}
+	}
+	
+	return nil;
+}
+
 #pragma mark -
 #pragma mark Delegate management
 /*
