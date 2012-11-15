@@ -71,6 +71,7 @@ char MGSScriptDictContext;
 - (MGSOutlineViewNode *)nodeWithKey:(id)key netClient:(MGSNetClient *)netClient;
 - (void)cacheNode:(MGSOutlineViewNode *)node withKey:(id)key netClient:(MGSNetClient *)netClient;
 - (MGSOutlineViewNode *)selectedObjectGroupNode;
+- (void)updateSharedCount;
 
 @property MGSNetClient *selectedNetClient;
 @property id selectedObject;
@@ -146,7 +147,7 @@ char MGSScriptDictContext;
 	rootName =  NSLocalizedString(@"SHARED", @"sidebar shared folder name");
 	_sharedNode = [[MGSOutlineViewNode alloc] initWithRepresentedObject:rootName];	
 	[tree addObject: _sharedNode];
-	
+    
 	self.clientTree = tree;
 	
 }
@@ -959,9 +960,29 @@ char MGSScriptDictContext;
 			[self performSelector:@selector(selectNode:) withObject:clientNode afterDelay:0];
 		}
 	}
+    
+    [self updateSharedCount];
 	
 }
 
+/*
+ 
+ - updateSharedCount
+ 
+ */
+- (void)updateSharedCount
+{
+    NSInteger sharedCount = _netClients.count - 1;
+    if (sharedCount < 0) sharedCount = 0;
+    _sharedNode.count = sharedCount;
+    _sharedNode.countColor = [MGSImageAndTextCell countColorMidGrey];
+    if (sharedCount == 0) {
+        _sharedNode.hasCount = NO;
+    } else {
+        _sharedNode.hasCount = YES;
+    }
+  
+}
 /*
  
  - netClientUnavailable:
@@ -987,6 +1008,8 @@ char MGSScriptDictContext;
         // remove client node map
         [outlineNodeCache removeObjectForKey:[netClient serviceName]];
     }
+    
+    [self updateSharedCount];
 }
 
 /*
