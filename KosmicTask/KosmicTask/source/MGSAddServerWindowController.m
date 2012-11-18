@@ -39,6 +39,7 @@ const char MGSContextFavoritesSelectionIndex;
 @synthesize delegate = _delegate;
 @synthesize secureConnection = _secureConnection;
 @synthesize selectedConnectionIsValid = _selectedConnectionIsValid;
+@synthesize note = _note;
 
 #pragma mark -
 #pragma mark Setup
@@ -74,10 +75,10 @@ const char MGSContextFavoritesSelectionIndex;
 
 /*
  
- - setPortNnumber:
+ - setPortNumber:
  
  */
-- (void)setPortNnumber:(NSInteger)value
+- (void)setPortNumber:(NSInteger)value
 {
     _portNumber = value;
     [self validateSelectedConnectionValues];
@@ -128,7 +129,10 @@ const char MGSContextFavoritesSelectionIndex;
 			self.portNumber = [[dict objectForKey:MGSNetClientKeyPortNumber] intValue];
 			self.secureConnection = [[dict objectForKey:MGSNetClientKeySecureConnection] boolValue];
 			self.keepConnected = [[dict objectForKey:MGSNetClientKeyKeepConnected] boolValue];
+            self.note = [[dict objectForKey:MGSNetClientKeyNote] copy];
 			enableRemove = YES;
+            
+            [self validateSelectedConnectionValues];
 		}
         
 		[favoritesSegment setEnabled:enableRemove forSegment:MGSRemoveFavorite];
@@ -285,6 +289,7 @@ const char MGSContextFavoritesSelectionIndex;
 	self.portNumber = MOTHER_IANA_REGISTERED_PORT;
 	self.secureConnection = YES;
 	self.keepConnected = NO;
+    self.note = @"";
     
 	[arrayController setSelectedObjects:nil];
 }
@@ -450,6 +455,7 @@ const char MGSContextFavoritesSelectionIndex;
                               [dict objectForKey:MGSNetClientKeyAddress], MGSNetClientKeyAddress,
 							  [dict objectForKey:MGSNetClientKeyPortNumber], MGSNetClientKeyPortNumber,
 							  [dict objectForKey:MGSNetClientKeyDisplayName], MGSNetClientKeyDisplayName,
+                              [dict objectForKey:MGSNetClientKeyNote], MGSNetClientKeyNote,
 							  [NSNumber numberWithBool:YES], MGSNetClientKeyKeepConnected,
 							  [dict objectForKey:MGSNetClientKeySecureConnection], MGSNetClientKeySecureConnection,
 							  nil];
@@ -497,6 +503,7 @@ const char MGSContextFavoritesSelectionIndex;
 						  [_displayName copy], MGSNetClientKeyDisplayName, 
 						  [NSNumber numberWithInteger:_portNumber], MGSNetClientKeyPortNumber,
 						  [NSNumber numberWithBool:_secureConnection], MGSNetClientKeySecureConnection,
+                          _note, MGSNetClientKeyNote,
 						  [NSNumber numberWithBool:_keepConnected], MGSNetClientKeyKeepConnected,
                           [NSNumber numberWithBool:NO], @"isConnected",
                           [NSString mgs_stringWithNewUUID], @"uuid", // make our dict unique

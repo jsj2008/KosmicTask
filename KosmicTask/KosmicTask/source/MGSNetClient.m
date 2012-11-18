@@ -40,6 +40,7 @@ NSString *MGSNetClientKeyDisplayName = @"displayName";
 NSString *MGSNetClientKeyKeepConnected = @"keepConnected";
 NSString *MGSNetClientKeyPortNumber = @"portNumber";
 NSString *MGSNetClientKeySecureConnection = @"secureConnection";
+NSString *MGSNetClientKeyNote = @"note";
 
 // key paths
 NSString *MGSNetClientKeyPathHostStatus = @"hostStatus";

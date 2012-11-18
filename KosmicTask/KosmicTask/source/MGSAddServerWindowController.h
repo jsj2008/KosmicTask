@@ -21,6 +21,7 @@
 @interface MGSAddServerWindowController : NSWindowController <MGSNetRequestOwner> {
 	NSString *_address;			// machine address to connect to
 	NSString *_displayName;		// display name to use in GUI
+    NSString *_note;
 	BOOL _secureConnection;		// secure SSL connection
 	BOOL _keepConnected;		// YES to keep connected between restarts 
 	//BOOL _tableRowSelected;
@@ -41,6 +42,7 @@
 	IBOutlet NSProgressIndicator *progressIndicator;
 	IBOutlet NSBox *failedBox;
     IBOutlet NSTextField *failedLabel;
+    IBOutlet NSTextField *noteTextField;
 }
 
 - (void)closeWindow;
@@ -49,7 +51,7 @@
 - (IBAction)clearSelection:(id)sender;
 - (IBAction)processFavorite:(id)sender;
 
-
+@property (copy) NSString *note;
 @property (copy) NSString *address;
 @property (copy) NSString *displayName;
 @property BOOL keepConnected;

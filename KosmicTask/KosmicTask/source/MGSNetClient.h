@@ -24,6 +24,7 @@ extern NSString *MGSNetClientKeyDisplayName;
 extern NSString *MGSNetClientKeyKeepConnected;
 extern NSString *MGSNetClientKeyPortNumber;
 extern NSString *MGSNetClientKeySecureConnection;
+extern NSString *MGSNetClientKeyNote;
 
 // key paths
 extern NSString *MGSNetClientKeyPathHostStatus;
