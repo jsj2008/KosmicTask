@@ -20,6 +20,7 @@
 + (void)stopTask:(id)result;
 + (id)sharedController;
 + (void)setKeepTaskAlive:(BOOL)aBool;
++ (BOOL)keepTaskAlive;
 + (NSString *)tempFileWithName:(NSString *)suffix;
 + (NSString *)resultFileWithName:(NSString *)suffix;
 + (void)stopTask:(id)result;

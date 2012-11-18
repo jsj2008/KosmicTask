@@ -70,6 +70,15 @@ static id mgs_sharedController;
 
 /*
  
+ + keepTaskAlive
+ 
+ */
++ (BOOL)keepTaskAlive
+{
+    return [[self sharedController] keepTaskAlive];
+}
+/*
+ 
  + keepTaskRunning
  
  */
