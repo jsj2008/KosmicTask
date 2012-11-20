@@ -563,6 +563,8 @@
 		AB75EABC0E9C166E0036F83D /* MGSResultFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB75EABB0E9C166E0036F83D /* MGSResultFooterView.m */; };
 		AB77742F159A5774002BE674 /* MGSChildScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB77742D159A4EA2002BE674 /* MGSChildScrollView.m */; };
 		AB7812E20D58875B00C19FAB /* MGSTimeIntervalTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7812E10D58875B00C19FAB /* MGSTimeIntervalTransformer.m */; };
+		AB7958D5165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7958D4165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m */; };
+		AB7958DA165B961A00AB0F99 /* jscocoa-ext.js in Copy JavaScript Resources */ = {isa = PBXBuildFile; fileRef = AB7958D7165B949400AB0F99 /* jscocoa-ext.js */; };
 		AB79AF7714CA32FE00087932 /* ORCDiscount.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB79AF7414CA2F1000087932 /* ORCDiscount.framework */; };
 		AB7C18D716220DCC00E45BD4 /* RedCross16.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7C18D616220DCC00E45BD4 /* RedCross16.png */; };
 		AB7C18D916220E8900E45BD4 /* GreenTick16.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7C18D816220E8900E45BD4 /* GreenTick16.png */; };
@@ -1066,6 +1068,7 @@
 		ABB2FB5B0E40AF2800B3C27A /* MGSActionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB2FB5A0E40AF2800B3C27A /* MGSActionInfoViewController.m */; };
 		ABB2FD320E40F1C500B3C27A /* MGSActionDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB2FD310E40F1C500B3C27A /* MGSActionDescriptionViewController.m */; };
 		ABB2FD360E40F22700B3C27A /* ActionDescriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB2FD350E40F22700B3C27A /* ActionDescriptionView.xib */; };
+		ABB361AB1659825B0010A2AF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABB361AA1659825A0010A2AF /* Cocoa.framework */; };
 		ABB36D0B121584A000AE7792 /* JAProcessInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC565141072199000069BBF /* JAProcessInfo.m */; };
 		ABB44DA30DE8158E00BB5427 /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABB44DA20DE8158E00BB5427 /* AboutWindow.xib */; };
 		ABB44DC20DE81AD800BB5427 /* MGSAboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB44DC10DE81AD800BB5427 /* MGSAboutWindowController.m */; };
@@ -3210,6 +3213,17 @@
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AB7958D9165B95CD00AB0F99 /* Copy JavaScript Resources */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = JavaScript;
+			dstSubfolderSpec = 7;
+			files = (
+				AB7958DA165B961A00AB0F99 /* jscocoa-ext.js in Copy JavaScript Resources */,
+			);
+			name = "Copy JavaScript Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AB92D09A12047BD20025EAEF /* Copy auxiliary executables */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -4032,6 +4046,9 @@
 		AB77742D159A4EA2002BE674 /* MGSChildScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSChildScrollView.m; sourceTree = "<group>"; };
 		AB7812E00D58875B00C19FAB /* MGSTimeIntervalTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTimeIntervalTransformer.h; sourceTree = "<group>"; };
 		AB7812E10D58875B00C19FAB /* MGSTimeIntervalTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSTimeIntervalTransformer.m; sourceTree = "<group>"; };
+		AB7958D3165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSCocoaController+Mugginsoft.h"; sourceTree = "<group>"; };
+		AB7958D4165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JSCocoaController+Mugginsoft.m"; sourceTree = "<group>"; };
+		AB7958D7165B949400AB0F99 /* jscocoa-ext.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jscocoa-ext.js"; sourceTree = "<group>"; };
 		AB79AF6814CA2F0E00087932 /* MarkdownLive.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MarkdownLive.xcodeproj; path = ../../../markdownlive/MarkdownLive.xcodeproj; sourceTree = "<group>"; };
 		AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YAMLKit.xcodeproj; path = ../../../yamlkit/YAMLKit.xcodeproj; sourceTree = SOURCE_ROOT; };
 		AB7C18D616220DCC00E45BD4 /* RedCross16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RedCross16.png; sourceTree = "<group>"; };
@@ -4664,6 +4681,12 @@
 		ABB2FD300E40F1C500B3C27A /* MGSActionDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSActionDescriptionViewController.h; sourceTree = "<group>"; };
 		ABB2FD310E40F1C500B3C27A /* MGSActionDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSActionDescriptionViewController.m; sourceTree = "<group>"; };
 		ABB2FD330E40F21500B3C27A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ActionDescriptionView.xib; sourceTree = "<group>"; };
+		ABB3619616597FDC0010A2AF /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		ABB3619816597FDC0010A2AF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		ABB3619A16597FDD0010A2AF /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		ABB3619B16597FDD0010A2AF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		ABB3619C16597FDD0010A2AF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		ABB361AA1659825A0010A2AF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		ABB44DA20DE8158E00BB5427 /* AboutWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutWindow.xib; sourceTree = "<group>"; };
 		ABB44DC00DE81AD800BB5427 /* MGSAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSAboutWindowController.h; sourceTree = "<group>"; };
 		ABB44DC10DE81AD800BB5427 /* MGSAboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSAboutWindowController.m; sourceTree = "<group>"; };
@@ -5284,6 +5307,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABB361AB1659825B0010A2AF /* Cocoa.framework in Frameworks */,
 				AB3167A5128D42280037EF1C /* SenTestingKit.framework in Frameworks */,
 				AB3167E1128D47260037EF1C /* MGSKosmicTask.framework in Frameworks */,
 				AB3167E2128D47260037EF1C /* MGSKosmicTaskRunner.framework in Frameworks */,
@@ -6279,6 +6303,9 @@
 			isa = PBXGroup;
 			children = (
 				AB6B8EF3121AAB5D00A4DF20 /* cint.framework */,
+				ABB3619A16597FDD0010A2AF /* AppKit.framework */,
+				ABB3619B16597FDD0010A2AF /* CoreData.framework */,
+				ABB3619C16597FDD0010A2AF /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -6360,6 +6387,7 @@
 		29B97314FDCFA39411CA2CEA /* mother */ = {
 			isa = PBXGroup;
 			children = (
+				ABB361AA1659825A0010A2AF /* Cocoa.framework */,
 				AB3F6FE5130C86DF00342F11 /* HG submodule project */,
 				AB3F5EEF130C7C5300342F11 /* MGSPythonScriptManager.m */,
 				AB777ED1130C7087000973D4 /* Git submodule projects - do not edit directly */,
@@ -6490,6 +6518,8 @@
 				AB25B3951325995D00D5B634 /* yaml.so */,
 				ABB732F3105662670042B4D0 /* libcrypto linking copy */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				ABB3619616597FDC0010A2AF /* SenTestingKit.framework */,
+				ABB3619816597FDC0010A2AF /* Cocoa.framework */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 				ABB732C310565F0D0042B4D0 /* libcrypto.0.9.7.dylib */,
 				ABB732C710565FCF0042B4D0 /* libcrypto.dylib */,
@@ -7074,6 +7104,7 @@
 		AB408CAB1191794700A8037A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB7958D6165B945200AB0F99 /* JSCocoa */,
 				AB25B443132665BF00D5B634 /* Lua */,
 				AB02438E12242D9A00035457 /* Scala */,
 				AB02438D12242D8A00035457 /* Javascript */,
@@ -7477,6 +7508,14 @@
 				AB34188C1276E769007965BA /* MGSLanguageSettingsTransformer.m */,
 			);
 			name = "Value transformers";
+			sourceTree = "<group>";
+		};
+		AB7958D6165B945200AB0F99 /* JSCocoa */ = {
+			isa = PBXGroup;
+			children = (
+				AB7958D7165B949400AB0F99 /* jscocoa-ext.js */,
+			);
+			name = JSCocoa;
 			sourceTree = "<group>";
 		};
 		AB79AF6914CA2F0E00087932 /* Products */ = {
@@ -8738,6 +8777,8 @@
 				ABBA127E12B28C77005F12A5 /* MGSJavaScriptCocoaRunner.m */,
 				AB9D25B512B2906100F241D0 /* MGSJSCocoaScriptManager.h */,
 				AB9D25B612B2906100F241D0 /* MGSJSCocoaScriptManager.m */,
+				AB7958D3165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.h */,
+				AB7958D4165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m */,
 			);
 			name = JSCocoa;
 			sourceTree = "<group>";
@@ -9519,6 +9560,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB3180C312B2884D001E821B /* Build configuration list for PBXNativeTarget "Language Plugin JSCocoa" */;
 			buildPhases = (
+				AB7958D9165B95CD00AB0F99 /* Copy JavaScript Resources */,
 				AB3180B612B2884D001E821B /* Resources */,
 				AB3180B912B2884D001E821B /* Copy Frameworks */,
 				AB3180BA12B2884D001E821B /* Sources */,
@@ -12603,6 +12645,7 @@
 				ABBA127F12B28C78005F12A5 /* MGSJavaScriptCocoaRunner.m in Sources */,
 				ABBA128112B28CF4005F12A5 /* MGSJSCocoaLanguage.m in Sources */,
 				AB9D25B712B2906100F241D0 /* MGSJSCocoaScriptManager.m in Sources */,
+				AB7958D5165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 //
 
 #import "KosmicTask_test.h"
+#import "KosmicTaskController.h"
 
 /*
  common macros defined in SenTestingKit.h
@@ -26,4 +27,17 @@
 - (void) setUp {}
 - (void) tearDown {}
 
+- (void)testInit
+{
+    NSString *tester = @"YES";
+    
+    STAssertNotNil(tester, @"Test is nil");
+}
+
+- (void)testKosmicTaskController
+{
+    NSString *fourChar = @"PsOf";
+    NSInteger val = [KosmicTaskController fourCharToInteger:fourChar];
+    STAssertEquals(val, 1349734246, @"%@ Four char string to integer", fourChar);
+}
 @end

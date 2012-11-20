@@ -89,6 +89,25 @@ static id mgs_sharedController;
 
 /*
  
+ + fourCharToInteger:
+ 
+ */
++ (NSUInteger)fourCharToInteger:(NSString *)fourChar
+{
+    // evaluate multi char constant as an integer
+    // ie: 'abcd'
+    NSUInteger val = 0;
+    if ([fourChar length] != 4) return val;
+    val = [fourChar characterAtIndex:0] << 24;
+    val += [fourChar characterAtIndex:1] << 16;
+    val += [fourChar characterAtIndex:2] << 8;
+    val += [fourChar characterAtIndex:3] << 0;
+    
+    return val;
+}
+
+/*
+ 
  + tempPathWithSuffix:
  
  */
@@ -205,4 +224,6 @@ static id mgs_sharedController;
 {
 	return temporaryPaths;
 }
+
+
 @end

@@ -38,6 +38,15 @@
 	// establish connection
 	jsCocoa = [JSCocoa new];
 
+    // load JSCocoa extensions
+    NSString *JSCocoaExt = @"jscocoa-ext";
+    id jscocoaExtPath = [[NSBundle bundleForClass:[self class]] pathForResource:JSCocoaExt ofType:@"js" inDirectory:@"JavaScript"];
+    if (!jscocoaExtPath) {
+        self.error = [NSString stringWithFormat:@"Error loading resource %@.js", JSCocoaExt];
+		return nil;
+    }
+    if ([[NSFileManager defaultManager] fileExistsAtPath:jscocoaExtPath])[jsCocoa evalJSFile:jscocoaExtPath];
+
     // load JSON support for NSObject types
     id jsonKitPath = [[NSBundle bundleForClass:[JSCocoa class]] pathForResource:@"json" ofType:@"js"];
     if (!jsonKitPath) {
@@ -46,7 +55,9 @@
     }
     if ([[NSFileManager defaultManager] fileExistsAtPath:jsonKitPath])[jsCocoa evalJSFile:jsonKitPath];
     
+    //
 	// evaluate the script file
+    //
 	if (![jsCocoa evalJSFile:scriptPath]) {
 		self.error = @"Error loading and evaluating script file.";
 		return nil;

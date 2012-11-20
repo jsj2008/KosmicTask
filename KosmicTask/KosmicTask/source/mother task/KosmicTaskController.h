@@ -25,6 +25,7 @@
 + (NSString *)resultFileWithName:(NSString *)suffix;
 + (void)stopTask:(id)result;
 + (void)keepTaskRunning;
++ (NSUInteger)fourCharToInteger:(NSString *)fourChar;
 
 - (NSString *)tempFileWithName:(NSString *)suffix;
 - (NSString *)resultFileWithName:(NSString *)suffix;

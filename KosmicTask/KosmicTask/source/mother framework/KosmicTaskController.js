@@ -1,7 +1,7 @@
 /*
 
  KosmicTaskController is predefined in the executing context
- as suplied by the task runner.
+ as supplied by the task runner.
  
  KosmicTaskController provides the following methods:
  
