@@ -26,9 +26,15 @@
 + (void)stopTask:(id)result;
 + (void)keepTaskRunning;
 + (NSUInteger)fourCharToInteger:(NSString *)fourChar;
++ (void)log:(NSString *)value;
++ (void)qlog:(NSString *)value;
++ (void)vlog:(NSString *)value;
 
 - (NSString *)tempFileWithName:(NSString *)suffix;
 - (NSString *)resultFileWithName:(NSString *)suffix;
 - (void)stopTask:(id)result;
 - (NSArray *)scratchPaths;
+- (void)log:(NSString *)value;
+- (void)qlog:(NSString *)value;
+- (void)vlog:(NSString *)value;
 @end

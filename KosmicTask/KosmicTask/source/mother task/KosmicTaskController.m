@@ -11,6 +11,22 @@
 #import "NSString_Mugginsoft.h"
 #import "MGSTempStorage.h"
 
+/*
+ 
+ QuietLog
+ 
+ */
+void QuietLog (NSString *format, ...) {
+    va_list argList;
+    
+    va_start (argList, format);
+    NSString *message = [[NSString alloc] initWithFormat: format arguments: argList]; // autorelease if not ARC
+    va_end (argList);
+    
+    fprintf (stderr, "%s\n", [message UTF8String]);
+    
+}
+
 @implementation KosmicTaskController
 
 static id mgs_sharedController;
@@ -47,6 +63,36 @@ static id mgs_sharedController;
     }
     return nil; //on subsequent allocation attempts return nil
 } 
+
+/*
+ 
+ + log
+ 
+ */
++ (void)log:(NSString *)value
+{
+    QuietLog(@"%@", value);
+}
+
+/*
+ 
+ + qlog
+ 
+ */
++ (void)qlog:(NSString *)value
+{
+    QuietLog(@"%@", value);
+}
+
+/*
+ 
+ + vlog
+ 
+ */
++ (void)vlog:(NSString *)value
+{
+    NSLog(@"%@", value);
+}
 
 /*
  
@@ -225,5 +271,33 @@ static id mgs_sharedController;
 	return temporaryPaths;
 }
 
+/*
+ 
+ - log
+ 
+ */
+- (void)log:(NSString *)value
+{
+    [[self class] log:value];
+}
 
+/*
+ 
+ + qlog
+ 
+ */
+- (void)qlog:(NSString *)value
+{
+    [[self class] qlog:value];
+}
+
+/*
+ 
+ - vlog
+ 
+ */
+- (void)vlog:(NSString *)value
+{
+    [[self class] vlog:value];
+}
 @end
