@@ -18,9 +18,18 @@
 #
 require 'osx/cocoa'
 
+# KosmicTask controller
+$taskController = OSX.NSClassFromString("KosmicTaskController")
+
 def kosmictask()
 	
-	# send log value to stderr
+	# send to stderr directly
+	$stderr.puts "Time to say..."
+		
+	# send value to log (quiet)
+	$taskController.log_("Goodbye, kosmos!");
+	
+	# send value to log (verbose)
 	OSX::NSLog("Goodbye, kosmos!")
 	
 	# return result

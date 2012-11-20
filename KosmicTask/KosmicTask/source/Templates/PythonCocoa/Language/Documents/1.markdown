@@ -85,10 +85,24 @@ Python Cocoa powered tasks can create temporary files by calling the **KosmicTas
 Logging and Debugging
 ---------------------
 
-Diagnostic and logging information can be written to a task's error stream using AppKit.NSLog(). 
+Diagnostic and logging information can be written to a task's error stream in a variety of ways. 
+	
+	import Foundation
+	import AppKit
+	import sys
+		
+	# KosmicTask controller
+	taskController = Foundation.NSClassFromString("KosmicTaskController")
 
-	# send log value to stderr
+	# send to stderr directly - requires import sys
+	print >> sys.stderr, "Time to say..."
+		
+	# send value to log (quiet) - requires import Foundation
+	taskController.log_("Goodbye, kosmos!")
+		
+	# send value to log (verbose) - requires import AppKit
 	AppKit.NSLog("Goodbye, kosmos!")
+
 
 
 NSObject Subclassing
