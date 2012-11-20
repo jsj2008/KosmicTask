@@ -32,7 +32,7 @@ script KosmicTask
 			set theCommand to "screencapture"
 			
 			-- log command
-			log "Running " & theCommand & " command..."
+			taskController's log_("Running " & theCommand & " command...")
 			
 			-- execute command
 			do shell script theCommand & " -t png " & quoted form of picPosixPath

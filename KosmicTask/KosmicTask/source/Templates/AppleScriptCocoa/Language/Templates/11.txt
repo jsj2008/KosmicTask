@@ -37,7 +37,7 @@ script KosmicTask
 				set picPosixPath to (taskController's resultFileWithName_("capture.png")) as string
 			
 				-- log command
-				log "Running " & theCommand & " command..."
+				taskController's log_("Running " & theCommand & " command...")
 			
 				-- execute command
 				do shell script theCommand & " -t png " & quoted form of picPosixPath
@@ -45,7 +45,7 @@ script KosmicTask
 				set end of paths to picPosixPath
 			
 				-- log wait
-				log "Waiting..."
+				taskController's log_("Waiting...")
 				
 				delay 1
 			

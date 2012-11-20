@@ -122,7 +122,20 @@ AppleScript Cocoa powered tasks can create temporary files by calling the **Kosm
 Logging and Debugging
 ---------------------
 
-Diagnostic and logging information can be written to a task's error stream using the `log` command. 
+Diagnostic and logging information can be written to a task's error stream using the KosmicTaskController `log_` method. 
+
+	-- KosmicTask controller
+	property taskController : class "KosmicTaskController"
+
+	-- run function
+	on KosmicTask()
+	
+		-- send value to log
+		taskController's log_("Goodbye, kosmos!")
+	
+	end KosmicTask
+	
+`NSLog()` style diagnostic and logging information can also be written to a task's error stream using the `log` command. 
 
 	-- send value to log
 	log "Goodbye, kosmos!"

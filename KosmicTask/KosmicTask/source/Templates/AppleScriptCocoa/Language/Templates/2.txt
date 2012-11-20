@@ -28,7 +28,7 @@ script KosmicTask
 	on kosmicTask()
 		
 		-- log timer started
-		log "Timer started..."
+		taskController's log_("Timer started...")
 		
 		-- create the timer
 		set theTimer to NSTimer's scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(delayTime, me, "timerFired:", "", true)
@@ -46,7 +46,7 @@ script KosmicTask
 	on timerFired_(theTimer)
 
 		-- log timer expired
-		log "Timer expired."
+		taskController's log_("Timer expired.")
 				
 		-- increment the counter
 		set repeatCounter to repeatCounter + 1

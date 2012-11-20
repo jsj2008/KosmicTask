@@ -27,7 +27,13 @@ script KosmicTask
 			-- insert AppleScript here and compute myResult
 			set myResult to "Hello, kosmos!"
 			
-			-- send value to log
+			-- Use this approach: send value to log (quiet)
+			taskController's log_("Goodbye, kosmos!")
+
+			-- send value to log (verbose)
+			taskController's vlog_("Goodbye, kosmos!")
+
+			-- send value to log (defaults to verbose)
 			log "Goodbye, kosmos!"
 			
 			-- myResult is complete, task will end

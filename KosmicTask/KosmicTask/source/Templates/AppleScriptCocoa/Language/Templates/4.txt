@@ -24,7 +24,7 @@ script KosmicTask
 		
 		try
 			-- log application access
-			log "Accessing Finder..."
+			taskController's log_("Accessing Finder...")
 			
 			-- target application
 			tell application "Finder"
