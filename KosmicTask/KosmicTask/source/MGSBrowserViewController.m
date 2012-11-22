@@ -1608,7 +1608,10 @@ errorExit:
 			[[netClient.taskController scriptManager] imageResourceForGroup:scriptManager name:&name location:&location];
 			if (name && location) {
 				NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys: name, MGSNoteValueKey, location, MGSNoteLocationKey, nil];
-				[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteGroupIconSelected object:[[self view] window] userInfo:userInfo];
+                
+                if (YES) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteGroupIconSelected object:[[self view] window] userInfo:userInfo];
+                }
 			}
 		}
 	}
@@ -1620,11 +1623,28 @@ errorExit:
 		//groupName = @"";
 	}
 	
-	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-							 MGSNoteClientGroupKey, MGSNoteClientItemKey,
-							  groupName, MGSNoteClientGroupKey,
-							  nil];
-	[self sendClientSelectedNotification:MGSNoteClientItemSelected options:options];
+    
+    if (groupName) {
+        MGSScript *script = [self selectedScript];
+        NSDictionary *options = nil;
+        
+        if (script) {
+            options = [NSDictionary dictionaryWithObjectsAndKeys:
+									 MGSNoteClientScriptKey, MGSNoteClientItemKey,
+									 groupName, MGSNoteClientGroupKey,
+									 script, MGSNoteClientScriptKey,
+									 nil];
+        } else {
+            options = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     MGSNoteClientGroupKey, MGSNoteClientItemKey,
+                                     groupName, MGSNoteClientGroupKey,
+                                     nil];
+        }
+        
+        if (YES) {
+            [self sendClientSelectedNotification:MGSNoteClientItemSelected options:options];
+        }
+    }
 	
 }
 

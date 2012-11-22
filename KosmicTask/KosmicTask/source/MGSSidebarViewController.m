@@ -410,17 +410,18 @@ char MGSScriptDictContext;
 	NSArray *groupNames = [scriptManager groupNames];
 	NSString *scriptKeyPrefix = nil;
 	for (NSString *groupName in groupNames) {
-		
+
+        MGSScriptManager *groupScriptManager = [scriptManager groupWithName:groupName];
+        
 		// make a group node
 		MGSOutlineViewNode *groupNode = [self newGroupTreeNodeWithObject:groupName netClient:netClient];
 		
 		// get script handler for group name
-		MGSScriptManager *groupScriptManager = [scriptManager groupWithName:groupName];
 		if (groupScriptManager.hasAllScripts) {
 			// it should be possible to get the count from the script controller
 			// but count always represents the publish group
 			clientNode.count = [groupScriptManager count];
-			
+            
 			// script object will appear twice.
 			// once in the all group and once in their named group
 			scriptKeyPrefix = MGSNodeKeyPrefixScriptGroupAll;
