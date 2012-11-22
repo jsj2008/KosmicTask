@@ -274,6 +274,8 @@ static MGSClientRequestManager *_sharedController = nil;
  */
 - (void)requestScriptDictForNetClient:(MGSNetClient *)netClient isPublished:(BOOL)published withOwner:(id <MGSNetRequestOwner>)owner
 {
+    netClient.activityFlags |= MGSClientActivityUpdatingTaskList;
+    
 	// retrieve either all scripts or published scripts
 	NSString *command = (published ? MGSScriptCommandListPublished : MGSScriptCommandListAll);
 	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient scriptCommand:command withOwner:owner];

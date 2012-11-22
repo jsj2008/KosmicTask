@@ -19,6 +19,8 @@
 	BOOL _countChildNodes;
 	NSDictionary *_options;
 	NSString *_type;
+    BOOL _updating;
+    NSUInteger _updatingImageIndex;
 }
 + (void)registerClass:(Class)klass options:(NSDictionary *)options;
 - (MGSOutlineViewNode *)createChildNodeWithRepresentedObject:(id)model;
@@ -46,5 +48,7 @@
 @property BOOL countChildNodes;
 @property (copy) NSDictionary *options;
 @property (copy) NSString *type;
+@property (getter=isUpdating) BOOL updating;
+@property NSUInteger updatingImageIndex;
 
 @end

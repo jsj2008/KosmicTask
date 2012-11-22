@@ -59,11 +59,15 @@
 	NSInteger indentation;
 	NSInteger countAlignment;
 	NSInteger countMarginVertical;
+    BOOL updating;
+    NSUInteger updatingImageIndex;
 }
 
 @property NSInteger indentation;
 @property NSInteger countAlignment;
 @property NSInteger countMarginVertical;
+@property (getter=isUpdating) BOOL updating;
+@property NSUInteger updatingImageIndex;;
 
 + (NSColor *)countColor;
 + (NSColor *)countColorGreen;
@@ -72,6 +76,7 @@
 + (NSColor *)countColorDarkRed;
 + (NSColor *)countColorMidGrey;
 + (NSColor *)countColorDarkBlue;
++ (NSUInteger)updatingImagesCount;
 
 - (void)setImage:(NSImage *)anImage;
 - (NSImage*)image;

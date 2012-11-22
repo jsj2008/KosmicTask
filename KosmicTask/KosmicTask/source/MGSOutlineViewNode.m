@@ -29,6 +29,8 @@ static NSMutableDictionary *registeredClasses = nil;
 @synthesize countChildNodes = _countChildNodes;
 @synthesize options = _options;
 @synthesize type = _type;
+@synthesize updating = _updating;
+@synthesize updatingImageIndex = _updatingImageIndex;
 
 /*
  
@@ -40,7 +42,7 @@ static NSMutableDictionary *registeredClasses = nil;
     NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
     if ([key isEqualToString:@"bindingObject"])
     {
-        NSSet *affectingKeys = [NSSet setWithObjects:@"name", @"image", @"count", @"hasCount", @"countColor", @"statusImage", nil];
+        NSSet *affectingKeys = [NSSet setWithObjects:@"name", @"image", @"count", @"hasCount", @"countColor", @"statusImage", @"updating", @"updatingImageIndex", nil];
         keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKeys];
     }
     return keyPaths;
@@ -57,12 +59,12 @@ static NSMutableDictionary *registeredClasses = nil;
 	if (!registeredClasses) {
 		registeredClasses = [NSMutableDictionary dictionaryWithCapacity:5];
 	}
-	NSMutableDictionary *mutableOptions = [registeredClasses objectForKey:klass];
+	NSMutableDictionary *mutableOptions = [registeredClasses objectForKey:[klass description]];
 	if (mutableOptions) {
 		[mutableOptions addEntriesFromDictionary:options];
 	} else {
 		mutableOptions = [NSMutableDictionary dictionaryWithDictionary:options];
-		[registeredClasses setObject:mutableOptions forKey:klass];	
+		[registeredClasses setObject:mutableOptions forKey:[klass description]];
 	}
 	
 }
@@ -256,7 +258,7 @@ static NSMutableDictionary *registeredClasses = nil;
 - (id)objectForKey:(id)optionKey
 {
 	Class objectClass = [self.representedObject class];
-	NSDictionary *options = [registeredClasses objectForKey:objectClass];
+	NSDictionary *options = [registeredClasses objectForKey:[objectClass description]];
 	
 	if (options) {
 		NSString *key = [options objectForKey:optionKey];

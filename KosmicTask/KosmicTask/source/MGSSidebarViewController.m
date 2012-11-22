@@ -24,6 +24,7 @@
 #import "MGSSidebarOutlineView.h"
 #import "MGSTaskSpecifierManager.h"
 #import "NSIndexPath+Mugginsoft.h"
+
 #include <sys/time.h>
 
 #define HOME_NODE_INDEX 0
@@ -72,6 +73,9 @@ char MGSScriptDictContext;
 - (void)cacheNode:(MGSOutlineViewNode *)node withKey:(id)key netClient:(MGSNetClient *)netClient;
 - (MGSOutlineViewNode *)selectedObjectGroupNode;
 - (void)updateSharedCount;
+- (void)configureAnimationTimer;
+- (void)animate;
+- (MGSOutlineViewNode *)nodeForNetClient:(MGSNetClient *)netClient;
 
 @property MGSNetClient *selectedNetClient;
 @property id selectedObject;
@@ -152,9 +156,60 @@ char MGSScriptDictContext;
 	
 }
 
+#pragma mark -
+#pragma mark Animation
+
+/*
+ 
+ - configureAnimationTimer
+ 
+ */
+- (void)configureAnimationTimer
+{
+    
+    _netClientsAnimated = [NSMutableArray arrayWithCapacity:[_netClients count]];
+    
+    // configure client animation.
+    for (MGSNetClient *netClient in _netClients) {
+        if (netClient.activityFlags & MGSClientActivityUpdatingTaskList) {
+            [_netClientsAnimated addObject:netClient];
+        }
+    }
+    
+    // if we need animation then start the timer
+    if ([_netClientsAnimated count] > 0) {
+        if (!cellAnimationTimer) {
+            NSTimeInterval interval = 1.0f/[MGSImageAndTextCell updatingImagesCount];
+            cellAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(animate) userInfo:nil repeats:YES];
+            [self animate];
+        }
+    } else {
+        [cellAnimationTimer invalidate];
+        cellAnimationTimer = nil;
+    }
+}
+
+/*
+ 
+ - animate
+ 
+ */
+- (void)animate
+{
+    for (MGSNetClient *netClient in _netClientsAnimated) {
+        
+        MGSOutlineViewNode *clientNode = [self nodeForNetClient:netClient];
+        
+        if (clientNode.updatingImageIndex < [MGSImageAndTextCell updatingImagesCount]) {
+            clientNode.updatingImageIndex +=1;
+        } else {
+            clientNode.updatingImageIndex = 0;
+        }
+    }
+}
 
 #pragma mark -
-#pragma mark OutlineView node handling 
+#pragma mark OutlineView node handling
 /*
  
  - expandNode:
@@ -340,12 +395,15 @@ char MGSScriptDictContext;
 	/*
 	 
 	 the cache provides a convenient way to lookup any node based on its key.
-	 the key will normally bederived wither from the node name or the represented object.
+	 the key will normally be derived either from the node name or the represented object.
 	 
 	 */
 	NSMutableDictionary *clientNodeCache = [NSMutableDictionary dictionaryWithCapacity:300];
-	[outlineNodeCache setObject:clientNodeCache forKey:[netClient serviceName]];
-	
+	[outlineNodeCache setObject:clientNodeCache forKey:[netClient key]];
+    
+    // add the client node itself to the cache as well as all the children
+	[clientNodeCache setObject:clientNode forKey:[netClient key]]; 
+    
 	NSMutableArray *clientChildNodes = [NSMutableArray arrayWithCapacity:100];
 	
 	// build task group tree
@@ -698,7 +756,31 @@ char MGSScriptDictContext;
  */
 - (NSMutableDictionary *)nodeCacheForNetClient:(MGSNetClient *)netClient
 {
-	return [outlineNodeCache objectForKey:[netClient serviceName]];
+	return [outlineNodeCache objectForKey:[netClient key]];
+}
+
+/*
+ 
+ - nodeForNetClient:
+ 
+ */
+- (MGSOutlineViewNode *)nodeForNetClient:(MGSNetClient *)netClient
+{
+    MGSOutlineViewNode *clientNode = [self nodeWithKey:netClient.key netClient:netClient];
+    
+    // this is the non cached approach
+    if (!clientNode) {
+        
+#ifdef MGS_DEBUG
+        NSLog(@"Sidebar outline net client node cache miss");
+#endif
+        MGSOutlineViewNode *rootNode = [self rootNodeForNetClient:netClient];
+
+        // very inefficient as it iterates over every leaf.
+        clientNode = [rootNode descendantNodeWithRepresentedObject:netClient];
+    }
+    
+    return clientNode;
 }
 
 #pragma mark -
@@ -758,9 +840,11 @@ char MGSScriptDictContext;
 	 */
 	// get nodes
 	MGSOutlineViewNode *nodeToBeSelected = nil;
-	MGSOutlineViewNode *rootNode = [self rootNodeForNetClient:netClient];
-	MGSOutlineViewNode *clientNode = [rootNode descendantNodeWithRepresentedObject:netClient];
-	NSAssert(clientNode, @"net client node is nil");
+	MGSOutlineViewNode *clientNode = [self nodeForNetClient:netClient];
+	if (!clientNode) {
+        MLogInfo(@"net client node is nil");
+        return;
+    }
 	
 	// get all group script node
 	NSString *nodeKey = [script keyWithString:MGSNodeKeyPrefixScriptGroupAll];
@@ -929,6 +1013,15 @@ char MGSScriptDictContext;
 	MGSNetClient *netClient = [notification object];
 	NSAssert([netClient isKindOfClass:[MGSNetClient class]], @"net client is not notification object");
 	
+    // check that this client is not already available
+    if ([_netClients containsObject:netClient]) {
+        
+        MLogDebug(@"net client already available. reload will occur.");
+        
+        // remove first to force reload
+        [self netClientUnavailable:notification];
+    }
+    
 	// get the root node to add the client to
 	MGSOutlineViewNode *rootNode = [self rootNodeForNetClient:netClient];
 		
@@ -936,7 +1029,7 @@ char MGSScriptDictContext;
 	MGSOutlineViewNode *clientNode = [rootNode createChildNodeWithRepresentedObject:netClient];	
 	clientNode.image = netClient.hostIcon;
 	clientNode.hasCount = YES;
-	
+    
 	// build client tree
 	[self buildClientTree:netClient atNode:clientNode];
 	
@@ -1006,8 +1099,10 @@ char MGSScriptDictContext;
         [_netClients removeObject:netClient];
         
         // remove client node map
-        [outlineNodeCache removeObjectForKey:[netClient serviceName]];
+        [outlineNodeCache removeObjectForKey:[netClient key]];
     }
+    
+    [self configureAnimationTimer];
     
     [self updateSharedCount];
 }
@@ -1073,9 +1168,8 @@ char MGSScriptDictContext;
 		return;
 	}
 	
-	// get nodes
-	MGSOutlineViewNode *rootNode = [self rootNodeForNetClient:netClient];
-	MGSOutlineViewNode *clientNode = [rootNode descendantNodeWithRepresentedObject:netClient];
+	// get client node
+	MGSOutlineViewNode *clientNode = [self nodeForNetClient:netClient];
 	if (!clientNode) {
 		// if cannot find the client then we have likely received this message
 		// before our client has been added to the tree
@@ -1564,11 +1658,12 @@ char MGSScriptDictContext;
 			if (selection) {
 				
 				// get nodes
-				MGSOutlineViewNode *rootNode = [self rootNodeForNetClient:netClient];
-				MGSOutlineViewNode *clientNode = [rootNode descendantNodeWithRepresentedObject:netClient];
+				MGSOutlineViewNode *clientNode = [self nodeForNetClient:netClient];
 				MGSOutlineViewNode *selectedNode = nil;
 				
 				if ([selection isKindOfClass:[MGSScript class]]) {
+                    
+                    // TODO: use the cache ? perhaps the ALL group causes issues
 					selectedNode = [clientNode descendantNodeWithRepresentedObject:selection];
 				} 			
 				
@@ -1579,7 +1674,21 @@ char MGSScriptDictContext;
 				[self selectNode:selectedNode];
 			}
 		}
-	} 
+        //
+		// updating
+		//
+		else if ([keyPath isEqualToString:MGSNetClientKeyPathActivityFlags]) {
+        
+            if (netClient.activityFlags & MGSClientActivityUpdatingTaskList) {
+                node.updating = YES;
+            } else {
+                node.updating = NO;
+            }
+            
+            [self configureAnimationTimer];
+        }
+
+	}
 	
 	/*
 	 
@@ -1657,6 +1766,10 @@ char MGSScriptDictContext;
 	
 	// observe changes to script access
 	[netClient addObserver:self forKeyPath:MGSNetClientKeyPathScriptAccess options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:0];
+    
+    // observe changes to updating
+	[netClient addObserver:self forKeyPath:MGSNetClientKeyPathActivityFlags options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:0];
+
 }
 
 /*
@@ -1676,6 +1789,7 @@ char MGSScriptDictContext;
 		[netClient removeObserver:self forKeyPath:MGSNetClientKeyPathHostStatus];
 		[netClient removeObserver:self forKeyPath:MGSNetClientKeyPathRunMode];
 		[netClient removeObserver:self forKeyPath:MGSNetClientKeyPathScriptAccess];
+        [netClient removeObserver:self forKeyPath:MGSNetClientKeyPathActivityFlags];
 	} 
 	@catch (NSException *e)
 	{

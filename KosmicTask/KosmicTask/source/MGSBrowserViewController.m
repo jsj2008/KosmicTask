@@ -972,6 +972,12 @@ errorExit:;
  */
 -(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
+	MGSNetClient *netClient = netRequest.netClient;
+    
+    // task list update is done one way or another
+    // clear the bit flag
+    netClient.activityFlags &= (~MGSClientActivityUpdatingTaskList);
+    
 	NSString *requestCommand = netRequest.kosmicTaskCommand;
 	
 	// validate response
@@ -999,7 +1005,6 @@ errorExit:;
 		return;
 	}
 	
-	MGSNetClient *netClient = netRequest.netClient;
 	
 	// save the script dict to the netClient 
 	NSMutableDictionary *scriptDict = [NSMutableDictionary dictionaryWithDictionary:payload.dictionary];

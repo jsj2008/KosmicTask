@@ -12,6 +12,7 @@
 #import "MGSImageAndText.h"
 #import "NSString_Mugginsoft.h"
 #import "MLog.h"
+#import "NSImage+Mugginsoft.h"
 
 #define kIconImageSize		16
 
@@ -24,13 +25,20 @@
 
 #define kMinCapsuleWidth 20
 
+static NSMutableArray *updatingImagesArray = nil;
+static NSUInteger updatingImagesArrayCount = 0;
+
 @implementation MGSImageAndTextCell
 
 @synthesize indentation;
 @synthesize countAlignment;
 @synthesize countMarginVertical;
+@synthesize updating;
+@synthesize updatingImageIndex;
 
 
+#pragma mark -
+#pragma mark Color
 + (NSColor *)countColor
 {
 	return [NSColor colorWithCalibratedRed:0.522f green:0.592f blue:0.733f alpha:1.0f];
@@ -69,6 +77,52 @@
 	
 }
 
+#pragma mark -
+#pragma mark Factory
+
+/*
+ 
+ + initialize
+ 
+ */
++ (void)initialize
+{
+    updatingImagesArray = [NSMutableArray arrayWithCapacity:2];
+    NSImage *img1 = [NSImage imageNamed:@"MGSUpdating1Template"];
+    NSImage *img2 = [NSImage imageNamed:@"MGSUpdating2Template"];
+    
+    if (img1) [updatingImagesArray addObject:img1];
+    if (img2) [updatingImagesArray addObject:img2];
+    
+    updatingImagesArrayCount = [updatingImagesArray count];
+}
+
+/*
+ 
+ + updatingImagesCount
+ 
+ */
++ (NSUInteger)updatingImagesCount
+{
+    return updatingImagesArrayCount;
+}
+
+#pragma mark -
+#pragma mark Instance
+
+/*
+ 
+ - initTextCell:
+ 
+ */
+- (id)initTextCell:(NSString *)aString
+{
+    self = [super initTextCell:aString];
+    if (self) {
+    }
+    
+    return self;
+}
 // -------------------------------------------------------------------------------
 //	awakeFromNib:
 // ------------------------------------------------------------------------------
@@ -86,21 +140,10 @@
 	
 	// blue background a la Mail.app
 	[self setCountBackgroundColour:[MGSImageAndTextCell countColor]];
+    
+
 }
 
-/* setCountBackgroundColour
- * Sets the colour used for the count button background.
- */
--(void)setCountBackgroundColour:(NSColor *)newColour
-{
-	[newColour retain];
-	[countBackgroundColour release]; 
-	countBackgroundColour = newColour;
-}
--(NSColor *)countBackgroundColour
-{
-	return countBackgroundColour;
-}
 // -------------------------------------------------------------------------------
 //	dealloc:
 // -------------------------------------------------------------------------------
@@ -111,6 +154,8 @@
     [super dealloc];
 }
 
+#pragma mark -
+#pragma mark NSCopy
 // -------------------------------------------------------------------------------
 //	copyWithZone:zone
 // -------------------------------------------------------------------------------
@@ -121,6 +166,32 @@
     return cell;
 }
 
+#pragma mark -
+#pragma mark Background
+/*
+ 
+ - setCountBackgroundColour
+ 
+ */
+-(void)setCountBackgroundColour:(NSColor *)newColour
+{
+	[newColour retain];
+	[countBackgroundColour release];
+	countBackgroundColour = newColour;
+}
+
+/*
+ 
+ - countBackgroundColour
+ 
+ */
+-(NSColor *)countBackgroundColour
+{
+	return countBackgroundColour;
+}
+
+#pragma mark -
+#pragma mark Images
 // -------------------------------------------------------------------------------
 //	setImage:anImage
 // -------------------------------------------------------------------------------
@@ -143,35 +214,67 @@
     return image;
 }
 
+/*
+ 
+ - setStatusImage:
+ 
+ */
 - (void)setStatusImage:(NSImage*)anImage
 {
     if (anImage != statusImage)
 	{
-        [statusImage release];
-        statusImage = [anImage retain];
+        statusImage = anImage ;
 		[statusImage setSize:NSMakeSize(kIconImageSize, kIconImageSize)];
-		
-		NSImageCell *imageCell = [[NSImageCell alloc] initImageCell:statusImage];
-		[imageCell setBackgroundStyle:NSBackgroundStyleDark];
-		
-		// NSCell - preparedImage does not seem to be declared in NSCell.h
-		// hence use performSelector to silence compiler
-		//invertedStatusImage = (NSImage *)[imageCell preparedImage];
-#pragma mark warning what happened to NSCell - preparedImage
-		/*
-		SEL preparedImageSelector = @selector(preparedImage);
-		invertedStatusImage = [imageCell respondsToSelector:preparedImageSelector] 
-									? [imageCell performSelector:preparedImageSelector] : nil;
-		 */
-		invertedStatusImage = statusImage;
-		
+        invertedStatusImage = statusImage;
     }
 }
 
+/*
+ 
+ - statusImage
+ 
+ */
 - (NSImage*)statusImage
 {
     return statusImage;
 }
+
+#pragma mark -
+#pragma mark Count
+
+/*
+ 
+ - setCount:
+ 
+ */
+- (void)setCount:(int)value
+{
+	count = value;
+}
+
+/*
+ 
+ - count
+ 
+ */
+- (void)setHasCount:(BOOL)value
+{
+	hasCount = value;
+}
+
+/*
+ 
+ - hasCount
+ 
+ */
+- (BOOL)hasCount
+{
+	return hasCount;
+}
+
+#pragma mark -
+#pragma mark Accessors
+
 // -------------------------------------------------------------------------------
 //	isGroupCell:
 // -------------------------------------------------------------------------------
@@ -179,6 +282,29 @@
 {
     return ([self image] == nil && [[self title] length] > 0);
 }
+
+/*
+ 
+ - setUpdating:
+ 
+ */
+- (void)setUpdating:(BOOL)value
+{
+    updating = value;
+}
+
+/*
+ 
+ - setUpdatingImageIndex:
+ 
+ */
+- (void)setUpdatingImageIndex:(NSUInteger)value
+{
+    updatingImageIndex = value;
+}
+
+#pragma mark -
+#pragma mark NSCell overrides
 
 // -------------------------------------------------------------------------------
 //	titleRectForBounds:cellRect
@@ -226,6 +352,9 @@
 	[super selectWithFrame:textFrame inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
 }
 
+#pragma mark -
+#pragma mark Drawing
+
 // -------------------------------------------------------------------------------
 //	drawWithFrame:inView:
 // -------------------------------------------------------------------------------
@@ -268,9 +397,7 @@
 	
 	// If the cell has a count button, draw the count
 	// button on the right of the cell.
-	if (hasCount) {
-		//NSSize stringSize = [[self attributedStringValue] size];
-		
+	if (hasCount && !self.isUpdating) {
 		NSString * number = [NSString stringWithFormat:@"%i", count];
 		
 		// Use the current font point size as a guide for the count font size
@@ -341,32 +468,54 @@
 		cellFrameModified = YES;
 	}
 
+    //
 	// draw status image
-	if (statusImage != nil)
-	{
-		NSImage *statImage = [self isHighlighted] ? invertedStatusImage : statusImage;
-		imageSize = [statImage size];
+    //
+	if (statusImage != nil || self.isUpdating) {
+        NSImage *theImage = nil;
+        CGFloat alpha = 1.0;
+        
+        if (self.isUpdating && updatingImagesArrayCount > 0) {
+            if (updatingImageIndex >= updatingImagesArrayCount) {
+                updatingImageIndex = updatingImagesArrayCount -1;
+            }
+            theImage = [updatingImagesArray objectAtIndex:updatingImageIndex];
+            alpha = 0.5;
+        } else {
+            theImage = [self isHighlighted] ? invertedStatusImage : statusImage;
+            imageSize = [theImage size];
+        }
+        
 		NSDivideRect(cellFrame, &imageFrame, &cellFrame, 4 + imageSize.width, NSMaxXEdge);
 		
 		if (imageFrame.size.width >= imageSize.width) {
 			
-			//imageFrame.origin.x += kImageOriginXOffset;
 			imageFrame.origin.y -= kImageOriginYOffset;
 			imageFrame.size = imageSize;
-			
+
+#define MGS_USE_DEPRECATED_NSIMAGE_API
+#ifdef MGS_USE_DEPRECATED_NSIMAGE_API
 			if ([controlView isFlipped]) {
 				imageFrame.origin.y += ceilf((cellFrame.size.height + imageFrame.size.height) / 2);
 			} else {
 				imageFrame.origin.y += ceilf((cellFrame.size.height - imageFrame.size.height) / 2);
 			}
 			
-			[statImage compositeToPoint:imageFrame.origin operation:NSCompositeSourceOver];
+			[theImage compositeToPoint:imageFrame.origin operation:NSCompositeSourceOver fraction:alpha];
+#else
+			if ([controlView isFlipped]) {
+				imageFrame.origin.y += ceilf((cellFrame.size.height + imageFrame.size.height) / 2);
+			} else {
+				imageFrame.origin.y += ceilf((cellFrame.size.height - imageFrame.size.height) / 2);
+			}
+
+            // TODO: flipping is causing issues
+            [theImage drawInRect:imageFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+#endif
 		}
 		
 		cellFrameModified = YES;
 	}
-	
-
 	
 	if (cellFrameModified) {
 			
@@ -440,11 +589,13 @@
 	return result;
 }
 
+#pragma mark -
+#pragma mark Instance
 /*
  
- JM 23-01-08
- set object value used by bindings machinery
- for NSValueBinding
+ - setObjectValue:
+
+ used by bindings machinery for NSValueBinding
  
  */
 - (void)setObjectValue:(id)object
@@ -500,26 +651,16 @@
 	
 	if ([object respondsToSelector:@selector(countAlignment)]) {
 		[self setCountAlignment:[object countAlignment]];
-	} 
+	}
+    
+    if ([object respondsToSelector:@selector(updatingImageIndex)]) {
+        self.updatingImageIndex = [object updatingImageIndex];
+    }
+    
+    if ([object respondsToSelector:@selector(isUpdating)]) {
+        [self setUpdating:[object isUpdating]];
+    }
 }
 
-// JM
-// count
-- (void)setCount:(int)value
-{
-	count = value;
-}
-
-
-// JM
-// has count
-- (void)setHasCount:(BOOL)value
-{
-	hasCount = value;
-}
-- (BOOL)hasCount
-{
-	return hasCount;
-}
 @end
 

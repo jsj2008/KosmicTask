@@ -26,7 +26,8 @@
 	NSMutableArray *_netClients;
 	NSMutableArray *clientTree;
 	BOOL _postNetClientSelectionNotifications;
-	
+	NSTimer *cellAnimationTimer;
+    NSMutableArray *_netClientsAnimated;
 	//NSMapTable *outlineNodeMapTable;
 	NSMutableDictionary *outlineNodeCache;
 }

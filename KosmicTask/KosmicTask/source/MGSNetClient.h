@@ -30,6 +30,7 @@ extern NSString *MGSNetClientKeyNote;
 extern NSString *MGSNetClientKeyPathHostStatus;
 extern NSString *MGSNetClientKeyPathRunMode;
 extern NSString *MGSNetClientKeyPathScriptAccess;
+extern NSString *MGSNetClientKeyPathActivityFlags;
 
 @protocol MGSNetClientDelegate
 
@@ -66,6 +67,11 @@ typedef enum _MGSScriptAccess {
 	MGSScriptAccessPublic = 0x2,	// scripts have public access
 	MGSScriptAccessTrusted = 0x4,		// scripts have authenticated user access
 } MGSScriptAccess;
+
+typedef enum _MGSClientActivityFlags {
+	MGSClientActivityNone = 0x0,                  // no activity
+	MGSClientActivityUpdatingTaskList = 0x1,		// updating task list
+} MGSClientActivityFlags;
 
 @class MGSNetRequest;
 @class MGSClientTaskController;
@@ -105,8 +111,9 @@ typedef enum _MGSScriptAccess {
 	BOOL _validatedConnection;			// connection has a valid licence
 	NSTimeInterval _bonjourResolveTimeout;
 	id _delegate;
-		
+    NSString *_UUID;
 	NSOperationQueue *_operationQueue;
+    MGSClientActivityFlags _activityFlags;
 }
 - (id)initWithNetService:(NSNetService *)aNetService;
 - (id)initWithDictionary:(NSDictionary *)dict;
@@ -143,11 +150,14 @@ typedef enum _MGSScriptAccess {
 - (void)errorOnRequestQueue:(MGSClientNetRequest *)netRequest code:(NSInteger)code reason:(NSString *)failureReason;
 - (void)applySecurity;
 
+- (id)key;
+
 @property (copy) NSString *serviceShortName;
 @property (copy) NSString *serviceName;
 @property (assign) NSImage *hostIcon;
 @property MGSHostStatus hostStatus;
-
+@property MGSClientActivityFlags activityFlags;
+@property (readonly, copy) NSString *UUID;
 @property (readonly) NSNetService *netService;
 @property BOOL visible;
 @property BOOL sendExecuteValidation;

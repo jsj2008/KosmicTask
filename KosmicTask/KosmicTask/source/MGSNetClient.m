@@ -28,6 +28,7 @@
 #import "MGSPreferences.h"
 #import "MGSOutlineViewNode.h"
 #import "MGSClientNetRequest.h"
+#import "NSString_Mugginsoft.h"
 
 const char MGSNetClientRunModeContext;
 
@@ -46,6 +47,7 @@ NSString *MGSNetClientKeyNote = @"note";
 NSString *MGSNetClientKeyPathHostStatus = @"hostStatus";
 NSString *MGSNetClientKeyPathRunMode = @"applicationWindowContext.runMode";
 NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
+NSString *MGSNetClientKeyPathActivityFlags = @"activityFlags";
 
 // class extension
 @interface MGSNetClient()
@@ -89,7 +91,8 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 @synthesize validatedConnection = _validatedConnection;
 @synthesize sendExecuteValidation = _sendExecuteValidation;
 @synthesize securePublicTasks = _securePublicTasks;
-
+@synthesize activityFlags = _activityFlags;
+@synthesize UUID = _UUID;
 
 /*
  
@@ -133,6 +136,8 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 - (id)initWithNetService:(NSNetService *)aNetService
 {
 	if ((self = [super init])) {
+        
+        _UUID = [NSString mgs_stringWithNewUUID];
 		_visible = NO;
 		
 		_taskController = [(MGSClientTaskController *)[MGSClientTaskController alloc] initWithNetClient:self];
@@ -176,6 +181,7 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 		// add observer
 		[self addObserver:self forKeyPath:MGSNetClientKeyPathRunMode options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial context:(void *)&MGSNetClientRunModeContext];
 
+        
 	}
 	_hostPort = 0;
 	_hostName = nil;
@@ -271,6 +277,16 @@ NSString *MGSNetClientKeyPathScriptAccess = @"taskController.scriptAccess";
 - (void)setVisible:(BOOL)visible
 {
     _visible = visible;
+}
+
+/*
+ 
+ - key
+ 
+ */
+- (id)key
+{
+    return self.UUID;
 }
 #pragma mark -
 #pragma mark Contexts

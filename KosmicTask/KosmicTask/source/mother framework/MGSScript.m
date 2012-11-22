@@ -1674,7 +1674,7 @@ errorExit:;
 	}
 	/*
 	 
-	the script may appear in repeatedly in some collections.
+	the script may appear repeatedly in some collections.
 	hence we offer additional keys.
 	 
 	 */
