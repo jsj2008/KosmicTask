@@ -17,6 +17,8 @@
 @interface MGSModeToolViewController : MGSToolViewController {
 	IBOutlet NSSegmentedControl *segmentedButtons;
 	IBOutlet NSTextField *label;
+    IBOutlet NSProgressIndicator *progress;
+    
 	//IBOutlet NSButton *loginButton;
 	eMGSMotherRunMode _segmentMode;
 	eMGSMotherRunMode _prevSegmentMode;

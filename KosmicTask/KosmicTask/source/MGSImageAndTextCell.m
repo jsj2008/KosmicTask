@@ -87,6 +87,7 @@ static NSUInteger updatingImagesArrayCount = 0;
  */
 + (void)initialize
 {
+    // TODO: this gets called by server and bundle image loading fails
     updatingImagesArray = [NSMutableArray arrayWithCapacity:2];
     NSImage *img1 = [NSImage imageNamed:@"MGSUpdating1Template"];
     NSImage *img2 = [NSImage imageNamed:@"MGSUpdating2Template"];

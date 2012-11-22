@@ -18,6 +18,8 @@
 #import "MGSPreferences.h"
 #import "MGSLM.h"
 
+char MGSClientActivity;
+
 NSString *MGSDefaultPersistentConnections = @"MGSPersistentConnections";
 NSString *MGSDefaultExcludedMothers = @"MGSExcludedConnections";
 NSString *MGSDefaultHeartBeatInterval = @"MGSHeartBeatInterval";
@@ -36,6 +38,7 @@ static MGSNetClientManager *_sharedController = nil;
 - (void)mgsRemoveClient:(MGSNetClient *)netClient;
 - (void)statusChanged:(NSNotification *)aNote;
 - (void)netClientSelected:(NSNotification *)aNote;
+- (void)updateNetClientActivityStatus:(MGSNetClient *)inNetClient;
 @end
 
 @interface MGSNetClientManager (Private)
@@ -556,6 +559,9 @@ copy with zone for singleton
  */
 - (void)mgsAddClient:(MGSNetClient *)netClient
 {
+    // observe the net client
+    [netClient addObserver:self forKeyPath:@"activityFlags" options:0 context:&MGSClientActivity];
+
 	// add client to array
 	[_netClients addObject:netClient];
 	
@@ -574,7 +580,11 @@ copy with zone for singleton
  */
 - (void)mgsRemoveClient:(MGSNetClient *)netClient
 {
+    // remove observers
+    [netClient removeObserver:self forKeyPath:@"activityFlags"];
 	
+    [self updateNetClientActivityStatus:nil];
+    
 	// remove client from array
 	[_netClients removeObject:netClient];
 
@@ -726,9 +736,54 @@ remove a static client
 	NSAssert(netClient, @"net client is nil");
 	self.selectedNetClient = netClient;	
 }
+
+#pragma mark -
+#pragma mark KVO 
+/*
+ 
+ - observeValueForKeyPath:ofObject:change:context:
+ 
+ */
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == &MGSClientActivity) {
+        [self updateNetClientActivityStatus:object];
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+
+/*
+ 
+ - updateNetClientActivityStatus
+ 
+ */
+- (void)updateNetClientActivityStatus:(MGSNetClient *)inNetClient
+{
+    BOOL isUpdating = NO;
+
+    if (inNetClient.activityFlags && MGSClientActivityUpdatingTaskList) {
+        isUpdating = YES;
+    } else {
+        for (MGSNetClient *netClient in _netClients) {
+            if (netClient.activityFlags && MGSClientActivityUpdatingTaskList) {
+                isUpdating = YES;
+                break;
+            }
+        }
+    }
+
+    
+    // post notification
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:MGSNoteClientActive
+        object:self
+        userInfo: @{ @"isUpdating" : @(isUpdating)}
+     ];
+}
+
 @end
-
-
 //
 // NSNetServiceBrowser delegate methods
 //
@@ -768,7 +823,7 @@ remove a static client
 
 	// create net client for service
 	netClient = [[MGSNetClient alloc] initWithNetService:netService];
-
+    
 	// defer connections?
 	BOOL deferConnections = [[NSUserDefaults standardUserDefaults] boolForKey:MGSDeferRemoteClientConnections];
 	

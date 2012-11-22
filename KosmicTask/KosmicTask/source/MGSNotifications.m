@@ -20,6 +20,8 @@ NSString *MGSNoteAuthenticateAccessSucceeded = @"MGSAuthenticateAccessSucceeded"
 
 NSString *MGSNoteClientSaveSucceeded = @"MGSClientSaveSucceeded";	// client save succeeded
 
+NSString *MGSNoteClientActive = @"MGSClientActive"; // client is active
+
 NSString *MGSNoteLogout = @"MGSLogOut";	// log user out 
 
 NSString *MGSNoteWindowEditModeChangeRequest = @"MGSWindowEditModeChangeRequest";	// window edit mode change request

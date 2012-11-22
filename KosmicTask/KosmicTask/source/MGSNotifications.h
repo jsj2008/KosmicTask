@@ -56,6 +56,7 @@ extern NSString *MGSNoteAppToggleExecuteTerminateTask;
 extern NSString *MGSNoteAppTerminateTask;
 extern NSString *MGSNoteWillUndoConfigurationChanges;
 extern NSString *MGSNoteClientScriptArrayKey;
+extern NSString *MGSNoteClientActive;
 
 extern NSString *MGSShowTaskTabContextMenu;
 

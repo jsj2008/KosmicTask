@@ -20,6 +20,7 @@
 - (void)changeRunMode:(eMGSMotherRunMode)mode;
 - (void)runModeShouldChange:(NSNotification *)notification;
 - (void)netClientSelected:(NSNotification *)notification;
+- (void)netClientActive:(NSNotification *)notification;
 - (void)pendingModeChangeConfirmed:(NSNotification *)notification;
 - (void)pendingModeChangeConfirmed:(NSNotification *)notification;
 - (void)configureAlertSheetDidEnd: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
@@ -66,6 +67,9 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pendingModeChangeConfirmed:) name:MGSNoteAuthenticateAccessSucceeded object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(runModeShouldChange:) name:MGSNoteAppRunModeShouldChange object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pendingModeChangeConfirmed:) name:MGSNoteClientSaveSucceeded object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(netClientActive:) name:MGSNoteClientActive object:nil];
+    
+    
 }
 
 /*
@@ -288,6 +292,8 @@
 #pragma mark NSNotificationCenter callbacks
 /*
  
+ netClientSelected:
+ 
  net client selected in browser
  
  */
@@ -326,6 +332,23 @@
 	[segmentedButtons setSelectedSegment:_segmentMode];	
 }
 
+/*
+ 
+ netClientActive:
+ 
+ */
+- (void)netClientActive:(NSNotification *)notification
+{
+	NSDictionary *userInfo = [notification userInfo];
+
+	// true if at least one net client is updating
+    BOOL isUpdating = [[userInfo objectForKey:@"isUpdating"] boolValue];
+    if (isUpdating) {
+        [progress startAnimation:self];
+    } else {
+        [progress stopAnimation:self];
+    }
+}
 //
 // mode change cancelled.
 //
