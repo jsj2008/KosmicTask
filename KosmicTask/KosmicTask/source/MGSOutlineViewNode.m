@@ -20,6 +20,7 @@ static NSMutableDictionary *registeredClasses = nil;
 
 @implementation MGSOutlineViewNode
 
+@synthesize label = _label;
 @synthesize isDraggable = _isDraggable;
 @synthesize image = _image;
 @synthesize count = _count;
@@ -42,7 +43,7 @@ static NSMutableDictionary *registeredClasses = nil;
     NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
     if ([key isEqualToString:@"bindingObject"])
     {
-        NSSet *affectingKeys = [NSSet setWithObjects:@"name", @"image", @"count", @"hasCount", @"countColor", @"statusImage", @"updating", @"updatingImageIndex", nil];
+        NSSet *affectingKeys = [NSSet setWithObjects:@"label", @"name", @"image", @"count", @"hasCount", @"countColor", @"statusImage", @"updating", @"updatingImageIndex", nil];
         keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKeys];
     }
     return keyPaths;
@@ -339,6 +340,19 @@ static NSMutableDictionary *registeredClasses = nil;
 	}
 	
 	return name;
+}
+/*
+ 
+ - name
+ 
+ */
+- (NSString *)label
+{
+    if (!_label) {
+        return [self name];
+    }
+    
+    return _label;
 }
 
 /*

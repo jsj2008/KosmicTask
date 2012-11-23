@@ -27,6 +27,7 @@
 - (BOOL)mgs_isURLorIPAddress;
 + (NSString *)mgs_StringWithSockAddrData:(NSData *)addressData;
 - (BOOL)mgs_isIPAddress;
+- (NSArray *)mgs_minimalComponentsSeparatedByString:(NSString *)separator;
 @end
 
 @interface NSMutableString (Mugginsoft)

@@ -924,7 +924,12 @@ errorExit:;
  */
 - (NSString *)group
 {
-	return [self objectForLocalizedKey:MGSScriptKeyGroup];
+	NSString *group = [self objectForLocalizedKey:MGSScriptKeyGroup];
+    
+    // old scripts may have troublesome group names
+    group = [group stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    return group;
 }
 
 /*
@@ -934,6 +939,8 @@ errorExit:;
  */
 - (void)setGroup:(NSString *)aString
 {
+    aString = [aString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
 	[self setObject:aString forLocalizedKey:MGSScriptKeyGroup];
 }
 

@@ -24,6 +24,7 @@
 #import "MGSSidebarOutlineView.h"
 #import "MGSTaskSpecifierManager.h"
 #import "NSIndexPath+Mugginsoft.h"
+#import "NSString_Mugginsoft.h"
 
 #include <sys/time.h>
 
@@ -33,6 +34,7 @@
 NSString * const MGSNodeKeyPrefixScriptGroupAll = @"$SCRIPT-ALL$";
 NSString * const MGSNodeKeyPrefixScriptGroup = @"$SCRIPT-GRP$";
 NSString * const MGSNodeKeyGroupPrefix = @"$GROUP$";
+NSString * const MGSGroupPathSeparator = @"/";
 
 NSString *MGSNodeTypeScript = @"script";
 NSString *MGSNodeTypeGroup = @"group";
@@ -76,6 +78,7 @@ char MGSScriptDictContext;
 - (void)configureAnimationTimer;
 - (void)animate;
 - (MGSOutlineViewNode *)nodeForNetClient:(MGSNetClient *)netClient;
+- (MGSOutlineViewNode *)_newGroupTreeNodeWithObject:(id)object netClient:(MGSNetClient *)netClient;
 
 @property MGSNetClient *selectedNetClient;
 @property id selectedObject;
@@ -411,10 +414,17 @@ char MGSScriptDictContext;
 	NSString *scriptKeyPrefix = nil;
 	for (NSString *groupName in groupNames) {
 
+        // we want clean group names
         MGSScriptManager *groupScriptManager = [scriptManager groupWithName:groupName];
         
+        NSRange range = [groupName rangeOfString:@"Funny"];
+        if (range.length != 0) {
+            NSLog(@"Funny found");
+        }
+        
 		// make a group node
-		MGSOutlineViewNode *groupNode = [self newGroupTreeNodeWithObject:groupName netClient:netClient];
+        // this will return the top level node if the group name contains path separators
+		MGSOutlineViewNode *groupTopNode = [self newGroupTreeNodeWithObject:groupName netClient:netClient];
 		
 		// get script handler for group name
 		if (groupScriptManager.hasAllScripts) {
@@ -429,10 +439,17 @@ char MGSScriptDictContext;
 			scriptKeyPrefix = MGSNodeKeyPrefixScriptGroup;
 		}
 		
-		// add the group node
-		//[[clientNode mutableChildNodes] addObject:groupNode];
-		[clientChildNodes addObject:groupNode];
-		
+		// add the group top node
+        if (![clientChildNodes containsObject:groupTopNode]) {
+            [clientChildNodes addObject:groupTopNode];
+		}
+        
+        // get the node to attach the tasks to
+        MGSOutlineViewNode *groupNode = [self nodeWithKey:[self nodeKeyForGroup:groupName] netClient:netClient];
+        if (!groupNode) {
+            groupNode = groupTopNode;
+        }
+        
 		// add tasks
 		for (int i = 0; i < [groupScriptManager count]; i ++) {
 			MGSScript *script = [groupScriptManager itemAtIndex:i];
@@ -507,26 +524,105 @@ char MGSScriptDictContext;
 {
 	NSAssert([object isKindOfClass:[NSString class]], @"bad object class");
 	
-	// get the script manager for the client
-	MGSClientScriptManager *scriptManager = [netClient.taskController scriptManager];		
-	NSAssert(scriptManager, @"script controller is nil");
+    NSString *groupName = object;
+    
+    MGSOutlineViewNode *groupNode = nil;
+    
+#undef MGS_GROUP_PATH_SUPPORTED
 
-	// make a group node
-	MGSOutlineViewNode *node = [self newTreeNodeWithObject:object type:MGSNodeTypeGroup options:nil];
+    // process / in group paths
+//
+// funny
+// funny / jokes
+// funny / stories
+// funny / stories / animals
+#ifdef MGS_GROUP_PATH_SUPPORTED
+    
+    // split group name into path components
+    NSArray *groupComponents = [groupName mgs_minimalComponentsSeparatedByString:MGSGroupPathSeparator];
+    
+    // group has a path
+    if ([groupComponents count] > 1) {
+        
+        // make a group node
+        MGSOutlineViewNode *parentNode  = nil;
+        NSString *groupNodeKey = nil;
+        
+        for (NSString *groupComponent in groupComponents) {
+            
+            // build the group node key back up from the components
+            if (!groupNodeKey) {
+                groupNodeKey = groupComponent;
+            } else {
+                groupNodeKey = [NSString stringWithFormat:@"%@ %@ %@", groupNodeKey, MGSGroupPathSeparator, groupComponent];
+            }
+            
+            MGSOutlineViewNode *node = nil;
+            
+            // get existing group node
+            node = [self nodeWithKey:[self nodeKeyForGroup:groupNodeKey] netClient:netClient];
+            
+            // make a group node if none exists
+            if (!node) {
+                node = [self _newGroupTreeNodeWithObject:groupNodeKey netClient:netClient];
+                
+                // use the component as the label not the key
+                node.label = groupComponent;
+                
+                if (parentNode) {
+                    [[parentNode mutableChildNodes] addObject:node];
+                }
+
+            }
+            
+            // we need to keep track of the top level node
+            if (!groupNode) {
+                groupNode = node;
+            }
+            
+            parentNode = node;
+        }
+    } 
+#endif
+
+    if (!groupNode) {
+        groupNode = [self _newGroupTreeNodeWithObject:groupName netClient:netClient];
+    }
+    
 	
-	// get script handler for group name
-	MGSScriptManager *groupScriptManager = [scriptManager groupWithName:object];
+	return groupNode;
+}
+
+/*
+ 
+ - _newGroupTreeNodeWithObject:netClient:
+ 
+ */
+- (MGSOutlineViewNode *)_newGroupTreeNodeWithObject:(id)object netClient:(MGSNetClient *)netClient
+{
+ 	NSAssert([object isKindOfClass:[NSString class]], @"bad object class");
+	
+    NSString *groupName = object;
+
+    MGSOutlineViewNode *groupNode = [self newTreeNodeWithObject:groupName type:MGSNodeTypeGroup options:nil];
+    
+    // get script handler for group name
+    // get the script manager for the client
+	MGSClientScriptManager *scriptManager = [netClient.taskController scriptManager];
+	NSAssert(scriptManager, @"script controller is nil");
+	MGSScriptManager *groupScriptManager = [scriptManager groupWithName:groupName];
 	
 	// get image for the group
-	node.image = [[groupScriptManager displayObject] image];
-	node.hasCount = YES;
-	node.countChildNodes = YES;
-
+	groupNode.image = [[groupScriptManager displayObject] image];
+	groupNode.hasCount = YES;
+	groupNode.countChildNodes = YES;
+    
 	// add to the node map
-	NSString *nodeKey = [self nodeKeyForGroup:object];
-	[self cacheNode:node withKey:nodeKey netClient:netClient];
+	NSString *nodeKey = [self nodeKeyForGroup:groupName];
+	[self cacheNode:groupNode withKey:nodeKey netClient:netClient];
 	
-	return node;
+	return groupNode;
+
 }
 /*
  

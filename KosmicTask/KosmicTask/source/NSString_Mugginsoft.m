@@ -327,6 +327,27 @@
     return address;
 }
 
+/*
+ 
+ - mgs_minimalComponentsSeparatedByString:
+ 
+ */
+- (NSArray *)mgs_minimalComponentsSeparatedByString:(NSString *)separator
+{
+    // separate
+    NSArray *rawGroupComponents = [self componentsSeparatedByString:separator];
+    
+    // remove empty elements and trim
+    NSMutableArray *groupComponents = [NSMutableArray arrayWithCapacity:[rawGroupComponents count]];
+    for (NSString *component in rawGroupComponents) {
+        component = [component stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if ([component length] > 0) {
+            [groupComponents addObject:component];
+        }
+    }
+    
+    return groupComponents;
+}
 @end
 
 @implementation NSMutableString (Mugginsoft)

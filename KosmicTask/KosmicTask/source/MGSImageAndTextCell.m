@@ -602,7 +602,9 @@ static NSUInteger updatingImagesArrayCount = 0;
 - (void)setObjectValue:(id)object
 {
 	// set super class object
-	if ([object respondsToSelector:@selector(name)]) {
+	if ([object respondsToSelector:@selector(label)]) {
+		[super setObjectValue:[object label]];
+	}else if ([object respondsToSelector:@selector(name)]) {
 		[super setObjectValue:[object name]];
 	} else if ([object respondsToSelector:@selector(value)]) {
 		

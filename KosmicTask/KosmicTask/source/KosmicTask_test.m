@@ -72,5 +72,49 @@
     STAssertFalse([@"192.168.023" mgs_isIPAddress], @"invalid IP");
     STAssertFalse([@"fe80:cabc:c8ff:fea5:d5db" mgs_isIPAddress], @"invalid IP");
     STAssertFalse([@"fe8o:cabc:c8ff:fea5:d5db" mgs_isIPAddress], @"invalid IP");
+    
+    // string methods
+    NSArray *components = @[ @"this", @"is a", @"really trivial sort", @"of", @"example, yes?"];
+    NSArray *invalidComponents = @[ @"this\n", @"\tis a", @"really trivial sort", @"of", @"example, yes?"];
+    
+    NSString *componentTestTarget1 = [NSString stringWithFormat:@"/ %@\n / \t%@ / %@ / %@ / %@ /",
+                                      [components objectAtIndex:0],
+                                      [components objectAtIndex:1],
+                                      [components objectAtIndex:2],
+                                      [components objectAtIndex:3],
+                                      [components objectAtIndex:4]
+                                      ];
+    NSString *componentTestTarget2 = [NSString stringWithFormat:@"/// %@\n / / \t%@ /  // %@ /// %@ / %@ // / /",
+                                      [components objectAtIndex:0],
+                                      [components objectAtIndex:1],
+                                      [components objectAtIndex:2],
+                                      [components objectAtIndex:3],
+                                      [components objectAtIndex:4]
+                                      ];
+    STAssertTrue([[componentTestTarget1 mgs_minimalComponentsSeparatedByString:@"/"] count] == [components count], @"valid components");
+    STAssertTrue([[componentTestTarget2 mgs_minimalComponentsSeparatedByString:@"/"] count] == [components count], @"valid components");
+    STAssertTrue([[componentTestTarget1 mgs_minimalComponentsSeparatedByString:@"/"] isEqualToArray:components], @"valid components");
+    STAssertTrue([[componentTestTarget2 mgs_minimalComponentsSeparatedByString:@"/"] isEqualToArray:components], @"valid components");
+    STAssertFalse([[componentTestTarget2 mgs_minimalComponentsSeparatedByString:@"/"] isEqualToArray:invalidComponents], @"invalid components");
+    STAssertFalse([[componentTestTarget2 mgs_minimalComponentsSeparatedByString:@"/"] isEqualToArray:invalidComponents], @"invalid components");
+}
+
+- (void)testObjCLiteralSyntax
+{
+    NSArray *array = @[ @"Hello", @'Z', @42, @42U, @42L, @42LL, @3.141592654F, @3.1415926535, @YES, @NO, @{ @"yes" : @YES, @"NO" : @NO } ];
+
+    id item = [array objectAtIndex:0];
+
+#if __LP64__
+    item = array[0];    // fails in 32 bit
+#endif
+    
+    NSMutableArray *marray = [NSMutableArray arrayWithObjects: @"Hello", @'Z', @42, @42U, @42L, @42LL, @3.141592654F, @3.1415926535, @YES, @NO, @{ @"yes" : @YES, @"NO" : @NO } , nil];
+    item = [marray objectAtIndex:0];
+    
+#if __LP64__    
+    marray[0] = @"Sayonara";    // fails in 32 bit
+#endif
+    
 }
 @end

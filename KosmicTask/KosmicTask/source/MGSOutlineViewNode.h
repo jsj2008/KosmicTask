@@ -10,6 +10,7 @@
 
 
 @interface MGSOutlineViewNode : NSTreeNode {
+    NSString *_label;
 	BOOL _isDraggable;
 	NSImage *_image;
 	NSInteger _count;
@@ -39,6 +40,7 @@
 - (void)removeChildNodeWithRepresentedObject:(id)object;
 - (void)removeFromParent;
 
+@property (copy) NSString *label;
 @property BOOL isDraggable;
 @property (assign) NSImage *image;
 @property (copy) NSImage *statusImage;
