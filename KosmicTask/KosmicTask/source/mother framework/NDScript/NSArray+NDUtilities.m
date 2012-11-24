@@ -13,7 +13,7 @@
 @private
 	NSArray			* array;
 	NSIndexSet		* indexSet;
-	unsigned int	currentIndex;
+	NSUInteger	currentIndex;
 }
 + (id)enumeratrorWithArray:(NSArray *)anArray indicies:(NSIndexSet *)anIndiciesSet;
 - (id)initWithArray:(NSArray *)anArray indicies:(NSIndexSet *)anIndiciesSet;
@@ -29,7 +29,7 @@
  */
 - (NSArray *)arrayByUsingFunction:(id (*)(id, BOOL *))aFunc
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 							theCount;
 	NSMutableArray		* theResultArray;
 	BOOL					theContinue = YES;
@@ -54,7 +54,7 @@
  */
 - (NSArray *)everyObjectOfKindOfClass:(Class)aClass
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 							theCount;
 	NSMutableArray		* theResultArray;
 
@@ -79,7 +79,7 @@
  */
 - (BOOL)makeObjectsPerformFunction:(BOOL (*)(id))aFunc
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 							theCount = [self count];
 	
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -93,7 +93,7 @@
  */
 - (BOOL)makeObjectsPerformFunction:(BOOL (*)(id, void *))aFunc withContext:(void *)aContext
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 							theCount = [self count];
 
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -107,7 +107,7 @@
  */
 - (BOOL)makeObjectsPerformFunction:(BOOL (*)(id, id))aFunc withObject:(id)anObject
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 							theCount = [self count];
 
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -121,7 +121,7 @@
  */
 - (BOOL)makeObjectsPerformFunction:(BOOL (*)(id))aFunc usingIndicies:(NSIndexSet *)anIndexSet
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 	theCount = [self count];
 	
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -135,7 +135,7 @@
  */
 - (BOOL)makeObjectsPerformFunction:(BOOL (*)(id, id))aFunc withObject:(id)anObject usingIndicies:(NSIndexSet *)anIndexSet
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 	theCount = [self count];
 	
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -149,7 +149,7 @@
  */
 - (BOOL)makeObjectsPerformFunction:(BOOL (*)(id))aFunc usingPredicate:(NSPredicate *)aPredicate
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 	theCount = [self count];
 	
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -167,7 +167,7 @@
  */
 - (BOOL)makeObjectsPerformFunction:(BOOL (*)(id, id))aFunc withObject:(id)anObject usingPredicate:(NSPredicate *)aPredicate
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 	theCount = [self count];
 	
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -185,7 +185,7 @@
 - (id)findObjectWithFunction:(BOOL (*)(id))aFunc
 {
 	id						theFoundObject = nil;
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 							theCount = [self count];
 
 	for( theIndex = 0; theIndex < theCount && theFoundObject == nil; theIndex++ )
@@ -204,7 +204,7 @@
 - (id)findObjectWithFunction:(BOOL (*)(id, void *))aFunc withContext:(void*)aContext
 {
 	id						theFoundObject = nil;
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 		theCount = [self count];
 
 	for( theIndex = 0; theIndex < theCount && theFoundObject == nil; theIndex++ )
@@ -223,7 +223,7 @@
 - (NSArray *)findAllObjectWithFunction:(BOOL (*)(id))aFunc
 {
 	NSMutableArray		* theFoundObjectArray = [NSMutableArray arrayWithCapacity:[self count]];
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 							theCount = [self count];
 	
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -242,7 +242,7 @@
 - (NSArray *)findAllObjectWithFunction:(BOOL (*)(id, void *))aFunc withContext:(void*)aContext
 {
 	NSMutableArray		* theFoundObjectArray = [NSMutableArray arrayWithCapacity:[self count]];
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 		theCount = [self count];
 	
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -258,9 +258,9 @@
 /*
 	- indexOfObjectWithFunction:
  */
-- (unsigned int)indexOfObjectWithFunction:(BOOL (*)(id))aFunc
+- (NSUInteger)indexOfObjectWithFunction:(BOOL (*)(id))aFunc
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 							theFoundIndex = NSNotFound,
 							theCount = [self count];
 	
@@ -276,9 +276,9 @@
 /*
 	- indexOfObjectWithFunction:withContext:
  */
-- (unsigned int)indexOfObjectWithFunction:(BOOL (*)(id, void *))aFunc withContext:(void*)aContext
+- (NSUInteger)indexOfObjectWithFunction:(BOOL (*)(id, void *))aFunc withContext:(void*)aContext
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 	theFoundIndex = NSNotFound,
 							theCount = [self count];
 
@@ -293,7 +293,7 @@
 
 - (void)sendEveryObjectToTarget:(id)aTarget withSelector:(SEL)aSelector
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 							theCount = [self count];
 	
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -302,7 +302,7 @@
 
 - (void)sendEveryObjectToTarget:(id)aTarget withSelector:(SEL)aSelector withObject:(id)anObject
 {
-	unsigned int		theIndex,
+	NSUInteger		theIndex,
 							theCount = [self count];
 	
 	for( theIndex = 0; theIndex < theCount; theIndex++ )
@@ -336,7 +336,7 @@
 - (id)firstObjectReturningYESToSelector:(SEL)aSelector withObject:(id)anObject
 {
 	id		theFoundObject = nil;
-	for( unsigned int theIndex = 0, theCount = [self count]; theIndex < theCount && theFoundObject == nil; theIndex ++ )
+	for( NSUInteger theIndex = 0, theCount = [self count]; theIndex < theCount && theFoundObject == nil; theIndex ++ )
 	{
 		id	theObject = [self objectAtIndex:theIndex];
 		if( [theObject respondsToSelector:aSelector] )
@@ -411,7 +411,7 @@
  */
 - (id)nextObject
 {
-	unsigned int	theCount = [array count];
+	NSUInteger	theCount = [array count];
 	id					theObject = nil;
 	if( currentIndex < theCount && currentIndex != NSNotFound )
 	{

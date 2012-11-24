@@ -421,6 +421,7 @@ char MGSScriptDictContext;
         if (range.length != 0) {
             NSLog(@"Funny found");
         }
+        [self valueForKey:nil];
         
 		// make a group node
         // this will return the top level node if the group name contains path separators

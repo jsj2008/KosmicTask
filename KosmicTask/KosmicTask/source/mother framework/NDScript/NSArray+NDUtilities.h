@@ -156,7 +156,7 @@
 	@param func The function used to test each object.
 	@result The index of the found object or <tt>NSNotFound</tt> if no object found.
  */
-- (unsigned int)indexOfObjectWithFunction:(BOOL (*)(id))func;
+- (NSUInteger)indexOfObjectWithFunction:(BOOL (*)(id))func;
 
 /*!
 	@method indexOfObjectWithFunction:withContext:
@@ -166,7 +166,7 @@
 	@param context A point to some data to be passed to the passed in function.
 	@result The index of the found object or <tt>NSNotFound</tt> if no object found.
  */
-- (unsigned int)indexOfObjectWithFunction:(BOOL (*)(id, void *))func withContext:(void*)context;
+- (NSUInteger)indexOfObjectWithFunction:(BOOL (*)(id, void *))func withContext:(void*)context;
 
 /*!
 	@method sendEveryObjectToTarget:withSelector:

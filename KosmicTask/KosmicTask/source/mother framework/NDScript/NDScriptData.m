@@ -34,13 +34,13 @@ const short	kScriptResourceID = 128;
  * class interface NDScriptContext (Private)
  */
 @interface NDScriptContext (Private)
-+ (OSAID)compileString:(NSString *)string modeFlags:(long)modeFlags scriptID:(OSAID)scriptID componentInstance:(NDComponentInstance *)aComponentInstance;
++ (OSAID)compileString:(NSString *)string modeFlags:(SInt32)modeFlags scriptID:(OSAID)scriptID componentInstance:(NDComponentInstance *)aComponentInstance;
 - (id)initWithScriptID:(OSAID)aScriptDataID parentScriptData:(NDScriptData *)aParentScriptData;
 @end
 
 @interface NDScriptHandler (Private)
 + (OSAID)compileString:(NSString *)aString scriptID:(OSAID)aScriptID componentInstance:(NDComponentInstance *)aComponentInstance;
-+ (OSAID)compileString:(NSString *)aString modeFlags:(long)aModeFlags scriptID:(OSAID)aScriptID componentInstance:(NDComponentInstance *)aComponentInstance;
++ (OSAID)compileString:(NSString *)aString modeFlags:(SInt32)aModeFlags scriptID:(OSAID)aScriptID componentInstance:(NDComponentInstance *)aComponentInstance;
 - (void)setResultScriptDataID:(OSAID)aScriptDataID;
 @end
 
@@ -59,8 +59,8 @@ static BOOL isTypeScriptContext( OSAID aScriptID, ComponentInstance aComponentIn
 static DescType bestType( OSAID aScriptID, ComponentInstance aComponentInstance );
 static BOOL canGetSource( OSAID aScriptID, ComponentInstance aComponentInstance );
 static BOOL hasOpenHandler( OSAID aScriptID, ComponentInstance aComponentInstance ) __unused;
-static OSAID compileString(NSString * aString, long int aModeFlags, OSAID aScriptID, NDComponentInstance * aComp );
-static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptID, NDComponentInstance * aComp );
+static OSAID compileString(NSString * aString, SInt32 aModeFlags, OSAID aScriptID, NDComponentInstance * aComp );
+static OSAID loadScriptData( NSData * aData, SInt32 aModeFlags, OSAID aScriptID, NDComponentInstance * aComp );
 
 /*
  * class implementation NDScriptData
@@ -466,9 +466,9 @@ static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptI
 /*
 	- hash
  */
-- (unsigned int)hash
+- (NSUInteger)hash
 {
-	return (unsigned int)[self instanceRecord] ^ (unsigned int)[self scriptID];
+	return (NSUInteger)[self instanceRecord] ^ (NSUInteger)[self scriptID];
 }
 
 @end
@@ -494,7 +494,7 @@ static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptI
 /*
 	- initWithSource:modeFlags:componentInstance:
  */
-- (id)initWithSource:(NSString *)aSource modeFlags:(long)aModeFlags componentInstance:(NDComponentInstance *)aComponentInstance
+- (id)initWithSource:(NSString *)aSource modeFlags:(SInt32)aModeFlags componentInstance:(NDComponentInstance *)aComponentInstance
 {
 	if(aComponentInstance == nil) {
 		aComponentInstance = [NDComponentInstance sharedComponentInstance];
@@ -852,7 +852,7 @@ static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptI
 /*
 	- executionModeFlags
  */
-- (long int)executionModeFlags
+- (AESendMode)executionModeFlags
 {
 	return executionModeFlags;
 }
@@ -862,7 +862,7 @@ static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptI
 /*
 	- setExecutionModeFlags:mask:
  */
-- (void)setExecutionModeFlags:(long int)aFlags mask:(long int)aMask
+- (void)setExecutionModeFlags:(AESendMode)aFlags mask:(AESendMode)aMask
 {
 	executionModeFlags = (executionModeFlags & ~aMask) | (aFlags & aMask);
 }
@@ -870,7 +870,7 @@ static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptI
 /*
 	- setExecutionModeFlags:
  */
-- (void)setExecutionModeFlags:(long int)aFlags
+- (void)setExecutionModeFlags:(AESendMode)aFlags
 {
 	executionModeFlags = aFlags;
 }
@@ -1533,7 +1533,7 @@ static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptI
 /*
 	- initWithSource:modeFlags:parentScriptData:
  */
-- (id)initWithSource:(NSString *)aSource modeFlags:(long)aModeFlags parentScriptData:(NDScriptData *)aParentData
+- (id)initWithSource:(NSString *)aSource modeFlags:(SInt32)aModeFlags parentScriptData:(NDScriptData *)aParentData
 {
 	return [self initWithScriptID:[[self class] compileString:aSource modeFlags:aModeFlags scriptID:kOSANullScript componentInstance:[aParentData componentInstance]] parentScriptData:aParentData];
 }
@@ -1914,7 +1914,7 @@ static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptI
 /*
 	-  compileString:
  */
-+ (OSAID)compileString:(NSString *)aString modeFlags:(long)aModeFlags scriptID:(OSAID)aScriptID componentInstance:(NDComponentInstance *)aComponentInstance
++ (OSAID)compileString:(NSString *)aString modeFlags:(SInt32)aModeFlags scriptID:(OSAID)aScriptID componentInstance:(NDComponentInstance *)aComponentInstance
 {
 	return compileString( aString, aModeFlags & ~(kOSAModeAugmentContext|kOSAModeCompileIntoContext), aScriptID, aComponentInstance );
 }
@@ -1943,7 +1943,7 @@ static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptI
 /*
 	+ compileString:modeFlags:scriptID:
  */
-+ (OSAID)compileString:(NSString *)aString modeFlags:(long)aModeFlags scriptID:(OSAID)aScriptID componentInstance:(NDComponentInstance *)aComponentInstance
++ (OSAID)compileString:(NSString *)aString modeFlags:(SInt32)aModeFlags scriptID:(OSAID)aScriptID componentInstance:(NDComponentInstance *)aComponentInstance
 {
 	return compileString( aString, aModeFlags | kOSAModeCompileIntoContext, aScriptID, aComponentInstance );
 }
@@ -1996,7 +1996,7 @@ static DescType bestType( OSAID aScriptID, ComponentInstance aComponentInstance 
 {
 	long int		theResult;
 	return NDLogOSAError( OSAGetScriptInfo( aComponentInstance, aScriptID, kOSAScriptBestType, &theResult))
-		? theResult
+		? (DescType)theResult
 			: typeWildCard;
 }
 
@@ -2021,7 +2021,7 @@ static BOOL hasOpenHandler( OSAID aScriptID, ComponentInstance aComponentInstanc
 /*
  *	compileString()
  */
-static OSAID compileString( NSString * aString, long int aModeFlags, OSAID aScriptID, NDComponentInstance * aComp )
+static OSAID compileString( NSString * aString, SInt32 aModeFlags, OSAID aScriptID, NDComponentInstance * aComp )
 {
 	NSAppleEventDescriptor		* theStringDesc;
 
@@ -2036,7 +2036,7 @@ static OSAID compileString( NSString * aString, long int aModeFlags, OSAID aScri
 /*
  *	loadScriptData()
  */
-static OSAID loadScriptData( NSData * aData, long int aModeFlags, OSAID aScriptID, NDComponentInstance * aComp )
+static OSAID loadScriptData( NSData * aData, SInt32 aModeFlags, OSAID aScriptID, NDComponentInstance * aComp )
 {	
 	#pragma unused(aModeFlags)
 	

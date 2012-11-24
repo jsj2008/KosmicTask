@@ -95,9 +95,9 @@
 /*
 	- indexOfCharacter:range:
  */
-- (unsigned int)indexOfCharacter:(unichar)aCharacter range:(NSRange)aRange
+- (NSUInteger)indexOfCharacter:(unichar)aCharacter range:(NSRange)aRange
 {
-	unsigned int	theIndex,
+	NSUInteger	theIndex,
 						theCount = [self length],
 						theFoundIndex = NSNotFound;
 
@@ -116,7 +116,7 @@
 /*
 	- indexOfCharacter:
  */
-- (unsigned int)indexOfCharacter:(unichar)aCharacter
+- (NSUInteger)indexOfCharacter:(unichar)aCharacter
 {
 	return [self indexOfCharacter:aCharacter range:NSMakeRange( 0, [self length] )];
 }
@@ -221,7 +221,7 @@
 - (NSRange)rangeOfStringEnclosedIn:(NSString *)aStartString and:(NSString *)anEndString includeEncloseString:(BOOL)anIncludeEnclose mode:(int)aMode
 {
 	NSRange		theRange = NSMakeRange( UINT_MAX, UINT_MAX );
-	unsigned int	theLenOfStart = [aStartString length],
+	NSUInteger	theLenOfStart = [aStartString length],
 						theLenOfEnd = [anEndString length];
 	
 	switch( aMode )
@@ -251,7 +251,7 @@
 + (NSString *)stringFromDictionary:(NSDictionary *)aDictionary withFormat:(NSString *)aFormat, ...
 {
 	NSString		*theResult = nil;
-	va_list			theArgument = NULL;
+	va_list			theArgument;
 	va_start( theArgument, aFormat );
 	theResult = [NSString stringFromDictionary:aDictionary withFormat:aFormat arguments:theArgument];
 	va_end( theArgument );
@@ -283,17 +283,17 @@
 	return theResult;
 }
 
-- (unsigned int)indexOfCharacater:(unichar)aChar
+- (NSUInteger)indexOfCharacater:(unichar)aChar
 {
 	return [self indexOfCharacater:(unichar)aChar options:0 range:NSMakeRange(0, [self length])];
 }
 
-- (unsigned int)indexOfCharacater:(unichar)aChar options:(NSStringCompareOptions)anOptions
+- (NSUInteger)indexOfCharacater:(unichar)aChar options:(NSStringCompareOptions)anOptions
 {
 	return [self indexOfCharacater:(unichar)aChar options:anOptions range:NSMakeRange(0, [self length])];
 }
 
-- (unsigned int)indexOfCharacater:(unichar)aChar options:(NSStringCompareOptions)anOptions range:(NSRange)aRange
+- (NSUInteger)indexOfCharacater:(unichar)aChar options:(NSStringCompareOptions)anOptions range:(NSRange)aRange
 {
 	return [self rangeOfString:[NSString stringWithCharacters:&aChar length:1] options:anOptions range:aRange].location;
 }
@@ -304,7 +304,7 @@
 - (NSArray *)componentsSeparatedByString:(NSString *)aSeparator withOpeningQuote:(NSString *)aOpeningQuote closingQuote:(NSString *)aClosingQuote singleQuote:(NSString *)aSingleQuote includeEmptyComponents:(BOOL)aFlag
 {
 	NSMutableArray		* theComponentArray = [NSMutableArray array];
-	unsigned int		theTokenEnd = 0,
+	NSUInteger		theTokenEnd = 0,
 						theLength = [self length],
 						theSeperatorLen = [aSeparator length],
 						theSingleQuoteLen = [aSingleQuote length],

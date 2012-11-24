@@ -6401,7 +6401,6 @@
 				AB777ED1130C7087000973D4 /* Git submodule projects - do not edit directly */,
 				AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */,
 				AB92318511A695E70093EDE3 /* KosmicTask Quick Look Plugin.xcodeproj */,
-				ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */,
 				ABCF25AE0EE0A66F00FC0364 /* KosmicTask MDImporter.xcodeproj */,
 				AB86986814D73A830002F88E /* Google toolbox for mac */,
 				AB4F64FD10C99DF100229E4E /* Shared Source */,
@@ -7468,6 +7467,7 @@
 		AB69B66D130EAA8E00171D4F /* Git repo is local */ = {
 			isa = PBXGroup;
 			children = (
+				ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */,
 				ABD056161325267000A728B8 /* lua.xcodeproj */,
 				AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */,
 				AB72CE370E703C5500E6711C /* Port Map.xcodeproj */,
@@ -16318,6 +16318,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -16340,6 +16341,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -17029,7 +17031,6 @@
 				SEPARATE_STRIP = NO;
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
-				VALID_ARCHS = i386;
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"-Wformat",
@@ -17080,7 +17081,6 @@
 				SEPARATE_STRIP = YES;
 				SKIP_INSTALL = NO;
 				STRIPFLAGS = "-x";
-				VALID_ARCHS = i386;
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"-Wformat",

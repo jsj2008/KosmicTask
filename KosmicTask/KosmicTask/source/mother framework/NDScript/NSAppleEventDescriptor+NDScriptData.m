@@ -126,7 +126,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 + (NSAppleEventDescriptor *)aliasListDescriptorWithArray:(NSArray *)anArray
 {
 	NSAppleEventDescriptor	* theEventList = nil;
-	unsigned int				theIndex,
+	NSUInteger				theIndex,
 									theNumOfParam;
 
 	theNumOfParam = [anArray count];
@@ -154,7 +154,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
  */
 + (NSAppleEventDescriptor *)descriptorWithURL:(NSURL *)aURL
 {
-	return [self descriptorWithDescriptorType:typeFileURL data:[NSData dataWithBytes:(void *)aURL length:sizeof(NSURL)]];
+	return [self descriptorWithDescriptorType:typeFileURL data:[NSData dataWithBytes:(void *)aURL length:sizeof(void *)]];
 }
 
 /*
@@ -209,7 +209,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
  */
 + (NSAppleEventDescriptor *)descriptorWithShort:(short int)aValue
 {
-	return [self descriptorWithDescriptorType:typeShortInteger data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
+	return [self descriptorWithDescriptorType:typeSInt16 data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
 }
 // typeLongInteger
 /*
@@ -217,7 +217,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
  */
 + (NSAppleEventDescriptor *)descriptorWithLong:(long int)aValue
 {
-	return [self descriptorWithDescriptorType:typeLongInteger data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
+	return [self descriptorWithDescriptorType:typeSInt32 data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
 }
 // typeInteger
 /*
@@ -225,7 +225,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
  */
 + (NSAppleEventDescriptor *)descriptorWithInt:(int)aValue
 {
-	return [self descriptorWithDescriptorType:typeInteger data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
+	return [self descriptorWithDescriptorType:typeSInt32 data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
 }
 // typeShortFloat
 /*
@@ -233,7 +233,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
  */
 + (NSAppleEventDescriptor *)descriptorWithFloat:(float)aValue
 {
-	return [self descriptorWithDescriptorType:typeShortFloat data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
+	return [self descriptorWithDescriptorType:typeIEEE32BitFloatingPoint data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
 }
 // typeLongFloat
 /*
@@ -241,7 +241,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
  */
 + (NSAppleEventDescriptor *)descriptorWithDouble:(double)aValue
 {
-	return [self descriptorWithDescriptorType:typeLongFloat data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
+	return [self descriptorWithDescriptorType:typeIEEE64BitFloatingPoint data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
 }
 // typeMagnitude
 /*
@@ -249,7 +249,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
  */
 + (NSAppleEventDescriptor *)descriptorWithUnsignedInt:(unsigned int)aValue
 {
-	return [self descriptorWithDescriptorType:typeMagnitude data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
+	return [self descriptorWithDescriptorType:typeUInt32 data:[NSData dataWithBytes:&aValue length: sizeof(aValue)]];
 }
 
 /*
@@ -408,7 +408,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 	else if( strcmp( theObjCType, @encode( NSRange ) ) )
 	{
 		NSRange		theRange = [aValue rangeValue];
-		theDescriptor = [NSAppleEventDescriptor listDescriptorWithObjects:[NSNumber numberWithUnsignedInt:theRange.location], [NSNumber numberWithUnsignedInt:theRange.location + theRange.length], nil];
+		theDescriptor = [NSAppleEventDescriptor listDescriptorWithObjects:[NSNumber numberWithUnsignedInteger:theRange.location], [NSNumber numberWithUnsignedInteger:theRange.location + theRange.length], nil];
 	}
 #if 0
 	else if( strcmp( theObjCType, @encode( NSRange ) ) == 0 )
@@ -548,7 +548,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 + (NSAppleEventDescriptor *)descriptorWithArray:(NSArray *)anArray
 {
 	NSAppleEventDescriptor	* theEventList = nil;
-	unsigned int				theIndex,
+	NSUInteger				theIndex,
 									theNumOfParam;
 
 	theNumOfParam = [anArray count];
@@ -622,7 +622,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 	NSAppleEventDescriptor	* theRecordDescriptor = [self recordDescriptor],
 							* theUserRecordDesc = nil;
 	NSArray					* theKeyArray = [aDictionary allKeys];
-	unsigned int			theIndex = 0,
+	NSUInteger			theIndex = 0,
 							theUserRecordCount = 1,
 							theCount = [theKeyArray count];
 	Class					theValueClass = [NSValue class];
@@ -774,7 +774,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
  */
 - (NSArray *)arrayValue
 {
-	SInt32						theNumOfItems,
+	NSInteger						theNumOfItems,
 									theIndex;
 	NSAppleEventDescriptor	* theDescriptor;
 	NSMutableArray				* theArray;
@@ -798,7 +798,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
  */
 -(NSDictionary *)dictionaryValue
 {
-	unsigned int				theIndex,
+	NSUInteger				theIndex,
 									theNumOfItems = [self numberOfItems];
 	NSMutableDictionary		*theDictionary = [NSMutableDictionary dictionaryWithCapacity:theNumOfItems];
 
@@ -823,7 +823,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 
 - (NSDictionary *)dictionaryValueFromUserRecordDescriptor
 {
-	unsigned int				theIndex,
+	NSUInteger				theIndex,
 									theNumOfItems = [self numberOfItems];
 	NSMutableDictionary		* theDictionary = theNumOfItems
 		? [NSMutableDictionary dictionaryWithCapacity:theNumOfItems/2]
@@ -983,11 +983,15 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 	switch([self descriptorType])
 	{
 		case typeBoolean:						//	Boolean value
-		case typeShortInteger:				//	16-bit integer
-		case typeLongInteger:				//	32-bit integer
-		case typeShortFloat:					//	SANE single
-		case typeFloat:						//	SANE double
-		case typeMagnitude:					//	unsigned 32-bit integer
+		case typeSInt16:				//	16-bit integer
+		case typeUInt16:				//	unsigned 16-bit integer
+		case typeSInt32:				//	32-bit integer
+		case typeUInt32:					//	unsigned 32-bit integer
+        case typeSInt64:
+        case typeUInt64:
+		case typeIEEE32BitFloatingPoint:					//	SANE single
+		case typeIEEE64BitFloatingPoint:						//	SANE double
+        case type128BitFloatingPoint:
 		case typeTrue:							//	TRUE Boolean value
 		case typeFalse:						//	FALSE Boolean value
 			theValue = [self numberValue];
@@ -998,7 +1002,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 			Size			theActualSize;
 			short int	theStart,
 							theEnd;
-			if( AEGetParamPtr([self aeDesc], keyOSASourceStart, typeShortInteger, &theTypeCode, (void*)&theStart, sizeof(short int), &theActualSize ) == noErr && AEGetParamPtr([self aeDesc], keyOSASourceEnd, typeShortInteger, &theTypeCode, (void*)&theEnd, sizeof(short int), &theActualSize ) == noErr )
+			if( AEGetParamPtr([self aeDesc], keyOSASourceStart, typeSInt16, &theTypeCode, (void*)&theStart, sizeof(short int), &theActualSize ) == noErr && AEGetParamPtr([self aeDesc], keyOSASourceEnd, typeSInt32, &theTypeCode, (void*)&theEnd, sizeof(short int), &theActualSize ) == noErr )
 			{
 				theValue = [NSValue valueWithRange:NSMakeRange( theStart, theEnd - theStart )];
 			}
@@ -1010,7 +1014,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 			Size			theActualSize;
 			short int	theStart,
 							theEnd;
-			if( AEGetParamPtr ([self aeDesc], keyAERangeStart, typeShortInteger, &theTypeCode, (void*)&theStart, sizeof(short int), &theActualSize ) == noErr && AEGetParamPtr ([self aeDesc], keyAERangeStop, typeShortInteger, &theTypeCode, (void*)&theEnd, sizeof(short int), &theActualSize ) == noErr )
+			if( AEGetParamPtr ([self aeDesc], keyAERangeStart, typeSInt16, &theTypeCode, (void*)&theStart, sizeof(short int), &theActualSize ) == noErr && AEGetParamPtr ([self aeDesc], keyAERangeStop, typeSInt32, &theTypeCode, (void*)&theEnd, sizeof(short int), &theActualSize ) == noErr )
 			{
 				theValue = [NSValue valueWithRange:NSMakeRange( theStart, theEnd - theStart )];
 			}
@@ -1039,10 +1043,10 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 		case typeBoolean:						//	Boolean value
 			theNumber = [NSNumber numberWithBool:[self booleanValue]];
 			break;
-		case typeShortInteger:				//	16-bit integer
+		case typeSInt16:				//	16-bit integer
 			theNumber = [NSNumber numberWithShort: [self int32Value]];
 			break;
-		case typeLongInteger:				//	32-bit integer
+		case typeSInt32:				//	32-bit integer
 //		case typeInteger:							//	32-bit integer
 		{
 			int		theInteger;
@@ -1050,11 +1054,11 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 				theNumber = [NSNumber numberWithInt: theInteger];
 			break;
 		}
-		case typeShortFloat:					//	SANE single
+		case typeIEEE32BitFloatingPoint:					//	SANE single
 //		case typeSMFloat:							//	SANE single
 			theNumber = [NSNumber numberWithFloat:[self floatValue]];
 			break;
-		case typeFloat:						//	SANE double
+		case typeIEEE64BitFloatingPoint:						//	SANE double
 //		case typeLongFloat:						//	SANE double
 			theNumber = [NSNumber numberWithDouble:[self doubleValue]];
 			break;
@@ -1062,7 +1066,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 //			break;
 //		case typeComp:							//	SANE comp
 //			break;
-		case typeMagnitude:					//	unsigned 32-bit integer
+		case typeUInt32:					//	unsigned 32-bit integer
 		case typeProperty:
 			theNumber = [NSNumber numberWithUnsignedLong:[self unsignedIntValue]];
 			break;
@@ -1098,18 +1102,16 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 	
 	switch(theDescType)
 	{
+		case typeSInt16:				//	16-bit integer
+		case typeUInt16:				//	16-bit integer
+		case typeSInt32:							//	32-bit integer
+		case typeUInt32:					//	unsigned 32-bit integer
+		case typeSInt64:							//	64-bit integer
+		case typeUInt64:					//	unsigned 64-bit integer
+		case typeIEEE32BitFloatingPoint:					//	SANE single
+		case typeIEEE64BitFloatingPoint:						//	SANE double
+        case type128BitFloatingPoint:
 		case typeBoolean:						//	1-byte Boolean value
-		case typeShortInteger:				//	16-bit integer
-//		case typeSMInt:							//	16-bit integer
-		case typeLongInteger:				//	32-bit integer
-//		case typeInteger:							//	32-bit integer
-		case typeShortFloat:					//	SANE single
-//		case typeSMFloat:							//	SANE single
-		case typeFloat:						//	SANE double
- //		case typeLongFloat:						//	SANE double
-//		case typeExtended:						//	SANE extended
-//		case typeComp:							//	SANE comp
-		case typeMagnitude:					//	unsigned 32-bit integer
 		case typeTrue:							//	TRUE Boolean value
 		case typeFalse:						//	FALSE Boolean value
 		case typeProperty:
@@ -1381,7 +1383,7 @@ static NSScriptObjectSpecifier * objectSpecifierForAppleEventDescriptor( NSApple
 /*
 	- sendWithSendMode:sendPriority:timeOutInTicks:idleProc:filterProc:
  */
-- (NSAppleEventDescriptor *)sendWithSendMode:(AESendMode)aSendMode sendPriority:(AESendPriority)aSendPriority timeOutInTicks:(long)aTimeOutInTicks idleProc:(AEIdleUPP)anIdleProc filterProc:(AEFilterUPP)aFilterProc
+- (NSAppleEventDescriptor *)sendWithSendMode:(AESendMode)aSendMode sendPriority:(AESendPriority)aSendPriority timeOutInTicks:(SInt32)aTimeOutInTicks idleProc:(AEIdleUPP)anIdleProc filterProc:(AEFilterUPP)aFilterProc
 {
 	AEDesc	theResult = { typeNull, NULL };
 	NDLogOSStatus( AESend( [self aeDesc], &theResult, aSendMode, aSendPriority, aTimeOutInTicks, anIdleProc, aFilterProc ) );
@@ -1461,7 +1463,7 @@ static BOOL aeDescForObjectSpecifier( AEDesc * aDesc, NSScriptObjectSpecifier * 
 		if( theContainerSpecifier == nil || NDLogFalse(aeDescForObjectSpecifier( &theContainerDesc, theContainerSpecifier  ) ) )
 		{
 			long int		theIndex = [aSpecifier index]+1;
-			if( NDLogOSStatus( AECreateDesc( typeLongInteger, &theIndex, sizeof( theIndex ), &theKeyData ) ) )
+			if( NDLogOSStatus( AECreateDesc( typeSInt32, &theIndex, sizeof( theIndex ), &theKeyData ) ) )
 			{
 				DescType		theKeyDesc = [theContainerClassDesc appleEventCodeForKey:[aSpecifier key]];
 				theResult = NDLogOSStatus( CreateObjSpecifier( theKeyDesc, &theContainerDesc, formAbsolutePosition, &theKeyData, NO, aDesc) );
@@ -1496,7 +1498,7 @@ static BOOL aeDescForObjectSpecifier( AEDesc * aDesc, NSScriptObjectSpecifier * 
 		if( theContainerSpecifier == nil || NDLogFalse(aeDescForObjectSpecifier( &theContainerDesc, theContainerSpecifier  ) ) )
 		{
 			NSString			* theName = [aSpecifier name];
-			unsigned int		theLength = [theName length];
+			NSUInteger		theLength = [theName length];
 			unichar				* theCharacters = malloc( theLength * sizeof(unichar) );
 			[theName getCharacters:theCharacters];
 			if( NDLogOSStatus( AECreateDesc( typeUnicodeText, theCharacters, theLength, &theKeyData ) ) )
@@ -1598,7 +1600,7 @@ static BOOL aeDescForObjectSpecifier( AEDesc * aDesc, NSScriptObjectSpecifier * 
 				id		theIdentifier = [aSpecifier uniqueID];
 				if( [theIdentifier isKindOfClass:[NSString class]] )
 				{
-					unsigned int		theLength = [(NSString*)theIdentifier length];
+					NSUInteger		theLength = [(NSString*)theIdentifier length];
 					unichar				* theCharacters = malloc( theLength * sizeof(unichar) );
 					[theIdentifier getCharacters:theCharacters];
 					if( NDLogOSStatus( AECreateDesc( typeUnicodeText, theCharacters, theLength, &theKeyData ) ) )
@@ -1610,7 +1612,7 @@ static BOOL aeDescForObjectSpecifier( AEDesc * aDesc, NSScriptObjectSpecifier * 
 				else if( [theIdentifier isKindOfClass:[NSNumber class]] )
 				{
 					long int	theIndex = [(NSNumber*)theIdentifier unsignedIntValue];
-					if( NDLogOSStatus( AECreateDesc( typeLongInteger, &theIndex, sizeof( theIndex ), &theKeyData ) ) )
+					if( NDLogOSStatus( AECreateDesc( typeSInt32, &theIndex, sizeof( theIndex ), &theKeyData ) ) )
 					{
 						theResult = NDLogOSStatus( CreateObjSpecifier( [[aSpecifier keyClassDescription] appleEventCode], &theContainerDesc, formAbsolutePosition, &theKeyData, NO, aDesc) );
 						AEDisposeDesc(&theKeyData);

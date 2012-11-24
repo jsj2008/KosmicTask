@@ -296,7 +296,7 @@ extern const short		kScriptResourceID;
 	@param componentInstance The component instance to use, a value of <tt>nil</tt> to use the default AppleScript context.
 	@result A initialized <tt>NDScriptHandler</tt>, or <tt>nil</tt> of initialization fails.
 */
-- (id)initWithSource:(NSString *)source modeFlags:(long)modeFlags componentInstance:(NDComponentInstance *)componentInstance;
+- (id)initWithSource:(NSString *)source modeFlags:(SInt32)modeFlags componentInstance:(NDComponentInstance *)componentInstance;
 
 /*!
 	@method source
@@ -332,7 +332,7 @@ extern const short		kScriptResourceID;
 {
 @protected
 	NDScriptData		* parentScriptData;
-	long int				executionModeFlags;
+	AESendMode				executionModeFlags;
 }
 
 /*!
@@ -473,7 +473,7 @@ extern const short		kScriptResourceID;
 	 </dl>
 	@result The execution mode flags.
 */
-- (long int)executionModeFlags;
+- (AESendMode)executionModeFlags;
 
 /*!
 	@method setExecutionModeFlags:mask:
@@ -496,7 +496,7 @@ extern const short		kScriptResourceID;
 	@param flags The execution mode flags or'ed together
 	@param mask A mask of the execution mode flags to change.
 */
-- (void)setExecutionModeFlags:(long int)flags mask:(long int)mask;
+- (void)setExecutionModeFlags:(AESendMode)flags mask:(AESendMode)mask;
 
 /*!
 	@method setExecutionModeFlags:
@@ -518,7 +518,7 @@ extern const short		kScriptResourceID;
 	 </dl>
 	@param flags The execution mode flags or'ed together
 */
-- (void)setExecutionModeFlags:(long int)flags;
+- (void)setExecutionModeFlags:(AESendMode)flags;
 
 /*!
 	@method appleEventTarget
@@ -1034,7 +1034,7 @@ extern const short		kScriptResourceID;
 	@param parentData <#disc#>
 	@result A initialized <tt>NDScriptContext</tt>, or <tt>nil</tt> of initialization fails.
  */
-- (id)initWithSource:(NSString *)source modeFlags:(long)modeFlags parentScriptData:(NDScriptData *)parentData;
+- (id)initWithSource:(NSString *)source modeFlags:(SInt32)modeFlags parentScriptData:(NDScriptData *)parentData;
 
 /*!
 	@method initWithSource:parentScriptData:

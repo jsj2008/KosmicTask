@@ -1275,7 +1275,7 @@ extern NSString		* NDAppleEventDescriptorCoercionError,
 	</dl>
 	@result The reply Apple event from the server application, if you specified the kAEWaitReply flag in the sendMode parameter. If you specify the kAEQueueReply flag in the sendMode parameter, you receive the reply Apple event in your event queue. If you specify kAENoReply flag, the reply Apple event is a null descriptor record.
  */
-- (NSAppleEventDescriptor *)sendWithSendMode:(AESendMode)sendMode sendPriority:(AESendPriority)sendPriority timeOutInTicks:(long)timeOutInTicks idleProc:(AEIdleUPP)idleProc filterProc:(AEFilterUPP)filterProc;
+- (NSAppleEventDescriptor *)sendWithSendMode:(AESendMode)sendMode sendPriority:(AESendPriority)sendPriority timeOutInTicks:(SInt32)timeOutInTicks idleProc:(AEIdleUPP)idleProc filterProc:(AEFilterUPP)filterProc;
 
 /*!
 	@method send

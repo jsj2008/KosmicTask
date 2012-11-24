@@ -30,7 +30,7 @@
 	@param filterProc A universal procedure pointer to a function that determines which incoming Apple events should be received while the handler waits for a reply or a return receipt. If your application doesn&rsquo;t need to filter Apple events, you can pass a value of <tt>NULL</tt> for this parameter. If you do so, no application-oriented Apple events are processed while waiting. For more information on the filter function, see <tt>AEFilterProcPtr</tt>.
 	@result A <tt>NSAppleEventDescriptor</tt> contain the result.
  */
-- (NSAppleEventDescriptor *)sendAppleEvent:(NSAppleEventDescriptor *)appleEventDescriptor sendMode:(AESendMode)sendMode sendPriority:(AESendPriority)sendPriority timeOutInTicks:(long)timeOutInTicks idleProc:(AEIdleUPP)idleProc filterProc:(AEFilterUPP)filterProc;
+- (NSAppleEventDescriptor *)sendAppleEvent:(NSAppleEventDescriptor *)appleEventDescriptor sendMode:(AESendMode)sendMode sendPriority:(AESendPriority)sendPriority timeOutInTicks:(SInt32)timeOutInTicks idleProc:(AEIdleUPP)idleProc filterProc:(AEFilterUPP)filterProc;
 @end
 
 /*!
