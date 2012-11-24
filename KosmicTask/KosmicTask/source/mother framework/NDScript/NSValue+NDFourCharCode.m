@@ -79,10 +79,11 @@
  */
 - (FourCharCode)fourCharCode
 {
+#warning check this is function for for 32/64 bit compatability
 	FourCharCode		theValue = 0;
 	const char			* theObjCType = [self objCType];
 	if( sizeof(FourCharCode) <= sizeof(unsigned long) && strcmp(theObjCType, @encode(unsigned long)) == 0 )
-		theValue = (FourCharCode)[(id)self unsignedLongValue];
+		theValue = (FourCharCode)[(id)self unsignedLongValue]; 
 	else if( sizeof(FourCharCode) <= sizeof(long) && strcmp(theObjCType, @encode(long)) == 0 )
 		theValue = (FourCharCode)[(id)self longValue];
 	else if( sizeof(FourCharCode) <= sizeof(unsigned int) && strcmp(theObjCType, @encode(unsigned int)) == 0 )
