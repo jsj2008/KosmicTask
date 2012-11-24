@@ -240,7 +240,7 @@ static NSUInteger _logFilePosition = 0;
 			
 			// truncate entry if too long
 			if ([logEntry length] > _MLogMaxEntryLength) {
-				NSString *suffix = [NSString stringWithFormat:@"this entry truncated: from %u to %u bytes", [logEntry length], _MLogMaxEntryLength];
+				NSString *suffix = [NSString stringWithFormat:@"this entry truncated: from %lu to %lu bytes", (long)[logEntry length], (long)_MLogMaxEntryLength];
 				NSString *entryStart = [logEntry substringToIndex:_MLogMaxEntryLength/2];
 				NSString *entryEnd = [logEntry substringFromIndex:[logEntry length] - _MLogMaxEntryLength/2];
 				logEntry = [NSString stringWithFormat: @"%@\n\n *** entry data omitted here *** \n\n%@\n*** %@\n", entryStart, entryEnd, suffix];
@@ -327,7 +327,7 @@ static NSUInteger _logFilePosition = 0;
 	NSUInteger fileSize = [fileSizeNum unsignedIntegerValue];
 	
 	if (location > fileSize) {
-		logPrefix = [NSString stringWithFormat: @"*** Log file size appears to be incorrect. Location = %u Filesize = %u ***\n", location, fileSize];
+		logPrefix = [NSString stringWithFormat: @"*** Log file size appears to be incorrect. Location = %lu Filesize = %lu ***\n", (unsigned long)location, (unsigned long)fileSize];
 	}
 	
 	// open file

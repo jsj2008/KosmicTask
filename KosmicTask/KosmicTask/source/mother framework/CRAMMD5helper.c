@@ -66,7 +66,7 @@ void CalcMD5( const char *inChallenge, long inChallengeLen, const char *inPasswo
 		CC_MD5_CTX      tempContext;
 		
 		CC_MD5_Init( &tempContext );
-		CC_MD5_Update( &tempContext, inPassword, inPasswordLen );
+		CC_MD5_Update( &tempContext, inPassword, (CC_LONG)inPasswordLen );
 		CC_MD5_Final( pTempKey, &tempContext );
 		
 		inPassword = (const char *)pTempKey;
@@ -87,7 +87,7 @@ void CalcMD5( const char *inChallenge, long inChallengeLen, const char *inPasswo
 	// perform the inner MD5
 	CC_MD5_Init( &md5Context );
 	CC_MD5_Update( &md5Context, pInnerPad, 64 );
-	CC_MD5_Update( &md5Context, inChallenge, inChallengeLen );
+	CC_MD5_Update( &md5Context, inChallenge, (CC_LONG)inChallengeLen );
 	CC_MD5_Final( outDigest, &md5Context );
 
 	// perform the outer MD5

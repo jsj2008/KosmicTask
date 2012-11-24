@@ -9,12 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSDictionary.h"
 
-typedef enum _MGSScriptParameterRepresentation {
+enum _MGSScriptParameterRepresentation {
 	MGSScriptParameterRepresentationUndefined = 0,		// undefined representation
 	MGSScriptParameterRepresentationStandard = 1,		// standard representation
 	MGSScriptParameterRepresentationExecute = 2,			// execute representation 
-} MGSScriptParameterRepresentation;
-
+};
+typedef NSInteger MGSScriptParameterRepresentation;
 
 @interface MGSScriptParameter : MGSDictionary {
 	BOOL _modelDataModified;

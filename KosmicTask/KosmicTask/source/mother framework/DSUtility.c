@@ -68,7 +68,7 @@ tDirStatus OpenSearchNode( tDirReference inDSRef, tDirNodeReference *outNodeRef 
 	tDataListPtr		pSearchNode		= NULL;
 	tDirStatus			dsStatus;
 	tContextData		dsContext		= 0;
-	unsigned long		ulReturnCount	= 0;
+	UInt32              ulReturnCount	= 0;
 
 	// verify none of the parameters are NULL, if so return an eDSNullParameter
 	if( outNodeRef == NULL || inDSRef == 0 ) {
@@ -125,8 +125,8 @@ tDirStatus LocateUserRecordNameAndNode( tDirReference inDSRef, tDirNodeReference
 	tDataListPtr	pRecTypeList	= NULL;
 	tDataListPtr	pRecNameList	= NULL;
 	tDataBufferPtr	pSearchBuffer	= NULL;
-	unsigned long	ulRecCount		= 0;	// do not limit the number of records we are expecting
-	unsigned long	ulBufferSize	= 2048;	// start with a 2k buffer for any data
+	UInt32          ulRecCount		= 0;	// do not limit the number of records we are expecting
+	UInt32          ulBufferSize	= 2048;	// start with a 2k buffer for any data
 	
 	// ensure none of the parameters are NULL
 	if( inDSRef == 0 || inSearchNode == 0 || inUsername == NULL || outRecordName == NULL || outNodeName == NULL ) {
@@ -331,7 +331,7 @@ tDirStatus DoPasswordAuth( tDirReference inDSRef, tDirNodeReference inNodeRef, c
 		}
 
 		// allocate a buffer large enough to hold all the username and password plus length bytes
-		pAuthStepData = dsDataBufferAllocate( inDSRef, 4 + strlen(inRecordName) + 4 + strlen(inPassword) );
+		pAuthStepData = dsDataBufferAllocate( inDSRef, (UInt32)(4 + strlen(inRecordName) + 4 + strlen(inPassword)) );
 		if( pAuthStepData == NULL ) {
 			dsStatus = eMemoryAllocError;
 			goto cleanup;
@@ -393,7 +393,7 @@ int printDirNodeInfo( tDirReference inDSRef, tDirNodeReference inNodeRef)
 {
 	tDataList attributeTypes;
 	tDataBufferPtr dataBuffer;
-	unsigned long k;
+	UInt32 k;
 	tAttributeListRef attrListRef;
 	tContextData context;
 	tAttributeValueListRef valueList;
@@ -465,7 +465,7 @@ tDirStatus DoChallengeResponseAuth( tDirReference inDSRef, tDirNodeReference inN
 		}
 		
 		// allocate a buffer large enough to hold all the username and password plus length bytes
-		pAuthStepData = dsDataBufferAllocate( inDSRef, 4 + strlen(inRecordName) + 4 + inChallengeLen + 4 + inResponseLen );
+		pAuthStepData = dsDataBufferAllocate( inDSRef, (UInt32)(4 + strlen(inRecordName) + 4 + inChallengeLen + 4 + inResponseLen) );
 		if( pAuthStepData == NULL ) {
 			dsStatus = eMemoryAllocError;
 			goto cleanup;

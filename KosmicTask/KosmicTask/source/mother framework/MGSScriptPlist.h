@@ -8,11 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum _MGSScriptUserModeInteraction {
+enum _MGSScriptUserModeInteraction {
 	kMGSScriptUserModeCanInteractIfLocal    = 0,	
 	kMGSScriptUserModeCanInteract           = 1,
 	kMGSScriptUserModeNeverInteract         = 2,
-} MGSScriptUserModeInteraction;
+};
+typedef NSInteger MGSScriptUserModeInteraction;
 
 extern NSString *MGSScriptIdentifier;
 extern NSString *MGSScriptPlistExt;

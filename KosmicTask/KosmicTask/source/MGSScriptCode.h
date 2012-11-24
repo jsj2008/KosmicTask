@@ -9,12 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSDictionary.h"
 
-typedef enum _MGSScriptCodeRepresentation {
+enum _MGSScriptCodeRepresentation {
 	MGSScriptCodeRepresentationUndefined = 0,		// undefined representation
 	MGSScriptCodeRepresentationStandard = 1,		// standard representation
 	MGSScriptCodeRepresentationBuild = 2,			// build representation 
 	MGSScriptCodeRepresentationSave = 3,
-} MGSScriptCodeRepresentation;
+};
+typedef NSInteger MGSScriptCodeRepresentation;
 
 @interface MGSScriptCode : MGSDictionary {
     NSAttributedString *_attributedSourceFromBuild;

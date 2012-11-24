@@ -48,7 +48,7 @@
     mem = BIO_push(b64, mem);
     
     // Encode all the data
-    BIO_write(mem, [self bytes], [self length]);
+    BIO_write(mem, [self bytes], (int)[self length]);
     (void)BIO_flush(mem);
     
     // Create a new string from the data in the memory buffer

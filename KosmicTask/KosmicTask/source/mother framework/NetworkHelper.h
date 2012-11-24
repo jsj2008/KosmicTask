@@ -67,7 +67,7 @@ int ReadToken( int iSocket, char **outData );
 	@abstract   Simple routine for sending a token on the network
 	@result     Number of bytes in token
 */
-int SendToken( int iSocket, char *inData, long inBytesToWrite );
+int SendToken( int iSocket, char *inData, int inBytesToWrite );
 
 /*!
     @function	BindSocket

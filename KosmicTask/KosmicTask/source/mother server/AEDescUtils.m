@@ -79,7 +79,7 @@ SUCH DAMAGE.
 - (NSArray*) listOfStringsToArray {
 
 		/* count the number of items in the AEDescList */
-	unsigned ix, N = [self numberOfItems];
+	NSInteger ix, N = [self numberOfItems];
 	
 		/* create a local array */
 	NSMutableArray* theArray = [NSMutableArray arrayWithCapacity:N];

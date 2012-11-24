@@ -221,9 +221,9 @@ NSString *MGSNoteLicenceStatusChanged = @"MGSWindowStatusChanged";	// non obviou
 	}
 	
 	// remove any duplicates
-	for (int i = [[self arrangedObjects] count] -1; i >= 1; i--) {
+	for (NSUInteger i = [[self arrangedObjects] count] -1; i >= 1; i--) {
 		MGSL *licence_i = [[self arrangedObjects] objectAtIndex:i];
-		for (int j = i-1; j >= 0; j--) {
+		for (NSInteger j = i-1; j >= 0; j--) {
 			MGSL *licence_j = [[self arrangedObjects] objectAtIndex:j];
 			if ([[licence_j hash] isEqualToString:[licence_i hash]]) {
 				[self removeObject:licence_i];

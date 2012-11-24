@@ -389,7 +389,7 @@ Here is a summary of the meanings for individual octal digit values:
 	// divide string at periods.
 	// if string starts or ends with period that array element will be empty
 	NSArray *array = [hostName componentsSeparatedByString:@"."];
-	int count = [array count];
+	NSInteger count = [array count];
 	if (count == 0) {
 		return nil;
 	}

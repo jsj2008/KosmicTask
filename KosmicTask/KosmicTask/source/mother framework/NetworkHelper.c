@@ -140,7 +140,7 @@ int ConnectTo( char *inHostname, int inPort )
 int ReadToken( int iSocket, char **outData )
 {
 	// first read the length of the data
-	long	lLength		= 0;
+	int	lLength		= 0;
 	int		iBytesRead	= ReadData( iSocket, (char *) &lLength, sizeof(lLength) );
 	
 	// if we read a length, let's now get the data
@@ -162,7 +162,7 @@ int ReadToken( int iSocket, char **outData )
 	return lLength;
 }
 
-int SendToken( int iSocket, char *inData, long inBytesToWrite )
+int SendToken( int iSocket, char *inData, int inBytesToWrite )
 {
 	// default to error state
 	int	iReturnValue = -1;
@@ -200,7 +200,7 @@ int ReadData( int iSocket, char *outData, int inBytesToRead )
 			break;
 		}
 		
-		int iBytes = recv( iSocket, &outData[iBytesRead], inBytesToRead, 0 );
+		ssize_t iBytes = recv( iSocket, &outData[iBytesRead], inBytesToRead, 0 );
 		
 		if( iBytes < 0 ) {
 			
@@ -227,7 +227,7 @@ int WriteData( int iSocket, char *inData, int inBytesToWrite )
 	
 	while( inBytesToWrite > 0 ) {
 		
-		int iWrote = send( iSocket, &inData[iWroteBytes], inBytesToWrite, 0 );
+		ssize_t iWrote = send( iSocket, &inData[iWroteBytes], inBytesToWrite, 0 );
 		if( iWrote < 0 ) {
 			if( errno == EINTR )
 				continue;

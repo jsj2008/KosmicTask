@@ -18,27 +18,30 @@ extern NSString *MGSInternetSharingKeyIPAddress;
 extern NSString *MGSInternetSharingKeyGatewayName;
 extern NSString *MGSInternetSharingKeyResponseRequired;
 
-typedef enum _MGSInternetSharingRequestID {
+enum _MGSInternetSharingRequestID {
 	kMGSInternetSharingRequestStatus = 0,
 	kMGSInternetSharingRequestInternetAccess = 1,
 	kMGSInternetSharingRequestMapPort = 4,
     kMGSInternetSharingRequestLocalAccess = 6,
     kMGSInternetSharingRequestAllowLocalAuthentication = 7,
     kMGSInternetSharingRequestAllowRemoteAuthentication = 8,
-} MGSInternetSharingRequestID;
+};
+typedef NSInteger MGSInternetSharingRequestID;
 
-typedef enum _MGSInternetSharingMappingStatus {
+enum _MGSInternetSharingMappingStatus {
     kMGSInternetSharingPortStatusNA = 0,    // port status NA
 	kMGSInternetSharingPortTryingToMap = 1, // trying to map
 	kMGSInternetSharingPortNotMapped = 2,   // port could not be mapped
 	kMGSInternetSharingPortMapped = 3,      // port mapped (automatic)
-} MGSInternetSharingMappingStatus;
+};
+typedef NSInteger MGSInternetSharingMappingStatus;
 
-typedef enum {
+enum {
     kMGSPortReachabilityNA = 0,
     kMGSPortReachable = 1,
     kMGSPortNotReachable = 2,
-}  MGSPortReachability;
+};
+typedef NSInteger MGSPortReachability;
 
 @interface MGSInternetSharing : NSObject {
 @private

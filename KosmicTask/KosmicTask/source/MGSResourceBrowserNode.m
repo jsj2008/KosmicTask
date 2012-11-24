@@ -52,12 +52,12 @@ static NSMutableDictionary *registeredClasses = nil;
 	if (!registeredClasses) {
 		registeredClasses = [NSMutableDictionary dictionaryWithCapacity:5];
 	}
-	NSMutableDictionary *mutableOptions = [registeredClasses objectForKey:klass];
+	NSMutableDictionary *mutableOptions = [registeredClasses objectForKey:[klass className]];
 	if (mutableOptions) {
 		[mutableOptions addEntriesFromDictionary:options];
 	} else {
 		mutableOptions = [NSMutableDictionary dictionaryWithDictionary:options];
-		[registeredClasses setObject:mutableOptions forKey:klass];	
+		[registeredClasses setObject:mutableOptions forKey:[klass className]];
 	}
 
 }
@@ -98,7 +98,7 @@ static NSMutableDictionary *registeredClasses = nil;
 - (id)objectForKey:(id)optionKey
 {
 	Class objectClass = [self.representedObject class];
-	NSDictionary *options = [registeredClasses objectForKey:objectClass];
+	NSDictionary *options = [registeredClasses objectForKey:[objectClass className]];
 	
 	if (options) {
 		NSString *key = [options objectForKey:optionKey];

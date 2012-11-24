@@ -9,7 +9,7 @@
 
 @interface NSTreeController (DMExtensions_Private)
 - (NSIndexPath *)dm_indexPathFromIndexPath:(NSIndexPath *)baseIndexPath inChildren:(NSArray *)children
-							  childCount:(unsigned int)childCount toObject:(id)object;
+							  childCount:(NSUInteger)childCount toObject:(id)object;
 @end
 
 @implementation NSTreeController (MGS_Extensions)
@@ -91,14 +91,14 @@
 @implementation NSTreeController (DMExtensions_Private)
 
 - (NSIndexPath *)dm_indexPathFromIndexPath:(NSIndexPath *)baseIndexPath inChildren:(NSArray *)children
-							  childCount:(unsigned int)childCount toObject:(id)object
+							  childCount:(NSUInteger)childCount toObject:(id)object
 {
-	unsigned int childIndex;
+	NSUInteger childIndex;
 	for (childIndex = 0; childIndex < childCount; childIndex++) {
 		id childObject = [children objectAtIndex:childIndex];
 		
 		NSArray *childsChildren = nil;
-		unsigned int childsChildrenCount = 0;
+		NSUInteger childsChildrenCount = 0;
 		NSString *leafKeyPath = [self leafKeyPath];
 		if (!leafKeyPath || [[childObject valueForKey:leafKeyPath] boolValue] == NO) {
 			NSString *countKeyPath = [self countKeyPath];

@@ -12,13 +12,14 @@
 
 extern NSString *MGSScriptOriginMugginsoft;
 
-typedef enum _MGSScriptStatus {
+ enum _MGSScriptStatus {
 	MGSScriptStatusNone = 0x0,
 	MGSScriptStatusNew = 0x01,	// new script
 	MGSScriptStatusExistsOnServer = 0x02,	// script created from file
-} MGSScriptStatus;
+ };
+typedef NSInteger MGSScriptStatus;
 
-typedef enum _MGSScriptRepresentation {
+enum _MGSScriptRepresentation {
 	MGSScriptRepresentationUndefined = 0,	// empty representation
 	MGSScriptRepresentationComplete = 1,	// complete representation - all dict keys defined
 	MGSScriptRepresentationDisplay = 2,		// display representation - sufficient dict keys defined for display
@@ -28,7 +29,9 @@ typedef enum _MGSScriptRepresentation {
 	MGSScriptRepresentationExecute = 6,		// execute representation - sufficient keys to execute the script
 	MGSScriptRepresentationPreview = 7,		// preview representation - sufficient keys to preview the script
 	MGSScriptRepresentationNegotiate = 8,	// negotiate representation - sufficient keys to negotiate the script
-} MGSScriptRepresentation;
+};
+
+typedef NSInteger MGSScriptRepresentation;
 
 @class MGSScriptParameterManager;
 @class MGSScriptCode;

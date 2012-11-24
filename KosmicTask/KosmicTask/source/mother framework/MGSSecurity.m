@@ -273,7 +273,7 @@ static NSDictionary *identityOptions = nil;
 	
 	err = SecIdentitySearchCreate(keychain, CSSM_KEYUSE_DECRYPT, &searchRef);
 	if (err != noErr) {
-		NSLog(@"Cannot obtain system identity. Error = %ld", err);
+		NSLog(@"Cannot obtain system identity. Error = %ld", (long)err);
 		return nil;
 	}
 	for (;;) {

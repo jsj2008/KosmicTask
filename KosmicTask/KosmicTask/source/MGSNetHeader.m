@@ -197,8 +197,8 @@ static NSDateFormatter *rfc3339DateFormatter = nil;
     [header appendFormat:@"%@ %@%@", MGSNetHeaderTagDate, rfc3339Date, MGSNetHeaderTerminator]; 
     [header appendFormat:@"%@ %@%@", MGSNetHeaderTagUserAgent, MGSNetHeaderUserAgentKosmicTaskOSX, MGSNetHeaderTerminator];
 	[header appendFormat:@"%@ %lu%@", MGSNetHeaderTagContentLength, (unsigned long)_contentLength, MGSNetHeaderTerminator]; 	// note cast to unsigned long - advised for 64 bit code
-	[header appendFormat:@"%@ %i%@", MGSNetHeaderTagRequestTimeout, _requestTimeout, MGSNetHeaderTerminator]; 	// note cast to unsigned long - advised for 64 bit code
-	[header appendFormat:@"%@ %i%@", MGSNetHeaderTagResponseTimeout, _responseTimeout, MGSNetHeaderTerminator]; 	// note cast to unsigned long - advised for 64 bit code
+	[header appendFormat:@"%@ %ld%@", MGSNetHeaderTagRequestTimeout, (long)_requestTimeout, MGSNetHeaderTerminator]; 	// note cast to unsigned long - advised for 64 bit code
+	[header appendFormat:@"%@ %ld%@", MGSNetHeaderTagResponseTimeout, (long)_responseTimeout, MGSNetHeaderTerminator]; 	// note cast to unsigned long - advised for 64 bit code
 
 	// append discretionary header info
 	

@@ -53,7 +53,7 @@
 #include <Kerberos/Kerberos.h>
 #include "GSSauthenticate.h"
 
-OM_uint32 AuthenticateGSS( char *inToken, int inTokenLen, char **outToken, int *outTokenLen, char **inOutServiceName, 
+OM_uint32 AuthenticateGSS( char *inToken, int inTokenLen, char **outToken, size_t *outTokenLen, char **inOutServiceName, 
 						   char **outUserPrinc, gss_ctx_id_t *inOutGSScontext, gss_cred_id_t *inOutGSScreds )
 {
 	OM_uint32           minorStatus				= 0;

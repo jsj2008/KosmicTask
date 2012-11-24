@@ -52,7 +52,7 @@
 @private
 	NSImage *image;
 	NSColor * countBackgroundColour;
-	int count;
+	NSUInteger count;
 	BOOL hasCount;
 	NSImage *statusImage;
 	NSImage *invertedStatusImage;
@@ -89,7 +89,7 @@
 -(void)setCountBackgroundColour:(NSColor *)newColour;
 -(NSColor *)countBackgroundColour;
 
-- (void)setCount:(int)value;
+- (void)setCount:(NSUInteger)value;
 - (void)setHasCount:(BOOL)value;
 - (BOOL)hasCount;
 

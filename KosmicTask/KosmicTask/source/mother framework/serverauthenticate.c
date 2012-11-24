@@ -270,7 +270,7 @@ int AuthGSSAPI( int inSocket )
 	char			*pRecvToken		= NULL;
 	int				iRecvTokenLen	= 0;
 	char			*pSendToken		= NULL;
-	int				iSendTokenLen	= 0;
+	size_t			iSendTokenLen	= 0;
 	char			*pUserPrinc		= NULL;
 	char			*pServiceName	= NULL;
 	gss_ctx_id_t	gssContext		= GSS_C_NO_CONTEXT;
@@ -304,11 +304,11 @@ int AuthGSSAPI( int inSocket )
 		// if we have a token to send, let's send it to the client
 		if( iSendTokenLen != 0 ) {
 			
-			printf( "Sending a token length of %d\n", iSendTokenLen );
+			printf( "Sending a token length of %lu\n", (long)iSendTokenLen );
 			
-			int iSent = SendToken(inSocket, pSendToken, iSendTokenLen);
+			int iSent = SendToken(inSocket, pSendToken, (int)iSendTokenLen);
 			
-			if( iSent == -1 || iSent != iSendTokenLen ) {
+			if( iSent == -1 || iSent != (int)iSendTokenLen ) {
 				// we had a problem, set failure state
 				printf( "Failed to send packet.. bailing\n" );
 				iResult = GSS_S_FAILURE;
@@ -501,7 +501,7 @@ int HandleCRAMMD5( int inSocket )
 	printf( "Sending challenge %s\n", pChallenge );
 	
 	// send our challenge to the client
-	if( SendToken(inSocket, pChallenge, strlen(pChallenge)) > 0 ) {
+	if( SendToken(inSocket, pChallenge, (int)strlen(pChallenge)) > 0 ) {
 		
 		// now wait for username and response to return
 		if( ReadToken(inSocket, &pUsername) > 0 ) {
@@ -563,7 +563,7 @@ int mainAuthServer( int argc, char *argv[] )
 	// are using uses for service principal
 
 	// let's convert the string provided for the port into a number
-	iPort = strtol( argv[1], NULL, 10 );
+	iPort = (int)strtol( argv[1], NULL, 10 );
 	
 	// don't allow privileged ports for this test
 	if( iPort < 1024 ) {

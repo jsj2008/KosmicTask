@@ -370,7 +370,7 @@
 	if (_portMapper) {
 		if (self.externalPort > 0) {
              _responsePending = YES;
-			[_portMapper remapWithExternalPort:self.externalPort listeningPort:self.listeningPort];
+			[_portMapper remapWithExternalPort:(int)self.externalPort listeningPort:(int)self.listeningPort];
 		}
 	} else {
 		MLogInfo(@"Cannot remap. Port mapper is not allocated.");
@@ -413,7 +413,7 @@
 		}
 		
 		// initialise the mapper
-		_portMapper = [[MGSPortMapper alloc] initWithExternalPort:self.externalPort listeningPort:self.listeningPort];
+		_portMapper = [[MGSPortMapper alloc] initWithExternalPort:(int)self.externalPort listeningPort:(int)self.listeningPort];
 		_portMapper.delegate = self;
 		
 	}

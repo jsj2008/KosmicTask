@@ -29,12 +29,12 @@ typedef struct kinfo_proc kinfo_proc;
     return self;
 }
 
-- (int)numberOfProcesses
+- (size_t)numberOfProcesses
 {
     return numberOfProcesses;
 }
 
-- (void)setNumberOfProcesses:(int)num
+- (void)setNumberOfProcesses:(size_t)num
 {
     numberOfProcesses = num;
 }
@@ -163,7 +163,7 @@ typedef struct kinfo_proc kinfo_proc;
  */
 - (BOOL)findProcessWithName:(NSString *)procNameToSearch
 {
-    int idx;
+    NSUInteger idx;
 	
     idx = [processList indexOfObject:[procNameToSearch substringToIndex:MAXCOMLEN]];
 	

@@ -248,7 +248,7 @@
 	NSMutableArray *editArray = [NSMutableArray arrayWithCapacity:2];
 	
 	// create array of edited scripts
-	for (int i = [self count] - 1; i >= 0; i--) {
+	for (NSInteger i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		
 		// we want:
@@ -272,7 +272,7 @@
 	NSMutableArray *editArray = [NSMutableArray arrayWithCapacity:2];
 	
 	// create array of edited scripts
-	for (int i = [self count] - 1; i >= 0; i--) {
+	for (NSInteger i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		
 		// we want:
@@ -336,7 +336,7 @@
 	NSMutableArray *editArray = [NSMutableArray arrayWithCapacity:2];
 	
 	// create array of edited scripts
-	int i;
+	NSInteger i;
 	for (i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		
@@ -428,7 +428,7 @@
  */
 - (void)removeScriptCode
 {
-	for (int i = [self count] - 1; i >= 0; i--) {
+	for (NSInteger i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		[script removeScriptCode];
 	}
@@ -455,7 +455,7 @@
  */
 - (void)setScriptStatus:(MGSScriptStatus)status
 {
-	int i;
+	NSInteger i;
 	for (i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		[script setScriptStatus: status];
@@ -469,7 +469,7 @@
  */
 - (void)removeUnpublishedItems
 {
-	for (int i = [self count] - 1; i >= 0; i--) {
+	for (NSInteger i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		if (![script published]) {
 			[self removeItemAtIndex:i];
@@ -503,7 +503,7 @@
  */
 - (NSCellStateValue)publishedCellState
 {
-	int publishedCount = [self publishedCount];
+	NSInteger publishedCount = [self publishedCount];
 	
 	if ([self count] == publishedCount) {
 		return NSOnState;
@@ -525,7 +525,7 @@
 - (void)acceptScheduleSave
 {
 	
-	int i;
+	NSInteger i;
 	for (i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		
@@ -545,7 +545,7 @@
 - (void)undoScheduleDelete
 {
 	
-	int i;
+	NSInteger i;
 	for (i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		
@@ -562,7 +562,7 @@
  */
 - (void)acceptScheduleDelete
 {
-	int i;
+	NSInteger i;
 	for (i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		
@@ -600,7 +600,7 @@
 - (void)acceptSchedulePublished
 {
 	
-	int i;
+	NSInteger i;
 	for (i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		
@@ -619,7 +619,7 @@
 - (void)undoSchedulePublished
 {
 	
-	int i;
+	NSInteger i;
 	for (i = [self count] - 1; i >= 0; i--) {
 		MGSScript *script = [self itemAtIndex:i];
 		

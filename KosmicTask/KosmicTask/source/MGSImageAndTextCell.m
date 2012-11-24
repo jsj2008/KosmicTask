@@ -248,7 +248,7 @@ static NSUInteger updatingImagesArrayCount = 0;
  - setCount:
  
  */
-- (void)setCount:(int)value
+- (void)setCount:(NSUInteger)value
 {
 	count = value;
 }
@@ -347,7 +347,7 @@ static NSUInteger updatingImagesArrayCount = 0;
 // -------------------------------------------------------------------------------
 //	selectWithFrame:inView:editor:delegate:event:start:length
 // -------------------------------------------------------------------------------
-- (void)selectWithFrame:(NSRect)aRect inView:(NSView*)controlView editor:(NSText*)textObj delegate:(id)anObject start:(int)selStart length:(int)selLength
+- (void)selectWithFrame:(NSRect)aRect inView:(NSView*)controlView editor:(NSText*)textObj delegate:(id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
 {
 	NSRect textFrame = [self titleRectForBounds:aRect];
 	[super selectWithFrame:textFrame inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
@@ -399,7 +399,7 @@ static NSUInteger updatingImagesArrayCount = 0;
 	// If the cell has a count button, draw the count
 	// button on the right of the cell.
 	if (hasCount && !self.isUpdating) {
-		NSString * number = [NSString stringWithFormat:@"%i", count];
+		NSString * number = [NSString stringWithFormat:@"%lu", (long)count];
 		
 		// Use the current font point size as a guide for the count font size
 		float pointSize = [[self font] pointSize];

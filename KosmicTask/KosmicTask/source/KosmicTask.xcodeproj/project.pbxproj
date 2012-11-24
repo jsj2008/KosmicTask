@@ -220,7 +220,6 @@
 		AB2E6CA012C799790071052D /* MGSNetMessage+KosmicTask.h in Headers */ = {isa = PBXBuildFile; fileRef = AB2E6C9E12C799790071052D /* MGSNetMessage+KosmicTask.h */; };
 		AB2E6CA112C799790071052D /* MGSNetMessage+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6C9F12C799790071052D /* MGSNetMessage+KosmicTask.m */; };
 		AB2E6D7C12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.h in Headers */ = {isa = PBXBuildFile; fileRef = AB2E6D7A12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.h */; };
-		AB2E6D7D12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6D7B12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.m */; };
 		AB2EC96A14D1F3AF00B54313 /* MGTemplateEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC95314D1F10200B54313 /* MGTemplateEngine.framework */; };
 		AB2ECA1014D1F58500B54313 /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2ECA0714D1F53200B54313 /* TCMPortMapper.framework */; };
 		AB2ECA1114D1F5AE00B54313 /* TCMPortMapper.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2ECA0714D1F53200B54313 /* TCMPortMapper.framework */; };
@@ -486,6 +485,7 @@
 		AB65AC7211CB957E000F5F1B /* NSTreeController-DMExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AB65AC7011CB957E000F5F1B /* NSTreeController-DMExtensions.h */; };
 		AB65AC7311CB957E000F5F1B /* NSTreeController-DMExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65AC7111CB957E000F5F1B /* NSTreeController-DMExtensions.m */; };
 		AB65AC7411CB957E000F5F1B /* NSTreeController-DMExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65AC7111CB957E000F5F1B /* NSTreeController-DMExtensions.m */; };
+		AB65EE16166174CA002940B0 /* MGSClientNetRequest+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6D7B12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.m */; };
 		AB6675851205B9DD006763E2 /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
 		AB6675861205B9DD006763E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AB6675CF1205B9E2006763E2 /* taskmain.m in Sources */ = {isa = PBXBuildFile; fileRef = 09372FDE0D0C301E00A9FAED /* taskmain.m */; };
@@ -11880,7 +11880,6 @@
 				AB384879128C0B290046FC72 /* MGSShellLanguage.m in Sources */,
 				AB2489A212BFF5F200933E98 /* MGSNetNegotiator.m in Sources */,
 				AB2E6CA112C799790071052D /* MGSNetMessage+KosmicTask.m in Sources */,
-				AB2E6D7D12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.m in Sources */,
 				ABC5BC71131E674E0020003D /* NSIndexPath+Mugginsoft.m in Sources */,
 				AB1E1AF113E1BBC4003643AC /* EMKeychain.m in Sources */,
 				AB01924F150ABE7200DA7747 /* NSObject+MGSDisposable.m in Sources */,
@@ -12117,6 +12116,7 @@
 				AB9EA8D71602249900FD0726 /* NSMutableAttributedString+Mugginsoft.m in Sources */,
 				AB7C197E1622F57600E45BD4 /* MGSClientNetRequest.m in Sources */,
 				ABEA1908163985530074B4F9 /* NSBundle_Mugginsoft.m in Sources */,
+				AB65EE16166174CA002940B0 /* MGSClientNetRequest+KosmicTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13958,6 +13958,7 @@
 		09C09E290CDC7D720048BC79 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
@@ -13976,6 +13977,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;

@@ -483,7 +483,7 @@ static MGSErrorWindowController *_controller;
 {
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 			[self domain], MGSDomainErrorKey,
-			[NSNumber numberWithInt:[self code]], MGSCodeErrorKey,
+			[NSNumber numberWithInteger:[self code]], MGSCodeErrorKey,
 			[self userInfo], MGSUserInfoErrorKey,
 			nil];
 }
@@ -501,7 +501,7 @@ static MGSErrorWindowController *_controller;
 	NSMutableDictionary *displayDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 										NSLocalizedString(@"Error", @"Error"),  NSLocalizedString(@"Result", @"Result"),
 										[self domain], NSLocalizedString(@"Source", @"Source of error"),
-										[NSNumber numberWithInt:[self code]], NSLocalizedString(@"Code", @"Error code"),
+										[NSNumber numberWithInteger:[self code]], NSLocalizedString(@"Code", @"Error code"),
 										nil];
 	
 	id description = [[self userInfo] objectForKey:NSLocalizedDescriptionKey];

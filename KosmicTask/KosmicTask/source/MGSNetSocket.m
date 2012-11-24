@@ -920,7 +920,7 @@ errorExit:
 
     // it must at the very least consist of a terminator
     if ([data length] < [chunkTerminatorData length]) {
-        [NSException raise:MGSNetSocketException format:@"Invalid attachment chunk data size: %u", [data length]];
+        [NSException raise:MGSNetSocketException format:@"Invalid attachment chunk data size: %lu", (long)[data length]];
     }
     
     // validate that the chunk ends with the terminator
