@@ -1978,13 +1978,6 @@
 			remoteGlobalIDString = D389F2030F196A7500558235;
 			remoteInfo = JSDemoApp;
 		};
-		AB450CCE11BFC6B700550A4E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D1107320486CEB800E47090;
-			remoteInfo = KosmicTaskHelper;
-		};
 		AB456B2D0DE2D73400F8A8AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3826,7 +3819,6 @@
 		AB42B88A165D789F004FF139 /* NSImage+Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Mugginsoft.m"; sourceTree = "<group>"; };
 		AB42B88D165E47C0004FF139 /* MGSUpdating1Template.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MGSUpdating1Template.tif; sourceTree = "<group>"; };
 		AB42B88E165E47C0004FF139 /* MGSUpdating2Template.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MGSUpdating2Template.tif; sourceTree = "<group>"; };
-		AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KosmicTaskHelper.xcodeproj; path = ../../KosmicTaskHelper/KosmicTaskHelper.xcodeproj; sourceTree = SOURCE_ROOT; };
 		AB450DC611C0146F00550A4E /* KosmicTask.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = KosmicTask.sdef; sourceTree = "<group>"; };
 		AB4654280D31033D00DCA1FA /* MGSParameterViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterViewManager.h; sourceTree = "<group>"; };
 		AB4654290D31033D00DCA1FA /* MGSParameterViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterViewManager.m; sourceTree = "<group>"; };
@@ -6399,7 +6391,6 @@
 				AB3F6FE5130C86DF00342F11 /* HG submodule project */,
 				AB3F5EEF130C7C5300342F11 /* MGSPythonScriptManager.m */,
 				AB777ED1130C7087000973D4 /* Git submodule projects - do not edit directly */,
-				AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */,
 				AB92318511A695E70093EDE3 /* KosmicTask Quick Look Plugin.xcodeproj */,
 				ABCF25AE0EE0A66F00FC0364 /* KosmicTask MDImporter.xcodeproj */,
 				AB86986814D73A830002F88E /* Google toolbox for mac */,
@@ -7125,14 +7116,6 @@
 				AB2CD00F12201324005E2379 /* Perl */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		AB450CC811BFC6B700550A4E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AB450CCF11BFC6B700550A4E /* KosmicTaskHelper.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		AB4A5B4B120D5B2F006A66CC /* Scala */ = {
@@ -10525,10 +10508,6 @@
 					ProjectRef = AB92318511A695E70093EDE3 /* KosmicTask Quick Look Plugin.xcodeproj */;
 				},
 				{
-					ProductGroup = AB450CC811BFC6B700550A4E /* Products */;
-					ProjectRef = AB450CC711BFC6B700550A4E /* KosmicTaskHelper.xcodeproj */;
-				},
-				{
 					ProductGroup = AB2C71CB14D2F32200C524B5 /* Products */;
 					ProjectRef = ABD056161325267000A728B8 /* lua.xcodeproj */;
 				},
@@ -10858,13 +10837,6 @@
 			fileType = wrapper.application;
 			path = JSDemoApp.app;
 			remoteRef = AB3F6ED3130C867700342F11 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB450CCF11BFC6B700550A4E /* KosmicTaskHelper.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = KosmicTaskHelper.app;
-			remoteRef = AB450CCE11BFC6B700550A4E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AB69B664130EAA3100171D4F /* FScript.framework */ = {
@@ -13922,6 +13894,7 @@
 		0953D02E0CD941E000519488 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "Developer ID Application: Mugginsoft LLP";
 				FRAMEWORK_SEARCH_PATHS = /Users/Jonathan/Documents/Computing/source/KosmicTask/yamlkit;
 				INFOPLIST_FILE = "KosmicTaskServer-Info.plist";
@@ -13940,6 +13913,7 @@
 		0953D02F0CD941E000519488 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "Developer ID Application: Mugginsoft LLP";
 				FRAMEWORK_SEARCH_PATHS = /Users/Jonathan/Documents/Computing/source/KosmicTask/yamlkit;
 				INFOPLIST_FILE = "KosmicTaskServer-Info.plist";

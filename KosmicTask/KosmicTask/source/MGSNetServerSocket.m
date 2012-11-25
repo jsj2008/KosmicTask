@@ -454,7 +454,7 @@
 	   
     // build the chunk.
     NSMutableData *chunk = [NSMutableData dataWithCapacity:[data length] + 30];
-    NSString *dataLength = [NSString stringWithFormat:@"%X%@", [data length], MGSNetHeaderTerminator];
+    NSString *dataLength = [NSString stringWithFormat:@"%lX%@", (long)[data length], MGSNetHeaderTerminator];
     [chunk appendData:[dataLength dataUsingEncoding:NSUTF8StringEncoding]];
     [chunk appendData:data];
     [chunk appendData:[MGSNetHeaderTerminator dataUsingEncoding:NSUTF8StringEncoding]];

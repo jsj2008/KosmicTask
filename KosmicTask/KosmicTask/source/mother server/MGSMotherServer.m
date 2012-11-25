@@ -141,10 +141,10 @@
  */
 - (int)externalPort
 {
-	int port = [[MGSPreferences standardUserDefaults] integerForKey:MGSExternalPortNumber];
+	int port = (int)[[MGSPreferences standardUserDefaults] integerForKey:MGSExternalPortNumber];
 	
 	if (port <= 0) {
-		MLogInfo(@"External port is invalid: %i. Resetting to default.", port);
+		MLogInfo(@"External port is invalid: %d. Resetting to default.", port);
 		port = MOTHER_IANA_REGISTERED_PORT;
 	}
 	return port;

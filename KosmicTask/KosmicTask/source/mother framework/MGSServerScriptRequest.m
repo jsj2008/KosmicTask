@@ -708,7 +708,7 @@ validate the script folder
 	[scriptManager setDictionary:scriptDict];
 	
 	// scan script array
-	int i, scriptCount;
+	NSInteger i, scriptCount;
 	scriptCount  = [scriptManager count];
 	for (i = scriptCount - 1; i >= 0; i--) {
 		MGSScript *script = [scriptManager itemAtIndex:i];

@@ -13,12 +13,13 @@
 #define DISCLOSE_USERNAME_TO_LOCAL 1
 #define DISCLOSE_USERNAME_TO_ALL 2
 
-enum {
+enum _mgsTimeoutUnits {
     kMGSTimeoutSeconds = 0,
     kMGSTimeoutMinutes = 1,
     kMGSTimeoutHours = 2,
     
-} typedef mgsTimeoutUnits;
+};
+typedef NSInteger mgsTimeoutUnits;
 
 #define MGS_MAX_LOG_ENTRY_LENGTH 5000
 
