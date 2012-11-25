@@ -417,11 +417,14 @@ char MGSScriptDictContext;
         // we want clean group names
         MGSScriptManager *groupScriptManager = [scriptManager groupWithName:groupName];
         
+#ifdef MGS_GROUP_PATH_SUPPORTED
+        
+        // Just some development test code
         NSRange range = [groupName rangeOfString:@"Funny"];
         if (range.length != 0) {
             NSLog(@"Funny found");
         }
-        [self valueForKey:nil];
+#endif
         
 		// make a group node
         // this will return the top level node if the group name contains path separators

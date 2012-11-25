@@ -347,10 +347,6 @@
 		AB4876FE118718A0005241D1 /* MGSScriptTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 09923FD40D266FB10033F942 /* MGSScriptTask.m */; };
 		AB4A47070E491049007204F1 /* NSScanner_Mugginsoft.h in Headers */ = {isa = PBXBuildFile; fileRef = AB4A47050E491049007204F1 /* NSScanner_Mugginsoft.h */; };
 		AB4A47080E491049007204F1 /* NSScanner_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4A47060E491049007204F1 /* NSScanner_Mugginsoft.m */; };
-		AB4A5B4A120D5B0C006A66CC /* KosmicTaskScalaRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = ABFFCDA9120D5A28005CC65A /* KosmicTaskScalaRunner */; };
-		AB4A5B4E120D5B51006A66CC /* MGSScalaLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4A5B4D120D5B51006A66CC /* MGSScalaLanguagePlugin.m */; };
-		AB4A5B52120D5BC6006A66CC /* MGSScalaRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4A5B51120D5BC6006A66CC /* MGSScalaRunner.m */; };
-		AB4A5C98120D6039006A66CC /* scala in Resources */ = {isa = PBXBuildFile; fileRef = AB4A5C6B120D600D006A66CC /* scala */; };
 		AB4A5CBC120D7753006A66CC /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
 		AB4A5CBD120D7753006A66CC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AB4A5D07120D775B006A66CC /* taskmain.m in Sources */ = {isa = PBXBuildFile; fileRef = 09372FDE0D0C301E00A9FAED /* taskmain.m */; };
@@ -1340,13 +1336,6 @@
 		ABFF56C40DA95E0700762E71 /* MGSRemoveServerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFF56C30DA95E0700762E71 /* MGSRemoveServerWindowController.m */; };
 		ABFF56C80DA95EC700762E71 /* DisconnectServer.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABFF56C60DA95EC700762E71 /* DisconnectServer.xib */; };
 		ABFF9CC60DD4AFF700A0CE5F /* MGSRequestSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFF9CC50DD4AFF700A0CE5F /* MGSRequestSplitView.m */; };
-		ABFFCD8D120D5A09005CC65A /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
-		ABFFCD8E120D5A09005CC65A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		ABFFCD9E120D5A28005CC65A /* taskmain.m in Sources */ = {isa = PBXBuildFile; fileRef = 09372FDE0D0C301E00A9FAED /* taskmain.m */; };
-		ABFFCDA1120D5A28005CC65A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
-		ABFFCDA2120D5A28005CC65A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		ABFFCDA3120D5A28005CC65A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB473EE20D90167700CB6816 /* Carbon.framework */; };
-		ABFFCDA4120D5A28005CC65A /* MGSKosmicTaskRunner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB27AD051189E86A00132977 /* MGSKosmicTaskRunner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -1984,13 +1973,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = AB4D19010DE2D49400D0E517;
 			remoteInfo = "Export Plugin PDF";
-		};
-		AB4A5B30120D5AEF006A66CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = ABFFCD9A120D5A28005CC65A;
-			remoteInfo = KosmicTaskScalaRunner;
 		};
 		AB4A5CB2120D7753006A66CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2853,20 +2835,6 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = QLMarkdown;
 		};
-		ABFFCD83120D5A09005CC65A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 09C09E250CDC7D710048BC79;
-			remoteInfo = MGSKosmicTask;
-		};
-		ABFFCD9C120D5A28005CC65A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AB27AD041189E86A00132977;
-			remoteInfo = MGSKosmicTaskRunner;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -3388,17 +3356,6 @@
 				AB2C728F14D2F42000C524B5 /* lua in Copy auxiliary executables */,
 				AB2C729014D2F42000C524B5 /* luac in Copy auxiliary executables */,
 				ABE783F9132518D200663CBB /* KosmicTaskLuaRunner in Copy auxiliary executables */,
-			);
-			name = "Copy auxiliary executables";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ABFFCD8F120D5A09005CC65A /* Copy auxiliary executables */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 6;
-			files = (
-				AB4A5B4A120D5B0C006A66CC /* KosmicTaskScalaRunner in Copy auxiliary executables */,
 			);
 			name = "Copy auxiliary executables";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5028,9 +4985,7 @@
 		ABFF9CC50DD4AFF700A0CE5F /* MGSRequestSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSRequestSplitView.m; sourceTree = "<group>"; };
 		ABFF9E3D0DD4E02700A0CE5F /* MGSBrowserToolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBrowserToolViewController.h; sourceTree = "<group>"; };
 		ABFF9E3E0DD4E02700A0CE5F /* MGSBrowserToolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBrowserToolViewController.m; sourceTree = "<group>"; };
-		ABFFCD95120D5A09005CC65A /* Language Plugin Scala.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin Scala.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABFFCD96120D5A0A005CC65A /* Language Plugin Scala-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Language Plugin Scala-Info.plist"; sourceTree = "<group>"; };
-		ABFFCDA9120D5A28005CC65A /* KosmicTaskScalaRunner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KosmicTaskScalaRunner; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5766,26 +5721,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ABFFCD8C120D5A09005CC65A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ABFFCD8D120D5A09005CC65A /* MGSKosmicTask.framework in Frameworks */,
-				ABFFCD8E120D5A09005CC65A /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ABFFCDA0120D5A28005CC65A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ABFFCDA1120D5A28005CC65A /* Foundation.framework in Frameworks */,
-				ABFFCDA2120D5A28005CC65A /* Cocoa.framework in Frameworks */,
-				ABFFCDA3120D5A28005CC65A /* Carbon.framework in Frameworks */,
-				ABFFCDA4120D5A28005CC65A /* MGSKosmicTaskRunner.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -6338,7 +6273,6 @@
 				AB27B0B8118A104900132977 /* KosmicTaskPythonRunner */,
 				AB27B19D118A12B500132977 /* KosmicTaskRubyCocoaRunner */,
 				AB5CDB04118AF3EF00C545CD /* KosmicTaskRubyRunner */,
-				ABFFCDA9120D5A28005CC65A /* KosmicTaskScalaRunner */,
 				0953D02B0CD941AD00519488 /* KosmicTaskServer */,
 				AB5625EE118DB10F0012487B /* KosmicTaskTclshRunner */,
 				AB562502118DB0FF0012487B /* KosmicTaskTcshRunner */,
@@ -6361,7 +6295,6 @@
 				AB9CB749118AEA6D006F19F1 /* Language Plugin PythonObjC.lang-plugin */,
 				AB5CDABF118AF38200C545CD /* Language Plugin Ruby.lang-plugin */,
 				AB36002B11886EF700F1E894 /* Language Plugin RubyCocoa.lang-plugin */,
-				ABFFCD95120D5A09005CC65A /* Language Plugin Scala.lang-plugin */,
 				AB1561E3118DAA1E00DC01C7 /* Language Plugin Tcl Shell.lang-plugin */,
 				AB1560FD118DA87E00DC01C7 /* Language Plugin TENEX C Shell.lang-plugin */,
 				AB156198118DA9AC00DC01C7 /* Language Plugin Z Shell.lang-plugin */,
@@ -10424,43 +10357,6 @@
 			productReference = ABE78257132516FF00663CBB /* Language Plugin Lua.lang-plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		ABFFCD81120D5A09005CC65A /* Language Plugin Scala */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = ABFFCD91120D5A09005CC65A /* Build configuration list for PBXNativeTarget "Language Plugin Scala" */;
-			buildPhases = (
-				ABFFCD86120D5A09005CC65A /* Resources */,
-				ABFFCD8A120D5A09005CC65A /* Sources */,
-				ABFFCD8C120D5A09005CC65A /* Frameworks */,
-				ABFFCD8F120D5A09005CC65A /* Copy auxiliary executables */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				ABFFCD82120D5A09005CC65A /* PBXTargetDependency */,
-				AB4A5B31120D5AEF006A66CC /* PBXTargetDependency */,
-			);
-			name = "Language Plugin Scala";
-			productName = "Language Plugin Ruby";
-			productReference = ABFFCD95120D5A09005CC65A /* Language Plugin Scala.lang-plugin */;
-			productType = "com.apple.product-type.bundle";
-		};
-		ABFFCD9A120D5A28005CC65A /* KosmicTaskScalaRunner */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = ABFFCDA5120D5A28005CC65A /* Build configuration list for PBXNativeTarget "KosmicTaskScalaRunner" */;
-			buildPhases = (
-				ABFFCD9D120D5A28005CC65A /* Sources */,
-				ABFFCDA0120D5A28005CC65A /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				ABFFCD9B120D5A28005CC65A /* PBXTargetDependency */,
-			);
-			name = KosmicTaskScalaRunner;
-			productName = KosmicTaskShellScriptRunner;
-			productReference = ABFFCDA9120D5A28005CC65A /* KosmicTaskScalaRunner */;
-			productType = "com.apple.product-type.tool";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -10575,7 +10471,6 @@
 				AB27B0A9118A104900132977 /* KosmicTaskPythonRunner */,
 				AB27B18E118A12B500132977 /* KosmicTaskRubyCocoaRunner */,
 				AB5CDAF5118AF3EF00C545CD /* KosmicTaskRubyRunner */,
-				ABFFCD9A120D5A28005CC65A /* KosmicTaskScalaRunner */,
 				0953D02A0CD941AD00519488 /* KosmicTaskServer */,
 				AB5625E0118DB10F0012487B /* KosmicTaskTclshRunner */,
 				AB5624F4118DB0FF0012487B /* KosmicTaskTcshRunner */,
@@ -10598,7 +10493,6 @@
 				AB9CB73A118AEA6D006F19F1 /* Language Plugin PythonObjC */,
 				AB5CDAAE118AF38200C545CD /* Language Plugin Ruby */,
 				AB36002A11886EF700F1E894 /* Language Plugin RubyCocoa */,
-				ABFFCD81120D5A09005CC65A /* Language Plugin Scala */,
 				AB1561D4118DAA1E00DC01C7 /* Language Plugin Tcl Shell */,
 				AB1560EE118DA87E00DC01C7 /* Language Plugin TENEX C Shell */,
 				AB156189118DA9AC00DC01C7 /* Language Plugin Z Shell */,
@@ -11525,14 +11419,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABD054DF1325231A00A728B8 /* Language in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ABFFCD86120D5A09005CC65A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AB4A5C98120D6039006A66CC /* scala in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12701,23 +12587,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ABFFCD8A120D5A09005CC65A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AB4A5B4E120D5B51006A66CC /* MGSScalaLanguagePlugin.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ABFFCD9D120D5A28005CC65A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ABFFCD9E120D5A28005CC65A /* taskmain.m in Sources */,
-				AB4A5B52120D5BC6006A66CC /* MGSScalaRunner.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -12931,11 +12800,6 @@
 			isa = PBXTargetDependency;
 			target = AB4D19010DE2D49400D0E517 /* Export Plugin PDF */;
 			targetProxy = AB456B2D0DE2D73400F8A8AE /* PBXContainerItemProxy */;
-		};
-		AB4A5B31120D5AEF006A66CC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = ABFFCD9A120D5A28005CC65A /* KosmicTaskScalaRunner */;
-			targetProxy = AB4A5B30120D5AEF006A66CC /* PBXContainerItemProxy */;
 		};
 		AB4A5CB1120D7753006A66CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -13447,16 +13311,6 @@
 			name = QLMarkdown;
 			targetProxy = ABF6CE2213CF7894000EADD7 /* PBXContainerItemProxy */;
 		};
-		ABFFCD82120D5A09005CC65A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 09C09E250CDC7D710048BC79 /* MGSKosmicTask */;
-			targetProxy = ABFFCD83120D5A09005CC65A /* PBXContainerItemProxy */;
-		};
-		ABFFCD9B120D5A28005CC65A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AB27AD041189E86A00132977 /* MGSKosmicTaskRunner */;
-			targetProxy = ABFFCD9C120D5A28005CC65A /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -13894,7 +13748,7 @@
 		0953D02E0CD941E000519488 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "Developer ID Application: Mugginsoft LLP";
 				FRAMEWORK_SEARCH_PATHS = /Users/Jonathan/Documents/Computing/source/KosmicTask/yamlkit;
 				INFOPLIST_FILE = "KosmicTaskServer-Info.plist";
@@ -13913,7 +13767,7 @@
 		0953D02F0CD941E000519488 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "Developer ID Application: Mugginsoft LLP";
 				FRAMEWORK_SEARCH_PATHS = /Users/Jonathan/Documents/Computing/source/KosmicTask/yamlkit;
 				INFOPLIST_FILE = "KosmicTaskServer-Info.plist";
@@ -16803,111 +16657,6 @@
 			};
 			name = Release;
 		};
-		ABFFCD92120D5A09005CC65A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Scala-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Scala";
-				WRAPPER_EXTENSION = "lang-plugin";
-			};
-			name = Debug;
-		};
-		ABFFCD93120D5A09005CC65A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				GENERATE_PKGINFO_FILE = YES;
-				INFOPLIST_FILE = "Language Plugin Scala-Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				PRODUCT_NAME = "Language Plugin Scala";
-				WRAPPER_EXTENSION = "lang-plugin";
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		ABFFCDA6120D5A28005CC65A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Mugginsoft LLP";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info copy.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskScalaRunner;
-				PROVISIONING_PROFILE = "";
-			};
-			name = Debug;
-		};
-		ABFFCDA7120D5A28005CC65A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Mugginsoft LLP";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "../KosmicTaskRunner-Info copy.plist";
-				INSTALL_PATH = /usr/local/bin;
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"KosmicTaskRunner-Info.plist",
-				);
-				PRODUCT_NAME = KosmicTaskScalaRunner;
-				PROVISIONING_PROFILE = "";
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -17644,24 +17393,6 @@
 			buildConfigurations = (
 				ABE78254132516FF00663CBB /* Debug */,
 				ABE78255132516FF00663CBB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		ABFFCD91120D5A09005CC65A /* Build configuration list for PBXNativeTarget "Language Plugin Scala" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				ABFFCD92120D5A09005CC65A /* Debug */,
-				ABFFCD93120D5A09005CC65A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		ABFFCDA5120D5A28005CC65A /* Build configuration list for PBXNativeTarget "KosmicTaskScalaRunner" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				ABFFCDA6120D5A28005CC65A /* Debug */,
-				ABFFCDA7120D5A28005CC65A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
