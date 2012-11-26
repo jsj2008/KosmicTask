@@ -196,8 +196,7 @@ static id _sharedController = nil;
  */
 - (NSString *)storageFileWithOptions:(NSDictionary *)options
 {
-#pragma unused(options)
-	
+
 	NSString *suffix = [options objectForKey:MGSTempFileSuffix];
 	if (!suffix) {
 		suffix = @"";

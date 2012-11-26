@@ -112,10 +112,10 @@ const char MGSIncrementValueBindingContext;
 	switch (offset) {
 		case 0:
 			return 20;
-			break;
+
 			
 		default:
-			NSAssert(NO, @"invalid subview offset");
+			NSAssert(NO, @"invalid subview offset", nil);
 	}
 	
 	return 0;
@@ -136,7 +136,7 @@ const char MGSIncrementValueBindingContext;
 			break;
 			
 		default:
-			NSAssert(NO, @"invalid subview offset");
+			NSAssert(NO, @"invalid subview offset", nil);
 	}
 	
 	return 0;

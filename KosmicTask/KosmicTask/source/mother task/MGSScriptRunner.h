@@ -130,7 +130,7 @@
 @property (copy) NSString *scriptExecutableExtension;
 @property (copy) NSString *scriptSourceExtension;
 @property (readonly, copy) NSString *scriptFilePath;
-@property (readonly, copy) NSString *workingDirectory;
+@property (readonly) NSString *workingDirectory;
 @property (copy) NSString *scriptFileNameTemplate;
 @property (readonly, copy) NSString *scriptAction;
 @property (readonly) BOOL isExecuting;

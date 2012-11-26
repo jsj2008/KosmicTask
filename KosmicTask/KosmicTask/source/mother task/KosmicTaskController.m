@@ -211,7 +211,7 @@ static id mgs_sharedController;
 	if (!keepTaskAlive) {
 			
 		id appDelegate = [NSApp delegate];		
-		NSAssert([appDelegate conformsToProtocol:@protocol(MGSScriptRunner)], @"app delegate cannot stop task");
+		NSAssert([appDelegate conformsToProtocol:@protocol(MGSScriptRunner)], @"app delegate cannot stop task", nil);
 
 		// stop the task
 		[appDelegate stopTask:self.resultObject];

@@ -106,6 +106,10 @@ static OSStatus LaunchSystemEvents(ProcessSerialNumber *psnPtr)
             
             err = LSOpenApplication(&appParams, psnPtr);
         } else {
+            
+#if __LP64__
+            // invalid path for 64 bit
+#else
             FSSpec				appSpec;
             LaunchParamBlockRec lpb;
             
@@ -132,6 +136,7 @@ static OSStatus LaunchSystemEvents(ProcessSerialNumber *psnPtr)
             if (err == noErr) {
                 *psnPtr = lpb.launchProcessSN;
             }
+#endif
         }
     }
 
@@ -232,7 +237,7 @@ static OSStatus SendAppleEvent(const AEDesc *event, AEDesc *reply)
 		err = AEGetParamPtr(
 			reply, 
 			keyErrorNumber, 
-			typeShortInteger, 
+			typeSInt16, 
 			&junkType,
 			&replyErr, 
 			sizeof(replyErr), 
@@ -808,7 +813,7 @@ extern OSStatus LIAERemove(CFIndex itemIndex)
 	// Build object specifier for "login item X".
 
 	itemIndexPlusOne = itemIndex + 1;	// AppleScript is one-based, CF is zero-based
-	err = AECreateDesc(typeLongInteger, &itemIndexPlusOne, sizeof(itemIndexPlusOne), &indexDesc);
+	err = AECreateDesc(typeSInt32, &itemIndexPlusOne, sizeof(itemIndexPlusOne), &indexDesc);
 	if (err == noErr) {
 		err = CreateObjSpecifier(cLoginItem, (AEDesc *) &kAENull, formAbsolutePosition, &indexDesc, false, &loginItemAtIndex);
 	}

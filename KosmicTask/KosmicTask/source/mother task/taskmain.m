@@ -65,7 +65,6 @@ void* WatchForParentTermination (void* arg) {
 	} 
 	NSLog(@"Task Terminating--Parent Process Terminated\n"); 
 	exit (0);	
-	return 0; 
 } 
 
 

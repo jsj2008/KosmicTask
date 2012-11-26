@@ -211,7 +211,7 @@
  
  */
 
-- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info proposedRow:(int)row proposedDropOperation:(NSTableViewDropOperation)op
+- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)op
 {
 	#pragma unused(tv)
 	#pragma unused(info)
@@ -229,7 +229,7 @@
  
  */
 - (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id <NSDraggingInfo>)info
-			  row:(int)row dropOperation:(NSTableViewDropOperation)operation
+			  row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation
 {
 	#pragma unused(aTableView)
 	#pragma unused(operation)
@@ -237,7 +237,7 @@
     NSPasteboard* pboard = [info draggingPasteboard];
     NSData* rowData = [pboard dataForType:MyPrivateTableViewDataType];
     NSIndexSet* rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
-    int dragRow = [rowIndexes firstIndex];
+    NSInteger dragRow = (NSInteger)[rowIndexes firstIndex];
 	
     // Move the specified row to its new location...
 	NSDragOperation dragOp = [info draggingSourceOperationMask];
@@ -291,7 +291,7 @@
 {	
 	#pragma unused(sender)
 	
-	int selectedSegment = [_segmentedControl selectedSegment];
+	NSUInteger selectedSegment = [_segmentedControl selectedSegment];
 	
 	[_arrayController commitEditing];
 	

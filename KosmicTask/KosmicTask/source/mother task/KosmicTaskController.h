@@ -23,7 +23,6 @@
 + (BOOL)keepTaskAlive;
 + (NSString *)tempFileWithName:(NSString *)suffix;
 + (NSString *)resultFileWithName:(NSString *)suffix;
-+ (void)stopTask:(id)result;
 + (void)keepTaskRunning;
 + (NSUInteger)fourCharToInteger:(NSString *)fourChar;
 + (void)log:(NSString *)value;

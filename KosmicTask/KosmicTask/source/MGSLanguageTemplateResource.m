@@ -70,10 +70,6 @@
 		case MGSResourceItemMarkdownFile:
 		case MGSResourceItemPlistFile:
 			return YES;
-			break;
-			
-		default:
-			break;
 	}
 	
 	return NO;

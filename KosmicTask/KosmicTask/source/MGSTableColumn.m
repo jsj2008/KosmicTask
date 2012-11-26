@@ -65,7 +65,7 @@
 	// I thought this would enable a fully functional subclassing of the table column header
 	// but it does not seem to do so either!
 	// this is legal if right is subclass of left + no more ivars
-	headerCell->isa = [iTableColumnHeaderCell class];
+	//headerCell->isa = [iTableColumnHeaderCell class];
 	(void)headerCell;	// shut the compiler up
 	return column;
 }

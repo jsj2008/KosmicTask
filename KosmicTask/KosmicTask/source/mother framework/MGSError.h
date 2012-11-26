@@ -101,7 +101,6 @@ extern NSString *MGSErrorDomainMotherScriptTask;
 + (id)errorWithDictionary:(NSDictionary *)dict log:(BOOL)logIt;
 + (id)errorWithDictionary:(NSDictionary *)dict;
 + (void)setWindowController:(MGSErrorWindowController *)controller;
-+ (id)clientCode:(NSInteger)code reason:(NSString *)message log:(BOOL)logIt;
 
 // framework
 + (id)frameworkCode:(NSInteger)code;

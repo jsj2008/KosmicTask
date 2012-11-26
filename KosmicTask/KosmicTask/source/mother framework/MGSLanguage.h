@@ -8,35 +8,40 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum {
-	kMGSInterpretedLanguage,
+enum _eMGSLanguageType {
+	kMGSInterpretedLanguage = 0,
 	kMGSCompiledLanguage,
-} eMGSLanguageType;
+};
+typedef NSInteger eMGSLanguageType;
 
-typedef enum {
-	kMGSInProcess,
+enum _eMGSProcessType {
+	kMGSInProcess = 0,
 	kMGSOutOfProcess,
-} eMGSProcessType;
+};
+typedef NSInteger eMGSProcessType;
 
-typedef enum {
-	kMGSSource,
+enum _eMGSExecutableFormat {
+	kMGSSource = 0,
 	kMGSCompiled,
-} eMGSExecutableFormat;
+};
+typedef NSInteger eMGSExecutableFormat;
 
-typedef enum {
-	kMGSOnRunCallNone,
+ enum _eMGSOnRunTask {
+	kMGSOnRunCallNone = 0,
 	kMGSOnRunCallScript,
 	kMGSOnRunCallScriptFunction,
 	kMGSOnRunCallClassFunction
-} eMGSOnRunTask;
+ };
+typedef NSInteger eMGSOnRunTask;
 
 // build result flags
-typedef enum 
+enum _MGSBuildResultFlags
 {
 	kMGSCompiledScript      = 1 <<  1,  // If set, build result includes compiled script
 	kMGSScriptSourceRTF     = 1 <<  2,  // If set, build result includes script source RTF
 	kMGSScriptSource		= 1 <<  3,  // If set, build result includes script source
-} MGSBuildResultFlags;
+};
+typedef NSInteger MGSBuildResultFlags;
 
 @interface MGSLanguage : NSObject <NSCopying> {
 

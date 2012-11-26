@@ -171,7 +171,7 @@ static BOOL isForegroundApplication = NO;
  */
 - (Class)languageClass
 {
-	NSAssert(NO, @"subclass must override");
+	NSAssert(NO, @"subclass must override", nil);
 	
 	return [MGSLanguage class];
 }
@@ -612,7 +612,7 @@ errorExit:
  */
 - (void)setErrorInfo:(NSMutableDictionary *)theErrorInfo
 {
-	NSAssert([theErrorInfo isKindOfClass:[NSDictionary class]], @"bad errorInfo class");
+	NSAssert([theErrorInfo isKindOfClass:[NSDictionary class]], @"bad errorInfo class", nil);
 	
 	errorInfo = theErrorInfo;
 	/*
@@ -1281,7 +1281,7 @@ exitHandler:
 		return self.scriptExecutableExtension;
 	}
 	
-	NSAssert(NO, @"invalid script file extension");
+	NSAssert(NO, @"invalid script file extension", nil);
 	
 	return @"tmp";
 }
@@ -1318,7 +1318,7 @@ exitHandler:
 - (void)setScriptFilePath:(NSString *)path
 {
 	scriptFilePath = path;
-	NSAssert([path isKindOfClass:[NSString class]], @"invalid path class");
+	NSAssert([path isKindOfClass:[NSString class]], @"invalid path class", nil);
 }
 /*
  

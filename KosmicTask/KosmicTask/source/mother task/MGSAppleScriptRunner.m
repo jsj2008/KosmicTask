@@ -501,7 +501,7 @@ OSErr MGSCustomSendProc( const AppleEvent *anAppleEvent, AppleEvent *aReply, AES
 	OSErr result = noErr;
 	
 	// send the event as normal
-	result = AESend(anAppleEvent, aReply, aSendMode, aSendPriority, aTimeOutInTicks, anIdleProc, aFilterProc);
+	result = AESend(anAppleEvent, aReply, aSendMode, aSendPriority, (int)aTimeOutInTicks, anIdleProc, aFilterProc);
 
 	//
 	// look for no user interaction required.
@@ -514,7 +514,7 @@ OSErr MGSCustomSendProc( const AppleEvent *anAppleEvent, AppleEvent *aReply, AES
 		if ([MGSAppleScriptRunner transformToForegroundApplication]) {
 		
 			// resend the event 
-			result = AESend(anAppleEvent, aReply, aSendMode, aSendPriority, aTimeOutInTicks, anIdleProc, aFilterProc);
+			result = AESend(anAppleEvent, aReply, aSendMode, aSendPriority, (int)aTimeOutInTicks, anIdleProc, aFilterProc);
 		}
 	}
 	

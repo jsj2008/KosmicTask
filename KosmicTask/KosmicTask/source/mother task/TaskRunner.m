@@ -17,9 +17,6 @@ static NSString *MGSTaskRunnerMainException = @"MGSTaskRunnerMainException";
  */
 int MGSTaskRunnerMain (int argc, const char * argv[])
 {
-#pragma unused(argc)
-#pragma unused(argv)
-	
 	//
 	// debugging the process
 	//
