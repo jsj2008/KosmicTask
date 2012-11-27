@@ -28,7 +28,7 @@
 - (MGSParameterViewController *)createView;
 - (void)destroyViews;
 - (void)createViews;
-- (void)showViewAtIndex:(int)index;
+- (void)showViewAtIndex:(NSInteger)index;
 - (void)addSplitViewSubview:(NSView *)view;
 - (void)removeSplitViewSubview:(NSView *)view;
 - (void)addSplitViewParameterSubview:(NSView *)view;
@@ -540,7 +540,7 @@
  show view at index.
  
  */
-- (void) showViewAtIndex:(int)idx
+- (void) showViewAtIndex:(NSInteger)idx
 {
 	MGSParameterViewController *viewController = [_viewControllers objectAtIndex:idx];
 	NSView *view = [viewController view];
@@ -609,7 +609,6 @@
 - (void)destroyViews
 {
 	MGSParameterViewController *viewController;
-	int i;
 	
 	// remove the end view
 	if ([_endViewController view]) {
@@ -617,7 +616,7 @@
 	}
 	
 	// remove the existing views from the splitview
-	for (i = [_viewControllers count]-1; i >= 0 ; i--) {
+	for (NSInteger i = [_viewControllers count]-1; i >= 0 ; i--) {
 		viewController = [_viewControllers objectAtIndex:i];
 		viewController.scriptParameter = nil;	// no longer references a parameter
 		NSView *view = [viewController view];

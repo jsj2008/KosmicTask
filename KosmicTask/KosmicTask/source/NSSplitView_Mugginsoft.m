@@ -42,7 +42,7 @@
 	CGFloat heightDelta = newSize.height - oldSize.height;
 	CGFloat dividerThickness = [self dividerThickness];
 
-	int subviewCount = [[self subviews] count];
+	NSUInteger subviewCount = [[self subviews] count];
 	
 	NSRect rect0 = [[[self subviews] objectAtIndex:0] frame];
 	NSRect rect1 = [[[self subviews] objectAtIndex:1] frame];
@@ -269,7 +269,7 @@
 	
 	for (NSUInteger i = 0; i < [[self subviews] count]; i++) {
 		NSRect frame = [[[self subviews] objectAtIndex:i] frame];
-		NSLog(@"subview %i : origin.x = %f : origin.y = %f : size.width = %f : size.height = %f", i, frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+		NSLog(@"subview %lu: origin.x = %f : origin.y = %f : size.width = %f : size.height = %f", (unsigned long)i, frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
 	}
 }
 

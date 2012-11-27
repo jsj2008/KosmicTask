@@ -9,10 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSAPLicence.h"
 
-typedef enum _MGSLType {
+enum _MGSLType {
 	MGSLTypeIndividual = 0x0,	// individual licence
 	MGSLTypeComputer = 0x01,	// computer licence
-} MGSLType;
+};
+typedef NSInteger MGSLType;
 
 
 @interface MGSL : NSObject {

@@ -1743,7 +1743,7 @@ const char MGSContextStartupComplete;
 	
 	// follow HIG guidelines for naming new documents
 	if ([_editWindowControllers count] > 1) {
-		NSString *newName = [NSString stringWithFormat:@"%@ %i", [newScript name], [_editWindowControllers count]];
+		NSString *newName = [NSString stringWithFormat:@"%@ %ld", [newScript name], (long)[_editWindowControllers count]];
 		[newScript setName:newName];
 	}
 	

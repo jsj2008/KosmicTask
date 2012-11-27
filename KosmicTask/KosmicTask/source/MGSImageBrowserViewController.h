@@ -55,6 +55,6 @@
 - (IBAction)save:(id)sender;
 
 - (NSWindow *)window;
-- (int) numberOfItemsInImageBrowser:(IKImageBrowserView *) browser;
+- (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) browser;
 
 @end

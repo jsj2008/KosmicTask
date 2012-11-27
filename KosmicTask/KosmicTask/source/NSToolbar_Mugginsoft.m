@@ -16,7 +16,7 @@
  get index of toolbar item with identifier
  
  */
-- (int)indexOfItemWithItemIdentifier:(NSString *)identifier
+- (NSInteger)indexOfItemWithItemIdentifier:(NSString *)identifier
 {
 	NSInteger idx = 0;
 	for (NSToolbarItem *item in [self items]) {
@@ -35,7 +35,7 @@
  */
 - (void)removeItemWithItemIdentifier:(NSString *)identifier
 {
-	int idx = [self indexOfItemWithItemIdentifier:identifier];
+	NSInteger idx = [self indexOfItemWithItemIdentifier:identifier];
 	if (idx == -1) return;
 	
 	[self removeItemAtIndex:idx];
@@ -48,7 +48,7 @@
  */
 - (void)removeItemsStartingAtIndex:(NSInteger)startIndex
 {
-	for (int i = [[self items] count] - 1; i >= startIndex; i--) {
+	for (NSInteger i = [[self items] count] - 1; i >= startIndex; i--) {
 		[self removeItemAtIndex:i];
 	}
 }

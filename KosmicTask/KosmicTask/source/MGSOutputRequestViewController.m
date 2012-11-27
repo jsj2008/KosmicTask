@@ -561,7 +561,7 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
  segment click
  
  */
-- (void)segmentClick:(int)selectedSegment
+- (void)segmentClick:(NSInteger)selectedSegment
 {
 	int mode = kMGSMotherResultViewDocument;	
 	switch (selectedSegment) {

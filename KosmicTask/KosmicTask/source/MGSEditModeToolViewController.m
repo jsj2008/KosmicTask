@@ -65,7 +65,7 @@ const char MGSTaskProcessingContext;
  */
 - (IBAction)segControlClicked:(id)sender
 {
-    int mode = [sender selectedSegment];	// mode is segment index
+    NSInteger mode = [sender selectedSegment];	// mode is segment index
 	
 	// same segment clicked again - ignore
 	if (_lastSegmentedClicked == mode) {
@@ -105,8 +105,8 @@ const char MGSTaskProcessingContext;
 	}
 	
 	// post edit mode changed notification
-	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:mode], MGSNoteModeKey,
-										[NSNumber numberWithInt:_lastSegmentedClicked], MGSNotePrevModeKey, 
+	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:mode], MGSNoteModeKey,
+										[NSNumber numberWithInteger:_lastSegmentedClicked], MGSNotePrevModeKey,
 										nil];
 
 	_lastSegmentedClicked = mode;

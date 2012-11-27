@@ -59,15 +59,15 @@
 @interface MGScopeBar (MGPrivateMethods)
 
 - (IBAction)scopeButtonClicked:(id)sender;
-- (NSButton *)getButtonForItem:(NSString *)identifier inGroup:(int)groupNumber; // returns relevant button/menu-item
-- (void)updateSelectedState:(BOOL)selected forItem:(NSString *)identifier inGroup:(int)groupNumber informDelegate:(BOOL)inform;
-- (NSButton *)buttonForItem:(NSString *)identifier inGroup:(int)groupNumber 
+- (NSButton *)getButtonForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber; // returns relevant button/menu-item
+- (void)updateSelectedState:(BOOL)selected forItem:(NSString *)identifier inGroup:(NSInteger)groupNumber informDelegate:(BOOL)inform;
+- (NSButton *)buttonForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber 
 				  withTitle:(NSString *)title image:(NSImage *)image; // creates a new NSButton
-- (NSMenuItem *)menuItemForItem:(NSString *)identifier inGroup:(int)groupNumber 
+- (NSMenuItem *)menuItemForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber 
 					  withTitle:(NSString *)title image:(NSImage *)image; // creates a new NSMenuitem
 - (NSPopUpButton *)popupButtonForGroup:(NSDictionary *)group;
-- (void)setControl:(NSObject *)control forIdentifier:(NSString *)identifier inGroup:(int)groupNumber;
-- (void)updateMenuTitleForGroupAtIndex:(int)groupNumber;
+- (void)setControl:(NSObject *)control forIdentifier:(NSString *)identifier inGroup:(NSInteger)groupNumber;
+- (void)updateMenuTitleForGroupAtIndex:(NSInteger)groupNumber;
 
 @end
 
@@ -136,7 +136,7 @@
 	
 	// Configure contents via delegate.
 	if (self.delegate && [delegate conformsToProtocol:@protocol(MGScopeBarDelegate)]) {
-		int numGroups = [delegate numberOfGroupsInScopeBar:self];
+		NSInteger numGroups = (NSInteger)[delegate numberOfGroupsInScopeBar:self];
 		
 		if (numGroups > 0) {
 			_separatorPositions = [[NSMutableArray alloc] initWithCapacity:numGroups];
@@ -144,18 +144,18 @@
 			_identifiers = [[NSMutableDictionary alloc] initWithCapacity:0];
 			_selectedItems = [[NSMutableArray alloc] initWithCapacity:numGroups];
 			
-			int xCoord = SCOPE_BAR_H_INSET;
+			NSInteger xCoord = SCOPE_BAR_H_INSET;
 			NSRect ctrlRect = NSZeroRect;
 			BOOL providesImages = [delegate respondsToSelector:@selector(scopeBar:imageForItem:inGroup:)];
 			
-			for (int groupNum = 0; groupNum < numGroups; groupNum++) {
+			for (NSInteger groupNum = 0; groupNum < numGroups; groupNum++) {
 				// Add separator if appropriate.
 				BOOL addSeparator = (groupNum > 0); // default behavior.
 				if ([delegate respondsToSelector:@selector(scopeBar:showSeparatorBeforeGroup:)]) {
 					addSeparator = [delegate scopeBar:self showSeparatorBeforeGroup:groupNum];
 				}
 				if (addSeparator) {
-					[_separatorPositions addObject:[NSNumber numberWithInt:xCoord]];
+					[_separatorPositions addObject:[NSNumber numberWithInteger:xCoord]];
 					xCoord += SCOPE_BAR_SEPARATOR_WIDTH + SCOPE_BAR_ITEM_SPACING;
 					
 					_totalGroupsWidth += SCOPE_BAR_SEPARATOR_WIDTH + SCOPE_BAR_ITEM_SPACING;
@@ -202,7 +202,7 @@
 				NSMutableDictionary *groupInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 												  usedIdentifiers, GROUP_IDENTIFIERS, 
 												  buttons, GROUP_BUTTONS, 
-												  [NSNumber numberWithInt:selMode], GROUP_SELECTION_MODE, 
+												  [NSNumber numberWithInteger:selMode], GROUP_SELECTION_MODE,
 												  [NSNumber numberWithBool:NO], GROUP_MENU_MODE, 
 												  [NSNumber numberWithBool:hasLabel], GROUP_HAS_LABEL, 
 												  [NSNumber numberWithBool:addSeparator], GROUP_HAS_SEPARATOR, 
@@ -360,7 +360,7 @@
 	}
 	
 	BOOL shouldAdjustPopups = (availableWidth < _totalGroupsWidthForPopups);
-	int oldFirstCollapsedGroup = _firstCollapsedGroup;
+	NSInteger oldFirstCollapsedGroup = _firstCollapsedGroup;
 	
 	// Work out which groups we should now check for collapsibility/expandability.
 	NSEnumerator *groupsEnumerator = nil;
@@ -503,9 +503,9 @@ check_proceed:
 		// If a change is required, ensure that each group is expanded or contracted as appropriate.
 		if (adjusting || shouldAdjustPopups) {
 			//NSLog(@"Got %@ - modifying groups %@", ((narrower) ? @"narrower" : @"wider"), NSStringFromRange(changedRange));
-			int nextXCoord = NSNotFound;
+			NSInteger nextXCoord = NSNotFound;
 			if (adjusting) {
-				for (int i = (int)(changedRange.location); i < (int)NSMaxRange(changedRange); i++) {
+				for (NSInteger i = (NSInteger)(changedRange.location); i < (NSInteger)NSMaxRange(changedRange); i++) {
 					NSMutableDictionary *groupInfo = [_groups objectAtIndex:i];
 					
 					if (nextXCoord == NSNotFound) {
@@ -558,7 +558,7 @@ check_proceed:
 						float buttonX = nextXCoord;
 						NSMutableArray *menuItems = [groupInfo objectForKey:GROUP_BUTTONS];
 						NSArray *selectedItems = [_selectedItems objectAtIndex:i];
-						for (int j = 0; j < (int)[menuItems count]; j++) {
+						for (NSInteger j = 0; j < (NSInteger)[menuItems count]; j++) {
 							NSMenuItem *menuItem = [menuItems objectAtIndex:j];
 							NSString *itemIdentifier = [menuItem representedObject];
 							NSButton *button = [self buttonForItem:itemIdentifier 
@@ -590,7 +590,7 @@ check_proceed:
 			if (shouldAdjustPopups) {
 				perGroupDelta = ((_totalGroupsWidthForPopups - availableWidth) / [_groups count]);
 			}
-			for (int i = startIndex; i < (int)[_groups count]; i++) {
+			for (NSInteger i = startIndex; i < (NSInteger)[_groups count]; i++) {
 				NSDictionary *groupInfo = [_groups objectAtIndex:i];
 				BOOL menuMode = [[groupInfo objectForKey:GROUP_MENU_MODE] boolValue];
 				
@@ -679,7 +679,7 @@ check_proceed:
 }
 
 
-- (NSButton *)getButtonForItem:(NSString *)identifier inGroup:(int)groupNumber
+- (NSButton *)getButtonForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber
 {
 	NSButton *button = nil;
 	NSArray *group = [_identifiers objectForKey:identifier];
@@ -694,7 +694,7 @@ check_proceed:
 }
 
 
-- (NSButton *)buttonForItem:(NSString *)identifier inGroup:(int)groupNumber 
+- (NSButton *)buttonForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber
 				  withTitle:(NSString *)title image:(NSImage *)image
 {
 	NSRect ctrlRect = NSMakeRect(0, 0, 50, 20); // arbitrary size; will be resized later.
@@ -726,7 +726,7 @@ check_proceed:
 }
 
 
-- (NSMenuItem *)menuItemForItem:(NSString *)identifier inGroup:(int)groupNumber 
+- (NSMenuItem *)menuItemForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber 
 					  withTitle:(NSString *)title image:(NSImage *)image
 {
 	NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:title action:@selector(scopeButtonClicked:) keyEquivalent:@""];
@@ -773,7 +773,7 @@ check_proceed:
 	// Add appropriate items.
 	[popup removeAllItems];
 	NSMutableArray *buttons = [group objectForKey:GROUP_BUTTONS];
-	for (int i = 0; i < (int)[buttons count]; i++) {
+	for (NSInteger i = 0; i < (NSInteger)[buttons count]; i++) {
 		NSButton *button = (NSButton *)[buttons objectAtIndex:i];
 		NSMenuItem *menuItem = [self menuItemForItem:[[button cell] representedObject] 
 											 inGroup:[button tag] 
@@ -796,7 +796,7 @@ check_proceed:
 }
 
 
-- (void)setControl:(NSObject *)control forIdentifier:(NSString *)identifier inGroup:(int)groupNumber
+- (void)setControl:(NSObject *)control forIdentifier:(NSString *)identifier inGroup:(NSInteger)groupNumber
 {
 	if (!_identifiers) {
 		_identifiers = [[NSMutableDictionary alloc] initWithCapacity:0];
@@ -808,10 +808,10 @@ check_proceed:
 		[_identifiers setObject:identArray forKey:identifier];
 	}
 	
-	int count = [identArray count];
+	NSInteger count = (NSInteger)[identArray count];
 	if (groupNumber >= count) {
 		// Pad identArray with nulls if appropriate, so this control lies at index groupNumber.
-		for (int i = count; i < groupNumber; i++) {
+		for (NSInteger i = count; i < groupNumber; i++) {
 			[identArray addObject:[NSNull null]];
 		}
 		[identArray addObject:control];
@@ -821,7 +821,7 @@ check_proceed:
 }
 
 
-- (void)updateMenuTitleForGroupAtIndex:(int)groupNumber
+- (void)updateMenuTitleForGroupAtIndex:(NSInteger)groupNumber
 {
 	// Ensure that this group's popup (if present) has the correct title,
 	// accounting for the group's selection-mode and selected item(s).
@@ -835,7 +835,7 @@ check_proceed:
 		NSPopUpButton *popup = [group objectForKey:GROUP_POPUP_BUTTON];
 		if (popup) {
 			NSArray *groupSelection = [_selectedItems objectAtIndex:groupNumber];
-			int numSelected = [groupSelection count];
+			NSInteger numSelected = [groupSelection count];
 			if (numSelected == 0) {
 				// No items selected.
 				[popup setTitle:POPUP_TITLE_EMPTY_SELECTION];
@@ -917,7 +917,7 @@ check_proceed:
 	NSButton *button = (NSButton *)sender;
 	BOOL menuMode = [sender isKindOfClass:[NSMenuItem class]];
 	NSString *identifier = [((menuMode) ? sender : [sender cell]) representedObject];
-	int groupNumber = [sender tag];
+	NSInteger groupNumber = [sender tag];
 	BOOL nowSelected = YES;
 	if (menuMode) {
 		// MenuItem. Ensure item has appropriate state.
@@ -934,7 +934,7 @@ check_proceed:
 #pragma mark Accessors and properties
 
 
-- (void)setSelected:(BOOL)selected forItem:(NSString *)identifier inGroup:(int)groupNumber
+- (void)setSelected:(BOOL)selected forItem:(NSString *)identifier inGroup:(NSInteger)groupNumber
 {
 	// Change state of other items in group appropriately, informing delegate if possible.
 	// First we find the appropriate group-info for the item's identifier.

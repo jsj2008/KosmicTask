@@ -12,12 +12,13 @@
 #import "MGSActionDescriptionViewController.h"
 #import "MGSActionViewController.h"
 
-typedef enum _MGSAIFButton {
+enum _MGSAIFButton {
 	MGSAifButtonNone = 0,
 	MGSAifButtonDescription = 1,
 	MGSAifButtonOptions = 2,
 	MGSAifButtonInfo = 3,
-} MGSAifButton;
+};
+typedef NSInteger MGSAifButton;
 
 static MGSAifButton _currentButton = MGSAifButtonNone;
 

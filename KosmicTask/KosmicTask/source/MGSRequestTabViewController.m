@@ -92,7 +92,7 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
     [[tabBar addTabButton] setAction:@selector(addCopyOfSelectedTab:)];
     
     // remove any tabs present in the nib
- 	int i;
+ 	NSInteger i;
 	for (i=[tabView numberOfTabViewItems]-1; i >=0; i--) {
 		NSTabViewItem *item = [[tabView tabViewItems] objectAtIndex:i];
 		[tabView removeTabViewItem:item];
@@ -333,7 +333,7 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 {
 	NSInteger count = 0;
 	
-	for (int i = [tabView numberOfTabViewItems]-1; i >=0; i--) {
+	for (NSInteger i = [tabView numberOfTabViewItems]-1; i >=0; i--) {
 		NSTabViewItem *item = [[tabView tabViewItems] objectAtIndex:i];
 		MGSTaskSpecifier *tabAction = [self actionSpecifierForTabViewItem:item];
 		if ([tabAction isProcessing]) count++;
@@ -401,7 +401,7 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
  */
  - (NSTabViewItem *)tabViewItemForAction:(MGSTaskSpecifier *)action
  {
-	int i;
+	NSInteger i;
 	for (i=[tabView numberOfTabViewItems]-1; i >=0; i--) {
 		NSTabViewItem *item = [[tabView tabViewItems] objectAtIndex:i];
 		if ([[self actionSpecifierForTabViewItem:item] isEqual:action]) {
@@ -418,7 +418,7 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
  */
 - (NSTabViewItem *)tabViewItemForActionUUID:(MGSTaskSpecifier *)action
 {
-	int i;
+	NSInteger i;
 	for (i=[tabView numberOfTabViewItems]-1; i >=0; i--) {
 		NSTabViewItem *item = [[tabView tabViewItems] objectAtIndex:i];
 		
@@ -440,7 +440,7 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
  */
 - (NSTabViewItem *)tabViewItemForActionClient:(MGSTaskSpecifier *)action
 {
-	int i;
+	NSInteger i;
 	for (i=[tabView numberOfTabViewItems]-1; i >=0; i--) {
 		NSTabViewItem *item = [[tabView tabViewItems] objectAtIndex:i];
 		
@@ -539,7 +539,7 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 // get tab view item for requestview
 - (NSTabViewItem *)tabViewItemForRequestView:(MGSRequestViewController *)requestView
 {
-	int i;
+	NSInteger i;
 	for (i=[tabView numberOfTabViewItems]-1; i >=0; i--) {
 		NSTabViewItem *item = [[tabView tabViewItems] objectAtIndex:i];
 		if ([item identifier] == requestView) {

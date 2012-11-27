@@ -19,7 +19,7 @@
 @implementation MGSBorderlessWindow
 
 - (id)initWithContentRect:(NSRect)contentRect 
-                styleMask:(unsigned int)aStyle 
+                styleMask:(NSUInteger)aStyle
                   backing:(NSBackingStoreType)bufferingType 
                     defer:(BOOL)flag {
     
@@ -63,9 +63,9 @@
     newOrigin.x = currentLocation.x - initialLocation.x;
     newOrigin.y = currentLocation.y - initialLocation.y;
     
-    if( (newOrigin.y + windowFrame.size.height) > (NSMaxY(screenFrame) - [NSMenuView menuBarHeight]) ){
+    if( (newOrigin.y + windowFrame.size.height) > (NSMaxY(screenFrame) - [[NSApp mainMenu] menuBarHeight]) ){
         // Prevent dragging into the menu bar area
-		newOrigin.y = NSMaxY(screenFrame) - windowFrame.size.height - [NSMenuView menuBarHeight];
+		newOrigin.y = NSMaxY(screenFrame) - windowFrame.size.height - [[NSApp mainMenu] menuBarHeight];
     }
     /*
 	 if (newOrigin.y < NSMinY(screenFrame)) {

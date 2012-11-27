@@ -198,7 +198,7 @@ static BOOL _userScriptGroupSaved = NO;
  */
 - (MGSScript *)scriptForUUID:(NSString *)UUID
 {
-	int i = [self scriptIndexForUUID:UUID];
+	NSInteger i = [self scriptIndexForUUID:UUID];
 	if (i == -1) return nil;
 	
 	MGSScript *script = [_scriptManager itemAtIndex:i];
@@ -593,7 +593,7 @@ static BOOL _userScriptGroupSaved = NO;
  group script handler at index 
  
  */
-- (MGSScriptManager *)groupAtIndex:(int)idx
+- (MGSScriptManager *)groupAtIndex:(NSInteger)idx
 {
 	if (idx >= 0 && idx < (NSInteger)[_groupScriptManagerArray count]) {
 		return [_groupScriptManagerArray objectAtIndex:idx];

@@ -31,6 +31,6 @@
 - (IBAction)logIn:(id)sender;
 - (void)updateSegmentModeText:(id)sender;
 - (void)updateSegmentStatus;
-- (void)setRunMode:(int)mode;
+- (void)setRunMode:(NSInteger)mode;
 
 @end

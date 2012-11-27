@@ -1010,7 +1010,7 @@ errorExit:
                 
         }
     } else {
-        [NSException raise:MGSNetSocketException format:@"Invalid request status in chunked read: %i", _netRequest.status];
+        [NSException raise:MGSNetSocketException format:@"Invalid request status in chunked read: %ld", (long)_netRequest.status];
     }
 
 } 

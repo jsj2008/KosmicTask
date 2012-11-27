@@ -260,7 +260,7 @@ NSString *MGSNetClientKeyPathActivityFlags = @"activityFlags";
 	
 	return [NSDictionary dictionaryWithObjectsAndKeys:address, MGSNetClientKeyAddress,
 			displayName, MGSNetClientKeyDisplayName,
-			[NSNumber numberWithInt:portNumber], MGSNetClientKeyPortNumber,
+			[NSNumber numberWithInteger:portNumber], MGSNetClientKeyPortNumber,
 			[NSNumber numberWithBool:_keepConnected], MGSNetClientKeyKeepConnected,
 			[NSNumber numberWithBool:_useSSL], MGSNetClientKeySecureConnection,			
 			nil];
@@ -885,7 +885,7 @@ NSString *MGSNetClientKeyPathActivityFlags = @"activityFlags";
 			break;
 			
 		default:
-			NSAssert1(NO, @"invalid host status %u", _hostStatus);
+			NSAssert1(NO, @"invalid host status %lu", (long)_hostStatus);
 			break;
 			
 	}
@@ -1226,7 +1226,7 @@ NSString *MGSNetClientKeyPathActivityFlags = @"activityFlags";
 			break;
 			
 		default:
-			NSAssert1(NO, @"invalid host status %u", _hostStatus);
+			NSAssert1(NO, @"invalid host status %lu", (long)_hostStatus);
 			break;
 			
 	}
@@ -1253,7 +1253,7 @@ NSString *MGSNetClientKeyPathActivityFlags = @"activityFlags";
 			
 		// host was already not responding and still isn't
 		case MGSHostStatusNotResponding:;
-			int heartbeatLimit = [[NSUserDefaults standardUserDefaults] integerForKey:MGSDefaultBadHeartbeatLimit];
+			NSInteger heartbeatLimit = [[NSUserDefaults standardUserDefaults] integerForKey:MGSDefaultBadHeartbeatLimit];
 			
 			// mark non bonjour host as disconnected after successive bad heartbeats
 			if (++_badHeartbeatCount == heartbeatLimit && _hostViaBonjour == NO) {
@@ -1269,7 +1269,7 @@ NSString *MGSNetClientKeyPathActivityFlags = @"activityFlags";
 			break;
 			
 		default:
-			NSAssert1(NO, @"invalid host status %u", _hostStatus);
+			NSAssert1(NO, @"invalid host status %lu", (long)_hostStatus);
 			break;
 			
 	}
@@ -1415,7 +1415,7 @@ NSString *MGSNetClientKeyPathActivityFlags = @"activityFlags";
 			break;
 			
 		default:
-			NSAssert1(NO, @"invalid host status %u", _hostStatus);
+			NSAssert1(NO, @"invalid host status %lu", (long)_hostStatus);
 			return;
 			
 	}

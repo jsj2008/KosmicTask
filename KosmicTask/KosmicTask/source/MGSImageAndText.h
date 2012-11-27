@@ -10,10 +10,11 @@
 
 extern NSString *MGSImageAndTextValueKey;
 
-typedef enum _MGSAlignment {
+enum _MGSAlignment {
 	MGSAlignRight = 0, 
 	MGSAlignLeft,
-} MGSAlignment;
+};
+typedef NSInteger MGSAlignment;
 
 @interface MGSImageAndText : NSObject {
 	id _value;

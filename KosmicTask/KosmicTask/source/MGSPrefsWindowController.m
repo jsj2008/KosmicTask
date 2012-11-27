@@ -161,7 +161,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 {
 	#pragma unused(sender)
 	
-	unsigned int flags = [[NSApp currentEvent] modifierFlags];
+	NSUInteger flags = [[NSApp currentEvent] modifierFlags];
     //if ((flags & NSCommandKeyMask) && (flags & NSAlternateKeyMask) && (flags & NSControlKeyMask)) {
 	if (!(flags & NSControlKeyMask)) {
         return;

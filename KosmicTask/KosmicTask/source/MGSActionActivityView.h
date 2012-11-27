@@ -14,7 +14,8 @@ enum _mgsFadeType {
     kMGSFadeTypeNone,
     kMGSFadeTypeIn,
     kMGSFadeTypeOut
-} typedef mgsFadeType;
+};
+typedef NSInteger mgsFadeType;
 
 @protocol MGSActionActivityViewDelegate <NSObject>
 

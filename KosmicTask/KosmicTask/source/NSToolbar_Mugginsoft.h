@@ -10,7 +10,7 @@
 
 
 @interface NSToolbar (Mugginsoft)
-- (int)indexOfItemWithItemIdentifier:(NSString *)identifier;
+- (NSInteger)indexOfItemWithItemIdentifier:(NSString *)identifier;
 - (void)removeItemWithItemIdentifier:(NSString *)identifier;
 - (void)removeItemsStartingAtIndex:(NSInteger)startIndex;
 @end

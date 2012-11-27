@@ -9,12 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSViewController.h"
 
-typedef enum _MGSNumberInputViewNotation {
+enum _MGSNumberInputViewNotation {
 	kMGSNumberInputViewDecimalNotation = 0,
 	kMGSNumberInputViewScientificENotation = 1,
 	kMGSNumberInputViewCurrencyNotation = 2,
 	kMGSNumberInputViewPercentNotation = 3,
-} MGSNumberInputViewNotation;
+};
+typedef NSInteger MGSNumberInputViewNotation;
 
 
 @interface MGSNumberInputViewController : NSViewController {

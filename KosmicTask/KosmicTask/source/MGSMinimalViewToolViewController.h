@@ -14,7 +14,7 @@
 }
 
 - (IBAction)segControlClicked:(id)sender;
-- (void)segmentClick:(int)selectedSegment;
+- (void)segmentClick:(NSInteger)selectedSegment;
 - (void)initialiseForWindow:(NSWindow *)window;
 
 

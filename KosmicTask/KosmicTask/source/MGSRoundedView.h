@@ -8,9 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum _MGSViewGradientType {
-	MGSViewGradientToolbar = 0, MGSViewGradientTableView, MGSViewGradientBanner
-} MGSViewGradientType;
+enum _MGSViewGradientType {
+	MGSViewGradientToolbar = 0,
+    MGSViewGradientTableView,
+    MGSViewGradientBanner
+};
+typedef NSInteger MGSViewGradientType;
 
 @interface MGSRoundedView : NSView {
 	MGSViewGradientType _gradientType;

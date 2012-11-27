@@ -81,7 +81,7 @@
 {
 	// mode is segment index.
 	// this index corresponds to the runMode
-    int mode = [sender selectedSegment];	
+    NSInteger mode = [sender selectedSegment];
 
 	// change run mode
 	[self changeRunMode: mode];
@@ -151,7 +151,7 @@
 	}	
 	
 	// info dict supplies mode
-	NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:mode], MGSNoteModeKey , nil];
+	NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:mode], MGSNoteModeKey , nil];
 
 	// we MUST authenticate if leaving public mode
 	if (_segmentMode == kMGSMotherRunModePublic) {
@@ -204,7 +204,7 @@
  */
 - (void)updateSegmentModeText:(id)sender
 {
-	int mode = [sender selectedSegment];	// mode is segment index
+	NSInteger mode = [sender selectedSegment];	// mode is segment index
 	
 	// select mode text
 	NSString *text = @"";
@@ -268,7 +268,7 @@
  set the run mode
  
  */
-- (void)setRunMode:(int)mode
+- (void)setRunMode:(NSInteger)mode
 {
 	[segmentedButtons setSelectedSegment:mode];
 	[self segControlClicked:segmentedButtons];
@@ -375,7 +375,7 @@
 	[self updateSegmentModeText:segmentedButtons];
 	
 	// info dict supplies mode
-	NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:_segmentMode], MGSNoteModeKey , nil];
+	NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:_segmentMode], MGSNoteModeKey , nil];
 	
 	// post mode changed notification
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteAppRunModeChanged object:self userInfo:infoDict];

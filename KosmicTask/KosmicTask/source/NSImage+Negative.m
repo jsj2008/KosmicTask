@@ -60,7 +60,7 @@
 	RGBAPixel
 		*pixels = (RGBAPixel *)[self bitmapData];  // -bitmapData returns a void*, not an NSData object ;-)
 		
-	int 
+	NSInteger
 		row, 
 		column,
 		widthInPixels = [self pixelsWide], 
@@ -84,7 +84,7 @@
 	RGBPixel
 	 	*pixels = (RGBPixel *)[self bitmapData];  // -bitmapData returns a void*, not an NSData object ;-)
 		
-	int 
+	NSInteger 
 		row, 
 		column,
 		widthInPixels = [self pixelsWide], 
@@ -107,7 +107,7 @@
 	GreyAlphaPixel
 	 	*pixels = (GreyAlphaPixel *)[self bitmapData];  // -bitmapData returns a void*, not an NSData object ;-)
 		
-	int 
+	NSInteger 
 		row, 
 		column,
 		widthInPixels = [self pixelsWide], 
@@ -128,7 +128,7 @@
 	GreyPixel
 	 	*pixels = (GreyPixel *)[self bitmapData];  // -bitmapData returns a void*, not an NSData object ;-)
 		
-	int 
+	NSInteger 
 		row, 
 		column,
 		widthInPixels = [self pixelsWide], 

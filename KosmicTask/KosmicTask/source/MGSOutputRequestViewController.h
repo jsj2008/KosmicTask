@@ -82,7 +82,7 @@ extern NSString *MGSRunStatusContext;
 - (void)setRequestProgress:(eMGSRequestProgress)value object:(id)object;
 - (void)progressDisplay;
 
-- (void)segmentClick:(int)selectedSegment;
+- (void)segmentClick:(NSInteger)selectedSegment;
 - (void)addResult:(MGSResult *)result;
 - (void)actionInputModified;
 - (MGSRequestProgress *)progress;

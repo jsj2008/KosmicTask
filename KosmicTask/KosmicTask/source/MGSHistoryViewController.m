@@ -202,7 +202,7 @@
 	
 	// look for modifier keys in current event
 	int actionDisplayType;
-	unsigned int flags = [[NSApp currentEvent] modifierFlags];
+	NSUInteger flags = [[NSApp currentEvent] modifierFlags];
 	if ((flags & NSCommandKeyMask) || (flags & NSAlternateKeyMask) || (flags & NSControlKeyMask)) {
 		actionDisplayType = MGSTaskDisplayInNewTab;
 	} else {

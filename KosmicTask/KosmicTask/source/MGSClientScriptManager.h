@@ -39,7 +39,7 @@
 - (NSInteger)scriptCount;
 - (NSInteger)publishedScriptCount;
 - (NSInteger)groupPublishedScriptCount;
-- (MGSScriptManager *)groupAtIndex:(int)index;
+- (MGSScriptManager *)groupAtIndex:(NSInteger)index;
 - (MGSClientScriptManager *)mutableDeepCopy;
 - (NSMutableDictionary *)mutableDeepCopyOfDictionary;
 - (MGSScriptManager *)activeGroup;

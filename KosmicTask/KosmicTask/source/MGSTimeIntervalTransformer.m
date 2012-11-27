@@ -205,9 +205,9 @@
 		// 1 msec resolution
 		case MGSTime1msec:
 			if (0 == hour) {
-				format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u.%03u", min, seconds, msecs] : [NSString stringWithFormat:@"%u m %u.%03u sec", min, seconds, msecs];
+				format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02lu:%02lu.%03lu", (unsigned long)min, (unsigned long)seconds, (unsigned long)msecs] : [NSString stringWithFormat:@"%lu m %lu.%03lu sec", (unsigned long)min, (unsigned long)seconds, (unsigned long)msecs];
 			} else {
-				format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u:%02u.%03u", hour, min, seconds, msecs] : [NSString stringWithFormat:@"%u h %u m %u.%03u sec", hour, min, seconds, msecs];
+				format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02lu:%02lu:%02lu.%03lu", (unsigned long)hour, (unsigned long)min, (unsigned long)seconds, (unsigned long)msecs] : [NSString stringWithFormat:@"%lu h %lu m %lu.%03lu sec", (unsigned long)hour, (unsigned long)min, (unsigned long)seconds, (unsigned long)msecs];
 			}			
 			break;
 			
@@ -216,12 +216,12 @@
 			msecs /= 10;
 			if (0 == hour) {
 				if (0 == min) {
-					format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u.%02u", min, seconds, msecs] : [NSString stringWithFormat:@"%u.%02u sec", seconds, msecs];
+					format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02lu:%02lu.%02lu", (unsigned long)min, (unsigned long)(unsigned long)seconds, (unsigned long)msecs] : [NSString stringWithFormat:@"%lu.%02lu sec", (unsigned long)seconds, (unsigned long)msecs];
 				} else {
-					format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u.%02u", min, seconds, msecs] : [NSString stringWithFormat:@"%u m %u.%02u sec", min, seconds, msecs];
+					format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02lu:%02lu.%02lu", (unsigned long)min, (unsigned long)seconds, (unsigned long)msecs] : [NSString stringWithFormat:@"%lu m %lu.%02lu sec", (unsigned long)min, (unsigned long)seconds, (unsigned long)msecs];
 				}
 			} else {
-				format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u:%02u.%02u", hour, min, seconds, msecs] : [NSString stringWithFormat:@"%u h %u m %u.%02u sec", hour, min, seconds, msecs];
+				format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02lu:%02lu:%02lu.%02lu", (unsigned long)hour, (unsigned long)min, (unsigned long)seconds, (unsigned long)msecs] : [NSString stringWithFormat:@"%lu h %lu m %lu.%02lu sec", (unsigned long)hour, (unsigned long)min, (unsigned long)seconds, (unsigned long)msecs];
 			}
 			break;
 			
@@ -229,9 +229,9 @@
 		case MGSTime100msec:
 			msecs /= 100;
 			if (0 == hour) {
-				format = [NSString stringWithFormat:@"%02u:%02u.%01u", min, seconds, msecs];
+				format = [NSString stringWithFormat:@"%02lu:%02lu.%01lu", (unsigned long)min, (unsigned long)seconds, (unsigned long)msecs];
 			} else {
-				format = [NSString stringWithFormat:@"%02u:%02u:%02u.%01u", hour, min, seconds, msecs];
+				format = [NSString stringWithFormat:@"%02lu:%02lu:%02lu.%01lu", (unsigned long)hour, (unsigned long)min, (unsigned long)seconds, (unsigned long)msecs];
 				
 			}			
 			break;
@@ -241,12 +241,12 @@
 		default:
 			if (0 == hour) {
 				if (0 == min) {
-					format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u", min, seconds] : [NSString stringWithFormat:@"%u sec", seconds];
+					format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long)min, (unsigned long)seconds] : [NSString stringWithFormat:@"%lu sec", (unsigned long)seconds];
 				} else {
-					format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u", min, seconds] : [NSString stringWithFormat:@"%u m %u sec", min, seconds];
+					format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02lu:%02lu", (unsigned long)min, (unsigned long)seconds] : [NSString stringWithFormat:@"%lu m %lu sec", (unsigned long)min, (unsigned long)seconds];
 				}
 			} else {
-				format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02u:%02u:%02u", hour, min, seconds] : [NSString stringWithFormat:@"%u h %u m %u sec", hour, min, seconds];
+				format = self.style == MGSTimeStyleNumeric ? [NSString stringWithFormat:@"%02lu:%02lu:%02lu", (unsigned long)hour, (unsigned long)min, (unsigned long)seconds] : [NSString stringWithFormat:@"%lu h %lu m %lu sec", (unsigned long)hour, (unsigned long)min, (unsigned long)seconds];
 
 				
 			}

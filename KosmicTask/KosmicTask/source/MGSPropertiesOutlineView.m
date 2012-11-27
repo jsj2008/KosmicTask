@@ -18,7 +18,7 @@
  see http://www.corbinstreehouse.com/blog/archives/cocoa/
 
  */
-- (void)drawRow:(int)row clipRect:(NSRect)clipRect 
+- (void)drawRow:(NSInteger)row clipRect:(NSRect)clipRect
 {
 
 	NSInteger drawStyleForRow = 0;

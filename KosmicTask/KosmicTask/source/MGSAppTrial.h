@@ -177,7 +177,7 @@ http://stackoverflow.com/questions/791232/canonical-way-to-randomize-an-nsarray-
 static NSUInteger MGSRandomBelow(NSUInteger n) {
     NSUInteger m = 1;
 	
-	srandom(time(NULL));
+	srandom((unsigned int)time(NULL));
 	
     do {
         m <<= 1;

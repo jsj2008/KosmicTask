@@ -25,7 +25,7 @@
 	MGSTaskSpecifier *_taskSpec;
 	MGSScript *_taskScript;
 	MGSTaskSpecifier *_pendingTaskSpec;
-	int _editMode;
+	NSInteger _editMode;
 	unsigned long int _requestID;
 	id _delegate;
 	BOOL _scriptTextChanged;

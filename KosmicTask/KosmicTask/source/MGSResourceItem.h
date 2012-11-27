@@ -12,16 +12,18 @@
 extern NSString * MGSResourceOriginUser;
 extern NSString * MGSResourceOriginMugginsoft;
 
-typedef enum _MGSResourceItemFileType {
+enum _MGSResourceItemFileType {
 	MGSResourceItemTextFile = 0,
 	MGSResourceItemRTFDFile = 1,
 	MGSResourceItemPlistFile = 2,
 	MGSResourceItemMarkdownFile = 3,
-}  MGSResourceItemFileType;
+};
+typedef NSInteger MGSResourceItemFileType;
 
-typedef enum _MGSDerivedResourceItemType {
+enum _MGSDerivedResourceItemType {
 	MGSDerivedResourceItemHTML = 0,
-}  MGSDerivedResourceItemType;
+};
+typedef NSInteger MGSDerivedResourceItemType;
 
 @class MGSResourceItem;
 

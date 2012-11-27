@@ -9,10 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-typedef enum {
+enum {
   kMGSResourceDocumentModeView = 0,
   kMGSResourceDocumentModeEdit = 1,
-}  MGSResourceDocumentMode;
+};
+typedef NSInteger MGSResourceDocumentMode;
 
 @class MGSResourceItem;
 @class MGSFragaria;

@@ -305,7 +305,7 @@ const char MGSContextFavoritesSelectionIndex;
 	
 	[self commitEditing];
 	
-	int selectedSegment = [favoritesSegment selectedSegment];
+	NSInteger selectedSegment = [favoritesSegment selectedSegment];
 	
 	switch (selectedSegment) {
 			

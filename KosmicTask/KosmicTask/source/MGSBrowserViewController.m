@@ -662,7 +662,7 @@ errorExit:;
 {
 	// Sender tag corresponds to the Finder label integer
     NSInteger label = [sender tag];
-    NSAssert1(label >=0 && label <= 7, @"invalid label %d (must be between 0 and 7)", label);
+    NSAssert1(label >=0 && label <= 7, @"invalid label %ld (must be between 0 and 7)", (long)label);
     
     // we have to close the menu manually; FVColorMenuCell returns its control view's menu item
     if ([sender respondsToSelector:@selector(enclosingMenuItem)] && [[[sender enclosingMenuItem] menu] respondsToSelector:@selector(cancelTracking)])
@@ -681,7 +681,7 @@ errorExit:;
 {
 	// Sender tag corresponds to the rating
     NSInteger rating = [sender tag];
-    NSAssert1(rating >=0 && rating <= 5, @"invalid label %d (must be between 0 and 5)", rating);
+    NSAssert1(rating >=0 && rating <= 5, @"invalid label %ld (must be between 0 and 5)", (long)rating);
     
 	// set script rating index
 	MGSScript *script = [self clickedScript];	
@@ -1522,7 +1522,7 @@ errorExit:
 	
 	// if no actions available then action will contain a nil script
 	MGSScript *script = nil;
-	int scriptIndex = -1;
+	NSInteger scriptIndex = -1;
 	if ([actionTable numberOfRows] > 0) {
 		scriptIndex = rowIndex;
 		if (scriptIndex > -1) {
@@ -1837,7 +1837,7 @@ errorExit:
 	
 	
 	// cicking the checkbox will select the row
-	int rowIndex = [tableView selectedRow];
+	NSInteger rowIndex = [tableView selectedRow];
 	MGSNetClient *netClient = [self selectedClient];
 	
 	
@@ -2260,7 +2260,7 @@ errorExit:
 	BOOL enableDisplayInNewWindow = [[NSUserDefaults standardUserDefaults] boolForKey:MGSModClickOpensNewWindow];
 	
 	// look for modifier keys in last event
-	unsigned int flags = [[NSApp currentEvent] modifierFlags];
+	NSUInteger flags = [[NSApp currentEvent] modifierFlags];
 	if ((flags & NSCommandKeyMask) && enableDisplayInNewTab) {
 		actionDisplayType = MGSTaskDisplayInNewTab;
 	} else if ((flags & NSAlternateKeyMask) && enableDisplayInNewWindow) {
@@ -2460,7 +2460,7 @@ errorExit:
 - (void)selectedClientNeedsDisplay
 {
 	// machine table column shows run mode
-	int row = [machineTable selectedRow];
+	NSInteger row = [machineTable selectedRow];
 	if (row != -1) {
 		[machineTable setNeedsDisplayInRect:[machineTable rectOfRow:row]];
 	}
@@ -2478,19 +2478,6 @@ errorExit:
 // tableview delegate methods
 //
 @implementation MGSBrowserViewController (TableViewDelegate)
-
-/*
- 
- table view should select row
- 
- */
-- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
-{
-	#pragma unused(aTableView)
-	#pragma unused(rowIndex)
-	
-	return YES;
-}
 
 /*
  
@@ -2608,7 +2595,7 @@ errorExit:
  number of rows in table view
  
  */
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
 	// machine table
 	if (aTableView == machineTable) {
@@ -2783,7 +2770,7 @@ errorExit:
 		}
 		
 		if ([identifier isEqualToString:MGSTableColumnIdentifierPublishCheckbox]) {
-			return [NSNumber numberWithInt:state];
+			return [NSNumber numberWithInteger:state];
 		}
 		
 		return nil;

@@ -152,7 +152,7 @@ static MGSTaskSpecifierManager *_sharedController = nil;
 {
 	// if this is a history then limit the content size
 	if (_isHistory) {
-		int historyCount = [[self content] count];
+		NSUInteger historyCount = [[self content] count];
 		if (historyCount == _maxHistoryCount) {
 			[self applyCapacityLimit:_maxHistoryCount-1];
 		}

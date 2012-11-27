@@ -8,9 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum tagNSView_Animate {
-	NSView_animateEffectNone = 0, NSView_animateEffectFade,
-}  NSView_animate;
+enum tagNSView_Animate {
+	NSView_animateEffectNone = 0,
+    NSView_animateEffectFade,
+};
+typedef NSInteger NSView_animate;
 
 @interface NSView (Mugginsoft)
 - (void)replaceSubview:(NSView *)oldView with:(NSView *)newView withEffect:(NSView_animate)effect;

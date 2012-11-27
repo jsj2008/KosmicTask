@@ -452,7 +452,7 @@ static BOOL permitExecution = YES;
 		[dictionary setObject:[self.netClient serviceShortName] forKey:MGSPlistKeyServiceShortName];
 		
 		// need the action identifier
-		[dictionary setObject:[NSNumber numberWithInt:[self identifier]] forKey: MGSPlistKeyIdentifier];
+		[dictionary setObject:[NSNumber numberWithInteger:[self identifier]] forKey: MGSPlistKeyIdentifier];
 	}
 	@catch (NSException *e) {
 		MLog(DEBUGLOG, @"exception name: %@ description: %@", [e name], [e reason]);
@@ -608,7 +608,7 @@ static BOOL permitExecution = YES;
 			
 			// shouldn't be here
 		default:;
-			NSString *text = [NSString stringWithFormat:@"trying to terminate invalid progress state: %d", self.requestProgress.value];
+			NSString *text = [NSString stringWithFormat:@"trying to terminate invalid progress state: %ld", (long)self.requestProgress.value];
 			MLogInfo(@"%@", text);
 			[self setLocalRunStatus:MGSTaskRunStatusTerminatedByUser];
 			break;
@@ -654,7 +654,7 @@ static BOOL permitExecution = YES;
 			break;
 
 		default:;
-			NSString *text = [NSString stringWithFormat:@"trying to suspend invalid progress state: %d", self.requestProgress.value];
+			NSString *text = [NSString stringWithFormat:@"trying to suspend invalid progress state: %ld", (long)self.requestProgress.value];
 			MLogInfo(@"%@", text);
 			break;
 	}
@@ -697,7 +697,7 @@ static BOOL permitExecution = YES;
 		
 			// this may occur if rapidly click the play button and build up a queue of events.
 		default:;
-			NSString *text = [NSString stringWithFormat:@"trying to resume invalid run status: %d", self.runStatus];
+			NSString *text = [NSString stringWithFormat:@"trying to resume invalid run status: %ld", (long)(self.runStatus)];
 			MLogInfo(@"%@", text);
 			break;
 	}

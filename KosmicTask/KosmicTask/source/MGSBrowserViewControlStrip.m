@@ -108,7 +108,7 @@
 {
 	eMGSViewState viewState = NSNotFound;
 	
-	int clickedSegment = [sender selectedSegment];
+	NSInteger clickedSegment = [sender selectedSegment];
 	
 	switch (clickedSegment) {
 			
@@ -239,7 +239,7 @@
 	if (!number) return;
 	eMGSViewState viewState = [number integerValue];
 
-	int idx = -1;
+	NSInteger idx = -1;
 	NSInteger state = NSOnState;
 
 	// sync GUI to view state

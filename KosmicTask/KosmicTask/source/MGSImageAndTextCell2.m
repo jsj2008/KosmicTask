@@ -191,7 +191,7 @@
 // -------------------------------------------------------------------------------
 //	selectWithFrame:inView:editor:delegate:event:start:length
 // -------------------------------------------------------------------------------
-- (void)selectWithFrame:(NSRect)aRect inView:(NSView*)controlView editor:(NSText*)textObj delegate:(id)anObject start:(int)selStart length:(int)selLength
+- (void)selectWithFrame:(NSRect)aRect inView:(NSView*)controlView editor:(NSText*)textObj delegate:(id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
 {
 	NSRect textFrame = [self titleRectForBounds:aRect];
 	[super selectWithFrame:textFrame inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
@@ -242,7 +242,7 @@
 	if (hasCount) {
 		//NSSize stringSize = [[self attributedStringValue] size];
 		
-		NSString * number = [NSString stringWithFormat:@"%i", count];
+		NSString * number = [NSString stringWithFormat:@"%ld", (long)count];
 		
 		// Use the current font point size as a guide for the count font size
 		float pointSize = [[self font] pointSize];
@@ -492,7 +492,7 @@
 
 // JM
 // count
-- (void)setCount:(int)value
+- (void)setCount:(NSInteger)value
 {
 	count = value;
 }

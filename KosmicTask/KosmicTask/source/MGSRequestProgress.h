@@ -10,7 +10,7 @@
 
 #import "MGSNetRequest.h"
 
-typedef enum _eMGSRequestProgress {
+enum _eMGSRequestProgress {
 	MGSRequestProgressNull = -1,
 	MGSRequestProgressReady = 0,
 	MGSRequestProgressSending,
@@ -24,7 +24,8 @@ typedef enum _eMGSRequestProgress {
 	MGSRequestProgressSuspended,
 	MGSRequestProgressSuspendedSending,
 	MGSRequestProgressSuspendedReceiving,
-} eMGSRequestProgress;
+};
+typedef NSInteger eMGSRequestProgress;
 
 @protocol MGSRequestProgressDelegate <NSObject>
 @optional

@@ -154,6 +154,24 @@ copy with zone for singleton
 
 
 #pragma mark
+#pragma mark Connection management
+/*
+ 
+ defer remote client connections
+ 
+ */
+- (void)setDeferRemoteClientConnections:(BOOL)aBool
+{
+	_deferRemoteClientConnections = aBool;
+	
+	// if no longer deferring then connect to deferred client
+	if (!_deferRemoteClientConnections) {
+		[self performSelector:@selector(connectToDeferredNetClient) withObject:nil afterDelay:.5];
+	}
+}
+
+
+#pragma mark
 #pragma mark Persistence
 /*
  
@@ -868,22 +886,6 @@ remove a static client
 {
 	self.deferRemoteClientConnections = NO;
 }
-
-/*
- 
- defer remote client connections
- 
- */
-- (void)setDeferRemoteClientConnections:(BOOL)aBool
-{
-	_deferRemoteClientConnections = aBool;
-	
-	// if no longer deferring then connect to deferred client
-	if (!_deferRemoteClientConnections) {
-		[self performSelector:@selector(connectToDeferredNetClient) withObject:nil afterDelay:.5];
-	}
-}
-
 
 // did not search
 - (void)netServiceBrowser:(NSNetServiceBrowser *)netServiceBrowser didNotSearch:(NSDictionary *)errorInfo

@@ -51,7 +51,7 @@
  segment click
  
  */
-- (void)segmentClick:(int)selectedSegment
+- (void)segmentClick:(NSInteger)selectedSegment
 {
 	eMGSMotherViewConfig viewConfig = kMGSMotherViewConfigDocument;
 	eMGSViewState viewState = kMGSViewStateShow;

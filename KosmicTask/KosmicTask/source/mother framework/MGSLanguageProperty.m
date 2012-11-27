@@ -347,8 +347,8 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
 	[s appendFormat:@"initialValue: %@\n", initialValue];
 	[s appendFormat:@"optionValues: %@\n", optionValues];
 	[s appendFormat:@"defaultOptionKey: %@\n", defaultOptionKey];
-	[s appendFormat:@"propertyType: %i\n", propertyType];
-	[s appendFormat:@"requestType: %i\n", requestType];
+	[s appendFormat:@"propertyType: %ld\n", (long)propertyType];
+	[s appendFormat:@"requestType: %ld\n", (long)requestType];
 	[s appendFormat:@"editable: %i\n", editable];
 	[s appendFormat:@"infoText: %@\n", infoText];
 

@@ -43,35 +43,40 @@ extern NSString *MGSNetClientKeyPathActivityFlags;
 - (void)netClientScriptDictUpdated:(MGSNetClient *)netClient;	// client script dict has changed
 @end
 
-typedef enum _MGSHostType {
+enum _MGSHostType {
 	MGSHostTypeUnknown = 0, // not connected
 	MGSHostTypeLocal, // localhost
 	MGSHostTypeRemote,		// remote host
-} MGSHostType;
+};
+typedef NSInteger MGSHostType;
 
-typedef enum _MGSHostStatus {
+enum _MGSHostStatus {
 	MGSHostStatusNotYetAvailable = 0,	// host not yet available
 	MGSHostStatusAvailable ,			// host service available 
 	MGSHostStatusNotResponding,			// host was available but not currently responding
 	MGSHostStatusDisconnected,			// host has disconnected and client set to be deleted
-} MGSHostStatus;
+};
+typedef NSInteger MGSHostStatus;
 
-typedef enum _MGSClientStatus {
+enum _MGSClientStatus {
 	MGSClientStatusNotAvailable = 0,		// client has not yet received script dict
 	MGSClientStatusAvailable = 1,			// client available, script dict has been retrieved
-} MGSClientStatus;
+};
+typedef NSInteger MGSClientStatus;
 
-typedef enum _MGSScriptAccess {
+enum _MGSScriptAccess {
 	MGSScriptAccessInit = 0x0,
 	MGSScriptAccessNone = 0x1,
 	MGSScriptAccessPublic = 0x2,	// scripts have public access
 	MGSScriptAccessTrusted = 0x4,		// scripts have authenticated user access
-} MGSScriptAccess;
+};
+typedef NSInteger MGSScriptAccess;
 
-typedef enum _MGSClientActivityFlags {
+enum _MGSClientActivityFlags {
 	MGSClientActivityNone = 0x0,                  // no activity
 	MGSClientActivityUpdatingTaskList = 0x1,		// updating task list
-} MGSClientActivityFlags;
+};
+typedef NSInteger MGSClientActivityFlags;
 
 @class MGSNetRequest;
 @class MGSClientTaskController;
@@ -138,7 +143,7 @@ typedef enum _MGSClientActivityFlags {
 - (BOOL)isAuthenticated;
 - (int)hostSortIndex;
 - (void)requestSearch:(NSDictionary *)searchDict withOwner:(id <MGSNetRequestOwner>)owner;
-- (bool)canSearch;
+- (BOOL)canSearch;
 - (NSDictionary *)authenticationDictionaryForRunMode;
 
 // context handling

@@ -651,11 +651,11 @@ NSString *KeyPath_FileCountString = @"fileCountString";
  uses datasource like Apple sample code
  
  */
-- (int) numberOfItemsInImageBrowser:(IKImageBrowserView *) browser
+- (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) browser
 {
 	#pragma unused(browser)
 	
-	int count = [_attachments.attachmentPreviewImages count];
+	NSUInteger count = [_attachments.attachmentPreviewImages count];
     return count;
 }
 
@@ -745,7 +745,7 @@ NSString *KeyPath_FileCountString = @"fileCountString";
 	[_imageBrowser reloadData];
 
 	NSString *fmt = nil;
-	int fileCount = [self numberOfItemsInImageBrowser:nil];
+	NSUInteger fileCount = [self numberOfItemsInImageBrowser:nil];
 	BOOL enableControls = YES;
 	
 	[self willChangeValueForKey:KeyPath_FileCountString];

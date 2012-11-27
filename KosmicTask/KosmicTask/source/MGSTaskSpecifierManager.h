@@ -26,7 +26,7 @@
 	MGSTaskSpecifierManager *_history;	// action history
 	BOOL _keepHistory;	// keep a history for this object
 	BOOL _isHistory;	// this object is a history
-	NSInteger _maxHistoryCount;
+	NSUInteger _maxHistoryCount;
 	id _delegate;
 }
 

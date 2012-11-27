@@ -13,7 +13,7 @@
 
 unsigned	UKPhysicalRAMSize()
 {
-	long		ramSize;
+	SInt32		ramSize;
 	
 	if( Gestalt( gestaltPhysicalRAMSizeInMegabytes, &ramSize ) == noErr )
 		return ramSize;
@@ -24,16 +24,16 @@ unsigned	UKPhysicalRAMSize()
 
 NSString*	UKSystemVersionString()
 {
-	long		vMajor = 10, vMinor = 0, vBugfix = 0;
+	SInt32		vMajor = 10, vMinor = 0, vBugfix = 0;
 	UKGetSystemVersionComponents( &vMajor, &vMinor, &vBugfix );
 	
-	return [NSString stringWithFormat: @"%ld.%ld.%ld", vMajor, vMinor, vBugfix];
+	return [NSString stringWithFormat: @"%ld.%ld.%ld", (long)vMajor, (long)vMinor, (long)vBugfix];
 }
 
 
-void	UKGetSystemVersionComponents( long* outMajor, long* outMinor, long* outBugfix )
+void	UKGetSystemVersionComponents( SInt32* outMajor, SInt32* outMinor, SInt32* outBugfix )
 {
-	long		sysVersion = UKSystemVersion();
+	SInt32		sysVersion = UKSystemVersion();
 	if( sysVersion >= MAC_OS_X_VERSION_10_4 )
 	{
 		Gestalt( gestaltSystemVersionMajor, outMajor );
@@ -49,9 +49,9 @@ void	UKGetSystemVersionComponents( long* outMajor, long* outMinor, long* outBugf
 }
 
 
-long	UKSystemVersion()
+SInt32	UKSystemVersion()
 {
-	long		sysVersion;
+	SInt32		sysVersion;
 	
 	if( Gestalt( gestaltSystemVersion, &sysVersion ) != noErr )
 		return 0;
@@ -62,7 +62,7 @@ long	UKSystemVersion()
 
 unsigned	UKClockSpeed()
 {
-	long		speed;
+	SInt32		speed;
 	
 	if( Gestalt( gestaltProcClkSpeed, &speed ) == noErr )
 		return speed / 1000000;
@@ -86,12 +86,20 @@ unsigned	UKCountCores()
 NSString*	UKMachineName()
 {
 	static NSString*	cpuName = nil;
-	if( cpuName )
+	
+    if( cpuName ) {
 		return cpuName;
+    }
+
+#if __LP64__
+   
+    cpuName = @"Unavailable on 64 bit architecture.";
+    
+#else
 	
 	char*				machineName = NULL;
 	
-	if( Gestalt( gestaltUserVisibleMachineName, (long*) &machineName ) == noErr )
+	if( Gestalt( gestaltUserVisibleMachineName, (long *)&machineName ) == noErr )
 	{
 		NSString*	internalName = [NSString stringWithCString: machineName +1 length: machineName[0]];
 		
@@ -199,7 +207,8 @@ NSString*	UKMachineName()
 		else
 			cpuName = humanReadableName;
 	}
-	
+#endif
+    
 	return cpuName;
 }
 
@@ -212,9 +221,17 @@ NSString*	UKCPUName()
 
 NSString*	UKAutoreleasedCPUName( BOOL releaseIt )
 {
-	long				cpu;
+
 	static NSString*	cpuName = nil;
-	
+
+#if __LP64__
+#pragma unused(releaseIt)
+    
+    cpuName = @"Unavailable on 64 bit architecture.";
+    
+#else
+	long				cpu;
+    
 	if( Gestalt( gestaltNativeCPUtype, &cpu ) == noErr )
 	{
 		if( !cpuName )
@@ -245,9 +262,9 @@ NSString*	UKAutoreleasedCPUName( BOOL releaseIt )
 			memmove( cpuCStr, &cpu, 4 );
 			if( (cpu & 0xff000000) >= 0x20000000 && (cpu & 0x00ff0000) >= 0x00200000
 				&& (cpu & 0x0000ff00) >= 0x00002000 && (cpu & 0x000000ff) >= 0x00000020)	// All valid as characters?
-				cpuName = [NSString stringWithFormat: @"Unknown (%d/%s)", cpu, &cpu];
+				cpuName = [NSString stringWithFormat: @"Unknown (%ld/%s)", cpu, (char *)&cpu];
 			else
-				cpuName = [NSString stringWithFormat: @"Unknown (%d)", cpu];
+				cpuName = [NSString stringWithFormat: @"Unknown (%ld)", cpu];
 		}
 		[cpuName retain];		// Yeah, I know, I'm paranoid.
 	}
@@ -260,6 +277,8 @@ NSString*	UKAutoreleasedCPUName( BOOL releaseIt )
 		return cn;
 	}
 	
+#endif
+    
 	return cpuName;
 }
 

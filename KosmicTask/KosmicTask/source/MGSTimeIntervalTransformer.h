@@ -8,17 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum _MGSTimeIntervalResolution {
+enum _MGSTimeIntervalResolution {
 	MGSTimeSecond = 0,
 	MGSTime100msec,
 	MGSTime10msec,
 	MGSTime1msec,
-} MGSTimeIntervalResolution;
+};
+typedef NSInteger MGSTimeIntervalResolution;
 
-typedef enum _MGSTimeIntervalStyle {
+enum _MGSTimeIntervalStyle {
 	MGSTimeStyleNumeric = 0,
 	MGSTimeStyleTextual = 1
-} MGSTimeIntervalStyle;
+};
+typedef NSInteger MGSTimeIntervalStyle;
 
 @interface MGSTimeIntervalTransformer : NSValueTransformer {
 	MGSTimeIntervalResolution _resolution;

@@ -182,7 +182,7 @@ NSString *MGSInputCountContext = @"InputContext";
  */
 - (IBAction)segmentClick:(id)sender
 {	
-	int selectedSegment = [sender selectedSegment];
+	NSInteger selectedSegment = [sender selectedSegment];
 	
 	[self commitEditing];
 	

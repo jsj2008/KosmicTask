@@ -14,7 +14,7 @@
 @private
 	NSImage *image;
 	NSColor * countBackgroundColour;
-	int count;
+	NSInteger count;
 	BOOL hasCount;
 	NSImage *statusImage;
 	NSImage *invertedStatusImage;
@@ -36,10 +36,10 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView*)controlView;
 - (NSSize)cellSize;
--(void)setCountBackgroundColour:(NSColor *)newColour;
--(NSColor *)countBackgroundColour;
+- (void)setCountBackgroundColour:(NSColor *)newColour;
+- (NSColor *)countBackgroundColour;
 
-- (void)setCount:(int)value;
+- (void)setCount:(NSInteger)value;
 - (void)setHasCount:(BOOL)value;
 - (BOOL)hasCount;
 

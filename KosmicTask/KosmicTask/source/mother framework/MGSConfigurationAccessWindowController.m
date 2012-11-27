@@ -114,7 +114,7 @@
 	
 	if (_authenticationComplete) {
 		
-		NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:_accessType], MGSNoteModeKey , nil];
+		NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:_accessType], MGSNoteModeKey , nil];
 		[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteAuthenticateAccessSucceeded object:nil userInfo:infoDict];
 	}
     

@@ -58,7 +58,7 @@ void	UKCrashReporterCheckForCrash(NSString *crashedAppName, NSString *appLogFile
 			NS_VOIDRETURN;
 		}
 		
-		long	sysvMajor = 0, sysvMinor = 0, sysvBugfix = 0;
+		SInt32	sysvMajor = 0, sysvMinor = 0, sysvBugfix = 0;
 		UKGetSystemVersionComponents( &sysvMajor, &sysvMinor, &sysvBugfix );
 		BOOL	isTenFiveOrBetter = sysvMajor >= 10 && sysvMinor >= 5;
 		BOOL	isTenSixOrBetter = sysvMajor >= 10 && sysvMinor >= 6;
@@ -265,7 +265,7 @@ NSString*	gCrashLogString = nil;
 		NSString*		defaultKey = [emailAddresses primaryIdentifier];
 		if( defaultKey )
 		{
-			unsigned int	defaultIndex = [emailAddresses indexForIdentifier: defaultKey];
+			NSUInteger	defaultIndex = [emailAddresses indexForIdentifier: defaultKey];
 			if( defaultIndex != NSNotFound )
 				emailAddr = [emailAddresses valueAtIndex: defaultIndex];
 		}
@@ -285,7 +285,7 @@ NSString*	gCrashLogString = nil;
 	{
 		[remindButton setHidden: YES];
 		
-		int				itemIndex = [switchTabView indexOfTabViewItemWithIdentifier: @"de.zathras.ukcrashreporter.crashlog-tab"];
+		NSInteger				itemIndex = [switchTabView indexOfTabViewItemWithIdentifier: @"de.zathras.ukcrashreporter.crashlog-tab"];
 		NSTabViewItem*	crashLogItem = [switchTabView tabViewItemAtIndex: itemIndex];
 		unsigned		numCores = UKCountCores();
 		NSString*		numCPUsString = (numCores == 1) ? @"" : [NSString stringWithFormat: @"%dx ",numCores];
@@ -331,7 +331,7 @@ NSString*	gCrashLogString = nil;
 	[postRequest setHTTPMethod: @"POST"];
 	[postRequest setValue: contentType forHTTPHeaderField: @"Content-Type"];
 	[postRequest setValue: agent forHTTPHeaderField: @"User-Agent"];
-	NSString *contentLength = [NSString stringWithFormat:@"%u", [formData length]];
+	NSString *contentLength = [NSString stringWithFormat:@"%lu", (long)[formData length]];
 	[postRequest setValue: contentLength forHTTPHeaderField: @"Content-Length"];
 	[postRequest setHTTPBody: formData];
 	

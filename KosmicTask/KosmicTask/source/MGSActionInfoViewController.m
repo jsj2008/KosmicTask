@@ -49,7 +49,7 @@
 	_actionSpecifier = action;
 	MGSScript *script = [action script];
 	
-	NSString *versionString = [NSString stringWithFormat:@"%i.%i.%i", [script versionMajor], [script versionMinor], [script versionRevision]];
+	NSString *versionString = [NSString stringWithFormat:@"%ld.%ld.%ld", (long)[script versionMajor], (long)[script versionMinor], (long)[script versionRevision]];
 	[_authorName setStringValueOrEmptyOnNil:[script author]];
 	[_scriptType setStringValueOrEmptyOnNil:[script scriptType]];
 	[_authorNote setStringValueOrEmptyOnNil:[script authorNote]];

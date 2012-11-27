@@ -118,7 +118,7 @@ NSString *MGSContentsItemIdentifier = @"Contents";
  number of groups in bar
  
  */
-- (int)numberOfGroupsInScopeBar:(MGScopeBar *)theScopeBar
+- (NSUInteger)numberOfGroupsInScopeBar:(MGScopeBar *)theScopeBar
 {
 	#pragma unused(theScopeBar)
 	
@@ -131,7 +131,7 @@ NSString *MGSContentsItemIdentifier = @"Contents";
  scope bar item identifiers
  
  */
-- (NSArray *)scopeBar:(MGScopeBar *)theScopeBar itemIdentifiersForGroup:(int)groupNumber
+- (NSArray *)scopeBar:(MGScopeBar *)theScopeBar itemIdentifiersForGroup:(NSInteger)groupNumber
 {
 	#pragma unused(theScopeBar)
 	
@@ -144,7 +144,7 @@ NSString *MGSContentsItemIdentifier = @"Contents";
  scope bar label for group
  
  */
-- (NSString *)scopeBar:(MGScopeBar *)theScopeBar labelForGroup:(int)groupNumber
+- (NSString *)scopeBar:(MGScopeBar *)theScopeBar labelForGroup:(NSInteger)groupNumber
 {
 	#pragma unused(theScopeBar)
 	
@@ -157,7 +157,7 @@ NSString *MGSContentsItemIdentifier = @"Contents";
  scope bar title of item in group
  
  */
-- (NSString *)scopeBar:(MGScopeBar *)theScopeBar titleOfItem:(NSString *)identifier inGroup:(int)groupNumber
+- (NSString *)scopeBar:(MGScopeBar *)theScopeBar titleOfItem:(NSString *)identifier inGroup:(NSInteger)groupNumber
 {
 	#pragma unused(theScopeBar)
 	
@@ -181,7 +181,7 @@ NSString *MGSContentsItemIdentifier = @"Contents";
  scope bar selection mode for group
  
  */
-- (MGScopeBarGroupSelectionMode)scopeBar:(MGScopeBar *)theScopeBar selectionModeForGroup:(int)groupNumber
+- (MGScopeBarGroupSelectionMode)scopeBar:(MGScopeBar *)theScopeBar selectionModeForGroup:(NSInteger)groupNumber
 {
 	#pragma unused(theScopeBar)
 
@@ -193,7 +193,7 @@ NSString *MGSContentsItemIdentifier = @"Contents";
  scope bar show separtor before group
  
  */
-- (BOOL)scopeBar:(MGScopeBar *)theScopeBar showSeparatorBeforeGroup:(int)groupNumber
+- (BOOL)scopeBar:(MGScopeBar *)theScopeBar showSeparatorBeforeGroup:(NSInteger)groupNumber
 {
 	#pragma unused(theScopeBar)
 	
@@ -206,7 +206,7 @@ NSString *MGSContentsItemIdentifier = @"Contents";
  scope bar image for item
  
  */
-- (NSImage *)scopeBar:(MGScopeBar *)scopeBar imageForItem:(NSString *)identifier inGroup:(int)groupNumber
+- (NSImage *)scopeBar:(MGScopeBar *)scopeBar imageForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber
 {
 	#pragma unused(scopeBar)
 	#pragma unused(identifier)
@@ -236,7 +236,7 @@ NSString *MGSContentsItemIdentifier = @"Contents";
  
  */
 - (void)scopeBar:(MGScopeBar *)theScopeBar selectedStateChanged:(BOOL)selected 
-		 forItem:(NSString *)identifier inGroup:(int)groupNumber
+		 forItem:(NSString *)identifier inGroup:(NSInteger)groupNumber
 {
 	#pragma unused(theScopeBar)
 	

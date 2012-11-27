@@ -21,7 +21,7 @@
 
 extern NSString *MGSKeyPathNetClientHostStatus;
 
-typedef enum _MGSTaskRunStatus {
+enum _MGSTaskRunStatus {
 	MGSTaskRunStatusHostUnavailable,		// host unavailable
 	MGSTaskRunStatusLoading,				// loading representation
 	MGSTaskRunStatusReady,				// ready to execute
@@ -33,33 +33,38 @@ typedef enum _MGSTaskRunStatus {
 	MGSTaskRunStatusSuspendedSending,
 	MGSTaskRunStatusSuspendedReceiving,
 	
-} MGSTaskRunStatus;
+};
+typedef NSInteger MGSTaskRunStatus;
 
-typedef enum _MGSTaskAvailability {
+enum _MGSTaskAvailability {
 	MGSTaskNotAvailable = -1,
 	MGSTaskClientNotAvailable = 0,	
 	MGSTaskAvailable = 1,		// newly created task
-} MGSTaskAvailability;
+};
+typedef NSInteger MGSTaskAvailability;
 
-typedef enum _MGSTaskStatus {
+enum _MGSTaskStatus {
 	MGSTaskStatusInit = 0,
 	MGSTaskStatusNew = 1,		// newly created task
-} MGSTaskStatus;
+};
+typedef NSInteger MGSTaskStatus;
 
-typedef enum _MGSTaskDisplayType {
+enum _MGSTaskDisplayType {
 	MGSTaskDisplayInSelectedTab = 0, 
 	MGSTaskDisplayInNewTab,
 	MGSTaskDisplayInNewWindow,
-} MGSTaskDisplayType;
+};
+typedef NSInteger MGSTaskDisplayType;
 
-typedef enum _MGSTaskActivity {
+enum _MGSTaskActivity {
 	MGSUnavailableTaskActivity = 0,		// unavailable
 	MGSLoadingTaskActivity,				// loading
 	MGSReadyTaskActivity,				// ready to execute
 	MGSPausedTaskActivity,			// is paused	
 	MGSProcessingTaskActivity,		// is processing
 	MGSTerminatedTaskActivity,		// terminated 
-}  MGSTaskActivity;
+};
+typedef NSInteger MGSTaskActivity;
 
 @interface MGSTaskSpecifier : NSObject <NSCopying> {
 	MGSNetClient *_netClient;			// net client to initiate task on

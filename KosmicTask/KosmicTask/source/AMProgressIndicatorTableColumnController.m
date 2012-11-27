@@ -85,7 +85,7 @@
 		double value = fmod(([cell doubleValue] + (5.0/60.0)), 1.0);
 		[cell setDoubleValue:value];
 		// redraw column
-		int columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
+		NSUInteger columnIndex = [[tableView tableColumns] indexOfObject:tableColumn];
 		NSRect redrawRect = [tableView rectOfColumn:columnIndex];
 		[tableView setNeedsDisplayInRect:redrawRect];
 	}

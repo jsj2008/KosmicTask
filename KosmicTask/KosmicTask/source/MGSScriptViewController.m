@@ -92,13 +92,17 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	_requestID = NO_REQUEST_OUTSTANDING;
 	
 	// OSA script view
+#ifdef MGS_USE_OSA_EDITOR
+    
+    // causes issues in 64 bit build
 	MarkerLineNumberView *lineNumberView = [[MarkerLineNumberView alloc] initWithScrollView:_osaScrollView];
 	[lineNumberView setBackgroundColor:[NSColor colorWithCalibratedWhite: 0.85f alpha: 1.0f]];
     [_osaScrollView setVerticalRulerView:lineNumberView];
     [_osaScrollView setHasHorizontalRuler:NO];
     [_osaScrollView setHasVerticalRuler:YES];
     [_osaScrollView setRulersVisible:YES];
-	
+#endif
+    
 	// create Fragaria instance
 	_fragaria = [[MGSFragaria alloc] init];
 	

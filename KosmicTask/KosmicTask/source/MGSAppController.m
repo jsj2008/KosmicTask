@@ -557,7 +557,7 @@
  */
 - (IBAction)toggleRunState:(id)sender
 {
-	unsigned int flags = [[NSApp currentEvent] modifierFlags];
+	NSUInteger flags = [[NSApp currentEvent] modifierFlags];
 	BOOL modify = (flags & NSCommandKeyMask) > 0;
 	NSString *noteName = nil;
 	
@@ -675,7 +675,7 @@
 	 
 	 */
 	NSString *bundleVersion = [NSBundle mainBundleInfoObjectForKey:@"CFBundleVersion"];
-	NSString *compiledInVersion = [NSString stringWithFormat:@"%i", (NSInteger)MGSKosmicTaskVersionNumber]; 
+	NSString *compiledInVersion = [NSString stringWithFormat:@"%ld", (long)MGSKosmicTaskVersionNumber];
 	
 	/*
 	 
@@ -846,8 +846,8 @@
 	NSArray *editWindowControllers = _netClient != nil ? [_motherWindowController editWindowControllersForNetClient:_netClient] :
 						[_motherWindowController editWindowControllers];
 	
-    unsigned editControllerCount = [editWindowControllers count];
-    unsigned needsSaving = 0;
+    NSUInteger editControllerCount = [editWindowControllers count];
+    NSUInteger needsSaving = 0;
 	
     // Determine if there are any unsaved documents...
     while (editControllerCount--) {
@@ -1591,7 +1591,7 @@
 		NSArray *editWindowControllers = _netClient != nil ? [_motherWindowController editWindowControllersForNetClient:_netClient] :
 																[_motherWindowController editWindowControllers];
 
-		unsigned editControllerCount = [editWindowControllers count];
+		NSUInteger editControllerCount = [editWindowControllers count];
         while (editControllerCount--) {
 			MGSEditWindowController *controller = [editWindowControllers objectAtIndex:editControllerCount];
 			if ([[controller window] isDocumentEdited]) {

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @protocol MGSPropertiesOutlineViewDelegate
--(NSInteger)mgs_outlineView:(NSOutlineView *)outlineview drawStyleForRow:(int)row;
+-(NSInteger)mgs_outlineView:(NSOutlineView *)outlineview drawStyleForRow:(NSInteger)row;
 @end
 
 

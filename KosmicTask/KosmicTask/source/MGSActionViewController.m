@@ -237,7 +237,7 @@
 	NSInteger parameterCount = [parameterHandler count];
 	
 	// right label is parameter count
-	[self.bannerRightLabel setStringValue:[NSString stringWithFormat:@"%i", [parameterHandler count]]];
+	[self.bannerRightLabel setStringValue:[NSString stringWithFormat:@"%ld", (long)[parameterHandler count]]];
 	
     // if we have an executable representation then we can execure the script
     BOOL executableRepresentation = [script canConformToRepresentation:MGSScriptRepresentationExecute];

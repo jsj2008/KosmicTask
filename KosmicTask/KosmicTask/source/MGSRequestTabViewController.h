@@ -12,12 +12,13 @@
 @class MGSRequestTabScrollView;
 @class MGSNetClient;
 
-typedef enum {
+enum {
 	kMGSActionTabSelectedStartup = 0,
 	kMGSActionTabSelectedUUIDMatch,
 	kMGSActionTabSelectedNetClientMatch,
 	kMGSActionTabSelectedNewTabCreated,
-} MGSActionTabSelected;
+};
+typedef NSInteger MGSActionTabSelected;
 
 @protocol MGSRequestTabViewController
 - (void)tabViewActionSelected:(MGSTaskSpecifier *)action;

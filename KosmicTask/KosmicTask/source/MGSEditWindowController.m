@@ -623,8 +623,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     }
 	
 	// post notification requesting edit mode change
-	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:mode], MGSNoteModeKey,
-						  [NSNumber numberWithInt:_editMode], MGSNotePrevModeKey, 
+	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:mode], MGSNoteModeKey,
+						  [NSNumber numberWithInteger:_editMode], MGSNotePrevModeKey, 
 						  nil];
 	
 	// send change request

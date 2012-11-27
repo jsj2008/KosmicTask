@@ -20,12 +20,13 @@
 @class MGSMinimalViewToolViewController;
 @class MGSNetClient;
 
-typedef enum _eMGSToolbarStyle {
+enum _eMGSToolbarStyle {
 	MGSToolbarStyleMain = 0,
 	MGSToolbarStyleEdit = 1,
 	MGSToolbarStyleAction = 2,
 	MGSToolbarStyleResult = 3,
-}  MGSToolbarStyle;
+};
+typedef NSInteger MGSToolbarStyle;
 
 @protocol MGSToolbarDelegate
 @optional

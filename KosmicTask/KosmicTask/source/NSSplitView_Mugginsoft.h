@@ -9,13 +9,14 @@
 #import <Cocoa/Cocoa.h>
 
 
-typedef enum _MGSSplitviewBehaviour {
+enum _MGSSplitviewBehaviour {
 	MGSSplitviewBehaviourNone = -1,
 	MGSSplitviewBehaviourOf2ViewsFirstFixed = 0,			// 2 views - first fixed width
 	MGSSplitviewBehaviourOf2ViewsSecondFixed,				// 2 views - second fixed width
 	MGSSplitviewBehaviourOf3ViewsFirstAndSecondFixed,		//  3 views - first and second fixed width	
 	MGSSplitviewBehaviourOf3ViewsFirstAndThirdFixed,		//  3 views - first and third fixed width
-} MGSSplitviewBehaviour;
+};
+typedef NSInteger MGSSplitviewBehaviour;
 
 @interface NSSplitView(Mugginsoft)
 - (void)resizeSubviewsWithOldSize: (NSSize)oldSize withBehaviour:(MGSSplitviewBehaviour)behaviour;

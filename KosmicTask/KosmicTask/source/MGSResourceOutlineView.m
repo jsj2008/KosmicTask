@@ -16,7 +16,7 @@
  drawRow:clipRect;
  
  */
-- (void)drawRow:(int)row clipRect:(NSRect)clipRect 
+- (void)drawRow:(NSInteger)row clipRect:(NSRect)clipRect
 {
 	NSInteger drawStyleForRow = 0;
 	

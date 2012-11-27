@@ -24,10 +24,11 @@
 @end
 
 // parameter mode
-typedef enum _MGSParameterMode {
+enum _MGSParameterMode {
 	MGSParameterModeInput = 0,
 	MGSParameterModeEdit
-}  MGSParameterMode;
+};
+typedef NSInteger MGSParameterMode;
 
 // parameter type
 typedef enum _MGSParameterType {

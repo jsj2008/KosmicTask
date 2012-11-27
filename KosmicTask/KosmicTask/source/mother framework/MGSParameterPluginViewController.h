@@ -11,9 +11,10 @@
 #import "MGSScriptPlist.h"
 #import "NSDictionary_Mugginsoft.h"
 
-typedef enum _MGSProcessParameterPlist {
+enum _MGSProcessParameterPlist {
 	MGSProcessParameterPlistForSave = 0,
-}  MGSProcessParameterPlist;
+};
+typedef NSInteger MGSProcessParameterPlist;
 
 @class MGSParameterPlugin;
 @class MGSParameterPluginViewController;

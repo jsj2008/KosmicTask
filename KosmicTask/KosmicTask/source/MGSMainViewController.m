@@ -247,7 +247,7 @@ static char MGSSeletedDetailViewSegmentContext;
 {
 	eMGSViewState viewState = NSNotFound;
 	
-	int clickedSegment = [sender selectedSegment];
+	NSInteger clickedSegment = [sender selectedSegment];
 	
 	// ensure that the detail view is hidden or visible as required
 	switch (clickedSegment) {
@@ -566,8 +566,8 @@ static char MGSSeletedDetailViewSegmentContext;
 		viewState = [number integerValue];
 	}
 	
-	int toggleViewPosition;
-	int subViewCount = [[mainSplitView subviews] count];
+	NSUInteger toggleViewPosition = 0;
+	NSUInteger subViewCount = [[mainSplitView subviews] count];
 	NSWindowOrderingMode orderMode;
 	
 	// two of our views can be toggled on and off
@@ -697,7 +697,7 @@ static char MGSSeletedDetailViewSegmentContext;
 	if (!number) return;
 	eMGSViewState viewState = [number integerValue];
 
-	int idx = -1;
+	NSInteger idx = -1;
 
 	// we may post a change view notification in which case our segmented button state is okay.
 	// if another object posts the notification however we have to sync our button to the requested view state.
@@ -1046,7 +1046,7 @@ static char MGSSeletedDetailViewSegmentContext;
  */
 - (void)browserSegControlClicked:(id)sender
 {
-	int selectedSegment = [sender selectedSegment];
+	NSInteger selectedSegment = [sender selectedSegment];
 	int idx = TAB_TASKS;
 	NSInteger viewMode = kMGSMainBrowseModeHidden;
 	

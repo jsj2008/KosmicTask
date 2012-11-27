@@ -8,14 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum {
+enum _CodesignResult {
 	CodesignUnrecognised = -2,
 	CodesignError = -1,
 	CodesignOkay = 0,
 	CodesignFail = 1,
 	CodesignInvalidArgs = 2,
 	CodesignFailedRequirement = 3,
-} CodesignResult;
+};
+typedef NSInteger CodesignResult;
 
 @interface MGSCodeSigning : NSObject {
 	NSString *_resultString;

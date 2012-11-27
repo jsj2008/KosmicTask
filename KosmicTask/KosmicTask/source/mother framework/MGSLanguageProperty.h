@@ -12,13 +12,14 @@
 @class MGSLanguagePropertyManager;
 
 
-typedef enum {
+enum _MGSLanguagePropertyType{
 	kMGSLanguagePropertyTypeAll = -1,
 	kMGSLanguageProperty,		// immutable
 	kMGSLanguageEditableOption,	// mutable
-} MGSLanguagePropertyType;
+};
+typedef NSInteger MGSLanguagePropertyType;
 
-typedef enum {
+enum {
 	kMGSLanguageRequest = -1,
 	kMGSBuildRequest,
 	kMGSExecuteRequest,
@@ -26,7 +27,8 @@ typedef enum {
 	kMGSRunRequest,
 	kMGSCocoaRequest,
 	kMGSResultRepresentationRequest,
-} MGSLanguageRequestType;
+};
+typedef NSInteger MGSLanguageRequestType;
 
 @interface MGSLanguageProperty : NSObject <NSCopying> {
 	NSString *key;

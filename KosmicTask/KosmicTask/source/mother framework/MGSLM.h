@@ -12,10 +12,11 @@ extern NSString *MGSNoteLicenceStatusChanged;
 
 @class MGSL;
 
-typedef enum _MGSLMMode {
+enum _MGSLMMode {
 	MGSInvalidLicenceMode = 34,
 	MGSValidLicenceMode = 1872
-} MGSLMMode;
+};
+typedef NSInteger MGSLMMode;
 
 @interface MGSLM : NSArrayController {
 	NSString *_lastError;

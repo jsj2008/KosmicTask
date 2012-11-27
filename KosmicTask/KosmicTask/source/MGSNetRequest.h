@@ -13,13 +13,14 @@
 
 #define MGS_STANDARD_TIMEOUT 60
 
-typedef enum _eMGSRequestType {
+enum _eMGSRequestType {
     kMGSRequestTypeWorker = 0,  
     kMGSRequestTypeLogging = 1
-} eMGSRequestType;
+};
+typedef NSInteger eMGSRequestType;
 
 // net request status
-typedef enum _eMGSRequestStatus {
+enum _eMGSRequestStatus {
     kMGSStatusTerminated = -3,
 	kMGSStatusExceptionOnConnecting = -2,
 	kMGSStatusCannotConnect = -1,
@@ -48,8 +49,8 @@ typedef enum _eMGSRequestStatus {
 	kMGSStatusReadingMessageAttachments = 103,
 	kMGSStatusMessageReceived = 104,
 	
-	
-} eMGSRequestStatus;
+};
+typedef NSInteger eMGSRequestStatus;
 
 @class MGSNetMessage;
 @class MGSNetSocket;
