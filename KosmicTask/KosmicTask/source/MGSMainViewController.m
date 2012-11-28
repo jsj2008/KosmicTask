@@ -79,13 +79,15 @@ static char MGSSeletedDetailViewSegmentContext;
 @synthesize tabViewController = _requestTabViewController;
 @synthesize netClientIsChanging;
 
+
 /*
  
  awake from nib
  
  */
-- (void)awakeFromNib
+- (void)configureView
 {
+    
 	_scriptVersionID = 0;
 	_detailSegmentToSelectWhenNotHidden = TASK_DETAIL_HISTORY_SEGMENT_INDEX;
 	_detailViewVisible = YES;
@@ -111,7 +113,7 @@ static char MGSSeletedDetailViewSegmentContext;
 	// set the detail tab style
 	[detailTabView setTabViewType:NSNoTabsNoBorder];
 	mainBottomView = detailTabView;
-	
+    
 	//
 	// load the main view (3 vertical views)
 	//
@@ -127,7 +129,7 @@ static char MGSSeletedDetailViewSegmentContext;
 	// load search view
 	_searchViewController = [[MGSTaskSearchViewController alloc] initWithNibName:@"TaskSearchView" bundle:nil];
 	[_searchViewController setDelegate:self];
-	
+	    
 	// load browser tab views
 	
 	// add browser view to tabview item 0
@@ -155,15 +157,18 @@ static char MGSSeletedDetailViewSegmentContext;
 	// note that loading other nibs in awake from nib is not recommended
 	//
 	_requestTabViewController = [[MGSRequestTabViewController alloc] initWithNibName:@"RequestTabView" bundle:nil];
-	[_requestTabViewController setDelegate:self];
-
+    
 	// load the view into request tabview controller
 	NSView *newView = [_requestTabViewController view];
+    [_requestTabViewController configureView];
+    [_requestTabViewController setDelegate:self];
+    
+    // load the request tabview controller into the splitview
 	[mainSplitView replaceMiddleView:newView];
 	[mainSplitView setDelegate:self];
 	mainMiddleView = newView;
 	_currentSubview = mainSplitView;
-	
+    
 	// load the scriptview controller
 	_scriptViewController = [[MGSScriptViewController alloc] init];
 	[_scriptViewController setDelegate:self];

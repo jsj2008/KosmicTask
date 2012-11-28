@@ -65,8 +65,9 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 @synthesize delegate = _delegate;
 @synthesize minViewHeight = _minViewHeight;
 
-- (void)awakeFromNib
+- (void)configureView
 {
+   
 	// add items to use defaults dict
 	[[NSUserDefaults standardUserDefaults] registerDefaults:
 	 [NSDictionary dictionaryWithObjectsAndKeys:
@@ -85,8 +86,7 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 		[NSNumber numberWithBool:YES], MGSDefaultTabSizeToFit,
 		[NSNumber numberWithBool:NO], MGSDefaultTabAutomaticallyAnimates,
 	  nil]];
-
-	
+        
     // hook up add tab button
     [[tabBar addTabButton] setTarget:self];
     [[tabBar addTabButton] setAction:@selector(addCopyOfSelectedTab:)];
@@ -98,6 +98,9 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 		[tabView removeTabViewItem:item];
 	}
 	
+    
+    tabView.delegate = tabBar;
+    
 	[self configureTabBarInitially];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTaskTabContextMenu:) name:MGSShowTaskTabContextMenu object:nil];

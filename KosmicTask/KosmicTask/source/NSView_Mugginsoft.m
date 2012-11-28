@@ -101,10 +101,18 @@
 	[self replaceSubview:oldView with:newView];
 }
 
-- (void) replaceSubview:(NSView *)oldView withViewFrameAsOld:(NSView *)newView 
+/*
+ 
+ - replaceSubview:withViewFrameAsOld:
+ 
+ */
+- (void)replaceSubview:(NSView *)oldView withViewFrameAsOld:(NSView *)newView 
 {
+    NSAssert(oldView, @"existing subview ref is nil");
+    NSAssert(newView, @"new subview ref is nil");
+
 	[newView setFrame:[oldView frame]];	// make newView frame as oldView
-	[self replaceSubview:oldView with:newView];
+    [self replaceSubview:oldView with:newView];
 }
 
 // resize the view and add subview beneath

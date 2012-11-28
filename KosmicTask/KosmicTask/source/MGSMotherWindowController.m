@@ -189,13 +189,20 @@ const char MGSContextStartupComplete;
 
 
 	[[self window] addViewToTitleBar:_feedbackButton xoffset:8];
-	
+
+    //
+    //
+    //
+    mainViewController = [[MGSMainViewController alloc] initWithNibName:@"MainView" bundle:nil];
+    NSView *mainView = [mainViewController view];
+    [mainViewController configureView];
+
 	//
-	// load the main splitview into the window main view
+	// load the main view into the splitview
 	//
 	[windowSplitView setDelegate:self];
-	[windowSplitView replaceSubview:windowMainView withViewSizedAsOld:[mainViewController view]];
-	windowMainView = [mainViewController view];	
+	[windowSplitView replaceSubview:windowMainView withViewSizedAsOld:mainView];
+	windowMainView = mainView;	
 	
 	//
 	// load the sidebar views
@@ -551,7 +558,7 @@ const char MGSContextStartupComplete;
 	NSView *contentView = [[self window] contentView];
 	
 	BOOL animate = [[NSUserDefaults standardUserDefaults] boolForKey:MGSAnimateUI];
-	
+    
 	if (animate) {
 		
 		// we cannot capture the _contentSubview contents as it is behind the wait view

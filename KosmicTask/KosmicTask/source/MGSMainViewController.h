@@ -83,5 +83,6 @@
 
 - (void)loadUserDefaults;
 - (void)saveUserDefaults;
+- (void)configureView;
 
 @end

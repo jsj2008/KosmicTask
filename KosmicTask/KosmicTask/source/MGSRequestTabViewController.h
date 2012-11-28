@@ -142,4 +142,6 @@ typedef NSInteger MGSActionTabSelected;
 - (IBAction)toggleToolbar:(id)sender;
 - (BOOL)validateToolbarItem:(NSToolbarItem *)theItem;
 
+- (void)configureView;
+
 @end

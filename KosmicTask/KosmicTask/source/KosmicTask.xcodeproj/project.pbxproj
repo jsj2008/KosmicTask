@@ -1170,6 +1170,7 @@
 		ABC7A22B12B42B2900916612 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97324FDCFA39411CA2CEA /* AppKit.framework */; };
 		ABC7A22E12B42B3600916612 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDB815F0DF7147100F24711 /* AddressBook.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		ABC7A23112B42B6700916612 /* OSAKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA858C40D5CAE910077F640 /* OSAKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		ABC893F21666510400134015 /* MainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABC893F01666510400134015 /* MainView.xib */; };
 		ABC9272A0E39D76A0076D862 /* StopActionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABC927290E39D76A0076D862 /* StopActionSheet.xib */; };
 		ABCA58B00DA0E20200CF2BBF /* MGSKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = ABCA58AE0DA0E20200CF2BBF /* MGSKeyChain.h */; };
 		ABCA58B10DA0E20200CF2BBF /* MGSKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA58AF0DA0E20200CF2BBF /* MGSKeyChain.m */; };
@@ -4754,6 +4755,7 @@
 		ABC65F810E71543900D0A72E /* DotYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DotYellow.png; sourceTree = "<group>"; };
 		ABC65F820E71543900D0A72E /* DotRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DotRed.png; sourceTree = "<group>"; };
 		ABC65F830E71543900D0A72E /* DotGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DotGreen.png; sourceTree = "<group>"; };
+		ABC893F11666510400134015 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainView.xib; sourceTree = "<group>"; };
 		ABCA58AE0DA0E20200CF2BBF /* MGSKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSKeyChain.h; sourceTree = "<group>"; };
 		ABCA58AF0DA0E20200CF2BBF /* MGSKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSKeyChain.m; sourceTree = "<group>"; };
 		ABCA58F80DA0E81100CF2BBF /* EMKeychainItem_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMKeychainItem_Mugginsoft.h; sourceTree = "<group>"; };
@@ -6417,6 +6419,7 @@
 				ABE81B0A0D36248500EF303E /* MainMenu.xib */,
 				ABFE7A650D01EE7200CBA780 /* message.plist */,
 				ABE81B0C0D36248500EF303E /* MotherWindow.xib */,
+				ABC893F01666510400134015 /* MainView.xib */,
 				ABAFC4100DF9439E00349FC3 /* NumberInputView.xib */,
 				AB5C52761272199F0036DC92 /* OpenSourceFileAccessoryView.xib */,
 				AB8F0D870D30296F00F3631C /* OutputRequestView.xib */,
@@ -10371,6 +10374,7 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
+				English,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* mother */;
 			projectDirPath = "";
@@ -11123,6 +11127,7 @@
 				AB7C18D916220E8900E45BD4 /* GreenTick16.png in Resources */,
 				AB42B88F165E47C0004FF139 /* MGSUpdating1Template.tif in Resources */,
 				AB42B890165E47C0004FF139 /* MGSUpdating2Template.tif in Resources */,
+				ABC893F21666510400134015 /* MainView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13592,6 +13597,14 @@
 				ABBF60330E1BB85800F82F81 /* English */,
 			);
 			name = ParameterPluginInputView.xib;
+			sourceTree = "<group>";
+		};
+		ABC893F01666510400134015 /* MainView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ABC893F11666510400134015 /* English */,
+			);
+			name = MainView.xib;
 			sourceTree = "<group>";
 		};
 		ABC927290E39D76A0076D862 /* StopActionSheet.xib */ = {
@@ -16775,10 +16788,10 @@
 				IBC_WARNINGS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = (
-					"-DMGS_DEBUG",
-					"-DMGS_LOG_FINALIZE",
-					"-DUK_DEBUG",
-					"-DMGS_INSTANCE_TRACKER",
+					"-D_NO_MGS_DEBUG",
+					"-D_NO_MGS_LOG_FINALIZE",
+					"-D_NO_UK_DEBUG",
+					"-D_NO_MGS_INSTANCE_TRACKER",
 				);
 				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
 				RUN_CLANG_STATIC_ANALYZER = NO;

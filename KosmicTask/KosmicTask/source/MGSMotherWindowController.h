@@ -38,14 +38,14 @@
 	IBOutlet NSView *windowMainView;
 	NSView *_contentSubview;
 	
-	IBOutlet MGSMainViewController *mainViewController;
+	MGSMainViewController *mainViewController;
 	
 	IBOutlet NSView *leftView;	// the left sidebar splitview
 	IBOutlet NSSplitView *leftSplitView;	// the left sidebar splitview
 	IBOutlet NSView *leftTopView;
 	IBOutlet NSView *leftBottomView;
 
-	IBOutlet MGSToolbarController *_toolbarController;
+	MGSToolbarController *_toolbarController;
 	IBOutlet NSButton *_feedbackButton;
 																
 	MGSSidebarViewController *_sidebarViewController;
