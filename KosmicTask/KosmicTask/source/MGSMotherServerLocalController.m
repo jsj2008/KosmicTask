@@ -78,10 +78,23 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
             }
 		}
         
+        // determine the launch path for 32/64 bit build
+#if __LP64__
+        
+        // the most suitable binary will be run
+        NSString *launchPath = agentPath;
+        NSArray *serverArguments = [[NSArray alloc] initWithObjects:nil];
+#else
+        // request that we run 32 bit
+        NSString *launchPath = @"/usr/bin/arch";
+        NSArray *serverArguments = [[NSArray alloc] initWithObjects:@"-i386", agentPath, nil];
 
+#endif
+        
+        // allocate NSTask
 		_serverTask = [[NSTask alloc] init];
-		[_serverTask setLaunchPath:agentPath];
-		//[serverTask setArguments:serverArguments];
+		[_serverTask setLaunchPath:launchPath];
+		[_serverTask setArguments:serverArguments];
 		
 		// launch it
 		// note that if the server is already running no exception
@@ -91,7 +104,7 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
 			[_serverTask launch];
 		} 
 		@catch (NSException *exception) {
-			MLog(DEBUGLOG, @"Exception launching server.");
+			MLog(DEBUGLOG, @"Exception launching server with agent path: %@\nLaunch path: %@\n Exception: %@", agentPath, launchPath, exception);
 			[_serverTask release];
 			_serverTask = nil;
 			return NO;

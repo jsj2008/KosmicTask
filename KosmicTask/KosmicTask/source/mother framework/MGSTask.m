@@ -102,10 +102,24 @@
 		
 		_taskOutputData = [[NSMutableData alloc] init];
 		_currentDirectoryPath = [[MGSTempStorage sharedController] storageDirectoryWithOptions:nil];
-	
+
+        // determine the launch path for 32/64 bit build
+#if __LP64__
+        
+        // the most suitable binary will be run
+        NSString *launchPath = execPath;
+        NSArray *launchArguments = [[NSArray alloc] initWithObjects:nil];
+#else
+        // request that we run 32 bit
+        NSString *launchPath = @"/usr/bin/arch";
+        NSArray *launchArguments = [[NSArray alloc] initWithObjects:@"-i386", execPath, nil];
+        
+#endif
+        
 		// configure the task
 		_task = [[NSTask alloc] init];
-		[_task setLaunchPath:execPath];
+		[_task setLaunchPath:launchPath];
+        [_task setArguments:launchArguments];
 		[_task setCurrentDirectoryPath:_currentDirectoryPath];
 
 		// task terminate notification

@@ -209,16 +209,31 @@ static NSString * const MGSExternalScriptRunnerException = @"MGSExternalScriptRu
 		//
 		task = [[NSTask alloc] init];
 		[task setCurrentDirectoryPath:self.workingDirectory];
-		[task setLaunchPath:taskPath];
+
+        // determine the launch path for 32/64 bit build
+#if __LP64__
+        
+        // the most suitable binary will be run
+        NSString *launchPath = taskPath;
+        NSArray *launchArguments = [[NSArray alloc] initWithObjects:nil];
+#else
+        // request that we run 32 bit
+        NSString *launchPath = @"/usr/bin/arch";
+        NSArray *launchArguments = [[NSArray alloc] initWithObjects:@"-i386", taskPath, nil];
+        
+#endif
 		
+        [task setLaunchPath:launchPath];
+        
 		// configure environment
 		if (env) {
 			[task setEnvironment:env];
 		}
 		
 		// configure task arguments
-		NSMutableArray *arguments = [NSMutableArray arrayWithArray:options];	// options
-		if (scriptFileName) {
+		NSMutableArray *arguments = [NSMutableArray arrayWithArray:launchArguments]; // launch args
+		[arguments addObjectsFromArray:options]; // options
+        if (scriptFileName) {
 			[arguments addObject:scriptFileName];	// script file path
 		}
 		if (parameters) {
