@@ -71,7 +71,7 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 	// add items to use defaults dict
 	[[NSUserDefaults standardUserDefaults] registerDefaults:
 	 [NSDictionary dictionaryWithObjectsAndKeys:
-	  @"Unified", MGSDefaultTabStyle,		//@"Aqua", @"Unified" @"Metal", @"Adium"
+	  @"Card", MGSDefaultTabStyle,		//@"Aqua", @"Unified" @"Metal", @"Adium"
 	  @"Horizontal", MGSDefaultTabOrientation,
 	  @"Alpha Window", MGSDefaultTabTearOff,
 	  @"200", MGSDefaultTabMinWidth,
@@ -97,9 +97,6 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 		NSTabViewItem *item = [[tabView tabViewItems] objectAtIndex:i];
 		[tabView removeTabViewItem:item];
 	}
-	
-    
-    tabView.delegate = tabBar;
     
 	[self configureTabBarInitially];
 	
@@ -710,11 +707,11 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 {
     if ([tabBar cellOptimumWidth] < [sender intValue]) {
         [tabBar setCellMinWidth:[tabBar cellOptimumWidth]];
-        [sender setIntValue:[tabBar cellOptimumWidth]];
+        [sender setIntegerValue:[tabBar cellOptimumWidth]];
         return;
     }
     
-    [tabBar setCellMinWidth:[sender intValue]];
+    [tabBar setCellMinWidth:[sender integerValue]];
 	
 	//[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:[sender intValue]]
 	//										  forKey:MGSDefaultTabMinWidth];
@@ -724,11 +721,11 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 {
     if ([tabBar cellOptimumWidth] > [sender intValue]) {
         [tabBar setCellMaxWidth:[tabBar cellOptimumWidth]];
-        [sender setIntValue:[tabBar cellOptimumWidth]];
+        [sender setIntegerValue:[tabBar cellOptimumWidth]];
         return;
     }
     
-    [tabBar setCellMaxWidth:[sender intValue]];
+    [tabBar setCellMaxWidth:[sender integerValue]];
 	
 	//[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:[sender intValue]]
 	//										  forKey:MGSDefaultTabMaxWidth];
@@ -738,17 +735,17 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 {
     if ([tabBar cellMaxWidth] < [sender intValue]) {
         [tabBar setCellOptimumWidth:[tabBar cellMaxWidth]];
-        [sender setIntValue:[tabBar cellMaxWidth]];
+        [sender setIntegerValue:[tabBar cellMaxWidth]];
         return;
     }
     
-    if ([tabBar cellMinWidth] > [sender intValue]) {
+    if ([tabBar cellMinWidth] > [sender integerValue]) {
         [tabBar setCellOptimumWidth:[tabBar cellMinWidth]];
-        [sender setIntValue:[tabBar cellMinWidth]];
+        [sender setIntegerValue:[tabBar cellMinWidth]];
         return;
     }
     
-    [tabBar setCellOptimumWidth:[sender intValue]];
+    [tabBar setCellOptimumWidth:[sender integerValue]];
 	
 }
 

@@ -58,7 +58,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{0, 334}, {484, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="991685389"/>
 						<string key="NSClassName">PSMTabBarControl</string>
 					</object>
@@ -82,7 +81,6 @@
 												<int key="NSvFlags">18</int>
 												<string key="NSFrame">{{-1, 0}, {485, 334}}</string>
 												<reference key="NSSuperview" ref="420840218"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="288833852"/>
 												<object class="NSMutableArray" key="NSTabViewItems">
 													<bool key="EncodedWithXMLCoder">YES</bool>
@@ -96,7 +94,6 @@
 															</object>
 															<string key="NSFrameSize">{485, 334}</string>
 															<reference key="NSSuperview" ref="804010727"/>
-															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="327957158"/>
 														</object>
 														<string key="NSLabel">Tab</string>
@@ -129,14 +126,12 @@
 										</object>
 										<string key="NSFrameSize">{484, 336}</string>
 										<reference key="NSSuperview" ref="110356842"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="804010727"/>
 										<string key="NSClassName">NSView</string>
 									</object>
 								</object>
 								<string key="NSFrameSize">{484, 336}</string>
 								<reference key="NSSuperview" ref="991685389"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="420840218"/>
 								<reference key="NSDocView" ref="420840218"/>
 								<reference key="NSBGColor" ref="155011561"/>
@@ -147,7 +142,6 @@
 								<int key="NSvFlags">-2147483392</int>
 								<string key="NSFrame">{{-100, -100}, {15, 328}}</string>
 								<reference key="NSSuperview" ref="991685389"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="110356842"/>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="991685389"/>
@@ -160,7 +154,6 @@
 								<int key="NSvFlags">-2147483392</int>
 								<string key="NSFrame">{{0, 328}, {492, 15}}</string>
 								<reference key="NSSuperview" ref="991685389"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<int key="NSsFlags">1</int>
@@ -171,7 +164,6 @@
 						</object>
 						<string key="NSFrameSize">{484, 336}</string>
 						<reference key="NSSuperview" ref="1005"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="536796949"/>
 						<int key="NSsFlags">133664</int>
 						<reference key="NSVScroller" ref="536796949"/>
@@ -184,12 +176,11 @@
 				</object>
 				<string key="NSFrameSize">{484, 356}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="862059222"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="630002757">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">266</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -208,6 +199,7 @@
 										<int key="NSvFlags">256</int>
 										<string key="NSFrame">{{16, 330}, {30, 13}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="10145159"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTextFieldCell" key="NSCell" id="395949005">
 											<int key="NSCellFlags">67108864</int>
@@ -237,6 +229,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{51, 325}, {112, 22}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="716408209"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSPopUpButtonCell" key="NSCell" id="569657468">
 											<int key="NSCellFlags">-2076180416</int>
@@ -256,24 +249,7 @@
 											</object>
 											<int key="NSPeriodicDelay">400</int>
 											<int key="NSPeriodicInterval">75</int>
-											<object class="NSMenuItem" key="NSMenuItem" id="499809513">
-												<reference key="NSMenu" ref="675097"/>
-												<string key="NSTitle">Metal</string>
-												<string key="NSKeyEquiv"/>
-												<int key="NSKeyEquivModMask">1048576</int>
-												<int key="NSMnemonicLoc">2147483647</int>
-												<int key="NSState">1</int>
-												<object class="NSCustomResource" key="NSOnImage" id="274852615">
-													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">NSMenuCheckmark</string>
-												</object>
-												<object class="NSCustomResource" key="NSMixedImage" id="167906372">
-													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">NSMenuMixedState</string>
-												</object>
-												<string key="NSAction">_popUpItemAction:</string>
-												<reference key="NSTarget" ref="569657468"/>
-											</object>
+											<nil key="NSMenuItem"/>
 											<bool key="NSMenuItemRespectAlignment">YES</bool>
 											<object class="NSMenu" key="NSMenu" id="675097">
 												<object class="NSMutableString" key="NSTitle">
@@ -281,7 +257,23 @@
 												</object>
 												<object class="NSMutableArray" key="NSMenuItems">
 													<bool key="EncodedWithXMLCoder">YES</bool>
-													<reference ref="499809513"/>
+													<object class="NSMenuItem" id="499809513">
+														<reference key="NSMenu" ref="675097"/>
+														<string key="NSTitle">Metal</string>
+														<string key="NSKeyEquiv"/>
+														<int key="NSKeyEquivModMask">1048576</int>
+														<int key="NSMnemonicLoc">2147483647</int>
+														<object class="NSCustomResource" key="NSOnImage" id="274852615">
+															<string key="NSClassName">NSImage</string>
+															<string key="NSResourceName">NSMenuCheckmark</string>
+														</object>
+														<object class="NSCustomResource" key="NSMixedImage" id="167906372">
+															<string key="NSClassName">NSImage</string>
+															<string key="NSResourceName">NSMenuMixedState</string>
+														</object>
+														<string key="NSAction">_popUpItemAction:</string>
+														<reference key="NSTarget" ref="569657468"/>
+													</object>
 													<object class="NSMenuItem" id="731459969">
 														<reference key="NSMenu" ref="675097"/>
 														<string key="NSTitle">Aqua</string>
@@ -315,8 +307,20 @@
 														<string key="NSAction">_popUpItemAction:</string>
 														<reference key="NSTarget" ref="569657468"/>
 													</object>
+													<object class="NSMenuItem" id="1060270002">
+														<reference key="NSMenu" ref="675097"/>
+														<string key="NSTitle">Card</string>
+														<string key="NSKeyEquiv"/>
+														<int key="NSKeyEquivModMask">1048576</int>
+														<int key="NSMnemonicLoc">2147483647</int>
+														<reference key="NSOnImage" ref="274852615"/>
+														<reference key="NSMixedImage" ref="167906372"/>
+														<string key="NSAction">_popUpItemAction:</string>
+														<reference key="NSTarget" ref="569657468"/>
+													</object>
 												</object>
 											</object>
+											<int key="NSSelectedIndex">-1</int>
 											<int key="NSPreferredEdge">3</int>
 											<bool key="NSUsesItemFromMenu">YES</bool>
 											<bool key="NSAltersState">YES</bool>
@@ -329,6 +333,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{13, 265}, {149, 18}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="688337536"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="380179089">
 											<int key="NSCellFlags">67108864</int>
@@ -357,6 +362,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{13, 225}, {127, 18}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="1026359854"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="313623718">
 											<int key="NSCellFlags">67108864</int>
@@ -380,6 +386,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{13, 205}, {144, 18}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="378119434"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="511025329">
 											<int key="NSCellFlags">67108864</int>
@@ -413,6 +420,7 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrame">{{44, 88}, {25, 13}}</string>
 														<reference key="NSSuperview" ref="141418009"/>
+														<reference key="NSNextKeyView" ref="131822360"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSTextFieldCell" key="NSCell" id="198265914">
 															<int key="NSCellFlags">67108864</int>
@@ -430,6 +438,7 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrame">{{41, 67}, {28, 13}}</string>
 														<reference key="NSSuperview" ref="141418009"/>
+														<reference key="NSNextKeyView" ref="186484569"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSTextFieldCell" key="NSCell" id="939835173">
 															<int key="NSCellFlags">67108864</int>
@@ -447,6 +456,7 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrame">{{16, 46}, {53, 13}}</string>
 														<reference key="NSSuperview" ref="141418009"/>
+														<reference key="NSNextKeyView" ref="816486326"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSTextFieldCell" key="NSCell" id="509607081">
 															<int key="NSCellFlags">67108864</int>
@@ -464,6 +474,7 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrame">{{77, 86}, {43, 19}}</string>
 														<reference key="NSSuperview" ref="141418009"/>
+														<reference key="NSNextKeyView" ref="458982021"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSTextFieldCell" key="NSCell" id="249403981">
 															<int key="NSCellFlags">-1804599231</int>
@@ -495,6 +506,7 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrame">{{77, 65}, {43, 19}}</string>
 														<reference key="NSSuperview" ref="141418009"/>
+														<reference key="NSNextKeyView" ref="964200941"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSTextFieldCell" key="NSCell" id="1067346229">
 															<int key="NSCellFlags">-1804599231</int>
@@ -513,6 +525,7 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrame">{{77, 44}, {43, 19}}</string>
 														<reference key="NSSuperview" ref="141418009"/>
+														<reference key="NSNextKeyView" ref="510168246"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSTextFieldCell" key="NSCell" id="167173514">
 															<int key="NSCellFlags">-1804599231</int>
@@ -531,6 +544,7 @@
 														<int key="NSvFlags">258</int>
 														<string key="NSFrame">{{12, 29}, {122, 5}}</string>
 														<reference key="NSSuperview" ref="141418009"/>
+														<reference key="NSNextKeyView" ref="533328973"/>
 														<string key="NSOffsets">{0, 0}</string>
 														<object class="NSTextFieldCell" key="NSTitleCell">
 															<int key="NSCellFlags">67108864</int>
@@ -553,6 +567,7 @@
 														<int key="NSvFlags">256</int>
 														<string key="NSFrame">{{33, 9}, {73, 16}}</string>
 														<reference key="NSSuperview" ref="141418009"/>
+														<reference key="NSNextKeyView" ref="24279327"/>
 														<bool key="NSEnabled">YES</bool>
 														<object class="NSButtonCell" key="NSCell" id="358334589">
 															<int key="NSCellFlags">67108864</int>
@@ -574,10 +589,12 @@
 												</object>
 												<string key="NSFrame">{{2, 2}, {146, 115}}</string>
 												<reference key="NSSuperview" ref="764117063"/>
+												<reference key="NSNextKeyView" ref="732971098"/>
 											</object>
 										</object>
 										<string key="NSFrame">{{13, 7}, {150, 132}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="141418009"/>
 										<string key="NSOffsets">{0, 0}</string>
 										<object class="NSTextFieldCell" key="NSTitleCell">
 											<int key="NSCellFlags">67108864</int>
@@ -601,6 +618,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{13, 185}, {130, 18}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="115077323"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="311243973">
 											<int key="NSCellFlags">-2080374784</int>
@@ -623,6 +641,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{13, 245}, {149, 18}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="1015414963"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="480284353">
 											<int key="NSCellFlags">67108864</int>
@@ -646,6 +665,7 @@
 										<int key="NSvFlags">256</int>
 										<string key="NSFrame">{{16, 309}, {62, 13}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="388263593"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTextFieldCell" key="NSCell" id="581830542">
 											<int key="NSCellFlags">67108864</int>
@@ -663,6 +683,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{83, 304}, {80, 22}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="1071364078"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSPopUpButtonCell" key="NSCell" id="945122517">
 											<int key="NSCellFlags">-2076180416</int>
@@ -723,6 +744,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{13, 165}, {153, 18}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="129992155"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="124954572">
 											<int key="NSCellFlags">67108864</int>
@@ -745,6 +767,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{13, 145}, {153, 18}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="764117063"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="124494264">
 											<int key="NSCellFlags">67108864</int>
@@ -767,6 +790,7 @@
 										<int key="NSvFlags">256</int>
 										<string key="NSFrame">{{16, 288}, {50, 13}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="1043002847"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTextFieldCell" key="NSCell" id="606108869">
 											<int key="NSCellFlags">67108864</int>
@@ -784,6 +808,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{71, 283}, {92, 22}}</string>
 										<reference key="NSSuperview" ref="9501072"/>
+										<reference key="NSNextKeyView" ref="927926523"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSPopUpButtonCell" key="NSCell" id="887454422">
 											<int key="NSCellFlags">-2076180416</int>
@@ -842,10 +867,12 @@
 								</object>
 								<string key="NSFrame">{{2, 2}, {180, 360}}</string>
 								<reference key="NSSuperview" ref="339547617"/>
+								<reference key="NSNextKeyView" ref="205595617"/>
 							</object>
 						</object>
 						<string key="NSFrame">{{8, 157}, {184, 377}}</string>
 						<reference key="NSSuperview" ref="630002757"/>
+						<reference key="NSNextKeyView" ref="9501072"/>
 						<string key="NSOffsets">{0, 0}</string>
 						<object class="NSTextFieldCell" key="NSTitleCell">
 							<int key="NSCellFlags">67108864</int>
@@ -879,6 +906,7 @@
 										<int key="NSvFlags">256</int>
 										<string key="NSFrame">{{16, 79}, {28, 13}}</string>
 										<reference key="NSSuperview" ref="577827663"/>
+										<reference key="NSNextKeyView" ref="599488895"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTextFieldCell" key="NSCell" id="632759509">
 											<int key="NSCellFlags">67108864</int>
@@ -896,6 +924,7 @@
 										<int key="NSvFlags">260</int>
 										<string key="NSFrame">{{16, 53}, {47, 13}}</string>
 										<reference key="NSSuperview" ref="577827663"/>
+										<reference key="NSNextKeyView" ref="108931608"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTextFieldCell" key="NSCell" id="56738128">
 											<int key="NSCellFlags">67108864</int>
@@ -913,6 +942,7 @@
 										<int key="NSvFlags">260</int>
 										<string key="NSFrame">{{13, 29}, {80, 18}}</string>
 										<reference key="NSSuperview" ref="577827663"/>
+										<reference key="NSNextKeyView" ref="313995625"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="736811272">
 											<int key="NSCellFlags">67108864</int>
@@ -935,6 +965,7 @@
 										<int key="NSvFlags">258</int>
 										<string key="NSFrame">{{45, 74}, {114, 22}}</string>
 										<reference key="NSSuperview" ref="577827663"/>
+										<reference key="NSNextKeyView" ref="665900868"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSPopUpButtonCell" key="NSCell" id="127514054">
 											<int key="NSCellFlags">-2076180416</int>
@@ -1029,6 +1060,7 @@
 										<int key="NSvFlags">260</int>
 										<string key="NSFrame">{{71, 51}, {50, 19}}</string>
 										<reference key="NSSuperview" ref="577827663"/>
+										<reference key="NSNextKeyView" ref="237054938"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTextFieldCell" key="NSCell" id="92344659">
 											<int key="NSCellFlags">-1804599231</int>
@@ -1047,6 +1079,7 @@
 										<int key="NSvFlags">260</int>
 										<string key="NSFrame">{{13, 9}, {80, 18}}</string>
 										<reference key="NSSuperview" ref="577827663"/>
+										<reference key="NSNextKeyView"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSButtonCell" key="NSCell" id="866134011">
 											<int key="NSCellFlags">67108864</int>
@@ -1067,10 +1100,12 @@
 								</object>
 								<string key="NSFrame">{{2, 2}, {178, 124}}</string>
 								<reference key="NSSuperview" ref="24279327"/>
+								<reference key="NSNextKeyView" ref="859368745"/>
 							</object>
 						</object>
 						<string key="NSFrame">{{10, 12}, {182, 141}}</string>
 						<reference key="NSSuperview" ref="630002757"/>
+						<reference key="NSNextKeyView" ref="577827663"/>
 						<string key="NSOffsets">{0, 0}</string>
 						<object class="NSTextFieldCell" key="NSTitleCell">
 							<int key="NSCellFlags">67108864</int>
@@ -1091,6 +1126,8 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{201, 540}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSNextKeyView" ref="339547617"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSMenu" id="666133178">
@@ -1154,7 +1191,6 @@
 				<int key="NSvFlags">256</int>
 				<string key="NSFrameSize">{125, 1}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView"/>
 			</object>
 		</object>
@@ -1384,6 +1420,14 @@
 						<reference key="destination" ref="553205165"/>
 					</object>
 					<int key="connectionID">277</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="804010727"/>
+						<reference key="destination" ref="862059222"/>
+					</object>
+					<int key="connectionID">293</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1989,6 +2033,7 @@
 							<reference ref="731459969"/>
 							<reference ref="991091100"/>
 							<reference ref="364337157"/>
+							<reference ref="1060270002"/>
 						</object>
 						<reference key="parent" ref="569657468"/>
 					</object>
@@ -2127,6 +2172,11 @@
 						</object>
 						<reference key="parent" ref="944344770"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">292</int>
+						<reference key="object" ref="1060270002"/>
+						<reference key="parent" ref="675097"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -2225,6 +2275,7 @@
 					<string>267.IBPluginDependency</string>
 					<string>268.IBPluginDependency</string>
 					<string>269.IBPluginDependency</string>
+					<string>292.IBPluginDependency</string>
 					<string>3.IBPluginDependency</string>
 					<string>6.IBPluginDependency</string>
 					<string>7.IBPluginDependency</string>
@@ -2326,6 +2377,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -2340,951 +2392,9 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">291</int>
+			<int key="maxID">293</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSActionExecuteWindow</string>
-					<string key="superclassName">NSWindow</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSActionExecuteWindow.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSActionExecuteWindowController</string>
-					<string key="superclassName">NSWindowController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>newDocument:</string>
-							<string>openFile:</string>
-							<string>openResultInNewWindow:</string>
-							<string>openTaskInNewWindow:</string>
-							<string>requestEditTask:</string>
-							<string>requestExecuteTask:</string>
-							<string>requestResumeTask:</string>
-							<string>requestSuspendTask:</string>
-							<string>requestTerminateTask:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>newDocument:</string>
-							<string>openFile:</string>
-							<string>openResultInNewWindow:</string>
-							<string>openTaskInNewWindow:</string>
-							<string>requestEditTask:</string>
-							<string>requestExecuteTask:</string>
-							<string>requestResumeTask:</string>
-							<string>requestSuspendTask:</string>
-							<string>requestTerminateTask:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">newDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">openFile:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">openResultInNewWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">openTaskInNewWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">requestEditTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">requestExecuteTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">requestResumeTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">requestSuspendTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">requestTerminateTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">_actionExecuteWindow</string>
-						<string key="NS.object.0">MGSActionExecuteWindow</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">_actionExecuteWindow</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">_actionExecuteWindow</string>
-							<string key="candidateClassName">MGSActionExecuteWindow</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSActionExecuteWindowController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSBrowserSplitView</string>
-					<string key="superclassName">NSSplitView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSBrowserSplitView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSBrowserViewController</string>
-					<string key="superclassName">NSViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>changeTaskLabelColour:</string>
-							<string>changeTaskRatingIndex:</string>
-							<string>handleTableCheckClick:</string>
-							<string>openTaskInNewTab:</string>
-							<string>openTaskInNewWindow:</string>
-							<string>selectGroupIcon:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>changeTaskLabelColour:</string>
-							<string>changeTaskRatingIndex:</string>
-							<string>handleTableCheckClick:</string>
-							<string>openTaskInNewTab:</string>
-							<string>openTaskInNewWindow:</string>
-							<string>selectGroupIcon:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">changeTaskLabelColour:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">changeTaskRatingIndex:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">handleTableCheckClick:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">openTaskInNewTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">openTaskInNewWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">selectGroupIcon:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_imageCollectionWindowController</string>
-							<string>_sharingView</string>
-							<string>actionEditBar</string>
-							<string>actionScrollView</string>
-							<string>actionTable</string>
-							<string>groupEditBar</string>
-							<string>groupScrollView</string>
-							<string>groupTable</string>
-							<string>machineTable</string>
-							<string>splitView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>MGSImageCollectionWindowController</string>
-							<string>NSView</string>
-							<string>NSView</string>
-							<string>NSScrollView</string>
-							<string>NSTableView</string>
-							<string>NSView</string>
-							<string>NSScrollView</string>
-							<string>NSTableView</string>
-							<string>NSTableView</string>
-							<string>MGSBrowserSplitView</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_imageCollectionWindowController</string>
-							<string>_sharingView</string>
-							<string>actionEditBar</string>
-							<string>actionScrollView</string>
-							<string>actionTable</string>
-							<string>groupEditBar</string>
-							<string>groupScrollView</string>
-							<string>groupTable</string>
-							<string>machineTable</string>
-							<string>splitView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_imageCollectionWindowController</string>
-								<string key="candidateClassName">MGSImageCollectionWindowController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_sharingView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">actionEditBar</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">actionScrollView</string>
-								<string key="candidateClassName">NSScrollView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">actionTable</string>
-								<string key="candidateClassName">NSTableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">groupEditBar</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">groupScrollView</string>
-								<string key="candidateClassName">NSScrollView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">groupTable</string>
-								<string key="candidateClassName">NSTableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">machineTable</string>
-								<string key="candidateClassName">NSTableView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">splitView</string>
-								<string key="candidateClassName">MGSBrowserSplitView</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSBrowserViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSImageCollectionWindowController</string>
-					<string key="superclassName">NSWindowController</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>myTargetView</string>
-							<string>selectionField</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSView</string>
-							<string>NSTextField</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>myTargetView</string>
-							<string>selectionField</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">myTargetView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">selectionField</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSImageCollectionWindowController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSMotherWindowController</string>
-					<string key="superclassName">MGSActionExecuteWindowController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addNewTaskTab:</string>
-							<string>addServer:</string>
-							<string>closeTaskTab:</string>
-							<string>deleteDocument:</string>
-							<string>duplicateDocument:</string>
-							<string>findTask:</string>
-							<string>maximizeTaskTab:</string>
-							<string>minimizeTaskTab:</string>
-							<string>publishDocument:</string>
-							<string>removeServer:</string>
-							<string>selectNextTaskTab:</string>
-							<string>selectPrevTaskTab:</string>
-							<string>subviewDoubleClick:</string>
-							<string>toggleTaskTabMaximization:</string>
-							<string>unpublishDocument:</string>
-							<string>viewMenuShowSelected:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addNewTaskTab:</string>
-							<string>addServer:</string>
-							<string>closeTaskTab:</string>
-							<string>deleteDocument:</string>
-							<string>duplicateDocument:</string>
-							<string>findTask:</string>
-							<string>maximizeTaskTab:</string>
-							<string>minimizeTaskTab:</string>
-							<string>publishDocument:</string>
-							<string>removeServer:</string>
-							<string>selectNextTaskTab:</string>
-							<string>selectPrevTaskTab:</string>
-							<string>subviewDoubleClick:</string>
-							<string>toggleTaskTabMaximization:</string>
-							<string>unpublishDocument:</string>
-							<string>viewMenuShowSelected:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">addNewTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">addServer:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">closeTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">deleteDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">duplicateDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">findTask:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">maximizeTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">minimizeTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">publishDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">removeServer:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">selectNextTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">selectPrevTaskTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">subviewDoubleClick:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">toggleTaskTabMaximization:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">unpublishDocument:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">viewMenuShowSelected:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_feedbackButton</string>
-							<string>leftBottomView</string>
-							<string>leftSplitView</string>
-							<string>leftTopView</string>
-							<string>leftView</string>
-							<string>windowLeftView</string>
-							<string>windowMainView</string>
-							<string>windowSplitView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSButton</string>
-							<string>NSView</string>
-							<string>NSSplitView</string>
-							<string>NSView</string>
-							<string>NSView</string>
-							<string>NSView</string>
-							<string>NSView</string>
-							<string>NSSplitView</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>_feedbackButton</string>
-							<string>leftBottomView</string>
-							<string>leftSplitView</string>
-							<string>leftTopView</string>
-							<string>leftView</string>
-							<string>windowLeftView</string>
-							<string>windowMainView</string>
-							<string>windowSplitView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">_feedbackButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">leftBottomView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">leftSplitView</string>
-								<string key="candidateClassName">NSSplitView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">leftTopView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">leftView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">windowLeftView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">windowMainView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">windowSplitView</string>
-								<string key="candidateClassName">NSSplitView</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSMotherWindowController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSRequestTabScrollView</string>
-					<string key="superclassName">NSScrollView</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">delegate</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">delegate</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">delegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSRequestTabScrollView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSRequestTabViewController</string>
-					<string key="superclassName">NSViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addCopyOfSelectedTab:</string>
-							<string>addNewTab:</string>
-							<string>closeSelectedTab:</string>
-							<string>isEditedAction:</string>
-							<string>isProcessingAction:</string>
-							<string>setIconNamed:</string>
-							<string>setObjectCount:</string>
-							<string>setTabLabel:</string>
-							<string>stopProcessing:</string>
-							<string>toggleToolbar:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>addCopyOfSelectedTab:</string>
-							<string>addNewTab:</string>
-							<string>closeSelectedTab:</string>
-							<string>isEditedAction:</string>
-							<string>isProcessingAction:</string>
-							<string>setIconNamed:</string>
-							<string>setObjectCount:</string>
-							<string>setTabLabel:</string>
-							<string>stopProcessing:</string>
-							<string>toggleToolbar:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">addCopyOfSelectedTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">addNewTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">closeSelectedTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">isEditedAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">isProcessingAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">setIconNamed:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">setObjectCount:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">setTabLabel:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">stopProcessing:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">toggleToolbar:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>button_allowScrubbing</string>
-							<string>button_automaticallyAnimate</string>
-							<string>button_canCloseOnlyTab</string>
-							<string>button_disableTabClosing</string>
-							<string>button_hideForSingleTab</string>
-							<string>button_showAddTab</string>
-							<string>button_sizeToFit</string>
-							<string>button_useOverflow</string>
-							<string>drawer</string>
-							<string>iconButton</string>
-							<string>isEditedButton</string>
-							<string>isProcessingButton</string>
-							<string>objectCounterField</string>
-							<string>popUp_orientation</string>
-							<string>popUp_style</string>
-							<string>popUp_tearOff</string>
-							<string>requestTabScrollView</string>
-							<string>tabBar</string>
-							<string>tabContextMenu</string>
-							<string>tabField</string>
-							<string>tabView</string>
-							<string>textField_maxWidth</string>
-							<string>textField_minWidth</string>
-							<string>textField_optimumWidth</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSDrawer</string>
-							<string>NSPopUpButton</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSTextField</string>
-							<string>NSPopUpButton</string>
-							<string>NSPopUpButton</string>
-							<string>NSPopUpButton</string>
-							<string>MGSRequestTabScrollView</string>
-							<string>PSMTabBarControl</string>
-							<string>NSMenu</string>
-							<string>NSTextField</string>
-							<string>NSTabView</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-							<string>NSTextField</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>button_allowScrubbing</string>
-							<string>button_automaticallyAnimate</string>
-							<string>button_canCloseOnlyTab</string>
-							<string>button_disableTabClosing</string>
-							<string>button_hideForSingleTab</string>
-							<string>button_showAddTab</string>
-							<string>button_sizeToFit</string>
-							<string>button_useOverflow</string>
-							<string>drawer</string>
-							<string>iconButton</string>
-							<string>isEditedButton</string>
-							<string>isProcessingButton</string>
-							<string>objectCounterField</string>
-							<string>popUp_orientation</string>
-							<string>popUp_style</string>
-							<string>popUp_tearOff</string>
-							<string>requestTabScrollView</string>
-							<string>tabBar</string>
-							<string>tabContextMenu</string>
-							<string>tabField</string>
-							<string>tabView</string>
-							<string>textField_maxWidth</string>
-							<string>textField_minWidth</string>
-							<string>textField_optimumWidth</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">button_allowScrubbing</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">button_automaticallyAnimate</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">button_canCloseOnlyTab</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">button_disableTabClosing</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">button_hideForSingleTab</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">button_showAddTab</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">button_sizeToFit</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">button_useOverflow</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">drawer</string>
-								<string key="candidateClassName">NSDrawer</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">iconButton</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">isEditedButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">isProcessingButton</string>
-								<string key="candidateClassName">NSButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">objectCounterField</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">popUp_orientation</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">popUp_style</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">popUp_tearOff</string>
-								<string key="candidateClassName">NSPopUpButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">requestTabScrollView</string>
-								<string key="candidateClassName">MGSRequestTabScrollView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">tabBar</string>
-								<string key="candidateClassName">PSMTabBarControl</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">tabContextMenu</string>
-								<string key="candidateClassName">NSMenu</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">tabField</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">tabView</string>
-								<string key="candidateClassName">NSTabView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">textField_maxWidth</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">textField_minWidth</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">textField_optimumWidth</string>
-								<string key="candidateClassName">NSTextField</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSRequestTabViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSSidebarOutlineView</string>
-					<string key="superclassName">NSOutlineView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSSidebarOutlineView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">MGSSidebarViewController</string>
-					<string key="superclassName">NSViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>openTaskInNewTab:</string>
-							<string>openTaskInNewWindow:</string>
-							<string>outlineDoubleAction:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>openTaskInNewTab:</string>
-							<string>openTaskInNewWindow:</string>
-							<string>outlineDoubleAction:</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">openTaskInNewTab:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">openTaskInNewWindow:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">outlineDoubleAction:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">outlineView</string>
-						<string key="NS.object.0">MGSSidebarOutlineView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">outlineView</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">outlineView</string>
-							<string key="candidateClassName">MGSSidebarOutlineView</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MGSSidebarViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">PSMTabBarControl</string>
-					<string key="superclassName">NSControl</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>delegate</string>
-							<string>partnerView</string>
-							<string>tabView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>NSTabView</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>delegate</string>
-							<string>partnerView</string>
-							<string>tabView</string>
-						</object>
-						<object class="NSArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBToOneOutletInfo">
-								<string key="name">delegate</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">partnerView</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">tabView</string>
-								<string key="candidateClassName">NSTabView</string>
-							</object>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PSMTabBarControl.h</string>
-					</object>
-				</object>
-			</object>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
