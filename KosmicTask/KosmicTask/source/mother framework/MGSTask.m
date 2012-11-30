@@ -115,50 +115,121 @@
         NSArray *launchArguments = [[NSArray alloc] initWithObjects:@"-i386", execPath, nil];
         
 #endif
+   
+        NSDictionary* environ = [[NSProcessInfo processInfo] environment];
+        BOOL inSandbox = (nil != [environ objectForKey:@"APP_SANDBOX_CONTAINER_ID"]);
         
-		// configure the task
-		_task = [[NSTask alloc] init];
-		[_task setLaunchPath:launchPath];
-        [_task setArguments:launchArguments];
-		[_task setCurrentDirectoryPath:_currentDirectoryPath];
+        // sandboxed app
+        if (inSandbox) {
+            
+            // this point to the container
+            // /Users/Jonathan/Library/Containers/com.mugginsoft.kosmictask/Data
+            //
+            // NSString *folder = [@"~/Library/Application Scripts/com.mugginsoft.kosmictaskserver" stringByExpandingTildeInPath];
+            // NSURL *scriptsFolderURL = [NSURL fileURLWithPath:folder isDirectory:YES];
 
-		// task terminate notification
-		[defaultCenter addObserver:self 
-						  selector:@selector(taskDidTerminate:) 
-							  name:NSTaskDidTerminateNotification object:_task];
-		
-		
-		// setup pipes for std in, out and err
-		_inputPipe = [NSPipe pipe];
-		if (!_inputPipe) {
-			[NSException raise:MGSTaskStartException format:@"Cannot allocate input pipe"];
-		}
-		[_task setStandardInput:_inputPipe];
+            //
+            // it looks like:
+            // Cannot access NSApplicationScriptsDirectory com.mugginsoft.kosmictask or com.mugginsoft.kosmictaskserver from here
+            //
+            // get user application scripts directory.
+            // this currently fails with error that we don't have permission
+            // to create com.mugginsoft.kosmictaskserver.
+            
+            NSURL *scriptsFolderURL = [[NSFileManager defaultManager]
+                                       URLForDirectory:NSApplicationScriptsDirectory
+                                       inDomain:NSUserDomainMask
+                                       appropriateForURL:nil
+                                       create:NO
+                                       error:error];
+            
+            if (*error) {
+                MLogInfo(@"Error: %@", *error);
+                
+                errMsg = NSLocalizedString(@"Cannot access applications scripts directory: ", @"Return by server when cannot access application scripts folder in sandboxed app.");
+                [NSException raise:MGSTaskStartException format:@"%@ %@", errMsg, *error];
+            }
+    
+            
 
-		_outputPipe = [NSPipe pipe];
-		if (!_outputPipe) {
-			[NSException raise:MGSTaskStartException format:@"Cannot allocate output pipe"];
-		}
-		[_task setStandardOutput:_outputPipe];
+            MLogInfo(@"NSApplicationScriptsDirectory = %@", scriptsFolderURL);
+            
+            // form task launcher path.
+            // a script launched from NSApplicationScriptsDirectory escapes the sandbox.
+            // note that the user will have to be prompted to move the launcher into place
+            NSString *taskRunnerExec = @"KosmicTaskLauncher";
+            NSURL *taskRunnerURL = [NSURL fileURLWithPathComponents: @[[scriptsFolderURL path], taskRunnerExec]];
 
-		_errorPipe = [NSPipe pipe];
-		if (!_errorPipe) {
-			[NSException raise:MGSTaskStartException format:@"Cannot allocate error pipe"];
+            MLogInfo(@"taskRunnerURL = %@", taskRunnerURL);
+
+            // initialise the task
+            _unixTask = [[NSUserUnixTask alloc] initWithURL:taskRunnerURL error:error];
+            if (*error) {
+                errMsg = NSLocalizedString(@"Cannot create unix task launcher: ", @"Return by server when cannot access application scripts task launcher in sandboxed app.");
+                [NSException raise:MGSTaskStartException format:@"%@ %@", errMsg, *error];
+                
+            }
+            
+            void (^completionHandler)(NSError *err);
+            completionHandler = ^(NSError *err) {
+                if (error) {
+                    NSLog(@"KosmicTaskLauncher failed: %@", err);
+                } else {
+                    NSLog(@"KosmicTaskLauncher okay");
+                }
+            };
+
+            // execute the task
+            [_unixTask executeWithArguments:@[ ] completionHandler:completionHandler];
+            
+        }
+        
+        if (YES) {
+        
+            // configure the task
+            _task = [[NSTask alloc] init];
+            [_task setLaunchPath:launchPath];
+            [_task setArguments:launchArguments];
+            [_task setCurrentDirectoryPath:_currentDirectoryPath];
+
+            // task terminate notification
+            [defaultCenter addObserver:self 
+                              selector:@selector(taskDidTerminate:) 
+                                  name:NSTaskDidTerminateNotification object:_task];
+            
+            
+            // setup pipes for std in, out and err
+            _inputPipe = [NSPipe pipe];
+            if (!_inputPipe) {
+                [NSException raise:MGSTaskStartException format:@"Cannot allocate input pipe"];
+            }
+            [_task setStandardInput:_inputPipe];
+
+            _outputPipe = [NSPipe pipe];
+            if (!_outputPipe) {
+                [NSException raise:MGSTaskStartException format:@"Cannot allocate output pipe"];
+            }
+            [_task setStandardOutput:_outputPipe];
+
+            _errorPipe = [NSPipe pipe];
+            if (!_errorPipe) {
+                [NSException raise:MGSTaskStartException format:@"Cannot allocate error pipe"];
+            }
+            [_task setStandardError:_errorPipe];
+            
+                    
+            // launch task and read in background
+            @try{
+                [_task launch];
+            } @catch (NSException *exception) {
+                
+                errMsg = NSLocalizedString(@"Cannot launch task. %@ : %@", @"Return by server when script task cannot be launched");
+                
+                // re raise
+                [NSException raise:MGSTaskStartException format:errMsg, [exception name], [exception reason]];
+            }
 		}
-		[_task setStandardError:_errorPipe];
-		
-				
-		// launch task and read in background
-		@try{
-			[_task launch];
-		} @catch (NSException *exception) {
-			
-			errMsg = NSLocalizedString(@"Cannot launch task. %@ : %@", @"Return by server when script task cannot be launched");
-			
-			// re raise
-			[NSException raise:MGSTaskStartException format:errMsg, [exception name], [exception reason]];
-		}
-		
+        
 		// read task output async
 		if ((fileHandle = [_outputPipe fileHandleForReading])) {
 			_taskOutputData = [NSMutableData data];

@@ -23,6 +23,7 @@
 
 @interface MGSTask : NSObject {
 	NSTask *_task;
+    NSUserUnixTask *_unixTask;
 	NSPipe *_inputPipe;
 	NSPipe *_outputPipe;
 	NSPipe *_errorPipe;

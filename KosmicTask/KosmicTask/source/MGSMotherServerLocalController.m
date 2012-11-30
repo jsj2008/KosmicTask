@@ -90,6 +90,15 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
         NSArray *serverArguments = [[NSArray alloc] initWithObjects:@"-i386", agentPath, nil];
 
 #endif
+        // get user application scripts directory
+        NSError *error = nil;
+        NSURL *scriptsFolderURL = [[NSFileManager defaultManager]
+                                   URLForDirectory:NSApplicationScriptsDirectory
+                                   inDomain:NSUserDomainMask
+                                   appropriateForURL:nil
+                                   create:YES
+                                   error:&error];
+        MLogInfo(@"NSApplicationScriptsDirectory = %@", scriptsFolderURL);
         
         // allocate NSTask
 		_serverTask = [[NSTask alloc] init];
