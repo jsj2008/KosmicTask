@@ -83,15 +83,15 @@
 	
 	// gradient
 	NSBezierPath *bgPath = [NSBezierPath bezierPathWithRect:aRect];
-	NSColor *startColor = [NSColor colorWithCalibratedRed:0.988f green:0.988f blue:0.988f alpha:1.0f];
+	NSColor *startColor = [NSColor colorWithCalibratedRed:0.925f green:0.925f blue:0.925f alpha:1.0f];
 	NSColor *endColor = [NSColor colorWithCalibratedRed:0.875f green:0.875f blue:0.875f alpha:1.0f];
 	
 	NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:startColor endingColor:endColor];
 	[gradient drawInBezierPath:bgPath angle:90.0f];
 
 	// top and bottom lines
-	NSColor *topColor = [NSColor colorWithCalibratedRed:0.647f green:0.647f blue:0.647f alpha:1.0f];
-	NSColor *bottomColor = [NSColor colorWithCalibratedRed:0.333f green:0.333f blue:0.333f alpha:1.0f];
+	NSColor *topColor = [NSColor colorWithCalibratedRed:0.645f green:0.645f blue:0.645f alpha:1.0f];
+	NSColor *bottomColor = [NSColor colorWithCalibratedRed:0.645f green:0.645f blue:0.645f alpha:1.0f];
 	
 	CGFloat width = aRect.size.width;
 	CGFloat height = aRect.size.height;
@@ -101,9 +101,17 @@
 	[topColor set];		
 	[bgPath stroke];
  
-	bgPath = [NSBezierPath bezierPathLineFrom:NSMakePoint(aRect.origin.x, aRect.origin.y + height) to: NSMakePoint(aRect.origin.x + width, aRect.origin.y + height)];
-	[bottomColor set];
-	[bgPath stroke];
+    // do not draw bottom line for first splitter
+    if ([[self subviews] count] > 2) {
+        
+        NSView *subview = [[self subviews] objectAtIndex:1];
+        
+        if (aRect.origin.y > subview.frame.origin.y) {
+            bgPath = [NSBezierPath bezierPathLineFrom:NSMakePoint(aRect.origin.x, aRect.origin.y + height) to: NSMakePoint(aRect.origin.x + width, aRect.origin.y + height)];
+            [bottomColor set];
+            [bgPath stroke];
+        }
+    }
 	
 	// let super draw circle icon
 	[super drawDividerInRect:aRect];

@@ -26,6 +26,7 @@
 #import "MGSPreferences.h"
 #import "MGSNotifications.h"
 #import "MGSMotherWindowController.h"
+#import "MGSKosmicUnityTabStyle.h"
 
 NSString *MGSDefaultTabStyle = @"PSMTabBarControl.Style";
 NSString *MGSDefaultTabOrientation =  @"PSMTabBarControl.Orientation";
@@ -67,11 +68,12 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 
 - (void)configureView
 {
-   
+    [[tabBar class] registerTabStyleClass:[MGSKosmicUnityTabStyle class]];
+     
 	// add items to use defaults dict
 	[[NSUserDefaults standardUserDefaults] registerDefaults:
 	 [NSDictionary dictionaryWithObjectsAndKeys:
-	  @"Card", MGSDefaultTabStyle,		//@"Aqua", @"Unified" @"Metal", @"Adium"
+	  [MGSKosmicUnityTabStyle name], MGSDefaultTabStyle,		// @"Aqua", @"Unified" @"Metal", @"Adium", @"Card"
 	  @"Horizontal", MGSDefaultTabOrientation,
 	  @"Alpha Window", MGSDefaultTabTearOff,
 	  @"200", MGSDefaultTabMinWidth,
@@ -1378,9 +1380,10 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 - (void)configureTabBarInitially
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	
-	[popUp_style selectItemWithTitle:[defaults stringForKey:MGSDefaultTabStyle]];
+
+    [tabBar setStyleNamed:[MGSKosmicUnityTabStyle name]];
+       
+	//[popUp_style selectItemWithTitle:[defaults stringForKey:MGSDefaultTabStyle]];
 	[popUp_orientation selectItemWithTitle:[defaults stringForKey:MGSDefaultTabOrientation]];
 	[popUp_tearOff selectItemWithTitle:[defaults stringForKey:MGSDefaultTabTearOff]];
 	[button_canCloseOnlyTab setState:[defaults boolForKey:MGSDefaultTabCanCloseOnlyTab]];
@@ -1393,7 +1396,7 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
 	[button_allowScrubbing setState:[defaults boolForKey:MGSDefaultTabAllowScrubbing]];
 	
 	
-	[self configStyle:popUp_style];
+	//[self configStyle:popUp_style];
 	[self configOrientation:popUp_orientation];
 	[self configCanCloseOnlyTab:button_canCloseOnlyTab];
 	[self configDisableTabClose:button_disableTabClosing];

@@ -48,6 +48,7 @@
         [sidebarToggle setBezelStyle:NSRoundRectBezelStyle];
         [sidebarToggle setBordered:NO];
 
+        self.hasBottomBorder = YES;
 	}
 	
 	return self;
@@ -116,6 +117,7 @@
 		case BROWSER_CLOSE_SEGMENT_INDEX:
 			if (browserViewVisible == NO) return;
 			viewState = kMGSViewStateHide;
+            self.hasBottomBorder = NO;
 			break;
 			
 			// any other segment
@@ -123,6 +125,7 @@
 			// if browser hidden then we require to show it
 			if (browserViewVisible == NO) {
 				viewState = kMGSViewStateShow;
+                self.hasBottomBorder =YES;
 			} 
 			_segmentToSelectWhenNotHidden = clickedSegment;
 			
