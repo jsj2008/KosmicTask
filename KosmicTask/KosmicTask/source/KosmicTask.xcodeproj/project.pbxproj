@@ -318,6 +318,7 @@
 		AB3E122B11C8D00300DA5D02 /* MGSImageAndTextCell2.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3E122911C8D00300DA5D02 /* MGSImageAndTextCell2.h */; };
 		AB3E122D11C8D00300DA5D02 /* MGSImageAndTextCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3E122A11C8D00300DA5D02 /* MGSImageAndTextCell2.m */; };
 		AB3F5EF0130C7C5300342F11 /* MGSPythonScriptManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3F5EEF130C7C5300342F11 /* MGSPythonScriptManager.m */; };
+		AB3F9D501667ECA0003357D9 /* MGSKosmicUnityTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3F9D4F1667ECA0003357D9 /* MGSKosmicUnityTabStyle.m */; };
 		AB4002E710E1337000C25076 /* NSArray_Tree_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4002E610E1337000C25076 /* NSArray_Tree_Mugginsoft.m */; };
 		AB406A55119AE163006E3552 /* NSString+SymlinksAndAliases.h in Headers */ = {isa = PBXBuildFile; fileRef = AB406A53119AE163006E3552 /* NSString+SymlinksAndAliases.h */; };
 		AB406A56119AE163006E3552 /* NSString+SymlinksAndAliases.m in Sources */ = {isa = PBXBuildFile; fileRef = AB406A54119AE163006E3552 /* NSString+SymlinksAndAliases.m */; };
@@ -3750,6 +3751,8 @@
 		AB3E122911C8D00300DA5D02 /* MGSImageAndTextCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSImageAndTextCell2.h; sourceTree = "<group>"; };
 		AB3E122A11C8D00300DA5D02 /* MGSImageAndTextCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSImageAndTextCell2.m; sourceTree = "<group>"; };
 		AB3F5EEF130C7C5300342F11 /* MGSPythonScriptManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSPythonScriptManager.m; path = "mother task/MGSPythonScriptManager.m"; sourceTree = "<group>"; };
+		AB3F9D4E1667ECA0003357D9 /* MGSKosmicUnityTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSKosmicUnityTabStyle.h; path = ../../../../../github/Mugginsoft/MGSKosmicUnityTabStyle/MGSKosmicUnityTabStyle.h; sourceTree = "<group>"; };
+		AB3F9D4F1667ECA0003357D9 /* MGSKosmicUnityTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSKosmicUnityTabStyle.m; path = ../../../../../github/Mugginsoft/MGSKosmicUnityTabStyle/MGSKosmicUnityTabStyle.m; sourceTree = "<group>"; };
 		AB4002E510E1336F00C25076 /* NSArray_Tree_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArray_Tree_Mugginsoft.h; sourceTree = "<group>"; };
 		AB4002E610E1337000C25076 /* NSArray_Tree_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArray_Tree_Mugginsoft.m; sourceTree = "<group>"; };
 		AB406A53119AE163006E3552 /* NSString+SymlinksAndAliases.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+SymlinksAndAliases.h"; path = "NSString+SymlinksAndAliases/NSString+SymlinksAndAliases.h"; sourceTree = Mugginsoft; };
@@ -4057,6 +4060,7 @@
 		AB874D2A0D3385C5003A752B /* MGSParameterSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterSplitView.m; sourceTree = "<group>"; };
 		AB874D300D338C22003A752B /* MGSNetMessageDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNetMessageDictionary.h; sourceTree = "<group>"; };
 		AB874D310D338C22003A752B /* MGSNetMessageDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNetMessageDictionary.m; sourceTree = "<group>"; };
+		AB88202C1668C7BA00072991 /* KosmicTask.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = KosmicTask.entitlements; sourceTree = "<group>"; };
 		AB8934F21168A83700F6177E /* MGSResultFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSResultFormat.h; sourceTree = "<group>"; };
 		AB8934F31168A83700F6177E /* MGSResultFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSResultFormat.m; sourceTree = "<group>"; };
 		AB89F097124364130076FBD0 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/MGSLanguageProcess.strings; sourceTree = "<group>"; };
@@ -6322,6 +6326,7 @@
 		29B97314FDCFA39411CA2CEA /* mother */ = {
 			isa = PBXGroup;
 			children = (
+				AB88202C1668C7BA00072991 /* KosmicTask.entitlements */,
 				ABB361AA1659825A0010A2AF /* Cocoa.framework */,
 				AB3F6FE5130C86DF00342F11 /* HG submodule project */,
 				AB3F5EEF130C7C5300342F11 /* MGSPythonScriptManager.m */,
@@ -7019,6 +7024,15 @@
 				AB0DC012130C8DF5000F4673 /* Hg submodule.rtf */,
 			);
 			name = "HG submodule project";
+			sourceTree = "<group>";
+		};
+		AB3F9D4D1667EC38003357D9 /* PSMTabBarControl */ = {
+			isa = PBXGroup;
+			children = (
+				AB3F9D4E1667ECA0003357D9 /* MGSKosmicUnityTabStyle.h */,
+				AB3F9D4F1667ECA0003357D9 /* MGSKosmicUnityTabStyle.m */,
+			);
+			name = PSMTabBarControl;
 			sourceTree = "<group>";
 		};
 		AB406A52119AE163006E3552 /* NSString+SymlinksAndAliases */ = {
@@ -7824,6 +7838,7 @@
 		AB98AFD510C540FA00C214B3 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				AB3F9D4D1667EC38003357D9 /* PSMTabBarControl */,
 				AB13E4D51638845B001A5921 /* Port checker */,
 				AB182F22127875CA00B79BA4 /* Concurrency */,
 				AB85C1AE0D3BFDAC00C1205B /* Categories */,
@@ -11980,6 +11995,7 @@
 				AB7C197E1622F57600E45BD4 /* MGSClientNetRequest.m in Sources */,
 				ABEA1908163985530074B4F9 /* NSBundle_Mugginsoft.m in Sources */,
 				AB65EE16166174CA002940B0 /* MGSClientNetRequest+KosmicTask.m in Sources */,
+				AB3F9D501667ECA0003357D9 /* MGSKosmicUnityTabStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

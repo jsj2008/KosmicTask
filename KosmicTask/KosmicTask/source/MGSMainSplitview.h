@@ -11,10 +11,14 @@
 @class CAAnimation;
 @interface MGSMainSplitview : NSSplitView {
 	CATransition *_transition;
+    BOOL _underlineFirstSplitter;
 }
 - (void)updateSubviewsTransition;
 - (void)replaceTopView:(NSView *)newView;
 - (void)replaceMiddleView:(NSView *)newView;
 - (void)replaceBottomView:(NSView *)newView;
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag;
+
+@property BOOL underlineFirstSplitter;
+
 @end

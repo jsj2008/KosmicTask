@@ -19,6 +19,8 @@
 
 @implementation MGSMainSplitview
 
+@synthesize underlineFirstSplitter = _underlineFirstSplitter;
+
 - (id)initWithFrame:(NSRect)newFrame {
     self = [super initWithFrame:newFrame];
     if (self) {
@@ -102,17 +104,27 @@
 	[bgPath stroke];
  
     // do not draw bottom line for first splitter
-    if ([[self subviews] count] > 2) {
+    if ([[self subviews] count] >= 2) {
         
+        for (NSView *v in [self subviews]) {
+            NSLog(@"x = %f y = %f w = %f h = %f", v.frame.origin.x, v.frame.origin.y, v.frame.size.width,  v.frame.size.height);
+        }
+        
+        BOOL drawUnderline = YES;
         NSView *subview = [[self subviews] objectAtIndex:1];
-        
-        if (aRect.origin.y > subview.frame.origin.y) {
+        BOOL isFirstSplitter = aRect.origin.y < subview.frame.origin.y;
+        if (isFirstSplitter & !self.underlineFirstSplitter) {
+            drawUnderline = NO;
+        }
+
+        if (drawUnderline) {
             bgPath = [NSBezierPath bezierPathLineFrom:NSMakePoint(aRect.origin.x, aRect.origin.y + height) to: NSMakePoint(aRect.origin.x + width, aRect.origin.y + height)];
             [bottomColor set];
             [bgPath stroke];
         }
+
     }
-	
+        
 	// let super draw circle icon
 	[super drawDividerInRect:aRect];
 }
@@ -133,6 +145,18 @@
 {
 	#pragma unused(theAnimation)
 }
+
+/*
+ 
+ - setUnderLineFirstSplitter
+ 
+ */
+- (void)setUnderLineFirstSplitter:(BOOL)value
+{
+    _underlineFirstSplitter = value;
+    [self setNeedsDisplay:YES];
+}
+
 @end
 
 @implementation MGSMainSplitview(Private)

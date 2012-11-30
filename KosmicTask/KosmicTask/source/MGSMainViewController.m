@@ -653,6 +653,9 @@ static char MGSSeletedDetailViewSegmentContext;
 		}
 	}
 	
+    BOOL browserIsVisible = ![self browserViewIsHidden];
+    mainSplitView.underlineFirstSplitter = !browserIsVisible;
+    
 	switch (mode) {
 			
 			// toggle the browser visibility
@@ -682,6 +685,7 @@ static char MGSSeletedDetailViewSegmentContext;
 												object:[[self view] window]
 												userInfo:[notification userInfo]];
 	[[NSNotificationCenter defaultCenter] postNotification:noteDone];
+
 }
 
 
