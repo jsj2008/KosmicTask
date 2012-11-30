@@ -214,8 +214,8 @@ int AuthCRAMMD5( char *inUsername, char *inChallenge, char *inResponse )
 						
 						// Here is the Utility function that will do the authentication for us
 						dsStatus = DoChallengeResponseAuth( dsRef, dsUserNodeRef, kDSStdAuthCRAM_MD5, pRecordName, 
-															inChallenge, strlen(inChallenge), 
-															inResponse, strlen(inResponse) );
+															inChallenge, (UInt32)strlen(inChallenge),
+															inResponse, (UInt32)strlen(inResponse) );
 						
 						// Determine if successful.  There are cases where you may receive other errors
 						// such as eDSAuthPasswordExpired.

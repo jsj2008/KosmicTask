@@ -56,7 +56,7 @@
 
 #pragma mark Internal Prototypes
 
-tDirStatus AppendStringToBuffer( tDataBufferPtr inBuffer, const char *inString, long inLength );
+tDirStatus AppendStringToBuffer( tDataBufferPtr inBuffer, const char *inString, UInt32 inLength );
 int printDirNodeInfo( tDirReference inDSRef, tDirNodeReference inNodeRef);
 
 #pragma mark -
@@ -346,8 +346,8 @@ tDirStatus DoPasswordAuth( tDirReference inDSRef, tDirNodeReference inNodeRef, c
 		}
 		
 		// now place the username and password into the buffer
-		AppendStringToBuffer( pAuthStepData, inRecordName, strlen(inRecordName) );
-		AppendStringToBuffer( pAuthStepData, inPassword, strlen(inPassword) );
+		AppendStringToBuffer( pAuthStepData, inRecordName, (UInt32)strlen(inRecordName) );
+		AppendStringToBuffer( pAuthStepData, inPassword, (UInt32)strlen(inPassword) );
 		
 		//printDirNodeInfo(inDSRef, inNodeRef);
 				
@@ -435,8 +435,8 @@ int printDirNodeInfo( tDirReference inDSRef, tDirNodeReference inNodeRef)
 }
 
 tDirStatus DoChallengeResponseAuth( tDirReference inDSRef, tDirNodeReference inNodeRef, const char *inAuthMethod,
-									const char *inRecordName, const char *inChallenge, long inChallengeLen, 
-									const char *inResponse, long inResponseLen )
+									const char *inRecordName, const char *inChallenge, UInt32 inChallengeLen, 
+									const char *inResponse, UInt32 inResponseLen )
 {
 	tDirStatus		dsStatus		= eDSAuthFailed;
 	tDataNodePtr	pAuthMethod		= NULL;
@@ -480,7 +480,7 @@ tDirStatus DoChallengeResponseAuth( tDirReference inDSRef, tDirNodeReference inN
 		}
 		
 		// now place the username and password into the buffer
-		AppendStringToBuffer( pAuthStepData, inRecordName, strlen(inRecordName) );
+		AppendStringToBuffer( pAuthStepData, inRecordName, (UInt32)strlen(inRecordName) );
 		AppendStringToBuffer( pAuthStepData, inChallenge, inChallengeLen );
 		AppendStringToBuffer( pAuthStepData, inResponse, inResponseLen );
 
@@ -524,7 +524,7 @@ cleanup:
 #pragma mark -
 #pragma mark Support Functions
 
-tDirStatus AppendStringToBuffer( tDataBufferPtr inBuffer, const char *inString, long inLength )
+tDirStatus AppendStringToBuffer( tDataBufferPtr inBuffer, const char *inString, UInt32 inLength )
 {
 	tDirStatus	dsStatus	= eDSBufferTooSmall;
 	
@@ -534,19 +534,19 @@ tDirStatus AppendStringToBuffer( tDataBufferPtr inBuffer, const char *inString, 
 	}
 	
 	// check to see if we have enough room in the buffer for the string and the 4 byte length
-	if( inBuffer->fBufferSize >= (inBuffer->fBufferLength + 4 + inLength) ) {
+	if( inBuffer->fBufferSize >= (inBuffer->fBufferLength + sizeof(UInt32) + inLength) ) {
 		
 		char	*pBufferEnd = inBuffer->fBufferData + inBuffer->fBufferLength;
 		
 		// prepend the data with the length of the string
-		bcopy( &inLength, pBufferEnd, sizeof(long) );
-		pBufferEnd += sizeof( long );
+		bcopy( &inLength, pBufferEnd, sizeof(UInt32) );
+		pBufferEnd += sizeof( UInt32 );
 		
 		// now add the string to the buffer
 		bcopy( inString, pBufferEnd, inLength );
 		
 		// increase the buffer accordingly
-		inBuffer->fBufferLength += 4 + inLength;
+		inBuffer->fBufferLength += sizeof(UInt32) + inLength;
 		
 		// set successful error status
 		dsStatus = eDSNoErr;

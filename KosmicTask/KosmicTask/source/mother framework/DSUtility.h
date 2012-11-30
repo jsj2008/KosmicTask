@@ -106,5 +106,5 @@ tDirStatus DoPasswordAuth( tDirReference inDSRef, tDirNodeReference inNodeRef, c
 	@result     Will return eDSNoErr if successful, otherwise any error that may have occurred
 */
 tDirStatus DoChallengeResponseAuth( tDirReference inDSRef, tDirNodeReference inNodeRef, const char *inAuthMethod,
-									const char *inRecordName, const char *inChallenge, long inChallengeLen, 
-									const char *inResponse, long inResponseLen );
+									const char *inRecordName, const char *inChallenge, UInt32 inChallengeLen,
+									const char *inResponse, UInt32 inResponseLen );
