@@ -10,7 +10,23 @@
 #import "MGSBundleInfo.h"
 #import "MGSSystem.h"
 #import "NSBundle_Mugginsoft.h"
-#import "MGSKosmicTaskServer_vers.h"
+
+
+// these externs will be linked in automatically from the derived sources folder
+// depending on the target
+#if MGS_KOSMICTASK_SERVER
+
+// build is server
+#import "KosmicTaskServer_vers.h"       // server
+#define MGS_KOSMICTASK_SERVER_VERSION_EXTERN KosmicTaskServerVersionNumber
+
+#elif MGS_KOSMICTASK_SERVER_FRAMEWORK
+
+// build is framework
+#import "MGSKosmicTaskServer_vers.h"    // framework
+#define MGS_KOSMICTASK_SERVER_VERSION_EXTERN MGSKosmicTaskServerVersionNumber
+
+#endif
 
 @implementation MGSMetaDataHandler
 
@@ -44,7 +60,7 @@
 				
 				// get bundle task info dictionary
 				NSMutableDictionary *taskInfo = [MGSBundleInfo serverInfoDictionary];
-				[taskInfo setObject:[NSNumber numberWithDouble:KosmicTaskServerVersionNumber] forKey:MGSKeyBundleVersionDocsImported];
+				[taskInfo setObject:[NSNumber numberWithDouble:MGS_KOSMICTASK_SERVER_VERSION_EXTERN] forKey:MGSKeyBundleVersionDocsImported];
 				
 				if (NO) {
 					[taskInfo setObject:[[MGSSystem sharedInstance] machineSerialNumber] forKey:MGSKeyMachineSerial];

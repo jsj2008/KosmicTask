@@ -1,11 +1,15 @@
-/*
- *  KosmicTaskServer_vers.h
- *  KosmicTask
- *
- *  Created by Jonathan on 02/12/2009.
- *  Copyright 2009 mugginsoft.com. All rights reserved.
- *
- */
+//
+//  MGSKosmicTaskServer_vers.h
+//  KosmicTask
+//
+//  Created by Jonathan on 30/11/2012.
+//
+//
+
+#ifndef KosmicTask_MGSKosmicTaskServer_vers_h
+#define KosmicTask_MGSKosmicTaskServer_vers_h
+
+
 /*
  
  when apple generic versioning is used these constants will be generated automatically.
@@ -14,5 +18,7 @@
  is essential that agvtool is executed to update the bundle version
  
  */
-extern double KosmicTaskServerVersionNumber;
-extern const unsigned char KosmicTaskServerVersionString[];
+extern double MGSKosmicTaskServerVersionNumber;
+extern const unsigned char MGSKosmicTaskServerVersionString[];
+
+#endif
