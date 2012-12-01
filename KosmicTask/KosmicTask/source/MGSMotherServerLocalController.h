@@ -13,8 +13,13 @@ extern NSString *MGSKosmicTaskAgentName;
 @interface MGSMotherServerLocalController : NSObject {
 	NSTask *_serverTask;
 	NSTimer *_timer;
+    NSThread *_serverThread;
+    BOOL _runAsProcess;
 }
-- (BOOL) launch;
-- (void) kill;
+
+- (BOOL)launch;
+- (void)kill;
 - (BOOL)launchIfNotRunning;
+@property BOOL runAsProcess;
+
 @end

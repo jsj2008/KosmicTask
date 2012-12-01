@@ -105,10 +105,13 @@
  
     // do not draw bottom line for first splitter
     if ([[self subviews] count] >= 2) {
+
+#if MGS_MAINSPLITVIEW_LOG
         
         for (NSView *v in [self subviews]) {
             NSLog(@"x = %f y = %f w = %f h = %f", v.frame.origin.x, v.frame.origin.y, v.frame.size.width,  v.frame.size.height);
         }
+#endif
         
         BOOL drawUnderline = YES;
         NSView *subview = [[self subviews] objectAtIndex:1];

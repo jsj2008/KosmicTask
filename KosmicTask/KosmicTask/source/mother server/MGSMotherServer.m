@@ -31,6 +31,51 @@
 @synthesize externalPort = _externalPort;
 @synthesize listeningPort = _serverPort;
 
+/*
+ 
+ + startWithOptions:
+ 
+ */
++ (void)startWithOptions:(NSDictionary *)options
+{
+    NSString *portString = [NSString stringWithFormat:@"%u", MOTHER_IANA_REGISTERED_PORT];
+
+    if (options) {
+        
+    }
+    
+    [self startOnPort:portString];
+}
+/*
+ 
++ startOnPort:
+ 
+ */
++ (void)startOnPort:(NSString *)portString
+{
+   	// configure temp storage
+	MGSTempStorage *storage = [MGSTempStorage sharedController];
+	[storage deleteStorageFacility];
+	
+	// create the server
+	MGSMotherServer *motherServer = [[MGSMotherServer alloc] init];
+	
+	// bail out if initialisation fails
+	if (![motherServer initialised]) {
+		MLogInfo(@"KosmicTaskServer server initialisation failed.\n");
+		MLogInfo(@"KosmicTaskServer exiting.\n");
+		
+		exit(1);
+	}
+    
+	// if the server initialised then queue a server start and start the run loop
+	[motherServer performSelector:@selector(startServerOnPortString:) withObject:portString afterDelay:0.1];
+	
+    // run loop forever
+    [[NSRunLoop currentRunLoop] run];
+	
+    // we wont reach here
+}
 /* 
  
  init

@@ -21,7 +21,8 @@
 	int _serverPort;
 	int _externalPort;
 }
-
++ (void)startWithOptions:(NSDictionary *)options;
++ (void)startOnPort:(NSString *)portString;
 - (void)startServerOnPortString:(NSString *)str;
 - (BOOL)initialise;
 - (void)dispose;

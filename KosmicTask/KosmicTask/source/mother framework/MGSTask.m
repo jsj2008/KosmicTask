@@ -115,10 +115,13 @@
         NSArray *launchArguments = [[NSArray alloc] initWithObjects:@"-i386", execPath, nil];
         
 #endif
-   
+
+#if MGS_USE_SANDBOX
+        
         NSDictionary* environ = [[NSProcessInfo processInfo] environment];
         BOOL inSandbox = (nil != [environ objectForKey:@"APP_SANDBOX_CONTAINER_ID"]);
-        
+ 
+
         // sandboxed app
         if (inSandbox) {
             
@@ -136,6 +139,9 @@
             // this currently fails with error that we don't have permission
             // to create com.mugginsoft.kosmictaskserver.
             
+            // so a solution is to configure the server to run as a thread of the main
+            // app. this works to the extent that the folder is now accessible.
+            //
             NSURL *scriptsFolderURL = [[NSFileManager defaultManager]
                                        URLForDirectory:NSApplicationScriptsDirectory
                                        inDomain:NSUserDomainMask
@@ -171,19 +177,24 @@
             }
             
             void (^completionHandler)(NSError *err);
+            
             completionHandler = ^(NSError *err) {
-                if (error) {
+                if (err) {
                     NSLog(@"KosmicTaskLauncher failed: %@", err);
                 } else {
                     NSLog(@"KosmicTaskLauncher okay");
                 }
             };
 
-            // execute the task
-            [_unixTask executeWithArguments:@[ ] completionHandler:completionHandler];
+            NSArray *taskArguments = @[@"hello", @"task"];
+            
+            // execute the task.
+            // this currently fails
+            [_unixTask executeWithArguments:taskArguments completionHandler:completionHandler];
             
         }
-        
+    
+#endif
         if (YES) {
         
             // configure the task

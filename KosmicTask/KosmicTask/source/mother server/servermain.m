@@ -82,43 +82,27 @@ int main (int argc, const char * argv[])
 	
 	// install the signal handler
 	[MySignalHandler installSignalHandler];
-	
-	// configure temp storage
-	MGSTempStorage *storage = [MGSTempStorage sharedController];
-	[storage deleteStorageFacility];
-	
-	// create the server
-	MGSMotherServer *motherServer = [[MGSMotherServer alloc] init];	
-	
-	// bail out if initialisation fails
-	if (![motherServer initialised]) {
-		MLogInfo(@"KosmicTaskServer server initialisation failed.\n");
-		MLogInfo(@"KosmicTaskServer exiting.\n");
-		
-		exit(1);
-	}
 
 	// watch for parent termination
 #ifdef MGS_TERMINATE_WITH_PARENT
-		
-		// http://old.nabble.com/Ensure-NSTask-terminates-when-parent-application-does-td22510014.html
-		
-		pthread_t thread; 
-		int threadError = pthread_create(&thread, 0, WatchForParentTermination, 0); 
-		if (threadError != 0) {
-			MLogInfo(@"Parent process watcher thread could not be started.\n");
-		} else {
-			MLogInfo(@"This process will terminate if its parent exits unexpectedly.\n");
-		}
-	}
+    
+    // http://old.nabble.com/Ensure-NSTask-terminates-when-parent-application-does-td22510014.html
+    
+    pthread_t thread;
+    int threadError = pthread_create(&thread, 0, WatchForParentTermination, 0);
+    if (threadError != 0) {
+        MLogInfo(@"Parent process watcher thread could not be started.\n");
+    } else {
+        MLogInfo(@"This process will terminate if its parent exits unexpectedly.\n");
+    }
+}
 #else
-	MLogInfo(@"This process will outlive its parent if the parent exits unexpectedly.\n");
+MLogInfo(@"This process will outlive its parent if the parent exits unexpectedly.\n");
 #endif
 
-	// if the server initialised then queue a server start and start the run loop
-	[motherServer performSelector:@selector(startServerOnPortString:) withObject:portString afterDelay:0.1];
-	[[NSRunLoop currentRunLoop] run];
-	
+    // start the server
+    [MGSMotherServer startOnPort:portString];
+
 	// will never hit this
 	return 0;
 }

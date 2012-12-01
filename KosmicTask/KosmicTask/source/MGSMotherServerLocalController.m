@@ -11,22 +11,61 @@
 #import "MGSSecurity.h"
 #import "JAProcessInfo.h"
 #import "MGSPath.h"
+#import "MGSMotherServer.h"
 
 NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
 
 @interface MGSMotherServerLocalController()
 - (void)startTimerExpired:(NSTimer *)theTimer;
 - (void)taskTimerExpired:(NSTimer *)theTimer;
+- (BOOL)threadLaunch;
+- (BOOL)processLaunch;
+- (BOOL)processLaunchIfNotRunning;
+- (BOOL)threadLaunchIfNotRunning;
+- (void)processKill;
+- (void)threadKill;
 @end
 
 @implementation MGSMotherServerLocalController
 
+@synthesize runAsProcess = _runAsProcess;
+
 /*
  
- launch the local server if not running
+ - init
+ 
+ */
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        
+        // default to run as process?
+        _runAsProcess = YES;
+    }
+    
+    return self;
+}
+
+/*
+ 
+ - launchIfNotRunning
  
  */
 - (BOOL)launchIfNotRunning
+{
+	if (self.runAsProcess) {
+        return [self processLaunchIfNotRunning];
+    }
+    
+    return [self threadLaunchIfNotRunning];
+}
+/*
+ 
+ - processLaunchIfNotRunning
+ 
+ */
+- (BOOL)processLaunchIfNotRunning
 {
 	JAProcessInfo *processInfo = [[JAProcessInfo alloc] init];
 	[processInfo obtainFreshProcessList];
@@ -38,17 +77,45 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
 }
 /*
  
+ - threadLaunchIfNotRunning
+ 
+ */
+- (BOOL)threadLaunchIfNotRunning
+{
+	if (![_serverThread isExecuting]) {
+        _serverThread = nil;
+		return [self launch];
+	}
+	
+	return NO;
+}
+/*
+ 
  launch the local server
  
  */
-- (BOOL) launch
+- (BOOL)launch
 {
-	if (!_serverTask) {
+    if (self.runAsProcess) {
+        return [self processLaunch];
+    }
+    
+    return [self threadLaunch];
+}
 
-		// path to agent executable
-		NSString *agentPath = [MGSPath bundlePathForHelperExecutable:MGSKosmicTaskAgentName];	
+/*
+ 
+ - processLaunch
+ 
+ */
+- (BOOL)processLaunch
+{
+    if (!_serverTask) {
         
-		/* 
+		// path to agent executable
+		NSString *agentPath = [MGSPath bundlePathForHelperExecutable:MGSKosmicTaskAgentName];
+        
+		/*
 		 try and get SSL identity.
 		 if not present in keychain then try and create it.
 		 calling this here means that the identity should be prepared
@@ -74,7 +141,7 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
                 MLogInfo(@"could not retrieve SSL identity");
                 NSRunAlertPanel(NSLocalizedString(@"SSL identity not found.", @"SSL identity not found alert title text"),
                                 NSLocalizedString(@"Secure communications will not be available.", @"SSL identity alert title text"),
-                                NSLocalizedString(@"OK", @"SSL identity alert button text"),nil,nil); 
+                                NSLocalizedString(@"OK", @"SSL identity alert button text"),nil,nil);
             }
 		}
         
@@ -88,17 +155,8 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
         // request that we run 32 bit
         NSString *launchPath = @"/usr/bin/arch";
         NSArray *serverArguments = [[NSArray alloc] initWithObjects:@"-i386", agentPath, nil];
-
+        
 #endif
-        // get user application scripts directory
-        NSError *error = nil;
-        NSURL *scriptsFolderURL = [[NSFileManager defaultManager]
-                                   URLForDirectory:NSApplicationScriptsDirectory
-                                   inDomain:NSUserDomainMask
-                                   appropriateForURL:nil
-                                   create:YES
-                                   error:&error];
-        MLogInfo(@"NSApplicationScriptsDirectory = %@", scriptsFolderURL);
         
         // allocate NSTask
 		_serverTask = [[NSTask alloc] init];
@@ -111,7 +169,7 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
 		// instance will terminate itself as it will not be able to bind to the required socket port
 		@try{
 			[_serverTask launch];
-		} 
+		}
 		@catch (NSException *exception) {
 			MLog(DEBUGLOG, @"Exception launching server with agent path: %@\nLaunch path: %@\n Exception: %@", agentPath, launchPath, exception);
 			[_serverTask release];
@@ -120,8 +178,8 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
 		}
 		
 		if ([_serverTask isRunning]) {
-			_timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(startTimerExpired:) userInfo:nil repeats:NO];	
-
+			_timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(startTimerExpired:) userInfo:nil repeats:NO];
+            
 		}
 		
 		// cannot seem to observe isRunning, hence timers
@@ -130,6 +188,32 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
 	
 	
 	return YES;
+}
+
+/*
+ 
+ - threadLaunch
+ 
+ */
+- (BOOL)threadLaunch
+{
+    if (_serverThread) {
+        return NO;
+    }
+    
+    // create thread
+   _serverThread = [[NSThread alloc] initWithTarget:[MGSMotherServer class]
+                                                 selector:@selector(startWithOptions:)
+                                                   object:nil];
+    
+    if (!_serverThread) {
+        return NO;
+    }
+    
+    // start the thread
+    [_serverThread start];
+    
+    return YES;
 }
 
 /*
@@ -181,6 +265,20 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
  */
 - (void) kill
 {
+    if (self.runAsProcess) {
+        return [self processKill];
+    }
+    
+    return [self threadKill];
+}
+
+/*
+ 
+ - processKill
+ 
+ */
+- (void)processKill
+{
 	if (!_serverTask) {
 		return;
 	}
@@ -190,18 +288,24 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
 	}
 	_serverTask = nil;
 	
-	return;
+	return;    
 }
 
 /*
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	if (![_serverTask isRunning]) {
-		_serverTask = nil;
-		[self launch];
-	}
-}
+ 
+ - threadKill
+ 
  */
+- (void)threadKill
+{
+    if (!_serverThread) {
+		return;
+	}
+	
+    // we really just want the thread to exit along with the application
+	
+	return;
+}
 @end
 
 
