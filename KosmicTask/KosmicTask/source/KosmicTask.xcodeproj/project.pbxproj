@@ -215,7 +215,6 @@
 		AB2C729014D2F42000C524B5 /* luac in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB2C71D814D2F32200C524B5 /* luac */; };
 		AB2C729314D2F45600C524B5 /* LuaCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2C71F114D2F34400C524B5 /* LuaCocoa.framework */; };
 		AB2CD02F122013CA005E2379 /* perl5 in Copy Perl resources */ = {isa = PBXBuildFile; fileRef = AB2CD01012201370005E2379 /* perl5 */; };
-		AB2D050B0CDE8171006632AF /* MGSMotherServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2D050A0CDE8171006632AF /* MGSMotherServer.m */; };
 		AB2D9B02128AFEE8005B0484 /* MGSAppleScriptLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2D9B01128AFEE8005B0484 /* MGSAppleScriptLanguage.m */; };
 		AB2E6CA012C799790071052D /* MGSNetMessage+KosmicTask.h in Headers */ = {isa = PBXBuildFile; fileRef = AB2E6C9E12C799790071052D /* MGSNetMessage+KosmicTask.h */; };
 		AB2E6CA112C799790071052D /* MGSNetMessage+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6C9F12C799790071052D /* MGSNetMessage+KosmicTask.m */; };
@@ -344,8 +343,6 @@
 		AB47B592130EC19500630B53 /* JSCocoa.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F6E24130C85B900342F11 /* JSCocoa.framework */; };
 		AB47B595130EC1E700630B53 /* FScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B664130EAA3100171D4F /* FScript.framework */; };
 		AB47B59A130EC20500630B53 /* FScript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B664130EAA3100171D4F /* FScript.framework */; };
-		AB4876FD11871887005241D1 /* MGSTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AAC70C0D0C7B3400D9B17A /* MGSTask.m */; };
-		AB4876FE118718A0005241D1 /* MGSScriptTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 09923FD40D266FB10033F942 /* MGSScriptTask.m */; };
 		AB4A47070E491049007204F1 /* NSScanner_Mugginsoft.h in Headers */ = {isa = PBXBuildFile; fileRef = AB4A47050E491049007204F1 /* NSScanner_Mugginsoft.h */; };
 		AB4A47080E491049007204F1 /* NSScanner_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4A47060E491049007204F1 /* NSScanner_Mugginsoft.m */; };
 		AB4A5CBC120D7753006A66CC /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
@@ -390,14 +387,9 @@
 		AB50A1340D3263EB0046ADB2 /* MGSButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50A1330D3263EB0046ADB2 /* MGSButton.m */; };
 		AB50A18B0D3284570046ADB2 /* MGSViewButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50A18A0D3284570046ADB2 /* MGSViewButtonCell.m */; };
 		AB50AB8F0D2E5E660058DE6F /* MGSServerScriptRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = AB50AB8D0D2E5E660058DE6F /* MGSServerScriptRequest.h */; };
-		AB50AB9E0D2E5F430058DE6F /* MGSNetServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9477DB0CF6F8EF0001A5E4 /* MGSNetServer.m */; };
-		AB50AB9F0D2E5F6E0058DE6F /* MGSNetServerSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA4DC910D2E3E2D00696618 /* MGSNetServerSocket.m */; };
 		AB50ABA00D2E5F7D0058DE6F /* MGSNetClient.m in Sources */ = {isa = PBXBuildFile; fileRef = AB93B4D60CFE17A900F13240 /* MGSNetClient.m */; };
 		AB50ABA10D2E5FAF0058DE6F /* MGSClientScriptManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBA47700D283D1000E1650E /* MGSClientScriptManager.m */; };
 		AB50ABA60D2E602B0058DE6F /* MGSNetClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50ABA50D2E602B0058DE6F /* MGSNetClientManager.m */; };
-		AB50ABBA0D2E78630058DE6F /* MGSNetServerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB971EDA0CEF7BB3007DAF6E /* MGSNetServerHandler.m */; };
-		AB50ABBD0D2E79E70058DE6F /* MGSServerScriptRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50AB8E0D2E5E660058DE6F /* MGSServerScriptRequest.m */; };
-		AB50ABD00D2E7CA50058DE6F /* MGSServerRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50ABCF0D2E7CA50058DE6F /* MGSServerRequestManager.m */; };
 		AB50ABD50D2E7E190058DE6F /* MGSClientRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50ABD40D2E7E190058DE6F /* MGSClientRequestManager.m */; };
 		AB50AC830D2E7E900058DE6F /* MGSNetRequestManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AB50AC810D2E7E900058DE6F /* MGSNetRequestManager.h */; };
 		AB50AC840D2E7E900058DE6F /* MGSNetRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50AC820D2E7E900058DE6F /* MGSNetRequestManager.m */; };
@@ -570,7 +562,6 @@
 		AB79AF7714CA32FE00087932 /* ORCDiscount.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB79AF7414CA2F1000087932 /* ORCDiscount.framework */; };
 		AB7C18D716220DCC00E45BD4 /* RedCross16.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7C18D616220DCC00E45BD4 /* RedCross16.png */; };
 		AB7C18D916220E8900E45BD4 /* GreenTick16.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7C18D816220E8900E45BD4 /* GreenTick16.png */; };
-		AB7C197B1622F52C00E45BD4 /* MGSServerNetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C197A1622F52C00E45BD4 /* MGSServerNetRequest.m */; };
 		AB7C197E1622F57600E45BD4 /* MGSClientNetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C197D1622F57600E45BD4 /* MGSClientNetRequest.m */; };
 		AB7C472F0DA2DEAD0008F562 /* ConnectToServer.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB7C472D0DA2DEAD0008F562 /* ConnectToServer.xib */; };
 		AB7C47320DA2DEE90008F562 /* MGSAddServerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C47310DA2DEE90008F562 /* MGSAddServerWindowController.m */; };
@@ -579,6 +570,7 @@
 		AB805B170E9814030079688F /* NewWindow16.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB805B160E9814030079688F /* NewWindow16.tif */; };
 		AB81CBD80D4A5A3C00177D63 /* MAAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = AB81CBD70D4A5A3C00177D63 /* MAAttachedWindow.m */; };
 		AB81CBDC0D4A5B0D00177D63 /* MGSAttachedWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB81CBDB0D4A5B0D00177D63 /* MGSAttachedWindowController.m */; };
+		AB820650166A9ABD00FCC5FB /* MGSKosmicTaskServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB882140166964E600072991 /* MGSKosmicTaskServer.framework */; };
 		AB823AF80DEF34AE005D07B3 /* NSApplication_Mugginsoft.h in Headers */ = {isa = PBXBuildFile; fileRef = AB823AF60DEF34AE005D07B3 /* NSApplication_Mugginsoft.h */; };
 		AB823AF90DEF34AE005D07B3 /* NSApplication_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB823AF70DEF34AE005D07B3 /* NSApplication_Mugginsoft.m */; };
 		AB823AFE0DEF35F7005D07B3 /* MGSSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = AB823AFC0DEF35F7005D07B3 /* MGSSystem.h */; };
@@ -640,7 +632,6 @@
 		AB8C0CE20D5743F400904607 /* MotherDisplayBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8C0CE10D5743F400904607 /* MotherDisplayBlue.png */; };
 		AB8C14B01257551E004231E2 /* MGSSettingsOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8C14AE1257551E004231E2 /* MGSSettingsOutlineViewController.m */; };
 		AB8C14B31257556C004231E2 /* SettingsOutlineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8C14B11257556C004231E2 /* SettingsOutlineView.xib */; };
-		AB8CB3FA1059665D00FFBBAF /* MGSServerTaskConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8CB3F91059665D00FFBBAF /* MGSServerTaskConfiguration.m */; };
 		AB8D3EC714D2C94A00FC88A2 /* Appscript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */; };
 		AB8D400314D2DFE600FC88A2 /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D400114D2DF7300FC88A2 /* Sparkle.framework */; };
 		AB8D400414D2E00D00FC88A2 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D400114D2DF7300FC88A2 /* Sparkle.framework */; };
@@ -746,7 +737,6 @@
 		AB9478380CF702120001A5E4 /* MGSMother.h in Headers */ = {isa = PBXBuildFile; fileRef = 09976C5F0CDC9FC300E78D55 /* MGSMother.h */; };
 		AB955F470DE6056B00F7B6D9 /* Send Plugin Pages.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = ABD668D80DE6035000097C1B /* Send Plugin Pages.plugin */; };
 		AB957568122FCD8C00ABA42E /* MGSResourceOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB957566122FCD8C00ABA42E /* MGSResourceOutlineView.m */; };
-		AB95E42810C6898900BD0814 /* MGSMetaDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA762380EE9782F00D900A6 /* MGSMetaDataHandler.m */; };
 		AB96764B16696B8B00AFA3A9 /* MGSKosmicTaskServer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB882140166964E600072991 /* MGSKosmicTaskServer.framework */; };
 		AB96764D166970B900AFA3A9 /* MGSKosmicTaskServer_vers.h in Headers */ = {isa = PBXBuildFile; fileRef = AB96764C166970B900AFA3A9 /* MGSKosmicTaskServer_vers.h */; };
 		AB96764E166973B400AFA3A9 /* MGSKosmicTaskServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB882140166964E600072991 /* MGSKosmicTaskServer.framework */; };
@@ -919,7 +909,6 @@
 		ABA381F60E0D074200126D6F /* MGSCapsuleTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA381F50E0D074200126D6F /* MGSCapsuleTextCell.m */; };
 		ABA4ADBF0D9925AC0022D465 /* MGSNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8FC24E0D5BA24500583172 /* MGSNotifications.m */; };
 		ABA4DC920D2E3E2D00696618 /* MGSNetServerSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA4DC900D2E3E2D00696618 /* MGSNetServerSocket.h */; };
-		ABA4E13A0ED82DD80087BE17 /* MGSServerScriptManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA4E1390ED82DD80087BE17 /* MGSServerScriptManager.m */; };
 		ABA4F1070EA91C7E00165602 /* NSData-Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA4F1030EA91C7E00165602 /* NSData-Base64Extensions.h */; };
 		ABA4F1080EA91C7E00165602 /* NSData-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA4F1040EA91C7E00165602 /* NSData-Base64Extensions.m */; };
 		ABA4F1090EA91C7E00165602 /* NSString-Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA4F1050EA91C7E00165602 /* NSString-Base64Extensions.h */; };
@@ -971,8 +960,6 @@
 		ABAAC2850E090D11007609C7 /* NSTextField_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAAC2840E090D11007609C7 /* NSTextField_Mugginsoft.m */; };
 		ABAAC5060E09633A007609C7 /* MGSParameterPluginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = ABAAC5040E09633A007609C7 /* MGSParameterPluginViewController.h */; };
 		ABAAC5070E09633A007609C7 /* MGSParameterPluginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAAC5050E09633A007609C7 /* MGSParameterPluginViewController.m */; };
-		ABAACDAB0D9E7E56000CC419 /* MGSServerPreferencesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAACDAA0D9E7E56000CC419 /* MGSServerPreferencesRequest.m */; };
-		ABAACDB80D9E85E0000CC419 /* MGSServerRequestProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAACDB70D9E85E0000CC419 /* MGSServerRequestProcessor.m */; };
 		ABAAD6570D78037100E67A03 /* MGSActionDeleteWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAAD6560D78037100E67A03 /* MGSActionDeleteWindowController.m */; };
 		ABAAD65A0D78040600E67A03 /* ActionDeleteWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAAD6580D78040600E67A03 /* ActionDeleteWindow.xib */; };
 		ABAB16D410481DA200AA3E9A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAB16D310481DA200AA3E9A /* IOKit.framework */; };
@@ -1132,7 +1119,6 @@
 		ABB93F760DF9CC83009A2BFC /* TextParameterEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAFC5150DF95B9F00349FC3 /* TextParameterEditView.xib */; };
 		ABB93F770DF9CC8B009A2BFC /* DateParameterEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAFC5A20DF9683D00349FC3 /* DateParameterEditView.xib */; };
 		ABB93F780DF9CC94009A2BFC /* FileParameterEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAFC66A0DF9886C00349FC3 /* FileParameterEditView.xib */; };
-		ABB9412611123C7F00DD9A07 /* NSURL+NDCarbonUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9E63F50DD5F6DB0022A1E3 /* NSURL+NDCarbonUtilities.m */; };
 		ABB978F30DA953460092680D /* Home.icns in Resources */ = {isa = PBXBuildFile; fileRef = ABB978F10DA953460092680D /* Home.icns */; };
 		ABB978F40DA953460092680D /* HomeGrey.icns in Resources */ = {isa = PBXBuildFile; fileRef = ABB978F20DA953460092680D /* HomeGrey.icns */; };
 		ABBA121712B28B16005F12A5 /* taskmain.m in Sources */ = {isa = PBXBuildFile; fileRef = 09372FDE0D0C301E00A9FAED /* taskmain.m */; };
@@ -1169,7 +1155,6 @@
 		ABC1030C0E6D58F3009DF330 /* MGSActionExecuteWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1030B0E6D58F3009DF330 /* MGSActionExecuteWindowController.m */; };
 		ABC1038210768E640040E569 /* MGSClientPowerManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC1038110768E640040E569 /* MGSClientPowerManagement.m */; };
 		ABC103AA107694C00040E569 /* MGSPowerManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAD1BA01073ECF000297C8C /* MGSPowerManagement.m */; };
-		ABC103E3107698080040E569 /* MGSServerPowerManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC103DD107696A80040E569 /* MGSServerPowerManagement.m */; };
 		ABC14AA10E75842300BA566D /* MGSImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB96E6170D45F500005814D4 /* MGSImageManager.m */; };
 		ABC14B250E75945D00BA566D /* MGSInternetSharingClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ABC14B230E75945D00BA566D /* MGSInternetSharingClient.h */; };
 		ABC14B260E75945D00BA566D /* MGSInternetSharingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC14B240E75945D00BA566D /* MGSInternetSharingClient.m */; };
@@ -1215,7 +1200,6 @@
 		ABD054DF1325231A00A728B8 /* Language in Resources */ = {isa = PBXBuildFile; fileRef = ABD054DE1325231A00A728B8 /* Language */; };
 		ABD05CB00E7E98AA00AE32B5 /* MGSBuildTaskSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD05CAF0E7E98AA00AE32B5 /* MGSBuildTaskSheetController.m */; };
 		ABD05CDB0E7E9B3E00AE32B5 /* CompileActionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABD05CDA0E7E9B3E00AE32B5 /* CompileActionSheet.xib */; };
-		ABD05DAE0E7EC0FC00AE32B5 /* MGSServerRequestThreadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD05D9F0E7EBD6200AE32B5 /* MGSServerRequestThreadHelper.m */; };
 		ABD11CF5106630CA00C7AAAC /* MGSTaskExecuteWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD11CF4106630CA00C7AAAC /* MGSTaskExecuteWindowController.m */; };
 		ABD11DF51066492E00C7AAAC /* LCD display green.png in Resources */ = {isa = PBXBuildFile; fileRef = ABD11DF41066492E00C7AAAC /* LCD display green.png */; };
 		ABD132AD0D8407DE00046CAB /* NSMutableDictionary_Localize.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD132AC0D8407DE00046CAB /* NSMutableDictionary_Localize.m */; };
@@ -5067,6 +5051,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB820650166A9ABD00FCC5FB /* MGSKosmicTaskServer.framework in Frameworks */,
 				ABEC6B69130C8AF20082698A /* YAMLKit.framework in Frameworks */,
 				ABA22FD50E51BB2D00B539A2 /* AppKit.framework in Frameworks */,
 				AB9F1AD40D9C07AE00F0DF68 /* Security.framework in Frameworks */,
@@ -11721,23 +11706,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0953D0C30CD945DF00519488 /* servermain.m in Sources */,
-				AB2D050B0CDE8171006632AF /* MGSMotherServer.m in Sources */,
-				AB50AB9E0D2E5F430058DE6F /* MGSNetServer.m in Sources */,
-				AB50AB9F0D2E5F6E0058DE6F /* MGSNetServerSocket.m in Sources */,
-				AB50ABBA0D2E78630058DE6F /* MGSNetServerHandler.m in Sources */,
-				AB50ABBD0D2E79E70058DE6F /* MGSServerScriptRequest.m in Sources */,
-				AB50ABD00D2E7CA50058DE6F /* MGSServerRequestManager.m in Sources */,
-				ABAACDAB0D9E7E56000CC419 /* MGSServerPreferencesRequest.m in Sources */,
-				ABAACDB80D9E85E0000CC419 /* MGSServerRequestProcessor.m in Sources */,
-				ABD05DAE0E7EC0FC00AE32B5 /* MGSServerRequestThreadHelper.m in Sources */,
-				ABA4E13A0ED82DD80087BE17 /* MGSServerScriptManager.m in Sources */,
-				AB8CB3FA1059665D00FFBBAF /* MGSServerTaskConfiguration.m in Sources */,
-				ABC103E3107698080040E569 /* MGSServerPowerManagement.m in Sources */,
-				AB95E42810C6898900BD0814 /* MGSMetaDataHandler.m in Sources */,
-				ABB9412611123C7F00DD9A07 /* NSURL+NDCarbonUtilities.m in Sources */,
-				AB4876FD11871887005241D1 /* MGSTask.m in Sources */,
-				AB4876FE118718A0005241D1 /* MGSScriptTask.m in Sources */,
-				AB7C197B1622F52C00E45BD4 /* MGSServerNetRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
