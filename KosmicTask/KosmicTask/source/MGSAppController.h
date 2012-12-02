@@ -57,6 +57,7 @@
 
 + (MGSAppController *)sharedInstance;
 
+- (BOOL)inSandbox;
 - (IBAction)showPreferencesPanel:(id)sender;
 - (IBAction)showConfigurationPanel:(id)sender;
 - (IBAction)showErrorWindow:(id)sender;

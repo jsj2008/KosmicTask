@@ -700,8 +700,21 @@
 - (NSString *)buildStringForDisplay 
 {
 	// get version from bundle info.plist
-	NSString *format = NSLocalizedString(@"Build: %@", @"Application build format string");
-	NSString *buildString = [NSString stringWithFormat: format, [NSBundle mainBundleInfoObjectForKey:@"MGSBuildNumber"]];
+	NSString *buildLabel = NSLocalizedString(@"Build", @"Application build label");
+    NSString *buildNumber = [NSBundle mainBundleInfoObjectForKey:@"MGSBuildNumber"];
+
+#if __LP64__
+    NSString *buildArch = @"64 bit";
+#else
+    NSString *buildArch = @"32 bit";
+#endif
+    
+	NSString *buildString = [NSString stringWithFormat: @"%@: %@ %@" , buildLabel, buildNumber, buildArch];
+    
+    // sandboxing
+	NSString *sandboxLabel = NSLocalizedString(@"Sandboxed", @"Application sandbox label");
+    NSString *sandboxState = ( self.inSandbox  ? @"Yes" : @"No");
+	NSString *sandboxString = [NSString stringWithFormat: @"%@: %@" , sandboxLabel, sandboxState];
 	
 #ifdef MGS_SUBVERSION_INFO_AVAILABLE
     
@@ -710,11 +723,26 @@
     if (revisionString) {
         buildString = [NSString stringWithFormat:@"%@ (%@)", buildString, revisionString];
     }
+    
 #endif
     
-	return buildString;
+    NSString *valueString = [NSString stringWithFormat:@"%@\n%@", buildString, sandboxString];
+    
+	return valueString;
 }
 
+/*
+ 
+ - inSandbox
+ 
+ */
+- (BOOL)inSandbox
+{
+    NSDictionary* environ = [[NSProcessInfo processInfo] environment];
+    BOOL inSandbox = (nil != [environ objectForKey:@"APP_SANDBOX_CONTAINER_ID"]);
+    
+    return inSandbox;
+}
 /*
  
  application version string suitable for displaying

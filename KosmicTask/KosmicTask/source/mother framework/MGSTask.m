@@ -142,8 +142,6 @@
                 [NSException raise:MGSTaskStartException format:@"%@ %@", errMsg, *error];
             }
     
-            
-
             MLogInfo(@"NSApplicationScriptsDirectory = %@", userScriptsFolderURL);
 
             // script path
