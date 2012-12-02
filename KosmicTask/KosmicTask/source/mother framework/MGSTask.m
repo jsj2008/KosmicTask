@@ -89,7 +89,7 @@
 	NSFileHandle * fileHandle = nil;
 
 	@try {
-			
+        *error = nil;
 		
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 		
@@ -125,52 +125,42 @@
         // sandboxed app
         if (inSandbox) {
             
-            // this point to the container
-            // /Users/Jonathan/Library/Containers/com.mugginsoft.kosmictask/Data
-            //
-            // NSString *folder = [@"~/Library/Application Scripts/com.mugginsoft.kosmictaskserver" stringByExpandingTildeInPath];
-            // NSURL *scriptsFolderURL = [NSURL fileURLWithPath:folder isDirectory:YES];
-
-            //
-            // it looks like:
-            // Cannot access NSApplicationScriptsDirectory com.mugginsoft.kosmictask or com.mugginsoft.kosmictaskserver from here
-            //
-            // get user application scripts directory.
-            // this currently fails with error that we don't have permission
-            // to create com.mugginsoft.kosmictaskserver.
-            
-            // so a solution is to configure the server to run as a thread of the main
-            // app. this works to the extent that the folder is now accessible.
-            //
-            NSURL *scriptsFolderURL = [[NSFileManager defaultManager]
+            // trying t launch a user script from a helper seems to be not permitted.
+            // need to call this from main app thread in order to work.
+            // so run server as thread rather than process.
+            NSURL *userScriptsFolderURL = [[NSFileManager defaultManager]
                                        URLForDirectory:NSApplicationScriptsDirectory
                                        inDomain:NSUserDomainMask
                                        appropriateForURL:nil
                                        create:NO
                                        error:error];
             
-            if (*error) {
+            if (!userScriptsFolderURL || *error) {
                 MLogInfo(@"Error: %@", *error);
                 
-                errMsg = NSLocalizedString(@"Cannot access applications scripts directory: ", @"Return by server when cannot access application scripts folder in sandboxed app.");
+                errMsg = NSLocalizedString(@"Cannot access user scripts directory: ", @"Return by server when cannot access user scripts folder in sandboxed app.");
                 [NSException raise:MGSTaskStartException format:@"%@ %@", errMsg, *error];
             }
     
             
 
-            MLogInfo(@"NSApplicationScriptsDirectory = %@", scriptsFolderURL);
-            
+            MLogInfo(@"NSApplicationScriptsDirectory = %@", userScriptsFolderURL);
+
+            // script path
+            // the script text must include the shell path on the first line otherwise we crash
+            //  #! /bin/bash
+            NSString *taskRunnerExec = @"KosmicTaskLauncher.sh";
+
             // form task launcher path.
             // a script launched from NSApplicationScriptsDirectory escapes the sandbox.
             // note that the user will have to be prompted to move the launcher into place
-            NSString *taskRunnerExec = @"KosmicTaskLauncher";
-            NSURL *taskRunnerURL = [NSURL fileURLWithPathComponents: @[[scriptsFolderURL path], taskRunnerExec]];
+            NSURL *taskRunnerURL = [NSURL fileURLWithPathComponents: @[[userScriptsFolderURL path], taskRunnerExec]];
 
             MLogInfo(@"taskRunnerURL = %@", taskRunnerURL);
 
             // initialise the task
             _unixTask = [[NSUserUnixTask alloc] initWithURL:taskRunnerURL error:error];
-            if (*error) {
+            if (!_unixTask || *error) {
                 errMsg = NSLocalizedString(@"Cannot create unix task launcher: ", @"Return by server when cannot access application scripts task launcher in sandboxed app.");
                 [NSException raise:MGSTaskStartException format:@"%@ %@", errMsg, *error];
                 
@@ -189,7 +179,6 @@
             NSArray *taskArguments = @[@"hello", @"task"];
             
             // execute the task.
-            // this currently fails
             [_unixTask executeWithArguments:taskArguments completionHandler:completionHandler];
             
         }
