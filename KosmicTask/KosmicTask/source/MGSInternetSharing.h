@@ -17,6 +17,7 @@ extern NSString *MGSInternetSharingKeyReachabilityStatus;
 extern NSString *MGSInternetSharingKeyIPAddress;
 extern NSString *MGSInternetSharingKeyGatewayName;
 extern NSString *MGSInternetSharingKeyResponseRequired;
+extern NSString *MGSInternetSharingKeyRouterStatus;
 
 enum _MGSInternetSharingRequestID {
 	kMGSInternetSharingRequestStatus = 0,
@@ -25,6 +26,7 @@ enum _MGSInternetSharingRequestID {
     kMGSInternetSharingRequestLocalAccess = 6,
     kMGSInternetSharingRequestAllowLocalAuthentication = 7,
     kMGSInternetSharingRequestAllowRemoteAuthentication = 8,
+    kMGSInternetSharingRequestRefreshMapping = 9,
 };
 typedef NSInteger MGSInternetSharingRequestID;
 
@@ -35,6 +37,14 @@ enum _MGSInternetSharingMappingStatus {
 	kMGSInternetSharingPortMapped = 3,      // port mapped (automatic)
 };
 typedef NSInteger MGSInternetSharingMappingStatus;
+
+enum _MGSInternetSharingRouterStatus {
+    kMGSInternetSharingRouterUnknown = 0,
+    kMGSInternetSharingRouterHasExternalIP = 1,
+    kMGSInternetSharingRouterIncompatible = 2,
+    kMGSInternetSharingRouterNotFound = 3
+};
+typedef NSInteger MGSInternetSharingRouterStatus;
 
 enum {
     kMGSPortReachabilityNA = 0,
@@ -57,6 +67,7 @@ typedef NSInteger MGSPortReachability;
     BOOL _allowRemoteUsersToAuthenticate;
 	NSString *_noteObjectString;
 	MGSInternetSharingMappingStatus _mappingStatus;
+    MGSInternetSharingRouterStatus _routerStatus;
 	NSString *_statusString;
 	NSString *_IPAddressString;
 	NSString *_gatewayName;
@@ -69,7 +80,7 @@ typedef NSInteger MGSPortReachability;
 	NSImage *_inactiveStatusLargeImage;
     NSImage *_activePortStatusImage;
 	NSImage *_inactivePortStatusImage;
-    MGSPortReachability _reachabilityStatus;
+    MGSPortReachability _portReachabilityStatus;
 }
 
 @property (readonly) NSImage *statusImage;
@@ -84,7 +95,8 @@ typedef NSInteger MGSPortReachability;
 @property BOOL allowRemoteUsersToAuthenticate;
 @property (readonly) NSString *noteObjectString;
 @property MGSInternetSharingMappingStatus mappingStatus;
-@property MGSPortReachability reachabilityStatus;
+@property MGSInternetSharingRouterStatus routerStatus;
+@property MGSPortReachability portReachabilityStatus;
 @property (readonly) NSString *statusString;
 @property (copy) NSString *IPAddressString;
 @property (copy) NSString *gatewayName;

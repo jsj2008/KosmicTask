@@ -71,6 +71,8 @@
 		AB0519190D2A6982004EF3FB /* MGSNetClientSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AB0519170D2A6982004EF3FB /* MGSNetClientSocket.h */; };
 		AB08ED510E1543AE004D44F8 /* MGSEmptyParameterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB08ED500E1543AE004D44F8 /* MGSEmptyParameterViewController.m */; };
 		AB08ED940E154BE1004D44F8 /* MGSFilledView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB08ED930E154BE1004D44F8 /* MGSFilledView.m */; };
+		AB0931DF166DFF6A00CA0D92 /* URLs.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB0931DE166DFF6A00CA0D92 /* URLs.strings */; };
+		AB0931E8166E041600CA0D92 /* MGSAppResources.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0931E7166E041600CA0D92 /* MGSAppResources.m */; };
 		AB0B0EC2122EE52600E1B450 /* NSOutlineView_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0B0EC0122EE52600E1B450 /* NSOutlineView_Mugginsoft.m */; };
 		AB0B2A41161D882A00702D0E /* NSNetService+Mugginsoft.h in Headers */ = {isa = PBXBuildFile; fileRef = AB0B2A3F161D882900702D0E /* NSNetService+Mugginsoft.h */; };
 		AB0B2A42161D882A00702D0E /* NSNetService+Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0B2A40161D882900702D0E /* NSNetService+Mugginsoft.m */; };
@@ -3502,6 +3504,9 @@
 		AB08ED500E1543AE004D44F8 /* MGSEmptyParameterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSEmptyParameterViewController.m; sourceTree = "<group>"; };
 		AB08ED920E154BE1004D44F8 /* MGSFilledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFilledView.h; sourceTree = "<group>"; };
 		AB08ED930E154BE1004D44F8 /* MGSFilledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFilledView.m; sourceTree = "<group>"; };
+		AB0931DE166DFF6A00CA0D92 /* URLs.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = URLs.strings; sourceTree = "<group>"; };
+		AB0931E6166E041600CA0D92 /* MGSAppResources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSAppResources.h; sourceTree = "<group>"; };
+		AB0931E7166E041600CA0D92 /* MGSAppResources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSAppResources.m; sourceTree = "<group>"; };
 		AB0B0EBF122EE52600E1B450 /* NSOutlineView_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSOutlineView_Mugginsoft.h; path = "../../../Mugginsoft-shared-source/NSOutlineView_Mugginsoft.h"; sourceTree = SOURCE_ROOT; };
 		AB0B0EC0122EE52600E1B450 /* NSOutlineView_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSOutlineView_Mugginsoft.m; path = "../../../Mugginsoft-shared-source/NSOutlineView_Mugginsoft.m"; sourceTree = SOURCE_ROOT; };
 		AB0B2A3F161D882900702D0E /* NSNetService+Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNetService+Mugginsoft.h"; sourceTree = "<group>"; };
@@ -5857,6 +5862,8 @@
 				AB9D90010DAE2C7E00D8443D /* UKKQueue.m */,
 				AB9D90020DAE2C7E00D8443D /* UKMainThreadProxy.h */,
 				AB9D90030DAE2C7E00D8443D /* UKMainThreadProxy.m */,
+				AB0931E6166E041600CA0D92 /* MGSAppResources.h */,
+				AB0931E7166E041600CA0D92 /* MGSAppResources.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -7001,6 +7008,7 @@
 			isa = PBXGroup;
 			children = (
 				AB89F09B124364230076FBD0 /* MGSLanguageProcess.strings */,
+				AB0931DE166DFF6A00CA0D92 /* URLs.strings */,
 			);
 			name = "Application string resources";
 			sourceTree = "<group>";
@@ -11231,6 +11239,7 @@
 				AB42B88F165E47C0004FF139 /* MGSUpdating1Template.tif in Resources */,
 				AB42B890165E47C0004FF139 /* MGSUpdating2Template.tif in Resources */,
 				ABC893F21666510400134015 /* MainView.xib in Resources */,
+				AB0931DF166DFF6A00CA0D92 /* URLs.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12067,6 +12076,7 @@
 				ABEA1908163985530074B4F9 /* NSBundle_Mugginsoft.m in Sources */,
 				AB65EE16166174CA002940B0 /* MGSClientNetRequest+KosmicTask.m in Sources */,
 				AB3F9D501667ECA0003357D9 /* MGSKosmicUnityTabStyle.m in Sources */,
+				AB0931E8166E041600CA0D92 /* MGSAppResources.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

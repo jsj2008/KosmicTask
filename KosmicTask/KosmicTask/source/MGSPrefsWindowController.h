@@ -27,6 +27,8 @@ extern NSString * MGSDefaultStartAtLogin;
 	IBOutlet NSObjectController *internetSharingObjectController;
     IBOutlet NSObjectController *ownerObjectController;
 	IBOutlet NSTextField *externalPort;
+    IBOutlet NSWindow *portMapperRouterIncompatibleStatusWindow;
+    IBOutlet NSWindow *portMapperRouterNotFoundStatusWindow;
     
     MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewController;
     MGSFragariaTextEditingPrefsViewController *textEditingPrefsViewController;
@@ -55,11 +57,13 @@ extern NSString * MGSDefaultStartAtLogin;
     //IBOutlet NSPopUpButton  *remoteUserTaskTimeoutUnits;
 }
 
+- (IBAction)endNetworkSheet:(id)aSender;
 - (IBAction)showPreferencesHelp:(id)sender;
 - (IBAction)showLocalNetworkPreferencesHelp:(id)sender;
 - (IBAction)showRemoteNetworkPreferencesHelp:(id)sender;
 - (IBAction)refreshInternetSharing:(id)sender;
-- (IBAction) showDebugPanel:(id)sender;
+- (IBAction)refreshMapping:(id)sender;
+- (IBAction)showDebugPanel:(id)sender;
 - (void) setStartAtLogin:(BOOL)value;
 - (BOOL) startAtLogin;
 - (void)updateServerPreferences;

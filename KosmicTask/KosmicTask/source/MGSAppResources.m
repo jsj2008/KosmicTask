@@ -1,13 +1,12 @@
 //
-//  MGSResources.m
+//  MGSAppResources.m
 //  KosmicTask
 //
 //  Created by Jonathan on 04/12/2012.
 //
 //
 
-#import "MGSResources.h"
+#import "MGSAppResources.h"
 
-@implementation MGSResources
+NSString* MGSURLStringsResource = @"URLs";
 
-@end

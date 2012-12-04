@@ -732,7 +732,7 @@
 }
 
 /*
- 
+
  - inSandbox
  
  */
@@ -1649,7 +1649,7 @@
  initialize user defaults
  
  */
-+ (void) initializeUserDefaults
++ (void)initializeUserDefaults
 {
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	NSMutableDictionary *appDefaults = [NSMutableDictionary dictionary];
@@ -1755,6 +1755,10 @@
         [appDefaults setObject:[NSNumber numberWithBool:NO] forKey:MGSEnableInternetAccessAtLogin];
     }
     
+    // port mapper 
+    [appDefaults setObject:@YES forKey:MGSShowPortMapperRouterIncompatible];
+    [appDefaults setObject:@YES forKey:MGSShowPortMapperRouterNotFound];
+
 	//
 	// register app defaults
 	//
@@ -1774,8 +1778,32 @@
 	
 	// need to sync
 	[userDefaults synchronize];
+    
+    // register initial values with the defaults controller.
+    // when the controller is reset these values will be re-applied
+    NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+    
+    // keep existing content
+    NSMutableDictionary *initialValues = [NSMutableDictionary dictionaryWithDictionary:[defaultsController initialValues]];
+    
+    [initialValues setObject:@YES forKey:MGSShowPortMapperRouterIncompatible];
+    [initialValues setObject:@YES forKey:MGSShowPortMapperRouterNotFound];
+	[defaultsController setInitialValues:initialValues];
 }
 
+/*
+ 
+ + resetUserDefaults
+ 
+ */
++ (void)resetUserDefaults
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // these values
+    [defaults setObject:@YES forKey:MGSShowPortMapperRouterIncompatible];
+    [defaults setObject:@YES forKey:MGSShowPortMapperRouterNotFound];
+}
 /*
  
  stop all running actions

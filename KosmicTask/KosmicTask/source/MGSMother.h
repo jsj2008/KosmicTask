@@ -9,3 +9,4 @@
 #include "mlog.h"
 #include "MGSError.h"
 #include "MGSInstanceTracker.h"
+#include "MGSAppResources.h"

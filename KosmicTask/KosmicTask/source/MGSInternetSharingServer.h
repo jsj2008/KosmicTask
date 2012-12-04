@@ -17,14 +17,18 @@
     MGSPortChecker *_portChecker;
     Reachability *_internetReach;
     BOOL _responsePending;
+    BOOL _portMapperIsWorking;
+    BOOL _portCheckerIsWorking;
 }
 
 - (id)initWithExternalPort:(NSInteger)externalPort listeningPort:(NSInteger)listeningPort;
 - (void)startPortMapping;
 - (void)stopPortMapping;
 - (void)remapPortMapping;
-- (void)initialisePortMapping;
 - (NSDictionary *)statusDictionary;
 - (void)request:(NSNotification *)note;
 - (void)postStatusNotification;
+
+@property (readonly) BOOL portMapperIsWorking;
+@property (readonly) BOOL portCheckerIsWorking;
 @end

@@ -79,6 +79,8 @@ extern NSString *MGSApplyTimeoutToMachineTasks;
 extern NSString *MGSMachineTaskTimeout;
 extern NSString *MGSMachineTaskTimeoutUnits;
 extern NSString *MGSTaskLoadingAnimationDelay;
+extern NSString *MGSShowPortMapperRouterIncompatible;
+extern NSString *MGSShowPortMapperRouterNotFound;
 
 @interface MGSPreferences : NSObject {
 

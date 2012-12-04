@@ -17,7 +17,10 @@
 - (void)response:(NSNotification *)note;
 - (void)externalPortWasChanged;
 - (void)cancelPortChangeRequest;
+- (void)validateRouterStatus:(id)sender;
+
 @property NSString *portStatusText;
+@property NSString *routerStatusText;
 @end
 
 @implementation MGSInternetSharingClient
@@ -26,6 +29,7 @@ static id _sharedInstance = nil;
 
 @synthesize startStopButtonText = _startStopButtonText;
 @synthesize portStatusText = _portStatusText;
+@synthesize routerStatusText = _routerStatusText;
 
 #pragma mark -
 #pragma mark Factory
@@ -87,19 +91,34 @@ static id _sharedInstance = nil;
 #pragma mark Notification handling
 /*
  
- request a status update
+ - requestStatusUpdate
  
  */
 - (void)requestStatusUpdate
 {
 	NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys: 
 								 [NSNumber numberWithInteger:kMGSInternetSharingRequestStatus], MGSInternetSharingKeyRequest,
-                                 [NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
                                  [NSNumber numberWithBool:YES], MGSInternetSharingKeyResponseRequired,
 								 nil];
 	
 	[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
 }
+
+/*
+ 
+ - requestMappingRefresh
+ 
+ */
+- (void)requestMappingRefresh
+{
+	NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys:
+								 @(kMGSInternetSharingRequestRefreshMapping), MGSInternetSharingKeyRequest,
+                                 @YES, MGSInternetSharingKeyResponseRequired,
+								 nil];
+	
+	[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
+}
+
 
 /*
  
@@ -125,6 +144,10 @@ static id _sharedInstance = nil;
             
             if ((obj = [userInfo objectForKey:MGSInternetSharingKeyMappingStatus])) {
                 self.mappingStatus = [obj integerValue];
+            }
+            if ((obj = [userInfo objectForKey:MGSInternetSharingKeyRouterStatus])) {
+                self.routerStatus = [obj integerValue];
+                [self performSelector:@selector(validateRouterStatus:) withObject:nil afterDelay:0];
             }
             if ((obj = [userInfo objectForKey:MGSExternalPortNumber])) {
                 self.externalPort = [obj integerValue];
@@ -158,7 +181,7 @@ static id _sharedInstance = nil;
             }
             
             if ((obj = [userInfo objectForKey:MGSInternetSharingKeyReachabilityStatus])) {
-                self.reachabilityStatus = [obj integerValue];
+                self.portReachabilityStatus = [obj integerValue];
             }
         }
         break;
@@ -219,7 +242,7 @@ static id _sharedInstance = nil;
         [_requestInvocation setArgument:&wait atIndex:3];
         [_requestInvocation retainArguments];
         
-#define MGS_DEBUG_INVOCATION
+#undef MGS_DEBUG_INVOCATION
 #ifdef MGS_DEBUG_INVOCATION
         MLogInfo(@"Property list set as argument to invocation: %@", dict);
 #endif       
@@ -423,11 +446,11 @@ static id _sharedInstance = nil;
  - setReachabilityStatus:
  
  */
-- (void)setReachabilityStatus:(MGSPortReachability)status
+- (void)setPortReachabilityStatus:(MGSPortReachability)status
 {
-	[super setReachabilityStatus:status];
+	[super setPortReachabilityStatus:status];
 	
-	switch (self.reachabilityStatus) {
+	switch (self.portReachabilityStatus) {
 		case kMGSPortReachabilityNA:
             self.portStatusText = NSLocalizedString(@"No (?)", @"Reachability not available");
 			break;
@@ -442,6 +465,42 @@ static id _sharedInstance = nil;
 			break;
 			
 	}
+}
+
+#pragma mark -
+#pragma mark Validation
+
+/*
+ 
+ - validateRouterStatus:
+ 
+ */
+- (void)validateRouterStatus:(id)sender
+{
+#pragma unused(sender)
+    
+    switch (self.routerStatus) {
+            
+        // cannot determine the router status
+        case kMGSInternetSharingRouterUnknown:
+            self.routerStatusText = NSLocalizedString(@"Status unknown", @"Comment");
+            break;
+            
+        // router connected and has an external IP
+        case kMGSInternetSharingRouterHasExternalIP:
+            self.routerStatusText = NSLocalizedString(@"Has external IP", @"Comment");
+            break;
+            
+        // router does not support UPnP or NAT-PMP
+        case kMGSInternetSharingRouterIncompatible:
+            self.routerStatusText = NSLocalizedString(@"No auto map support", @"Comment");
+            break;
+            
+        // router not found on network
+        case kMGSInternetSharingRouterNotFound:
+            self.routerStatusText = NSLocalizedString(@"Router not found", @"Comment");
+            break;
+    }
 }
 
 #pragma mark -

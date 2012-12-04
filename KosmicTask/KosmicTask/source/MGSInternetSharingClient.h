@@ -15,12 +15,15 @@
 	NSImage *_appIconImage;
 	NSImage *_appActiveSharingIconImage;
     NSString *_portStatusText;
+    NSString *_routerStatusText;
     NSInvocation *_requestInvocation;
 }
 
 @property (readonly) NSString *startStopButtonText;
 @property (readonly) NSString *portStatusText;
+@property (readonly) NSString *routerStatusText;
 
 - (void)requestStatusUpdate;
+- (void)requestMappingRefresh;
 + (id)sharedInstance;
 @end

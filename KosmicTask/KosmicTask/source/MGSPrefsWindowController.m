@@ -25,6 +25,7 @@
 #import "MGSPath.h"
 
 char MGSAutoMappingContext;
+char MGSRouterStatusContext;
 
 NSString *MGSMotherLaunchdPlist = @"com.mugginsoft.kosmictasklaunchd.plist";
 
@@ -42,29 +43,8 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 @synthesize machineTaskTimeout = _machineTaskTimeout;
 @synthesize machineTaskTimeoutUnits = _machineTaskTimeoutUnits;
 
-/*
- 
- setup toolbar
- 
- */
-- (void)setupToolbar
-{
-	_generalTabIdentifier = NSLocalizedString(@"General", @"Preferences tab name");
-    _tasksTabIdentifier = NSLocalizedString(@"Tasks", @"Preferences tab name");
-    _tabsTabIdentifier = NSLocalizedString(@"Tabs", @"Preferences tab name");
-    _textTabIdentifier = NSLocalizedString(@"Text Editing", @"Text editing tab name");
-    _fontTabIdentifier = NSLocalizedString(@"Fonts & Colours", @"Fonts & colours tab name");
-    _securityTabIdentifier = NSLocalizedString(@"Security", @"Preferences tab name");
-	_internetTabIdentifier = NSLocalizedString(@"Network", @"Preferences tab name");
-    
-	[self addView:generalPrefsView label:_generalTabIdentifier];
-    [self addView:tasksPrefsView label:_tasksTabIdentifier image:[NSImage imageNamed: @"NSAdvanced"]];
-    [self addView:tabsPrefsView label:_tabsTabIdentifier image:[NSImage imageNamed: @"TabsPreference"]];	
-    [self addView:textEditingPrefsView label:_textTabIdentifier image:[NSImage imageNamed: @"PencilAndPaper.icns"]];
-    [self addView:fontsAndColoursPrefsView label:_fontTabIdentifier image:[NSImage imageNamed: @"FontsAndColours.icns"]];
-    [self addView:securityPrefsView label:_securityTabIdentifier image:[[[MGSImageManager sharedManager] locked] copy]];
-    [self addView:internetPrefsView label:_internetTabIdentifier image:[NSImage imageNamed: @"NSNetwork"]];
-}
+#pragma mark -
+#pragma mark Setup
 
 /*
  
@@ -87,18 +67,36 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	return self;
 }
 
+#pragma mark -
+#pragma mark Toolbar
+
 /*
  
- refresh internet sharing
+ setup toolbar
  
  */
-- (IBAction)refreshInternetSharing:(id)sender
+- (void)setupToolbar
 {
-	#pragma unused(sender)
-	[self commitEditingAndDiscard:NO];
-	[[MGSInternetSharingClient sharedInstance] requestStatusUpdate];
+	_generalTabIdentifier = NSLocalizedString(@"General", @"Preferences tab name");
+    _tasksTabIdentifier = NSLocalizedString(@"Tasks", @"Preferences tab name");
+    _tabsTabIdentifier = NSLocalizedString(@"Tabs", @"Preferences tab name");
+    _textTabIdentifier = NSLocalizedString(@"Text Editing", @"Text editing tab name");
+    _fontTabIdentifier = NSLocalizedString(@"Fonts & Colours", @"Fonts & colours tab name");
+    _securityTabIdentifier = NSLocalizedString(@"Security", @"Preferences tab name");
+	_internetTabIdentifier = NSLocalizedString(@"Network", @"Preferences tab name");
+    
+	[self addView:generalPrefsView label:_generalTabIdentifier];
+    [self addView:tasksPrefsView label:_tasksTabIdentifier image:[NSImage imageNamed: @"NSAdvanced"]];
+    [self addView:tabsPrefsView label:_tabsTabIdentifier image:[NSImage imageNamed: @"TabsPreference"]];
+    [self addView:textEditingPrefsView label:_textTabIdentifier image:[NSImage imageNamed: @"PencilAndPaper.icns"]];
+    [self addView:fontsAndColoursPrefsView label:_fontTabIdentifier image:[NSImage imageNamed: @"FontsAndColours.icns"]];
+    [self addView:securityPrefsView label:_securityTabIdentifier image:[[[MGSImageManager sharedManager] locked] copy]];
+    [self addView:internetPrefsView label:_internetTabIdentifier image:[NSImage imageNamed: @"NSNetwork"]];
 }
- 
+
+#pragma mark
+#pragma mark NWindowController
+
 /*
  
  show window override
@@ -123,33 +121,24 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	[self retrieveServerPreferences];
 }
 
-
 /*
  
- - showInternetPreferences
+ window did load
  
  */
-- (void)showInternetPreferences
+- (void)windowDidLoad
 {
-	[self showWindow:self];
-	[[[self window] toolbar] setSelectedItemIdentifier:_internetTabIdentifier];
-	self.selectedNetworkTabIdentifier = @"remote";
-    [self displayViewForIdentifier:_internetTabIdentifier animate:NO];
+	[super windowDidLoad];
+	
+	MGSInternetSharingClient *internetSharingClient = [MGSInternetSharingClient sharedInstance];
+	
+	//  prefs internet sharing controls bound to internetSharingObjectController
+	[internetSharingObjectController setContent:internetSharingClient];
     
+    // add observers
+    [internetSharingClient addObserver:self forKeyPath:@"automaticallyMapPort" options:0 context:&MGSAutoMappingContext];
+    [internetSharingClient addObserver:self forKeyPath:@"routerStatus" options:0 context:&MGSRouterStatusContext];
     
-}
-
-/*
- 
- - showLocalNetworkPreferences
- 
- */
-- (void)showLocalNetworkPreferences
-{
-	[self showWindow:self];
-	[[[self window] toolbar] setSelectedItemIdentifier:_internetTabIdentifier];
-    self.selectedNetworkTabIdentifier = @"local";
-	[self displayViewForIdentifier:_internetTabIdentifier animate:NO];
 }
 
 /*
@@ -159,7 +148,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
  */
 - (IBAction) showDebugPanel:(id)sender
 {
-	#pragma unused(sender)
+#pragma unused(sender)
 	
 	NSUInteger flags = [[NSApp currentEvent] modifierFlags];
     //if ((flags & NSCommandKeyMask) && (flags & NSAlternateKeyMask) && (flags & NSControlKeyMask)) {
@@ -172,6 +161,8 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	[debugController showWindow:self];
 }
 
+#pragma mark
+#pragma mark Accessors
 - (BOOL) startAtLogin
 {
 	return _startAtLogin;
@@ -258,13 +249,8 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	 */
 }
 
-- (void) dealloc
-{
-	[debugController release];
-	[super dealloc];
-}
-
-
+#pragma mark -
+#pragma mark Editing and validation
 /*
  
  - commitEditingAndDiscard:
@@ -293,132 +279,6 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
     return commit;
 }
 
-/*
- 
- window did load
- 
- */
-- (void)windowDidLoad
-{
-	[super windowDidLoad];
-	
-	MGSInternetSharingClient *internetSharingClient = [MGSInternetSharingClient sharedInstance];
-	
-	//  prefs internet sharing controls bound to internetSharingObjectController
-	[internetSharingObjectController setContent:internetSharingClient];
-    
-    // add observers
-    [internetSharingClient addObserver:self forKeyPath:@"automaticallyMapPort" options:0 context:&MGSAutoMappingContext];
-}
-
-/*
- 
- update those preferences that relate to the server.
- the client does not update these preferences directly.
- send them to the server and let it apply them
- 
- this seems overly complex
- 
- */
-- (void)updateServerPreferences
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	// form server preferences change dictionary
-	NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:2];
-
-	// ssl 
-	BOOL useSSL = ([useSSLCheckbox state] == NSOnState ? YES : NO);
-	if (useSSL != [defaults boolForKey:MGSEnableServerSSLSecurity]) {
-		[dictionary setObject:[NSNumber numberWithBool:useSSL] forKey:MGSEnableServerSSLSecurity];
-	}
-	
-	// user name disclosure
-	NSInteger usernameDisclosureMode = [[userNameDisclosureRadioButtons selectedCell] tag];
-	switch (usernameDisclosureMode) {
-
-		case DISCLOSE_USERNAME_TO_LOCAL:
-			break;
-			
-		case DISCLOSE_USERNAME_TO_ALL:
-			break;
-			
-		case DISCLOSE_USERNAME_TO_NONE:
-		default:
-			break;			
-	}
-	if (usernameDisclosureMode != [defaults integerForKey:MGSUsernameDisclosureMode]) {
-		[dictionary setObject:[NSNumber numberWithInteger:usernameDisclosureMode] forKey:MGSUsernameDisclosureMode];
-	}
-	
-    // machine task timeouts
-    if (self.applyTimeoutToMachineTasks != [defaults integerForKey:MGSApplyTimeoutToMachineTasks]) {
-        [dictionary setObject:[NSNumber numberWithBool:self.applyTimeoutToMachineTasks] forKey:MGSApplyTimeoutToMachineTasks];
-    }
-    
-    if (self.machineTaskTimeout != [defaults integerForKey:MGSMachineTaskTimeout]) {
-        [dictionary setObject:[NSNumber numberWithInteger:self.machineTaskTimeout] forKey:MGSMachineTaskTimeout];
-    }
-    
-    if (self.machineTaskTimeoutUnits != [defaults integerForKey:MGSMachineTaskTimeoutUnits]) {
-        [dictionary setObject:[NSNumber numberWithInteger:self.machineTaskTimeoutUnits] forKey:MGSMachineTaskTimeoutUnits];
-    }
-    
-	// send valid changes
-	if ([dictionary count] > 0) {
-		
-			// send out a distributed notification
-			// note we could also use CFMessagePort
-			[[NSDistributedNotificationCenter defaultCenter] 
-			 postNotificationName:MGSDistNoteServerPreferencesRequest
-			 object:@"KosmicTask" 
-			 userInfo:dictionary
-			 deliverImmediately:YES];
-			
-		return;
-	}
-	
-}
-
-/*
- 
- retrieve server preferences
- these preferences are maintained by the server not by the client.
- hence they are not bound.
- when modified the prefs are sent to the server to be applied
- 
- */
-- (void)retrieveServerPreferences
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    BOOL autoMap = [defaults boolForKey:MGSEnableInternetAccessAtLogin];
-	[autoMappingCheckbox setState:autoMap];
-
-	BOOL useSSL = [defaults boolForKey:MGSEnableServerSSLSecurity];
-	[useSSLCheckbox setState:useSSL];
-
-	NSInteger usernameDisclosureMode = [defaults integerForKey:MGSUsernameDisclosureMode];
-	[userNameDisclosureRadioButtons selectCellWithTag:usernameDisclosureMode];
-    
-    self.applyTimeoutToMachineTasks = [defaults integerForKey:MGSApplyTimeoutToMachineTasks];
-    
-    self.machineTaskTimeout = [defaults integerForKey:MGSMachineTaskTimeout];
-    
-    self.machineTaskTimeoutUnits = [defaults integerForKey:MGSMachineTaskTimeoutUnits];
-}
-
-/*
- 
- net request response
- 
- */
--(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
-{
-	#pragma unused(netRequest)
-	#pragma unused(payload)
-	
-}
 
 /*
  
@@ -451,6 +311,9 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	return YES;
 }
 
+#pragma mark -
+#pragma mark Security
+
 /*
  
  show SSL certficate
@@ -463,6 +326,9 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 	[MGSSecurity showCertificate];
 }
 
+#pragma mark -
+#pragma mark Font handling
+
 /*
  
  - changeFont:
@@ -472,6 +338,106 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 {
     /* NSFontManager will send this method up the responder chain */
     [fontsAndColoursPrefsViewController changeFont:sender];
+}
+
+#pragma mark -
+#pragma mark Preference defaults
+
+/*
+ 
+ update those preferences that relate to the server.
+ the client does not update these preferences directly.
+ send them to the server and let it apply them
+ 
+ this seems overly complex
+ 
+ */
+- (void)updateServerPreferences
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	// form server preferences change dictionary
+	NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:2];
+    
+	// ssl
+	BOOL useSSL = ([useSSLCheckbox state] == NSOnState ? YES : NO);
+	if (useSSL != [defaults boolForKey:MGSEnableServerSSLSecurity]) {
+		[dictionary setObject:[NSNumber numberWithBool:useSSL] forKey:MGSEnableServerSSLSecurity];
+	}
+	
+	// user name disclosure
+	NSInteger usernameDisclosureMode = [[userNameDisclosureRadioButtons selectedCell] tag];
+	switch (usernameDisclosureMode) {
+            
+		case DISCLOSE_USERNAME_TO_LOCAL:
+			break;
+			
+		case DISCLOSE_USERNAME_TO_ALL:
+			break;
+			
+		case DISCLOSE_USERNAME_TO_NONE:
+		default:
+			break;
+	}
+	if (usernameDisclosureMode != [defaults integerForKey:MGSUsernameDisclosureMode]) {
+		[dictionary setObject:[NSNumber numberWithInteger:usernameDisclosureMode] forKey:MGSUsernameDisclosureMode];
+	}
+	
+    // machine task timeouts
+    if (self.applyTimeoutToMachineTasks != [defaults integerForKey:MGSApplyTimeoutToMachineTasks]) {
+        [dictionary setObject:[NSNumber numberWithBool:self.applyTimeoutToMachineTasks] forKey:MGSApplyTimeoutToMachineTasks];
+    }
+    
+    if (self.machineTaskTimeout != [defaults integerForKey:MGSMachineTaskTimeout]) {
+        [dictionary setObject:[NSNumber numberWithInteger:self.machineTaskTimeout] forKey:MGSMachineTaskTimeout];
+    }
+    
+    if (self.machineTaskTimeoutUnits != [defaults integerForKey:MGSMachineTaskTimeoutUnits]) {
+        [dictionary setObject:[NSNumber numberWithInteger:self.machineTaskTimeoutUnits] forKey:MGSMachineTaskTimeoutUnits];
+    }
+    
+	// send valid changes
+	if ([dictionary count] > 0) {
+		
+        // send out a distributed notification
+        // note we could also use CFMessagePort
+        [[NSDistributedNotificationCenter defaultCenter]
+         postNotificationName:MGSDistNoteServerPreferencesRequest
+         object:@"KosmicTask"
+         userInfo:dictionary
+         deliverImmediately:YES];
+        
+		return;
+	}
+	
+}
+
+/*
+ 
+ retrieve server preferences
+ these preferences are maintained by the server not by the client.
+ hence they are not bound.
+ when modified the prefs are sent to the server to be applied
+ 
+ */
+- (void)retrieveServerPreferences
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    BOOL autoMap = [defaults boolForKey:MGSEnableInternetAccessAtLogin];
+	[autoMappingCheckbox setState:autoMap];
+    
+	BOOL useSSL = [defaults boolForKey:MGSEnableServerSSLSecurity];
+	[useSSLCheckbox setState:useSSL];
+    
+	NSInteger usernameDisclosureMode = [defaults integerForKey:MGSUsernameDisclosureMode];
+	[userNameDisclosureRadioButtons selectCellWithTag:usernameDisclosureMode];
+    
+    self.applyTimeoutToMachineTasks = [defaults integerForKey:MGSApplyTimeoutToMachineTasks];
+    
+    self.machineTaskTimeout = [defaults integerForKey:MGSMachineTaskTimeout];
+    
+    self.machineTaskTimeoutUnits = [defaults integerForKey:MGSMachineTaskTimeoutUnits];
 }
 
 /*
@@ -487,6 +453,76 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 }
 
 #pragma mark -
+#pragma mark Internet sharing
+/*
+ 
+ - refreshInternetSharing
+ 
+ */
+- (IBAction)refreshInternetSharing:(id)sender
+{
+#pragma unused(sender)
+	[self commitEditingAndDiscard:NO];
+	[[MGSInternetSharingClient sharedInstance] requestStatusUpdate];
+}
+
+/*
+ 
+ - refreshMapping
+ 
+ */
+- (IBAction)refreshMapping:(id)sender
+{
+#pragma unused(sender)
+	[self commitEditingAndDiscard:NO];
+	[[MGSInternetSharingClient sharedInstance] requestMappingRefresh];
+}
+#pragma mark -
+#pragma mark Preference views
+/*
+ 
+ - showInternetPreferences
+ 
+ */
+- (void)showInternetPreferences
+{
+	[self showWindow:self];
+	[[[self window] toolbar] setSelectedItemIdentifier:_internetTabIdentifier];
+	self.selectedNetworkTabIdentifier = @"remote";
+    [self displayViewForIdentifier:_internetTabIdentifier animate:NO];
+    
+    
+}
+
+/*
+ 
+ - showLocalNetworkPreferences
+ 
+ */
+- (void)showLocalNetworkPreferences
+{
+	[self showWindow:self];
+	[[[self window] toolbar] setSelectedItemIdentifier:_internetTabIdentifier];
+    self.selectedNetworkTabIdentifier = @"local";
+	[self displayViewForIdentifier:_internetTabIdentifier animate:NO];
+}
+
+
+#pragma mark -
+#pragma mark NetRequest owner
+/*
+ 
+ net request response
+ 
+ */
+-(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
+{
+#pragma unused(netRequest)
+#pragma unused(payload)
+	
+}
+
+#pragma mark -
 #pragma mark Observing
 
 /*
@@ -496,12 +532,126 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    MGSInternetSharingClient *sharingClient = [MGSInternetSharingClient sharedInstance];
+     
     if (context == &MGSAutoMappingContext) {
-        BOOL autoMapping = [[MGSInternetSharingClient sharedInstance] automaticallyMapPort];
+    
+        BOOL autoMapping = [sharingClient automaticallyMapPort];
         autoMappingCheckbox.state = (autoMapping ? NSOnState: NSOffState);
+    
+    } else if (context == &MGSRouterStatusContext) {
+        
+        switch ([sharingClient routerStatus]) {
+                
+                // show router status panel
+            case kMGSInternetSharingRouterNotFound:
+            case kMGSInternetSharingRouterUnknown:
+            case kMGSInternetSharingRouterIncompatible:
+                [self showNetworkPanelForRouterStatus:[sharingClient routerStatus]];
+                break;
+                
+                // router connected and has an external IP
+            case kMGSInternetSharingRouterHasExternalIP:
+                break;
+                
+        }
+
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
+}
+
+#pragma mark -
+#pragma mark Sheet handling
+/*
+ 
+ - showNetworkPanelForRouterStatus
+ 
+ */
+- (void)showNetworkPanelForRouterStatus:(MGSInternetSharingRouterStatus)routerStatus
+{
+    MGSInternetSharingClient *internetSharingClient = [MGSInternetSharingClient sharedInstance];
+    // show router status panel ?
+    if (!([[self window] isVisible] &&
+          internetSharingClient.automaticallyMapPort &&
+          [internetPrefsView window] &&
+          [self.selectedNetworkTabIdentifier isEqual:@"remote"]
+          )) {
+        return;
+    }
+    
+    NSString *panelShowKey = nil;
+    NSWindow *panel = nil;
+
+    switch (routerStatus) {
+            
+            // router not found
+        case kMGSInternetSharingRouterNotFound:
+            panelShowKey = MGSShowPortMapperRouterNotFound;
+            panel = portMapperRouterNotFoundStatusWindow;
+            break;
+            
+            // router does not support uPNP or NAT-PMP
+        case kMGSInternetSharingRouterIncompatible:
+            panelShowKey = MGSShowPortMapperRouterIncompatible;
+            panel = portMapperRouterIncompatibleStatusWindow;
+            break;
+         
+            // router status not known
+        case kMGSInternetSharingRouterUnknown:
+            break;
+            
+
+            // router connected and has an external IP
+        case kMGSInternetSharingRouterHasExternalIP:
+            return;
+            
+    }
+
+    if (panel && panelShowKey) {
+        
+        id defaults = [[NSUserDefaultsController sharedUserDefaultsController] values];
+        
+        if ([[defaults valueForKey:panelShowKey] boolValue]) {
+        
+            [NSApp beginSheet:panel
+               modalForWindow:[self window]
+                modalDelegate:self
+               didEndSelector:@selector(genericSheetDidEnd:returnCode:contextInfo:)
+                  contextInfo:nil];
+        }
+        
+    }
+}
+
+/*
+ 
+ - genericSheetDidEnd:returnCode:contextInfo:
+ 
+ */
+- (void)genericSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+#pragma unused(returnCode)
+#pragma unused(contextInfo)
+    
+    [sheet orderOut:self];
+}
+
+/*
+ 
+ - endNetworkSheet:
+ 
+ */
+- (IBAction)endNetworkSheet:(id)aSender
+{
+	if ([aSender tag] == 42) {
+        NSURL *url = [NSURL URLWithString:NSLocalizedStringFromTable(@"NAT-PMP Howto URL", MGSURLStringsResource, @"NAT-PMP Howto URL")];
+        if (url) {
+            [[NSWorkspace sharedWorkspace] openURL:url];
+        }
+	}
+	
+    [NSApp endSheet:[aSender window]];
 }
 
 #pragma mark -

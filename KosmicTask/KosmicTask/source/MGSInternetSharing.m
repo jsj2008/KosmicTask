@@ -29,6 +29,7 @@
 
 NSString *MGSInternetSharingKeyRequest = @"MGSInternetSharingRequest";
 NSString *MGSInternetSharingKeyMappingStatus = @"MGSInternetSharingMappingStatus";
+NSString *MGSInternetSharingKeyRouterStatus = @"MGSInternetSharingRouterStatus";
 NSString *MGSInternetSharingKeyIPAddress = @"MGSInternetSharingKeyIPAddress";
 NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName";
 NSString *MGSInternetSharingKeyReachabilityStatus = @"MGSInternetSharingKeyReachabilityStatus";
@@ -44,6 +45,7 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
 @synthesize automaticallyMapPort = _automaticallyMapPort;
 @synthesize noteObjectString = _noteObjectString;
 @synthesize mappingStatus = _mappingStatus;
+@synthesize routerStatus = _routerStatus;
 @synthesize statusString = _statusString;
 @synthesize IPAddressString = _IPAddressString;
 @synthesize gatewayName = _gatewayName;
@@ -60,7 +62,7 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
 @synthesize activeUserStatusImage = _activeUserStatusImage;
 @synthesize activePortStatusImage = _activePortStatusImage;
 @synthesize inactivePortStatusImage = _inactivePortStatusImage;
-@synthesize reachabilityStatus = _reachabilityStatus;
+@synthesize portReachabilityStatus = _portReachabilityStatus;
 
 #pragma mark -
 #pragma mark Instance
@@ -209,11 +211,11 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
  - setReachabilityStatus:
  
  */
-- (void)setReachabilityStatus:(MGSPortReachability)status
+- (void)setPortReachabilityStatus:(MGSPortReachability)status
 {
 	
 	// reachability status
-	_reachabilityStatus = status;
+	_portReachabilityStatus = status;
 
     [self updatePortStatusImage];
 }
@@ -275,7 +277,7 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
  */
 - (NSString *)notAvailableString
 {
-    return NSLocalizedString(@"not available", @"Internet sharing property not available");
+    return NSLocalizedString(@"Not available", @"Internet sharing property not available");
 }
 #pragma mark -
 #pragma mark Status image updating
@@ -322,7 +324,7 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
  */
 - (void)updatePortStatusImage
 {
-    if (self.reachabilityStatus == kMGSPortReachable) {
+    if (self.portReachabilityStatus == kMGSPortReachable) {
         self.statusImage = self.activePortStatusImage;
     } else {
         self.statusImage = self.inactivePortStatusImage;
