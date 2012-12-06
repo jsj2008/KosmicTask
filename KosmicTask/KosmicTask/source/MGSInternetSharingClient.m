@@ -21,6 +21,9 @@
 
 @property NSString *portStatusText;
 @property NSString *routerStatusText;
+@property BOOL portMapperIsWorking;
+@property BOOL portCheckerIsWorking;
+
 @end
 
 @implementation MGSInternetSharingClient
@@ -30,6 +33,8 @@ static id _sharedInstance = nil;
 @synthesize startStopButtonText = _startStopButtonText;
 @synthesize portStatusText = _portStatusText;
 @synthesize routerStatusText = _routerStatusText;
+@synthesize portMapperIsWorking = _portMapperIsWorking;
+@synthesize portCheckerIsWorking = _portCheckerIsWorking;
 
 #pragma mark -
 #pragma mark Factory
@@ -56,11 +61,12 @@ static id _sharedInstance = nil;
  */
 - (id)init
 {
-    _processingResponse = YES;  // we don't want to initiate a request during init
-    
+   
 	if ((self = [super init])) {
-		_processingResponse = NO;
-		
+		_portMapperIsWorking = NO;
+		_portCheckerIsWorking = NO;
+        _processingResponse = NO;
+        
 		// standard app icon image
 		_appIconImage = [[NSApp applicationIconImage] copy];
 		
@@ -78,10 +84,8 @@ static id _sharedInstance = nil;
 		// register for status update notification
 		[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(response:) 
 																name:MGSDistNoteInternetSharingResponse object:self.noteObjectString];
-		
-		// request a status update
-		[self requestStatusUpdate];
-				
+        
+        [self requestStatusUpdate];
 	}
 	
 	return self;
@@ -96,12 +100,28 @@ static id _sharedInstance = nil;
  */
 - (void)requestStatusUpdate
 {
-	NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys: 
+	NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys:
 								 [NSNumber numberWithInteger:kMGSInternetSharingRequestStatus], MGSInternetSharingKeyRequest,
                                  [NSNumber numberWithBool:YES], MGSInternetSharingKeyResponseRequired,
 								 nil];
 	
-	[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
+	[self postDistributedRequestNotificationWithDict:requestDict];
+}
+
+
+/*
+ 
+ - requestPortCheck
+ 
+ */
+- (void)requestPortCheck
+{
+	NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys: 
+								 [NSNumber numberWithInteger:kMGSInternetSharingRequestPortCheck], MGSInternetSharingKeyRequest,
+                                 [NSNumber numberWithBool:YES], MGSInternetSharingKeyResponseRequired,
+								 nil];
+	
+	[self postDistributedRequestNotificationWithDict:requestDict];
 }
 
 /*
@@ -116,7 +136,7 @@ static id _sharedInstance = nil;
                                  @YES, MGSInternetSharingKeyResponseRequired,
 								 nil];
 	
-	[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
+	[self postDistributedRequestNotificationWithDict:requestDict];
 }
 
 
@@ -141,7 +161,20 @@ static id _sharedInstance = nil;
 		case kMGSInternetSharingRequestStatus:
         {
             id obj = nil;
-            
+
+            if ((obj = [userInfo objectForKey:MGSInternetSharingKeyPortMapperActive])) {
+                self.portMapperIsWorking = [obj boolValue];
+                
+                // request a port check when mapper is done
+                if (!self.portMapperIsWorking) {
+                    [self requestPortCheck];
+                }
+            }
+
+            if ((obj = [userInfo objectForKey:MGSInternetSharingKeyPortCheckerActive])) {
+                self.portCheckerIsWorking = [obj boolValue];
+            }
+
             if ((obj = [userInfo objectForKey:MGSInternetSharingKeyMappingStatus])) {
                 self.mappingStatus = [obj integerValue];
             }
@@ -149,9 +182,11 @@ static id _sharedInstance = nil;
                 self.routerStatus = [obj integerValue];
                 [self performSelector:@selector(validateRouterStatus:) withObject:nil afterDelay:0];
             }
+            
             if ((obj = [userInfo objectForKey:MGSExternalPortNumber])) {
                 self.externalPort = [obj integerValue];
             }
+            
             if ((obj = [userInfo objectForKey:MGSAllowInternetAccess])) {
                 self.allowInternetAccess = [obj boolValue];
             }
@@ -194,7 +229,6 @@ static id _sharedInstance = nil;
 	}
 
 	_processingResponse = NO;
-	self.responseReceived = YES;
     
     // if we have an outstanding request invocation then invoke it
     if (_requestInvocation) {
@@ -219,12 +253,12 @@ static id _sharedInstance = nil;
  post distributed request notification with dictionary
  
  */
-- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict waitOnResponse:(BOOL)wait
+- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict
 {
-    BOOL useInvocation = YES;
+    BOOL useInvocation = NO;
     
-    // are we awaiting a reponse?
-    if (!self.responseReceived && useInvocation) {
+    // are we awaiting a response?
+    if (useInvocation) {
         
         // dict must be a property list
         if (![NSPropertyListSerialization propertyList:dict isValidForFormat:NSPropertyListXMLFormat_v1_0]) {
@@ -250,7 +284,7 @@ static id _sharedInstance = nil;
         return;
     }
     
-	[super postDistributedRequestNotificationWithDict:dict waitOnResponse:wait];
+	[super postDistributedRequestNotificationWithDict:dict];
 }
 
 #pragma mark -
@@ -274,7 +308,7 @@ static id _sharedInstance = nil;
                                      [NSNumber numberWithBool:responseRequired], MGSInternetSharingKeyResponseRequired,
 									 nil];
 		
-		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:responseRequired];
+		[self postDistributedRequestNotificationWithDict:requestDict];
 		
 	}
 }
@@ -296,7 +330,7 @@ static id _sharedInstance = nil;
 									 [NSNumber numberWithBool:value], MGSAllowLocalAccess,
 									 nil];
 		
-		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:NO];
+		[self postDistributedRequestNotificationWithDict:requestDict];
 		
 	}
 }
@@ -320,7 +354,7 @@ static id _sharedInstance = nil;
 									 [NSNumber numberWithBool:value], MGSAllowLocalUsersToAuthenticate,
 									 nil];
 		
-		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:NO];
+		[self postDistributedRequestNotificationWithDict:requestDict];
 		
 	}
 }
@@ -342,7 +376,7 @@ static id _sharedInstance = nil;
 									 [NSNumber numberWithBool:value], MGSAllowRemoteUsersToAuthenticate,
 									 nil];
 		
-		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:NO];
+		[self postDistributedRequestNotificationWithDict:requestDict];
 		
 	}
 }
@@ -366,7 +400,7 @@ static id _sharedInstance = nil;
                                      [NSNumber numberWithBool:YES], MGSInternetSharingKeyResponseRequired,
 									 nil];
 		
-		[self postDistributedRequestNotificationWithDict:requestDict waitOnResponse:YES];
+		[self postDistributedRequestNotificationWithDict:requestDict];
 		
 	}
 }
@@ -516,7 +550,7 @@ static id _sharedInstance = nil;
         if (self.automaticallyMapPort) {
             self.automaticallyMapPort = self.automaticallyMapPort;
         } else {
-            [self requestStatusUpdate];
+            [self requestPortCheck];
         }
     }
 }

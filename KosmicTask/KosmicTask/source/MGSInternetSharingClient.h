@@ -10,20 +10,23 @@
 #import "MGSInternetSharing.h"
 
 @interface MGSInternetSharingClient : MGSInternetSharing {
-	BOOL _processingResponse;
+	BOOL _portMapperIsWorking;
+    BOOL _portCheckerIsWorking;
 	NSString *_startStopButtonText;
 	NSImage *_appIconImage;
 	NSImage *_appActiveSharingIconImage;
     NSString *_portStatusText;
     NSString *_routerStatusText;
     NSInvocation *_requestInvocation;
+    BOOL _processingResponse;
 }
 
 @property (readonly) NSString *startStopButtonText;
 @property (readonly) NSString *portStatusText;
 @property (readonly) NSString *routerStatusText;
 
-- (void)requestStatusUpdate;
+
+- (void)requestPortCheck;
 - (void)requestMappingRefresh;
 + (id)sharedInstance;
 @end

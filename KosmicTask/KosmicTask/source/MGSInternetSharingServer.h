@@ -12,23 +12,34 @@
 #import "MGSPortChecker.h"
 #import "Reachability.h"
 
+
+enum _MGSRequestResponsePending {
+    kMGSMGSRequestResponsePendingNone = 0,
+    kMGSMGSRequestResponsePendingPortAccess = 0x01,
+    kMGSMGSRequestResponsePendingPortMapping = 0x02,
+    
+};
+
+typedef NSInteger MGSRequestResponsePending;
+
 @interface MGSInternetSharingServer : MGSInternetSharing <MGSPortMapperDelegate, MGSPortCheckerDelegate>{
 	MGSPortMapper *_portMapper;
     MGSPortChecker *_portChecker;
     Reachability *_internetReach;
-    BOOL _responsePending;
+    MGSRequestResponsePending _responsePending;
     BOOL _portMapperIsWorking;
     BOOL _portCheckerIsWorking;
+    BOOL _doPortCheckWhenPortMapperFinishes;
 }
 
+
 - (id)initWithExternalPort:(NSInteger)externalPort listeningPort:(NSInteger)listeningPort;
-- (void)startPortMapping;
-- (void)stopPortMapping;
-- (void)remapPortMapping;
-- (NSDictionary *)statusDictionary;
+- (void)startPortMapper;
+- (void)disablePortMapping;
+- (void)enablePortMapping;
 - (void)request:(NSNotification *)note;
-- (void)postStatusNotification;
 
 @property (readonly) BOOL portMapperIsWorking;
 @property (readonly) BOOL portCheckerIsWorking;
+@property BOOL doPortCheckWhenPortMapperFinishes;
 @end

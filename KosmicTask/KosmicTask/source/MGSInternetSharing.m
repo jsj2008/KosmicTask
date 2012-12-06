@@ -12,15 +12,18 @@
 #import "MGSDistributedNotifications.h"
 #import "MGSPreferences.h"
 #import "MGSMotherServer.h"
+#import "NSString_Mugginsoft.h"
 
 // class extension
 @interface MGSInternetSharing()
 @property NSImage *statusImage;
+@property NSImage *mappingStatusImage;
 @property () NSImage *allowInternetAccessStatusImage;
 @property () NSImage *allowLocalAccessStatusImage;
 - (void)updateRemoteAccessStatusImage;
 - (void)updateLocalAccessStatusImage;
 - (void)updatePortStatusImage;
+- (void)updateMappingStatusImage;
 @end
 
 @interface MGSInternetSharing(Private)
@@ -34,6 +37,8 @@ NSString *MGSInternetSharingKeyIPAddress = @"MGSInternetSharingKeyIPAddress";
 NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName";
 NSString *MGSInternetSharingKeyReachabilityStatus = @"MGSInternetSharingKeyReachabilityStatus";
 NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyResponseRequired";
+NSString *MGSInternetSharingKeyPortMapperActive = @"MGSInternetSharingKeyPortMapperActive";
+NSString *MGSInternetSharingKeyPortCheckerActive = @"MGSInternetSharingKeyPortCheckerActive";
 
 @implementation MGSInternetSharing
 
@@ -47,12 +52,14 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
 @synthesize mappingStatus = _mappingStatus;
 @synthesize routerStatus = _routerStatus;
 @synthesize statusString = _statusString;
+@synthesize mappingStatusImage = _mappingStatusImage;
 @synthesize IPAddressString = _IPAddressString;
 @synthesize gatewayName = _gatewayName;
-@synthesize responseReceived = _responseReceived;
 @synthesize isActive = _isActive;
 @synthesize activeStatusImage = _activeStatusImage;
 @synthesize inactiveStatusImage = _inactiveStatusImage;
+@synthesize activeMappingStatusImage = _activeMappingStatusImage;
+@synthesize inactiveMappingStatusImage = _inactiveMappingStatusImage;
 @synthesize activeStatusLargeImage = _activeStatusLargeImage;
 @synthesize inactiveStatusLargeImage = _inactiveStatusLargeImage;
 @synthesize allowInternetAccessStatusImage = _allowInternetAccessStatusImage;
@@ -86,7 +93,6 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
 		_gatewayName = [self notAvailableString];
 		_mappingStatus = kMGSInternetSharingPortNotMapped;
 		_noteObjectString = [[MGSPortMapper class] className];
-		_responseReceived = YES;
 		_activeUserStatusImage = [[[MGSImageManager sharedManager] greenDotUser] copy];
 		_activeStatusImage = [[[MGSImageManager sharedManager] greenDotNoUser] copy];
 		_inactiveStatusImage = [[[MGSImageManager sharedManager] redDotNoUser] copy];
@@ -94,6 +100,8 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
 		_inactiveStatusLargeImage = [[[MGSImageManager sharedManager] redDotLarge] copy];
 		_activePortStatusImage = [[[MGSImageManager sharedManager] greenTick16] copy];
 		_inactivePortStatusImage = [[[MGSImageManager sharedManager] redCross16] copy];
+		_activeMappingStatusImage = [[[MGSImageManager sharedManager] greenDot] copy];
+		_inactiveMappingStatusImage = [[[MGSImageManager sharedManager] redDot] copy];
         
 		// read preferences
 		MGSPreferences *preferences = [MGSPreferences standardUserDefaults];
@@ -129,12 +137,9 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
  post distributed request notification with dictionary
  
  */
-- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict waitOnResponse:(BOOL)wait
+- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict
 {
-	if (wait) {
-        self.responseReceived = NO;
-	}
-    
+  
 	// send out a distributed notification
 	[[NSDistributedNotificationCenter defaultCenter] 
 		postNotificationName: MGSDistNoteInternetSharingRequest
@@ -204,6 +209,8 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
 	}
 	[self didChangeValueForKey:@"statusString"];
 	[self didChangeValueForKey:@"isActive"];
+    
+    [self updateMappingStatusImage];
 }
 
 /*
@@ -279,6 +286,17 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
 {
     return NSLocalizedString(@"Not available", @"Internet sharing property not available");
 }
+
+/*
+ 
+ - setIPAddressString:
+ 
+ */
+- (void)setIPAddressString:(NSString *)value
+{
+    _IPAddressString = value;
+    
+}
 #pragma mark -
 #pragma mark Status image updating
 /*
@@ -328,6 +346,20 @@ NSString *MGSInternetSharingKeyResponseRequired = @"MGSInternetSharingKeyRespons
         self.statusImage = self.activePortStatusImage;
     } else {
         self.statusImage = self.inactivePortStatusImage;
+    }
+}
+
+/*
+ 
+ - updateMappingStatusImage
+ 
+ */
+- (void)updateMappingStatusImage
+{
+    if (self.mappingStatus == kMGSInternetSharingPortMapped) {
+        self.mappingStatusImage = self.activeMappingStatusImage;
+    } else {
+        self.mappingStatusImage = self.inactiveMappingStatusImage;
     }
 }
 

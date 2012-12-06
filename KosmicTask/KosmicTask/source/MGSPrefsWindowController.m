@@ -463,7 +463,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 {
 #pragma unused(sender)
 	[self commitEditingAndDiscard:NO];
-	[[MGSInternetSharingClient sharedInstance] requestStatusUpdate];
+	[[MGSInternetSharingClient sharedInstance] requestPortCheck];
 }
 
 /*

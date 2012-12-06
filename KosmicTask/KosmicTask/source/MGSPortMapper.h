@@ -37,7 +37,7 @@ typedef NSInteger MGSPortMapperRouter;
 
 - (id)initWithExternalPort:(int)externalPort listeningPort:(int)listeningPort;
 - (void)remapWithExternalPort:(int)externalPort listeningPort:(int)listeningPort;
-- (void)startMapping;
+- (void)startPortMapper;
 - (void)stopMapping;
 - (void)dispose;
 - (void)refreshMapping;
@@ -46,4 +46,5 @@ typedef NSInteger MGSPortMapperRouter;
 - (NSString *)externalIPAddress;
 - (NSString *)gatewayName;
 - (NSInteger)externalPort;
+- (void)removeMapping;
 @end

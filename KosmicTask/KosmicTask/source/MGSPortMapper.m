@@ -19,6 +19,7 @@
 - (void)portMapperDidFindRouter:(NSNotification *)aNotification;
 - (void)portMappingDidChangeMappingStatus:(NSNotification *)aNotification;
 - (TCMPortMapper *)portMapper;
+- (void)addMappingWithExternalPort:(int)externalPort listeningPort:(int)listeningPort;
 
 @property (readwrite) MGSPortMapperRouter routerStatus;
 @end
@@ -54,8 +55,8 @@
 		
         _routerStatus = kPortMapperRouterUnknown;
         
-		// remap
-		[self remapWithExternalPort:externalPort listeningPort:listeningPort];
+		// add mapping
+		[self addMappingWithExternalPort:externalPort listeningPort:listeningPort];
 		
 		// register for local notifications
         NSNotificationCenter *center=[NSNotificationCenter defaultCenter];
@@ -83,6 +84,19 @@
 	
 	return self;
 }
+
+/*
+ 
+ set delegate
+ 
+ */
+- (void)setDelegate:(id <MGSPortMapperDelegate>)delegate
+{
+	_delegate = delegate;
+}
+
+#pragma mark -
+#pragma mark Accessors
 
 /*
  
@@ -134,7 +148,17 @@
  */
 - (NSString *)gatewayName
 {
-	return [NSString stringWithFormat:@"%@ %@", [[self portMapper] mappingProtocol], [[self portMapper] routerName]];
+	NSString *gatewayName = nil;
+    NSString *mappingProtocol = [[self portMapper] mappingProtocol];
+    NSArray *mappingProtocols = @[TCMNATPMPPortMapProtocol, TCMUPNPPortMapProtocol];
+    
+    if ([mappingProtocols containsObject:mappingProtocol]) {
+        gatewayName = [NSString stringWithFormat:@"%@ %@", mappingProtocol, [[self portMapper] routerName]];
+    } else {
+        gatewayName = [[self portMapper] routerName];
+    }
+    
+    return gatewayName;
 }
 
 /*
@@ -168,12 +192,14 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark -
+#pragma mark Mapping operations
 /*
  
  - startMapping 
  
  */
-- (void)startMapping
+- (void)startPortMapper
 {
 	[[self portMapper] start];
 }
@@ -201,41 +227,45 @@
 
 /*
  
- remap external port to local port
- 
- designated initialiser
- 
+ - remapWithExternalPort:listeningPort:
+
  */
 - (void)remapWithExternalPort:(int)externalPort listeningPort:(int)listeningPort
 {		
-	// access shared mapper
-	TCMPortMapper *pm = [self portMapper];
-	
-	// remove existing mapping
-	if (_mapping) {
-		[pm removePortMapping:_mapping];
-	}
-	
-	// create mapping
-    
-    if (externalPort > 0) {
-        _mapping = [TCMPortMapping portMappingWithLocalPort:listeningPort
-									desiredExternalPort:externalPort 
-									  transportProtocol:TCMPortMappingTransportProtocolTCP
-											   userInfo:nil];
-        [pm addPortMapping: _mapping];
-    }
+    [self addMappingWithExternalPort:externalPort listeningPort:listeningPort];
 }
-
 
 /*
  
- set delegate
+ - addMappingWithExternalPort:listeningPort:
  
  */
-- (void)setDelegate:(id <MGSPortMapperDelegate>)delegate
+- (void)addMappingWithExternalPort:(int)externalPort listeningPort:(int)listeningPort
 {
-	_delegate = delegate;
+    // we only need to manage one mapping so remove an existing mapping
+    [self removeMapping];
+    
+	// create mapping
+    // if the port is zero then do not add the mapping
+    if (externalPort > 0) {
+        _mapping = [TCMPortMapping portMappingWithLocalPort:listeningPort
+                                        desiredExternalPort:externalPort
+                                          transportProtocol:TCMPortMappingTransportProtocolTCP
+                                                   userInfo:nil];
+        [[self portMapper] addPortMapping: _mapping];
+    }
+}
+/*
+ 
+ - removeMapping
+ 
+ */
+- (void)removeMapping
+{
+    // remove existing mapping
+	if (_mapping) {
+		[[self portMapper] removePortMapping:_mapping];
+	}
 }
 
 #pragma mark -
@@ -270,7 +300,7 @@
 		
 	} else {
 		
-		MLogInfo(@"Port mapping could not be established: %@", [_mapping description]);
+		MLogInfo(@"Port mapping was not established: %@", [_mapping description]);
         
 	}
 	
@@ -318,7 +348,7 @@
         self.routerStatus = kPortMapperRouterHasExternalIP;
     } else {
         
-        // we found the router but could not get the extrenal address which suggests that
+        // we found the router but could not get the external address which suggests that
         // UPNP or NAT-PMP is not supported
 		if ([pm routerIPAddress]) {
             self.routerStatus = kPortMapperRouterIncompatible;

@@ -18,6 +18,8 @@ extern NSString *MGSInternetSharingKeyIPAddress;
 extern NSString *MGSInternetSharingKeyGatewayName;
 extern NSString *MGSInternetSharingKeyResponseRequired;
 extern NSString *MGSInternetSharingKeyRouterStatus;
+extern NSString *MGSInternetSharingKeyPortMapperActive;
+extern NSString *MGSInternetSharingKeyPortCheckerActive;
 
 enum _MGSInternetSharingRequestID {
 	kMGSInternetSharingRequestStatus = 0,
@@ -27,6 +29,7 @@ enum _MGSInternetSharingRequestID {
     kMGSInternetSharingRequestAllowLocalAuthentication = 7,
     kMGSInternetSharingRequestAllowRemoteAuthentication = 8,
     kMGSInternetSharingRequestRefreshMapping = 9,
+    kMGSInternetSharingRequestPortCheck = 10,
 };
 typedef NSInteger MGSInternetSharingRequestID;
 
@@ -56,6 +59,7 @@ typedef NSInteger MGSPortReachability;
 @interface MGSInternetSharing : NSObject {
 @private
 	NSImage *_statusImage;
+    NSImage *_mappingStatusImage;
     NSImage *_allowInternetAccessStatusImage;
     NSImage *_allowLocalAccessStatusImage;
 	NSInteger _externalPort;
@@ -71,7 +75,6 @@ typedef NSInteger MGSPortReachability;
 	NSString *_statusString;
 	NSString *_IPAddressString;
 	NSString *_gatewayName;
-	BOOL _responseReceived;
 	BOOL _isActive;
     NSImage *_activeUserStatusImage;
 	NSImage *_activeStatusImage;
@@ -80,10 +83,13 @@ typedef NSInteger MGSPortReachability;
 	NSImage *_inactiveStatusLargeImage;
     NSImage *_activePortStatusImage;
 	NSImage *_inactivePortStatusImage;
+    NSImage *_activeMappingStatusImage;
+	NSImage *_inactiveMappingStatusImage;
     MGSPortReachability _portReachabilityStatus;
 }
 
 @property (readonly) NSImage *statusImage;
+@property (readonly) NSImage *mappingStatusImage;
 @property (readonly) NSImage *allowInternetAccessStatusImage;
 @property (readonly) NSImage *allowLocalAccessStatusImage;
 @property NSInteger externalPort;
@@ -100,7 +106,6 @@ typedef NSInteger MGSPortReachability;
 @property (readonly) NSString *statusString;
 @property (copy) NSString *IPAddressString;
 @property (copy) NSString *gatewayName;
-@property BOOL responseReceived;
 @property (readonly) BOOL isActive;
 @property (copy) NSImage *activeUserStatusImage;
 @property (copy) NSImage *activeStatusImage;
@@ -109,9 +114,11 @@ typedef NSInteger MGSPortReachability;
 @property (copy) NSImage *inactivePortStatusImage;
 @property (copy) NSImage *activeStatusLargeImage;
 @property (copy) NSImage *inactiveStatusLargeImage;
+@property (copy) NSImage *inactiveMappingStatusImage;
+@property (copy) NSImage *activeMappingStatusImage;
 
 - (void)dispose;
-- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict waitOnResponse:(BOOL)wait;
 - (void)postDistributedResponseNotificationWithDict:(NSDictionary *)dict;
+- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict;
 - (NSString *)notAvailableString;
 @end
