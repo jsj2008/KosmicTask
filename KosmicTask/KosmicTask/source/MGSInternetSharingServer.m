@@ -84,7 +84,7 @@
             
             // Observe the kNetworkReachabilityChangedNotification. When that notification is posted, the
             // method "reachabilityChanged" will be called.
-            [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+            [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object:nil];
 
             _internetReach = [Reachability reachabilityForInternetConnection];
             [_internetReach startNotifier];
@@ -136,6 +136,14 @@
 		case kMGSInternetSharingRequestPortCheck:
         {
             if (_portCheckerIsWorking) return;
+
+            NSInteger port = [[userInfo objectForKey:MGSExternalPortNumber] integerValue];
+            if (port == 0) {
+                MLog(RELEASELOG, @"Cannot complete port check request. Requested port is 0.");
+                break;
+            }
+
+            self.externalPort = port;
             
             // we do a port check and return the port status status when the check is done
             [self startPortChecking];
@@ -173,17 +181,11 @@
                 break;
             }
             
-			self.automaticallyMapPort = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
-            if (self.automaticallyMapPort) {
-                
-                if ([self mappingStatus] == kMGSInternetSharingPortMapped) {
-                    MLog(RELEASELOG, @"Cannot complete map port request. Mapping is already active.");
-                    break;
-                }
-            }
-            
             self.externalPort = port;
+			self.automaticallyMapPort = [[userInfo objectForKey:MGSEnableInternetAccessAtLogin] boolValue];
             
+            // note that if the mapper protocol is none then we just update the mapping table
+            // but no mapping actually occurs.
             if (self.automaticallyMapPort) {
                  [self enablePortMapping];
              } else {
@@ -216,7 +218,7 @@
     BOOL remap = NO;
     
     if (self.externalPort != port) {
-        remap = YES;
+        remap = NO;
     }
     super.externalPort = port;
     
@@ -280,7 +282,7 @@
  */
 - (void)startPortChecking
 {
-    self.portReachabilityStatus = kMGSPortReachabilityNA;
+    self.portReachabilityStatus = kMGSPortTryingToReach;
     if (!_portChecker) {
         
         NSString *portCheckerURL = @"http://portcheck.mugginsoft.com";
@@ -457,14 +459,7 @@
  */
 - (void)portMapperDidFinishWork
 {
-  
-    if (![_portChecker.gatewayAddress mgs_isIPAddress]) {
-        self.IPAddressString = [_portMapper externalIPAddress];
-    }
-    
-    if ([_portMapper gatewayName]) {
-        self.gatewayName = [_portMapper gatewayName];
-    }
+    self.mappingProtocol = [_portMapper mappingProtocol];
     
     switch ([_portMapper mappingStatus])
     {
@@ -503,6 +498,10 @@
  */
 - (void)portMapperDidFindRouter
 {
+    if ([_portMapper gatewayName]) {
+        self.gatewayName = [_portMapper gatewayName];
+    }
+    
     switch ([_portMapper routerStatus]) {
         case kPortMapperRouterUnknown:
             self.routerStatus = kMGSInternetSharingRouterUnknown;
@@ -522,7 +521,7 @@
     }
     
     if (!self.portMapperIsWorking) {
-        self.portMapperIsWorking = NO;
+        [self postPortMapperStatus];
     }
 }
 
@@ -533,8 +532,10 @@
  */
 - (void)portMapperExternalIPAddressDidChange
 {
+    self.IPAddressString = [_portMapper externalIPAddress];
+
     if (!self.portMapperIsWorking) {
-        self.portMapperIsWorking = NO;
+        [self postPortMapperStatus];
     }
 }
 
@@ -546,8 +547,8 @@
  */
 - (void)portMappingDidChangeMappingStatus
 {
-    if (!!self.portMapperIsWorking) {
-        self.portMapperIsWorking = NO;
+    if (!self.portMapperIsWorking) {
+        [self postPortMapperStatus];
     }
 }
 
@@ -563,7 +564,13 @@
 - (void)portCheckerDidFinishProbing:(MGSPortChecker *)portChecker
 {
 
-    //self.IPAddressString = [self notAvailableString];
+    // update address only if port checker has found a valid IP.
+    // note that we will receive the IP address even if the port is closed.
+    if ([portChecker.gatewayAddress mgs_isIPAddress] && ![portChecker.gatewayAddress isEqualToString:@"0.0.0.0"]) {
+        self.IPAddressString = portChecker.gatewayAddress;
+    } else {
+        self.IPAddressString = _portMapper.externalIPAddress;
+    }
     
     switch ([portChecker status]) {
         case kMGS_PORT_STATUS_NA:
@@ -572,15 +579,7 @@
 
         case kMGS_PORT_STATUS_OPEN:
             self.portReachabilityStatus = kMGSPortReachable;
-            //self.externalPort = portChecker.portNumber;
-            
-            // update URL if port checker has found a valid IP
-            if ([portChecker.gatewayAddress mgs_isIPAddress]) {
-                self.IPAddressString = portChecker.gatewayAddress;
-            } else {
-                self.IPAddressString = _portMapper.externalIPAddress;
-            }
-        break;
+         break;
 
         case kMGS_PORT_STATUS_CLOSED:
             self.portReachabilityStatus = kMGSPortNotReachable;
@@ -608,6 +607,7 @@
     if (_portCheckerIsWorking) {
         dict =  [NSMutableDictionary dictionaryWithObjectsAndKeys:
                     @YES, MGSInternetSharingKeyPortCheckerActive,
+                    [NSNumber numberWithInteger:[self portReachabilityStatus]], MGSInternetSharingKeyReachabilityStatus,
                     nil];
     } else {
         dict = [self portCheckerStatusDictionary];
@@ -628,6 +628,7 @@
     if (_portMapperIsWorking) {
         dict =  [NSMutableDictionary dictionaryWithObjectsAndKeys:
                  @YES, MGSInternetSharingKeyPortMapperActive,
+                 @(kMGSInternetSharingPortTryingToMap), MGSInternetSharingKeyMappingStatus,
                  nil];
 
     } else {
@@ -687,6 +688,7 @@
                                  @NO, MGSInternetSharingKeyPortMapperActive,
                                  [NSNumber numberWithInteger:kMGSInternetSharingRequestStatus], MGSInternetSharingKeyRequest,
                                  [NSNumber numberWithInteger:[self mappingStatus]], MGSInternetSharingKeyMappingStatus,
+                                 [NSNumber numberWithInteger:[self mappingProtocol]], MGSInternetSharingKeyMappingProtocol,
                                  [NSNumber numberWithInteger:[self routerStatus]], MGSInternetSharingKeyRouterStatus,
                                  [self IPAddressString], MGSInternetSharingKeyIPAddress,
                                  [self gatewayName], MGSInternetSharingKeyGatewayName,

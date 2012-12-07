@@ -17,14 +17,16 @@
 	NSImage *_appActiveSharingIconImage;
     NSString *_portStatusText;
     NSString *_routerStatusText;
-    NSInvocation *_requestInvocation;
+    NSString *_mappingProtocolText;
+    NSInvocation *_portMapperRequestInvocation;
+    NSInvocation *_portCheckerRequestInvocation;
     BOOL _processingResponse;
 }
 
 @property (readonly) NSString *startStopButtonText;
 @property (readonly) NSString *portStatusText;
 @property (readonly) NSString *routerStatusText;
-
+@property (readonly) NSString *mappingProtocolText;
 
 - (void)requestPortCheck;
 - (void)requestMappingRefresh;

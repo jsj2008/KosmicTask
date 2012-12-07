@@ -17,10 +17,10 @@
 - (void)response:(NSNotification *)note;
 - (void)externalPortWasChanged;
 - (void)cancelPortChangeRequest;
-- (void)validateRouterStatus:(id)sender;
 
 @property NSString *portStatusText;
 @property NSString *routerStatusText;
+@property NSString *mappingProtocolText;
 @property BOOL portMapperIsWorking;
 @property BOOL portCheckerIsWorking;
 
@@ -35,6 +35,7 @@ static id _sharedInstance = nil;
 @synthesize routerStatusText = _routerStatusText;
 @synthesize portMapperIsWorking = _portMapperIsWorking;
 @synthesize portCheckerIsWorking = _portCheckerIsWorking;
+@synthesize mappingProtocolText = _mappingProtocolText;
 
 #pragma mark -
 #pragma mark Factory
@@ -118,6 +119,7 @@ static id _sharedInstance = nil;
 {
 	NSDictionary *requestDict = [NSDictionary dictionaryWithObjectsAndKeys: 
 								 [NSNumber numberWithInteger:kMGSInternetSharingRequestPortCheck], MGSInternetSharingKeyRequest,
+                                 [NSNumber numberWithInteger:self.externalPort], MGSExternalPortNumber,
                                  [NSNumber numberWithBool:YES], MGSInternetSharingKeyResponseRequired,
 								 nil];
 	
@@ -147,6 +149,7 @@ static id _sharedInstance = nil;
  */
 - (void)response:(NSNotification *)note
 {
+    BOOL requestPortCheck = NO;
 	_processingResponse = YES;
 	NSDictionary *userInfo = [note userInfo];
 	
@@ -163,11 +166,12 @@ static id _sharedInstance = nil;
             id obj = nil;
 
             if ((obj = [userInfo objectForKey:MGSInternetSharingKeyPortMapperActive])) {
+                
                 self.portMapperIsWorking = [obj boolValue];
                 
                 // request a port check when mapper is done
                 if (!self.portMapperIsWorking) {
-                    [self requestPortCheck];
+                    requestPortCheck = YES;
                 }
             }
 
@@ -177,10 +181,22 @@ static id _sharedInstance = nil;
 
             if ((obj = [userInfo objectForKey:MGSInternetSharingKeyMappingStatus])) {
                 self.mappingStatus = [obj integerValue];
+                
             }
             if ((obj = [userInfo objectForKey:MGSInternetSharingKeyRouterStatus])) {
+                
+                MGSInternetSharingRouterStatus prevRouterStatus = self.routerStatus;
+                
                 self.routerStatus = [obj integerValue];
-                [self performSelector:@selector(validateRouterStatus:) withObject:nil afterDelay:0];
+                
+                if (prevRouterStatus != self.routerStatus) {
+                    requestPortCheck = YES;
+                }
+
+            }
+            
+            if ((obj = [userInfo objectForKey:MGSInternetSharingKeyMappingProtocol])) {
+                self.mappingProtocol = [obj integerValue];
             }
             
             if ((obj = [userInfo objectForKey:MGSExternalPortNumber])) {
@@ -230,22 +246,36 @@ static id _sharedInstance = nil;
 
 	_processingResponse = NO;
     
+    NSInvocation *requestInvocation = nil;
+    if (_portMapperRequestInvocation) {
+        requestInvocation = _portMapperRequestInvocation;
+        _portMapperRequestInvocation = nil;
+    } else if (_portCheckerRequestInvocation) {
+        requestInvocation = _portCheckerRequestInvocation;
+        _portCheckerRequestInvocation = nil;
+    }
+
     // if we have an outstanding request invocation then invoke it
-    if (_requestInvocation) {
+    if (requestInvocation) {
         
         NSDictionary *dict = nil;
-        [_requestInvocation getArgument:&dict atIndex:2];
+        [requestInvocation getArgument:&dict atIndex:2];
         
         // dict must be a property list
         if (![NSPropertyListSerialization propertyList:dict isValidForFormat:NSPropertyListXMLFormat_v1_0]) {
             MLogInfo(@"Invalid property list detected prior to invocation: %@", dict);
         } else {
-            [_requestInvocation invoke];
+            [requestInvocation invoke];
         }
         
-        _requestInvocation = nil;
-        
+        // any port check is now redundant
+        requestPortCheck = NO;
     }
+    
+    if (requestPortCheck) {
+        [self requestPortCheck];
+    }
+
 }
 
 /*
@@ -255,10 +285,9 @@ static id _sharedInstance = nil;
  */
 - (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict
 {
-    BOOL useInvocation = NO;
+    BOOL useInvocation = YES;
     
-    // are we awaiting a response?
-    if (useInvocation) {
+    if (useInvocation && (self.portMapperIsWorking || self.portCheckerIsWorking)) {
         
         // dict must be a property list
         if (![NSPropertyListSerialization propertyList:dict isValidForFormat:NSPropertyListXMLFormat_v1_0]) {
@@ -266,15 +295,19 @@ static id _sharedInstance = nil;
             return;
         }
 
-        // this approach fails because when invoked the dict argument
-        // seems to contain a CFType which is invalid for a Plist
         NSMethodSignature *aSignature = [[self class] instanceMethodSignatureForSelector:_cmd];
-        _requestInvocation = [NSInvocation invocationWithMethodSignature:aSignature];
-        _requestInvocation.target = self;
-        _requestInvocation.selector = _cmd;
-        [_requestInvocation setArgument:&dict atIndex:2];
-        [_requestInvocation setArgument:&wait atIndex:3];
-        [_requestInvocation retainArguments];
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:aSignature];
+        invocation.target = self;
+        invocation.selector = _cmd;
+        [invocation setArgument:&dict atIndex:2];
+        [invocation retainArguments];
+        
+        if (self.portMapperIsWorking) {
+            _portMapperRequestInvocation = invocation;
+            _portCheckerRequestInvocation = nil;
+        } else {
+            _portCheckerRequestInvocation = invocation;
+        }
         
 #undef MGS_DEBUG_INVOCATION
 #ifdef MGS_DEBUG_INVOCATION
@@ -423,60 +456,6 @@ static id _sharedInstance = nil;
 
 /*
  
- set mapping status _
- 
- */
-- (void)setMappingStatus:(MGSInternetSharingMappingStatus)mappingStatus
-{
-	
-	// mapping status
-	[super setMappingStatus:mappingStatus];
-	/*
-	[self willChangeValueForKey:@"startStopButtonText"];
-	
-	switch (self.mappingStatus) {
-		case kMGSInternetSharingPortTryingToMap:
-			_startStopButtonText = NSLocalizedString(@"...", @"Trying to map router port");
-            self.portStatusText = NSLocalizedString(@"...", @"Trying to map router port");
-			break;
-			
-		case kMGSInternetSharingPortMapped:
-			_startStopButtonText = NSLocalizedString(@"Close", @"Router port mapped");
-            self.portStatusText = NSLocalizedString(@"open", @"Port is open");
-			break;
-			
-		case kMGSInternetSharingPortNotMapped:
-		default:
-			_startStopButtonText = NSLocalizedString(@"Open", @"Router port not mapped");
-            self.portStatusText = NSLocalizedString(@"closed", @"Port is closed");
-			break;
-			
-	}
-	[self didChangeValueForKey:@"startStopButtonText"];
-	*/
-	// update application icon to reflect Internet sharing status
-	/*NSImage *appIconImage;
-	if (self.isActive) {
-		appIconImage = _appActiveSharingIconImage;
-	} else {
-		appIconImage = _appIconImage;
-	}*/
-
-	// set application icon
-	// note that whatever is set here seems to get used when creating
-	// miniwindows for other application windows.
-	// so if the orb is displayed here then it will appear in the miniwindows too.
-	// if the sharing is subsequently stopped then the miniwindow display may be out of sync.
-	//[NSApp setApplicationIconImage: appIconImage];
-	// or update dock tile
-	// this seems to cause an icon flash
-	//NSDockTile *dockTile = [NSApp dockTile];
-	//[dockTile setContentView:[[MGSImageManager sharedManager] imageView:appIconImage]];
-	//[dockTile display];
-}
-
-/*
- 
  - setReachabilityStatus:
  
  */
@@ -486,13 +465,17 @@ static id _sharedInstance = nil;
 	
 	switch (self.portReachabilityStatus) {
 		case kMGSPortReachabilityNA:
-            self.portStatusText = NSLocalizedString(@"No (?)", @"Reachability not available");
+            self.portStatusText = NSLocalizedString(@"No (check did not complete)", @"Reachability not available");
 			break;
 			
 		case kMGSPortReachable:
             self.portStatusText = NSLocalizedString(@"Yes", @"Port is reachable");
 			break;
 			
+        case kMGSPortTryingToReach:
+            self.portStatusText = NSLocalizedString(@"Checking port...", @"Trying port");
+            break;
+            
 		case kMGSPortNotReachable:
 		default:
             self.portStatusText = NSLocalizedString(@"No", @"Port is not reachable");
@@ -506,33 +489,61 @@ static id _sharedInstance = nil;
 
 /*
  
- - validateRouterStatus:
+ - setRouterStatus:
  
  */
-- (void)validateRouterStatus:(id)sender
+- (void)setRouterStatus:(MGSInternetSharingRouterStatus)value
 {
-#pragma unused(sender)
+    super.routerStatus = value;
     
     switch (self.routerStatus) {
             
         // cannot determine the router status
         case kMGSInternetSharingRouterUnknown:
-            self.routerStatusText = NSLocalizedString(@"Status unknown", @"Comment");
+            self.routerStatusText = NSLocalizedString(@"Not available", @"Comment");
             break;
             
         // router connected and has an external IP
         case kMGSInternetSharingRouterHasExternalIP:
-            self.routerStatusText = NSLocalizedString(@"Has external IP", @"Comment");
+            self.routerStatusText = NSLocalizedString(@"Connected and has IP address", @"Comment");
             break;
             
         // router does not support UPnP or NAT-PMP
         case kMGSInternetSharingRouterIncompatible:
-            self.routerStatusText = NSLocalizedString(@"No auto map support", @"Comment");
+            self.routerStatusText = NSLocalizedString(@"Connected", @"Comment");
             break;
             
         // router not found on network
         case kMGSInternetSharingRouterNotFound:
-            self.routerStatusText = NSLocalizedString(@"Router not found", @"Comment");
+            self.routerStatusText = NSLocalizedString(@"Not found", @"Comment");
+            break;
+    }
+}
+
+/*
+ 
+ - setRouterStatus:
+ 
+ */
+- (void)setMappingProtocol:(MGSPortMapperProtocol)value
+{
+    super.mappingProtocol = value;
+    
+    switch (self.mappingProtocol) {
+        case kMGSPortMapperProtocolNone:
+            self.mappingProtocolText =  NSLocalizedString(@"Auto mapping is not available", @"Comment");
+            break;
+            
+        case kMGSPortMapperProtocolUPNP:
+            self.mappingProtocolText =  NSLocalizedString(@"UPnP", @"Comment");
+            break;
+
+        case kMGSPortMapperProtocolNAT_PMP:
+            self.mappingProtocolText =  NSLocalizedString(@"NAT-PMP", @"Comment");
+            break;
+
+        case kMGSPortMapperProtocolBoth:
+            self.mappingProtocolText =  NSLocalizedString(@"Both", @"Comment");
             break;
     }
 }
@@ -548,7 +559,7 @@ static id _sharedInstance = nil;
 {
     if (!_processingResponse) {
         if (self.automaticallyMapPort) {
-            self.automaticallyMapPort = self.automaticallyMapPort;
+            self.automaticallyMapPort = YES;    // force remap
         } else {
             [self requestPortCheck];
         }

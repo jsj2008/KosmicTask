@@ -303,6 +303,7 @@
 								<string key="NSFrame">{{976, 2}, {16, 16}}</string>
 								<reference key="NSSuperview" ref="313715184"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSImageCell" key="NSCell" id="637746856">
@@ -310,7 +311,7 @@
 									<int key="NSCellFlags2">33554432</int>
 									<object class="NSCustomResource" key="NSContents">
 										<string key="NSClassName">NSImage</string>
-										<string key="NSResourceName">RedCross16</string>
+										<string key="NSResourceName">FlagRedSmall</string>
 									</object>
 									<string key="NSCellIdentifier">_NS:9</string>
 									<int key="NSAlign">0</int>
@@ -659,11 +660,9 @@
 				</object>
 			</object>
 			<object class="NSTabView" id="755287958">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">18</int>
 				<string key="NSFrameSize">{666, 121}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<object class="NSMutableArray" key="NSTabViewItems">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSTabViewItem" id="762947454">
@@ -684,7 +683,6 @@
 							<int key="NSvFlags">256</int>
 							<string key="NSFrame">{{10, 33}, {646, 75}}</string>
 							<reference key="NSSuperview" ref="755287958"/>
-							<reference key="NSWindow"/>
 						</object>
 						<string key="NSLabel">Script</string>
 						<reference key="NSColor" ref="593069910"/>
@@ -827,19 +825,27 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">configureInternetSharing:</string>
+						<string key="label">configureLocalSharing:</string>
 						<reference key="source" ref="314539002"/>
-						<reference key="destination" ref="575485308"/>
+						<reference key="destination" ref="314037146"/>
 					</object>
-					<int key="connectionID">429</int>
+					<int key="connectionID">457</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">configureLocalSharing:</string>
 						<reference key="source" ref="314539002"/>
-						<reference key="destination" ref="314037146"/>
+						<reference key="destination" ref="575485308"/>
 					</object>
-					<int key="connectionID">434</int>
+					<int key="connectionID">458</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">configureInternetSharing:</string>
+						<reference key="source" ref="314539002"/>
+						<reference key="destination" ref="72473174"/>
+					</object>
+					<int key="connectionID">459</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -1382,6 +1388,7 @@
 					<string>430.IBAttributePlaceholdersKey</string>
 					<string>430.IBPluginDependency</string>
 					<string>431.IBPluginDependency</string>
+					<string>435.IBAttributePlaceholdersKey</string>
 					<string>435.IBPluginDependency</string>
 					<string>436.IBPluginDependency</string>
 				</object>
@@ -1491,6 +1498,14 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSMutableDictionary">
+						<string key="NS.key.0">ToolTip</string>
+						<object class="IBToolTipAttribute" key="NS.object.0">
+							<string key="name">ToolTip</string>
+							<reference key="object" ref="72473174"/>
+							<string key="toolTip">Internet access</string>
+						</object>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
@@ -1507,7 +1522,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">455</int>
+			<int key="maxID">459</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2307,10 +2322,10 @@
 				<string>BracesTemplate</string>
 				<string>ClockTemplate</string>
 				<string>DotRedNoUser</string>
+				<string>FlagRedSmall</string>
 				<string>GroupTemplate</string>
 				<string>LeftViewTemplate</string>
 				<string>NSApplicationIcon</string>
-				<string>RedCross16</string>
 				<string>ToggleViewTemplate</string>
 				<string>ToggleViewTemplateUp</string>
 			</object>
@@ -2319,10 +2334,10 @@
 				<string>{128, 128}</string>
 				<string>{128, 128}</string>
 				<string>{32, 16}</string>
-				<string>{128, 128}</string>
-				<string>{128, 128}</string>
-				<string>{128, 128}</string>
 				<string>{16, 16}</string>
+				<string>{128, 128}</string>
+				<string>{128, 128}</string>
+				<string>{128, 128}</string>
 				<string>{128, 128}</string>
 				<string>{16, 12}</string>
 			</object>

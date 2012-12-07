@@ -121,7 +121,7 @@
     if ([pm isRunning]) {
         externalIPAddress = [pm externalIPAddress];
         if (!externalIPAddress || [externalIPAddress isEqualToString:@"0.0.0.0"]) {
-            externalIPAddress = NSLocalizedString(@"No address.", @"");
+            externalIPAddress = NSLocalizedString(@"Not available", @"");
         }
      } else {
          externalIPAddress = NSLocalizedString(@"Not available", @"");
@@ -143,22 +143,34 @@
 
 /*
  
- gateway name
+ - gatewayName
  
  */
 - (NSString *)gatewayName
 {
-	NSString *gatewayName = nil;
-    NSString *mappingProtocol = [[self portMapper] mappingProtocol];
-    NSArray *mappingProtocols = @[TCMNATPMPPortMapProtocol, TCMUPNPPortMapProtocol];
-    
-    if ([mappingProtocols containsObject:mappingProtocol]) {
-        gatewayName = [NSString stringWithFormat:@"%@ %@", mappingProtocol, [[self portMapper] routerName]];
-    } else {
-        gatewayName = [[self portMapper] routerName];
-    }
-    
+	NSString *gatewayName = [[self portMapper] routerName];
+     
     return gatewayName;
+}
+
+/*
+ 
+ - mappingProtocol
+ 
+ */
+- (MGSPortMapperProtocol)mappingProtocol
+{
+    MGSPortMapperProtocol protocol = kMGSPortMapperProtocolNone;
+    
+    NSString *protocolString = [[self portMapper] mappingProtocol];
+    
+    if ([protocolString isEqualToString:TCMNATPMPPortMapProtocol]) {
+        protocol = kMGSPortMapperProtocolNAT_PMP;
+    } else if ([protocolString isEqualToString:TCMUPNPPortMapProtocol]) {
+        protocol = kMGSPortMapperProtocolUPNP; 
+    }
+
+    return protocol;
 }
 
 /*
@@ -248,6 +260,21 @@
 	// create mapping
     // if the port is zero then do not add the mapping
     if (externalPort > 0) {
+        
+        /*
+         note that simply removing and adding a mapping with different external
+         port numbers will not work when executed in the same call. it does work if the
+         removal and add are accomplished separately.
+         
+         the port mapper is threaded and the remove operation does not finish before
+         the add thread causes the remove update to finish.
+         
+         the effect is that the mapper sees that we already have a mapping that
+         matches the desired private port and updates the requested mapping
+         public port with the existing public port.
+         
+         the overall effect is that the mapping stays exactly the same
+         */
         _mapping = [TCMPortMapping portMappingWithLocalPort:listeningPort
                                         desiredExternalPort:externalPort
                                           transportProtocol:TCMPortMappingTransportProtocolTCP

@@ -139,6 +139,8 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
     [internetSharingClient addObserver:self forKeyPath:@"automaticallyMapPort" options:0 context:&MGSAutoMappingContext];
     [internetSharingClient addObserver:self forKeyPath:@"routerStatus" options:0 context:&MGSRouterStatusContext];
     
+    
+    
 }
 
 /*
@@ -488,7 +490,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 {
 	[self showWindow:self];
 	[[[self window] toolbar] setSelectedItemIdentifier:_internetTabIdentifier];
-	self.selectedNetworkTabIdentifier = @"remote";
+	self.selectedNetworkTabIdentifier = @"internet";
     [self displayViewForIdentifier:_internetTabIdentifier animate:NO];
     
     
@@ -503,7 +505,7 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
 {
 	[self showWindow:self];
 	[[[self window] toolbar] setSelectedItemIdentifier:_internetTabIdentifier];
-    self.selectedNetworkTabIdentifier = @"local";
+    self.selectedNetworkTabIdentifier = @"network";
 	[self displayViewForIdentifier:_internetTabIdentifier animate:NO];
 }
 
@@ -539,6 +541,11 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
         BOOL autoMapping = [sharingClient automaticallyMapPort];
         autoMappingCheckbox.state = (autoMapping ? NSOnState: NSOffState);
     
+        // if we are mapping but there is no mapping protocol then we won't
+        // get a notification from the mapper 
+        if (autoMapping && [sharingClient mappingProtocol] == kMGSPortMapperProtocolNone) {
+            [self showNetworkPanelForRouterStatus:[sharingClient routerStatus]];
+        }
     } else if (context == &MGSRouterStatusContext) {
         
         switch ([sharingClient routerStatus]) {
@@ -570,12 +577,12 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
  */
 - (void)showNetworkPanelForRouterStatus:(MGSInternetSharingRouterStatus)routerStatus
 {
-    MGSInternetSharingClient *internetSharingClient = [MGSInternetSharingClient sharedInstance];
+    //MGSInternetSharingClient *internetSharingClient = [MGSInternetSharingClient sharedInstance];
     // show router status panel ?
     if (!([[self window] isVisible] &&
-          internetSharingClient.automaticallyMapPort &&
+          //internetSharingClient.automaticallyMapPort &&
           [internetPrefsView window] &&
-          [self.selectedNetworkTabIdentifier isEqual:@"remote"]
+          [self.selectedNetworkTabIdentifier isEqual:@"internet"]
           )) {
         return;
     }

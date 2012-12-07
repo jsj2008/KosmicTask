@@ -7,12 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MGSPortMapper.h"
 
 #define MGS_MIN_INTERNET_SHARING_PORT 1024
 #define MGS_MAX_INTERNET_SHARING_PORT 49151
 
 extern NSString *MGSInternetSharingKeyRequest;
 extern NSString *MGSInternetSharingKeyMappingStatus;
+extern NSString *MGSInternetSharingKeyMappingProtocol;
 extern NSString *MGSInternetSharingKeyReachabilityStatus;
 extern NSString *MGSInternetSharingKeyIPAddress;
 extern NSString *MGSInternetSharingKeyGatewayName;
@@ -53,6 +55,7 @@ enum {
     kMGSPortReachabilityNA = 0,
     kMGSPortReachable = 1,
     kMGSPortNotReachable = 2,
+    kMGSPortTryingToReach = 3,
 };
 typedef NSInteger MGSPortReachability;
 
@@ -72,6 +75,7 @@ typedef NSInteger MGSPortReachability;
 	NSString *_noteObjectString;
 	MGSInternetSharingMappingStatus _mappingStatus;
     MGSInternetSharingRouterStatus _routerStatus;
+    MGSPortMapperProtocol _mappingProtocol;
 	NSString *_statusString;
 	NSString *_IPAddressString;
 	NSString *_gatewayName;
@@ -83,8 +87,10 @@ typedef NSInteger MGSPortReachability;
 	NSImage *_inactiveStatusLargeImage;
     NSImage *_activePortStatusImage;
 	NSImage *_inactivePortStatusImage;
+    NSImage *_workingPortStatusImage;
     NSImage *_activeMappingStatusImage;
 	NSImage *_inactiveMappingStatusImage;
+    NSImage *_workingMappingStatusImage;
     MGSPortReachability _portReachabilityStatus;
 }
 
@@ -112,10 +118,13 @@ typedef NSInteger MGSPortReachability;
 @property (copy) NSImage *inactiveStatusImage;
 @property (copy) NSImage *activePortStatusImage;
 @property (copy) NSImage *inactivePortStatusImage;
+@property (copy) NSImage *workingPortStatusImage;
 @property (copy) NSImage *activeStatusLargeImage;
 @property (copy) NSImage *inactiveStatusLargeImage;
 @property (copy) NSImage *inactiveMappingStatusImage;
 @property (copy) NSImage *activeMappingStatusImage;
+@property (copy) NSImage *workingMappingStatusImage;
+@property MGSPortMapperProtocol mappingProtocol;
 
 - (void)dispose;
 - (void)postDistributedResponseNotificationWithDict:(NSDictionary *)dict;

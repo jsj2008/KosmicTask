@@ -26,6 +26,14 @@ enum _MGSPortMapperRouter {
 };
 typedef NSInteger MGSPortMapperRouter;
 
+enum _MGSPortMapperProtocol {
+    kMGSPortMapperProtocolNone = 0,
+    kMGSPortMapperProtocolUPNP  = 1,
+    kMGSPortMapperProtocolNAT_PMP = 2,
+    kMGSPortMapperProtocolBoth = 3,
+};
+typedef NSInteger MGSPortMapperProtocol;
+
 @interface MGSPortMapper : NSObject {
 	TCMPortMapping *_mapping;
 	id _delegate;
@@ -47,4 +55,5 @@ typedef NSInteger MGSPortMapperRouter;
 - (NSString *)gatewayName;
 - (NSInteger)externalPort;
 - (void)removeMapping;
+- (MGSPortMapperProtocol)mappingProtocol;
 @end

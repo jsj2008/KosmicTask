@@ -8,7 +8,6 @@
 
 #import "MGSInternetSharing.h"
 #import "MGSImageManager.h"
-#import "MGSPortMapper.h"
 #import "MGSDistributedNotifications.h"
 #import "MGSPreferences.h"
 #import "MGSMotherServer.h"
@@ -32,6 +31,7 @@
 
 NSString *MGSInternetSharingKeyRequest = @"MGSInternetSharingRequest";
 NSString *MGSInternetSharingKeyMappingStatus = @"MGSInternetSharingMappingStatus";
+NSString *MGSInternetSharingKeyMappingProtocol = @"MGSInternetSharingKeyMappingProtocol";
 NSString *MGSInternetSharingKeyRouterStatus = @"MGSInternetSharingRouterStatus";
 NSString *MGSInternetSharingKeyIPAddress = @"MGSInternetSharingKeyIPAddress";
 NSString *MGSInternetSharingKeyGatewayName = @"MGSInternetSharingKeyGatewayName";
@@ -68,8 +68,11 @@ NSString *MGSInternetSharingKeyPortCheckerActive = @"MGSInternetSharingKeyPortCh
 @synthesize allowRemoteUsersToAuthenticate = _allowRemoteUsersToAuthenticate;
 @synthesize activeUserStatusImage = _activeUserStatusImage;
 @synthesize activePortStatusImage = _activePortStatusImage;
+@synthesize workingPortStatusImage = _workingPortStatusImage;
 @synthesize inactivePortStatusImage = _inactivePortStatusImage;
 @synthesize portReachabilityStatus = _portReachabilityStatus;
+@synthesize mappingProtocol = _mappingProtocol;
+@synthesize workingMappingStatusImage = _workingMappingStatusImage;
 
 #pragma mark -
 #pragma mark Instance
@@ -82,6 +85,7 @@ NSString *MGSInternetSharingKeyPortCheckerActive = @"MGSInternetSharingKeyPortCh
 {
 	if ((self = [super init])) {
 		
+        _mappingProtocol = kMGSPortMapperProtocolNone;
 		_listeningPort = MOTHER_IANA_REGISTERED_PORT;
 		_externalPort = MOTHER_IANA_REGISTERED_PORT;
 		_allowInternetAccess = NO;
@@ -98,10 +102,12 @@ NSString *MGSInternetSharingKeyPortCheckerActive = @"MGSInternetSharingKeyPortCh
 		_inactiveStatusImage = [[[MGSImageManager sharedManager] redDotNoUser] copy];
 		_activeStatusLargeImage = [[[MGSImageManager sharedManager] greenDotLarge] copy];
 		_inactiveStatusLargeImage = [[[MGSImageManager sharedManager] redDotLarge] copy];
-		_activePortStatusImage = [[[MGSImageManager sharedManager] greenTick16] copy];
-		_inactivePortStatusImage = [[[MGSImageManager sharedManager] redCross16] copy];
+		_activePortStatusImage = [NSImage imageNamed:@"FlagGreenSmall.png"];
+		_inactivePortStatusImage = [NSImage imageNamed:@"FlagRedSmall.png"];
+		_workingPortStatusImage = [NSImage imageNamed:@"FlagYellowSmall.png"];
 		_activeMappingStatusImage = [[[MGSImageManager sharedManager] greenDot] copy];
 		_inactiveMappingStatusImage = [[[MGSImageManager sharedManager] redDot] copy];
+        _workingMappingStatusImage = [[[MGSImageManager sharedManager] yellowDot] copy];
         
 		// read preferences
 		MGSPreferences *preferences = [MGSPreferences standardUserDefaults];
@@ -176,7 +182,7 @@ NSString *MGSInternetSharingKeyPortCheckerActive = @"MGSInternetSharingKeyPortCh
 	
 	// mapping status
 	_mappingStatus = status;
-	
+    
 	[self willChangeValueForKey:@"statusString"];
 	[self willChangeValueForKey:@"isActive"];
 	
@@ -189,7 +195,7 @@ NSString *MGSInternetSharingKeyPortCheckerActive = @"MGSInternetSharingKeyPortCh
             break;
             
 		case kMGSInternetSharingPortTryingToMap:
-			_statusString = NSLocalizedString(@"Mapping external port", @"Trying to map router port");
+			_statusString = NSLocalizedString(@"Checking router...", @"Trying to map router port");
 			break;
         
         case kMGSInternetSharingPortMapped:
@@ -342,10 +348,18 @@ NSString *MGSInternetSharingKeyPortCheckerActive = @"MGSInternetSharingKeyPortCh
  */
 - (void)updatePortStatusImage
 {
-    if (self.portReachabilityStatus == kMGSPortReachable) {
-        self.statusImage = self.activePortStatusImage;
-    } else {
-        self.statusImage = self.inactivePortStatusImage;
+    switch (self.portReachabilityStatus) {
+        case kMGSPortReachable:
+            self.statusImage = self.activePortStatusImage;
+            break;
+            
+        case kMGSPortTryingToReach:
+            self.statusImage = self.workingPortStatusImage;
+            break;
+
+        default:
+            self.statusImage = self.inactivePortStatusImage;
+            break;
     }
 }
 
@@ -356,11 +370,20 @@ NSString *MGSInternetSharingKeyPortCheckerActive = @"MGSInternetSharingKeyPortCh
  */
 - (void)updateMappingStatusImage
 {
-    if (self.mappingStatus == kMGSInternetSharingPortMapped) {
-        self.mappingStatusImage = self.activeMappingStatusImage;
-    } else {
-        self.mappingStatusImage = self.inactiveMappingStatusImage;
+    switch (self.mappingStatus) {
+        case kMGSInternetSharingPortMapped:
+            self.mappingStatusImage = self.activeMappingStatusImage;
+            break;
+            
+        case kMGSInternetSharingPortTryingToMap:
+            self.mappingStatusImage = self.workingMappingStatusImage;
+            break;
+            
+        default:
+            self.mappingStatusImage = self.inactiveMappingStatusImage;
+            break;
     }
+    
 }
 
 #pragma mark -
