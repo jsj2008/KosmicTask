@@ -50,8 +50,8 @@ Tcl powered tasks can create temporary files simply by creating files in the cur
 	# file created in task current directory will be automatically deleted
 	set file "capture.png"
 	 
-	# capture sceen shot to file
-	exec screencapture -t png $file
+	# capture sceen shot to file ignoring output on stderr
+	exec -ignorestderr screencapture -t png $file
 	    
 	# return a YAML inline format dictionary with filename
 	set result "{kosmicFile: $file, kosmicInfo: file returned}"

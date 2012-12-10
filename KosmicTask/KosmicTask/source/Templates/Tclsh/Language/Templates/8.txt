@@ -31,8 +31,8 @@ proc runTask {} {
 	 	# log command
 		puts stderr "Running $command command..."
 	
-		# execute command
-		if {[catch {exec $command -t png $file}]} {
+		# execute command ignoring output to stderr
+		if {[catch {exec -ignorestderr $command -t png $file}]} {
 			error "Error running $command"
 		}
 	
