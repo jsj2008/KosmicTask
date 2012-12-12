@@ -41,7 +41,7 @@
 @synthesize nextRequest = _nextRequest;
 @synthesize owner = _owner;
 @synthesize sendUpdatesToOwner = _sendUpdatesToOwner;
-@synthesize ownerObject = _ownerObject;
+@synthesize tagObject = _tagObject;
 @synthesize ownerString = _ownerString;
 @synthesize allowUserToAuthenticate = _allowUserToAuthenticate;
 
@@ -474,7 +474,7 @@
         // copy appropriate properties
         copy.delegate = self.delegate;
         copy.owner = self.owner;
-        copy.ownerObject = self.ownerObject;
+        copy.tagObject = self.tagObject;
         copy.ownerString = self.ownerString;
         copy.allowUserToAuthenticate = self.allowUserToAuthenticate;
         copy.sendUpdatesToOwner = self.sendUpdatesToOwner;

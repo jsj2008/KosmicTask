@@ -1243,7 +1243,7 @@ const char MGSContextStartupComplete;
 			// duplicate action
 			//
 			if (netRequest.ownerString == MGSRequestDuplicateAction) {
-				action = netRequest.ownerObject;
+				action = netRequest.tagObject;
 				
 				// duplicate the script.
 				// this will give it a new UUID.
@@ -1258,7 +1258,7 @@ const char MGSContextStartupComplete;
 			// edit action
 			//
 			else if (netRequest.ownerString == MGSRequestEditAction) {
-				action = netRequest.ownerObject;
+				action = netRequest.tagObject;
 				
 				// cannot edit a bundled script so duplicate it.
 				// duplicate scripts are automatically marked as not bundled
@@ -1308,12 +1308,12 @@ const char MGSContextStartupComplete;
 		else {	
 
 			if (netRequest.ownerString == MGSRequestDuplicateAction) {
-				action = netRequest.ownerObject;
+				action = netRequest.tagObject;
 				MLogInfo(@"Could not duplicate script UUID: %@", [[action script] UUID]);
 			}
 			
 			else if (netRequest.ownerString == MGSRequestEditAction) {
-				action = netRequest.ownerObject;
+				action = netRequest.tagObject;
 				[self removeEditPendingForAction:action];
 				MLogInfo(@"Could not edit script UUID: %@", [[action script] UUID]);
 			}
@@ -1588,7 +1588,7 @@ const char MGSContextStartupComplete;
 	// request entire script with UUID
 	MGSClientNetRequest *netRequest = [[MGSClientRequestManager sharedController] requestScriptWithUUID:UUID netClient:[taskSpec netClient] withOwner:self options:nil];
 	netRequest.ownerString = MGSRequestDuplicateAction;
-	netRequest.ownerObject = taskSpec;
+	netRequest.tagObject = taskSpec;
 }
 
 
@@ -1957,7 +1957,7 @@ const char MGSContextStartupComplete;
 	// request entire script with UUID
 	MGSClientNetRequest *netRequest = [[MGSClientRequestManager sharedController] requestScriptWithUUID:UUID netClient:[action netClient] withOwner:self options:nil];
 	netRequest.ownerString = MGSRequestEditAction;
-	netRequest.ownerObject = action;
+	netRequest.tagObject = action;
 	
 	// add edit pending for this action
 	[self addEditPendingForAction:action];

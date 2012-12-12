@@ -40,7 +40,7 @@
 - (MGSClientNetRequest *)requestSaveTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner;
 
 // execute an task
-- (void)requestExecuteTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner;
+- (MGSClientNetRequest *)requestExecuteTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner;
 
 // terminate an executing task
 - (void)requestTerminateTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner;

@@ -23,6 +23,7 @@
 @property NSString *mappingProtocolText;
 @property BOOL portMapperIsWorking;
 @property BOOL portCheckerIsWorking;
+@property (readwrite) NSString *desiredPortNumberText;
 
 @end
 
@@ -36,6 +37,7 @@ static id _sharedInstance = nil;
 @synthesize portMapperIsWorking = _portMapperIsWorking;
 @synthesize portCheckerIsWorking = _portCheckerIsWorking;
 @synthesize mappingProtocolText = _mappingProtocolText;
+@synthesize desiredPortNumberText = _desiredPortNumberText;
 
 #pragma mark -
 #pragma mark Factory
@@ -200,7 +202,19 @@ static id _sharedInstance = nil;
             }
             
             if ((obj = [userInfo objectForKey:MGSExternalPortNumber])) {
-                self.externalPort = [obj integerValue];
+                
+                NSInteger portNumber =  [obj integerValue];
+                
+                if (portNumber != self.externalPort) {
+                    self.desiredPortNumberText = [NSString stringWithFormat:@"%@\n%lu %@",
+                                                  NSLocalizedString(@"Desired port", @"comment"),
+                                                  (long) self.externalPort,
+                                                  NSLocalizedString(@"is in use", @"comment")
+                                                  ];
+                } else {
+                    self.desiredPortNumberText = @"";
+                }
+                self.externalPort = portNumber;
             }
             
             if ((obj = [userInfo objectForKey:MGSAllowInternetAccess])) {

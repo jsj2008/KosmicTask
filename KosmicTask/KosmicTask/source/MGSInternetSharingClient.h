@@ -20,6 +20,7 @@
     NSString *_mappingProtocolText;
     NSInvocation *_portMapperRequestInvocation;
     NSInvocation *_portCheckerRequestInvocation;
+    NSString *_desiredPortNumberText;
     BOOL _processingResponse;
 }
 
@@ -27,6 +28,7 @@
 @property (readonly) NSString *portStatusText;
 @property (readonly) NSString *routerStatusText;
 @property (readonly) NSString *mappingProtocolText;
+@property (readonly) NSString *desiredPortNumberText;
 
 - (void)requestPortCheck;
 - (void)requestMappingRefresh;

@@ -20,6 +20,7 @@
 @protocol MGSNetRequestOwner;
 
 extern NSString *MGSKeyPathNetClientHostStatus;
+extern NSString *MGSTaskExecuteKeyTag;
 
 enum _MGSTaskRunStatus {
 	MGSTaskRunStatusHostUnavailable,		// host unavailable
@@ -120,6 +121,7 @@ typedef NSInteger MGSTaskActivity;
 - (BOOL)isEqualUUID:(id)object;
 
 // operation
+- (void)execute:(id <MGSNetRequestOwner>)owner options:(NSDictionary *)options;
 - (void)execute:(id <MGSNetRequestOwner>)owner;
 - (void)suspend:(id <MGSNetRequestOwner>)owner;
 - (void)resume:(id <MGSNetRequestOwner>)owner;

@@ -357,7 +357,7 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 										netClient:[actionSpec netClient] 
 									 withOwner:self
 									 options:options];
-		displayNetRequest.ownerObject = actionSpec;
+		displayNetRequest.tagObject = actionSpec;
 		
 		// we use the current representation until the requested representation is received
 	}
@@ -581,7 +581,7 @@ commonExit:
 		}
 
 		
-		[[self actionSpecifier] execute:self];
+		[[self actionSpecifier] execute:self options:@{MGSTaskExecuteKeyTag: [self actionSpecifier]}];
 	}
 }
 
@@ -846,9 +846,6 @@ commonExit:
  */
 -(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
-	MGSNetClient *netClient = netRequest.netClient;
-	NSAssert([[self actionSpecifier] netClient] == netClient, @"net client does not match action specifier");
-
 	// if action was terminated by user then ignore response
 	if ([self actionSpecifier].runStatus == MGSTaskRunStatusTerminatedByUser) {
 		return;
@@ -877,6 +874,13 @@ commonExit:
  */
 -(void)executeResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
+    // check that request is for the current task.
+    // this should be true so log error if not
+    if (netRequest.tagObject != [self actionSpecifier]) {
+        MLog(RELEASELOG, @"Request tag does not match task specifier.");
+		return;
+	}
+    
 	// display the progress table now rather than waiting for the runloop.
 	// this gives better progress feedback.
 	[_outputViewController progressDisplay];
@@ -1011,7 +1015,9 @@ commonExit:
 {
 	// is the response for the current task.
 	// if not, discard it.
-	if (netRequest.ownerObject != [self actionSpecifier]) {
+    // this may occur if the script code id received after a new task has been loaded
+    // into the view.
+	if (netRequest.tagObject != [self actionSpecifier]) {
 		return;
 	}
 	

@@ -77,7 +77,7 @@ static MGSClientRequestManager *_sharedController = nil;
  request execute a task
  
  */
-- (void)requestExecuteTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner
+- (MGSClientNetRequest *)requestExecuteTask:(MGSTaskSpecifier *)task withOwner:(id <MGSNetRequestOwner>)owner
 {
 	MGSError *mgsError = nil;
 
@@ -116,7 +116,7 @@ static MGSClientRequestManager *_sharedController = nil;
 		netRequest.error = mgsError;
 		[netRequest sendErrorToOwner];
 					
-		return;
+		return nil;
 	}
 	
 	//
@@ -161,6 +161,7 @@ static MGSClientRequestManager *_sharedController = nil;
 	// send the request 
 	[self sendRequestOnClient:netRequest];
 
+    return netRequest;
 }
 
 /*

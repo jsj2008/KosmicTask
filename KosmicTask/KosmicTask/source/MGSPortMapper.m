@@ -52,7 +52,8 @@
 		
 		// access shared mapper
 		TCMPortMapper *pm = [self portMapper];
-		
+		pm.appIdentifier = @"KosmicTask";
+        
         _routerStatus = kPortMapperRouterUnknown;
         
 		// add mapping

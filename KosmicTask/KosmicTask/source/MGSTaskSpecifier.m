@@ -27,6 +27,8 @@ NSString *MGSPlistKeyIdentifier = @"identifier";
 NSString *MGSPlistKeyServicename = @"servicename";
 NSString *MGSPlistKeyServiceShortName = @"shortname";
 
+NSString *MGSTaskExecuteKeyTag = @"MGSTaskExecuteKeyTag";
+
 NSString *MGSKeyPathNetClientHostStatus = @"representedNetClient.hostStatus";
 
 const char MGSContextNetClientHostStatus;
@@ -535,18 +537,28 @@ static BOOL permitExecution = YES;
 
 /*
  
- execute
+ - execute
  
  */
 - (void)execute:(id <MGSNetRequestOwner>)owner
 {
-	// cannot execute if connection not validated
+    [self execute:owner options:nil];
+}
+
+/*
+ 
+ - execute:options:
+ 
+ */
+- (void)execute:(id <MGSNetRequestOwner>)owner options:(NSDictionary *)options
+{
+    // cannot execute if connection not validated
 	if (!self.netClient.validatedConnection) {
 		
-		[[NSNotificationCenter defaultCenter] 
-			postNotificationName:MGSNoteConnectionLimitExceeded 
-			object:self.netClient 
-			userInfo:nil];
+		[[NSNotificationCenter defaultCenter]
+         postNotificationName:MGSNoteConnectionLimitExceeded
+         object:self.netClient
+         userInfo:nil];
 		
 		return;
 	}
@@ -558,12 +570,16 @@ static BOOL permitExecution = YES;
 		} else {
 			remoteTaskExecuteCount++;
 		}
-			
+        
 		[self setLocalRunStatus:MGSTaskRunStatusExecuting];
-		[[MGSClientRequestManager sharedController] requestExecuteTask:self withOwner:owner];
+		MGSClientNetRequest *request = [[MGSClientRequestManager sharedController] requestExecuteTask:self withOwner:owner];
+        id tag = [options objectForKey:MGSTaskExecuteKeyTag];
+        if (tag) {
+            request.tagObject = tag;
+        }
 	}
-}
 
+}
 /*
  
  terminate the action
