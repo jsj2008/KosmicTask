@@ -225,42 +225,55 @@ const char MGSContextFavoritesSelectionIndex;
 - (IBAction)connect:(id)sender
 {
 	#pragma unused(sender)
-	
+	_responder = [[self window] firstResponder];
+    
 	[self commitEditing];
 	
     if (![self selectedConnectionIsValid]) {
         return;
     }
-	
-	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:_address, MGSNetClientKeyAddress,
-						  [NSNumber numberWithInteger:_portNumber], MGSNetClientKeyPortNumber,
-						   _displayName, MGSNetClientKeyDisplayName,
-						   [NSNumber numberWithBool:_keepConnected], MGSNetClientKeyKeepConnected,
-						   [NSNumber numberWithBool:_secureConnection], MGSNetClientKeySecureConnection,
-						  nil];
-	
-    // does a netClient already exist for this connection
-    if ([self netClientForConnection:dict]) {
-		MLogInfo(@"net client already exists for connection");
-        return;
+	    
+    _outstandingRequestCount = 0;
+    
+    // iterate over selected items
+    for (NSDictionary *item in [arrayController selectedObjects]) {
+    
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[item objectForKey:MGSNetClientKeyAddress], MGSNetClientKeyAddress,
+                              [item objectForKey:MGSNetClientKeyPortNumber], MGSNetClientKeyPortNumber,
+                               [item objectForKey:MGSNetClientKeyDisplayName], MGSNetClientKeyDisplayName,
+                               [item objectForKey:MGSNetClientKeyKeepConnected], MGSNetClientKeyKeepConnected,
+                               [item objectForKey:MGSNetClientKeySecureConnection], MGSNetClientKeySecureConnection,
+                              nil];
+        
+        // does a netClient already exist for this connection
+        if ([self netClientForConnection:dict]) {
+            MLogInfo(@"net client already exists for connection");
+            continue;
+        }
+        
+        // create client for connection.
+        MGSNetClient *netClient = [[MGSNetClient alloc] initWithDictionary:dict];
+        netClient.delegate = self;
+        if (!netClient) {
+            MLogInfo(@"net client is nil");
+            continue;
+        }
+        
+        // send heartbeat to client.
+        // the request will retain a ref to the netClient.
+        [[MGSClientRequestManager sharedController] requestHeartbeatForNetClient:netClient withOwner:self];
+
+        _outstandingRequestCount++;
     }
     
-	// create client for connection.
-	_netClient = [[MGSNetClient alloc] initWithDictionary:dict];
-	_netClient.delegate = self;
-	if (!_netClient) {
-		MLog(DEBUGLOG, @"net client is nil");
-		return;
-	}
-	
-	// prepare user interface
-	[self setControlsEnabled:NO];
-	[failedBox setHidden:YES];
-	[progressIndicator setHidden:NO];
-	[progressIndicator startAnimation:self];
-	
-	// send heartbeat to client
-	[[MGSClientRequestManager sharedController] requestHeartbeatForNetClient:_netClient withOwner:self];
+    // prepare user interface
+    if (_outstandingRequestCount > 0) {
+        [self setControlsEnabled:NO];
+        [failedBox setHidden:YES];
+        [progressIndicator setHidden:NO];
+        [progressIndicator startAnimation:self];
+    }
+
 }
 
 /*
@@ -347,13 +360,10 @@ const char MGSContextFavoritesSelectionIndex;
 -(void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload
 {
 #pragma unused(payload)
-	[self setControlsEnabled:YES];
-
-	[progressIndicator setHidden:YES];
-	[progressIndicator stopAnimation:self];
 
 	MGSNetClient *netClient = netRequest.netClient;
-	
+	_outstandingRequestCount--;
+    
 	// if no error in payload then heartbeat reply was received.
 	// assume host is valid and contactable
 	if (!netRequest.error) {
@@ -363,7 +373,6 @@ const char MGSContextFavoritesSelectionIndex;
 		// send our connectable client to our delegate
 		[[MGSNetClientManager sharedController] addStaticClient:netClient];
 		
-		[self closeWindow];
 	} else {
         NSString *errorString = nil;
         switch (netRequest.error.code) {
@@ -378,10 +387,19 @@ const char MGSContextFavoritesSelectionIndex;
         [failedLabel setStringValue:errorString];
 		[failedBox setHidden:NO];
 	}
-	
+
+    if (_outstandingRequestCount == 0) {
+        [self setControlsEnabled:YES];
+        [failedBox setHidden:YES];
+        [progressIndicator setHidden:YES];
+        
+        if (_responder) {
+            [[self window] makeFirstResponder:_responder];
+        }
+    }
+
     [self validateConnectionStatus];
-    
-	_netClient = nil;
+
 }
 
 #pragma mark -

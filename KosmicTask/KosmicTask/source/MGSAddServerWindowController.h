@@ -27,9 +27,10 @@
 	//BOOL _tableRowSelected;
 	NSInteger _portNumber;		// port number
 	id <MGSAddServerDelegate, NSObject> _delegate;
-	MGSNetClient *_netClient;
 	id _selectedObject;
     BOOL _selectedConnectionIsValid;
+    NSResponder *_responder;
+    NSInteger _outstandingRequestCount;
     
     NSMutableArray *_connections;
 	IBOutlet NSObjectController *objectController;

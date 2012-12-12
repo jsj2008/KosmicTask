@@ -1312,13 +1312,22 @@ char MGSScriptDictContext;
 			nodeKey = [self nodeKeyForGroup:groupName];
 			MGSOutlineViewNode *groupNode = [self nodeWithKey:nodeKey netClient:netClient];
 			
-			NSAssert(groupNode, @"group node is nil");
-			if (!groupNode) return;
+            // previously this was asserted
+			if (!groupNode) {
+                
+                MLog(RELEASELOG, @"groupNode is nil");
+                return;
+            }
 			
 			// get the group outline item
 			NSTreeNode *groupOutlineItem = [clientTreeController mgs_outlineItemForObject:groupNode];
-			NSAssert(groupOutlineItem, @"group outline item is nil");
-			
+
+            // previously this was asserted
+            if (!groupOutlineItem) {
+                MLog(RELEASELOG, @"groupOutlineItem is nil");
+                return;
+            }
+
 			nodeToSelect = groupNode;
 			
 			// if the group item is expanded then get the script node
@@ -1339,9 +1348,13 @@ char MGSScriptDictContext;
 				} 	
 			}
 		}
-		
-		NSAssert(nodeToSelect, @"node to select is nil");
-		
+
+        // previously this was asserted
+        if (!nodeToSelect) {
+            MLog(RELEASELOG, @"node to select is nil");
+            return;
+        }
+
 		// select the required node
 		/*
 		 calling NSTreeController setSelectionIndexPaths seems to call

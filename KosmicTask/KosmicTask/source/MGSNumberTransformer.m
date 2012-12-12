@@ -22,7 +22,14 @@
 }
 
 - (id)transformedValue:(id)value {
-	return [NSString stringWithFormat:@"%@", value];   // no formatting required
+	return [NSString stringWithFormat:@"%@", value];   // no formatting required, localisation inserts a comma
 }
 
+- (id)reverseTransformedValue:(id)value
+{
+    NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+    [f setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber *number = [f numberFromString:value];
+    return number;
+}
 @end
