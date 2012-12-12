@@ -110,15 +110,22 @@
 - (IBAction)disconnect:(id)sender
 {
 	#pragma unused(sender)
-	
+	NSMutableArray *objects = [NSMutableArray arrayWithCapacity:[[arrayController selectedObjects] count]];
+    
 	for (NSDictionary *dict in [arrayController selectedObjects]) {
-		NSString *address = [dict objectForKey:MGSNetClientKeyAddress];
-		MGSNetClient *netClient = [[MGSNetClientManager sharedController] clientForServiceName:address]; 
-		if (netClient) {
+		
+        NSString *address = [dict objectForKey:MGSNetClientKeyAddress];
+        NSInteger port = [[dict objectForKey:MGSNetClientKeyPortNumber] integerValue];
+		MGSNetClient *netClient = [[MGSNetClientManager sharedController] clientForServiceName:address port:port];
+		
+        if (netClient) {
 			[(MGSNetClientManager *)[MGSNetClientManager sharedController] removeStaticClient:netClient];
-			[arrayController removeObject:dict];
+			[objects addObject:dict];
 		}
 	}
+    
+    [arrayController removeObjects:objects];
+    
 	return;
 }
 
