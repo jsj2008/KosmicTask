@@ -118,6 +118,7 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	_showPrevResultEnabled = NO;
 	_resultPositionString = @"";
 	
+    // progress tableview bindings configuration
 	// bind table columns to controller
 	
 	// object itself bound to image and text cell
@@ -1073,9 +1074,11 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
  */
 - (void)addProgress:(MGSRequestProgress *)progress
 {
-	// stop timimg the current request progress
+    // conclude the current progress operation
 	MGSRequestProgress *prevProgress = [self progress];
 	if (prevProgress) {
+
+        // stop timimg the current request progress
 		[prevProgress stopDurationTimer];
 		
 		// mark prev progress as complete
@@ -1106,7 +1109,9 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	// add new progress item
 	[_progressArrayController addObject:progress];
 	[_progressTable scrollRowToVisible:[_progressTable numberOfRows] -1];
-	_observedProgress = progress;
+	
+    // observe the progress duration
+    _observedProgress = progress;
 	[_observedProgress addObserver:self forKeyPath:@"duration" options:0 context:MGSProgressDurationContext];
 	
 	switch (progress.value) {

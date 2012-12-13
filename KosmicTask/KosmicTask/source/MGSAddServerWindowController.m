@@ -113,6 +113,45 @@ const char MGSContextFirstResponder;
     [arrayController commitEditing];
 }
 
+    #pragma mark -
+    #pragma mark NSMutableDictionary+KVCValidation protocol
+
+    /*
+     
+     - validateValue:forKey:error:sender:
+     
+     */
+    - (BOOL)validateValue:(id *)ioValue forKey:(NSString *)key error:(NSError **)outError sender:(NSMutableDictionary *)sender
+    {
+    #pragma unused(sender)
+        
+        BOOL isValid = YES;
+        
+        if ([key isEqualToString:MGSNetClientKeyPortNumber]) {
+            
+            if (![*ioValue isKindOfClass:[NSNumber class]] || [*ioValue integerValue] < 1025 || [*ioValue integerValue] > 65535) {
+                *outError = [NSError errorWithDomain:@"Application"
+                                                code:0
+                                            userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"The entered port number is invalid.", @"comment"),
+                                        NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Enter a number between 1025 and 65535.", @"comment")
+                             }];
+                isValid = NO;
+            }
+        } else if ([key isEqualToString:MGSNetClientKeyAddress]) {
+            
+            if (![*ioValue isKindOfClass:[NSString class]] || ![(NSString *)*ioValue mgs_isURLorIPAddress]) {
+                
+                isValid = NO;
+                *outError = [NSError errorWithDomain:@"Application"
+                                                code:0
+                                            userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"The entered address is invalid.", @"comment"),
+                                                        NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Enter a valid URL or IP address.", @"comment")
+                                                    }];
+            }
+        }
+        
+        return isValid;
+    }
 #pragma mark -
 #pragma mark KVO
 
@@ -375,12 +414,13 @@ const char MGSContextFirstResponder;
 			
             // add favorite
 		case MGSAddFavorite:;
-			NSDictionary *item = [self selectedConnection];
-			if (!item) {
+			NSMutableDictionary *connection = [self selectedConnection];
+			if (!connection) {
 				return;
 			}
-			[arrayController addObject:item];
-			[arrayController setSelectedObjects:[NSArray arrayWithObject:item]];
+            connection.validationDelegate = self;
+			[arrayController addObject:connection];
+			[arrayController setSelectedObjects:[NSArray arrayWithObject:connection]];
             
             [tableView scrollRowToVisible:[tableView selectedRow]];
 			break;
@@ -513,6 +553,7 @@ const char MGSContextFirstResponder;
     // we need an array of mutable dict so that bindings can update it in the table view
     for (NSDictionary *defConnection in defConnections) {
         NSMutableDictionary *connection = [[NSMutableDictionary alloc] initWithDictionary:defConnection];
+        connection.validationDelegate = self;
         [arrayController addObject:connection];
     }
     [self validateConnectionStatus];

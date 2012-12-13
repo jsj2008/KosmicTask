@@ -386,6 +386,7 @@
 		AB4D186F0DE2D05D00D0E517 /* Export Plugin Plain Text.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = ABA247960DE2CEEB00BD2A66 /* Export Plugin Plain Text.plugin */; };
 		AB4D19080DE2D49400D0E517 /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
 		AB4D19090DE2D49400D0E517 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		AB4D9794167A8D4C000BC31B /* NSMutableDictionary+KVCValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4D9793167A8D4C000BC31B /* NSMutableDictionary+KVCValidation.m */; };
 		AB4F2B5110DD72C800E79849 /* KosmicTask.mdimporter in Copy Spotlight importers */ = {isa = PBXBuildFile; fileRef = ABBDFDE410C532CB000E51A3 /* KosmicTask.mdimporter */; };
 		AB4F650110C99E1700229E4E /* GlossyGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = AB4F650010C99E1700229E4E /* GlossyGradient.m */; };
 		AB5005790DE4BE8000C67F0D /* MGSExcelSendPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1512E20DE4BCC2002280E3 /* MGSExcelSendPlugin.m */; };
@@ -3888,6 +3889,8 @@
 		AB4CF82A1226C36D00CB2E39 /* Language */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Language; path = Templates/Zsh/Language; sourceTree = SOURCE_ROOT; };
 		AB4D190D0DE2D49400D0E517 /* Export Plugin PDF.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Export Plugin PDF.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4D19180DE2D49400D0E517 /* Export Plugin PDF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Export Plugin PDF-Info.plist"; sourceTree = "<group>"; };
+		AB4D9792167A8D4C000BC31B /* NSMutableDictionary+KVCValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableDictionary+KVCValidation.h"; path = "../../../../../github/Mugginsoft/NSMutableDictionary-KVCValidation/NSMutableDictionary+KVCValidation.h"; sourceTree = "<group>"; };
+		AB4D9793167A8D4C000BC31B /* NSMutableDictionary+KVCValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableDictionary+KVCValidation.m"; path = "../../../../../github/Mugginsoft/NSMutableDictionary-KVCValidation/NSMutableDictionary+KVCValidation.m"; sourceTree = "<group>"; };
 		AB4F64FF10C99E1700229E4E /* GlossyGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlossyGradient.h; path = GlossyGradient/GlossyGradient.h; sourceTree = Mugginsoft; };
 		AB4F650010C99E1700229E4E /* GlossyGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GlossyGradient.m; path = GlossyGradient/GlossyGradient.m; sourceTree = Mugginsoft; };
 		AB4F92621039AD9A005EF329 /* deployment.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = deployment.xcconfig; sourceTree = "<group>"; };
@@ -7561,6 +7564,8 @@
 		AB85C1AE0D3BFDAC00C1205B /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				AB4D9792167A8D4C000BC31B /* NSMutableDictionary+KVCValidation.h */,
+				AB4D9793167A8D4C000BC31B /* NSMutableDictionary+KVCValidation.m */,
 				ABC5BC6E131E674E0020003D /* NSIndexPath+Mugginsoft.h */,
 				ABC5BC6F131E674E0020003D /* NSIndexPath+Mugginsoft.m */,
 				AB9E3A930E141F0600716B7A /* PixelTypes.h */,
@@ -12109,6 +12114,7 @@
 				AB0931E8166E041600CA0D92 /* MGSAppResources.m in Sources */,
 				AB0932041671242000CA0D92 /* PRHOnOffButton.m in Sources */,
 				AB0932051671242000CA0D92 /* PRHOnOffButtonCell.m in Sources */,
+				AB4D9794167A8D4C000BC31B /* NSMutableDictionary+KVCValidation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

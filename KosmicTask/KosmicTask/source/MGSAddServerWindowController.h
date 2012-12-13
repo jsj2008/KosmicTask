@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSClientNetRequest.h"
+#import "NSMutableDictionary+KVCValidation.h"
 
 #define MGSAddFavorite 0
 #define MGSRemoveFavorite 1
@@ -31,7 +32,7 @@ typedef NSInteger MGSAddServerStatusID;
 - (void)addStaticClient:(MGSNetClient *)netClient;
 @end
 
-@interface MGSAddServerWindowController : NSWindowController <MGSNetRequestOwner> {
+@interface MGSAddServerWindowController : NSWindowController <MGSNetRequestOwner, NSMutableDictionary_KVCValidationDelegate> {
 	NSString *_address;			// machine address to connect to
 	NSString *_displayName;		// display name to use in GUI
     NSString *_note;
