@@ -20,6 +20,21 @@ NSString *MGSDefaultFavoriteConnections = @"MGSFavoriteConnections";
 
 const char MGSContextFavoritesSelectedObjects;
 const char MGSContextFavoritesSelectionIndex;
+const char MGSContextFirstResponder;
+
+@implementation MGSAddServerArrayController
+
+-(void)setValue:(id)value forKeyPath:(NSString *)keyPath
+{
+    [super setValue:value forKeyPath:keyPath];
+}
+- (BOOL)validateValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError
+{
+    BOOL isValid = YES;
+    
+    return isValid;
+}
+@end
 
 // class interface extension
 @interface MGSAddServerWindowController()
@@ -40,6 +55,7 @@ const char MGSContextFavoritesSelectionIndex;
 @synthesize secureConnection = _secureConnection;
 @synthesize selectedConnectionIsValid = _selectedConnectionIsValid;
 @synthesize note = _note;
+@synthesize canConnect = _canConnect;
 
 #pragma mark -
 #pragma mark Setup
@@ -53,7 +69,7 @@ const char MGSContextFavoritesSelectionIndex;
 	self = [super initWithWindowNibName:@"ConnectToServer"];
 
     if (self) {
-        
+        _canConnect = YES;
     }
     
 	return self;
@@ -141,7 +157,13 @@ const char MGSContextFavoritesSelectionIndex;
 	} else if (context == &MGSContextFavoritesSelectionIndex) {
 		
 		
-	}
+	} else if (context == &MGSContextFirstResponder) {
+        NSResponder *firstResponder = self.window.firstResponder;
+        
+        if (![firstResponder isKindOfClass:[NSTableView class]]) {
+            [arrayController setSelectedObjects:nil];
+        }
+    }
 
 }
 
@@ -196,6 +218,7 @@ const char MGSContextFavoritesSelectionIndex;
     for (NSMutableDictionary *connection in _connections) {
         
         BOOL isConnected = NO;
+        MGSAddServerStatusID statusId = [[connection objectForKey:@"statusID"] integerValue];
         
         // get net client instance if available
         MGSNetClient *netClient = [self netClientForConnection:connection];
@@ -206,10 +229,14 @@ const char MGSContextFavoritesSelectionIndex;
         
         // set connection image
         NSImage *isConnectedImage  = nil;
-        if (isConnected) {
+        if (isConnected || statusId == kMGSAddServerConnected) {
             isConnectedImage = [[[MGSImageManager sharedManager] greenDot] copy];
         } else {
-            isConnectedImage = [[[MGSImageManager sharedManager] redDot] copy];
+            if (statusId == kMGSAddServerNotConnected) {
+                isConnectedImage = [[[MGSImageManager sharedManager] redDot] copy];
+            } else {
+                isConnectedImage = [[[MGSImageManager sharedManager] yellowDot] copy];
+            }
         }
         [connection setObject:isConnectedImage forKey:@"isConnectedImage"];
     }
@@ -235,14 +262,28 @@ const char MGSContextFavoritesSelectionIndex;
 	    
     _outstandingRequestCount = 0;
     
-    // iterate over selected items
-    for (NSDictionary *item in [arrayController selectedObjects]) {
+    NSArray *connections = nil;
+    if (arrayController.selectedObjects.count > 0) {
+        connections = [arrayController selectedObjects];
+        
+    } else {
+        NSMutableDictionary *connection = [NSMutableDictionary dictionaryWithObjectsAndKeys:_address, MGSNetClientKeyAddress,
+						  [NSNumber numberWithInteger:_portNumber], MGSNetClientKeyPortNumber,
+                          _displayName, MGSNetClientKeyDisplayName,
+                          [NSNumber numberWithBool:_keepConnected], MGSNetClientKeyKeepConnected,
+                          [NSNumber numberWithBool:_secureConnection], MGSNetClientKeySecureConnection,
+						  nil];
+        connections = @[connection];
+    }
     
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[item objectForKey:MGSNetClientKeyAddress], MGSNetClientKeyAddress,
-                              [item objectForKey:MGSNetClientKeyPortNumber], MGSNetClientKeyPortNumber,
-                               [item objectForKey:MGSNetClientKeyDisplayName], MGSNetClientKeyDisplayName,
-                               [item objectForKey:MGSNetClientKeyKeepConnected], MGSNetClientKeyKeepConnected,
-                               [item objectForKey:MGSNetClientKeySecureConnection], MGSNetClientKeySecureConnection,
+    // iterate over selected items
+    for (NSDictionary *connection in connections) {
+    
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[connection objectForKey:MGSNetClientKeyAddress], MGSNetClientKeyAddress,
+                              [connection objectForKey:MGSNetClientKeyPortNumber], MGSNetClientKeyPortNumber,
+                               [connection objectForKey:MGSNetClientKeyDisplayName], MGSNetClientKeyDisplayName,
+                               [connection objectForKey:MGSNetClientKeyKeepConnected], MGSNetClientKeyKeepConnected,
+                               [connection objectForKey:MGSNetClientKeySecureConnection], MGSNetClientKeySecureConnection,
                               nil];
         
         // does a netClient already exist for this connection
@@ -261,19 +302,29 @@ const char MGSContextFavoritesSelectionIndex;
         
         // send heartbeat to client.
         // the request will retain a ref to the netClient.
-        [[MGSClientRequestManager sharedController] requestHeartbeatForNetClient:netClient withOwner:self];
-
+        MGSClientNetRequest *netRequest = [[MGSClientRequestManager sharedController] requestHeartbeatForNetClient:netClient withOwner:self];
+        netRequest.tagObject = connection;
+        
+        [connection setValue:NSLocalizedString(@"Connecting...", @"comment") forKey:@"status"];
+        [connection setValue:@(kMGSAddServerConnecting) forKey:@"statusID"];
+        
         _outstandingRequestCount++;
     }
     
     // prepare user interface
     if (_outstandingRequestCount > 0) {
-        [self setControlsEnabled:NO];
+        //[self setControlsEnabled:NO];
+        self.canConnect = NO;
         [failedBox setHidden:YES];
         [progressIndicator setHidden:NO];
         [progressIndicator startAnimation:self];
     }
 
+    [self validateConnectionStatus];
+    
+    if (NO) {
+        [arrayController setSelectedObjects:nil];
+    }
 }
 
 /*
@@ -330,13 +381,15 @@ const char MGSContextFavoritesSelectionIndex;
 			}
 			[arrayController addObject:item];
 			[arrayController setSelectedObjects:[NSArray arrayWithObject:item]];
+            
+            [tableView scrollRowToVisible:[tableView selectedRow]];
 			break;
             
             // remove favorite
 		case MGSRemoveFavorite:;
 			NSArray *selectedObjects = [arrayController selectedObjects];
 			if ([selectedObjects count] > 0) {
-				[arrayController removeObject:[selectedObjects objectAtIndex:0]];
+				[arrayController removeObjects:selectedObjects];
 			}
 			break;
             
@@ -349,6 +402,16 @@ const char MGSContextFavoritesSelectionIndex;
 	return;
 }
 
+/*
+ 
+ - checkboxClickAction:
+ 
+ */
+- (IBAction)checkboxClickAction:(id)sender
+{
+#pragma unused(sender)    
+    [arrayController setSelectedObjects:nil];
+}
 #pragma mark -
 #pragma mark MGSNetRequestOwner protocol
 
@@ -364,6 +427,9 @@ const char MGSContextFavoritesSelectionIndex;
 	MGSNetClient *netClient = netRequest.netClient;
 	_outstandingRequestCount--;
     
+    NSString *status = NSLocalizedString(@"Connected", @"Comment");
+    NSMutableDictionary *connection = netRequest.tagObject;
+    
 	// if no error in payload then heartbeat reply was received.
 	// assume host is valid and contactable
 	if (!netRequest.error) {
@@ -372,7 +438,9 @@ const char MGSContextFavoritesSelectionIndex;
 		
 		// send our connectable client to our delegate
 		[[MGSNetClientManager sharedController] addStaticClient:netClient];
-		
+
+        [connection setValue:@(kMGSAddServerConnected) forKey:@"statusID"];
+
 	} else {
         NSString *errorString = nil;
         switch (netRequest.error.code) {
@@ -384,13 +452,20 @@ const char MGSContextFavoritesSelectionIndex;
                 errorString = NSLocalizedString(@"Connection failed.", @"Remote connection failed");
                 break;
         }
+        errorString = [errorString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"."]];
         [failedLabel setStringValue:errorString];
 		[failedBox setHidden:NO];
+        status = errorString;
+        [connection setValue:@(kMGSAddServerNotConnected) forKey:@"statusID"];
+        
 	}
 
+    [connection setObject:status forKey:@"status"];
+
     if (_outstandingRequestCount == 0) {
-        [self setControlsEnabled:YES];
-        [failedBox setHidden:YES];
+        self.canConnect = YES;
+        //[self setControlsEnabled:YES];
+        //[failedBox setHidden:YES];
         [progressIndicator setHidden:YES];
         
         if (_responder) {
@@ -450,6 +525,7 @@ const char MGSContextFavoritesSelectionIndex;
 	
 	// KVO
 	[arrayController addObserver:self forKeyPath:@"selectedObjects" options:NSKeyValueObservingOptionNew context:(void *)&MGSContextFavoritesSelectedObjects];
+    [self.window addObserver:self forKeyPath:@"firstResponder" options:0 context:(void *)&MGSContextFirstResponder];
 }
 /*
  
@@ -484,6 +560,8 @@ const char MGSContextFavoritesSelectionIndex;
         // remove transient objects
         [dict removeObjectForKey:@"isConnected"];
         [dict removeObjectForKey:@"isConnectedImage"];
+        [dict removeObjectForKey:@"status"];
+        [dict removeObjectForKey:@"statusID"];
 	}
 	[[NSUserDefaults standardUserDefaults] setObject:persistentClients forKey:MGSDefaultPersistentConnections];
     [[NSUserDefaults standardUserDefaults] setObject:_connections forKey:@"MGSFavoriteConnections"];

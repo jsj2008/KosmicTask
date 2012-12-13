@@ -12,6 +12,19 @@
 #define MGSAddFavorite 0
 #define MGSRemoveFavorite 1
 
+enum _MGSAddServerStatusID {
+    kMGSAddServerNotConnected = 0,
+    kMGSAddServerConnecting = 1,
+    kMGSAddServerConnected = 2,
+    
+};
+typedef NSInteger MGSAddServerStatusID;
+
+@interface MGSAddServerArrayController : NSArrayController {
+    
+}
+@end
+
 @class MGSNetClient;
 
 @protocol MGSAddServerDelegate
@@ -31,8 +44,10 @@
     BOOL _selectedConnectionIsValid;
     NSResponder *_responder;
     NSInteger _outstandingRequestCount;
+    BOOL _canConnect;
     
     NSMutableArray *_connections;
+    IBOutlet NSTableView *tableView;
 	IBOutlet NSObjectController *objectController;
 	IBOutlet NSViewController *viewController;
 	IBOutlet NSArrayController *arrayController;
@@ -51,6 +66,7 @@
 - (IBAction)connect:(id)sender;
 - (IBAction)clearSelection:(id)sender;
 - (IBAction)processFavorite:(id)sender;
+- (IBAction)checkboxClickAction:(id)sender;
 
 @property (copy) NSString *note;
 @property (copy) NSString *address;
@@ -60,5 +76,5 @@
 @property NSInteger portNumber;
 @property id delegate;
 @property BOOL selectedConnectionIsValid;
-
+@property BOOL canConnect;
 @end

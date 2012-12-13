@@ -25,7 +25,7 @@
 - (void)requestScriptDictForNetClient:(MGSNetClient *)netClient isPublished:(BOOL)published withOwner:(id <MGSNetRequestOwner>)owner;
 
 // send a simple heartbeat message to a net client
-- (void)requestHeartbeatForNetClient: (MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner;
+- (MGSClientNetRequest *)requestHeartbeatForNetClient: (MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner;
 
 // request authentication
 - (MGSClientNetRequest *)requestAuthenticationForNetClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner;

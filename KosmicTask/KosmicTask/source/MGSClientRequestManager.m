@@ -290,7 +290,7 @@ static MGSClientRequestManager *_sharedController = nil;
  request heartbeat
  
  */
-- (void)requestHeartbeatForNetClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner
+- (MGSClientNetRequest *)requestHeartbeatForNetClient:(MGSNetClient *)netClient withOwner:(id <MGSNetRequestOwner>)owner
 {
 	MGSClientNetRequest *netRequest = [self createRequestForClient:netClient command:MGSNetMessageCommandHeartbeat withOwner:owner];
 
@@ -298,6 +298,8 @@ static MGSClientRequestManager *_sharedController = nil;
     
 	// send the request 
 	[self sendRequestOnClient:netRequest];
+    
+    return netRequest;
 }
 
 /*
