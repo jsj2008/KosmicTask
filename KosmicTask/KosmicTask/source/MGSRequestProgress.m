@@ -45,6 +45,7 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
 @synthesize durationString = _durationString;
 @synthesize remainingTimeString = _remainingTimeString;
 
+#pragma mark -
 #pragma mark Class methods
 /*
  
@@ -90,14 +91,7 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
 			progress = MGSRequestProgressCannotConnect;
 			break;
 			
-		case kMGSStatusNotConnected:
-		case kMGSStatusResolving:
-		case kMGSStatusConnecting:
-		case kMGSStatusConnected:
-			
-			// server
-		case kMGSStatusMessageSent:
-		case kMGSStatusDisconnected:			
+            // we don't need to progress any other values
 		default:
 			progress = MGSRequestProgressNull;
 			break;
@@ -141,6 +135,7 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
 	}
 }
 
+#pragma mark -
 #pragma mark Instance handling
 /*
  
@@ -189,7 +184,18 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
 
 }
 
+/*
+ 
+ - description
+ 
+ */
+- (NSString *)description
+{
+    NSString *description = [NSString stringWithFormat:@"eMGSRequestProgress:%lu %@", (long)self.value, self.name];
+    return description;
+}
 
+#pragma mark -
 #pragma mark Accessors
 /*
  
@@ -267,6 +273,10 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
  */
 - (void)setValue:(eMGSRequestProgress)value 
 {
+#ifdef MGS_DEBUG_PROGRESS
+    MLogInfo(@"%lx %@ %@ eMGSRequestProgress: %lu", self, [self className], NSStringFromSelector(_cmd), (long)value);
+#endif
+    
 	[self setValue:value object:nil];
 }
 
@@ -275,10 +285,20 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
  set value from status
  
  */
-- (void)setValueFromStatus:(eMGSRequestStatus)status 
+- (void)setValueFromStatus:(eMGSRequestStatus)status
 {
+#ifdef MGS_DEBUG_PROGRESS
+    MLogInfo(@"%lx %@ %@ eMGSRequestStatus: %lu", self, [self className], NSStringFromSelector(_cmd), (long)status);
+#endif
+    
 	eMGSRequestProgress progress = [MGSRequestProgress progressValueForStatus:status];
+    
+    // a null indicates that there is not a distinct progress value for the status
 	if (progress == MGSRequestProgressNull) {
+        
+#ifdef MGS_DEBUG_PROGRESS
+    MLogInfo(@"%lx %@ %@ progress == MGSRequestProgressNull", self, [self className], NSStringFromSelector(_cmd));
+#endif
 		return;
 	}
 	
@@ -423,6 +443,7 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
 	[self didChangeValueForKey:@"remainingTimeString"];
 }
 
+#pragma mark -
 #pragma mark Duration timer
 /*
  
@@ -552,6 +573,7 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
 	_duration = value;
 }
 
+#pragma mark -
 #pragma mark Progress representation
 /*
  
@@ -789,6 +811,8 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
 	}
 	
 }
+
+#pragma mark -
 #pragma mark NSCopying protocol message
 /*
  

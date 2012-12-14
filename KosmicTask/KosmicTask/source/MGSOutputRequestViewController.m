@@ -1074,6 +1074,11 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
  */
 - (void)addProgress:(MGSRequestProgress *)progress
 {
+    
+#ifdef MGS_DEBUG_PROGRESS
+    MLogInfo(@"%lx %@ %@ progress: %@", self, [self className], NSStringFromSelector(_cmd), progress.description);
+#endif
+    
     // conclude the current progress operation
 	MGSRequestProgress *prevProgress = [self progress];
 	if (prevProgress) {

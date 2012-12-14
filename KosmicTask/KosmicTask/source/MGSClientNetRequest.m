@@ -296,14 +296,25 @@
     
 	@synchronized (self) {
 		[super setStatus:value];
-        
+
+#ifdef MGS_DEBUG_PROGRESS
+        NSString *requestType = @"worker";
+        if (self.requestMessage.isNegotiateMessage) requestType = @"negotiate";
+        if (self.requestType == kMGSRequestTypeLogging) requestType = @"logging";
+        MLogInfo(@"%lx %@ %@ %@ %lu", self, [self className], requestType, NSStringFromSelector(_cmd), (long)value);
+#endif        
 		if (self.sendUpdatesToOwner) {
 			// message owner with request status change for net request
 			// this should only be implemented by owners that need
 			// to examine the request properties, such as the requestID
 			// note that an observation could have done the trick just as well.
 			if (_owner && [_owner respondsToSelector:@selector(netRequestUpdate:)]) {
-				[_owner performSelectorOnMainThread:@selector(netRequestUpdate:) withObject:self waitUntilDone:NO];
+                
+                // we need to wait to keep progress synchronised.
+                // if don't wait then by the time netRequestUpdate: runs on the main thread the status may have changed
+                // and we loose a progress state transition.
+                [_owner performSelectorOnMainThread:@selector(netRequestUpdate:) withObject:self waitUntilDone:YES];
+
 			}
 		}
 	}
@@ -317,6 +328,13 @@
 - (void)updateProgress:(MGSRequestProgress *)progress
 {
 	unsigned long bytesDone = 0, bytesTotal = 0;
+    
+#ifdef MGS_DEBUG_PROGRESS
+    NSString *requestType = @"worker";
+    if (self.requestMessage.isNegotiateMessage) requestType = @"negotiate";
+    if (self.requestType == kMGSRequestTypeLogging) requestType = @"logging";
+    MLogInfo(@"%lx %@ %@ %@ %@", self, [self className], requestType, NSStringFromSelector(_cmd), progress);
+#endif
 	
 	switch (progress.value) {
 		case MGSRequestProgressReady:
