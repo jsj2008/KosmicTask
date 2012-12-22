@@ -14,6 +14,16 @@
 @class MGSParameterEndViewController;
 @class MGSParameterSplitView;
 
+enum _MGSParameterInputMenuTags {
+    kMGSParameterInputMenuInsert = 0,
+    kMGSParameterInputMenuAppend = 1,
+    kMGSParameterInputMenuDuplicate = 2,
+    kMGSParameterInputMenuMoveUp = 3,
+    kMGSParameterInputMenuMoveDown = 4,
+    kMGSParameterInputMenuRemove = 5,
+    kMGSParameterInputMenuInsertType = 6,
+    kMGSParameterInputMenuAppendType = 7,
+};
 
 @protocol MGSParameterViewManager
 
@@ -22,7 +32,7 @@
 
 @optional
 - (void)parameterViewDidClose:(MGSParameterViewController *)viewController;
-
+- (void)parameterViewAdded:(MGSParameterViewController *)viewController;
 @end
 
 @interface MGSParameterViewManager : NSObject <MGSActionViewController, MGSParameterViewController> {
@@ -31,26 +41,40 @@
 	BOOL _nibLoaded;
 	NSMutableArray *_viewControllers;
 	//NSMutableArray *_viewControllerCache;
-	MGSScriptParameterManager * _scriptParameterHandler;
+	MGSScriptParameterManager * _scriptParameterManager;
 	MGSParameterMode _mode;
 	MGSParameterEndViewController *_endViewController;
 	id _delegate;
 	MGSActionViewController *_actionViewController;
+    BOOL _dragging;
+    NSPoint _lastDragLocation;
+    IBOutlet NSMenu *inputParameterMenu;
+    MGSParameterViewController *_lastCickedParmeterViewController;
+    MGSParameterViewController *_selectedParameterViewController;
+    BOOL _parameterScrollingEnabled;
 }
 
 - (BOOL)commitPendingEdits;
 //- (void)updateViews;
-- (MGSParameterViewController *)addParameter;
-- (void)removeLastParameter;
-- (void)highlightParameter:(MGSParameterViewController *)controller;
-- (void)setScriptParameterHandler:(MGSScriptParameterManager *)aScriptParameterHandler;
+- (MGSParameterViewController *)appendParameter;
+- (void)selectParameter:(MGSParameterViewController *)controller;
+- (void)setScriptParameterManager:(MGSScriptParameterManager *)aScriptParameterHandler;
 - (BOOL)validateParameters:(MGSParameterViewController **)parameterViewController;
-- (void)highlightParameterAtIndex:(NSUInteger)index;
+- (void)selectParameterAtIndex:(NSUInteger)index;
 - (void)resetToDefaultValue;
 - (void)setHighlightForAllViews:(BOOL)aBool;
 - (void)highlightActionView;
+- (void)scrollViewControllerVisible:(MGSParameterViewController *)viewController;;
+
+- (IBAction)insertInputParameterAction:(id)sender;
+- (IBAction)appendInputParameterAction:(id)sender;
+- (IBAction)duplicateInputParameterAction:(id)sender;
+- (IBAction)removeInputParameterAction:(id)sender;
+- (IBAction)moveUpInputParameterAction:(id)sender;
+- (IBAction)moveDownInputParameterAction:(id)sender;
 
 @property MGSParameterMode mode;
 @property id delegate;
 @property MGSActionViewController *actionViewController;
+@property MGSParameterViewController *selectedParameterViewController;
 @end

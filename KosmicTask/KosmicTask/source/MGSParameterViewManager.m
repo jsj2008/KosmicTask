@@ -23,17 +23,28 @@
 #import "MGSTaskSpecifier.h"
 #import "MGSNotifications.h"
 #import "MGSMotherWindowController.h"
+#import "MGSViewDraggingProtocol.h"
+
+// clas extension
+@interface MGSParameterViewManager ()
+- (void)moveParameterAtIndex:(NSUInteger)sourceIndex toIndex:(NSUInteger)targetIndex;
+- (void)inputParameterInsertMenuAction:(id)sender;
+- (void)inputParameterAppendMenuAction:(id)sender;
+- (MGSParameterViewController *)insertParameterAtIndex:(NSUInteger)idx;
+
+@property BOOL parameterScrollingEnabled;
+@end
 
 @interface MGSParameterViewManager(Private)
 - (MGSParameterViewController *)createView;
 - (void)destroyViews;
 - (void)createViews;
-- (void)showViewAtIndex:(NSInteger)index;
+- (void)showViewAtIndex:(NSUInteger)index;
 - (void)addSplitViewSubview:(NSView *)view;
 - (void)removeSplitViewSubview:(NSView *)view;
-- (void)addSplitViewParameterSubview:(NSView *)view;
+- (void)addSplitViewParameterSubview:(NSView *)view atIndex:(NSUInteger)idx;
 - (void)updateViewLocations;
-- (MGSParameterViewController *)createViewForParameterAtIndex:(NSInteger)index;
+- (MGSParameterViewController *)createViewForParameterAtIndex:(NSUInteger)index;
 - (void)addEndViewToSplitView;
 - (void)replaceSplitViewSubview:(NSView *)subView with:(NSView *)newView;
 - (void)addSplitViewSubview:(NSView *)view positioned:(NSWindowOrderingMode)place relativeTo:(NSView *)otherView;
@@ -44,6 +55,8 @@
 @synthesize mode = _mode;
 @synthesize delegate = _delegate;
 @synthesize actionViewController = _actionViewController;
+@synthesize selectedParameterViewController = _selectedParameterViewController;
+@synthesize parameterScrollingEnabled = _parameterScrollingEnabled;
 
 /*
  
@@ -55,6 +68,7 @@
 	if ((self = [super init])) {
 		_viewControllers = [NSMutableArray arrayWithCapacity:1];
 		self.mode = MGSParameterModeInput;
+        _parameterScrollingEnabled = YES;
 	}
 	return self;
 }
@@ -70,7 +84,7 @@
 	_actionViewController.delegate = self;
 	
 	MGSScript *script = [_actionViewController.action script];
-	[self setScriptParameterHandler: [script parameterHandler]];
+	[self setScriptParameterManager: [script parameterHandler]];
 	
 	// put action view at top of splitview
 	[self replaceSplitViewSubview:[[splitView subviews] objectAtIndex:0]  with:[_actionViewController view]];
@@ -93,6 +107,18 @@
 	// this view will be replaced by parameter view
 	NSAssert(([[splitView subviews] count] == 2), @"splitview subviews count should be 2");
 	_splitSubView2 = [[splitView subviews] objectAtIndex:1];
+    
+    // add parameter type submenu for insert type menu
+    NSMenuItem *menuItem = [inputParameterMenu itemWithTag:kMGSParameterInputMenuInsertType];
+    NSDictionary *menuDict = [MGSParameterViewController parameterTypeMenuDictionaryWithTarget:self action:@selector(inputParameterInsertMenuAction:)];
+    NSMenu *parameterMenu = [menuDict objectForKey:@"menu"];    
+    [menuItem setSubmenu:parameterMenu];
+    
+    // add parameter type submenu for append type menu
+    menuItem = [inputParameterMenu itemWithTag:kMGSParameterInputMenuAppendType];
+    menuDict = [MGSParameterViewController parameterTypeMenuDictionaryWithTarget:self action:@selector(inputParameterAppendMenuAction:)];
+    parameterMenu = [menuDict objectForKey:@"menu"];  
+    [menuItem setSubmenu:parameterMenu];
 }
 
 /*
@@ -128,18 +154,35 @@
 	
 	return YES;
 }
-#pragma mark MGSParameterViewController delegate methods
 
+#pragma mark -
+#pragma mark Accessors
+
+
+/*
+ 
+ - setSelectedParameterViewController:
+ 
+ */
+- (void)setSelectedParameterViewController:(MGSParameterViewController *)viewController
+{
+    [self setHighlightForAllViews:NO];
+    _selectedParameterViewController = viewController;
+    
+    if (_selectedParameterViewController) {
+        _selectedParameterViewController.isHighlighted = YES;
+    }
+}
 
 /*
  
  set script parameter handler
  
  */
--(void)setScriptParameterHandler:(MGSScriptParameterManager *)aScriptParameterHandler
+-(void)setScriptParameterManager:(MGSScriptParameterManager *)aScriptParameterManager
 {
-	NSAssert(aScriptParameterHandler, @"script parameter handler is null");
-	_scriptParameterHandler = aScriptParameterHandler;
+	NSAssert(aScriptParameterManager, @"script parameter manager is null");
+	_scriptParameterManager = aScriptParameterManager;
 	
 	// destroy current parameter views
 	[self destroyViews];
@@ -148,9 +191,44 @@
 	[self createViews];
 }
 
+#pragma mark -
+#pragma mark MGSParameterViewController delegate methods
+
 /*
  
- close parameter view
+ - dragParameterView:event:
+ 
+ */
+- (void)dragParameterView:(MGSParameterViewController *)controller event:(NSEvent *)event
+{
+    NSUInteger viewIndex = [_viewControllers indexOfObject:controller];
+    if (viewIndex == NSNotFound) {
+        return;
+    }
+    
+    NSSize dragOffset = NSMakeSize(0.0, 0.0);
+    NSPoint imageLocation = NSMakePoint(0.0, 0.0);
+    
+    // define pasteboard
+    NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
+    [pboard declareTypes:@[MGSParameterViewPBoardType] owner:self];
+    [pboard setPropertyList:@{ @"index" : @(viewIndex)} forType:MGSParameterViewPBoardType];
+
+    NSImage *dragImage = controller.view.mgs_dragImage;
+    [controller.view dragImage:dragImage
+                            at:imageLocation
+                        offset:dragOffset
+                         event:event
+                    pasteboard:pboard
+                        source:self
+                     slideBack:YES];
+ 
+}
+
+
+/*
+ 
+ - closeParameterView
  
  */
 - (void)closeParameterView:(MGSParameterViewController *)viewController
@@ -168,8 +246,10 @@
 	}
 	if (-1 == idx) return;
 	
+    self.selectedParameterViewController = nil;
+    
 	// remove the script parameter and view controller
-	[_scriptParameterHandler removeItemAtIndex:idx];
+	[_scriptParameterManager removeItemAtIndex:idx];
 	[_viewControllers  removeObject:viewController];
 	
 	// remove the subview
@@ -183,6 +263,310 @@
 		[_delegate parameterViewDidClose:viewController];
 	}
 }
+
+/*
+ 
+ reset enabled changed
+ 
+ */
+- (void)parameterViewController:(MGSParameterViewController *)sender didChangeResetEnabled:(BOOL)resetEnabled
+{
+#pragma unused(sender)
+#pragma unused(resetEnabled)
+	
+	BOOL enabled = NO;
+	for (MGSParameterViewController *viewController in _viewControllers) {
+		if (viewController.resetEnabled) {
+			enabled = YES;
+			break;
+		}
+	}
+	[_actionViewController setResetEnabled:enabled];
+}
+
+
+/*
+ 
+ - parameterViewController:changeIndex:
+ 
+ */
+- (void)parameterViewController:(MGSParameterViewController *)viewController changeIndex:(MGSParameterIndexChange)changeIndex
+{
+    NSUInteger targetControllerIndex = 0;
+    NSUInteger sourceControllerIndex = [_viewControllers indexOfObject:viewController];
+    if (sourceControllerIndex == NSNotFound) {
+        MLogDebug(@"view controller not found");
+        return;
+    }
+    
+    switch (changeIndex) {
+            
+        // decrease the parameter index
+        case kMGSParameterIndexDecrease:
+            if (sourceControllerIndex == 0) {
+                return;
+            }
+            targetControllerIndex = sourceControllerIndex - 1;
+            break;
+            
+        // increase the parameter index
+        default:
+            if (sourceControllerIndex >= [_viewControllers count] - 1) {
+                return;
+            }
+            targetControllerIndex = sourceControllerIndex + 1;
+            break;
+    }
+    
+    [self moveParameterAtIndex:sourceControllerIndex toIndex:targetControllerIndex];
+    
+    [self scrollViewControllerVisible:viewController];
+}
+
+#pragma mark -
+#pragma mark Parameter creation and  moving
+/*
+ 
+ - appendParameter
+ 
+ */
+- (MGSParameterViewController *)appendParameter
+{
+    NSUInteger idx = [_scriptParameterManager count];
+    MGSParameterViewController *viewController = [self insertParameterAtIndex:idx];
+	return viewController;
+}
+
+/*
+ 
+ - insertParameterAtIndex:
+ 
+ */
+- (MGSParameterViewController *)insertParameterAtIndex:(NSUInteger)idx
+{
+    // create script parameter and add to handler array
+	MGSScriptParameter *parameter = [MGSScriptParameter new];
+	[_scriptParameterManager insertItem:parameter atIndex:idx];
+	
+	// create new view for parameter
+	MGSParameterViewController *viewController = [self createViewForParameterAtIndex:idx];
+    
+	// set parameter description if set
+	if ([viewController parameterDescription]) {
+		[[viewController scriptParameter] setDescription:[viewController parameterDescription]];
+	}
+	
+	// update the view locations
+	[self updateViewLocations];
+	
+    // inform delegate that view added
+	if (_delegate && [_delegate respondsToSelector:@selector(parameterViewAdded:)]) {
+		[_delegate parameterViewAdded:viewController];
+	}
+    
+	return viewController;
+}
+
+/*
+ 
+ - moveParameterAtIndex:toIndex:
+ 
+ */
+- (void)moveParameterAtIndex:(NSUInteger)sourceIndex toIndex:(NSUInteger)targetIndex
+{
+    NSUInteger maxIndex = _viewControllers.count - 1;
+    
+    if (sourceIndex == targetIndex) return;
+    if (sourceIndex > maxIndex || targetIndex > maxIndex) {
+        MLogInfo(@"invalid parameter view indicies for source: %lu target: %lu", sourceIndex, targetIndex);
+        return;
+    }
+    
+    MGSParameterViewController *viewController = [_viewControllers objectAtIndex:sourceIndex];
+    MGSParameterViewController *targetViewController = [_viewControllers objectAtIndex:targetIndex];
+    
+    // move the view controller
+	[_viewControllers  removeObject:viewController];
+    [_viewControllers insertObject:viewController atIndex:targetIndex];
+	
+    // move the script parameter
+    [_scriptParameterManager moveItemAtIndex:sourceIndex toIndex:targetIndex];
+
+    // move the splitview subview
+	[self removeSplitViewSubview:[viewController view]];
+    NSWindowOrderingMode position = NSWindowAbove;
+    if (targetIndex < sourceIndex) {
+       position = NSWindowBelow;
+    }
+    [self addSplitViewSubview:viewController.view positioned:position relativeTo:targetViewController.view];
+    	
+     // update view banners
+	[self updateViewLocations];
+}
+
+
+#pragma mark -
+#pragma mark NSDraggingSource protocol
+/*
+ 
+ - draggingSourceOperationMaskForLocal:
+ 
+ */
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
+{
+    NSDragOperation dragOp = NSDragOperationNone;
+    
+    if (isLocal) {
+        dragOp = NSDragOperationEvery;
+    }
+    
+    return dragOp;
+}
+
+#pragma mark -
+#pragma mark MGSViewDraggingProtocol protocol
+
+/*
+ 
+ - draggingEntered:object:
+ 
+ */
+- (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender object:(id)object
+{
+    NSPasteboard *pboard = [sender draggingPasteboard];
+    //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+
+    MGSParameterViewController *viewController = object;
+    NSAssert([_viewControllers containsObject:viewController], @"bad view controller");
+    
+    if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
+        //if (sourceDragMask & NSDragOperationGeneric) {
+        
+        if (!viewController.isHighlighted) {
+            viewController.isHighlighted = YES;
+        }
+        return NSDragOperationGeneric;
+        //}
+    }
+    
+    return NSDragOperationNone;
+}
+
+
+/*
+ 
+ - draggingUpdated:object:
+ 
+ */
+- (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender object:(id)object
+{
+#pragma unused(sender)
+#pragma unused(object)  
+    return NSDragOperationGeneric;
+}
+
+/*
+ 
+ - draggingExited:object:
+ 
+ */
+- (void)draggingExited:(id < NSDraggingInfo >)sender object:(id)object
+{
+ 
+    NSPasteboard *pboard = [sender draggingPasteboard];
+    //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+    
+    MGSParameterViewController *viewController = object;
+    NSAssert([_viewControllers containsObject:viewController], @"bad view controller");
+    
+    if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
+        //if (sourceDragMask & NSDragOperationGeneric) {
+        
+        if (viewController.isHighlighted) {
+            viewController.isHighlighted = NO;
+        }
+        //}
+    }
+}
+
+/*
+ 
+ - prepareForDragOperation:object:
+ 
+ */
+- (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender object:(id)object
+{
+#pragma unused(sender)
+#pragma unused(object)
+    
+    return YES;
+}
+
+/*
+ 
+ - performDragOperation:object:
+ 
+ */
+- (BOOL)performDragOperation:(id < NSDraggingInfo >)sender object:(id)object
+{
+    MGSParameterViewController *targetViewController = object;
+    NSAssert([_viewControllers containsObject:targetViewController], @"bad view controller");
+    
+    BOOL accept = NO;
+    
+    //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+    NSPasteboard *pboard = [sender draggingPasteboard];
+    
+    // parameter view type
+    if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
+
+        // get our dictionary
+        NSDictionary *info = [pboard propertyListForType:MGSParameterViewPBoardType];
+        NSNumber *indexNumber = [info objectForKey:@"index"];
+        
+        // get index of dropped view
+        if (indexNumber && [indexNumber isKindOfClass:[NSNumber class]]) {
+            NSInteger sourceViewIndex = [indexNumber integerValue];
+            
+            if (sourceViewIndex < (NSInteger)[_viewControllers count]) {
+                NSInteger targetViewIndex = [_viewControllers indexOfObject:targetViewController];
+                
+                [self moveParameterAtIndex:sourceViewIndex toIndex:targetViewIndex];
+                
+                //[self performSelector:@selector(scrollViewControllerVisible:) withObject:viewController afterDelay:0];
+                
+            }
+        }
+    }
+
+    return accept;
+}
+
+/*
+ 
+ - concludeDragOperation:object:
+ 
+ */
+- (void)concludeDragOperation:(id < NSDraggingInfo >)sender object:(id)object
+{
+#pragma unused(sender)
+#pragma unused(object)    
+}
+
+/*
+ 
+ - draggingEnded:object:
+ 
+ */
+- (void)draggingEnded:(id < NSDraggingInfo >)sender object:(id)object
+{
+#pragma unused(sender)
+#pragma unused(object)
+}
+
+#pragma mark -
+#pragma mark Methods
+
 
 /*
  
@@ -206,8 +590,18 @@
  */
 - (void)controllerViewClicked:(MGSRoundedPanelViewController *)controller
 {
+    
+    if (![self commitPendingEdits]) return;
+    
 	BOOL showMenu = NO;
 	
+    _lastCickedParmeterViewController = (MGSParameterViewController *)controller;
+    
+    NSUInteger viewIndex = [_viewControllers indexOfObject:controller];
+    if (viewIndex == NSNotFound) {
+        return;
+    }
+    
 	NSEvent *event = [NSApp currentEvent];
 	switch ([event type]) {
 		case NSLeftMouseDown:					
@@ -222,16 +616,7 @@
 				showMenu = YES;
 			}
 
-			// controller is already highlighted
-			if (controller.isHighlighted) {
-				break;
-			}
-			
-			// dehighlight all views
-			[self setHighlightForAllViews:NO];
-			
-			// highlight the view
-			[controller setIsHighlighted:YES];
+
 			
 			break;
 				
@@ -240,8 +625,53 @@
 			break;
 	}
 	
+    // select controller view
+    if (controller != self.selectedParameterViewController) {
+        self.selectedParameterViewController = _lastCickedParmeterViewController;
+    }
+    
 	if (showMenu) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:MGSShowTaskTabContextMenu object:event userInfo:nil];
+        
+        switch (_mode) {
+            case MGSParameterModeInput:
+                [[NSNotificationCenter defaultCenter] postNotificationName:MGSShowTaskTabContextMenu object:event userInfo:nil];
+                break;
+            
+            case MGSParameterModeEdit:
+            {
+                // show the input parameter menu
+                [NSMenu popUpContextMenu:inputParameterMenu withEvent:event forView:splitView];
+            }
+                break;
+        }
+	}
+}
+
+
+
+#pragma mark -
+#pragma mark Parameter selection and highlighting
+
+/*
+ 
+ - selectParameter:
+ 
+ */
+- (void)selectParameter:(MGSParameterViewController *)controller
+{
+    self.selectedParameterViewController = controller;
+}
+
+
+/*
+ 
+ - selectParameterAtIndex:
+ 
+ */
+- (void)selectParameterAtIndex:(NSUInteger)idx
+{
+	if (idx < [_viewControllers count]) {
+		[self selectParameter:[_viewControllers objectAtIndex:idx]];
 	}
 }
 
@@ -255,13 +685,13 @@
 	// parameter views
 	for (MGSParameterViewController *viewController in _viewControllers) {
 		if ([viewController isHighlighted] != aBool) {
-			[viewController setIsHighlighted:aBool]; 
+			[viewController setIsHighlighted:aBool];
 		}
 	}
 	
 	// view
 	if (_actionViewController.isHighlighted != aBool) {
-		[_actionViewController setIsHighlighted:aBool]; 
+		[_actionViewController setIsHighlighted:aBool];
 	}
 }
 
@@ -275,85 +705,263 @@
 	[self controllerViewClicked:_actionViewController];
 }
 
+
+#pragma mark -
+#pragma mark NSMenuValidation protocol
+
 /*
  
- reset enabled changed
+ - validateMenuItem:
  
  */
-- (void)parameterViewController:(MGSParameterViewController *)sender didChangeResetEnabled:(BOOL)resetEnabled
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	#pragma unused(sender)
-	#pragma unused(resetEnabled)
-	
-	BOOL enabled = NO;
-	for (MGSParameterViewController *viewController in _viewControllers) {
-		if (viewController.resetEnabled) {
-			enabled = YES;
-			break;
-		}
-	}
-	[_actionViewController setResetEnabled:enabled];
+    
+    if (!_lastCickedParmeterViewController) {
+        return NO;
+    }
+    
+    NSUInteger viewIndex = [_viewControllers indexOfObject:_lastCickedParmeterViewController];
+    if (viewIndex == NSNotFound) {
+        return NO;
+    }
+    
+    BOOL valid = YES;
+    
+    switch (menuItem.tag) {
+        case kMGSParameterInputMenuMoveUp:
+            valid = (viewIndex == 0 ? NO : YES);
+            break;
+
+        case kMGSParameterInputMenuMoveDown:
+            valid = (viewIndex >= [_viewControllers count] - 1) ? NO : YES;
+            break;
+            
+        case kMGSParameterInputMenuInsert:            
+        case kMGSParameterInputMenuAppend:
+        case kMGSParameterInputMenuDuplicate:
+        case kMGSParameterInputMenuRemove:
+        case kMGSParameterInputMenuInsertType:
+        case kMGSParameterInputMenuAppendType:
+            break;
+    }
+    
+    return valid;
+}
+
+#pragma mark -
+#pragma mark Views
+
+/*
+ 
+ - scrollViewControllerVisible:
+ 
+ */
+- (void)scrollViewControllerVisible:(MGSParameterViewController *)viewController
+{
+    if (self.parameterScrollingEnabled) {
+        // call display before scrolling otherwise scrolling visible is unreliable
+        // after modifying the splitview content
+        [splitView display];
+        
+        // scroll the view to make visible
+        [viewController.view scrollRectToVisible:viewController.view.bounds];
+    }
+}
+#pragma mark -
+#pragma mark Actions
+
+/*
+ 
+ - insertInputParameterAction:
+ 
+ */
+- (IBAction)insertInputParameterAction:(id)sender
+{
+#pragma unused(sender)
+    
+    if (![self commitPendingEdits]) return;
+
+    // get location at which to insert the input
+    MGSParameterViewController *targetViewController = self.selectedParameterViewController;
+    if (!targetViewController) return;
+    
+#if 0
+    // add parameter
+    MGSParameterViewController *sourceViewController = [self appendParameter];
+
+    // move to desired location
+    NSUInteger sourceIndex = [_viewControllers indexOfObject:sourceViewController];
+    NSUInteger targetIndex = [_viewControllers indexOfObject:targetViewController];
+    
+    // if sender is a script parameter then use it
+    if ([sender isKindOfClass:[MGSScriptParameter class]]) {
+        
+        // copy the script parameter and update the manager
+        MGSScriptParameter *scriptParameter = [(MGSScriptParameter *)sender mutableDeepCopy];
+        [_scriptParameterManager replaceItemAtIndex:sourceIndex withItem:scriptParameter];
+        
+        sourceViewController.scriptParameter = scriptParameter;
+    }
+    
+    if (sourceIndex != targetIndex && sourceIndex != NSNotFound && targetIndex != NSNotFound) {
+        [self moveParameterAtIndex:sourceIndex toIndex:targetIndex];
+    }
+#else
+    NSUInteger targetIndex = [_viewControllers indexOfObject:targetViewController];
+
+    // insert parameter
+    MGSParameterViewController *sourceViewController = [self insertParameterAtIndex:targetIndex];
+
+    // if sender is a script parameter then use it
+    if ([sender isKindOfClass:[MGSScriptParameter class]]) {
+        
+        // copy the script parameter and update the manager
+        MGSScriptParameter *scriptParameter = [(MGSScriptParameter *)sender mutableDeepCopy];
+        [_scriptParameterManager replaceItemAtIndex:targetIndex withItem:scriptParameter];
+        
+        sourceViewController.scriptParameter = scriptParameter;
+    }
+
+#endif
+    
+    // select new view
+    self.selectedParameterViewController = sourceViewController;
+    
+    [self scrollViewControllerVisible:sourceViewController];
 }
 
 /*
  
- add parameter view
+ - appendInputParameterAction:
  
  */
-- (MGSParameterViewController *)addParameter
-{	
-	// create script parameter and add to handler array
-	MGSScriptParameter *parameter = [MGSScriptParameter new];
-	[_scriptParameterHandler addItem:parameter];
-	
-	// create new view for parameter
-	NSInteger idx = [_scriptParameterHandler count] - 1;
-	MGSParameterViewController *viewController = [self createViewForParameterAtIndex:idx];
-
-	// set parameter description if set
-	if ([viewController parameterDescription]) {
-		[[viewController scriptParameter] setDescription:[viewController parameterDescription]];
-	}
-	
-	// update the view locations
-	[self updateViewLocations];
-	
-	return viewController;
+- (IBAction)appendInputParameterAction:(id)sender
+{
+#pragma unused(sender)
+    
+    if (![self commitPendingEdits]) return;
+    
+    // create parameter
+    MGSParameterViewController *parameterViewController = [self appendParameter];
+    
+    // select new view
+    self.selectedParameterViewController = parameterViewController;
+    
+    [self scrollViewControllerVisible:parameterViewController];
 }
 
 /*
  
- remove the last parameter
+ - duplicateInputParameterAction:
  
  */
-- (void)removeLastParameter
+- (IBAction)duplicateInputParameterAction:(id)sender
 {
-	[self closeParameterView: [_viewControllers lastObject]];
+#pragma unused(sender)    
+    if (![self commitPendingEdits]) return;
+    if (!self.selectedParameterViewController) return;
+
+    // the parameter model only updates on request
+    [self.selectedParameterViewController updateModel];
+    
+    // insert parameter and set scriptParameter
+    [self insertInputParameterAction:self.selectedParameterViewController.scriptParameter];
 }
 
 /*
  
- highlight the parameter
+ - removeInputParameterAction:
  
  */
-- (void)highlightParameter:(MGSParameterViewController *)controller
+- (IBAction)removeInputParameterAction:(id)sender
 {
-	[self controllerViewClicked:controller];
+#pragma unused(sender)
+    if (![self commitPendingEdits]) return;
+    
+    if (self.selectedParameterViewController) {
+        [self closeParameterView:self.selectedParameterViewController];
+    }
 }
-
 
 /*
  
- highlight the parameter at index
+ - moveUpInputParameterAction:
  
  */
-- (void)highlightParameterAtIndex:(NSUInteger)idx
+- (IBAction)moveUpInputParameterAction:(id)sender
 {
-	if (idx < [_viewControllers count]) {
-		[self highlightParameter:[_viewControllers objectAtIndex:idx]];
-	}
+#pragma unused(sender)
+
+    if (![self commitPendingEdits]) return;
+    
+    // get view to move
+    if (!self.selectedParameterViewController) return;
+    
+    [self parameterViewController:self.selectedParameterViewController changeIndex:kMGSParameterIndexDecrease];
+}
+
+/*
+ 
+ - moveDownInputParameterAction:
+ 
+ */
+- (IBAction)moveDownInputParameterAction:(id)sender
+{
+#pragma unused(sender)
+    if (![self commitPendingEdits]) return;
+    
+    // get view to move
+    if (!self.selectedParameterViewController) return;
+    
+    [self parameterViewController:self.selectedParameterViewController changeIndex:kMGSParameterIndexIncrease];
+}
+
+/*
+ 
+ - inputParameterInsertMenuAction
+ 
+ */
+- (void)inputParameterInsertMenuAction:(id)sender
+{
+    if (![self commitPendingEdits]) return;
+    
+    // get location at which to insert the input
+    MGSParameterViewController *viewController = self.selectedParameterViewController;
+    if (!viewController) return;
+	
+    // insert parameter 
+    [self insertInputParameterAction:self];
+    if (viewController == self.selectedParameterViewController) return;
+    
+	[self.selectedParameterViewController selectParmaterTypeWithMenuTag:[sender tag]];
+}
+
+/*
+ 
+ - inputParameterAppendMenuAction
+ 
+ */
+- (void)inputParameterAppendMenuAction:(id)sender
+{
+    if (![self commitPendingEdits]) return;
+    
+    // get location at which to insert the input
+    MGSParameterViewController *viewController = self.selectedParameterViewController;
+    if (!viewController) return;
+	
+    // append parameter
+    self.parameterScrollingEnabled = NO;
+    [self appendInputParameterAction:self];
+    if (viewController == self.selectedParameterViewController) return;
+    
+	[self.selectedParameterViewController selectParmaterTypeWithMenuTag:[sender tag]];
+    
+    self.parameterScrollingEnabled = YES;
+    [self scrollViewControllerVisible:self.selectedParameterViewController];
 }
 @end
+
 
 @implementation MGSParameterViewManager(Private)
 
@@ -362,7 +970,7 @@
  creat view for parameter at index
  
  */
-- (MGSParameterViewController *)createViewForParameterAtIndex:(NSInteger)idx
+- (MGSParameterViewController *)createViewForParameterAtIndex:(NSUInteger)idx
 {
 	// create new view
 	// we are loading views from a nib here so the outlets
@@ -370,12 +978,15 @@
 	MGSParameterViewController *viewController = [self createView];
 
 	// pass script parameters to the controller
-	viewController.scriptParameter = [_scriptParameterHandler itemAtIndex:idx];
+	viewController.scriptParameter = [_scriptParameterManager itemAtIndex:idx];
 	[viewController setDisplayIndex:idx+1];		
 	
-	// show view
-	[_viewControllers insertObject:viewController atIndex:idx];	
-	[self showViewAtIndex: idx];
+    // insert object
+	[_viewControllers insertObject:viewController atIndex:idx];
+    
+    // show view
+    [self showViewAtIndex:idx];
+    
 	return viewController;
 }
 
@@ -388,31 +999,23 @@
 {
 	// loop through views
 	for (NSUInteger i = 0; i < [_viewControllers count]; i++) {
-		MGSParameterViewController *viewController = [_viewControllers objectAtIndex:i];
-		MGSParameterView *parameterView = [viewController parameterView];
-		NSString *format;
 		
-		// set view left banner
-		if (MGSParameterModeInput == _mode) {
-			//viewController.parameterName = @"Name";	// this will be bound later
-		} else if (MGSParameterModeEdit == _mode) {
-			//format = NSLocalizedString(@"Input %i", @"Parameter left banner edit mode");
-			//viewController.parameterName = [NSString stringWithFormat:format, i + 1];
-		} else {
-			NSAssert(NO, @"invalid mode");
-		}
-		
+        MGSParameterViewController *viewController = [_viewControllers objectAtIndex:i];
+				
 		// set view right banner
-		//format = NSLocalizedString(@"%i of %i", @"Parameter right banner format string");
-		//viewController.bannerRight = [NSString stringWithFormat:format, i + 1, [_scriptParameterHandler count]];
-		format = NSLocalizedString(@"%i", @"Parameter right banner format string");
+		NSString *format = NSLocalizedString(@"%i", @"Parameter right banner format string");
 		viewController.bannerRight = [NSString stringWithFormat:format, i + 1];
 		
-		if (i != [_viewControllers count]-1) {
-			[parameterView setHasConnector:YES];
+		if (i != [_viewControllers count] - 1) {
+			[viewController.parameterView setHasConnector:YES];
 		} else {
-			[parameterView setHasConnector:NO];
+			[viewController.parameterView setHasConnector:NO];
 		}
+        
+        viewController.canDecreaseDisplayIndex = (i == 0 ? NO : YES);
+        viewController.canIncreaseDisplayIndex = (i >= _viewControllers.count - 1 ? NO : YES);
+
+        viewController.displayIndex = i+1;
 	}
 }
 
@@ -446,7 +1049,7 @@
  add parameter subview to splitview
  
  */
-- (void)addSplitViewParameterSubview:(NSView *)view
+- (void)addSplitViewParameterSubview:(NSView *)view atIndex:(NSUInteger)idx
 {
 	// get last splitview subview
 	NSView *lastView = [[splitView subviews] lastObject];
@@ -454,7 +1057,16 @@
 	// always want our view at the end of our subview array.
 	// if end view exists insert our view before it.
 	if (lastView == [_endViewController view]) {
-		[self addSplitViewSubview:view positioned:NSWindowAbove relativeTo:lastView];
+        
+        NSWindowOrderingMode position = 0;
+        
+        if (idx <= [[splitView subviews] count] - 1) {
+            position = NSWindowBelow;
+        } else {
+            position = NSWindowAbove;
+        }
+
+		[self addSplitViewSubview:view positioned:position relativeTo:[[splitView subviews] objectAtIndex:idx]];
 	} else {
 		// add additional subview
 		[self addSplitViewSubview:view];
@@ -481,7 +1093,7 @@
  */
 - (void)addEndViewToSplitView
 {
-	NSInteger parameterCount = [_scriptParameterHandler count];
+	NSInteger parameterCount = [_scriptParameterManager count];
 	
 	if (parameterCount > 0) {
 		
@@ -505,13 +1117,12 @@
  */
 - (void)removeSplitViewSubview:(NSView *)view
 {
-	// maintain two views in out splitview
+	// maintain two views in splitview
 	if (2 == [[splitView subviews] count]) {
 		NSView *emptyView = [[NSView alloc] initWithFrame:[view frame]];
 		[self replaceSplitViewSubview:view  with:emptyView];
 	} else {
 		[view removeFromSuperview];
-		//[splitView autoSizeHeight];
 	}
 }
 /*
@@ -531,7 +1142,9 @@
 	// lazy loading can lead to lots of problems if it is not anticipated.
 	[viewController view];
 	
-	// our view controller no references a fully initialised object
+    [[viewController view] registerForDraggedTypes:@[MGSParameterViewPBoardType]];
+    
+	// our view controller now references a fully initialised object
 	return viewController;
 }
 
@@ -540,7 +1153,7 @@
  show view at index.
  
  */
-- (void) showViewAtIndex:(NSInteger)idx
+- (void) showViewAtIndex:(NSUInteger)idx
 {
 	MGSParameterViewController *viewController = [_viewControllers objectAtIndex:idx];
 	NSView *view = [viewController view];
@@ -570,7 +1183,7 @@
 		// replace existing view with new view
 		[self replaceSplitViewSubview:[[splitView subviews] objectAtIndex:idx]  with:view];
 	} else {
-		[self addSplitViewParameterSubview:view];
+		[self addSplitViewParameterSubview:view atIndex:idx];
 	}
 	
 	// make sure that our splitview subviews are terminated
@@ -593,7 +1206,7 @@
 	NSAssert([_viewControllers count] == 0, @"view controllers array not empty");
 	
 	// show a view for each parameter
-	for (i = 0; i < [_scriptParameterHandler count]; i++) {
+	for (i = 0; i < [_scriptParameterManager count]; i++) {
 		[self createViewForParameterAtIndex:i];
 	}
 	
