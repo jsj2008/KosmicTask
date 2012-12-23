@@ -71,7 +71,6 @@
 	
 	if ([self representedObject]) {
 		[description unbind:NSValueBinding];
-		[self setRepresentedObject: nil];
 	}
 	
 	//

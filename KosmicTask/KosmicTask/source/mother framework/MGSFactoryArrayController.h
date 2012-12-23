@@ -28,4 +28,7 @@
 - (void)removeItemAtIndex:(NSUInteger)index;
 - (NSMutableArray *)array;
 - (NSInteger)indexOfItem:(id)item;
+- (void)moveItemAtIndex:(NSUInteger)sourceIdx toIndex:(NSUInteger)targetIdx;
+- (void)insertItem:(id)item atIndex:(NSUInteger)idx;
+- (void)replaceItemAtIndex:(NSUInteger)idx withItem:(id)item;
 @end

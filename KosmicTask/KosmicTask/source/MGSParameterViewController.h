@@ -17,10 +17,18 @@
 @class MGSParameterViewController;
 @class MGSParameterPluginInputViewController;
 
+enum _MGSParameterIndexChange {
+    kMGSParameterIndexDecrease = 1,
+    kMGSParameterIndexIncrease = 0,
+};
+typedef NSInteger MGSParameterIndexChange;
+
 @protocol MGSParameterViewController
 
 - (void)closeParameterView:(MGSParameterViewController *)controller;
 - (void)parameterViewController:(MGSParameterViewController *)sender didChangeResetEnabled:(BOOL)resetEnabled;
+- (void)parameterViewController:(MGSParameterViewController *)sender changeIndex:(MGSParameterIndexChange)changeIndex;
+- (void)dragParameterView:(MGSParameterViewController *)controller event:(NSEvent *)event;
 @end
 
 // parameter mode
@@ -38,7 +46,6 @@ typedef enum _MGSParameterType {
 	MGSFileParameter,
 } MGSParameterType;
 
-
 @interface MGSParameterViewController : MGSRoundedPanelViewController {
 	
 	//IBOutlet NSTextField *index;					// parameter index
@@ -48,7 +55,8 @@ typedef enum _MGSParameterType {
 	//IBOutlet NSTextField *value;					// parameter value
 	IBOutlet NSPopUpButton *typePopup;				// parameter type popup
 	IBOutlet NSImageView *bannerLeftImage;				// left banner image
-	
+	IBOutlet NSSegmentedControl *parameterIndexControl;
+    
 	//
 	// circular button.
 	// to get the correct redraw behaviour when clicked make sure that the button
@@ -94,6 +102,11 @@ typedef enum _MGSParameterType {
 	NSSize _middleLayoutSize;
 	NSSize _bottomLayoutSize;
 	BOOL _resetEnabled;
+    BOOL _dragging;
+    BOOL _mouseDragged;
+    NSPoint _lastDragLocation;
+    BOOL _canDecreaseDisplayIndex;
+    BOOL _canIncreaseDisplayIndex;
 }
 
 @property (assign) MGSScriptParameter *scriptParameter;
@@ -103,13 +116,17 @@ typedef enum _MGSParameterType {
 @property (copy) NSString *parameterName;
 @property (copy) NSString *parameterDescription;
 @property (readonly) BOOL resetEnabled;
+@property BOOL canDecreaseDisplayIndex;
+@property BOOL canIncreaseDisplayIndex;
 
--(id)initWithMode:(MGSParameterMode)mode;
++ (id)parameterTypeMenuDictionaryWithTarget:(id)target action:(SEL)selector;
+- (id)initWithMode:(MGSParameterMode)mode;
 - (void)buildMenus;
 - (void)typePopupMenuItemSelected:(id)sender;
 - (void)typePopupMenuItemClicked:(id)sender;
 //- (void)initialiseForMode:(MGSParameterMode)mode;
 - (IBAction)close:(id)sender;
+- (IBAction)changeInputIndexAction:(id)sender;
 - (BOOL)isValid;
 - (NSString *)validationString;
 
@@ -117,5 +134,11 @@ typedef enum _MGSParameterType {
 - (MGSParameterView *)parameterView;
 - (void)resetToDefaultValue;
 - (void)subview:(NSView *)view wantsNewSize:(NSSize)newSize;
+
+- (BOOL)isHighlighted;
+- (void)setIsHighlighted:(BOOL)value;
+- (void)selectParmaterTypeWithMenuTag:(NSUInteger)tag;
+- (void)updateModel;
+- (void)markModelDataAsModified;
 
 @end

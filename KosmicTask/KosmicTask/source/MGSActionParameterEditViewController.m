@@ -29,11 +29,11 @@
 #define ON_RUN_TASK_CALL_USER_HANDLER 3
 
 NSString *MGSInputCountContext = @"InputContext";
+char MGSParameterViewSelectedContext;
 
-@interface MGSActionParameterEditViewController (Private)
+@interface MGSActionParameterEditViewController ()
+- (void)updateRemoveInputSegmentEnabledStatus;
 @end
-
-
 
 @implementation MGSActionParameterEditViewController
 @synthesize inputCount = _inputCount;
@@ -52,7 +52,7 @@ NSString *MGSInputCountContext = @"InputContext";
 	_action = nil;
 	
 	// set edit mode for parameter view handler
-	parameterViewHandler.mode = MGSParameterModeEdit;
+	parameterViewManager.mode = MGSParameterModeEdit;
 	
 	// observe the input count
 	[self addObserver:self forKeyPath:@"inputCount" options:NSKeyValueObservingOptionNew context:MGSInputCountContext];
@@ -61,6 +61,7 @@ NSString *MGSInputCountContext = @"InputContext";
 	// set empty parameter view
 	self.parameterView = [emptyParameterViewController view];
 	
+    [parameterViewManager addObserver:self forKeyPath:@"selectedParameterViewController" options:0 context:&MGSParameterViewSelectedContext];
 }
 
 /*
@@ -91,7 +92,7 @@ NSString *MGSInputCountContext = @"InputContext";
 
 /*
  
- observe value for key path
+ - observeValueForKeyPath:ofObject:change:context:
  
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -103,12 +104,26 @@ NSString *MGSInputCountContext = @"InputContext";
 	// input count modified
 	if (context == MGSInputCountContext) {
 		
-		// change remove input segment enabled status
-		[inputSegmentedControl setEnabled:(self.inputCount == 0) ? NO : YES forSegment:MGSRemoveItem]; 
+		[self updateRemoveInputSegmentEnabledStatus];
 		
 		// show the required parameter view
 		[self setParameterView:(self.inputCount == 0) ? [emptyParameterViewController view] : parameterScrollView];
-	}
+        
+	} if (context == &MGSParameterViewSelectedContext) {
+        [self updateRemoveInputSegmentEnabledStatus];
+    }
+}
+
+
+/*
+ 
+ - updateRemoveInputSegmentEnabledStatus
+ 
+ */
+- (void)updateRemoveInputSegmentEnabledStatus
+{
+    // change remove input segment enabled status
+    [inputSegmentedControl setEnabled:(self.inputCount > 0 && parameterViewManager.selectedParameterViewController) ? YES : NO forSegment:MGSRemoveItem];
 }
 
 /*
@@ -124,8 +139,8 @@ NSString *MGSInputCountContext = @"InputContext";
 	_parameterHandler = [_action.script parameterHandler];
 	self.inputCount = [_parameterHandler count];
 	
-	[parameterViewHandler setScriptParameterHandler:_parameterHandler];
-	parameterViewHandler.delegate = self;
+	[parameterViewManager setScriptParameterManager:_parameterHandler];
+	parameterViewManager.delegate = self;
 	  
 	// set up bindings
 	[inputCountText bind:@"value" toObject:self withKeyPath:@"inputCount" options:nil];
@@ -190,25 +205,24 @@ NSString *MGSInputCountContext = @"InputContext";
 			
 			// add item
 		case MGSAddItem:;
-			MGSParameterViewController *viewController = [parameterViewHandler addParameter];
-			[parameterViewHandler highlightParameter:viewController];
-			
+			MGSParameterViewController *viewController = [parameterViewManager appendParameter];
+			[parameterViewManager selectParameter:viewController];
+			[parameterViewManager scrollViewControllerVisible:viewController];
 			break;
 			
 			// remove item
 			case MGSRemoveItem:;
-			[parameterViewHandler removeLastParameter];
-
+			[parameterViewManager closeParameterView:parameterViewManager.selectedParameterViewController];
 			break;
 			
 			default:
 			return;
 	}
 	
-	self.inputCount = [_parameterHandler count];
+	//self.inputCount = [_parameterHandler count];
 
 	// document edited
-	[[[self view] window] setDocumentEdited:YES];
+	//[[[self view] window] setDocumentEdited:YES];
 	
 	return;
 }
@@ -222,6 +236,23 @@ NSString *MGSInputCountContext = @"InputContext";
 - (void)parameterViewDidClose:(MGSParameterViewController *)viewController
 {
 	#pragma unused(viewController)
+	
+	// the view has closed.
+	// setting the input count will have no effect other than to reset the
+	// bound parameter view counter
+	self.inputCount = [_parameterHandler count];
+	
+	// document edited
+	[[[self view] window] setDocumentEdited:YES];
+}
+
+/*
+ 
+ - parameterViewAdded:
+ */
+- (void)parameterViewAdded:(MGSParameterViewController *)viewController
+{
+#pragma unused(viewController)
 	
 	// the view has closed.
 	// setting the input count will have no effect other than to reset the

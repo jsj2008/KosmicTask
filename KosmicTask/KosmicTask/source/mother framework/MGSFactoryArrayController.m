@@ -65,7 +65,7 @@
 
 /*
  
- add item
+ - addItem
  
  */
 - (void)addItem:(id)item
@@ -78,6 +78,23 @@
 	}
 	
 	[_array addObject:item];
+}
+
+/*
+ 
+ - insertItem:atIndex:
+ 
+ */
+- (void)insertItem:(id)item atIndex:(NSUInteger)idx
+{
+	NSAssert(item, @"item argument is nil");
+	NSAssert([item isKindOfClass:_itemClass], @"add item to array is of wrong class");
+    
+	if (_useFactorySelector == YES) {
+		item = [item performSelector:_itemAddSelector];
+	}
+	
+	[_array insertObject:item atIndex:idx];
 }
 
 /*
@@ -165,7 +182,30 @@
 	[_array removeObjectAtIndex:idx];
 }
 
+/*
+ 
+ - moveItemAtIndex:toIndex
+ 
+ */
+- (void)moveItemAtIndex:(NSUInteger)sourceIdx toIndex:(NSUInteger)targetIdx
+{
+    id item = [_array objectAtIndex:sourceIdx];
+    [_array removeObjectAtIndex:sourceIdx];
+    [_array insertObject:item atIndex:targetIdx];
+}
+
+/*
+ 
+ - replaceItemAtIndex:withItem:
+ 
+ */
+- (void)replaceItemAtIndex:(NSUInteger)idx withItem:(id)item
+{
+    [self removeItemAtIndex:idx];
+    [self insertItem:item atIndex:idx];
+}
 @end
+
 @implementation MGSFactoryArrayController(Private)
 
 /*

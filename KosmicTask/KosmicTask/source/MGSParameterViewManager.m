@@ -24,13 +24,19 @@
 #import "MGSNotifications.h"
 #import "MGSMotherWindowController.h"
 #import "MGSViewDraggingProtocol.h"
+#import "MGSParameterPluginController.h"
+#import "MGSParameterPlugin.h"
+#import "MGSAppCOntroller.h"
 
-// clas extension
+// class extension
 @interface MGSParameterViewManager ()
 - (void)moveParameterAtIndex:(NSUInteger)sourceIndex toIndex:(NSUInteger)targetIndex;
 - (void)inputParameterInsertMenuAction:(id)sender;
 - (void)inputParameterAppendMenuAction:(id)sender;
 - (MGSParameterViewController *)insertParameterAtIndex:(NSUInteger)idx;
+- (NSPasteboard *)cutAndPastePasteBoard;
+- (IBAction)pasteInputParameterAction:(id)sender;
+- (MGSScriptParameter *)pasteBoardScriptParameter;
 
 @property BOOL parameterScrollingEnabled;
 @end
@@ -118,6 +124,13 @@
     menuItem = [inputParameterMenu itemWithTag:kMGSParameterInputMenuAppendType];
     menuDict = [MGSParameterViewController parameterTypeMenuDictionaryWithTarget:self action:@selector(inputParameterAppendMenuAction:)];
     parameterMenu = [menuDict objectForKey:@"menu"];  
+    [menuItem setSubmenu:parameterMenu];
+    
+    
+    // add parameter type submenu for minimial add type menu
+    menuItem = [minimalInputParameterMenu itemWithTag:kMGSParameterInputMenuAddType];
+    menuDict = [MGSParameterViewController parameterTypeMenuDictionaryWithTarget:self action:@selector(inputParameterAppendMenuAction:)];
+    parameterMenu = [menuDict objectForKey:@"menu"];
     [menuItem setSubmenu:parameterMenu];
 }
 
@@ -233,7 +246,7 @@
  */
 - (void)closeParameterView:(MGSParameterViewController *)viewController
 {	
-	NSInteger idx = -1;
+	NSUInteger idx = NSNotFound;
 	
 	if (!viewController) return;
 	
@@ -244,7 +257,7 @@
 			break;
 		}
 	}
-	if (-1 == idx) return;
+	if (NSNotFound == idx) return;
 	
     self.selectedParameterViewController = nil;
     
@@ -258,6 +271,13 @@
 	// update view banners
 	[self updateViewLocations];
 	
+    if ([_viewControllers count] > 0) {
+        if (idx >= [_viewControllers count] - 1) {
+            idx = [_viewControllers count] - 1;
+        }
+        self.selectedParameterViewController = [_viewControllers objectAtIndex:idx];
+    }
+
 	// inform delegate that view closed
 	if (_delegate && [_delegate respondsToSelector:@selector(parameterViewDidClose:)]) {
 		[_delegate parameterViewDidClose:viewController];
@@ -595,7 +615,7 @@
     
 	BOOL showMenu = NO;
 	
-    _lastCickedParmeterViewController = (MGSParameterViewController *)controller;
+    MGSParameterViewController *viewController = (MGSParameterViewController *)controller;
     
     NSUInteger viewIndex = [_viewControllers indexOfObject:controller];
     if (viewIndex == NSNotFound) {
@@ -627,7 +647,7 @@
 	
     // select controller view
     if (controller != self.selectedParameterViewController) {
-        self.selectedParameterViewController = _lastCickedParmeterViewController;
+        self.selectedParameterViewController = viewController;
     }
     
 	if (showMenu) {
@@ -716,17 +736,22 @@
  */
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    
-    if (!_lastCickedParmeterViewController) {
-        return NO;
-    }
-    
-    NSUInteger viewIndex = [_viewControllers indexOfObject:_lastCickedParmeterViewController];
-    if (viewIndex == NSNotFound) {
-        return NO;
-    }
-    
     BOOL valid = YES;
+    NSString *menuTitle = nil;
+    NSString *inputTitle = NSLocalizedString(@"Input", @"Input menu title");
+    NSUInteger viewIndex = 0;
+    
+    if ([menuItem menu] == inputParameterMenu) {
+        if (!self.selectedParameterViewController) {
+            return NO;
+        }
+        
+            
+        viewIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
+        if (viewIndex == NSNotFound) {
+            return NO;
+        }
+    }
     
     switch (menuItem.tag) {
         case kMGSParameterInputMenuMoveUp:
@@ -736,13 +761,26 @@
         case kMGSParameterInputMenuMoveDown:
             valid = (viewIndex >= [_viewControllers count] - 1) ? NO : YES;
             break;
+           
+        case kMGSParameterInputMenuPaste:
+            valid = [self canPasteInputParameter];
+            menuTitle = NSLocalizedString(@"Paste", @"Paste menu title");
+            if (valid) {
+                MGSScriptParameter *scriptParameter = [self pasteBoardScriptParameter];
+                if (scriptParameter) {
+                    
+                    MGSParameterPluginController *parameterPluginController = [[NSApp delegate] parameterPluginController];
+                    MGSParameterPlugin *parameterPlugin = [parameterPluginController pluginWithClassName:scriptParameter.typeName];
+                    
+                    if (parameterPlugin) {
+                        menuTitle = [NSString stringWithFormat:@"%@ %@ %@", menuTitle, parameterPlugin.menuItemString, inputTitle];
+                    }
+                }
+            }
+            [menuItem setTitle:menuTitle];
+            break;
             
-        case kMGSParameterInputMenuInsert:            
-        case kMGSParameterInputMenuAppend:
-        case kMGSParameterInputMenuDuplicate:
-        case kMGSParameterInputMenuRemove:
-        case kMGSParameterInputMenuInsertType:
-        case kMGSParameterInputMenuAppendType:
+        default:
             break;
     }
     
@@ -786,28 +824,6 @@
     MGSParameterViewController *targetViewController = self.selectedParameterViewController;
     if (!targetViewController) return;
     
-#if 0
-    // add parameter
-    MGSParameterViewController *sourceViewController = [self appendParameter];
-
-    // move to desired location
-    NSUInteger sourceIndex = [_viewControllers indexOfObject:sourceViewController];
-    NSUInteger targetIndex = [_viewControllers indexOfObject:targetViewController];
-    
-    // if sender is a script parameter then use it
-    if ([sender isKindOfClass:[MGSScriptParameter class]]) {
-        
-        // copy the script parameter and update the manager
-        MGSScriptParameter *scriptParameter = [(MGSScriptParameter *)sender mutableDeepCopy];
-        [_scriptParameterManager replaceItemAtIndex:sourceIndex withItem:scriptParameter];
-        
-        sourceViewController.scriptParameter = scriptParameter;
-    }
-    
-    if (sourceIndex != targetIndex && sourceIndex != NSNotFound && targetIndex != NSNotFound) {
-        [self moveParameterAtIndex:sourceIndex toIndex:targetIndex];
-    }
-#else
     NSUInteger targetIndex = [_viewControllers indexOfObject:targetViewController];
 
     // insert parameter
@@ -822,8 +838,6 @@
         
         sourceViewController.scriptParameter = scriptParameter;
     }
-
-#endif
     
     // select new view
     self.selectedParameterViewController = sourceViewController;
@@ -845,6 +859,18 @@
     // create parameter
     MGSParameterViewController *parameterViewController = [self appendParameter];
     
+    // if sender is a script parameter then use it
+    if ([sender isKindOfClass:[MGSScriptParameter class]]) {
+        
+         NSUInteger targetIndex = [_viewControllers indexOfObject:parameterViewController];
+        
+        // copy the script parameter and update the manager
+        MGSScriptParameter *scriptParameter = [(MGSScriptParameter *)sender mutableDeepCopy];
+        [_scriptParameterManager replaceItemAtIndex:targetIndex withItem:scriptParameter];
+        
+        parameterViewController.scriptParameter = scriptParameter;
+    }
+
     // select new view
     self.selectedParameterViewController = parameterViewController;
     
@@ -867,6 +893,11 @@
     
     // insert parameter and set scriptParameter
     [self insertInputParameterAction:self.selectedParameterViewController.scriptParameter];
+    
+    MGSParameterViewController *viewController = self.selectedParameterViewController;
+    viewController.parameterName = [NSString stringWithFormat:@"%@ %@",
+                                    viewController.parameterName,
+                                    NSLocalizedString(@"copy", @"parameter copy suffix")];
 }
 
 /*
@@ -930,11 +961,15 @@
     MGSParameterViewController *viewController = self.selectedParameterViewController;
     if (!viewController) return;
 	
-    // insert parameter 
+    // insert parameter
+    self.parameterScrollingEnabled = NO;
     [self insertInputParameterAction:self];
-    if (viewController == self.selectedParameterViewController) return;
+    if (viewController != self.selectedParameterViewController) {
+        [self.selectedParameterViewController selectParmaterTypeWithMenuTag:[sender tag]];
+    }
     
-	[self.selectedParameterViewController selectParmaterTypeWithMenuTag:[sender tag]];
+    self.parameterScrollingEnabled = YES;
+    [self scrollViewControllerVisible:self.selectedParameterViewController];
 }
 
 /*
@@ -946,19 +981,141 @@
 {
     if (![self commitPendingEdits]) return;
     
-    // get location at which to insert the input
+    // get selection - nil is okay as we may call this method when no views yet defined.
     MGSParameterViewController *viewController = self.selectedParameterViewController;
-    if (!viewController) return;
 	
     // append parameter
     self.parameterScrollingEnabled = NO;
     [self appendInputParameterAction:self];
-    if (viewController == self.selectedParameterViewController) return;
-    
-	[self.selectedParameterViewController selectParmaterTypeWithMenuTag:[sender tag]];
-    
+    if (viewController != self.selectedParameterViewController) {
+        [self.selectedParameterViewController selectParmaterTypeWithMenuTag:[sender tag]];
+    }
     self.parameterScrollingEnabled = YES;
     [self scrollViewControllerVisible:self.selectedParameterViewController];
+}
+/*
+ 
+ - cutInputParameterAction:
+ 
+ */
+- (IBAction)cutInputParameterAction:(id)sender
+{
+#pragma unused(sender)
+    
+    [self copyInputParameterAction:self];
+    [self removeInputParameterAction:self];
+}
+
+/*
+ 
+ - copyInputParameterAction:
+ 
+ */
+- (IBAction)copyInputParameterAction:(id)sender
+{
+#pragma unused(sender)
+    
+    if (![self commitPendingEdits]) return;
+    
+    // get selection
+    MGSParameterViewController *viewController = self.selectedParameterViewController;
+    if (!viewController) return;
+
+    // the parameter model only updates on request
+    [viewController updateModel];
+    
+    NSPasteboard *pasteBoard = [NSPasteboard pasteboardWithName:MGSInputParameterPBoard];
+    [pasteBoard clearContents];
+    
+    NSDictionary *parameterDict = viewController.scriptParameter.dict;
+    [pasteBoard declareTypes:@[MGSInputParameterPBoardType] owner:self];
+    [pasteBoard setPropertyList:parameterDict forType:MGSInputParameterPBoardType];
+}
+
+
+/*
+ 
+ - pasteInputParameterAction:
+ 
+ */
+- (IBAction)pasteInputParameterAction:(id)sender
+{
+#pragma unused(sender)
+    
+    if (![self commitPendingEdits]) return;
+    
+    if ([self canPasteInputParameter]) {
+        MGSScriptParameter *scriptParameter = [self pasteBoardScriptParameter];
+        [self insertInputParameterAction:scriptParameter];
+    }
+}
+
+/*
+ 
+ - pasteAppendInputParameterAction:
+ 
+ */
+- (IBAction)pasteAppendInputParameterAction:(id)sender
+{
+#pragma unused(sender)
+    
+    if (![self commitPendingEdits]) return;
+    
+    if ([self canPasteInputParameter]) {
+        MGSScriptParameter *scriptParameter = [self pasteBoardScriptParameter];
+        [self appendInputParameterAction:scriptParameter];
+    }
+}
+
+#pragma mark -
+#pragma mark Cut and paste
+
+/*
+ 
+ - cutAndPastePasteBoard
+ 
+ */
+- (NSPasteboard *)cutAndPastePasteBoard
+{
+    return [NSPasteboard pasteboardWithName:MGSInputParameterPBoard];
+}
+
+/*
+ 
+ - canPasteInputParameter
+ 
+ */
+- (BOOL)canPasteInputParameter
+{
+    BOOL canPaste = NO;
+    NSArray *pbTypes = [[self cutAndPastePasteBoard] types];
+    if ([pbTypes containsObject:MGSInputParameterPBoardType]) {
+        canPaste = YES;
+    }
+ 
+    return canPaste;
+}
+
+/*
+ 
+ - pasteBoardScriptParameter
+ 
+ */
+- (MGSScriptParameter *)pasteBoardScriptParameter
+{
+    MGSScriptParameter *scriptParameter = nil;
+    
+    if ([self canPasteInputParameter]) {
+        
+        id plist = [[self cutAndPastePasteBoard] propertyListForType:MGSInputParameterPBoardType];
+        
+        if (plist && [plist isKindOfClass:[NSDictionary class]]) {
+            scriptParameter = [MGSScriptParameter new];
+            scriptParameter.dict = [NSMutableDictionary dictionaryWithDictionary:plist];
+        }
+    }
+    
+    return scriptParameter;
 }
 @end
 
@@ -1061,9 +1218,9 @@
         NSWindowOrderingMode position = 0;
         
         if (idx <= [[splitView subviews] count] - 1) {
-            position = NSWindowBelow;
-        } else {
             position = NSWindowAbove;
+        } else {
+            position = NSWindowBelow;
         }
 
 		[self addSplitViewSubview:view positioned:position relativeTo:[[splitView subviews] objectAtIndex:idx]];
@@ -1100,6 +1257,7 @@
 		// lazy controller creation
 		if (!_endViewController) {
 			_endViewController = [[MGSParameterEndViewController alloc] init];
+            _endViewController.view.menu = minimalInputParameterMenu;
 		}
 
 		// if our last view is not the end view then add one

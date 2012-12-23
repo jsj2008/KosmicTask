@@ -30,6 +30,11 @@ const char MGSContextFirstResponder;
 }
 - (BOOL)validateValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError
 {
+    
+#pragma unused(ioValue)
+#pragma unused(inKeyPath)
+#pragma unused(outError)
+    
     BOOL isValid = YES;
     
     return isValid;

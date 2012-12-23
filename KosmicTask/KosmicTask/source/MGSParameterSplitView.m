@@ -71,6 +71,7 @@ MGSResizableParameter *resizingParameter = nil;
 @implementation MGSParameterSplitView
 
 @synthesize isDragging = _isDragging;
+@synthesize delegate = _delegate;
 
 /*
  

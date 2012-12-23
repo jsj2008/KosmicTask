@@ -330,7 +330,7 @@ const char MGSContextFirstResponder;
 }
 /*
  
- mouse down
+ - mouseDown:
  
  */
 - (void)mouseDown:(NSEvent *)theEvent
@@ -341,6 +341,36 @@ const char MGSContextFirstResponder;
 	
 	// pass on up the responder chain
 	[super mouseDown:theEvent];
+}
+
+/*
+ 
+ - mouseUp:
+ 
+ */
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	if (delegate && [delegate respondsToSelector:@selector(mouseUp:)]) {
+		[delegate mouseUp:theEvent];
+	}
+	
+	// pass on up the responder chain
+	[super mouseUp:theEvent];
+}
+
+/*
+ 
+ - mouseDragged:
+ 
+ */
+- (void)mouseDragged:(NSEvent *)theEvent
+{
+	if (delegate && [delegate respondsToSelector:@selector(mouseDragged:)]) {
+		[delegate mouseDragged:theEvent];
+	}
+	
+	// pass on up the responder chain
+	[super mouseDragged:theEvent];
 }
 
 /*

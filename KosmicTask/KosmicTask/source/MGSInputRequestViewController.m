@@ -513,7 +513,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	if (![_parameterViewManager validateParameters:&viewController]) {
 		
 		// highlight the invalid parameter
-		[_parameterViewManager highlightParameter:viewController];
+		[_parameterViewManager selectParameter:viewController];
 		
 		// scroll view visible
 		[[viewController view] scrollRectToVisible:[[viewController view] bounds]];

@@ -307,4 +307,25 @@
 	}
 	
 }
+
+/*
+ 
+ - mgs_dragImage
+ 
+ */
+- (NSImage *)mgs_dragImage
+{
+    NSBitmapImageRep *rep = [self bitmapImageRepForCachingDisplayInRect:self.bounds];
+    [self cacheDisplayInRect:self.bounds toBitmapImageRep:rep];
+	NSImage *image = [[NSImage alloc] initWithSize:[rep size]];
+	[image addRepresentation:rep];
+    
+
+	NSImage *returnImage = [[[NSImage alloc] initWithSize:[rep size]] autorelease];
+	[returnImage lockFocus];
+    [image drawAtPoint:NSMakePoint(0.0, 0.0) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	[returnImage unlockFocus];
+
+	return returnImage;
+}
 @end

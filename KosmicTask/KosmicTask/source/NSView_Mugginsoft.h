@@ -26,5 +26,6 @@ typedef NSInteger NSView_animate;
 - (NSImage *)mgs_captureImage;
 - (NSImageView *)mgs_captureImageView;
 - (void)mgs_fadeToSiblingView:(NSView *)view duration:(NSTimeInterval)duration;
+- (NSImage *)mgs_dragImage;
 @end
 

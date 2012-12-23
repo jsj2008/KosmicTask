@@ -51,6 +51,7 @@
 #import "MGSNotifications.h"
 #import "MGSImageAndTextCell.h"
 #import "MGSParameterPluginInputViewController.h"
+#import "MGSViewDraggingProtocol.h"
 
 
 NSString *MGSParameterValueContext = @"MGSParameterValueContext";
@@ -83,6 +84,54 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 @synthesize parameterName = _parameterName;
 @synthesize resetEnabled = _resetEnabled;
 @synthesize parameterDescription = _parameterDescription;
+@synthesize canDecreaseDisplayIndex = _canDecreaseDisplayIndex;
+@synthesize canIncreaseDisplayIndex = _canIncreaseDisplayIndex;
+
+#pragma mark -
+#pragma mark Class methods
+
+/*
+ 
+ + parameterTypeMenuDictionaryWithTarget:action:
+ 
+ */
++ (id)parameterTypeMenuDictionaryWithTarget:(id)target action:(SEL)action
+{
+    NSMenu *popupMenu = [[NSMenu alloc] initWithTitle:@"Format"];
+	NSMenuItem *defaultMenuItem = nil;
+	
+    NSUInteger tag = 900;
+    
+	// build the parameter menu
+	MGSParameterPluginController *parameterPluginController = [[NSApp delegate] parameterPluginController];
+	for (id item in [parameterPluginController instances]) {
+		
+		// sanity check on plugin class
+		if ([item isKindOfClass:[MGSParameterPlugin class]]) {
+			MGSParameterPlugin *parameterPlugin = item;
+			
+			// create menu item
+			NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[parameterPlugin menuItemString] action:action keyEquivalent:@""];
+			[menuItem setTarget:target];
+            [menuItem setTag:tag++];
+            
+			// represented object is our parameter plugin
+			[menuItem setRepresentedObject:parameterPlugin];
+			
+			// add item to popup menu
+			[popupMenu addItem:menuItem];
+            
+            // get default
+			if ([parameterPlugin isDefault]) {
+				defaultMenuItem = menuItem;
+			}
+		} else {
+			MLog(DEBUGLOG, @"bad parameter plugin class");
+		}
+	}
+    
+    return @{@"menu" : popupMenu, @"default" : defaultMenuItem};
+}
 
 #pragma mark -
 #pragma mark Instance handling
@@ -169,6 +218,21 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	
 	// build menus
 	[self buildMenus];
+    
+    BOOL canChangeParameterIndex = NO;
+    switch (_mode) {
+        case MGSParameterModeInput:
+            break;
+            
+        case MGSParameterModeEdit:
+            canChangeParameterIndex = YES;
+            break;
+    }
+    [parameterIndexControl setHidden:!canChangeParameterIndex];
+    
+    self.canDecreaseDisplayIndex = NO;
+    self.canDecreaseDisplayIndex = NO;
+    
 }
 
 
@@ -233,7 +297,101 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 }
 
 #pragma mark -
+#pragma mark Accessors
+
+/*
+ 
+ - isHighlighted
+ 
+ */
+- (BOOL)isHighlighted
+{
+    return self.parameterView.isHighlighted;
+}
+
+
+/*
+ 
+ - setIsHighlighted:
+ 
+ */
+- (void)setIsHighlighted:(BOOL)value
+{
+    self.parameterView.isHighlighted = value;
+}
+
+/*
+ 
+ - setCanDecreaseDisplayIndex:
+ 
+ */
+- (void)setCanDecreaseDisplayIndex:(BOOL)value
+{
+    _canDecreaseDisplayIndex = value;
+
+    [parameterIndexControl setEnabled:_canDecreaseDisplayIndex forSegment:kMGSParameterIndexDecrease];
+}
+
+/*
+ 
+ - setCanIncreaseDisplayIndex:
+ 
+ */
+- (void)setCanIncreaseDisplayIndex:(BOOL)value
+{
+    _canIncreaseDisplayIndex = value;
+    [parameterIndexControl setEnabled:_canIncreaseDisplayIndex forSegment:kMGSParameterIndexIncrease];
+}
+
+#pragma mark -
+#pragma mark Actions
+
+/*
+ 
+ - changeInputIndexAction:
+ 
+ */
+- (IBAction)changeInputIndexAction:(id)sender
+{
+#pragma unused(sender)
+    
+    MGSParameterIndexChange indexChange = [parameterIndexControl selectedSegment];
+
+    if ([self.delegate respondsToSelector:@selector(parameterViewController:changeIndex:)]) {
+        [self.delegate parameterViewController:self changeIndex:indexChange];
+    }
+
+}
+
+
+#pragma mark -
 #pragma mark Methods
+
+/*
+ 
+ - updateModel
+ 
+ */
+- (void)updateModel
+{
+    if (MGSParameterModeEdit == _mode) {
+		[_typeEditViewController updatePlist];
+    } else {
+		[_typeInputViewController updatePlist];
+	}
+}
+
+/*
+ 
+ - markModelDataAsModified
+ 
+ */
+- (void)markModelDataAsModified
+{
+    if (MGSParameterModeEdit == _mode) {
+		_typeEditViewController.modelDataModified = YES;
+    } 
+}
 /*
  
  reset input parameter
@@ -396,6 +554,18 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	
 	[self typePopupMenuItemSelected:sender];
 }
+
+/*
+ 
+ - selectParmaterTypeWithMenuTag:
+ 
+ */
+- (void)selectParmaterTypeWithMenuTag:(NSUInteger)tag
+{
+    [typePopup selectItemWithTag:tag];
+    [self typePopupMenuItemSelected:[typePopup.menu itemWithTag:tag]];
+}
+
 /*
  
  type popup menu item selected 
@@ -532,35 +702,12 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
  */
 - (void)buildMenus
 {
-	
-	NSMenu *popupMenu = [[NSMenu alloc] initWithTitle:@"Format"];
-	NSMenuItem *defaultMenuItem = nil;
-	
-	// build the export menu 
-	MGSParameterPluginController *parameterPluginController = [[NSApp delegate] parameterPluginController];
-	for (id item in [parameterPluginController instances]) {
-		
-		// sanity check on plugin class
-		if ([item isKindOfClass:[MGSParameterPlugin class]]) {
-			MGSParameterPlugin *parameterPlugin = item;
-			
-			// create menu item
-			NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[parameterPlugin menuItemString] action:@selector(typePopupMenuItemClicked:) keyEquivalent:@""];
-			[menuItem setTarget:self];
-			 
-			// represented object is our parameter plugin
-			[menuItem setRepresentedObject:parameterPlugin];
-			
-			// add item to popup menu
-			[popupMenu addItem:menuItem];
-			if ([parameterPlugin isDefault]) {
-				defaultMenuItem = menuItem;
-			}			
-		} else {
-			MLog(DEBUGLOG, @"bad parameter plugin class");
-		}
-	}
-	
+
+    NSDictionary *menuDict = [[self class] parameterTypeMenuDictionaryWithTarget:self action:@selector(typePopupMenuItemClicked:)];
+    
+    NSMenu *popupMenu = [menuDict objectForKey:@"menu"];
+    NSMenuItem *defaultMenuItem = [menuDict objectForKey:@"default"];
+    
 	// set menu for popup
 	[typePopup setMenu:popupMenu];
 	if (defaultMenuItem) {
@@ -573,7 +720,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 #pragma mark MGSRoundedPanelView delegate methods
 /*
  
- mouse down event
+ - mouseDown:
  
  */
 - (void)mouseDown:(NSEvent *)theEvent
@@ -581,14 +728,187 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	
 	[super mouseDown:theEvent];
 	
+	NSPoint mouseLoc = [[self view] convertPoint:[theEvent locationInWindow] fromView:nil];	// convert to view co-ordinates
 	
 	// hit-test the description text
-	NSPoint mouseLoc = [[self view] convertPoint:[theEvent locationInWindow] fromView:nil];	// convert to view co-ordinates
 	if (NSMouseInRect(mouseLoc, [[_descriptionViewController view] frame], [[_descriptionViewController view] isFlipped])) {
 		[_descriptionViewController toggleDescriptionDisclosure];
-	}
+	} else {
+        
+        // hit test banner view for drag source.
+        // we only want to drag in edit mode.
+        BOOL bannerClick = NSPointInRect(mouseLoc, self.bannerView.frame);
+        BOOL requireBannerClick = YES;
+        if (!requireBannerClick) bannerClick = YES;
+        
+        if (bannerClick && MGSParameterModeEdit == _mode) {
+            
+            if ([self.delegate respondsToSelector:@selector(dragParameterView:event:)]) {
+                _dragging = YES;
+                _mouseDragged = NO;
+                _lastDragLocation = mouseLoc;
+            }
+        }
+    }
 }
 
+/*
+ 
+ - mouseDragged:
+ 
+ */
+-(void)mouseDragged:(NSEvent *)event
+{
+    // delay kicking off the actual drag untilwe get the first drag event
+    if (_dragging && !_mouseDragged) {
+        if ([self.delegate respondsToSelector:@selector(dragParameterView:event:)]) {
+            [self.delegate dragParameterView:self event:event];
+        }
+        _mouseDragged = YES;
+    }
+
+    if (_dragging) {
+        NSPoint mouseLoc=[self.view convertPoint:[event locationInWindow]
+                                          fromView:nil];
+        
+                
+        // save the new drag location for the next drag event
+        _lastDragLocation = mouseLoc;
+        
+        // support automatic scrolling during a drag
+        // by calling NSView's autoscroll: method
+        [self.view autoscroll:event];
+    }
+}
+
+/*
+ 
+ - mouseUp:
+ 
+  
+ */
+-(void)mouseUp:(NSEvent *)event
+{
+#pragma unused(event)
+    
+    if (_dragging) {
+        _dragging = NO;
+    }
+    
+}
+
+#pragma mark -
+#pragma mark MGSViewDraggingProtocol protocol
+
+/*
+ 
+ - draggingEntered:object:
+ 
+ */
+- (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender object:(id)object
+{   
+    NSAssert(object == self.view, @"Bad class");
+    
+    if ([self.delegate respondsToSelector:@selector(draggingEntered:object:)]) {
+        return [self.delegate draggingEntered:sender object:self];
+    }
+    
+    return NSDragOperationNone;
+}
+
+
+/*
+ 
+ - draggingUpdated:object:
+ 
+ */
+- (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender object:(id)object
+{
+#pragma unused(object)
+    
+    if ([self.delegate respondsToSelector:@selector(draggingUpdated:object:)]) {
+        return [self.delegate draggingUpdated:sender object:self];
+    }
+    
+    return NSDragOperationNone;
+}
+
+/*
+ 
+ - draggingExited:object:
+ 
+ */
+- (void)draggingExited:(id < NSDraggingInfo >)sender object:(id)object
+{
+#pragma unused(object)
+    
+    if ([self.delegate respondsToSelector:@selector(draggingExited:object:)]) {
+        [self.delegate draggingExited:sender object:self];
+    }
+}
+
+/*
+ 
+ - prepareForDragOperation:object:
+ 
+ */
+- (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender object:(id)object
+{
+    #pragma unused(object)
+    
+    if ([self.delegate respondsToSelector:@selector(prepareForDragOperation:object:)]) {
+        [self.delegate prepareForDragOperation:sender object:self];
+    }
+    
+    return NO;
+}
+
+/*
+ 
+ - performDragOperation:object:
+ 
+ */
+- (BOOL)performDragOperation:(id < NSDraggingInfo >)sender object:(id)object
+{
+    #pragma unused(object)
+    
+    if ([self.delegate respondsToSelector:@selector(performDragOperation:object:)]) {
+        return [self.delegate performDragOperation:sender object:self];
+    }
+    
+    return NO;
+    
+}
+
+/*
+ 
+ - concludeDragOperation:object:
+ 
+ */
+- (void)concludeDragOperation:(id < NSDraggingInfo >)sender object:(id)object
+{
+    #pragma unused(object)
+    
+    if ([self.delegate respondsToSelector:@selector(concludeDragOperation:object:)]) {
+        [self.delegate concludeDragOperation:sender object:self];
+    }
+    
+}
+
+/*
+ 
+ - draggingEnded:object:
+ 
+ */
+- (void)draggingEnded:(id < NSDraggingInfo >)sender object:(id)object
+{
+    #pragma unused(object)
+    
+    if ([self.delegate respondsToSelector:@selector(draggingEnded:object:)]) {
+        [self.delegate draggingEnded:sender object:self];
+    }
+    
+}
 
 #pragma mark -
 #pragma mark Subview resizing
@@ -836,7 +1156,10 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		self.canDragHeight = [_typeEditViewController canDragHeight];	// generally YES
 		self.canDragMiddleView = [_typeEditViewController canDragMiddleView]; // depends on view functionality
 		self.parameterDescription = _typeEditViewController.parameterDescription;
-		
+	
+        //
+        // create input view
+        //
 	} else if (MGSParameterModeInput == _mode && [plugin respondsToSelector:@selector(createViewController:delegate:)]) {
 
 		// instantiate input view controller and associated view
@@ -908,12 +1231,13 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	[self setFrameSize:viewSize];
 	
 	// replace middle view
+    [newMiddleView  setFrame:frame];
 	[[self view] replaceSubview:self.middleView with:newMiddleView];
 	self.middleView = newMiddleView;
 	[self.middleView setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable]; // as coming from plugin ensure resizing is correct
 	
 	// set middle view frame
-	[self.middleView setFrame:frame];
+	//[self.middleView setFrame:frame];
 	[self.middleView setNeedsDisplay:YES];
 	[[self view] setNeedsDisplay:YES];
 	

@@ -573,6 +573,8 @@
 		AB7C197E1622F57600E45BD4 /* MGSClientNetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C197D1622F57600E45BD4 /* MGSClientNetRequest.m */; };
 		AB7C472F0DA2DEAD0008F562 /* ConnectToServer.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB7C472D0DA2DEAD0008F562 /* ConnectToServer.xib */; };
 		AB7C47320DA2DEE90008F562 /* MGSAddServerWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C47310DA2DEE90008F562 /* MGSAddServerWindowController.m */; };
+		AB804E091680E2550030D5C8 /* MGSNudgeDownTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB804E071680E2550030D5C8 /* MGSNudgeDownTemplate.tif */; };
+		AB804E0A1680E2550030D5C8 /* MGSNudgeUpTemplate.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB804E081680E2550030D5C8 /* MGSNudgeUpTemplate.tif */; };
 		AB805ACE0E9804DC0079688F /* CircleArrows16.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB805ACD0E9804DC0079688F /* CircleArrows16.tif */; };
 		AB805AE90E980BA30079688F /* NewWindow.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB805AE80E980BA30079688F /* NewWindow.tif */; };
 		AB805B170E9814030079688F /* NewWindow16.tif in Resources */ = {isa = PBXBuildFile; fileRef = AB805B160E9814030079688F /* NewWindow16.tif */; };
@@ -4080,6 +4082,9 @@
 		AB7C472E0DA2DEAD0008F562 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ConnectToServer.xib; sourceTree = "<group>"; };
 		AB7C47300DA2DEE90008F562 /* MGSAddServerWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSAddServerWindowController.h; sourceTree = "<group>"; };
 		AB7C47310DA2DEE90008F562 /* MGSAddServerWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSAddServerWindowController.m; sourceTree = "<group>"; };
+		AB804E061680A4510030D5C8 /* MGSViewDraggingProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSViewDraggingProtocol.h; sourceTree = "<group>"; };
+		AB804E071680E2550030D5C8 /* MGSNudgeDownTemplate.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MGSNudgeDownTemplate.tif; sourceTree = "<group>"; };
+		AB804E081680E2550030D5C8 /* MGSNudgeUpTemplate.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MGSNudgeUpTemplate.tif; sourceTree = "<group>"; };
 		AB805ACD0E9804DC0079688F /* CircleArrows16.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = CircleArrows16.tif; sourceTree = "<group>"; };
 		AB805AE80E980BA30079688F /* NewWindow.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NewWindow.tif; sourceTree = "<group>"; };
 		AB805B160E9814030079688F /* NewWindow16.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NewWindow16.tif; sourceTree = "<group>"; };
@@ -5991,6 +5996,8 @@
 		09976D430CDCA25000E78D55 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AB804E071680E2550030D5C8 /* MGSNudgeDownTemplate.tif */,
+				AB804E081680E2550030D5C8 /* MGSNudgeUpTemplate.tif */,
 				AB5996561620E8D100FE5567 /* DotRedNoUser.png */,
 				AB5996541620E8C600FE5567 /* DotGreenNoUser.png */,
 				AB5996521620E68F00FE5567 /* DotGreenUser.png */,
@@ -6518,9 +6525,6 @@
 				ABAFC4100DF9439E00349FC3 /* NumberInputView.xib */,
 				AB5C52761272199F0036DC92 /* OpenSourceFileAccessoryView.xib */,
 				AB8F0D870D30296F00F3631C /* OutputRequestView.xib */,
-				AB0463DA0E01D29E00194233 /* ParameterEndView.xib */,
-				ABBF60320E1BB85800F82F81 /* ParameterPluginInputView.xib */,
-				ABB15FAF0E0FE33F002AB48D /* ParameterView.xib */,
 				ABE81B0E0D36248500EF303E /* Preferences.xib */,
 				AB3A06310D3D6ECB005EB557 /* RequestTabView.xib */,
 				ABE81AE80D3621D900EF303E /* RequestView.xib */,
@@ -7730,6 +7734,7 @@
 				AB874D2A0D3385C5003A752B /* MGSParameterSplitView.m */,
 				AB8F0D610D30225F00F3631C /* MGSParameterView.h */,
 				AB8F0D620D30225F00F3631C /* MGSParameterView.m */,
+				AB804E061680A4510030D5C8 /* MGSViewDraggingProtocol.h */,
 				AB933D9D0D57527E005AB9BD /* MGSPlayButton.h */,
 				AB933D9E0D57527E005AB9BD /* MGSPlayButton.m */,
 				ABB271FD0DDE3D65004BBAB5 /* MGSPopupButton.h */,
@@ -8477,6 +8482,9 @@
 				ABAE66B50D6F117700A0FC53 /* ScriptView.xib */,
 				ABAA51860D7999C100C497E9 /* ActionEditView.xib */,
 				AB4BBCE20D64556C000A4B07 /* EditWindow.xib */,
+				AB0463DA0E01D29E00194233 /* ParameterEndView.xib */,
+				ABBF60320E1BB85800F82F81 /* ParameterPluginInputView.xib */,
+				ABB15FAF0E0FE33F002AB48D /* ParameterView.xib */,
 			);
 			name = "Edit window";
 			sourceTree = "<group>";
@@ -11275,6 +11283,8 @@
 				AB0932141671376400CA0D92 /* FlagYellowSmall.png in Resources */,
 				AB0932151671376400CA0D92 /* FlagRedSmall.png in Resources */,
 				AB0932161671376400CA0D92 /* FlagGreenSmall.png in Resources */,
+				AB804E091680E2550030D5C8 /* MGSNudgeDownTemplate.tif in Resources */,
+				AB804E0A1680E2550030D5C8 /* MGSNudgeUpTemplate.tif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

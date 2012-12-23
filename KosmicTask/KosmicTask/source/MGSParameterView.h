@@ -9,6 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSRoundedPanelView.h"
 
+extern NSString *MGSParameterViewPBoardType;
+extern NSString *MGSInputParameterPBoardType ;
+extern NSString *MGSInputParameterPBoard ;
+
 @interface MGSParameterView : MGSRoundedPanelView {
 
 }

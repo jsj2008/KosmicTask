@@ -14,9 +14,11 @@
 	BOOL _isDragging;
 	BOOL _restrictSubViewHeight;
 	NSMutableArray *_resizableParameters;
+    id _delegate;
 }
 
 @property BOOL isDragging;
+@property id delegate;
 
 //- (void)subView:(NSView *)view resizeViewWithNewSize:(NSSize)newSize;
 @end

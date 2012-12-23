@@ -18,7 +18,7 @@
 	
 	IBOutlet NSTextField *inputCountText;						// number of inputs
 	IBOutlet NSSegmentedControl *inputSegmentedControl;			// input segment control
-	IBOutlet MGSParameterViewManager *parameterViewHandler;		// parameter view handler
+	IBOutlet MGSParameterViewManager *parameterViewManager;		// parameter view handler
 	IBOutlet MGSEmptyParameterViewController *emptyParameterViewController;	// view to be displayed when zero parameters are defined
 	IBOutlet NSView *parameterView;								// view containing parameters
 	IBOutlet NSScrollView *parameterScrollView;					// parameter scrollview

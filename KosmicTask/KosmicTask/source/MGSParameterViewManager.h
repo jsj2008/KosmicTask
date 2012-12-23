@@ -23,6 +23,12 @@ enum _MGSParameterInputMenuTags {
     kMGSParameterInputMenuRemove = 5,
     kMGSParameterInputMenuInsertType = 6,
     kMGSParameterInputMenuAppendType = 7,
+    kMGSParameterInputMenuCut = 8,
+    kMGSParameterInputMenuCopy = 9,
+    kMGSParameterInputMenuPaste = 10,
+    
+    kMGSParameterInputMenuAdd = 100,
+    kMGSParameterInputMenuAddType = 101,
 };
 
 @protocol MGSParameterViewManager
@@ -49,7 +55,7 @@ enum _MGSParameterInputMenuTags {
     BOOL _dragging;
     NSPoint _lastDragLocation;
     IBOutlet NSMenu *inputParameterMenu;
-    MGSParameterViewController *_lastCickedParmeterViewController;
+    IBOutlet NSMenu *minimalInputParameterMenu;
     MGSParameterViewController *_selectedParameterViewController;
     BOOL _parameterScrollingEnabled;
 }
@@ -72,6 +78,10 @@ enum _MGSParameterInputMenuTags {
 - (IBAction)removeInputParameterAction:(id)sender;
 - (IBAction)moveUpInputParameterAction:(id)sender;
 - (IBAction)moveDownInputParameterAction:(id)sender;
+- (IBAction)cutInputParameterAction:(id)sender;
+- (IBAction)copyInputParameterAction:(id)sender;
+- (IBAction)pasteInputParameterAction:(id)sender;
+- (IBAction)pasteAppendInputParameterAction:(id)sender;
 
 @property MGSParameterMode mode;
 @property id delegate;
