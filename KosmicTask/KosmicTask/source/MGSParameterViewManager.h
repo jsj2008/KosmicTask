@@ -26,6 +26,7 @@ enum _MGSParameterInputMenuTags {
     kMGSParameterInputMenuCut = 8,
     kMGSParameterInputMenuCopy = 9,
     kMGSParameterInputMenuPaste = 10,
+    kMGSParameterInputMenuUndo = 11,
     
     kMGSParameterInputMenuAdd = 100,
     kMGSParameterInputMenuAddType = 101,
@@ -58,6 +59,8 @@ enum _MGSParameterInputMenuTags {
     IBOutlet NSMenu *minimalInputParameterMenu;
     MGSParameterViewController *_selectedParameterViewController;
     BOOL _parameterScrollingEnabled;
+    NSUndoManager *parameterInputUndoManager;
+    NSString *_undoActionName;
 }
 
 - (BOOL)commitPendingEdits;
@@ -82,6 +85,7 @@ enum _MGSParameterInputMenuTags {
 - (IBAction)copyInputParameterAction:(id)sender;
 - (IBAction)pasteInputParameterAction:(id)sender;
 - (IBAction)pasteAppendInputParameterAction:(id)sender;
+- (IBAction)undoInputParameterAction:(id)sender;
 
 @property MGSParameterMode mode;
 @property id delegate;

@@ -37,6 +37,7 @@
 - (NSPasteboard *)cutAndPastePasteBoard;
 - (IBAction)pasteInputParameterAction:(id)sender;
 - (MGSScriptParameter *)pasteBoardScriptParameter;
+- (void)undoInputParameterChange:(NSDictionary *)undoDict;
 
 @property BOOL parameterScrollingEnabled;
 @end
@@ -132,6 +133,8 @@
     menuDict = [MGSParameterViewController parameterTypeMenuDictionaryWithTarget:self action:@selector(inputParameterAppendMenuAction:)];
     parameterMenu = [menuDict objectForKey:@"menu"];
     [menuItem setSubmenu:parameterMenu];
+    
+    parameterInputUndoManager = [[NSUndoManager alloc] init];
 }
 
 /*
@@ -247,9 +250,13 @@
 - (void)closeParameterView:(MGSParameterViewController *)viewController
 {	
 	NSUInteger idx = NSNotFound;
-	
+	NSUInteger idxUndo = NSNotFound;
+    
 	if (!viewController) return;
 	
+    // need the model to be up to date if we restore the view via undo
+    [viewController updateModel];
+    
 	// get index of controller to remove
 	for (NSUInteger i = 0; i < [_viewControllers count]; i++) {
 		if ([[_viewControllers objectAtIndex:i] isEqual:viewController]) {
@@ -258,7 +265,8 @@
 		}
 	}
 	if (NSNotFound == idx) return;
-	
+	idxUndo = idx;
+    
     self.selectedParameterViewController = nil;
     
 	// remove the script parameter and view controller
@@ -282,6 +290,18 @@
 	if (_delegate && [_delegate respondsToSelector:@selector(parameterViewDidClose:)]) {
 		[_delegate parameterViewDidClose:viewController];
 	}
+    
+    // register undo
+    [parameterInputUndoManager registerUndoWithTarget:self
+                                             selector:@selector(undoInputParameterChange:)
+                                               object:@{ @"operation" : @"delete",
+                                                        @"viewController" : viewController,
+                                                        @"index" : @(idxUndo),
+                                                        }];
+    
+    // user assigned undo name if available
+    [parameterInputUndoManager setActionName:_undoActionName ? _undoActionName : NSLocalizedString(@"Close Input", @"Parameter close undo")];
+    _undoActionName = nil;
 }
 
 /*
@@ -725,6 +745,29 @@
 	[self controllerViewClicked:_actionViewController];
 }
 
+#pragma mark -
+#pragma mark Undo support
+
+/*
+ 
+ - undoInputParameterChange:
+ 
+ */
+- (void)undoInputParameterChange:(NSDictionary *)undoDict
+{
+    NSString *operation = [undoDict objectForKey:@"operation"];    
+    NSUInteger idx = [[undoDict objectForKey:@"index"] unsignedIntegerValue];
+    MGSParameterViewController *viewController = [undoDict objectForKey:@"viewController"];
+    
+    if ([operation isEqualToString:@"delete"]) {
+        if (idx >= [_viewControllers count]) {
+            [self appendInputParameterAction:viewController.scriptParameter];
+        } else {
+            self.selectedParameterViewController = [_viewControllers objectAtIndex:idx];
+            [self insertInputParameterAction:viewController.scriptParameter];
+        }
+    }
+}
 
 #pragma mark -
 #pragma mark NSMenuValidation protocol
@@ -777,11 +820,22 @@
                     }
                 }
             }
-            [menuItem setTitle:menuTitle];
+            break;
+        
+        case kMGSParameterInputMenuUndo:
+            menuTitle = NSLocalizedString(@"Undo", @"undo menu title");
+            valid = [parameterInputUndoManager canUndo];
+            if (valid) {
+                menuTitle = [parameterInputUndoManager undoMenuItemTitle];
+            }
             break;
             
         default:
             break;
+    }
+    
+    if (menuTitle) {
+        [menuItem setTitle:menuTitle];
     }
     
     return valid;
@@ -911,6 +965,8 @@
     if (![self commitPendingEdits]) return;
     
     if (self.selectedParameterViewController) {
+        _undoActionName = NSLocalizedString(@"Delete Input", @"Parameter delete undo");
+        
         [self closeParameterView:self.selectedParameterViewController];
     }
 }
@@ -1002,8 +1058,12 @@
 {
 #pragma unused(sender)
     
-    [self copyInputParameterAction:self];
-    [self removeInputParameterAction:self];
+    if (self.selectedParameterViewController) {
+        [self copyInputParameterAction:self];
+        
+        _undoActionName = NSLocalizedString(@"Cut Input", @"Parameter cut undo");        
+        [self closeParameterView:self.selectedParameterViewController];
+    }
 }
 
 /*
@@ -1067,6 +1127,19 @@
     }
 }
 
+/*
+ 
+ - undoInputParameterAction:
+ 
+ */
+- (IBAction)undoInputParameterAction:(id)sender
+{
+#pragma unused(sender)
+    
+    if (![self commitPendingEdits]) return;
+
+    [parameterInputUndoManager undo];
+}
 #pragma mark -
 #pragma mark Cut and paste
 
