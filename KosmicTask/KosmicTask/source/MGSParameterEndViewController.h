@@ -8,9 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MGSPopupButton;
 
 @interface MGSParameterEndViewController : NSViewController {
 	IBOutlet NSTextField *_textField;
+    IBOutlet NSSegmentedControl *inputSegmentedControl;
+    IBOutlet MGSPopupButton *contextPopupButton;
 }
+
+@property (readonly) NSSegmentedControl *inputSegmentedControl;
+@property (readonly) MGSPopupButton *contextPopupButton;
 
 @end

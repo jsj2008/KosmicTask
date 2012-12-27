@@ -28,7 +28,7 @@
 
 	NSCell *cell = [_textField cell];
 	if ([cell isKindOfClass:[MGSCapsuleTextCell class]]) {
-		[(MGSCapsuleTextCell *)cell setCapsuleHasShadow:YES];
+		[(MGSCapsuleTextCell *)cell setCapsuleHasShadow:NO];
 	}
 }
 

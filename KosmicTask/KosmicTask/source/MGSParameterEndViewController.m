@@ -11,6 +11,9 @@
 
 @implementation MGSParameterEndViewController
 
+@synthesize inputSegmentedControl;
+@synthesize contextPopupButton;
+
 /*
  
  init

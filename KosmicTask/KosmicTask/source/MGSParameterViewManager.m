@@ -1329,8 +1329,11 @@
 		
 		// lazy controller creation
 		if (!_endViewController) {
-			_endViewController = [[MGSParameterEndViewController alloc] init];
+			/*_endViewController = [[MGSParameterEndViewController alloc] init];
             _endViewController.view.menu = minimalInputParameterMenu;
+            _endViewController.contextPopupButton.menu = minimalInputParameterMenu;
+            _endViewController.inputSegmentedControl.target = _;
+            _endViewController.inputSegmentedControl.action = @selector(segmentClick);*/
 		}
 
 		// if our last view is not the end view then add one

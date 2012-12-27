@@ -50,7 +50,7 @@ enum _MGSParameterInputMenuTags {
 	//NSMutableArray *_viewControllerCache;
 	MGSScriptParameterManager * _scriptParameterManager;
 	MGSParameterMode _mode;
-	MGSParameterEndViewController *_endViewController;
+	IBOutlet MGSParameterEndViewController *_endViewController;
 	id _delegate;
 	MGSActionViewController *_actionViewController;
     BOOL _dragging;

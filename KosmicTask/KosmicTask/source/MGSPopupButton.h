@@ -10,8 +10,7 @@
 
 
 @interface MGSPopupButton : NSButton {
-
-	
+	    NSPopUpButtonCell *popUpCell;
 }
 
 @end

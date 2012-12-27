@@ -20,13 +20,15 @@
  */
 - (BOOL)trackMouse:(NSEvent *)theEvent inRect:(NSRect)cellFrame ofView:(NSView *)controlView untilMouseUp:(BOOL)untilMouseUp
 {
+    BOOL tracking = [super trackMouse:theEvent inRect:cellFrame ofView:controlView untilMouseUp:untilMouseUp];
+    
 	// show our menu on left mouse
 	if ([theEvent type] == NSLeftMouseDown) {
 		[NSMenu popUpContextMenu:[self menu] withEvent:theEvent forView:controlView];
-		return NO;
+		tracking = NO;
 	}
-	
-	return [super trackMouse:theEvent inRect:cellFrame ofView:controlView untilMouseUp:untilMouseUp];
+    
+	return tracking;
 }
 
 @end
