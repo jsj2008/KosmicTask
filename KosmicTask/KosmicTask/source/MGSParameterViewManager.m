@@ -398,7 +398,7 @@
 	
 	// update the view locations
 	[self updateViewLocations];
-	
+    
     // inform delegate that view added
 	if (_delegate && [_delegate respondsToSelector:@selector(parameterViewAdded:)]) {
 		[_delegate parameterViewAdded:viewController];
@@ -756,17 +756,43 @@
 - (void)undoInputParameterChange:(NSDictionary *)undoDict
 {
     NSString *operation = [undoDict objectForKey:@"operation"];    
-    NSUInteger idx = [[undoDict objectForKey:@"index"] unsignedIntegerValue];
+    NSUInteger idx = [[undoDict objectForKey:@"index"] unsignedIntegerValue];   // may be absent, default to zero
     MGSParameterViewController *viewController = [undoDict objectForKey:@"viewController"];
     
+    [parameterInputUndoManager disableUndoRegistration];
+    
+    // undo delete
     if ([operation isEqualToString:@"delete"]) {
+        
         if (idx >= [_viewControllers count]) {
+            
+            // append input
             [self appendInputParameterAction:viewController.scriptParameter];
         } else {
+            
+            // insert input
             self.selectedParameterViewController = [_viewControllers objectAtIndex:idx];
             [self insertInputParameterAction:viewController.scriptParameter];
         }
+        
+    // undo insert, append, duplicate
+    } else if ([operation isEqualToString:@"insert"] || [operation isEqualToString:@"append"]
+               || [operation isEqualToString:@"duplicate"] || [operation isEqualToString:@"paste"]) {
+        
+        // close the parameter
+        [self closeParameterView:viewController];
+        
+    // undo move
+    } else if ([operation isEqualToString:@"move"]) {
+        
+        NSUInteger sourceIdx = [_viewControllers indexOfObject:viewController];
+        
+        // move the parameter
+        [self moveParameterAtIndex:sourceIdx toIndex:idx];
+        [self scrollViewControllerVisible:viewController];
     }
+    
+    [parameterInputUndoManager enableUndoRegistration];
 }
 
 #pragma mark -
@@ -897,6 +923,16 @@
     self.selectedParameterViewController = sourceViewController;
     
     [self scrollViewControllerVisible:sourceViewController];
+    
+    // register undo
+    [parameterInputUndoManager registerUndoWithTarget:self
+                                             selector:@selector(undoInputParameterChange:)
+                                               object:@{ @"operation" : @"insert",
+                                                         @"viewController" : sourceViewController
+     }];
+    
+    // undo menu text
+    [parameterInputUndoManager setActionName:NSLocalizedString(@"Insert Input", @"Parameter Insert undo")];
 }
 
 /*
@@ -929,6 +965,17 @@
     self.selectedParameterViewController = parameterViewController;
     
     [self scrollViewControllerVisible:parameterViewController];
+    
+    // register undo
+    [parameterInputUndoManager registerUndoWithTarget:self
+                                             selector:@selector(undoInputParameterChange:)
+                                               object:@{ @"operation" : @"append",
+                                                    @"viewController" : parameterViewController
+     }];
+    
+    // undo menu text
+    [parameterInputUndoManager setActionName:NSLocalizedString(@"Append Input", @"Parameter Append undo")];
+
 }
 
 /*
@@ -952,6 +999,17 @@
     viewController.parameterName = [NSString stringWithFormat:@"%@ %@",
                                     viewController.parameterName,
                                     NSLocalizedString(@"copy", @"parameter copy suffix")];
+    
+    // register undo
+    [parameterInputUndoManager registerUndoWithTarget:self
+                                             selector:@selector(undoInputParameterChange:)
+                                               object:@{ @"operation" : @"duplicate",
+                                                        @"viewController" : viewController
+     }];
+    
+    // undo menu text
+    [parameterInputUndoManager setActionName:NSLocalizedString(@"Duplicate Input", @"Parameter duplicate undo")];
+    
 }
 
 /*
@@ -985,7 +1043,20 @@
     // get view to move
     if (!self.selectedParameterViewController) return;
     
+    NSUInteger idxUndo = [_viewControllers indexOfObject:self.selectedParameterViewController];
+    
     [self parameterViewController:self.selectedParameterViewController changeIndex:kMGSParameterIndexDecrease];
+
+    // register undo
+    [parameterInputUndoManager registerUndoWithTarget:self
+                                             selector:@selector(undoInputParameterChange:)
+                                               object:@{ @"operation" : @"move",
+                                                @"viewController" : self.selectedParameterViewController,
+                                                @"index" : @(idxUndo),
+     }];
+    
+    // undo menu text
+    [parameterInputUndoManager setActionName:NSLocalizedString(@"Move Input Up", @"Parameter move up undo")];
 }
 
 /*
@@ -1001,7 +1072,21 @@
     // get view to move
     if (!self.selectedParameterViewController) return;
     
+    NSUInteger idxUndo = [_viewControllers indexOfObject:self.selectedParameterViewController];
+    
     [self parameterViewController:self.selectedParameterViewController changeIndex:kMGSParameterIndexIncrease];
+    
+    // register undo
+    [parameterInputUndoManager registerUndoWithTarget:self
+                                             selector:@selector(undoInputParameterChange:)
+                                               object:@{ @"operation" : @"move",
+                                                @"viewController" : self.selectedParameterViewController,
+                                                @"index" : @(idxUndo),
+     }];
+    
+    // undo menu text
+    [parameterInputUndoManager setActionName:NSLocalizedString(@"Move Input Down", @"Parameter move down undo")];
+    
 }
 
 /*
@@ -1026,6 +1111,17 @@
     
     self.parameterScrollingEnabled = YES;
     [self scrollViewControllerVisible:self.selectedParameterViewController];
+    
+    // register undo
+    [parameterInputUndoManager registerUndoWithTarget:self
+                                             selector:@selector(undoInputParameterChange:)
+                                               object:@{ @"operation" : @"insert",
+                                                        @"viewController" : self.selectedParameterViewController
+     }];
+    
+    // undo menu text
+    [parameterInputUndoManager setActionName:NSLocalizedString(@"Insert Input", @"Parameter insert undo")];
+    
 }
 
 /*
@@ -1048,6 +1144,16 @@
     }
     self.parameterScrollingEnabled = YES;
     [self scrollViewControllerVisible:self.selectedParameterViewController];
+    
+    // register undo
+    [parameterInputUndoManager registerUndoWithTarget:self
+                                             selector:@selector(undoInputParameterChange:)
+                                               object:@{ @"operation" : @"insert",
+                                                        @"viewController" : self.selectedParameterViewController
+     }];
+    
+    // undo menu text
+    [parameterInputUndoManager setActionName:NSLocalizedString(@"Append Input", @"Parameter append undo")];
 }
 /*
  
@@ -1090,6 +1196,8 @@
     NSDictionary *parameterDict = viewController.scriptParameter.dict;
     [pasteBoard declareTypes:@[MGSInputParameterPBoardType] owner:self];
     [pasteBoard setPropertyList:parameterDict forType:MGSInputParameterPBoardType];
+    
+    // no undo required
 }
 
 
@@ -1107,6 +1215,17 @@
     if ([self canPasteInputParameter]) {
         MGSScriptParameter *scriptParameter = [self pasteBoardScriptParameter];
         [self insertInputParameterAction:scriptParameter];
+        
+        // register undo
+        [parameterInputUndoManager registerUndoWithTarget:self
+                                                 selector:@selector(undoInputParameterChange:)
+                                                   object:@{ @"operation" : @"paste",
+                                                            @"viewController" : self.selectedParameterViewController
+         }];
+        
+        // undo menu text
+        [parameterInputUndoManager setActionName:NSLocalizedString(@"Paste Input", @"Parameter paste undo")];
+        
     }
 }
 
@@ -1124,6 +1243,16 @@
     if ([self canPasteInputParameter]) {
         MGSScriptParameter *scriptParameter = [self pasteBoardScriptParameter];
         [self appendInputParameterAction:scriptParameter];
+        
+        // register undo
+        [parameterInputUndoManager registerUndoWithTarget:self
+                                                 selector:@selector(undoInputParameterChange:)
+                                                   object:@{ @"operation" : @"paste",
+                                                            @"viewController" : self.selectedParameterViewController
+         }];
+        
+        // undo menu name
+        [parameterInputUndoManager setActionName:NSLocalizedString(@"Paste Input", @"Parameter paste undo")];
     }
 }
 
@@ -1139,6 +1268,8 @@
     if (![self commitPendingEdits]) return;
 
     [parameterInputUndoManager undo];
+    
+    // no undo
 }
 #pragma mark -
 #pragma mark Cut and paste
