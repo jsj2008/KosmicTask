@@ -28,6 +28,8 @@
 #import "MGSParameterPlugin.h"
 #import "MGSAppCOntroller.h"
 
+NSString * MGSInputParameterException = @"MGSInputParameterException";
+
 // class extension
 @interface MGSParameterViewManager ()
 - (void)moveParameterAtIndex:(NSUInteger)sourceIndex toIndex:(NSUInteger)targetIndex;
@@ -38,6 +40,7 @@
 - (IBAction)pasteInputParameterAction:(id)sender;
 - (MGSScriptParameter *)pasteBoardScriptParameter;
 - (void)undoInputParameterChange:(NSDictionary *)undoDict;
+- (void)registerUndoForObject:(id)object actionName:(NSString *)actionName;
 
 @property BOOL parameterScrollingEnabled;
 @end
@@ -255,7 +258,7 @@
 - (void)closeParameterView:(MGSParameterViewController *)viewController
 {	
 	NSUInteger idx = NSNotFound;
-	NSUInteger idxUndo = NSNotFound;
+	NSUInteger changedIndex = NSNotFound;
     
 	if (!viewController) return;
 	
@@ -270,7 +273,7 @@
 		}
 	}
 	if (NSNotFound == idx) return;
-	idxUndo = idx;
+	changedIndex = idx;
     
     self.selectedParameterViewController = nil;
     
@@ -297,15 +300,10 @@
 	}
     
     // register undo
-    [parameterInputUndoManager registerUndoWithTarget:self
-                                             selector:@selector(undoInputParameterChange:)
-                                               object:@{ @"operation" : @"delete",
-                                                        @"viewController" : viewController,
-                                                        @"index" : @(idxUndo),
-                                                        }];
-    
-    // user assigned undo name if available
-    [parameterInputUndoManager setActionName:_undoActionName ? _undoActionName : NSLocalizedString(@"Close Input", @"Parameter close undo")];
+    NSDictionary *undoObject = @{ @"operation" : @"delete", @"scriptParameter" : viewController.scriptParameter.mutableDeepCopy, @"changedIndex" : @(changedIndex) };
+    NSString *actionName = _undoActionName ? _undoActionName : NSLocalizedString(@"Close Input", @"Parameter close undo");
+    [self registerUndoForObject:undoObject actionName:actionName];
+
     _undoActionName = nil;
 }
 
@@ -320,16 +318,13 @@
         
         [viewController updateModel];
         MGSScriptParameter *scriptParameter = viewController.scriptParameter.mutableDeepCopy;
-        
-        [parameterInputUndoManager registerUndoWithTarget:self
-                                                 selector:@selector(undoInputParameterChange:)
-                                                   object:@{ @"operation" : @"type",
-                                                            @"viewController" : viewController,
-                                                            @"scriptParameter" : scriptParameter,
-         }];
-        
-        // undo menu text
-        [parameterInputUndoManager setActionName: NSLocalizedString(@"Change Input Type", @"Parameter change type undo")];
+
+        NSUInteger changedIndex = [_viewControllers indexOfObject:viewController];
+
+        // register undo
+        NSDictionary *undoObject = @{ @"operation" : @"type", @"changedIndex" : @(changedIndex), @"scriptParameter" : viewController.scriptParameter.mutableDeepCopy, @"scriptParameter" : scriptParameter};
+        NSString *actionName = NSLocalizedString(@"Change Input Type", @"Parameter change type undo");
+        [self registerUndoForObject:undoObject actionName:actionName];
     }
 }
 
@@ -376,11 +371,15 @@
         MLogDebug(@"view controller not found");
         return;
     }
+
+    NSString *actionName = nil;
+
     
     switch (changeIndex) {
             
         // decrease the parameter index
         case kMGSParameterIndexDecrease:
+            actionName = NSLocalizedString(@"Move Input Up", @"Parameter move up undo");
             if (sourceControllerIndex == 0) {
                 return;
             }
@@ -389,16 +388,21 @@
             
         // increase the parameter index
         default:
+            actionName = NSLocalizedString(@"Move Input Down", @"Parameter move down undo");
             if (sourceControllerIndex >= [_viewControllers count] - 1) {
                 return;
             }
             targetControllerIndex = sourceControllerIndex + 1;
             break;
     }
-    
+
     [self moveParameterAtIndex:sourceControllerIndex toIndex:targetControllerIndex];
-    
+    self.selectedParameterViewController = viewController;
     [self scrollViewControllerVisible:viewController];
+    
+    // register undo
+    NSDictionary *undoObject = @{ @"operation" : @"move", @"scriptParameter" : self.selectedParameterViewController.scriptParameter.mutableDeepCopy, @"changedIndex" : @(targetControllerIndex), @"originalIndex" : @(sourceControllerIndex)};
+    [self registerUndoForObject:undoObject actionName:actionName];
 }
 
 #pragma mark -
@@ -788,57 +792,132 @@
 
 /*
  
+ - registerUndoForObject:actionName:
+ 
+ */
+- (void)registerUndoForObject:(id)object actionName:(NSString *)actionName
+{
+    if (![parameterInputUndoManager isUndoing]) {
+        // register undo
+        [parameterInputUndoManager registerUndoWithTarget:self
+                                                 selector:@selector(undoInputParameterChange:)
+                                                   object:object];
+        
+        // undo menu text
+        [parameterInputUndoManager setActionName:actionName];
+    }
+}
+
+/*
+ 
  - undoInputParameterChange:
  
  */
 - (void)undoInputParameterChange:(NSDictionary *)undoDict
 {
-    NSString *operation = [undoDict objectForKey:@"operation"];    
-    NSUInteger idx = [[undoDict objectForKey:@"index"] unsignedIntegerValue];   // may be absent, default to zero
-    MGSParameterViewController *viewController = [undoDict objectForKey:@"viewController"];
-    MGSScriptParameter *scriptParameter = [undoDict objectForKey:@"scriptParameter"];    // may be nil
-    NSUInteger controllerIdx = [_viewControllers indexOfObject:viewController];
-    
-    [parameterInputUndoManager disableUndoRegistration];
-    
-    // undo delete
-    if ([operation isEqualToString:@"delete"]) {
-        
-        if (idx >= [_viewControllers count]) {
-            
-            // append input
-            [self appendInputParameterAction:viewController.scriptParameter];
-        } else {
-            
-            // insert input
-            self.selectedParameterViewController = [_viewControllers objectAtIndex:idx];
-            [self insertInputParameterAction:viewController.scriptParameter];
-        }
-        
-    // undo insert, append, duplicate
-    } else if ([operation isEqualToString:@"insert"] || [operation isEqualToString:@"append"]
-               || [operation isEqualToString:@"duplicate"] || [operation isEqualToString:@"paste"]) {
-        
-        // close the parameter
-        [self closeParameterView:viewController];
-        
-    // undo move
-    } else if ([operation isEqualToString:@"move"]) {
-        
-        
-        // move the parameter
-        [self moveParameterAtIndex:controllerIdx toIndex:idx];
-        [self scrollViewControllerVisible:viewController];
-        
-        // undo type change
-    } else if ([operation isEqualToString:@"type"]) {
-        
-        [_scriptParameterManager replaceItemAtIndex:controllerIdx withItem:scriptParameter];
-        
-        viewController.scriptParameter = scriptParameter;
+    // get the original operation to be undone
+    NSString *operation = [undoDict objectForKey:@"operation"];
+    if (! operation) {
+        [NSException raise:MGSInputParameterException format:@"Undo operation is nil."];
     }
     
-    [parameterInputUndoManager enableUndoRegistration];
+    // get changed index and view controller
+    MGSParameterViewController *changedViewController = nil;
+    NSUInteger changedIndex = NSNotFound;
+    if ([undoDict objectForKey:@"changedIndex"]) {
+        changedIndex = [[undoDict objectForKey:@"changedIndex"] unsignedIntegerValue];
+
+        if (changedIndex < [_viewControllers count]) {
+            changedViewController = [_viewControllers objectAtIndex:changedIndex];
+        }
+    }
+
+    // get original index
+    NSUInteger originalIndex = NSNotFound;
+    if ([undoDict objectForKey:@"originalIndex"]) {
+        originalIndex = [[undoDict objectForKey:@"originalIndex"] unsignedIntegerValue];
+    }
+
+    // get the script parameter
+    MGSScriptParameter *scriptParameter = [undoDict objectForKey:@"scriptParameter"];
+
+    [parameterInputUndoManager disableUndoRegistration];
+
+    @try {
+        
+        // undo delete
+        if ([operation isEqualToString:@"delete"]) {
+            
+            if (changedIndex == NSNotFound) {
+                [NSException raise:MGSInputParameterException format:@"Controller index is missing for operation : %@", operation];
+            }
+
+
+            if (changedIndex >= [_viewControllers count]) {
+                
+                // append input
+                [self appendInputParameterAction:scriptParameter];
+            } else {
+                
+                if (!changedViewController) {
+                    [NSException raise:MGSInputParameterException format:@"Changed view controller is missing for operation : %@", operation];
+                }
+
+                 // insert input
+                self.selectedParameterViewController = changedViewController;
+                [self insertInputParameterAction:scriptParameter];
+            }
+            
+        // undo insert, append, duplicate
+        } else if ([operation isEqualToString:@"insert"] || [operation isEqualToString:@"append"]
+                   || [operation isEqualToString:@"duplicate"] || [operation isEqualToString:@"paste"]) {
+            
+            if (!changedViewController) {
+                [NSException raise:MGSInputParameterException format:@"Changed view controller is missing for operation : %@", operation];
+            }
+            
+            // close the parameter
+            [self closeParameterView:changedViewController];
+            
+        // undo move
+        } else if ([operation isEqualToString:@"move"]) {
+
+            if (changedIndex == NSNotFound || originalIndex == NSNotFound) {
+                [NSException raise:MGSInputParameterException format:@"Controller index is missing for operation : %@", operation];
+            }
+
+            if (!changedViewController) {
+                [NSException raise:MGSInputParameterException format:@"Changed view controller is missing for operation : %@", operation];
+            }
+
+             // move the parameter
+            [self moveParameterAtIndex:changedIndex toIndex:originalIndex];
+            [self scrollViewControllerVisible:changedViewController];
+            
+            // undo type change
+        } else if ([operation isEqualToString:@"type"]) {
+            
+            if (changedIndex == NSNotFound) {
+                [NSException raise:MGSInputParameterException format:@"Controller index is missing for operation : %@", operation];
+            }
+
+            [_scriptParameterManager replaceItemAtIndex:changedIndex withItem:scriptParameter];
+            
+            changedViewController.scriptParameter = scriptParameter;
+        } else {
+            [NSException raise:MGSInputParameterException format:@"Bad operation undo type found : %@", operation];
+        }
+    } @catch (NSException *e) {
+        
+        MLogInfo(@"Exception: %@ : %@", [e name], [e reason]);
+        
+    } @finally {
+        
+        [parameterInputUndoManager enableUndoRegistration];
+        
+    }
+    
+
 }
 
 #pragma mark -
@@ -950,36 +1029,39 @@
     MGSParameterViewController *targetViewController = self.selectedParameterViewController;
     if (!targetViewController) return;
     
-    NSUInteger targetIndex = [_viewControllers indexOfObject:targetViewController];
+    NSUInteger changedIndex = [_viewControllers indexOfObject:targetViewController];
+
+    [parameterInputUndoManager disableUndoRegistration];
 
     // insert parameter
-    MGSParameterViewController *sourceViewController = [self insertParameterAtIndex:targetIndex];
+    MGSParameterViewController *sourceViewController = [self insertParameterAtIndex:changedIndex];
 
     // if sender is a script parameter then use it
     if ([sender isKindOfClass:[MGSScriptParameter class]]) {
         
+        
         // copy the script parameter and update the manager
         MGSScriptParameter *scriptParameter = [(MGSScriptParameter *)sender mutableDeepCopy];
-        [_scriptParameterManager replaceItemAtIndex:targetIndex withItem:scriptParameter];
+        [_scriptParameterManager replaceItemAtIndex:changedIndex withItem:scriptParameter];
         
         sourceViewController.scriptParameter = scriptParameter;
+        
     }
     
+    [parameterInputUndoManager enableUndoRegistration];
+
     // select new view
     self.selectedParameterViewController = sourceViewController;
     
     [self scrollViewControllerVisible:sourceViewController];
-    
+
     // register undo
-    [parameterInputUndoManager registerUndoWithTarget:self
-                                             selector:@selector(undoInputParameterChange:)
-                                               object:@{ @"operation" : @"insert",
-                                                         @"viewController" : sourceViewController
-     }];
-    
-    // undo menu text
-    [parameterInputUndoManager setActionName:NSLocalizedString(@"Insert Input", @"Parameter Insert undo")];
+    NSDictionary *undoObject = @{ @"operation" : @"insert", @"changedIndex" : @(changedIndex), @"scriptParameter" : sourceViewController.scriptParameter.mutableDeepCopy};
+    NSString *actionName = NSLocalizedString(@"Insert Input", @"Parameter Insert undo");
+    [self registerUndoForObject:undoObject actionName:actionName];
+
 }
+
 
 /*
  
@@ -992,20 +1074,28 @@
     
     if (![self commitPendingEdits]) return;
     
+    [parameterInputUndoManager disableUndoRegistration];
+    
     // create parameter
     MGSParameterViewController *parameterViewController = [self appendParameter];
-    
+
+    NSUInteger changedIndex = [_viewControllers count] - 1;
+
     // if sender is a script parameter then use it
     if ([sender isKindOfClass:[MGSScriptParameter class]]) {
         
-         NSUInteger targetIndex = [_viewControllers indexOfObject:parameterViewController];
+        
+        NSUInteger targetIndex = [_viewControllers indexOfObject:parameterViewController];
         
         // copy the script parameter and update the manager
         MGSScriptParameter *scriptParameter = [(MGSScriptParameter *)sender mutableDeepCopy];
         [_scriptParameterManager replaceItemAtIndex:targetIndex withItem:scriptParameter];
         
         parameterViewController.scriptParameter = scriptParameter;
+        
     }
+
+    [parameterInputUndoManager enableUndoRegistration];
 
     // select new view
     self.selectedParameterViewController = parameterViewController;
@@ -1013,15 +1103,9 @@
     [self scrollViewControllerVisible:parameterViewController];
     
     // register undo
-    [parameterInputUndoManager registerUndoWithTarget:self
-                                             selector:@selector(undoInputParameterChange:)
-                                               object:@{ @"operation" : @"append",
-                                                    @"viewController" : parameterViewController
-     }];
-    
-    // undo menu text
-    [parameterInputUndoManager setActionName:NSLocalizedString(@"Append Input", @"Parameter Append undo")];
-
+    NSDictionary *undoObject = @{ @"operation" : @"append", @"changedIndex" : @(changedIndex), @"scriptParameter" : parameterViewController.scriptParameter.mutableDeepCopy};
+    NSString *actionName = NSLocalizedString(@"Append Input", @"Parameter Append undo");
+    [self registerUndoForObject:undoObject actionName:actionName];
 }
 
 /*
@@ -1038,23 +1122,24 @@
     // the parameter model only updates on request
     [self.selectedParameterViewController updateModel];
     
+    [parameterInputUndoManager disableUndoRegistration];
+
     // insert parameter and set scriptParameter
     [self insertInputParameterAction:self.selectedParameterViewController.scriptParameter];
-    
+
+    [parameterInputUndoManager enableUndoRegistration];
+
     MGSParameterViewController *viewController = self.selectedParameterViewController;
     viewController.parameterName = [NSString stringWithFormat:@"%@ %@",
                                     viewController.parameterName,
                                     NSLocalizedString(@"copy", @"parameter copy suffix")];
     
+    NSUInteger changedIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
+
     // register undo
-    [parameterInputUndoManager registerUndoWithTarget:self
-                                             selector:@selector(undoInputParameterChange:)
-                                               object:@{ @"operation" : @"duplicate",
-                                                        @"viewController" : viewController
-     }];
-    
-    // undo menu text
-    [parameterInputUndoManager setActionName:NSLocalizedString(@"Duplicate Input", @"Parameter duplicate undo")];
+    NSDictionary *undoObject = @{ @"operation" : @"duplicate", @"changedIndex" : @(changedIndex), @"scriptParameter" : viewController.scriptParameter.mutableDeepCopy};
+    NSString *actionName =NSLocalizedString(@"Duplicate Input", @"Parameter duplicate undo");
+    [self registerUndoForObject:undoObject actionName:actionName];
     
 }
 
@@ -1089,20 +1174,7 @@
     // get view to move
     if (!self.selectedParameterViewController) return;
     
-    NSUInteger idxUndo = [_viewControllers indexOfObject:self.selectedParameterViewController];
-    
     [self parameterViewController:self.selectedParameterViewController changeIndex:kMGSParameterIndexDecrease];
-
-    // register undo
-    [parameterInputUndoManager registerUndoWithTarget:self
-                                             selector:@selector(undoInputParameterChange:)
-                                               object:@{ @"operation" : @"move",
-                                                @"viewController" : self.selectedParameterViewController,
-                                                @"index" : @(idxUndo),
-     }];
-    
-    // undo menu text
-    [parameterInputUndoManager setActionName:NSLocalizedString(@"Move Input Up", @"Parameter move up undo")];
 }
 
 /*
@@ -1117,22 +1189,8 @@
     
     // get view to move
     if (!self.selectedParameterViewController) return;
-    
-    NSUInteger idxUndo = [_viewControllers indexOfObject:self.selectedParameterViewController];
-    
+
     [self parameterViewController:self.selectedParameterViewController changeIndex:kMGSParameterIndexIncrease];
-    
-    // register undo
-    [parameterInputUndoManager registerUndoWithTarget:self
-                                             selector:@selector(undoInputParameterChange:)
-                                               object:@{ @"operation" : @"move",
-                                                @"viewController" : self.selectedParameterViewController,
-                                                @"index" : @(idxUndo),
-     }];
-    
-    // undo menu text
-    [parameterInputUndoManager setActionName:NSLocalizedString(@"Move Input Down", @"Parameter move down undo")];
-    
 }
 
 /*
@@ -1147,29 +1205,26 @@
     // get location at which to insert the input
     MGSParameterViewController *viewController = self.selectedParameterViewController;
     if (!viewController) return;
+
+    [parameterInputUndoManager disableUndoRegistration];
 	
     // insert parameter
     self.parameterScrollingEnabled = NO;
     [self insertInputParameterAction:self];
     if (viewController != self.selectedParameterViewController) {
-        [parameterInputUndoManager disableUndoRegistration];
-        [self.selectedParameterViewController selectParameterTypeWithMenuTag:[sender tag]];
-        [parameterInputUndoManager enableUndoRegistration];
+         [self.selectedParameterViewController selectParameterTypeWithMenuTag:[sender tag]];
     }
+    [parameterInputUndoManager enableUndoRegistration];
     
     self.parameterScrollingEnabled = YES;
     [self scrollViewControllerVisible:self.selectedParameterViewController];
     
+    NSUInteger changedIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
+    
     // register undo
-    [parameterInputUndoManager registerUndoWithTarget:self
-                                             selector:@selector(undoInputParameterChange:)
-                                               object:@{ @"operation" : @"insert",
-                                                        @"viewController" : self.selectedParameterViewController
-     }];
-    
-    // undo menu text
-    [parameterInputUndoManager setActionName:NSLocalizedString(@"Insert Input", @"Parameter insert undo")];
-    
+    NSDictionary *undoObject = @{ @"operation" : @"insert", @"changedIndex" : @(changedIndex), @"scriptParameter" : self.selectedParameterViewController.scriptParameter.mutableDeepCopy};
+    NSString *actionName =NSLocalizedString(@"Insert Input", @"Parameter insert undo");
+    [self registerUndoForObject:undoObject actionName:actionName];    
 }
 
 /*
@@ -1183,27 +1238,26 @@
     
     // get selection - nil is okay as we may call this method when no views yet defined.
     MGSParameterViewController *viewController = self.selectedParameterViewController;
-	
+
+    [parameterInputUndoManager disableUndoRegistration];
+
     // append parameter
     self.parameterScrollingEnabled = NO;
     [self appendInputParameterAction:self];
     if (viewController != self.selectedParameterViewController) {
-        [parameterInputUndoManager disableUndoRegistration];
         [self.selectedParameterViewController selectParameterTypeWithMenuTag:[sender tag]];
-        [parameterInputUndoManager enableUndoRegistration];
     }
     self.parameterScrollingEnabled = YES;
     [self scrollViewControllerVisible:self.selectedParameterViewController];
-    
+
+    [parameterInputUndoManager enableUndoRegistration];
+
+    NSUInteger changedIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
+
     // register undo
-    [parameterInputUndoManager registerUndoWithTarget:self
-                                             selector:@selector(undoInputParameterChange:)
-                                               object:@{ @"operation" : @"insert",
-                                                        @"viewController" : self.selectedParameterViewController
-     }];
-    
-    // undo menu text
-    [parameterInputUndoManager setActionName:NSLocalizedString(@"Append Input", @"Parameter append undo")];
+    NSDictionary *undoObject = @{ @"operation" : @"append", @"changedIndex" : @(changedIndex), @"scriptParameter" : self.selectedParameterViewController.scriptParameter.mutableDeepCopy};
+    NSString *actionName = NSLocalizedString(@"Append Input", @"Parameter append undo");
+    [self registerUndoForObject:undoObject actionName:actionName];
 }
 /*
  
@@ -1263,19 +1317,20 @@
     if (![self commitPendingEdits]) return;
     
     if ([self canPasteInputParameter]) {
+        
+        [parameterInputUndoManager disableUndoRegistration];
+        
         MGSScriptParameter *scriptParameter = [self pasteBoardScriptParameter];
         [self insertInputParameterAction:scriptParameter];
-        
+
+        [parameterInputUndoManager enableUndoRegistration];
+
+        NSUInteger changedIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
+
         // register undo
-        [parameterInputUndoManager registerUndoWithTarget:self
-                                                 selector:@selector(undoInputParameterChange:)
-                                                   object:@{ @"operation" : @"paste",
-                                                            @"viewController" : self.selectedParameterViewController
-         }];
-        
-        // undo menu text
-        [parameterInputUndoManager setActionName:NSLocalizedString(@"Paste Input", @"Parameter paste undo")];
-        
+        NSDictionary *undoObject = @{ @"operation" : @"paste", @"changedIndex" : @(changedIndex), @"scriptParameter" : self.selectedParameterViewController.scriptParameter.mutableDeepCopy};
+        NSString *actionName = NSLocalizedString(@"Paste Input", @"Parameter paste undo");
+        [self registerUndoForObject:undoObject actionName:actionName];
     }
 }
 
@@ -1291,18 +1346,20 @@
     if (![self commitPendingEdits]) return;
     
     if ([self canPasteInputParameter]) {
+        
+        [parameterInputUndoManager disableUndoRegistration];
+
         MGSScriptParameter *scriptParameter = [self pasteBoardScriptParameter];
         [self appendInputParameterAction:scriptParameter];
         
-        // register undo
-        [parameterInputUndoManager registerUndoWithTarget:self
-                                                 selector:@selector(undoInputParameterChange:)
-                                                   object:@{ @"operation" : @"paste",
-                                                            @"viewController" : self.selectedParameterViewController
-         }];
+        [parameterInputUndoManager enableUndoRegistration];
+
+        NSUInteger changedIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
         
-        // undo menu name
-        [parameterInputUndoManager setActionName:NSLocalizedString(@"Paste Input", @"Parameter paste undo")];
+        // register undo
+        NSDictionary *undoObject = @{ @"operation" : @"paste", @"changedIndex" : @(changedIndex), @"scriptParameter" : self.selectedParameterViewController.scriptParameter.mutableDeepCopy};
+        NSString *actionName = NSLocalizedString(@"Paste Input", @"Parameter paste undo");
+        [self registerUndoForObject:undoObject actionName:actionName];
     }
 }
 
