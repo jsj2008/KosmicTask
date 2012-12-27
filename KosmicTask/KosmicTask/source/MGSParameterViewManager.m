@@ -197,6 +197,9 @@
  */
 -(void)setScriptParameterManager:(MGSScriptParameterManager *)aScriptParameterManager
 {
+    [parameterInputUndoManager removeAllActions];
+    [parameterInputUndoManager disableUndoRegistration];
+    
 	NSAssert(aScriptParameterManager, @"script parameter manager is null");
 	_scriptParameterManager = aScriptParameterManager;
 	
@@ -205,6 +208,8 @@
 	
 	// create new views for parameters
 	[self createViews];
+    
+    [parameterInputUndoManager enableUndoRegistration];
 }
 
 #pragma mark -
@@ -304,6 +309,39 @@
     _undoActionName = nil;
 }
 
+/*
+ 
+ - parameterViewControllerTypeWillChange:
+ 
+ */
+- (void)parameterViewControllerTypeWillChange:(MGSParameterViewController *)viewController
+{
+    if ([parameterInputUndoManager isUndoRegistrationEnabled]) {
+        
+        [viewController updateModel];
+        MGSScriptParameter *scriptParameter = viewController.scriptParameter.mutableDeepCopy;
+        
+        [parameterInputUndoManager registerUndoWithTarget:self
+                                                 selector:@selector(undoInputParameterChange:)
+                                                   object:@{ @"operation" : @"type",
+                                                            @"viewController" : viewController,
+                                                            @"scriptParameter" : scriptParameter,
+         }];
+        
+        // undo menu text
+        [parameterInputUndoManager setActionName: NSLocalizedString(@"Change Input Type", @"Parameter change type undo")];
+    }
+}
+
+/*
+ 
+ - parameterViewControllerTypeDidChange:
+ 
+ */
+- (void)parameterViewControllerTypeDidChange:(MGSParameterViewController *)viewController
+{
+#pragma unused(viewController)
+}
 /*
  
  reset enabled changed
@@ -758,6 +796,8 @@
     NSString *operation = [undoDict objectForKey:@"operation"];    
     NSUInteger idx = [[undoDict objectForKey:@"index"] unsignedIntegerValue];   // may be absent, default to zero
     MGSParameterViewController *viewController = [undoDict objectForKey:@"viewController"];
+    MGSScriptParameter *scriptParameter = [undoDict objectForKey:@"scriptParameter"];    // may be nil
+    NSUInteger controllerIdx = [_viewControllers indexOfObject:viewController];
     
     [parameterInputUndoManager disableUndoRegistration];
     
@@ -785,11 +825,17 @@
     // undo move
     } else if ([operation isEqualToString:@"move"]) {
         
-        NSUInteger sourceIdx = [_viewControllers indexOfObject:viewController];
         
         // move the parameter
-        [self moveParameterAtIndex:sourceIdx toIndex:idx];
+        [self moveParameterAtIndex:controllerIdx toIndex:idx];
         [self scrollViewControllerVisible:viewController];
+        
+        // undo type change
+    } else if ([operation isEqualToString:@"type"]) {
+        
+        [_scriptParameterManager replaceItemAtIndex:controllerIdx withItem:scriptParameter];
+        
+        viewController.scriptParameter = scriptParameter;
     }
     
     [parameterInputUndoManager enableUndoRegistration];
@@ -1106,7 +1152,9 @@
     self.parameterScrollingEnabled = NO;
     [self insertInputParameterAction:self];
     if (viewController != self.selectedParameterViewController) {
-        [self.selectedParameterViewController selectParmaterTypeWithMenuTag:[sender tag]];
+        [parameterInputUndoManager disableUndoRegistration];
+        [self.selectedParameterViewController selectParameterTypeWithMenuTag:[sender tag]];
+        [parameterInputUndoManager enableUndoRegistration];
     }
     
     self.parameterScrollingEnabled = YES;
@@ -1140,7 +1188,9 @@
     self.parameterScrollingEnabled = NO;
     [self appendInputParameterAction:self];
     if (viewController != self.selectedParameterViewController) {
-        [self.selectedParameterViewController selectParmaterTypeWithMenuTag:[sender tag]];
+        [parameterInputUndoManager disableUndoRegistration];
+        [self.selectedParameterViewController selectParameterTypeWithMenuTag:[sender tag]];
+        [parameterInputUndoManager enableUndoRegistration];
     }
     self.parameterScrollingEnabled = YES;
     [self scrollViewControllerVisible:self.selectedParameterViewController];
@@ -1497,6 +1547,8 @@
  */
 - (MGSParameterViewController *)createView
 {
+    [parameterInputUndoManager disableUndoRegistration];
+    
 	// create new view
 	MGSParameterViewController *viewController = [[MGSParameterViewController alloc] initWithMode:self.mode];
 	[viewController setDelegate:self];
@@ -1508,7 +1560,9 @@
 	[viewController view];
 	
     [[viewController view] registerForDraggedTypes:@[MGSParameterViewPBoardType]];
-    
+
+    [parameterInputUndoManager enableUndoRegistration];
+
 	// our view controller now references a fully initialised object
 	return viewController;
 }

@@ -557,10 +557,10 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 
 /*
  
- - selectParmaterTypeWithMenuTag:
+ - selectParameterTypeWithMenuTag:
  
  */
-- (void)selectParmaterTypeWithMenuTag:(NSUInteger)tag
+- (void)selectParameterTypeWithMenuTag:(NSUInteger)tag
 {
     [typePopup selectItemWithTag:tag];
     [self typePopupMenuItemSelected:[typePopup.menu itemWithTag:tag]];
@@ -579,6 +579,10 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		return;
 	}
 
+    if ([self.delegate respondsToSelector:@selector(parameterViewControllerTypeWillChange:)]) {
+        [self.delegate parameterViewControllerTypeWillChange:self];
+    }
+    
     BOOL updateParameterDescription = NO;
     if ([[_scriptParameter description] isEqualToString:self.parameterDescription]) {
         updateParameterDescription = YES;
@@ -598,6 +602,10 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	}
     if (![_scriptParameter description] || [[_scriptParameter description] isEqualToString:@""] || updateParameterDescription) {
         [_scriptParameter setDescription:descripton];
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(parameterViewControllerTypeDidChange:)]) {
+        [self.delegate parameterViewControllerTypeDidChange:self];
     }
 }
 

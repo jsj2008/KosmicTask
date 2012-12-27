@@ -29,6 +29,8 @@ typedef NSInteger MGSParameterIndexChange;
 - (void)parameterViewController:(MGSParameterViewController *)sender didChangeResetEnabled:(BOOL)resetEnabled;
 - (void)parameterViewController:(MGSParameterViewController *)sender changeIndex:(MGSParameterIndexChange)changeIndex;
 - (void)dragParameterView:(MGSParameterViewController *)controller event:(NSEvent *)event;
+- (void)parameterViewControllerTypeWillChange:(MGSParameterViewController *)sender;
+- (void)parameterViewControllerTypeDidChange:(MGSParameterViewController *)sender;
 @end
 
 // parameter mode
@@ -137,7 +139,7 @@ typedef enum _MGSParameterType {
 
 - (BOOL)isHighlighted;
 - (void)setIsHighlighted:(BOOL)value;
-- (void)selectParmaterTypeWithMenuTag:(NSUInteger)tag;
+- (void)selectParameterTypeWithMenuTag:(NSUInteger)tag;
 - (void)updateModel;
 - (void)markModelDataAsModified;
 
