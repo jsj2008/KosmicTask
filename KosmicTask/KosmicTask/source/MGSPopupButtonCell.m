@@ -18,17 +18,31 @@
  this gives Mail.app like popup button behaviour
  
  */
-- (BOOL)trackMouse:(NSEvent *)theEvent inRect:(NSRect)cellFrame ofView:(NSView *)controlView untilMouseUp:(BOOL)untilMouseUp
+- (BOOL)trackMouse:(NSEvent *)event inRect:(NSRect)cellFrame ofView:(NSView *)controlView untilMouseUp:(BOOL)untilMouseUp
 {
-    BOOL tracking = [super trackMouse:theEvent inRect:cellFrame ofView:controlView untilMouseUp:untilMouseUp];
-    
 	// show our menu on left mouse
-	if ([theEvent type] == NSLeftMouseDown) {
-		[NSMenu popUpContextMenu:[self menu] withEvent:theEvent forView:controlView];
-		tracking = NO;
+	if ([event type] == NSLeftMouseDown) {
+        
+        NSPoint result = [controlView convertPoint:cellFrame.origin toView:nil];
+       
+        NSEvent *newEvent = [NSEvent mouseEventWithType: [event type]
+                                               location: result
+                                          modifierFlags: [event modifierFlags]
+                                              timestamp: [event timestamp]
+                                           windowNumber: [event windowNumber]
+                                                context: [event context]
+                                            eventNumber: [event eventNumber]
+                                             clickCount: [event clickCount]
+                                               pressure: [event pressure]];
+        
+        // need to generate a new event otherwise selection of button
+        // after menu display fails
+		[NSMenu popUpContextMenu:[self menu] withEvent:newEvent forView:controlView];
+        
+		return YES;
 	}
-    
-	return tracking;
+	
+	return [super trackMouse:event inRect:cellFrame ofView:controlView untilMouseUp:untilMouseUp];
 }
 
 @end
