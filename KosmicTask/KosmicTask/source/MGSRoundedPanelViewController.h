@@ -76,6 +76,8 @@
 - (NSRect)middleDragThumbRect;				// NSRect for middle drag thumb
 - (BOOL)isHighlighted;						// YES if view highlighted
 - (void)setIsHighlighted:(BOOL)value;		//
+- (BOOL)isDragTarget;
+- (void)setIsDragTarget:(BOOL)value;
 - (void)setBannerRightBackgroundColor:(NSColor *)color;
 - (void)modifyBottomViewHeightBy:(CGFloat)heightDelta;
 - (CGFloat)canModifyBottomViewHeightBy:(CGFloat)heightDelta;

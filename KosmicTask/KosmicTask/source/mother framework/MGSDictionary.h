@@ -16,6 +16,7 @@
 }
 + (id) newDict;
 + (id) dictWithDict:(NSMutableDictionary *)dict;
+- (id)initWithDictionary:(NSDictionary *)dict;
 - (void)setDict:(NSMutableDictionary *)dict;
 - (NSMutableDictionary *)dict;
 - (NSString *)name;

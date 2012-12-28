@@ -129,6 +129,27 @@
 
 /*
  
+ - isDragTarget
+ 
+ */
+- (BOOL)isDragTarget
+{
+	return [(MGSRoundedPanelView *)[self view] isDragTarget];
+}
+
+/*
+ 
+ - setIsDragTarget:
+ 
+ */
+- (void)setIsDragTarget:(BOOL)value
+{
+	//if (self.allowHighlight) {
+		[(MGSRoundedPanelView *)[self view] setIsDragTarget:value];
+	//}
+}
+/*
+ 
  set banner right background color
  
  */

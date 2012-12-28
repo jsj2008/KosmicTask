@@ -302,27 +302,6 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 
 /*
  
- - isHighlighted
- 
- */
-- (BOOL)isHighlighted
-{
-    return self.parameterView.isHighlighted;
-}
-
-
-/*
- 
- - setIsHighlighted:
- 
- */
-- (void)setIsHighlighted:(BOOL)value
-{
-    self.parameterView.isHighlighted = value;
-}
-
-/*
- 
  - setCanDecreaseDisplayIndex:
  
  */
@@ -863,7 +842,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
     #pragma unused(object)
     
     if ([self.delegate respondsToSelector:@selector(prepareForDragOperation:object:)]) {
-        [self.delegate prepareForDragOperation:sender object:self];
+        return [self.delegate prepareForDragOperation:sender object:self];
     }
     
     return NO;
@@ -909,6 +888,10 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 - (void)draggingEnded:(id < NSDraggingInfo >)sender object:(id)object
 {
     #pragma unused(object)
+    
+    if (self.dragging) {
+        self.dragging = NO;
+    }
     
     if ([self.delegate respondsToSelector:@selector(draggingEnded:object:)]) {
         [self.delegate draggingEnded:sender object:self];

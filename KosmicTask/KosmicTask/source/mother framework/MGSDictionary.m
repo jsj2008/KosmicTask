@@ -76,11 +76,31 @@
 	return this;
 }
 
+/*
+ 
+ - init
+ 
+ */
 - (id)init
 {
-	if ([super init]) {
+    // call designated initialiser
+    return [self initWithDictionary:nil];
+}
+
+/*
+ 
+ - initWithDictionary:
+ 
+ */
+- (id)initWithDictionary:(NSDictionary *)dict
+{
+    self = [super init];
+    if (self) {
 		_dict = [NSMutableDictionary dictionaryWithCapacity:25];
-		
+        if (dict) {
+            [_dict addEntriesFromDictionary:dict];
+        }
+        
 		//
 		// note that it might be better to look at the main bundle's list of support localizations
 		//
@@ -95,7 +115,7 @@
 			_preferredLang = [@"-" stringByAppendingString:preferredLang];
 		}
 	}
-	return self;		 
+	return self;
 }
 
 // this object is merely a wrapper for the dictionary object.

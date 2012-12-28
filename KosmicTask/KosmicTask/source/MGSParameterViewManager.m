@@ -30,6 +30,7 @@
 
 NSString * MGSInputParameterException = @"MGSInputParameterException";
 NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
+NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 
 // class extension
 @interface MGSParameterViewManager ()
@@ -243,9 +244,19 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
     // define pasteboard
     NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
     [pboard declareTypes:@[MGSParameterViewPBoardType] owner:self];
-    [pboard setPropertyList:@{ @"index" : @(viewIndex)} forType:MGSParameterViewPBoardType];
+    
+    [controller updateModel];
+    MGSScriptParameter *scriptParameter = controller.scriptParameter.mutableCopy;
+    [pboard setPropertyList:@{ @"scriptParameterDict" : scriptParameter.dict, @"index" : @(viewIndex) } forType:MGSParameterViewPBoardType];
 
     NSImage *dragImage = controller.view.mgs_dragImage;
+    CGFloat newWidth = 300.0f;
+    if (dragImage.size.width > newWidth) {
+        CGFloat newHeight = newWidth * dragImage.size.height / dragImage.size.width;
+        NSSize newImageSize = NSMakeSize(newWidth, newHeight);
+        [dragImage setSize:newImageSize];
+    }
+    
     [controller.view dragImage:dragImage
                             at:imageLocation
                         offset:dragOffset
@@ -551,6 +562,7 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
 {
     #pragma unused(anImage)
     #pragma unused(aPoint)
+    #pragma unused(operation)
     
     [_draggingAutoscrollTimer invalidate];
     _draggingAutoscrollTimer = nil;
@@ -583,6 +595,9 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
  
  - draggingEntered:object:
  
+ these methods are received from the viewController which may be able
+ to deal with them directly rather than handling them here.
+ 
  */
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender object:(id)object
 {
@@ -599,6 +614,7 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
             //if (!viewController.isHighlighted) {
             //    viewController.isHighlighted = YES;
             //}
+            viewController.isDragTarget = YES;
         }
         return NSDragOperationGeneric;
         //}
@@ -638,9 +654,7 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
         //if (sourceDragMask & NSDragOperationGeneric) {
         
         if (!viewController.dragging) {
-            if (viewController.isHighlighted) {
-                viewController.isHighlighted = NO;
-            }
+            viewController.isDragTarget = NO;
         }
         //}
     }
@@ -655,8 +669,19 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
 {
 #pragma unused(sender)
 #pragma unused(object)
+
+    BOOL accept = NO;
     
-    return YES;
+    MGSParameterViewController *targetViewController = object;
+    if ([_viewControllers containsObject:targetViewController]) {
+        accept = YES;
+        
+        if (targetViewController.dragging) {
+            accept = NO;
+        }
+    }
+    
+    return accept;
 }
 
 /*
@@ -670,30 +695,47 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
     NSAssert([_viewControllers containsObject:targetViewController], @"bad view controller");
     
     BOOL accept = NO;
+
+    if (![self commitPendingEdits]) return accept;
     
     //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
     NSPasteboard *pboard = [sender draggingPasteboard];
     
-    // parameter view type
-    if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
+    @try {
+        // parameter view type
+        if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
 
-        // get our dictionary
-        NSDictionary *info = [pboard propertyListForType:MGSParameterViewPBoardType];
-        NSNumber *indexNumber = [info objectForKey:@"index"];
-        
-        // get index of dropped view
-        if (indexNumber && [indexNumber isKindOfClass:[NSNumber class]]) {
-            NSInteger sourceViewIndex = [indexNumber integerValue];
+            // get our dictionary
+            NSDictionary *info = [pboard propertyListForType:MGSParameterViewPBoardType];
+            NSDictionary *scriptParameterDict = [info objectForKey:@"scriptParameterDict"];
             
-            if (sourceViewIndex < (NSInteger)[_viewControllers count]) {
-                NSInteger targetViewIndex = [_viewControllers indexOfObject:targetViewController];
-                
-                [self moveParameterAtIndex:sourceViewIndex toIndex:targetViewIndex];
-                
-                //[self performSelector:@selector(scrollViewControllerVisible:) withObject:viewController afterDelay:0];
-                
+            if (!scriptParameterDict || ![scriptParameterDict isKindOfClass:[NSDictionary class]]) {
+                [NSException raise:MGSInputParameterDragException format:@"Script parameter dictionary not found"];
             }
+
+            //if (![info objectForKey:@"index"]) {
+            //    [NSException raise:MGSInputParameterDragException format:@"Controller index not found"];
+            //}
+
+            MGSScriptParameter *scriptParameter = [[MGSScriptParameter alloc] initWithDictionary:scriptParameterDict];
+            
+            // configure undo
+            self.undoActionName = NSLocalizedString(@"Paste Input", @"Parameter paste undo");
+            self.undoActionOperation = @"paste";
+
+            self.selectedParameterViewController = targetViewController;
+            
+            if ([_viewControllers count] == 0) {                
+                [self appendInputParameterAction:scriptParameter];
+            } else if ([self canPasteInputParameter]) {
+                [self insertInputParameterAction:scriptParameter];                
+            }
+            
+            accept = YES;
         }
+    } @catch (NSException *e) {
+        MLogInfo(@"%@ : %@", e.name, e.reason);
+        accept = NO;
     }
 
     return accept;
@@ -717,8 +759,22 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
  */
 - (void)draggingEnded:(id < NSDraggingInfo >)sender object:(id)object
 {
-#pragma unused(sender)
-#pragma unused(object)
+   
+    NSPasteboard *pboard = [sender draggingPasteboard];
+    //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+    
+    MGSParameterViewController *viewController = object;
+    NSAssert([_viewControllers containsObject:viewController], @"bad view controller");
+    
+    if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
+        //if (sourceDragMask & NSDragOperationGeneric) {
+        
+        if (!viewController.dragging) {
+            viewController.isDragTarget = NO;
+        }
+        //}
+    }
+
 }
 
 #pragma mark -

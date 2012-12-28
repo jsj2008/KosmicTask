@@ -138,8 +138,6 @@ typedef enum _MGSParameterType {
 - (void)resetToDefaultValue;
 - (void)subview:(NSView *)view wantsNewSize:(NSSize)newSize;
 
-- (BOOL)isHighlighted;
-- (void)setIsHighlighted:(BOOL)value;
 - (void)selectParameterTypeWithMenuTag:(NSUInteger)tag;
 - (void)updateModel;
 - (void)markModelDataAsModified;

@@ -15,6 +15,7 @@
 @private
 	IBOutlet id delegate;
 	BOOL _isHighlighted;
+    BOOL _isDragTarget;
 	BOOL _drawFooter;
 	BOOL _wasFirstResponder;
 	BOOL _observeFirstResponder;
@@ -47,6 +48,7 @@
 
 @property id delegate;
 @property BOOL isHighlighted;
+@property BOOL isDragTarget;
 @property BOOL drawFooter;
 @property CGFloat footerHeight;
 @property CGFloat bannerHeight;
@@ -59,7 +61,10 @@
 @property (copy) NSColor *bannerMidColor;		// mid hue color
 @property (copy) NSColor *bannerEndColor;		// darkest color
 
++ (NSColor *)highlightColor;
++ (NSColor *)dragTargetOutlineColor;
 - (void)subviewClicked:(NSView *)aView;
+
 
 @end
 

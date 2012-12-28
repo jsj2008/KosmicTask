@@ -84,7 +84,7 @@ NSString *MGSInputParameterPBoard = @"MGSInputParameterPBoard";
 - (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
 {
     if ([self.delegate respondsToSelector:@selector(prepareForDragOperation:object:)]) {
-        [self.delegate prepareForDragOperation:sender object:self];
+        return [self.delegate prepareForDragOperation:sender object:self];
     }
     
     return NO;

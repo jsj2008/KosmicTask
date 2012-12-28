@@ -52,6 +52,7 @@ const char MGSContextFirstResponder;
 
 @synthesize delegate;
 @synthesize isHighlighted = _isHighlighted;
+@synthesize isDragTarget = _isDragTarget;
 @synthesize drawFooter = _drawFooter;
 @synthesize footerHeight = _footerHeight;
 @synthesize bannerHeight = _bannerHeight;
@@ -62,7 +63,27 @@ const char MGSContextFirstResponder;
 @synthesize hasConnector = _hasConnector;
 @synthesize bannerStartColor = _bannerStartColor;
 @synthesize bannerMidColor = _bannerMidColor;
-@synthesize bannerEndColor = _bannerEndColor;	
+@synthesize bannerEndColor = _bannerEndColor;
+
+/*
+ 
+ + highlightColor
+ 
+ */
++ (NSColor *)highlightColor
+{
+    return [NSColor colorWithCalibratedRed:0.953f green:0.275f blue:0.282f alpha:0.8f];
+}
+
+/*
+ 
+ + dragTargetOutlineColor
+ 
+ */
++ (NSColor *)dragTargetOutlineColor
+{
+    return [NSColor colorWithCalibratedRed:0.275f green:0.953f blue:0.282f alpha:0.8f];
+}
 /*
  
  init with frame
@@ -296,15 +317,24 @@ const char MGSContextFirstResponder;
 	[bgBannerPath stroke];
 	
 	//================================
-	// draw highlight
+	// draw outline
 	//================================
-	if (_isHighlighted) {
-		NSColor *highlightColor = [NSColor colorWithCalibratedRed:0.953f green:0.275f blue:0.282f alpha:0.8f];
+	if (_isHighlighted || _isDragTarget) {
+		NSColor *highlightColor = nil;
+        
+        if (_isHighlighted) {
+            highlightColor = [[self class] highlightColor];
+        }
+
+        if (_isDragTarget) {
+            highlightColor = [[self class] dragTargetOutlineColor];
+        }
+
 		[bgOutlinePath setLineWidth:3];
 		[highlightColor set];
 		[bgOutlinePath stroke];
-		
 	}
+    
 }	
 
 /*
@@ -315,6 +345,17 @@ const char MGSContextFirstResponder;
 - (void)setIsHighlighted:(BOOL)value
 {
 	_isHighlighted = value;
+	[self setNeedsDisplay:YES];
+}
+
+/*
+ 
+ - setIsDragTarget:
+ 
+ */
+- (void)setIsDragTarget:(BOOL)value
+{
+	_isDragTarget = value;
 	[self setNeedsDisplay:YES];
 }
 
