@@ -205,14 +205,12 @@ char MGSParameterViewSelectedContext;
 			
 			// add item
 		case MGSAddItem:;
-			MGSParameterViewController *viewController = [parameterViewManager appendParameter];
-			[parameterViewManager selectParameter:viewController];
-			[parameterViewManager scrollViewControllerVisible:viewController];
+			[parameterViewManager appendInputParameterAction:self];
 			break;
 			
 			// remove item
 			case MGSRemoveItem:;
-			[parameterViewManager closeParameterView:parameterViewManager.selectedParameterViewController];
+			[parameterViewManager removeInputParameterAction:self];
 			break;
 			
 			default:
