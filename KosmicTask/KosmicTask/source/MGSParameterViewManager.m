@@ -607,20 +607,20 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
     MGSParameterViewController *viewController = object;
     NSAssert([_viewControllers containsObject:viewController], @"bad view controller");
     
+    NSUInteger dragOperation = NSDragOperationNone;
+    
     if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
         //if (sourceDragMask & NSDragOperationGeneric) {
         
-        if (!viewController.dragging) {
-            //if (!viewController.isHighlighted) {
-            //    viewController.isHighlighted = YES;
-            //}
+        if (!viewController.dragging && viewController.mode == MGSParameterModeEdit) {
             viewController.isDragTarget = YES;
+            dragOperation = NSDragOperationGeneric;
+
         }
-        return NSDragOperationGeneric;
         //}
     }
     
-    return NSDragOperationNone;
+    return dragOperation;
 }
 
 
@@ -674,10 +674,9 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
     
     MGSParameterViewController *targetViewController = object;
     if ([_viewControllers containsObject:targetViewController]) {
-        accept = YES;
         
-        if (targetViewController.dragging) {
-            accept = NO;
+        if (!targetViewController.dragging && targetViewController.mode == MGSParameterModeEdit) {
+            accept = YES;
         }
     }
     
