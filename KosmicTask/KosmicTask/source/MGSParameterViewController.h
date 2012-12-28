@@ -120,6 +120,7 @@ typedef enum _MGSParameterType {
 @property (readonly) BOOL resetEnabled;
 @property BOOL canDecreaseDisplayIndex;
 @property BOOL canIncreaseDisplayIndex;
+@property BOOL dragging;
 
 + (id)parameterTypeMenuDictionaryWithTarget:(id)target action:(SEL)selector;
 - (id)initWithMode:(MGSParameterMode)mode;

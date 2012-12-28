@@ -42,6 +42,7 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
 - (MGSScriptParameter *)pasteBoardScriptParameter;
 - (void)undoInputParameterChange:(NSDictionary *)undoDict;
 - (void)registerUndoForObject:(NSDictionary *)object;
+- (void)timerAutoscrollCallback:(NSTimer *)timer;
 
 @property BOOL parameterScrollingEnabled;
 @property (copy) NSString *undoActionName;
@@ -510,6 +511,71 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
     return dragOp;
 }
 
+/*
+ 
+ - draggedImage:movedTo:
+ 
+ */
+- (void)draggedImage:(NSImage *)anImage movedTo:(NSPoint)screenPoint
+{
+#pragma unused(anImage)
+#pragma unused(screenPoint)
+    
+}
+
+/*
+ 
+ - draggedImage:beganAt:
+ 
+ */
+- (void)draggedImage:(NSImage *)anImage beganAt:(NSPoint)aPoint
+{
+    #pragma unused(anImage)
+    #pragma unused(aPoint)
+    
+    NSView *draggedView = self.selectedParameterViewController.view;
+    _draggingAutoscrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                                                target:self
+                                                              selector:@selector(timerAutoscrollCallback:)
+                                                              userInfo:draggedView
+                                                               repeats:YES];
+}
+
+/*
+ 
+ - draggedImage:endedAt:operation:
+ 
+ 
+ */
+- (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation
+{
+    #pragma unused(anImage)
+    #pragma unused(aPoint)
+    
+    [_draggingAutoscrollTimer invalidate];
+    _draggingAutoscrollTimer = nil;
+}
+
+#pragma mark -
+#pragma mark Drag and drop support
+
+/*
+ 
+ - timerAutoscrollCallback
+ 
+ */
+- (void)timerAutoscrollCallback:(NSTimer *)timer
+{
+
+    NSView *draggedView = timer.userInfo;    
+
+    NSEvent *event = [NSApp currentEvent];
+    if ([event type] == NSLeftMouseDragged ) {
+        [draggedView autoscroll:event];
+    }
+}
+
+
 #pragma mark -
 #pragma mark MGSViewDraggingProtocol protocol
 
@@ -529,8 +595,10 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
     if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
         //if (sourceDragMask & NSDragOperationGeneric) {
         
-        if (!viewController.isHighlighted) {
-            viewController.isHighlighted = YES;
+        if (!viewController.dragging) {
+            //if (!viewController.isHighlighted) {
+            //    viewController.isHighlighted = YES;
+            //}
         }
         return NSDragOperationGeneric;
         //}
@@ -569,8 +637,10 @@ NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
     if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
         //if (sourceDragMask & NSDragOperationGeneric) {
         
-        if (viewController.isHighlighted) {
-            viewController.isHighlighted = NO;
+        if (!viewController.dragging) {
+            if (viewController.isHighlighted) {
+                viewController.isHighlighted = NO;
+            }
         }
         //}
     }

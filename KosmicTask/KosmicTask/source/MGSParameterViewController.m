@@ -86,6 +86,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 @synthesize parameterDescription = _parameterDescription;
 @synthesize canDecreaseDisplayIndex = _canDecreaseDisplayIndex;
 @synthesize canIncreaseDisplayIndex = _canIncreaseDisplayIndex;
+@synthesize dragging = _dragging;
 
 #pragma mark -
 #pragma mark Class methods
@@ -752,7 +753,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
         if (bannerClick && MGSParameterModeEdit == _mode) {
             
             if ([self.delegate respondsToSelector:@selector(dragParameterView:event:)]) {
-                _dragging = YES;
+                self.dragging = YES;
                 _mouseDragged = NO;
                 _lastDragLocation = mouseLoc;
             }
@@ -768,24 +769,20 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 -(void)mouseDragged:(NSEvent *)event
 {
     // delay kicking off the actual drag untilwe get the first drag event
-    if (_dragging && !_mouseDragged) {
+    if (self.dragging && !_mouseDragged) {
         if ([self.delegate respondsToSelector:@selector(dragParameterView:event:)]) {
             [self.delegate dragParameterView:self event:event];
         }
         _mouseDragged = YES;
     }
 
-    if (_dragging) {
+    if (self.dragging) {
         NSPoint mouseLoc=[self.view convertPoint:[event locationInWindow]
                                           fromView:nil];
         
                 
         // save the new drag location for the next drag event
         _lastDragLocation = mouseLoc;
-        
-        // support automatic scrolling during a drag
-        // by calling NSView's autoscroll: method
-        [self.view autoscroll:event];
     }
 }
 
@@ -799,8 +796,8 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 {
 #pragma unused(event)
     
-    if (_dragging) {
-        _dragging = NO;
+    if (self.dragging) {
+        self.dragging = NO;
     }
     
 }
@@ -833,10 +830,11 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 - (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender object:(id)object
 {
 #pragma unused(object)
-    
+   
     if ([self.delegate respondsToSelector:@selector(draggingUpdated:object:)]) {
         return [self.delegate draggingUpdated:sender object:self];
     }
+
     
     return NSDragOperationNone;
 }
