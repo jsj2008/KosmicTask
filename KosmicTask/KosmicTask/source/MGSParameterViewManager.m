@@ -238,7 +238,8 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
         return;
     }
     
-    NSSize dragOffset = NSMakeSize(0.0, 0.0);
+    NSPoint event_location = [event locationInWindow];
+    NSPoint local_point = [controller.view convertPoint:event_location fromView:nil];
     NSPoint imageLocation = NSMakePoint(0.0, 0.0);
     
     // define pasteboard
@@ -250,16 +251,22 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
     [pboard setPropertyList:@{ @"scriptParameterDict" : scriptParameter.dict, @"index" : @(viewIndex) } forType:MGSParameterViewPBoardType];
 
     NSImage *dragImage = controller.view.mgs_dragImage;
+    NSSize newImageSize = dragImage.size;
+    NSSize viewSize = controller.view.frame.size;
+    
     CGFloat newWidth = 300.0f;
+    
     if (dragImage.size.width > newWidth) {
         CGFloat newHeight = newWidth * dragImage.size.height / dragImage.size.width;
-        NSSize newImageSize = NSMakeSize(newWidth, newHeight);
+        newImageSize = NSMakeSize(newWidth, newHeight);
         [dragImage setSize:newImageSize];
+        
+        imageLocation = NSMakePoint(local_point.x - newImageSize.width * local_point.x/viewSize.width, local_point.y - newImageSize.height);
     }
     
     [controller.view dragImage:dragImage
                             at:imageLocation
-                        offset:dragOffset
+                        offset:NSMakeSize(0.0, 0.0) // unused
                          event:event
                     pasteboard:pboard
                         source:self
