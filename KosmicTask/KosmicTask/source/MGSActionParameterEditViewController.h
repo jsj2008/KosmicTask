@@ -13,9 +13,10 @@
 @class MGSScriptParameterManager;
 @class MGSEmptyParameterViewController;
 @class MGSParameterSplitView;
+@class MGSGradientView;
 
 @interface MGSActionParameterEditViewController : NSViewController {
-	
+	IBOutlet MGSGradientView *_toolGradientView;
 	IBOutlet NSTextField *inputCountText;						// number of inputs
 	IBOutlet NSSegmentedControl *inputSegmentedControl;			// input segment control
 	IBOutlet MGSParameterViewManager *parameterViewManager;		// parameter view handler
@@ -24,7 +25,8 @@
 	IBOutlet NSScrollView *parameterScrollView;					// parameter scrollview
 	
 	IBOutlet NSButton *_copyHandlerTemplateButton;				// copy handler template button
-	
+	IBOutlet NSButton *_undoParameterButton;
+    
 	MGSTaskSpecifier *_action;
 	MGSScriptParameterManager *_parameterHandler;
 	

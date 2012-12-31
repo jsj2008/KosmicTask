@@ -19,6 +19,7 @@
 #import "MGSEmptyParameterViewController.h"
 #import "NSView_Mugginsoft.h"
 #import "MGSParameterSplitView.h"
+#import "MGSGradientView.h"
 
 #define MGSAddItem 0
 #define MGSRemoveItem 1
@@ -62,6 +63,12 @@ char MGSParameterViewSelectedContext;
 	self.parameterView = [emptyParameterViewController view];
 	
     [parameterViewManager addObserver:self forKeyPath:@"selectedParameterViewController" options:0 context:&MGSParameterViewSelectedContext];
+    
+    [_undoParameterButton bind:NSEnabledBinding toObject:parameterViewManager withKeyPath:@"canUndo" options:nil];
+    
+    // configure the tool gradient view border.
+    _toolGradientView.hasBottomBorder = YES;
+    _toolGradientView.hasTopBorder = YES;
 }
 
 /*

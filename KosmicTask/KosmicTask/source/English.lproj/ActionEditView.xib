@@ -318,7 +318,7 @@
 										<reference key="NSNextKeyView" ref="799052751"/>
 									</object>
 								</array>
-								<string key="NSFrameSize">{390, 503}</string>
+								<string key="NSFrameSize">{390, 501}</string>
 								<reference key="NSSuperview" ref="406188304"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="214724024"/>
@@ -332,7 +332,7 @@
 							<object class="NSScroller" id="389783996">
 								<reference key="NSNextResponder" ref="406188304"/>
 								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{390, 0}, {15, 503}}</string>
+								<string key="NSFrame">{{390, 0}, {15, 501}}</string>
 								<reference key="NSSuperview" ref="406188304"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -340,7 +340,7 @@
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<reference key="NSTarget" ref="406188304"/>
 								<string key="NSAction">_doScroller:</string>
-								<double key="NSPercent">0.99801587301587302</double>
+								<double key="NSPercent">0.99404761904761907</double>
 							</object>
 							<object class="NSScroller" id="87904">
 								<reference key="NSNextResponder" ref="406188304"/>
@@ -356,7 +356,7 @@
 								<double key="NSPercent">0.50602409999999998</double>
 							</object>
 						</array>
-						<string key="NSFrameSize">{405, 503}</string>
+						<string key="NSFrameSize">{405, 501}</string>
 						<reference key="NSSuperview" ref="358137492"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="87904"/>
@@ -501,11 +501,7 @@
 									<int key="NSCellFlags">67108864</int>
 									<int key="NSCellFlags2">134217728</int>
 									<string key="NSContents">Undo</string>
-									<object class="NSFont" key="NSSupport">
-										<string key="NSName">LucidaGrande</string>
-										<double key="NSSize">12</double>
-										<int key="NSfFlags">4883</int>
-									</object>
+									<reference key="NSSupport" ref="872995239"/>
 									<reference key="NSControlView" ref="515662905"/>
 									<int key="NSButtonFlags">-2038284288</int>
 									<int key="NSButtonFlags2">164</int>
@@ -3085,12 +3081,20 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					<int key="connectionID">1032</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">copyHandlerTemplate:</string>
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_undoParameterButton</string>
 						<reference key="source" ref="980770774"/>
 						<reference key="destination" ref="515662905"/>
 					</object>
-					<int key="connectionID">1036</int>
+					<int key="connectionID">1038</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_toolGradientView</string>
+						<reference key="source" ref="980770774"/>
+						<reference key="destination" ref="426155709"/>
+					</object>
+					<int key="connectionID">1039</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3227,6 +3231,14 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<reference key="destination" ref="153581894"/>
 					</object>
 					<int key="connectionID">1008</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">undoInputParameterAction:</string>
+						<reference key="source" ref="168301287"/>
+						<reference key="destination" ref="515662905"/>
+					</object>
+					<int key="connectionID">1037</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -5139,7 +5151,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1036</int>
+			<int key="maxID">1039</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5400,6 +5412,8 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_copyHandlerTemplateButton">NSButton</string>
+						<string key="_toolGradientView">MGSGradientView</string>
+						<string key="_undoParameterButton">NSButton</string>
 						<string key="emptyParameterViewController">MGSEmptyParameterViewController</string>
 						<string key="inputCountText">NSTextField</string>
 						<string key="inputSegmentedControl">NSSegmentedControl</string>
@@ -5410,6 +5424,14 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="_copyHandlerTemplateButton">
 							<string key="name">_copyHandlerTemplateButton</string>
+							<string key="candidateClassName">NSButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_toolGradientView">
+							<string key="name">_toolGradientView</string>
+							<string key="candidateClassName">MGSGradientView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_undoParameterButton">
+							<string key="name">_undoParameterButton</string>
 							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="emptyParameterViewController">
