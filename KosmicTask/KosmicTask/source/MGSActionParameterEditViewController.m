@@ -23,6 +23,7 @@
 
 #define MGSAddItem 0
 #define MGSRemoveItem 1
+#define MGSUndoItem 2
 
 #define ON_RUN_TASK_CALL_IMPLICIT_RUN_HANDLER 0
 #define ON_RUN_TASK_CALL_EXPLICIT_RUN_HANDLER_WITH_PARAMETERS 1
@@ -31,9 +32,11 @@
 
 NSString *MGSInputCountContext = @"InputContext";
 char MGSParameterViewSelectedContext;
+char MGSParameterViewManagerUndoContext;
 
 @interface MGSActionParameterEditViewController ()
 - (void)updateRemoveInputSegmentEnabledStatus;
+- (void)updateUndoInputSegmentEnabledStatus;
 @end
 
 @implementation MGSActionParameterEditViewController
@@ -64,11 +67,15 @@ char MGSParameterViewSelectedContext;
 	
     [parameterViewManager addObserver:self forKeyPath:@"selectedParameterViewController" options:0 context:&MGSParameterViewSelectedContext];
     
-    [_undoParameterButton bind:NSEnabledBinding toObject:parameterViewManager withKeyPath:@"canUndo" options:nil];
-    
+    //[_undoParameterButton bind:NSEnabledBinding toObject:parameterViewManager withKeyPath:@"canUndo" options:nil];
+
+    [parameterViewManager addObserver:self forKeyPath:@"canUndo" options:0 context:&MGSParameterViewManagerUndoContext];
+
     // configure the tool gradient view border.
     _toolGradientView.hasBottomBorder = YES;
     _toolGradientView.hasTopBorder = YES;
+    
+    [self updateUndoInputSegmentEnabledStatus];
 }
 
 /*
@@ -116,8 +123,12 @@ char MGSParameterViewSelectedContext;
 		// show the required parameter view
 		[self setParameterView:(self.inputCount == 0) ? [emptyParameterViewController view] : parameterScrollView];
         
-	} if (context == &MGSParameterViewSelectedContext) {
+	} else if (context == &MGSParameterViewSelectedContext) {
+     
         [self updateRemoveInputSegmentEnabledStatus];
+        
+    } else if (context == &MGSParameterViewManagerUndoContext) {
+        [self updateUndoInputSegmentEnabledStatus];
     }
 }
 
@@ -133,6 +144,16 @@ char MGSParameterViewSelectedContext;
     [inputSegmentedControl setEnabled:(self.inputCount > 0 && parameterViewManager.selectedParameterViewController) ? YES : NO forSegment:MGSRemoveItem];
 }
 
+/*
+ 
+ - updateUndoInputSegmentEnabledStatus
+ 
+ */
+- (void)updateUndoInputSegmentEnabledStatus
+{
+    // change remove input segment enabled status
+    [inputSegmentedControl setEnabled:parameterViewManager.canUndo forSegment:MGSUndoItem];
+}
 /*
  
  set action
@@ -216,10 +237,15 @@ char MGSParameterViewSelectedContext;
 			break;
 			
 			// remove item
-			case MGSRemoveItem:;
+        case MGSRemoveItem:;
 			[parameterViewManager removeInputParameterAction:self];
 			break;
-			
+
+            // undo item
+        case MGSUndoItem:;
+			[parameterViewManager undoInputParameterAction:self];
+			break;
+
 			default:
 			return;
 	}
