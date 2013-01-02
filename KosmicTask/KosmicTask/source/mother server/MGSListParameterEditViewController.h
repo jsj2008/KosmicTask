@@ -22,4 +22,8 @@
 
 - (IBAction)segmentClick:(id)sender;
 - (void)setIsInitialValue:(BOOL)isInitial forItem:(MGSListParameterItem *)item;
+
+- (IBAction)addItemAction:(id)sender;
+- (IBAction)removeItemAction:(id)sender;
+- (IBAction)insertItemAction:(id)sender;
 @end

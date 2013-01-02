@@ -15,6 +15,11 @@
 #define MGSAddItem 0
 #define MGSRemoveItem 1
 
+enum _MGSListMenuItemTag {
+    kMGSListItemTagAdd = 0,
+    kMGSListItemTagRemove = 1,
+};
+
 /*
  
  list parameter item 
@@ -35,7 +40,6 @@
 - (id)initWithDictionary:(NSDictionary *)dict;
 
 @end
-
 
 @implementation MGSListParameterItem
 @synthesize value = _value;
@@ -115,6 +119,10 @@
 }
 @end
 
+@interface MGSListParameterEditViewController() 
+- (IBAction)tableViewDoubleClickAction:(id)sender;
+@end
+    
 @implementation MGSListParameterEditViewController
 
 /*
@@ -171,6 +179,11 @@
 
 	// register for drag types
 	[_tableView registerForDraggedTypes: [NSArray arrayWithObject:MyPrivateTableViewDataType] ];
+    
+    //[_tableView setTarget:self];
+    //[_tableView setDoubleAction:@selector(tableViewDoubleClickAction:)];
+    
+    [_tableView setDataSource:(id)self];
 }
 
 /*
@@ -189,6 +202,8 @@
 	}
 }
 
+#pragma mark -
+#pragma mark NSTableViewDataSource
 /*
  
  begin a drag operation
@@ -220,7 +235,7 @@
 	
     // Add code here to validate the drop
     //NSLog(@"validate Drop");
-    return NSDragOperationEvery;
+    return NSDragOperationMove;
 }
 
 /*
@@ -241,7 +256,9 @@
 	
     // Move the specified row to its new location...
 	NSDragOperation dragOp = [info draggingSourceOperationMask];
-	if ((dragOp & NSDragOperationMove) == NSDragOperationMove) {
+    
+    // drag op is always NSDragOperationAll
+	if ((dragOp & NSDragOperationAll) == NSDragOperationAll) {
 		id dragItem = [[_arrayController arrangedObjects] objectAtIndex:dragRow];
 		[_arrayController removeObjectAtArrangedObjectIndex:dragRow];
 		if (dragRow < row) row--;
@@ -250,6 +267,9 @@
 	
 	return YES;
 }
+
+#pragma mark -
+#pragma mark KVO
 /*
  
  observe value for key path
@@ -293,42 +313,16 @@
 	
 	NSUInteger selectedSegment = [_segmentedControl selectedSegment];
 	
-	[_arrayController commitEditing];
-	
-	
 	switch (selectedSegment) {
 			
 		// add item
 		case MGSAddItem:;
-			MGSListParameterItem *listItem = [[MGSListParameterItem alloc] init];
-			listItem.value = NSLocalizedString(@"List item", @"List item");
-			listItem.delegate = self;
-			
-			if (0 == [[_arrayController arrangedObjects] count]) {
-				listItem.isInitialValue = YES;
-			}
-			// insert at selected position
-			NSInteger selectionIndex = [_arrayController selectionIndex];
-			if (NSNotFound == selectionIndex) {
-				[_arrayController addObject:listItem];
-			} else {
-				[_arrayController insertObject:listItem atArrangedObjectIndex:selectionIndex+1];
-			}
-
-			
-			//[self setRemoveSegmentEnabledState];
-			NSInteger rowIndex = [_arrayController selectionIndex];
-			[_tableView scrollRowToVisible:rowIndex];							// scroll row visible
-			[_tableView editColumn:1 row:rowIndex withEvent:nil select:YES];	// edit cell
+            [self addItemAction:self];
 			break;
 			
 		// remove item
 		case MGSRemoveItem:;
-			NSArray *selectedObjects = [_arrayController selectedObjects];
-			if ([selectedObjects count] > 0) {
-				[_arrayController removeObject:[selectedObjects objectAtIndex:0]];
-			}
-			//[self setRemoveSegmentEnabledState];
+            [self removeItemAction:self];
 			break;
 			
 			default:
@@ -381,4 +375,122 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Actions
+
+/*
+ 
+ - removeItemAction:
+ 
+ 
+ */
+- (IBAction)removeItemAction:(id)sender
+{
+#pragma unused(sender)
+    
+    if ([_arrayController commitEditing]) {
+        NSInteger clickedRow = [_tableView clickedRow];
+        if (clickedRow == -1) {
+            NSArray *selectedObjects = [_arrayController selectedObjects];
+            if ([selectedObjects count] > 0) {
+                [_arrayController removeObject:[selectedObjects objectAtIndex:0]];
+            }
+        } else {
+            if (clickedRow < (NSInteger)[[_arrayController arrangedObjects] count]) {
+                [_arrayController removeObject:[[_arrayController arrangedObjects] objectAtIndex:clickedRow]];
+            }
+        }
+        //[self setRemoveSegmentEnabledState];
+    }
+    
+}
+/*
+ 
+ - addItemAction:
+ 
+ */
+- (IBAction)addItemAction:(id)sender
+{
+#pragma unused(sender)
+    if ([_arrayController commitEditing]) {
+
+        MGSListParameterItem *listItem = [[MGSListParameterItem alloc] init];
+        listItem.value = NSLocalizedString(@"List item", @"List item");
+        listItem.delegate = self;
+        
+        if (0 == [[_arrayController arrangedObjects] count]) {
+            listItem.isInitialValue = YES;
+        }
+        
+        NSInteger rowIndex = [_tableView clickedRow];
+        if (rowIndex != -1) {
+            [_arrayController insertObject:listItem atArrangedObjectIndex:++rowIndex];
+        } else {
+        
+            // insert at selected position
+            rowIndex = [_arrayController selectionIndex];
+            if (NSNotFound == rowIndex) {
+                [_arrayController addObject:listItem];
+                rowIndex = [[_arrayController arrangedObjects] count] - 1;
+            } else {
+                [_arrayController insertObject:listItem atArrangedObjectIndex:++rowIndex];
+            }
+        }
+
+        [_tableView scrollRowToVisible:rowIndex];							// scroll row visible
+        [_tableView editColumn:1 row:rowIndex withEvent:nil select:YES];	// edit cell
+    }
+}
+
+/*
+ 
+ - insertItemAction:
+ 
+ */
+- (IBAction)insertItemAction:(id)sender
+{
+#pragma unused(sender)
+}
+/*
+ 
+ - tableViewDoubleClickAction:
+ 
+ */
+- (IBAction)tableViewDoubleClickAction:(id)sender
+{
+#pragma unused(sender)
+	NSInteger rowIndex = [_tableView clickedRow];
+    
+	if (rowIndex == -1) {
+		[self addItemAction:self];
+	} else {
+        [_tableView editColumn:1 row:rowIndex withEvent:nil select:YES];
+    }
+}
+
+#pragma mark -
+#pragma mark NSMenuValidation protocol
+
+/*
+ 
+ - validateMenuItem:
+ 
+ */
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    BOOL valid = NO;
+    NSInteger rowIndex = [_tableView clickedRow];
+    
+    switch(menuItem.tag) {
+        case kMGSListItemTagAdd:
+            valid = YES;
+            break;
+            
+        case kMGSListItemTagRemove:
+            if (rowIndex != -1) valid = YES;
+            break;
+    }
+
+    return valid;
+}
 @end
