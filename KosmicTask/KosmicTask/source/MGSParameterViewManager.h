@@ -60,6 +60,7 @@ enum _MGSParameterInputMenuTags {
     NSString *_undoActionName;
     NSString *_undoActionOperation;
     NSTimer *_draggingAutoscrollTimer;
+    BOOL _canUndo;
 }
 
 - (BOOL)commitPendingEdits;
@@ -90,4 +91,6 @@ enum _MGSParameterInputMenuTags {
 @property id delegate;
 @property MGSActionViewController *actionViewController;
 @property MGSParameterViewController *selectedParameterViewController;
+@property BOOL canUndo;
+
 @end

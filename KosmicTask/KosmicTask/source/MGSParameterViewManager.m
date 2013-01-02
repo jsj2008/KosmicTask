@@ -37,13 +37,14 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 - (void)moveParameterAtIndex:(NSUInteger)sourceIndex toIndex:(NSUInteger)targetIndex;
 - (void)inputParameterInsertMenuAction:(id)sender;
 - (void)inputParameterAppendMenuAction:(id)sender;
-- (MGSParameterViewController *)insertParameterAtIndex:(NSUInteger)idx;
+- (MGSParameterViewController *)insertScriptParameter:(MGSScriptParameter *)parameter AtIndex:(NSUInteger)idx;
 - (NSPasteboard *)cutAndPastePasteBoard;
 - (IBAction)pasteInputParameterAction:(id)sender;
 - (MGSScriptParameter *)pasteBoardScriptParameter;
 - (void)undoInputParameterChange:(NSDictionary *)undoDict;
 - (void)registerUndoForObject:(NSDictionary *)object;
 - (void)timerAutoscrollCallback:(NSTimer *)timer;
+- (void)undoNotification:(NSNotification *)note;
 
 @property BOOL parameterScrollingEnabled;
 @property (copy) NSString *undoActionName;
@@ -75,6 +76,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 @synthesize parameterScrollingEnabled = _parameterScrollingEnabled;
 @synthesize undoActionName = _undoActionName;
 @synthesize undoActionOperation = _undoActionOperation;
+@synthesize canUndo = _canUndo;
 
 /*
  
@@ -146,6 +148,8 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
     [menuItem setSubmenu:parameterMenu];
     
     parameterInputUndoManager = [[NSUndoManager alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(undoNotification:) name:NSUndoManagerDidUndoChangeNotification object:parameterInputUndoManager];
 }
 
 /*
@@ -183,6 +187,23 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 }
 
 #pragma mark -
+#pragma mark Notification handling
+
+/*
+ 
+ - undoNotification:
+ 
+ */
+- (void)undoNotification:(NSNotification *)note
+{
+#pragma unused(note)
+    
+    if ([note.name isEqualToString:NSUndoManagerDidUndoChangeNotification] ) {
+        self.canUndo = [parameterInputUndoManager canUndo];
+    }
+}
+
+#pragma mark -
 #pragma mark Accessors
 
 
@@ -198,6 +219,10 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
     
     if (_selectedParameterViewController) {
         _selectedParameterViewController.isHighlighted = YES;
+        
+        if (self.parameterScrollingEnabled) {
+            [self scrollViewControllerVisible:_selectedParameterViewController];
+        }
     }
 }
 
@@ -421,7 +446,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 
     [self moveParameterAtIndex:sourceControllerIndex toIndex:targetControllerIndex];
     self.selectedParameterViewController = viewController;
-    [self scrollViewControllerVisible:viewController];
+
     
     // register undo
     self.undoActionOperation =  @"move";
@@ -439,19 +464,22 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 - (MGSParameterViewController *)appendParameter
 {
     NSUInteger idx = [_scriptParameterManager count];
-    MGSParameterViewController *viewController = [self insertParameterAtIndex:idx];
+    MGSParameterViewController *viewController = [self insertScriptParameter:nil AtIndex:idx];
 	return viewController;
 }
 
 /*
  
- - insertParameterAtIndex:
+ - insertScriptParameter:AtIndex:
  
  */
-- (MGSParameterViewController *)insertParameterAtIndex:(NSUInteger)idx
+- (MGSParameterViewController *)insertScriptParameter:(MGSScriptParameter *)parameter AtIndex:(NSUInteger)idx
 {
     // create script parameter and add to handler array
-	MGSScriptParameter *parameter = [MGSScriptParameter new];
+    if (!parameter) {
+        parameter = [MGSScriptParameter new];
+    }
+    
 	[_scriptParameterManager insertItem:parameter atIndex:idx];
 	
 	// create new view for parameter
@@ -846,7 +874,10 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 	
     // select controller view
     if (controller != self.selectedParameterViewController) {
+        BOOL scrollingEnabled = self.parameterScrollingEnabled;
+        self.parameterScrollingEnabled = NO;
         self.selectedParameterViewController = viewController;
+        self.parameterScrollingEnabled = scrollingEnabled;
     }
     
 	if (showMenu) {
@@ -966,6 +997,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
     self.undoActionOperation = nil;
     self.undoActionName = nil;
 
+    self.canUndo = [parameterInputUndoManager canUndo];
 }
 
 /*
@@ -1222,6 +1254,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 - (void)scrollViewControllerVisible:(MGSParameterViewController *)viewController
 {
     if (self.parameterScrollingEnabled) {
+        
         // call display before scrolling otherwise scrolling visible is unreliable
         // after modifying the splitview content
         [splitView display];
@@ -1252,27 +1285,20 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 
     [parameterInputUndoManager disableUndoRegistration];
 
-    // insert parameter
-    MGSParameterViewController *sourceViewController = [self insertParameterAtIndex:changedIndex];
-
+    MGSScriptParameter *scriptParameter = nil;
+    
     // if sender is a script parameter then use it
     if ([sender isKindOfClass:[MGSScriptParameter class]]) {
-        
-        
-        // copy the script parameter and update the manager
-        MGSScriptParameter *scriptParameter = [(MGSScriptParameter *)sender mutableDeepCopy];
-        [_scriptParameterManager replaceItemAtIndex:changedIndex withItem:scriptParameter];
-        
-        sourceViewController.scriptParameter = scriptParameter;
-        
+        scriptParameter = [(MGSScriptParameter *)sender mutableDeepCopy];
     }
+
+    // insert parameter
+    MGSParameterViewController *sourceViewController = [self insertScriptParameter:scriptParameter AtIndex:changedIndex];
     
     [parameterInputUndoManager enableUndoRegistration];
 
     // select new view
     self.selectedParameterViewController = sourceViewController;
-    
-    [self scrollViewControllerVisible:sourceViewController];
 
     // register undo
     self.undoActionName = NSLocalizedString(@"Insert Input", @"Parameter Insert undo");
@@ -1319,8 +1345,6 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 
     // select new view
     self.selectedParameterViewController = parameterViewController;
-    
-    [self scrollViewControllerVisible:parameterViewController];
     
     // register undo
     self.undoActionName = NSLocalizedString(@"Append Input", @"Parameter Append undo");
@@ -1849,6 +1873,12 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 	MGSParameterViewController *viewController = [_viewControllers objectAtIndex:idx];
 	NSView *view = [viewController view];
 	
+    // the sizing of inserted parameters is not correct if we don't
+    // match the view size to the splitview
+    NSSize viewSize = [view frame].size;
+    viewSize.width = [splitView frame].size.width;
+    [view setFrameSize:viewSize];
+    
 	// determine if first sub view contains action view
 	BOOL firstSubviewIsAction = _actionViewController ? YES : NO;
 	
