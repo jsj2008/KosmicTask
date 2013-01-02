@@ -28,6 +28,10 @@
 #import "MGSParameterPlugin.h"
 #import "MGSAppCOntroller.h"
 
+#undef MGS_DEBUG_PARAMETER_DRAG
+
+NSTimer * m_draggingAutoscrollTimer = nil;
+
 NSString * MGSInputParameterException = @"MGSInputParameterException";
 NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
 NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
@@ -578,13 +582,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 {
     #pragma unused(anImage)
     #pragma unused(aPoint)
-    
-    NSView *draggedView = self.selectedParameterViewController.view;
-    _draggingAutoscrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
-                                                                target:self
-                                                              selector:@selector(timerAutoscrollCallback:)
-                                                              userInfo:draggedView
-                                                               repeats:YES];
+
 }
 
 /*
@@ -599,8 +597,12 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
     #pragma unused(aPoint)
     #pragma unused(operation)
     
-    [_draggingAutoscrollTimer invalidate];
-    _draggingAutoscrollTimer = nil;
+    [m_draggingAutoscrollTimer invalidate];
+    m_draggingAutoscrollTimer = nil;
+
+#ifdef MGS_DEBUG_PARAMETER_DRAG
+    NSLog(@"Drag ended. Timer invalidated.");
+#endif
 }
 
 #pragma mark -
@@ -614,14 +616,21 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 - (void)timerAutoscrollCallback:(NSTimer *)timer
 {
 
-    NSView *draggedView = timer.userInfo;    
-
-    NSEvent *event = [NSApp currentEvent];
-    if ([event type] == NSLeftMouseDragged ) {
-        [draggedView autoscroll:event];
+    MGSParameterViewController *viewController = timer.userInfo;
+    if (![viewController isKindOfClass:[MGSParameterViewController class]]) {
+        return;
     }
+    NSView *draggedView = viewController.view;
+    
+    NSEvent *event = [NSApp currentEvent];
+    if ([event type] == NSLeftMouseDragged) {
+        [draggedView autoscroll:event];
+        
+#ifdef MGS_DEBUG_PARAMETER_DRAG
+        NSLog(@"Timer expired: Auto scrolling parameter view");
+#endif
+       }
 }
-
 
 #pragma mark -
 #pragma mark MGSViewDraggingProtocol protocol
@@ -652,6 +661,23 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
             dragOperation = NSDragOperationGeneric;
 
         }
+        
+        //NSView *draggedView = self.selectedParameterViewController.view;
+        if ([m_draggingAutoscrollTimer isValid]) {
+            [m_draggingAutoscrollTimer invalidate];
+#ifdef MGS_DEBUG_PARAMETER_DRAG            
+            NSLog(@"Drag entered. Timer invalidated.");
+#endif
+        }
+        
+        m_draggingAutoscrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                                                    target:self
+                                                                  selector:@selector(timerAutoscrollCallback:)
+                                                                  userInfo:object
+                                                                   repeats:YES];
+#ifdef MGS_DEBUG_PARAMETER_DRAG
+        NSLog(@"Parameter scroll callback timer activated.");
+#endif
         //}
     }
     
@@ -693,6 +719,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
         }
         //}
     }
+
 }
 
 /*

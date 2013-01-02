@@ -59,7 +59,6 @@ enum _MGSParameterInputMenuTags {
     NSUndoManager *parameterInputUndoManager;
     NSString *_undoActionName;
     NSString *_undoActionOperation;
-    NSTimer *_draggingAutoscrollTimer;
     BOOL _canUndo;
 }
 

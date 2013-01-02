@@ -1210,8 +1210,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	// calc frame for new middleview
 	NSRect frame = [newMiddleView frame];
 	NSRect prevFrame = [self.middleView frame];
- 
-#define MGS_DEBUG_VIEW_SIZING
+
 #ifdef MGS_DEBUG_VIEW_SIZING
     NSLog(@"[newMiddleView frame] w = %f h = %f", frame.size.width, frame.size.height);
     NSLog(@"[self.middleView frame] w = %f h = %f", prevFrame.size.width, prevFrame.size.height);
