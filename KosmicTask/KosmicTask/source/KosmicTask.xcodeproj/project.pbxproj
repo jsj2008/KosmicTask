@@ -1031,7 +1031,7 @@
 		ABADF08D104D374E007A5319 /* NDScript.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABADEE02104D32A9007A5319 /* NDScript.framework */; };
 		ABAE66B40D6F110600A0FC53 /* MGSScriptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAE66B30D6F110600A0FC53 /* MGSScriptViewController.m */; };
 		ABAE66B70D6F117700A0FC53 /* ScriptView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABAE66B50D6F117700A0FC53 /* ScriptView.xib */; };
-		ABAE677F0E1A920F0003003D /* MGSParameterEndView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAE677E0E1A920F0003003D /* MGSParameterEndView.m */; };
+		ABAE677F0E1A920F0003003D /* MGSParameterEmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAE677E0E1A920F0003003D /* MGSParameterEmptyView.m */; };
 		ABAED7A70EBB4AB600D03641 /* ArrowInCircleLeft15Template.tif in Resources */ = {isa = PBXBuildFile; fileRef = ABAED7A60EBB4AB600D03641 /* ArrowInCircleLeft15Template.tif */; };
 		ABAEDB490E389B930044ACDE /* NSWindow_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAEDB480E389B930044ACDE /* NSWindow_Mugginsoft.m */; };
 		ABAEDBBC0E38B6D10044ACDE /* MGSRequestViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABAEDBBB0E38B6D10044ACDE /* MGSRequestViewManager.m */; };
@@ -4614,8 +4614,8 @@
 		ABAE66B20D6F110600A0FC53 /* MGSScriptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptViewController.h; sourceTree = "<group>"; };
 		ABAE66B30D6F110600A0FC53 /* MGSScriptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSScriptViewController.m; sourceTree = "<group>"; };
 		ABAE66B60D6F117700A0FC53 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ScriptView.xib; sourceTree = "<group>"; };
-		ABAE677D0E1A920F0003003D /* MGSParameterEndView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterEndView.h; sourceTree = "<group>"; };
-		ABAE677E0E1A920F0003003D /* MGSParameterEndView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterEndView.m; sourceTree = "<group>"; };
+		ABAE677D0E1A920F0003003D /* MGSParameterEmptyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSParameterEmptyView.h; sourceTree = "<group>"; };
+		ABAE677E0E1A920F0003003D /* MGSParameterEmptyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSParameterEmptyView.m; sourceTree = "<group>"; };
 		ABAED7A60EBB4AB600D03641 /* ArrowInCircleLeft15Template.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = ArrowInCircleLeft15Template.tif; sourceTree = "<group>"; };
 		ABAEDB470E389B930044ACDE /* NSWindow_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSWindow_Mugginsoft.h; sourceTree = "<group>"; };
 		ABAEDB480E389B930044ACDE /* NSWindow_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSWindow_Mugginsoft.m; sourceTree = "<group>"; };
@@ -7729,8 +7729,8 @@
 				ABA325F80DDC956D00DC2E65 /* MGSOutputRequestSplitView.m */,
 				ABA7397810EBF3A400842C7F /* MGSOutputRequestView.h */,
 				ABA7397910EBF3A400842C7F /* MGSOutputRequestView.m */,
-				ABAE677D0E1A920F0003003D /* MGSParameterEndView.h */,
-				ABAE677E0E1A920F0003003D /* MGSParameterEndView.m */,
+				ABAE677D0E1A920F0003003D /* MGSParameterEmptyView.h */,
+				ABAE677E0E1A920F0003003D /* MGSParameterEmptyView.m */,
 				AB874D290D3385C5003A752B /* MGSParameterSplitView.h */,
 				AB874D2A0D3385C5003A752B /* MGSParameterSplitView.m */,
 				AB8F0D610D30225F00F3631C /* MGSParameterView.h */,
@@ -12025,7 +12025,7 @@
 				ABA09F940E15217C00D3B01E /* NSCell_Mugginsoft.m in Sources */,
 				AB08ED510E1543AE004D44F8 /* MGSEmptyParameterViewController.m in Sources */,
 				AB08ED940E154BE1004D44F8 /* MGSFilledView.m in Sources */,
-				ABAE677F0E1A920F0003003D /* MGSParameterEndView.m in Sources */,
+				ABAE677F0E1A920F0003003D /* MGSParameterEmptyView.m in Sources */,
 				ABBF60380E1BB9C900F82F81 /* MGSParameterPluginInputViewController.m in Sources */,
 				ABA563200E2CDB3500C5E787 /* MGSStopButton.m in Sources */,
 				ABBAD23D0E2E52C300049696 /* MGSActionActivityView.m in Sources */,

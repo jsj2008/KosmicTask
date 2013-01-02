@@ -14,9 +14,15 @@
 	IBOutlet NSTextField *_textField;
     IBOutlet NSSegmentedControl *inputSegmentedControl;
     IBOutlet MGSPopupButton *contextPopupButton;
+    IBOutlet id delegate;
+    NSColor *_capsuleBackgroundColor;
+    NSColor *_capsuleDragBackgroundColor;
 }
+
+- (void)setIsDragTarget:(BOOL)isDragTarget;
 
 @property (readonly) NSSegmentedControl *inputSegmentedControl;
 @property (readonly) MGSPopupButton *contextPopupButton;
+@property id delegate;
 
 @end

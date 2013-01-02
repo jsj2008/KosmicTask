@@ -11,6 +11,12 @@
 #import "MGSRoundedView.h"
 #import "MGSActionExecuteWindow.h"
 
+enum _MGSRoundedPanelViewStyle {
+    kMGSRoundedPanelViewStyleParameter = 0,
+    kMGSRoundedPanelViewStyleEmptyParameter = 1,
+};
+typedef NSUInteger MGSRoundedPanelViewStyle;
+
 @interface MGSRoundedPanelView : MGSRoundedView <MGSSubviewClicking> {
 @private
 	IBOutlet id delegate;
@@ -42,10 +48,10 @@
 	NSColor *_bannerEndColor;	
 	
 	BOOL _hasConnector;
-
+    MGSRoundedPanelViewStyle _panelStyle;
 }
 
-
+@property MGSRoundedPanelViewStyle panelStyle;
 @property id delegate;
 @property BOOL isHighlighted;
 @property BOOL isDragTarget;

@@ -9,6 +9,9 @@
 #import "MGSRoundedPanelView.h"
 #import "NSApplication_Mugginsoft.h"
 
+@interface MGSRoundedPanelView ()
+- (void)drawRectForParameterStyle:(NSRect)aRect;
+@end
 
 @interface MGSRoundedPanelView (Private)
 - (void)appendFooterPath:(NSBezierPath *)bp;
@@ -64,6 +67,7 @@ const char MGSContextFirstResponder;
 @synthesize bannerStartColor = _bannerStartColor;
 @synthesize bannerMidColor = _bannerMidColor;
 @synthesize bannerEndColor = _bannerEndColor;
+@synthesize panelStyle = _panelStyle;
 
 /*
  
@@ -109,7 +113,8 @@ const char MGSContextFirstResponder;
 		_bannerStartColor = [NSColor colorWithCalibratedRed:0.83f green:0.83f blue:0.83f alpha:1.0f];
 		_bannerMidColor = [NSColor colorWithCalibratedRed:0.875f green:0.875f blue:0.875f alpha:1.0f];
 		_bannerEndColor = [NSColor colorWithCalibratedRed:0.800f green:0.800f blue:0.800f alpha:1.0f];	
-
+        _panelStyle = kMGSRoundedPanelViewStyleParameter;
+        
 #ifdef OBSERVE_FIRST_RESPONDER 		
 
 		NSUInteger major, minor, bugfix;
@@ -159,8 +164,27 @@ const char MGSContextFirstResponder;
 {
 	#pragma unused(aRect)
 	
-	//BOOL isKeyWindow = [[self window] isKeyWindow];
-	
+    switch (_panelStyle) {
+ 
+        case kMGSRoundedPanelViewStyleEmptyParameter:
+        break;
+    
+        default:
+        case kMGSRoundedPanelViewStyleParameter:
+            [self drawRectForParameterStyle:aRect];
+            break;
+    }
+}	
+
+/*
+ 
+ - drawRectForParameterStyle:
+ 
+ */
+- (void)drawRectForParameterStyle:(NSRect)aRect
+{
+    #pragma unused(aRect)
+    
 	NSGraphicsContext* gc = [NSGraphicsContext currentContext];
 	[gc setShouldAntialias:YES];
 	
@@ -172,7 +196,7 @@ const char MGSContextFirstResponder;
 	// using aRect here was causing a morning wasting problem
 	// though I did get to investigate subclassing NSButton, NSControl and NSButtonCell!
 	NSRect bgRect = [self bounds];
-	float radius = 15.0f; 
+	float radius = 15.0f;
 	
 	
 	_minX = NSMinX(bgRect);
@@ -189,7 +213,7 @@ const char MGSContextFirstResponder;
 	
 	CGFloat bannerHeight = 25.0f;
 	CGFloat bannerY = _maxY - bannerHeight;
-
+    
 	// declare points to be used for body
 	_bodyLeftBottom = NSMakePoint(_minX, _minY);
 	_bodyRightBottom = NSMakePoint(_maxX, _minY);
@@ -204,20 +228,20 @@ const char MGSContextFirstResponder;
 	
 	// Right edge and top-right curve
 	[bgBannerPath moveToPoint:_bannerRightBottom];
-	[bgBannerPath appendBezierPathWithArcFromPoint:NSMakePoint(_maxX, _maxY) 
-										   toPoint:_bannerMiddleTop 
+	[bgBannerPath appendBezierPathWithArcFromPoint:NSMakePoint(_maxX, _maxY)
+										   toPoint:_bannerMiddleTop
 											radius:radius];
 	
 	// Top edge and top-left curve
-	[bgBannerPath appendBezierPathWithArcFromPoint:NSMakePoint(_minX, _maxY) 
-										   toPoint:_bannerLeftBottom 
+	[bgBannerPath appendBezierPathWithArcFromPoint:NSMakePoint(_minX, _maxY)
+										   toPoint:_bannerLeftBottom
 											radius:radius];
 	
 	[bgBannerPath lineToPoint:_bannerLeftBottom];	// arc does not extend to toPoint
 	NSBezierPath *bgBannerOutlinePath = [bgBannerPath copy];		// use as top of our outline
 	[bgBannerPath closePath];
 	[bgBannerPath transformUsingAffineTransform: transform];
-
+    
 	//===============================
 	// define view bottom footer path
 	//===============================
@@ -225,7 +249,7 @@ const char MGSContextFirstResponder;
 	// declare points to be used for footer
 	_footerLeftTop = NSMakePoint(_minX, _footerHeight);
 	_footerRightTop = NSMakePoint(_maxX, _footerHeight);
-
+    
 	
 	bgFooterPath = [NSBezierPath bezierPath];
 	[bgFooterPath moveToPoint:_footerLeftTop];
@@ -270,7 +294,7 @@ const char MGSContextFirstResponder;
 	
 	// restore state - remove shadow
 	[gc restoreGraphicsState];
-
+    
 	// draw outline border
 	NSColor *borderColor = [NSColor colorWithCalibratedRed:0.502f green:0.502f blue:0.502f alpha:1.0f];
 	[borderColor set];
@@ -278,7 +302,7 @@ const char MGSContextFirstResponder;
 	
 	
 	//================================
-	// draw the footer 
+	// draw the footer
 	//================================
 	if (_drawFooter) {
 		NSColor *footerColor = [NSColor colorWithCalibratedRed:0.902f green:0.902f blue:0.902f alpha:1.0f];
@@ -287,7 +311,7 @@ const char MGSContextFirstResponder;
 		
 		// footer gradient colors
 		NSColor *footerStart = [NSColor colorWithCalibratedRed:0.769f green:0.769f blue:0.769f alpha:1.0f];
-		NSColor *footerEnd = footerColor;	
+		NSColor *footerEnd = footerColor;
 		
 		// draw gradient under footer
 		NSRect footerGradientRect = NSMakeRect(_footerLeftTop.x, _footerLeftTop.y - 4, _footerRightTop.x - _footerLeftTop.x, 4);
@@ -295,7 +319,7 @@ const char MGSContextFirstResponder;
 									  footerEnd, (CGFloat)1.0,
 									  nil];
 		[footerGradient drawInRect:footerGradientRect angle:-90];
-
+        
 		// draw footer border
 		[borderColor set];
 		[bgFooterPath stroke];
@@ -325,18 +349,17 @@ const char MGSContextFirstResponder;
         if (_isHighlighted) {
             highlightColor = [[self class] highlightColor];
         }
-
+        
         if (_isDragTarget) {
             highlightColor = [[self class] dragTargetOutlineColor];
         }
-
+        
 		[bgOutlinePath setLineWidth:3];
 		[highlightColor set];
 		[bgOutlinePath stroke];
 	}
     
-}	
-
+}
 /*
  
  is highlighted
@@ -481,6 +504,20 @@ const char MGSContextFirstResponder;
 	}
 }
 
+#pragma mark -
+#pragma mark Accessors
+
+/*
+ 
+ - setPanelStyle:
+ 
+ */
+- (void)setPanelStyle:(MGSRoundedPanelViewStyle)panelStyle
+{
+    _panelStyle = panelStyle;
+    [self setNeedsDisplay:YES];
+}
+#pragma mark -
 #pragma mark KVO
 
 /*

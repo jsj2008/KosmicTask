@@ -645,40 +645,51 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
  */
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender object:(id)object
 {
-    NSPasteboard *pboard = [sender draggingPasteboard];
-    //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
-
-    MGSParameterViewController *viewController = object;
-    NSAssert([_viewControllers containsObject:viewController], @"bad view controller");
     
     NSUInteger dragOperation = NSDragOperationNone;
+    NSPasteboard *pboard = [sender draggingPasteboard];
+    //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
     
-    if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
-        //if (sourceDragMask & NSDragOperationGeneric) {
+    if ([m_draggingAutoscrollTimer isValid]) {
+        [m_draggingAutoscrollTimer invalidate];
+        m_draggingAutoscrollTimer = nil;
         
-        if (!viewController.dragging && viewController.mode == MGSParameterModeEdit) {
-            viewController.isDragTarget = YES;
-            dragOperation = NSDragOperationGeneric;
-
-        }
-        
-        //NSView *draggedView = self.selectedParameterViewController.view;
-        if ([m_draggingAutoscrollTimer isValid]) {
-            [m_draggingAutoscrollTimer invalidate];
-#ifdef MGS_DEBUG_PARAMETER_DRAG            
-            NSLog(@"Drag entered. Timer invalidated.");
-#endif
-        }
-        
-        m_draggingAutoscrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
-                                                                    target:self
-                                                                  selector:@selector(timerAutoscrollCallback:)
-                                                                  userInfo:object
-                                                                   repeats:YES];
 #ifdef MGS_DEBUG_PARAMETER_DRAG
-        NSLog(@"Parameter scroll callback timer activated.");
+        NSLog(@"Drag entered. Timer invalidated.");
 #endif
-        //}
+        
+    }
+        
+    if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
+
+        if ([object isKindOfClass:[MGSParameterViewController class]]) {
+                
+            MGSParameterViewController *viewController = object;
+            NSAssert([_viewControllers containsObject:viewController], @"bad view controller");
+
+            //if (sourceDragMask & NSDragOperationGeneric) {
+            
+            if (!viewController.dragging && viewController.mode == MGSParameterModeEdit) {
+                viewController.isDragTarget = YES;
+                dragOperation = NSDragOperationGeneric;
+            }
+            
+            m_draggingAutoscrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                                                        target:self
+                                                                      selector:@selector(timerAutoscrollCallback:)
+                                                                      userInfo:object
+                                                                       repeats:YES];
+#ifdef MGS_DEBUG_PARAMETER_DRAG
+            NSLog(@"Parameter scroll callback timer activated.");
+#endif
+                //}
+
+        } else if ([object isKindOfClass:[MGSParameterEndViewController class]]) {
+             MGSParameterEndViewController *endViewController = object;
+            
+            endViewController.isDragTarget = YES;
+            dragOperation = NSDragOperationGeneric;
+        }
     }
     
     return dragOperation;
@@ -694,6 +705,9 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 {
 #pragma unused(sender)
 #pragma unused(object)  
+    if ([object isKindOfClass:[MGSParameterViewController class]]) {
+    }
+    
     return NSDragOperationGeneric;
 }
 
@@ -704,22 +718,28 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
  */
 - (void)draggingExited:(id < NSDraggingInfo >)sender object:(id)object
 {
- 
     NSPasteboard *pboard = [sender draggingPasteboard];
-    //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
-    
-    MGSParameterViewController *viewController = object;
-    NSAssert([_viewControllers containsObject:viewController], @"bad view controller");
-    
-    if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
-        //if (sourceDragMask & NSDragOperationGeneric) {
-        
-        if (!viewController.dragging) {
-            viewController.isDragTarget = NO;
-        }
-        //}
-    }
 
+    if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
+
+        if ([object isKindOfClass:[MGSParameterViewController class]]) {
+            //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+            
+            MGSParameterViewController *viewController = object;
+            NSAssert([_viewControllers containsObject:viewController], @"bad view controller");
+            
+                //if (sourceDragMask & NSDragOperationGeneric) {
+                
+            if (!viewController.dragging) {
+                viewController.isDragTarget = NO;
+            }
+                //}
+        } else if ([object isKindOfClass:[MGSParameterEndViewController class]]) {
+            MGSParameterEndViewController *endViewController = object;
+            
+            endViewController.isDragTarget = NO;
+        }
+    } 
 }
 
 /*
@@ -733,12 +753,14 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 #pragma unused(object)
 
     BOOL accept = NO;
-    
-    MGSParameterViewController *targetViewController = object;
-    if ([_viewControllers containsObject:targetViewController]) {
-        
-        if (!targetViewController.dragging && targetViewController.mode == MGSParameterModeEdit) {
-            accept = YES;
+    if ([object isKindOfClass:[MGSParameterViewController class]]) {
+            
+        MGSParameterViewController *targetViewController = object;
+        if ([_viewControllers containsObject:targetViewController]) {
+            
+            if (!targetViewController.dragging && targetViewController.mode == MGSParameterModeEdit) {
+                accept = YES;
+            }
         }
     }
     
@@ -752,53 +774,56 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
  */
 - (BOOL)performDragOperation:(id < NSDraggingInfo >)sender object:(id)object
 {
-    MGSParameterViewController *targetViewController = object;
-    NSAssert([_viewControllers containsObject:targetViewController], @"bad view controller");
-    
     BOOL accept = NO;
 
-    if (![self commitPendingEdits]) return accept;
-    
-    //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
-    NSPasteboard *pboard = [sender draggingPasteboard];
-    
-    @try {
-        // parameter view type
-        if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
+    if ([object isKindOfClass:[MGSParameterViewController class]]) {
+        MGSParameterViewController *targetViewController = object;
+        NSAssert([_viewControllers containsObject:targetViewController], @"bad view controller");
+        
 
-            // get our dictionary
-            NSDictionary *info = [pboard propertyListForType:MGSParameterViewPBoardType];
-            NSDictionary *scriptParameterDict = [info objectForKey:@"scriptParameterDict"];
-            
-            if (!scriptParameterDict || ![scriptParameterDict isKindOfClass:[NSDictionary class]]) {
-                [NSException raise:MGSInputParameterDragException format:@"Script parameter dictionary not found"];
+        if (![self commitPendingEdits]) return accept;
+        
+        //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+        NSPasteboard *pboard = [sender draggingPasteboard];
+        
+        @try {
+            // parameter view type
+            if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
+
+                // get our dictionary
+                NSDictionary *info = [pboard propertyListForType:MGSParameterViewPBoardType];
+                NSDictionary *scriptParameterDict = [info objectForKey:@"scriptParameterDict"];
+                
+                if (!scriptParameterDict || ![scriptParameterDict isKindOfClass:[NSDictionary class]]) {
+                    [NSException raise:MGSInputParameterDragException format:@"Script parameter dictionary not found"];
+                }
+
+                //if (![info objectForKey:@"index"]) {
+                //    [NSException raise:MGSInputParameterDragException format:@"Controller index not found"];
+                //}
+
+                MGSScriptParameter *scriptParameter = [[MGSScriptParameter alloc] initWithDictionary:scriptParameterDict];
+                
+                // configure undo
+                self.undoActionName = NSLocalizedString(@"Paste Input", @"Parameter paste undo");
+                self.undoActionOperation = @"paste";
+
+                self.selectedParameterViewController = targetViewController;
+                
+                if ([_viewControllers count] == 0) {                
+                    [self appendInputParameterAction:scriptParameter];
+                } else if ([self canPasteInputParameter]) {
+                    [self insertInputParameterAction:scriptParameter];                
+                }
+                
+                accept = YES;
             }
-
-            //if (![info objectForKey:@"index"]) {
-            //    [NSException raise:MGSInputParameterDragException format:@"Controller index not found"];
-            //}
-
-            MGSScriptParameter *scriptParameter = [[MGSScriptParameter alloc] initWithDictionary:scriptParameterDict];
-            
-            // configure undo
-            self.undoActionName = NSLocalizedString(@"Paste Input", @"Parameter paste undo");
-            self.undoActionOperation = @"paste";
-
-            self.selectedParameterViewController = targetViewController;
-            
-            if ([_viewControllers count] == 0) {                
-                [self appendInputParameterAction:scriptParameter];
-            } else if ([self canPasteInputParameter]) {
-                [self insertInputParameterAction:scriptParameter];                
-            }
-            
-            accept = YES;
+        } @catch (NSException *e) {
+            MLogInfo(@"%@ : %@", e.name, e.reason);
+            accept = NO;
         }
-    } @catch (NSException *e) {
-        MLogInfo(@"%@ : %@", e.name, e.reason);
-        accept = NO;
     }
-
+    
     return accept;
 }
 
@@ -810,7 +835,8 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 - (void)concludeDragOperation:(id < NSDraggingInfo >)sender object:(id)object
 {
 #pragma unused(sender)
-#pragma unused(object)    
+    if ([object isKindOfClass:[MGSParameterViewController class]]) {
+    }
 }
 
 /*
@@ -820,22 +846,27 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
  */
 - (void)draggingEnded:(id < NSDraggingInfo >)sender object:(id)object
 {
-   
     NSPasteboard *pboard = [sender draggingPasteboard];
     //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
-    
-    MGSParameterViewController *viewController = object;
-    NSAssert([_viewControllers containsObject:viewController], @"bad view controller");
-    
+       
     if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
-        //if (sourceDragMask & NSDragOperationGeneric) {
-        
-        if (!viewController.dragging) {
-            viewController.isDragTarget = NO;
-        }
-        //}
-    }
+        if ([object isKindOfClass:[MGSParameterViewController class]]) {
 
+            MGSParameterViewController *viewController = object;
+            NSAssert([_viewControllers containsObject:viewController], @"bad view controller");
+            
+            //if (sourceDragMask & NSDragOperationGeneric) {
+            
+            if (!viewController.dragging) {
+                viewController.isDragTarget = NO;
+            }
+            //}
+        } else if ([object isKindOfClass:[MGSParameterEndViewController class]]) {
+            MGSParameterEndViewController *endViewController = object;
+            
+            endViewController.isDragTarget = NO;
+        }
+    }
 }
 
 #pragma mark -

@@ -6,15 +6,23 @@
 //  Copyright 2008 Mugginsoft. All rights reserved.
 //
 
-#import "MGSParameterEndView.h"
+#import "MGSParameterEmptyView.h"
+#import "MGSParameterView.h"
 
+@implementation MGSParameterEmptyView
 
-@implementation MGSParameterEndView
-
+/*
+ 
+ - initWithFrame:
+ 
+ */
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
+        
+        [self registerForDraggedTypes:@[MGSParameterViewPBoardType]];
+        
     }
     return self;
 }
