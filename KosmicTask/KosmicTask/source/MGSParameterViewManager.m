@@ -762,6 +762,8 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
                 accept = YES;
             }
         }
+    } else if ([object isKindOfClass:[MGSParameterEndViewController class]]) {
+        accept = YES;
     }
     
     return accept;
@@ -776,20 +778,34 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 {
     BOOL accept = NO;
 
-    if ([object isKindOfClass:[MGSParameterViewController class]]) {
-        MGSParameterViewController *targetViewController = object;
-        NSAssert([_viewControllers containsObject:targetViewController], @"bad view controller");
-        
+    if (![self commitPendingEdits]) return accept;
+    
+    //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
+    NSPasteboard *pboard = [sender draggingPasteboard];
 
-        if (![self commitPendingEdits]) return accept;
-        
-        //NSDragOperation sourceDragMask = [sender draggingSourceOperationMask];
-        NSPasteboard *pboard = [sender draggingPasteboard];
+    // parameter view type
+    if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
+
+        BOOL appendInput = NO;
         
         @try {
-            // parameter view type
-            if ( [[pboard types] containsObject:MGSParameterViewPBoardType] ) {
 
+            if ([object isKindOfClass:[MGSParameterViewController class]]) {
+            
+                MGSParameterViewController *targetViewController = object;
+                NSAssert([_viewControllers containsObject:targetViewController], @"bad view controller");
+
+                self.selectedParameterViewController = targetViewController;
+                
+                accept = YES;
+                
+            } else if ([object isKindOfClass:[MGSParameterEndViewController class]]) {
+                
+                accept = YES;
+                appendInput = YES;
+            }
+
+            if (accept) {
                 // get our dictionary
                 NSDictionary *info = [pboard propertyListForType:MGSParameterViewPBoardType];
                 NSDictionary *scriptParameterDict = [info objectForKey:@"scriptParameterDict"];
@@ -797,27 +813,20 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
                 if (!scriptParameterDict || ![scriptParameterDict isKindOfClass:[NSDictionary class]]) {
                     [NSException raise:MGSInputParameterDragException format:@"Script parameter dictionary not found"];
                 }
-
-                //if (![info objectForKey:@"index"]) {
-                //    [NSException raise:MGSInputParameterDragException format:@"Controller index not found"];
-                //}
-
+                
                 MGSScriptParameter *scriptParameter = [[MGSScriptParameter alloc] initWithDictionary:scriptParameterDict];
                 
                 // configure undo
                 self.undoActionName = NSLocalizedString(@"Paste Input", @"Parameter paste undo");
                 self.undoActionOperation = @"paste";
-
-                self.selectedParameterViewController = targetViewController;
                 
-                if ([_viewControllers count] == 0) {                
+                if ([_viewControllers count] == 0 || appendInput) {
                     [self appendInputParameterAction:scriptParameter];
                 } else if ([self canPasteInputParameter]) {
-                    [self insertInputParameterAction:scriptParameter];                
+                    [self insertInputParameterAction:scriptParameter];
                 }
-                
-                accept = YES;
             }
+
         } @catch (NSException *e) {
             MLogInfo(@"%@ : %@", e.name, e.reason);
             accept = NO;
