@@ -167,6 +167,8 @@ const char MGSContextFirstResponder;
     switch (_panelStyle) {
  
         case kMGSRoundedPanelViewStyleEmptyParameter:
+            [[NSColor whiteColor] set];
+            NSRectFill(aRect);
         break;
     
         default:

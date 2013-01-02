@@ -16,7 +16,7 @@
 #import "MGSScriptPlist.h"
 #import "MGSScriptParameter.h"
 #import "MGSParameterViewManager.h"
-#import "MGSEmptyParameterViewController.h"
+#import "MGSParameterEndViewController.h"
 #import "NSView_Mugginsoft.h"
 #import "MGSParameterSplitView.h"
 #import "MGSGradientView.h"

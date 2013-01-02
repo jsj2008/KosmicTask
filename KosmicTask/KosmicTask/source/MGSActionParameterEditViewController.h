@@ -11,7 +11,7 @@
 @class MGSTaskSpecifier;
 @class MGSParameterViewManager;
 @class MGSScriptParameterManager;
-@class MGSEmptyParameterViewController;
+@class MGSParameterEndViewController;
 @class MGSParameterSplitView;
 @class MGSGradientView;
 
@@ -20,7 +20,7 @@
 	IBOutlet NSTextField *inputCountText;						// number of inputs
 	IBOutlet NSSegmentedControl *inputSegmentedControl;			// input segment control
 	IBOutlet MGSParameterViewManager *parameterViewManager;		// parameter view handler
-	IBOutlet MGSEmptyParameterViewController *emptyParameterViewController;	// view to be displayed when zero parameters are defined
+	IBOutlet MGSParameterEndViewController *emptyParameterViewController;	// view to be displayed when zero parameters are defined
 	IBOutlet NSView *parameterView;								// view containing parameters
 	IBOutlet NSScrollView *parameterScrollView;					// parameter scrollview
 	
