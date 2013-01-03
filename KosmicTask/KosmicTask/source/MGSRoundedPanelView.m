@@ -381,7 +381,7 @@ const char MGSContextFirstResponder;
 - (void)setIsDragTarget:(BOOL)value
 {
 	_isDragTarget = value;
-	[self setNeedsDisplay:YES];
+    [self setNeedsDisplay:YES];
 }
 
 /*
