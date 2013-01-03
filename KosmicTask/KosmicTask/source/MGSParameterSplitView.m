@@ -391,7 +391,7 @@ MGSResizableParameter *resizingParameter = nil;
  */
 - (void)resetCursorRects
 {
-	NSView *subView;
+	MGSParameterView *subView;
 	NSRect cursorRect = NSMakeRect(0, 0, [self frame].size.width, [self dividerThickness]);
 	NSRect convertedRect, thumbRect;
 	
@@ -403,7 +403,14 @@ MGSResizableParameter *resizingParameter = nil;
 			
 		// get max and min size for view from controller
 		if ([subView isKindOfClass:[MGSParameterView class]]) {
-			MGSParameterViewController *viewController = [(MGSParameterView *)subView delegate];
+            
+            // the end view is a MGSParameterView subclass but it's controller does
+            /// not inherit from MGSParameterViewController            
+            if (![[subView delegate] isKindOfClass:[MGSParameterViewController class]]) {
+                continue;
+            }
+            
+			MGSParameterViewController *viewController = [subView delegate];
 						
 			// may not be able to drag the view
 			if ([viewController canDragHeight]) {
