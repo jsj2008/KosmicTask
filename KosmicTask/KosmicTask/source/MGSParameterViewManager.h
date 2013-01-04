@@ -37,6 +37,7 @@ enum _MGSParameterInputMenuTags {
 @optional
 - (void)parameterViewDidClose:(MGSParameterViewController *)viewController;
 - (void)parameterViewAdded:(MGSParameterViewController *)viewController;
+- (void)parameterViewMoved:(MGSParameterViewController *)viewController;
 @end
 
 @interface MGSParameterViewManager : NSObject <MGSActionViewController, MGSParameterViewController> {

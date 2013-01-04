@@ -141,5 +141,6 @@ typedef enum _MGSParameterType {
 - (void)selectParameterTypeWithMenuTag:(NSUInteger)tag;
 - (void)updateModel;
 - (void)markModelDataAsModified;
+- (void)markParameterNameAsCopy;
 
 @end

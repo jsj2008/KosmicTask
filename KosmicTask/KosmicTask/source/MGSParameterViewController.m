@@ -589,6 +589,18 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
     }
 }
 
+/*
+ 
+ - markParameterNameAsCopy
+ 
+ */
+- (void)markParameterNameAsCopy
+{
+    self.parameterName = [NSString stringWithFormat:@"%@ %@",
+                                    self.parameterName,
+                                    NSLocalizedString(@"copy", @"parameter copy suffix")];
+
+}
 #pragma mark -
 #pragma mark KVO
 /*

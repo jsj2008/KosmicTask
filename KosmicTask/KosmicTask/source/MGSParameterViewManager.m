@@ -562,6 +562,11 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
     	
      // update view banners
 	[self updateViewLocations];
+    
+    // inform delegate that view added
+	if (_delegate && [_delegate respondsToSelector:@selector(parameterViewMoved:)]) {
+		[_delegate parameterViewMoved:viewController];
+	}
 }
 
 
@@ -943,7 +948,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
                         if (self.draggedParameterViewController) {
                             
                             if (appendInput) {
-                                newIndex = [_viewControllers count];
+                                newIndex = [_viewControllers count] - 1;
                             } else {
                                 newIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
                             }
@@ -952,7 +957,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
                             [self parameterViewController:self.draggedParameterViewController moveToIndex:newIndex];
                         } else {
                             // moving a parameter from another view.
-                            // we copy it to this view and then delete it witin the original
+                            // we copy it to this view and then delete it within the original
                             copyParameter = YES;
                         }
                     default:
@@ -968,6 +973,10 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
                         [self appendInputParameterAction:scriptParameter];
                     } else if ([self canPasteInputParameter]) {
                         [self insertInputParameterAction:scriptParameter];
+                    }
+                    
+                    if (dragOperation == NSDragOperationCopy) {
+                        [self.selectedParameterViewController markParameterNameAsCopy];
                     }
                 }
             }
@@ -1582,18 +1591,30 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 
     // the parameter model only updates on request
     [self.selectedParameterViewController updateModel];
+
+    // get script parameter to duplicate
+    MGSScriptParameter *scriptParameter = self.selectedParameterViewController.scriptParameter;
+    
+    NSUInteger sourceIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
     
     [parameterInputUndoManager disableUndoRegistration];
 
-    // insert parameter and set scriptParameter
-    [self insertInputParameterAction:self.selectedParameterViewController.scriptParameter];
-
+    if (sourceIndex != [_viewControllers count] - 1) {
+        NSUInteger targetIndex = sourceIndex + 1;
+        
+        self.selectedParameterViewController = [_viewControllers objectAtIndex:targetIndex];
+        
+        // insert parameter
+        [self insertInputParameterAction:scriptParameter];
+    } else {
+        // append parameter
+        [self appendInputParameterAction:scriptParameter];
+    }
+    
     [parameterInputUndoManager enableUndoRegistration];
 
     MGSParameterViewController *viewController = self.selectedParameterViewController;
-    viewController.parameterName = [NSString stringWithFormat:@"%@ %@",
-                                    viewController.parameterName,
-                                    NSLocalizedString(@"copy", @"parameter copy suffix")];
+    [viewController markParameterNameAsCopy];
     
     NSUInteger changedIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
 

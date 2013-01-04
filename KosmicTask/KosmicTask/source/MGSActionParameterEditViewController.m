@@ -280,6 +280,7 @@ char MGSParameterViewManagerUndoContext;
 /*
  
  - parameterViewAdded:
+ 
  */
 - (void)parameterViewAdded:(MGSParameterViewController *)viewController
 {
@@ -293,6 +294,20 @@ char MGSParameterViewManagerUndoContext;
 	// document edited
 	[[[self view] window] setDocumentEdited:YES];
 }
+
+/*
+ 
+ - parameterViewMoved:
+ 
+ */
+- (void)parameterViewMoved:(MGSParameterViewController *)viewController
+{
+#pragma unused(viewController)
+	
+	// document edited
+	[[[self view] window] setDocumentEdited:YES];
+}
+
 @end
 
 @implementation MGSActionParameterEditViewController (Private)
