@@ -31,6 +31,7 @@
 #undef MGS_DEBUG_PARAMETER_DRAG
 
 NSTimer * m_draggingAutoscrollTimer = nil;
+MGSParameterViewManager *m_targetParameterViewManager = nil;
 
 NSString * MGSInputParameterException = @"MGSInputParameterException";
 NSString * MGSInputParameterUndoException = @"MGSInputParameterUndoException";
@@ -51,6 +52,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 - (void)undoNotification:(NSNotification *)note;
 - (NSDragOperation)dragOperationForSourceOperation:(NSDragOperation)sourceDragMask;
 - (BOOL)viewControllerCanAcceptDrop:(NSViewController *)viewController forDragOperation:(NSDragOperation)dragOperation;
+- (void)parameterViewController:(MGSParameterViewController *)viewController moveToIndex:(NSUInteger)newIndex;
 
 @property BOOL parameterScrollingEnabled;
 @property (copy) NSString *undoActionName;
@@ -452,14 +454,30 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
             break;
     }
 
-    [self moveParameterAtIndex:sourceControllerIndex toIndex:targetControllerIndex];
-    self.selectedParameterViewController = viewController;
+    [self parameterViewController:viewController moveToIndex:targetControllerIndex];
+}
 
+/*
+ 
+ - parameterViewController:moveToIndex:
+ 
+ */
+- (void)parameterViewController:(MGSParameterViewController *)viewController moveToIndex:(NSUInteger)newIndex
+{
+    NSUInteger sourceControllerIndex = [_viewControllers indexOfObject:viewController];
+    if (sourceControllerIndex == NSNotFound) {
+        MLogDebug(@"view controller not found");
+        return;
+    }
+
+    [self moveParameterAtIndex:sourceControllerIndex toIndex:newIndex];
+    self.selectedParameterViewController = viewController;
     
     // register undo
     self.undoActionOperation =  @"move";
-    NSDictionary *undoObject = @{ @"scriptParameter" : self.selectedParameterViewController.scriptParameter.mutableDeepCopy, @"changedIndex" : @(targetControllerIndex), @"originalIndex" : @(sourceControllerIndex)};
+    NSDictionary *undoObject = @{ @"scriptParameter" : self.selectedParameterViewController.scriptParameter.mutableDeepCopy, @"changedIndex" : @(newIndex), @"originalIndex" : @(sourceControllerIndex)};
     [self registerUndoForObject:undoObject];
+    
 }
 
 #pragma mark -
@@ -604,6 +622,15 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
     [m_draggingAutoscrollTimer invalidate];
     m_draggingAutoscrollTimer = nil;
 
+    if (operation == NSDragOperationMove) {
+        
+        // if the static target is not this object
+        // then we have moved a parameter out of this view
+        if (m_targetParameterViewManager != self) {
+            [self removeInputParameterAction:self.draggedParameterViewController];
+        }
+    }
+    
     self.draggedParameterViewController = nil;
     
 #ifdef MGS_DEBUG_PARAMETER_DRAG
@@ -616,7 +643,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 
 /*
  
- - timerAutoscrollCallback
+ - timerAutoscrollCallback:
  
  */
 - (void)timerAutoscrollCallback:(NSTimer *)timer
@@ -899,27 +926,49 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
                 }
                 
                 MGSScriptParameter *scriptParameter = [[MGSScriptParameter alloc] initWithDictionary:scriptParameterDict];
+                BOOL copyParameter = NO;
+                NSUInteger newIndex = 0;
                 
                 switch (dragOperation) {
                         
                     // copy
                     case NSDragOperationCopy:
-                
-                        // configure undo
-                        self.undoActionName = NSLocalizedString(@"Input Copy", @"Parameter drag copy undo");
-                        self.undoActionOperation = @"paste";
-                        
-                        if ([_viewControllers count] == 0 || appendInput) {
-                            [self appendInputParameterAction:scriptParameter];
-                        } else if ([self canPasteInputParameter]) {
-                            [self insertInputParameterAction:scriptParameter];
-                        }
+                        copyParameter = YES;
                         break;
                     
                     // move
                     case NSDragOperationMove:
+                        
+                        // moving a parameter within this view
+                        if (self.draggedParameterViewController) {
+                            
+                            if (appendInput) {
+                                newIndex = [_viewControllers count];
+                            } else {
+                                newIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
+                            }
+                            
+                            // move the parameter
+                            [self parameterViewController:self.draggedParameterViewController moveToIndex:newIndex];
+                        } else {
+                            // moving a parameter from another view.
+                            // we copy it to this view and then delete it witin the original
+                            copyParameter = YES;
+                        }
                     default:
                         break;
+                }
+                
+                if (copyParameter) {
+                    // configure undo
+                    self.undoActionName = NSLocalizedString(@"Copy Input", @"Parameter drag copy undo");
+                    self.undoActionOperation = @"paste";
+                    
+                    if ([_viewControllers count] == 0 || appendInput) {
+                        [self appendInputParameterAction:scriptParameter];
+                    } else if ([self canPasteInputParameter]) {
+                        [self insertInputParameterAction:scriptParameter];
+                    }
                 }
             }
 
@@ -927,6 +976,10 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
             MLogInfo(@"%@ : %@", e.name, e.reason);
             accept = NO;
         }
+    }
+    
+    if (accept) {
+        m_targetParameterViewManager = self;
     }
     
     return accept;
