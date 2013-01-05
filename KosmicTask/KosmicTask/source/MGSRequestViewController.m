@@ -785,11 +785,26 @@ commonExit:
 {
 	#pragma unused(netRequest)
 	
-	// return a configuration dictionary
 	MGSScript *script = [[self actionSpecifier] script];
-	
-	NSInteger timeout = script.applyTimeout ? [script timeoutSeconds] : 0;
+
+    // determine timeout to be used
+    NSInteger timeout = 0;
+    BOOL useDefaultTimeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSApplyTimeoutToLocalUserTasks];
+
+    // use default timeout or script timeout
+    if (useDefaultTimeout) {
+        
+        timeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSLocalUserTaskTimeout];
+        MGSTimeoutUnits timeoutUnits = [[MGSPreferences standardUserDefaults] integerForKey:MGSLocalUserTaskTimeoutUnits];
+        
+        // get seconds representation
+        timeout = [[MGSScript class] timeoutSecondsForTimeout:(float)timeout timeoutUnits:timeoutUnits];
+        
+    } else {
+        timeout = script.applyTimeout ? [script timeoutSeconds] : 0;
+    }
     
+	// return a configuration dictionary
 	return [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:timeout], @"ReadTimeout", [NSNumber numberWithInteger:timeout], @"WriteTimeout", nil];
 }
 

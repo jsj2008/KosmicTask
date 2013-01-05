@@ -19,7 +19,7 @@ enum _mgsTimeoutUnits {
     kMGSTimeoutHours = 2,
     
 };
-typedef NSInteger mgsTimeoutUnits;
+typedef NSInteger MGSTimeoutUnits;
 
 #define MGS_MAX_LOG_ENTRY_LENGTH 5000
 

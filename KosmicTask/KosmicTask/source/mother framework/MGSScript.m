@@ -507,6 +507,32 @@ errorExit:;
 	return NO;
 }
 
+/*
+ 
+ - timeoutSecondsForTimeout:timeoutUnits:
+ 
+ */
++ (NSInteger)timeoutSecondsForTimeout:(float)timeout timeoutUnits:(MGSTimeoutUnits)timeoutUnits
+{
+    float mul = 0;
+    switch (timeoutUnits) {
+            
+        case kMGSTimeoutHours:
+            mul = 60 * 60;
+            break;
+            
+        case kMGSTimeoutMinutes:
+            mul = 60;
+            break;
+            
+        case kMGSTimeoutSeconds:
+        default:
+            mul = 1;
+            break;
+    }
+    
+    return (NSInteger)(timeout * mul);
+}
 
 #pragma mark -
 #pragma mark Instance Methods
@@ -1782,26 +1808,7 @@ errorExit:;
  */
 - (NSInteger)timeoutSeconds
 {
-    float value = [self timeout];
-    float mul = 0;
-    
-    switch ([self timeoutUnits]) {
-            
-        case kMGSTimeoutHours:
-            mul = 60 * 60;
-            break;
-        
-        case kMGSTimeoutMinutes:
-            mul = 60;
-            break;
-
-        case kMGSTimeoutSeconds:
-        default:
-            mul = 1;
-            break;
-    }
-    
-    return (NSInteger)(value * mul);
+    return [[self class] timeoutSecondsForTimeout:[self timeout] timeoutUnits:[self timeoutUnits]];
 }
 
 /*

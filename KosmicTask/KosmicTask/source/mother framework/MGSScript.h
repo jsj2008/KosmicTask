@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSDictionary.h"
 #import "MGSScriptPlist.h"
+#import "MGSPreferences.h"
 
 extern NSString *MGSScriptOriginMugginsoft;
 
@@ -71,6 +72,7 @@ typedef NSInteger MGSScriptRepresentation;
 + (NSString *)defaultScriptType;
 + (NSString *)scriptTypeForFile:(NSString *)filename;
 + (BOOL)clientRepresentationRequiresAuthentication:(MGSScriptRepresentation)representation;
++ (NSInteger)timeoutSecondsForTimeout:(float)timeout timeoutUnits:(MGSTimeoutUnits)timeoutUnits;
 
 - (NSString *)FileVersion;
 - (NSString *)identifier;

@@ -305,7 +305,7 @@ error_exit:
         NSInteger serverTimeout = [[MGSPreferences standardUserDefaults] integerForKey:MGSMachineTaskTimeout];
         
         if (serverTimeout > 0) {
-            mgsTimeoutUnits timeoutUnits = [[MGSPreferences standardUserDefaults] integerForKey:MGSMachineTaskTimeoutUnits];
+            MGSTimeoutUnits timeoutUnits = [[MGSPreferences standardUserDefaults] integerForKey:MGSMachineTaskTimeoutUnits];
             NSInteger mul = 0;
             
             switch (timeoutUnits) {
