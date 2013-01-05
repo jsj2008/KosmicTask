@@ -407,7 +407,7 @@ send_error_reply:;
     // if we are sending an error reponse though it may be okay as long
     // as the writing end has a read queued.
     //
-    // Obviiusly we cannot send an error response if we are
+    // Obviously we cannot send an error response if we are
     // in the midst of sending a standard response.
     if (netRequest.status == kMGSStatusMessageReceived) {
         
