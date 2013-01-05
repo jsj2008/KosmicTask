@@ -28,7 +28,7 @@
 - (NSString *) userApplicationSupportPath;
 - (BOOL)loadScriptManagers;
 - (BOOL)terminateRequest:(MGSServerNetRequest *)netRequest;
-
+- (BOOL)terminateRequestTask:(MGSServerNetRequest *)netRequest;
 
 @property (readonly) BOOL initialised;
 @end

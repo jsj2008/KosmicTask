@@ -114,6 +114,8 @@ static MGSServerRequestManager *_sharedController = nil;
 	MGSServerNetRequest *request = [MGSServerNetRequest requestWithConnectedSocket:socket];
 	[request setDelegate: self];
 	
+    //NSLog(@"requestWithConnectedSocket: %@", request.requestMessage);
+    
 	// add to request array
 	[self addRequest:request];
 	
@@ -334,8 +336,11 @@ send_error_reply:;
     // terminate any task associated with the task.
     // the request itself will be terminated only if a task
     // is currently associated with the request
-	[_scriptController terminateRequest:netRequest];
-    
+    if (netRequest.requestType == kMGSRequestTypeWorker
+        && netRequest.requestMessage.isNegotiateMessage == NO) {
+        [_scriptController terminateRequest:netRequest];
+    }
+
     // terminate
     if (netRequest.status != kMGSStatusTerminated) {
         [self terminateRequest:netRequest];
@@ -425,12 +430,17 @@ send_error_reply:;
     // but extending the timeout to allow the response to be sent.
     if ((netRequest.timeoutCount == 1) && sendTimeoutResponse) {
 
+        // terminate any task associated with the request.
+        // we don't however terminate the netRequest
+        [_scriptController terminateRequestTask:netRequest];
+        
         netRequest.timeout = 10;
         [netRequest startRequestTimer];
 
         MGSError *mgsError = [MGSError serverCode:MGSErrorCodeServerRequestTimeout reason:@"Request has been terminated by the task server."];
         [netRequest.responseMessage setErrorDictionary:[mgsError dictionary]];
         [self sendResponseOnSocket:netRequest wasValid:YES];
+        
     } else {
     
         if (netRequest.timeoutCount > 1) {
@@ -441,7 +451,7 @@ send_error_reply:;
         
         // conclude our request.
         // this will terminate any tasks associated with the request
-        // and may remove the request from the request queue
+        // and will remove the request from the request queue
         [self concludeRequest:netRequest];
     }
     

@@ -44,6 +44,8 @@
 #import <YAMLKit/YAMLKit.h>
 #import "MGSNetNegotiator.h"
 
+#undef MGS_LOG_TASK_REQUEST_UUID_ACTIVITY
+
 #define MGS_PARSE_RESULT_AS_YAML
 
 NSString *MGSSearchKeyQuery = @"Query";
@@ -71,9 +73,11 @@ static BOOL LicenceValidForRequest(MGSServerNetRequest *netRequest, MGSError **m
 - (BOOL)suspendRequestUUID:(NSString *)UUID;
 - (BOOL)resumeRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest;
 - (BOOL)resumeRequestUUID:(NSString *)UUID;
-- (BOOL)terminateRequestUUID:(NSString *)UUID;
 - (BOOL)logRequestUUIDs:(NSArray *)UUIDs forRequest:(MGSServerNetRequest *)netRequest;
 - (BOOL)logRequestUUID:(NSString *)UUID forRequest:(MGSServerNetRequest *)netRequest;
+- (BOOL)terminateTaskAndRequestWithRequestUUID:(NSString *)UUID;
+- (BOOL)terminateTaskOnlyWithRequestUUID:(NSString *)UUID;
+- (BOOL)terminateTaskWithRequestUUID:(NSString *)UUID terminateRequest:(BOOL)terminateRequest;
 @end
 
 @interface MGSServerScriptRequest (Script)
@@ -586,15 +590,39 @@ errorExit:;	// the trailing ; prevents compiler complaining (can also { } subseq
 	
 	return NO;		// caller will issue reply
 }
+
 /*
  
- - terminateRequest
+ - terminateRequest:
  
  */
 - (BOOL)terminateRequest:(MGSServerNetRequest *)netRequest
 {
-	// terminate task associated with request if any still active
-	return[self terminateRequestUUID:[netRequest UUID]];
+    
+#ifdef MGS_LOG_TASK_REQUEST_UUID_ACTIVITY    
+    NSLog(@"Terminate Request: %@", [netRequest.requestMessage messageDict]);
+#endif
+    
+	// terminate task associated with request if any still active.
+    // also terminate the net request.
+	return [self terminateTaskAndRequestWithRequestUUID:[netRequest UUID]];
+}
+
+/*
+ 
+ - terminateRequestTask:
+ 
+ */
+- (BOOL)terminateRequestTask:(MGSServerNetRequest *)netRequest
+{
+    
+#ifdef MGS_LOG_TASK_REQUEST_UUID_ACTIVITY    
+    NSLog(@"Terminate task: %@", [netRequest.requestMessage messageDict]);
+#endif
+    
+	// terminate task associated with request if any still active.
+    // the net request itself is not terminated.
+	return [self terminateTaskOnlyWithRequestUUID:[netRequest UUID]];
 }
 
 /*
@@ -858,7 +886,7 @@ errorExit:;
 {
 	// terminate each UUID
 	for (NSString *UUID in UUIDs) {
-		[self terminateRequestUUID: UUID];
+		[self terminateTaskAndRequestWithRequestUUID: UUID];
 	}
 	
 	// add scripts dict to reply, flag as valid and send
@@ -976,14 +1004,37 @@ errorExit:;
 
 /*
  
- terminate request UUID
+ - terminateTaskAndRequestWithRequestUUID:
  
  */
-- (BOOL)terminateRequestUUID:(NSString *)UUID
+- (BOOL)terminateTaskAndRequestWithRequestUUID:(NSString *)UUID
+{
+    return [self terminateTaskWithRequestUUID:UUID terminateRequest:YES];
+}
+
+/*
+ 
+ - terminateTaskOnlyWithRequestUUID:
+ 
+ */
+- (BOOL)terminateTaskOnlyWithRequestUUID:(NSString *)UUID
+{
+    return [self terminateTaskWithRequestUUID:UUID terminateRequest:NO];
+}
+/*
+ 
+ - terminateTaskWithRequestUUID:terminateRequest:
+ 
+ */
+- (BOOL)terminateTaskWithRequestUUID:(NSString *)UUID terminateRequest:(BOOL)terminateRequest
 {
     if (!UUID) {
         return NO;
     }
+    
+#ifdef MGS_LOG_TASK_REQUEST_UUID_ACTIVITY
+    NSLog(@"Requesting task terminate for request UUID: %@", UUID);
+#endif
     
 	// terminate task with matching UUID
 	MGSScriptTask *scriptTask = [_scriptTasks objectForKey:UUID];
@@ -991,19 +1042,29 @@ errorExit:;
 		
         // remove task
         [_scriptTasks removeObjectForKey:UUID];
-
-		// remove the originating request
-		[[MGSServerRequestManager sharedController] terminateRequest:scriptTask.netRequest];
-		
+        
+		// termminate the originating request
+        if (terminateRequest) {
+            [[MGSServerRequestManager sharedController] terminateRequest:scriptTask.netRequest];
+		}
+        
         // terminate the task
 		[scriptTask terminate];
 		
 		MLog(DEBUGLOG, @"**** task terminated: %@ ****", UUID);
+        
+#ifdef MGS_LOG_TASK_REQUEST_UUID_ACTIVITY
+        NSLog(@"Task terminated for request UUID: %@", UUID);
+#endif
 		return YES;
-	} 
-	
-	return NO;	
+	}
+    
+#ifdef MGS_LOG_TASK_REQUEST_UUID_ACTIVITY
+    NSLog(@"No task found for request UUID: %@", UUID);
+#endif
+	return NO;
 }
+
 
 /*
  
@@ -1752,6 +1813,10 @@ errorExit:;
 	// add to script tasks array
 	[_scriptTasks setObject:scriptTask forKey:[netRequest.requestMessage messageUUID]];
 	
+#ifdef MGS_LOG_TASK_REQUEST_UUID_ACTIVITY
+    NSLog(@"Executing task for request UUID: %@", [netRequest.requestMessage messageUUID]);
+#endif
+    
 	return YES;
 }
 
