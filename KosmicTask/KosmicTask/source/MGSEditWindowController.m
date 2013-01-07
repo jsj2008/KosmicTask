@@ -36,6 +36,7 @@
 #import "MGSRequestTabScrollView.h"
 #import "MGSAPLicenceCode.h"
 #import "MGSApplicationMenu.h"
+#import "MGSFunctionNameSheetController.h"
 
 #define ACTION_TAB 0
 #define SCRIPT_TAB 1
@@ -58,6 +59,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (void)resourceSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)showTemplateSheet_:(id)sender;
 - (BOOL)changeEditMode:(eMGSMotherEditMode)mode;
+
+- (void)functionNameSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 @end
 
 @interface MGSEditWindowController(Private)
@@ -334,7 +337,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	
 
 #pragma mark -
-#pragma mark Templates
+#pragma mark Templates 
 
 /*
  
@@ -415,6 +418,59 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 		case 2:
 			[self openFile:self];
 			break;
+	}
+}
+
+#pragma mark -
+#pragma mark Input Function
+
+/*
+ 
+ - showFunctionSheet:
+ 
+ */
+- (IBAction)showFunctionSheet:(id)sender
+{
+#pragma unused(sender)
+	
+	// load the resource sheet controller.
+	// use the cached controller if available and resources have not been modified
+	if (!functionNameSheetController) {
+		functionNameSheetController = [[MGSFunctionNameSheetController alloc] init];
+		[functionNameSheetController window];
+	}
+	
+	// we require to preselect the default template for the current script type
+	//resourceSheetController.scriptType = [[_taskSpec script] scriptType];
+	
+	// show the sheet
+	[NSApp beginSheet:[functionNameSheetController window]
+	   modalForWindow:self.window
+		modalDelegate:self
+	   didEndSelector:@selector(functionNameSheetDidEnd:returnCode:contextInfo:)
+		  contextInfo:NULL];
+    
+}
+
+/*
+ 
+ - functionNameSheetDidEnd:returnCode:contextInfo:
+ 
+ */
+- (void)functionNameSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+#pragma unused(sheet)
+#pragma unused(contextInfo)
+	
+	switch (returnCode) {
+            
+			// quit
+		case 0:
+			break;
+			
+		case 1:;
+			break;
+            
 	}
 }
 
@@ -552,11 +608,12 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			
 		}
 		
-		// compile document script
-	} else if  (theAction == @selector(showTemplateSheet:)) {
+		// show template/function sheet
+	} else if  (theAction == @selector(showTemplateSheet:) ||
+                theAction == @selector(showFunctionSheet:)) {
 		enabled = NO;
 		
-		// can only compile when script mode selected
+		// can only show sheet when script mode selected
 		if (_editMode == kMGSMotherEditModeScript) {
 			
 			enabled = YES;

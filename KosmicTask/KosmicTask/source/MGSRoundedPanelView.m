@@ -86,7 +86,8 @@ const char MGSContextFirstResponder;
  */
 + (NSColor *)dragTargetOutlineColor
 {
-    return [NSColor colorWithCalibratedRed:0.0f green:0.500f blue:0.250f alpha:0.8f];
+    //return [NSColor colorWithCalibratedRed:0.0f green:0.500f blue:0.250f alpha:0.8f];
+    return [NSColor colorWithCalibratedRed:164.0/256.0 green:181.0/256.0 blue:0.250f alpha:0.8f];
 }
 /*
  

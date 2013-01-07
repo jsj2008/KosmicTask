@@ -23,6 +23,7 @@
 @class MGSSaveActionSheetController;
 @class MGSError;
 @class MGSRequestTabScrollView;
+@class MGSFunctionNameSheetController;
 
 @protocol MGSEditWindowDelegate
 @required
@@ -44,6 +45,8 @@
 
 	MGSTaskSpecifier *_taskSpec;
 	MGSSaveActionSheetController *_saveActionSheetController;
+    MGSFunctionNameSheetController *functionNameSheetController;
+    
 	BOOL _closeWindowAfterSave;
 	BOOL _silentClose;
 	eMGSMotherEditMode _editMode;
@@ -53,6 +56,7 @@
 
 - (IBAction)viewMenuEditModeSelected:(id)sender;
 - (IBAction)showTemplateSheet:(id)sender;
+- (IBAction)showFunctionSheet:(id)sender;
 
 - (void)setDelegate:(id <MGSEditWindowDelegate>) object;
 - (BOOL)commitPendingEdits;
