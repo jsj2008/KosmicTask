@@ -48,4 +48,14 @@
 	return self;
 }
 
+/*
+ 
+ - codeProperties
+ 
+ */
+- (NSDictionary *)codeProperties
+{
+    return @{MGSInputStyle:@"function"};
+}
+
 @end

@@ -9,6 +9,8 @@
 #import "MGSLanguage.h"
 #import "MGSLanguageProperty.h"
 
+NSString *MGSInputStyle = @"InputStyle";
+
 #define MGS_PROP_COPY(METHOD) self.METHOD = copy.METHOD
 
 // class extension
@@ -374,7 +376,114 @@ initBuildResultFlags;
 	return [self isMissingProperty: initSyntaxDefinition] ? self.initScriptTypeFamily : initSyntaxDefinition;
 }
 
+#pragma mark -
+#pragma mark Code generation
 
+/*
+ 
+ - taskInputCodeTemplate:
+ 
+ */
+- (NSString *)taskInputCodeTemplate:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    NSString *templateString = [self codeTemplateBundleResourceWithName:@"taskInputCodeTemplate" extension:@"txt"];
+    if (!templateString) {
+        templateString = NSLocalizedString(@"no task input template available", @"comment");
+    }
+    return templateString;
+}
+
+/*
+ 
+ - taskInputSeparatorCodeTemplate:
+ 
+ */
+- (NSString *)taskInputSeparatorCodeTemplate:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    NSString *templateString = [self codeTemplateBundleResourceWithName:@"taskInputSeparatorCodeTemplate" extension:@"txt"];
+    if (!templateString) {
+        templateString = NSLocalizedString(@"no task input separator template available", @"comment");
+    }
+    return templateString;
+}
+
+/*
+ 
+ - taskInputDuplicateCodeTemplate:
+ 
+ */
+- (NSString *)taskInputDuplicateCodeTemplate:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    NSString *templateString = [self codeTemplateBundleResourceWithName:@"taskInputDuplicateCodeTemplate" extension:@"txt"];
+    if (!templateString) {
+        templateString = NSLocalizedString(@"no task input duplicate template available", @"comment");
+    }
+    return templateString;
+}
+/*
+ 
+ - taskInputsCodeTemplate:
+ 
+ */
+- (NSString *)taskInputsCodeTemplate:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    NSString *templateString = [self codeTemplateBundleResourceWithName:@"taskInputsCodeTemplate" extension:@"txt"];
+    if (!templateString) {
+        templateString = NSLocalizedString(@"no task inputs template available", @"comment");
+    }
+    return templateString;
+}
+
+/*
+ 
+ - taskBodyCodeTemplate:
+ 
+ */
+- (NSString *)taskBodyCodeTemplate:(NSDictionary *)taskInfo
+{
+    #pragma unused(taskInfo)
+
+    NSString *templateString = [self codeTemplateBundleResourceWithName:@"taskBodyCodeTemplate" extension:@"txt"];
+    if (!templateString) {
+        templateString = NSLocalizedString(@"no task body template available", @"comment");
+    }
+    return templateString;
+}
+
+/*
+ 
+ - codeTemplateBundleResourceWithName:extension:
+ 
+ */
+- (NSString *)codeTemplateBundleResourceWithName:(NSString *)resourceName extension:(NSString *)extension
+{
+    NSString *templateString = nil;
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *resourcePath = [bundle pathForResource:resourceName ofType:extension inDirectory:@"Language/Code"];
+    NSError *error = nil;
+    templateString = [NSString stringWithContentsOfFile:resourcePath encoding:NSUTF8StringEncoding error:&error];
+    if (error) {
+        templateString = nil;
+    }
+    return templateString;
+}
+/*
+ 
+ - codeProperties
+ 
+ */
+- (NSDictionary *)codeProperties
+{
+    return @{};
+}
 #pragma mark -
 #pragma mark System version
 /*

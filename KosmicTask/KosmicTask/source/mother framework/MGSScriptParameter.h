@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSDictionary.h"
 
+
 enum _MGSScriptParameterRepresentation {
 	MGSScriptParameterRepresentationUndefined = 0,		// undefined representation
 	MGSScriptParameterRepresentationStandard = 1,		// standard representation

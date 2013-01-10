@@ -25,6 +25,7 @@
 #import "MGSResultFormat.h"
 #import "MGSLanguagePluginController.h"
 #import "MGSLanguageTemplateResourcesManager.h"
+#import "MGSLanguageFunctionDescriptor.h"
 
 // script file versions
 #define MGS_SCRIPT_FILE_VERSION_1_0 @"1.0"
@@ -2741,6 +2742,7 @@ errorExit:;
 	
 	return [NSString stringWithFormat:@"%@ (%@)", name, [_parameterManager shortStringValue]];
 }
+
 
 #pragma mark -
 #pragma mark Version

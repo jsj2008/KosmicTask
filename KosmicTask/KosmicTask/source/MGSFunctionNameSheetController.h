@@ -7,38 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-enum _MGSFunctionArgumentName {
-    kMGSFunctionArgumentName = 0,
-    kMGSFunctionArgumentNameAndType = 1,
-    kMGSFunctionArgumentType = 2,
-    kMGSFunctionArgumentTypeAndName = 3,
-};
-typedef NSUInteger MGSFunctionArgumentName;
-
-enum _MGSFunctionArgumentCase {
-    kMGSFunctionArgumentCamelCase= 0,
-    kMGSFunctionArgumentLowerCase = 1,
-    kMGSFunctionArgumentInputCase = 2,
-    kMGSFunctionArgumentPascalCase = 3,
-    kMGSFunctionArgumentUpperCase = 4,
-};
-typedef NSUInteger MGSFunctionArgumentCase;
-
-enum _MGSFunctionArgumentStyle {
-    kMGSFunctionArgumentHyphenated = 0,
-    kMGSFunctionArgumentUnderscoreSeparated = 1,
-    kMGSFunctionArgumentWhitespaceRemoved = 2,
-};
-typedef NSUInteger MGSFunctionArgumentStyle;
-
-enum _MGSFunctionCodeStyle {
-    kMGSFunctionCodeInputOnly = 0,
-    kMGSFunctionCodeFuntionBody = 1,
-};
-typedef NSUInteger MGSFunctionCodeStyle;
+#import  "MGSLanguageFunctionDescriptor.h"
 
 @class MGSFragaria;
+@class MGSLanguageFunctionDescriptor;
+@class MGSScript;
 
 @interface MGSFunctionNameSheetController : NSWindowController
 {
@@ -47,12 +20,11 @@ typedef NSUInteger MGSFunctionCodeStyle;
     IBOutlet NSPopUpButton *_argumentCasePopupButton;
     IBOutlet NSPopUpButton *_argumentStylePopupButton;
     IBOutlet NSSegmentedControl *_codeSegmentedControl;
+    IBOutlet NSTextField *_runConfigurationTextField;
     
-    MGSFunctionArgumentName _functionArgumentName;
-    MGSFunctionArgumentCase _functionArgumentCase;
-    MGSFunctionArgumentStyle _functionArgumentStyle;
-    MGSFunctionCodeStyle _functionCodeStyle;
+    MGSLanguageFunctionDescriptor *_functionDescriptor;
     
+    MGSScript *_script;
     MGSFragaria *_fragaria;
 	IBOutlet NSView *_fragariaHostView; // fragria host view
 	NSTextView *_fragariaTextView;
@@ -62,8 +34,12 @@ typedef NSUInteger MGSFunctionCodeStyle;
 
 - (IBAction)ok:(id)sender;
 - (IBAction)copyToPasteBoard:(id)sender;
+- (IBAction)showRunSettings:(id)sender;
+- (IBAction)selectTemplate:(id)sender;
+- (IBAction)insertCode:(id)sender;
 
 @property (copy, readonly) NSArray *scriptTypes;
 @property (copy) NSString *scriptType;
+@property MGSScript *script;
 
 @end

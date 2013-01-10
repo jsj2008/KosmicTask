@@ -9,6 +9,8 @@
 #import "KosmicTask_test.h"
 #import "KosmicTaskController.h"
 #import "NSString_Mugginsoft.h"
+#import "NSArray_Mugginsoft.h"
+#import "MGSLanguageFunctionDescriptor.h"
 
 /*
  common macros defined in SenTestingKit.h
@@ -38,8 +40,8 @@
 - (void)testKosmicTaskController
 {
     NSString *fourChar = @"PsOf";
-    NSInteger val = [KosmicTaskController fourCharToInteger:fourChar];
-    STAssertEquals(val, 1349734246, @"%@ Four char string to integer", fourChar);
+    NSUInteger val = [KosmicTaskController fourCharToInteger:fourChar];
+    STAssertEquals((NSUInteger)val, (NSUInteger)1349734246, @"%@ Four char string to integer", fourChar);
 }
 
 - (void)testStringCategories
@@ -97,6 +99,56 @@
     STAssertTrue([[componentTestTarget2 mgs_minimalComponentsSeparatedByString:@"/"] isEqualToArray:components], @"valid components");
     STAssertFalse([[componentTestTarget2 mgs_minimalComponentsSeparatedByString:@"/"] isEqualToArray:invalidComponents], @"invalid components");
     STAssertFalse([[componentTestTarget2 mgs_minimalComponentsSeparatedByString:@"/"] isEqualToArray:invalidComponents], @"invalid components");
+}
+
+- (void)testArrayCategories
+{
+    NSIndexSet *indexSet =nil;
+    
+    // object indexes
+    NSArray *array = @[@"one", @"two", @"three", @"four", @" one", @"two ", @"tree", @"for"];
+    NSDictionary *indexSetDictionary = [array mgs_objectIndexes];
+    NSArray *keys = [indexSetDictionary allKeys];
+    STAssertTrue([array count] == [keys count], @"valid key count");
+    for (NSString *key in keys) {
+        indexSet = [indexSetDictionary objectForKey:key];
+        STAssertTrue([indexSet count] == 1, @"valid index set count");
+    }
+    
+    array = @[@"one", @"two", @"three", @"four", @"two", @"five", @"one", @"three"];
+    indexSetDictionary = [array mgs_objectIndexes];
+    keys = [indexSetDictionary allKeys];
+    STAssertTrue([keys count] == 5, @"valid key count");
+    indexSet = [indexSetDictionary objectForKey:@"one"];
+    STAssertTrue([indexSet count] == 2, @"valid index set count");
+    indexSet = [indexSetDictionary objectForKey:@"two"];
+    STAssertTrue([indexSet count] == 2, @"valid index set count");
+    indexSet = [indexSetDictionary objectForKey:@"three"];
+    STAssertTrue([indexSet count] == 2, @"valid index set count");
+    indexSet = [indexSetDictionary objectForKey:@"four"];
+    STAssertTrue([indexSet count] == 1, @"valid index set count");
+    indexSet = [indexSetDictionary objectForKey:@"five"];
+    STAssertTrue([indexSet count] == 1, @"index set count");
+    
+}
+
+- (void)testTaskCodeGeneration
+{
+    /* need a valid script object for this to work
+    MGSLanguageFunctionDescriptor *descriptor = [[MGSLanguageFunctionDescriptor alloc] init];
+    descriptor.functionArgumentCase = kMGSFunctionArgumentInputCase;
+    descriptor.functionArgumentStyle = kMGSFunctionArgumentHyphenated;
+    NSMutableArray *array = [NSMutableArray arrayWithObjects:@"one", @"two", @"three", @"four", @"two", @"three ", @"one", @"three", nil];
+    [descriptor makeObjectsUnique:array];
+    STAssertTrue([[array objectAtIndex:0] isEqualToString:@"one-1"], @"valid content");
+    STAssertTrue([[array objectAtIndex:1] isEqualToString:@"two-1"], @"valid content");
+    STAssertTrue([[array objectAtIndex:2] isEqualToString:@"three-1"], @"valid content");
+    STAssertTrue([[array objectAtIndex:3] isEqualToString:@"four"], @"valid content");
+    STAssertTrue([[array objectAtIndex:4] isEqualToString:@"two-2"], @"valid content");
+    STAssertTrue([[array objectAtIndex:5] isEqualToString:@"three-2"], @"valid content");
+    STAssertTrue([[array objectAtIndex:6] isEqualToString:@"one-2"], @"valid content");
+    STAssertTrue([[array objectAtIndex:6] isEqualToString:@"three-3"], @"valid content");
+     */
 }
 
 - (void)testObjCLiteralSyntax

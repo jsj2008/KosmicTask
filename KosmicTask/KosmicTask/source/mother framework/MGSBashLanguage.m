@@ -39,4 +39,14 @@
 	return self;
 }
 
+/*
+ 
+ - codeProperties
+ 
+ */
+- (NSDictionary *)codeProperties
+{
+    return @{MGSInputStyle:@"variable"};
+}
+
 @end

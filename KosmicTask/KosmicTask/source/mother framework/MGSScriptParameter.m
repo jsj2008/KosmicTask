@@ -11,6 +11,7 @@
 #import "MGSScriptPlist.h"
 #import "MGSParameterPluginController.h"
 #import "MGSAppController.h"
+
 @implementation MGSScriptParameter
 
 

@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern NSString *MGSInputStyle;
+
 enum _eMGSLanguageType {
 	kMGSInterpretedLanguage = 0,
 	kMGSCompiledLanguage,
@@ -166,4 +168,11 @@ typedef NSInteger MGSBuildResultFlags;
 
 - (BOOL)isMissingProperty:(id)value;
 - (BOOL)validateOSVersion:(unsigned)major minor:(unsigned)minor bugFix:(unsigned)bugFix;
+- (NSString *)taskInputsCodeTemplate:(NSDictionary *)taskInfo;
+- (NSString *)taskInputCodeTemplate:(NSDictionary *)taskInfo;
+- (NSString *)taskBodyCodeTemplate:(NSDictionary *)taskInfo;
+- (NSString *)taskInputSeparatorCodeTemplate:(NSDictionary *)taskInfo;
+- (NSDictionary *)codeProperties;
+- (NSString *)codeTemplateBundleResourceWithName:(NSString *)resourceName extension:(NSString *)extension;
+- (NSString *)taskInputDuplicateCodeTemplate:(NSDictionary *)taskInfo;
 @end

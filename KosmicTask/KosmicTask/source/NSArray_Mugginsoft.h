@@ -13,4 +13,5 @@
 - (NSArray *)mgs_sortedArrayUsingBestSelector;
 - (NSArray *)mgs_sortedArrayUsingSelectors:(NSArray *)selectors;
 - (BOOL)mgs_objectsShareClass;
+- (NSDictionary *)mgs_objectIndexes;
 @end

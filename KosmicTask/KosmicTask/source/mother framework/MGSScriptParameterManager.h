@@ -11,6 +11,7 @@
 #import "MGSFactoryArrayController.h"
 #import "MGSScriptParameter.h"
 
+
 @interface MGSScriptParameterManager : MGSFactoryArrayController {
 
 }

@@ -83,4 +83,26 @@
 	
 	return YES;
 }
+
+/*
+ 
+ - mgs_objectIndexes
+ 
+ */
+- (NSDictionary *)mgs_objectIndexes
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:[self count]];
+    
+    for (NSUInteger i = 0; i < [self count]; i++) {
+        id object = [self objectAtIndex:i];
+        NSMutableIndexSet *indexSet = [dict objectForKey:object];
+        if (!indexSet) {
+            indexSet = [[NSMutableIndexSet alloc] init];
+            [dict setObject:indexSet forKey:object];
+        }
+        [indexSet addIndex:i];
+    }
+    
+    return dict;
+}
 @end

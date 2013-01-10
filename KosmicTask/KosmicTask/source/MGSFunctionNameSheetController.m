@@ -9,6 +9,7 @@
 #import "MGSFunctionNameSheetController.h"
 #import <MGSFragaria/MGSFragaria.h>
 #import "MGSScript.h"
+#import "MGSLanguagePluginController.h"
 
 char MGSFunctionNameContext;
 
@@ -18,10 +19,7 @@ char MGSFunctionNameContext;
 - (void)generateFunctionCodeString;
 
 @property (copy, readwrite) NSArray *scriptTypes;
-@property MGSFunctionArgumentName functionArgumentName;
-@property MGSFunctionArgumentCase functionArgumentCase;
-@property MGSFunctionArgumentStyle functionArgumentStyle;
-@property MGSFunctionCodeStyle functionCodeStyle;
+@property MGSLanguageFunctionDescriptor *functionDescriptor;
 
 @end
 
@@ -29,10 +27,8 @@ char MGSFunctionNameContext;
 
 @synthesize scriptTypes = _scriptTypes;
 @synthesize scriptType = _scriptType;
-@synthesize functionArgumentName = _functionArgumentName;
-@synthesize functionArgumentCase = _functionArgumentCase;
-@synthesize functionArgumentStyle = _functionArgumentStyle;
-@synthesize functionCodeStyle = _functionCodeStyle;
+@synthesize functionDescriptor = _functionDescriptor;
+@synthesize script = _script;
 
 /*
  
@@ -85,27 +81,39 @@ char MGSFunctionNameContext;
 	[_scriptTypePopupButton bind:@"contentValues" toObject:self withKeyPath:@"scriptTypes" options:nil];
 	[_scriptTypePopupButton bind:NSSelectedValueBinding toObject:self withKeyPath:@"scriptType" options:nil];
     
-    _functionArgumentName = kMGSFunctionArgumentName;
-    _functionArgumentCase = kMGSFunctionArgumentCamelCase;
-    _functionArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
-    
+    _functionDescriptor = [[MGSLanguageFunctionDescriptor alloc] init];
+
     // bind the argument tags
-    [_argumentNamePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"functionArgumentName" options:nil];
-    [_argumentCasePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"functionArgumentCase" options:nil];
-    [_argumentStylePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"functionArgumentStyle" options:nil];
+    [_argumentNamePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"functionDescriptor.functionArgumentName" options:nil];
+    [_argumentCasePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"functionDescriptor.functionArgumentCase" options:nil];
+    [_argumentStylePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"functionDescriptor.functionArgumentStyle" options:nil];
     
     // bind the segmented control
-    _functionCodeStyle = kMGSFunctionCodeInputOnly;
-    [_codeSegmentedControl bind:NSSelectedTagBinding toObject:self withKeyPath:@"functionCodeStyle" options:nil];
+    [_codeSegmentedControl bind:NSSelectedTagBinding toObject:self withKeyPath:@"functionDescriptor.functionCodeStyle" options:nil];
     
     // add observers
     [self addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSFunctionNameContext];
-    [self addObserver:self forKeyPath:@"functionArgumentName" options:0 context:&MGSFunctionNameContext];
-    [self addObserver:self forKeyPath:@"functionArgumentCase" options:0 context:&MGSFunctionNameContext];
-    [self addObserver:self forKeyPath:@"functionArgumentStyle" options:0 context:&MGSFunctionNameContext];
-    [self addObserver:self forKeyPath:@"functionCodeStyle" options:0 context:&MGSFunctionNameContext];
+    [self addObserver:self forKeyPath:@"functionDescriptor.functionArgumentName" options:0 context:&MGSFunctionNameContext];
+    [self addObserver:self forKeyPath:@"functionDescriptor.functionArgumentCase" options:0 context:&MGSFunctionNameContext];
+    [self addObserver:self forKeyPath:@"functionDescriptor.functionArgumentStyle" options:0 context:&MGSFunctionNameContext];
+    [self addObserver:self forKeyPath:@"functionDescriptor.functionCodeStyle" options:0 context:&MGSFunctionNameContext];
+    
+    [self generateFunctionCodeString];
 }
 
+#pragma mark -
+#pragma mark Accessors
+
+/*
+ 
+ - setScript:
+ 
+ */
+- (void)setScript:(MGSScript *)script
+{
+    _script = script;
+    self.scriptType = [_script scriptType];
+}
 #pragma mark -
 #pragma mark KVO
 
@@ -135,7 +143,10 @@ char MGSFunctionNameContext;
  */
 - (void)generateFunctionCodeString
 {
-    NSString *functionString = @"KosmicTask (blah)";
+    NSString *functionString = NSLocalizedString(@"[missing]", @"Missing language function code");
+    
+    [self.functionDescriptor setScript:self.script];
+    functionString = [self.functionDescriptor generateCodeString];
     
     _fragaria.string = functionString;
 }
@@ -150,6 +161,7 @@ char MGSFunctionNameContext;
 {
     _scriptType = name;
 	[_fragaria setObject:_scriptType forKey:MGSFOSyntaxDefinitionName];
+    self.script.scriptType = _scriptType;
 }
 
 #pragma mark -
@@ -192,6 +204,8 @@ char MGSFunctionNameContext;
 	[pasteboard setString:text forType:NSStringPboardType];
     
 #endif
+    
+    [self closeSheet:2];
 }
 
 /*
@@ -203,6 +217,42 @@ char MGSFunctionNameContext;
 {
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window] returnCode:returnCode];
+}
+
+/*
+ 
+ - showRunSettings:
+ 
+ */
+- (IBAction)showRunSettings:(id)sender
+{
+#pragma unused(sender)
+    
+	[self closeSheet:10];
+}
+
+/*
+ 
+ - selectTemplate:
+ 
+ */
+- (IBAction)selectTemplate:(id)sender
+{
+#pragma unused(sender)
+    
+	[self closeSheet:3];
+}
+
+/*
+ 
+ - insertCode:
+ 
+ */
+- (IBAction)insertCode:(id)sender
+{
+#pragma unused(sender)
+    
+	[self closeSheet:4];
 }
 @end
 
