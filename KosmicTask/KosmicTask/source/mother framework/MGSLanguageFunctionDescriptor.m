@@ -200,9 +200,12 @@ char MGSScriptTypeContext;
     [self makeObjectsUnique:normalisedNames];
 
     // format inputs using template
+    
     NSString *inputTemplate = [self.scriptLanguage taskInputCodeTemplate:nil];
-    for (NSUInteger idx = 0; idx < parameterCount; idx++) {
+    for (NSUInteger idx = 0; idx < [normalisedNames count]; idx++) {
         NSString *normalisedName = [normalisedNames objectAtIndex:idx];
+     
+        // MGTemplateEngine is behaving erratically
         normalisedName = [_templateEngine processTemplate:inputTemplate
                                             withVariables:@{@"task-input":normalisedName, @"task-input-index-1-based":@(idx+1), @"task-input-index-0-based":@(idx)}];
         [normalisedNames replaceObjectAtIndex:idx withObject:normalisedName];
