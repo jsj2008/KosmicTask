@@ -147,6 +147,7 @@
 		AB19176612AFE02800710031 /* Language Plugin LuaCocoa.lang-plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = AB1914D012AFD8A500710031 /* Language Plugin LuaCocoa.lang-plugin */; };
 		AB19176A12AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB19176912AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m */; };
 		AB19176B12AFE15100710031 /* KosmicTaskLuaCocoaRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB19162D12AFD90300710031 /* KosmicTaskLuaCocoaRunner */; };
+		AB19B5AE16A0C1F200CCE1EA /* libGRMustache6-MacOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB19B5A516A0C17500CCE1EA /* libGRMustache6-MacOS.a */; };
 		AB1CBC7B14CDCFD800CCF7DD /* OpenFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */; };
 		AB1CBC7C14CDCFF000CCF7DD /* OpenFeedback.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */; };
 		AB1D731713F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D731613F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m */; };
@@ -1644,6 +1645,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = AB1914B912AFD8A500710031;
 			remoteInfo = "Language Plugin LuaCocoa";
+		};
+		AB19B5A416A0C17500CCE1EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 56DEC248152631040031E8DC;
+			remoteInfo = "GRMustache6-MacOS";
+		};
+		AB19B5A616A0C17500CCE1EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 56DEC255152631040031E8DC;
+			remoteInfo = "GRMustache6-MacOSTests";
+		};
+		AB19B5A816A0C17500CCE1EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ABAF86A516A0A65A001ADE96;
+			remoteInfo = "GRMustache6-MacOSTests-GC";
+		};
+		AB19B5AA16A0C17500CCE1EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 56DEC26E1526311B0031E8DC;
+			remoteInfo = "GRMustache6-iOS";
+		};
+		AB19B5AC16A0C17500CCE1EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 56DEC27B1526311C0031E8DC;
+			remoteInfo = "GRMustache6-iOSTests";
+		};
+		AB19B5AF16A0C21500CCE1EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 56DEC247152631040031E8DC;
+			remoteInfo = "GRMustache6-MacOS";
 		};
 		AB1CBC7714CDCF8F00CCF7DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3598,6 +3641,7 @@
 		AB1916F712AFDE3800710031 /* MGSLuaScriptManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLuaScriptManager.m; sourceTree = "<group>"; };
 		AB19176812AFE09300710031 /* MGSLuaCocoaLanguagePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLuaCocoaLanguagePlugin.h; sourceTree = "<group>"; };
 		AB19176912AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLuaCocoaLanguagePlugin.m; sourceTree = "<group>"; };
+		AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GRMustache.xcodeproj; path = ../../../GRMustache/src/GRMustache.xcodeproj; sourceTree = "<group>"; };
 		AB1BA9400CF7711B00F35D8F /* servermainDO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = servermainDO.m; sourceTree = "<group>"; };
 		AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LuaCocoa.xcodeproj; path = ../../../luacocoa/Xcode/LuaCocoa.xcodeproj; sourceTree = SOURCE_ROOT; };
 		AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OpenFeedback.xcodeproj; path = ../../../OpenFeedback/OpenFeedback.xcodeproj; sourceTree = "<group>"; };
@@ -5129,6 +5173,7 @@
 				ABAD63EA0EC4EAAC009EAE2F /* SecurityInterface.framework in Frameworks */,
 				ABAB16D410481DA200AA3E9A /* IOKit.framework in Frameworks */,
 				ABA105D81056E3A100F1CC84 /* SystemConfiguration.framework in Frameworks */,
+				AB19B5AE16A0C1F200CCE1EA /* libGRMustache6-MacOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6801,6 +6846,18 @@
 			name = Lua;
 			sourceTree = "<group>";
 		};
+		AB19B59A16A0C17400CCE1EA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB19B5A516A0C17500CCE1EA /* libGRMustache6-MacOS.a */,
+				AB19B5A716A0C17500CCE1EA /* GRMustache6-MacOSTests.octest */,
+				AB19B5A916A0C17500CCE1EA /* GRMustache6-MacOSTests-GC.octest */,
+				AB19B5AB16A0C17500CCE1EA /* libGRMustache6-iOS.a */,
+				AB19B5AD16A0C17500CCE1EA /* GRMustache6-iOSTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AB1BA93D0CF76EB500F35D8F /* Redundant source */ = {
 			isa = PBXGroup;
 			children = (
@@ -7517,6 +7574,7 @@
 		AB69B66D130EAA8E00171D4F /* Git repo is local */ = {
 			isa = PBXGroup;
 			children = (
+				AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */,
 				ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */,
 				ABD056161325267000A728B8 /* lua.xcodeproj */,
 				AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */,
@@ -9278,6 +9336,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AB19B5B016A0C21500CCE1EA /* PBXTargetDependency */,
 				AB3B504414D215A300B82B95 /* PBXTargetDependency */,
 				AB2ECA0F14D1F57200B54313 /* PBXTargetDependency */,
 				AB79AF7614CA32B800087932 /* PBXTargetDependency */,
@@ -10579,6 +10638,10 @@
 					ProjectRef = ABA1DE831204916A000B3F00 /* FScript.xcodeproj */;
 				},
 				{
+					ProductGroup = AB19B59A16A0C17400CCE1EA /* Products */;
+					ProjectRef = AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */;
+				},
+				{
 					ProductGroup = AB3F6E20130C85B900342F11 /* Products */;
 					ProjectRef = AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */;
 				},
@@ -10704,6 +10767,41 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		AB19B5A516A0C17500CCE1EA /* libGRMustache6-MacOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libGRMustache6-MacOS.a";
+			remoteRef = AB19B5A416A0C17500CCE1EA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB19B5A716A0C17500CCE1EA /* GRMustache6-MacOSTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "GRMustache6-MacOSTests.octest";
+			remoteRef = AB19B5A616A0C17500CCE1EA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB19B5A916A0C17500CCE1EA /* GRMustache6-MacOSTests-GC.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "GRMustache6-MacOSTests-GC.octest";
+			remoteRef = AB19B5A816A0C17500CCE1EA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB19B5AB16A0C17500CCE1EA /* libGRMustache6-iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libGRMustache6-iOS.a";
+			remoteRef = AB19B5AA16A0C17500CCE1EA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB19B5AD16A0C17500CCE1EA /* GRMustache6-iOSTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "GRMustache6-iOSTests.octest";
+			remoteRef = AB19B5AC16A0C17500CCE1EA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -12912,6 +13010,11 @@
 			target = AB1914B912AFD8A500710031 /* Language Plugin LuaCocoa */;
 			targetProxy = AB19174712AFDFDB00710031 /* PBXContainerItemProxy */;
 		};
+		AB19B5B016A0C21500CCE1EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "GRMustache6-MacOS";
+			targetProxy = AB19B5AF16A0C21500CCE1EA /* PBXContainerItemProxy */;
+		};
 		AB1CBC7A14CDCFAA00CCF7DD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = OpenFeedback;
@@ -14040,6 +14143,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/GRMustache6-MacOS/usr/local/lib\"",
 				);
 				PRODUCT_NAME = MGSKosmicTask;
 			};
@@ -14054,11 +14158,13 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
 				FRAMEWORK_VERSION = A;
+				HEADER_SEARCH_PATHS = "./include/**";
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/GRMustache6-MacOS/usr/local/lib\"",
 				);
 				PRODUCT_NAME = MGSKosmicTask;
 			};
@@ -16979,13 +17085,21 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mother_Prefix.pch;
-				HEADER_SEARCH_PATHS = ../../PSMTabBarControl/trunk/source;
+				HEADER_SEARCH_PATHS = (
+					../../PSMTabBarControl/trunk/source,
+					"\"$(SRCROOT)/../../../GRMustache/src/classes\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../cint/cint/lib\"",
+					"\"$(SRCROOT)/../../../../../github/GRMustache/lib\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../KosmicTask MDImporter/trunk/GRMustache6-MacOS 11-01-2013 09.45/usr/local/lib\"",
+					"\"$(SRCROOT)/../../KosmicTask MDImporter/trunk/GRMustache6-MacOS.45/usr/local/lib\"",
+					"\"$(SRCROOT)/GRMustache6-MacOS/usr/local/lib\"",
 				);
 				PRODUCT_NAME = KosmicTask;
 				PROVISIONING_PROFILE = "";
@@ -17008,13 +17122,21 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mother_Prefix.pch;
-				HEADER_SEARCH_PATHS = ../../PSMTabBarControl/trunk/source;
+				HEADER_SEARCH_PATHS = (
+					../../PSMTabBarControl/trunk/source,
+					"\"$(SRCROOT)/../../../GRMustache/src/classes\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../cint/cint/lib\"",
+					"\"$(SRCROOT)/../../../../../github/GRMustache/lib\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../KosmicTask MDImporter/trunk/GRMustache6-MacOS 11-01-2013 09.45/usr/local/lib\"",
+					"\"$(SRCROOT)/../../KosmicTask MDImporter/trunk/GRMustache6-MacOS.45/usr/local/lib\"",
+					"\"$(SRCROOT)/GRMustache6-MacOS/usr/local/lib\"",
 				);
 				PRODUCT_NAME = KosmicTask;
 				PROVISIONING_PROFILE = "";
@@ -17054,9 +17176,13 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "./include/**";
+				HEADER_SEARCH_PATHS = (
+					"./include/**",
+					"\"$(SRCROOT)/../../../GRMustache/src/classes\"",
+				);
 				IBC_WARNINGS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-D_NO_MGS_DEBUG",
 					"-D_NO_MGS_LOG_FINALIZE",
@@ -17112,7 +17238,10 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "./include/**";
+				HEADER_SEARCH_PATHS = (
+					"./include/**",
+					"\"$(SRCROOT)/../../../GRMustache/src/classes\"",
+				);
 				IBC_WARNINGS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = "";

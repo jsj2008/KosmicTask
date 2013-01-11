@@ -9,10 +9,12 @@
 #import "MGSLanguageFunctionDescriptor.h"
 #import "MGSLanguagePluginController.h"
 #import "NSArray_Mugginsoft.h"
-#import "MGTemplateEngine/ICUTemplateMatcher.h"
 #import "MGSParameterPluginController.h"
 #import "MGSAppController.h"
 #import "MGSParameterPlugin.h"
+
+#import "MGTemplateEngine/ICUTemplateMatcher.h"
+#import "GRMustache.h"
 
 char MGSScriptTypeContext;
 
@@ -47,10 +49,6 @@ char MGSScriptTypeContext;
         _functionArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
         _functionCodeStyle = kMGSFunctionCodeTaskInputs;
         
-        // configure the template engine
-        _templateEngine = [MGTemplateEngine templateEngine];
-        //[_templateEngine setDelegate:self];
-        [_templateEngine setMatcher:[ICUTemplateMatcher matcherWithTemplateEngine:_templateEngine]];
     }
     
     return self;
@@ -164,7 +162,7 @@ char MGSScriptTypeContext;
 
     // run the template
     if (templateVariables) {
-        codeString = [_templateEngine processTemplate:template withVariables:templateVariables];
+        codeString = [self processTemplate:template object:templateVariables error:NULL];
     }
 
     return codeString;
@@ -205,9 +203,12 @@ char MGSScriptTypeContext;
     for (NSUInteger idx = 0; idx < [normalisedNames count]; idx++) {
         NSString *normalisedName = [normalisedNames objectAtIndex:idx];
      
-        // MGTemplateEngine is behaving erratically
-        normalisedName = [_templateEngine processTemplate:inputTemplate
-                                            withVariables:@{@"task-input":normalisedName, @"task-input-index-1-based":@(idx+1), @"task-input-index-0-based":@(idx)}];
+        // MGTemplateEngine is behaving erratically with these keys when the template contains
+        // just {{task-input}}
+        NSDictionary *variables = @{@"task-input":normalisedName, @"task-input-index-1-based":@(idx+1), @"task-input-index-0-based":@(idx)};
+        
+        normalisedName = [self processTemplate:inputTemplate object:variables error:NULL];
+
         [normalisedNames replaceObjectAtIndex:idx withObject:normalisedName];
     }
     
@@ -237,7 +238,7 @@ char MGSScriptTypeContext;
                 NSString *parameterName = [parameterNames objectAtIndex:idx];
                 
                 // format input using template
-                parameterName = [_templateEngine processTemplate:inputTemplate withVariables:@{@"task-input":parameterName, @"task-input-id":@(identifier)}];
+                parameterName = [self processTemplate:inputTemplate object:@{@"task-input":parameterName, @"task-input-id":@(identifier)} error:NULL];
                 
                 // re normalise using the parameter name but don't do case processing
                 // this time around
@@ -270,7 +271,7 @@ char MGSScriptTypeContext;
         
         // apply separator template too all inputs excpet the last one
         if (idx < [taskInputsList count] - 1) {
-            taskInput = [_templateEngine processTemplate:separatorTemplate withVariables:@{@"task-input":taskInput, @"input-index-1-based":@(idx+1), @"input-index-0-based":@(idx)}];
+            taskInput = [self processTemplate:separatorTemplate object:@{@"task-input":taskInput, @"input-index-1-based":@(idx+1), @"input-index-0-based":@(idx)} error:NULL];
          }
         [nameString appendString:taskInput];
 
@@ -452,4 +453,61 @@ char MGSScriptTypeContext;
         [self updateLanguageProperties];
     }
 }
+
+#pragma mark -
+#pragma mark Template processing
+
+/*
+ 
+ - processTemplate:object:error
+ 
+ */
+-(NSString *)processTemplate:(NSString *)inputTemplate object:(NSDictionary *)variables error:(NSError **)error
+{
+    NSString *output = nil;
+    
+    NSUInteger templateEngine = 1;
+    
+    switch (templateEngine) {
+        case 0:
+            
+            // configure the template engine
+            if (!_templateEngine) {
+                _templateEngine = [MGTemplateEngine templateEngine];
+                //[_templateEngine setDelegate:self];
+                [_templateEngine setMatcher:[ICUTemplateMatcher matcherWithTemplateEngine:_templateEngine]];
+            }
+            
+            /* MGTemplateEngine was behaving erratically with these keys when the template contains
+             just {{task-input}}
+             NSDictionary *variables = @{@"task-input":normalisedName, @"task-input-index-1-based":@(idx+1), @"task-input-index-0-based":@(idx)};
+             
+             presumably this is a regex parsing issue. 
+             appending a space to the template resolves matters.
+             
+             updating RegexKitLite fixed the issue.
+             
+             */
+            //NSString *inputTemplate = [NSString stringWithFormat:@"%@ ", inputTemplate];
+            output = [_templateEngine processTemplate:inputTemplate
+                                        withVariables:variables];
+            //output = [output substringToIndex:[output length] - 1];
+            break;
+            
+        case 1:
+            /*
+             
+             GRMustache is much more capable and includes tests.
+             GC support seems okay when just add build support.
+             
+             */
+            output = [GRMustacheTemplate renderObject:variables
+                                           fromString:inputTemplate
+                                                error:error];
+            break;
+    }
+    
+    return output;
+}
+
 @end

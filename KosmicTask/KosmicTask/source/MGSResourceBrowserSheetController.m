@@ -122,9 +122,15 @@ const char MGSContextResourcesChanged;
 	scriptType = [resourceBrowserViewController.languagePlugin scriptType];
 	MGSLanguageTemplateResource *templateResource = [resourceBrowserViewController selectedTemplate];
 	
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:kCFDateFormatterShortStyle];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    NSString *date = [dateFormatter stringFromDate:[NSDate date]];
+    
 	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys: 
 							   [MGSScript defaultAuthor], @"author", 
 							   scriptType, @"script",
+                               date, @"date",
 							   nil];
 	
 	NSString *stringResource = [templateResource stringResourceWithVariables:variables];

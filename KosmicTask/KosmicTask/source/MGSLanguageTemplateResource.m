@@ -9,6 +9,8 @@
 #import "MGSLanguageTemplateResource.h"
 #import "MGSResourceBrowserNode.h"
 #import "MGTemplateEngine/ICUTemplateMatcher.h"
+#import "MGTemplateEngine/RegexKitLite.h"
+#import "GRMustache.h"
 
 // class extension
 @interface MGSLanguageTemplateResource()
@@ -134,6 +136,37 @@
 #pragma mark -
 #pragma mark String resource
 
+- (NSString *)stringResource
+{
+    NSString *resource = [super stringResource];
+    
+    BOOL useRegex = YES;
+    
+    /*
+     
+     old templates included the following MGTemplate code
+     
+     {% now | date_format: \"dd MMM yyyy HH:mm:ss\" %}
+     
+     much better to use
+     
+     {{ date }}
+     
+     */
+    if (!useRegex) {
+        // a regex may be required for user templates that have modified the date string!
+        resource = [resource stringByReplacingOccurrencesOfString:@"{% now | date_format: \"dd MMM yyyy HH:mm:ss\" %}" withString:@"{{ date }}"];
+        resource = [resource stringByReplacingOccurrencesOfString:@"{% now | date_format: 'dd MMM yyyy HH:mm:ss' %}" withString:@"{{ date }}"];
+    } else {
+        // test regex online with http://gskinner.com/RegExr/
+        
+        // regex is more powerful, but could cause greater disturbance when an unintended match occurs
+        NSString *regEx = @"\\{%\\s*now.*%\\}";
+        resource = [resource stringByReplacingOccurrencesOfRegex:regEx withString:@"{{ date }}"];
+    }
+    
+    return resource;
+}
 /*
  
  - stringResourceWithVariables:
@@ -141,14 +174,34 @@
  */
 - (NSString *)stringResourceWithVariables:(NSDictionary *)variables
 {
-	MGTemplateEngine *engine = [MGTemplateEngine templateEngine];
-	[engine setDelegate:self];
-	[engine setMatcher:[ICUTemplateMatcher matcherWithTemplateEngine:engine]];
+    NSString *output = nil;
+    NSString *template = [self stringResource];
+    
+    NSUInteger templateEngine = 1;
+    
+    switch (templateEngine) {
+        case 0:
+        {
+            MGTemplateEngine *engine = [MGTemplateEngine templateEngine];
+            [engine setDelegate:self];
+            [engine setMatcher:[ICUTemplateMatcher matcherWithTemplateEngine:engine]];
 	
-	// Process the template and display the results.
-	NSString *result = [engine processTemplate:[self stringResource] withVariables:variables];
-	
-	return result;	
+            // Process the template and display the results.
+            output = [engine processTemplate:template withVariables:variables];
+        }
+            break;
+            
+        case 1:
+        {
+            NSError *error = nil;
+            output = [GRMustacheTemplate renderObject:variables
+                                   fromString:template
+                                        error:&error];
+        }
+            break;
+    }
+    
+	return output;
 }
 
 #pragma mark -

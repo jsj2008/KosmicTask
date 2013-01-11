@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @class MGSScript;
-@class MGTemplateEngine;
 @class MGSLanguage;
 
 enum _MGSFunctionArgumentName {
@@ -48,7 +47,7 @@ typedef NSUInteger MGSFunctionCodeStyle;
     MGSFunctionArgumentStyle _functionArgumentStyle;
     MGSFunctionCodeStyle _functionCodeStyle;
     MGSScript *_script;
-    MGTemplateEngine *_templateEngine;
+    id _templateEngine;
     MGSLanguage *_scriptLanguage;
 }
 
@@ -67,4 +66,5 @@ typedef NSUInteger MGSFunctionCodeStyle;
 - (NSString *)normalisedParameterName:(NSString *)name typeName:(NSString *)typeName;
 - (NSString *)normalisedParameterName:(NSString *)name;
 - (void)makeObjectsUnique:(NSMutableArray *)parameterNames;
+- (NSString *)processTemplate:(NSString *)inputTemplate object:(NSDictionary *)variables error:(NSError **)error;
 @end
