@@ -148,6 +148,7 @@
 		AB19176A12AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB19176912AFE09300710031 /* MGSLuaCocoaLanguagePlugin.m */; };
 		AB19176B12AFE15100710031 /* KosmicTaskLuaCocoaRunner in Copy auxiliary executables */ = {isa = PBXBuildFile; fileRef = AB19162D12AFD90300710031 /* KosmicTaskLuaCocoaRunner */; };
 		AB19B5AE16A0C1F200CCE1EA /* libGRMustache6-MacOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB19B5A516A0C17500CCE1EA /* libGRMustache6-MacOS.a */; };
+		AB19B5BE16A0CCB500CCE1EA /* YAMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F6E8A130C862500342F11 /* YAMLKit.framework */; };
 		AB1CBC7B14CDCFD800CCF7DD /* OpenFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */; };
 		AB1CBC7C14CDCFF000CCF7DD /* OpenFeedback.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */; };
 		AB1D731713F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D731613F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m */; };
@@ -226,7 +227,6 @@
 		AB2E6CA012C799790071052D /* MGSNetMessage+KosmicTask.h in Headers */ = {isa = PBXBuildFile; fileRef = AB2E6C9E12C799790071052D /* MGSNetMessage+KosmicTask.h */; };
 		AB2E6CA112C799790071052D /* MGSNetMessage+KosmicTask.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E6C9F12C799790071052D /* MGSNetMessage+KosmicTask.m */; };
 		AB2E6D7C12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.h in Headers */ = {isa = PBXBuildFile; fileRef = AB2E6D7A12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.h */; };
-		AB2EC96A14D1F3AF00B54313 /* MGTemplateEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC95314D1F10200B54313 /* MGTemplateEngine.framework */; };
 		AB2ECA1014D1F58500B54313 /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2ECA0714D1F53200B54313 /* TCMPortMapper.framework */; };
 		AB2ECA1114D1F5AE00B54313 /* TCMPortMapper.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2ECA0714D1F53200B54313 /* TCMPortMapper.framework */; };
 		AB2FB96A0E995C3500BA3246 /* MGSNullBindingProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB9690E995C3500BA3246 /* MGSNullBindingProxy.m */; };
@@ -768,7 +768,6 @@
 		AB99768F0D5B5D4700DA13B6 /* MGSRequestProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = AB96196D0D532609008688F4 /* MGSRequestProgress.m */; };
 		AB99A5D40D707AAB00B9141E /* ClockFaceGrey16.png in Resources */ = {isa = PBXBuildFile; fileRef = AB99A5D30D707AAB00B9141E /* ClockFaceGrey16.png */; };
 		AB9A1C790D51EA4B001B6AEA /* NSSplitView_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A1C780D51EA4B001B6AEA /* NSSplitView_Mugginsoft.m */; };
-		AB9A7B4E14D9DC6B0026EDB1 /* MGTemplateEngine.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC95314D1F10200B54313 /* MGTemplateEngine.framework */; };
 		AB9A7D9314D9E9870026EDB1 /* NDScriptContext_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9C2C7F0DF7E3A000FE2CB8 /* NDScriptContext_Mugginsoft.m */; };
 		AB9A7D9614D9EDB80026EDB1 /* Appscript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8D3EC314D2C8ED00FC88A2 /* Appscript.framework */; };
 		AB9A7EB114D9F69F0026EDB1 /* MGSActionActivityTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A7EB014D9F69F0026EDB1 /* MGSActionActivityTextView.m */; };
@@ -1234,7 +1233,6 @@
 		ABD69FED0EB7B9C600287D72 /* MGSRequestTabScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD69FEC0EB7B9C600287D72 /* MGSRequestTabScrollView.m */; };
 		ABD6AB4B169EED7A00C97C3A /* NSArray_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5B78301167CD00002A3E6A /* NSArray_Mugginsoft.m */; };
 		ABD6AB4C169F361E00C97C3A /* MGSLanguageFunctionDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = AB81FFBE169B579E003FB984 /* MGSLanguageFunctionDescriptor.m */; };
-		ABD6AB4D169F37EE00C97C3A /* MGTemplateEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2EC95314D1F10200B54313 /* MGTemplateEngine.framework */; };
 		ABD7B0B10D2FF66600419EBD /* MGSParameterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD7B0B00D2FF66600419EBD /* MGSParameterViewController.m */; };
 		ABD90AB30D33934B00601C00 /* MGSScriptManager.h in Headers */ = {isa = PBXBuildFile; fileRef = ABD90AB10D33934B00601C00 /* MGSScriptManager.h */; };
 		ABD90AB40D33934B00601C00 /* MGSScriptManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD90AB20D33934B00601C00 /* MGSScriptManager.m */; };
@@ -1688,6 +1686,20 @@
 			remoteGlobalIDString = 56DEC247152631040031E8DC;
 			remoteInfo = "GRMustache6-MacOS";
 		};
+		AB19B5BF16A0CCC500CCE1EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = YAMLKit;
+		};
+		AB19B5C116A0CDEF00CCE1EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = YAMLKit;
+		};
 		AB1CBC7714CDCF8F00CCF7DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */;
@@ -1939,13 +1951,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = AB36006211886FD600F1E894;
 			remoteInfo = "Language Plugin Python";
-		};
-		AB3B504314D215A300B82B95 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 947BD41F1343688100765304;
-			remoteInfo = MGTemplateEngine.framework;
 		};
 		AB3F662C130C845F00342F11 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2955,7 +2960,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				AB96764B16696B8B00AFA3A9 /* MGSKosmicTaskServer.framework in Copy Frameworks */,
-				AB9A7B4E14D9DC6B0026EDB1 /* MGTemplateEngine.framework in Copy Frameworks */,
 				AB8D3EC714D2C94A00FC88A2 /* Appscript.framework in Copy Frameworks */,
 				AB2ECA1114D1F5AE00B54313 /* TCMPortMapper.framework in Copy Frameworks */,
 				ABDD7D6A14D1A5C000CB91F8 /* PSMTabBarControl.framework in Copy Frameworks */,
@@ -5156,8 +5160,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB19B5BE16A0CCB500CCE1EA /* YAMLKit.framework in Frameworks */,
 				AB2ECA1014D1F58500B54313 /* TCMPortMapper.framework in Frameworks */,
-				AB2EC96A14D1F3AF00B54313 /* MGTemplateEngine.framework in Frameworks */,
 				AB89EFAE14CA34650077A496 /* ORCDiscount.framework in Frameworks */,
 				AB33582110CABF75003B44AC /* CoreFoundation.framework in Frameworks */,
 				ABB7335A1056636F0042B4D0 /* libcrypto.0.9.7.dylib in Frameworks */,
@@ -5197,7 +5201,6 @@
 				AB8D400414D2E00D00FC88A2 /* Sparkle.framework in Frameworks */,
 				ABE8E68013CA42FB005852B5 /* WebKit.framework in Frameworks */,
 				AB96764E166973B400AFA3A9 /* MGSKosmicTaskServer.framework in Frameworks */,
-				ABD6AB4D169F37EE00C97C3A /* MGTemplateEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9336,8 +9339,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				AB19B5C016A0CCC500CCE1EA /* PBXTargetDependency */,
 				AB19B5B016A0C21500CCE1EA /* PBXTargetDependency */,
-				AB3B504414D215A300B82B95 /* PBXTargetDependency */,
 				AB2ECA0F14D1F57200B54313 /* PBXTargetDependency */,
 				AB79AF7614CA32B800087932 /* PBXTargetDependency */,
 			);
@@ -9369,6 +9372,7 @@
 				AB9DC2FB0DE5C99800B85F5E /* PBXBuildRule */,
 			);
 			dependencies = (
+				AB19B5C216A0CDEF00CCE1EA /* PBXTargetDependency */,
 				AB96764A16696B4F00AFA3A9 /* PBXTargetDependency */,
 				ABDD7D6814D1A58F00CB91F8 /* PBXTargetDependency */,
 				ABC0F53914D05D3300BCE71D /* PBXTargetDependency */,
@@ -13015,6 +13019,16 @@
 			name = "GRMustache6-MacOS";
 			targetProxy = AB19B5AF16A0C21500CCE1EA /* PBXContainerItemProxy */;
 		};
+		AB19B5C016A0CCC500CCE1EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = YAMLKit;
+			targetProxy = AB19B5BF16A0CCC500CCE1EA /* PBXContainerItemProxy */;
+		};
+		AB19B5C216A0CDEF00CCE1EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = YAMLKit;
+			targetProxy = AB19B5C116A0CDEF00CCE1EA /* PBXContainerItemProxy */;
+		};
 		AB1CBC7A14CDCFAA00CCF7DD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = OpenFeedback;
@@ -13105,11 +13119,6 @@
 			isa = PBXTargetDependency;
 			target = AB36006211886FD600F1E894 /* Language Plugin Python */;
 			targetProxy = AB3600911188704D00F1E894 /* PBXContainerItemProxy */;
-		};
-		AB3B504414D215A300B82B95 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MGTemplateEngine.framework;
-			targetProxy = AB3B504314D215A300B82B95 /* PBXContainerItemProxy */;
 		};
 		AB456B2E0DE2D73400F8A8AE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -14143,7 +14152,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/GRMustache6-MacOS/usr/local/lib\"",
 				);
 				PRODUCT_NAME = MGSKosmicTask;
 			};
@@ -14164,7 +14172,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/GRMustache6-MacOS/usr/local/lib\"",
 				);
 				PRODUCT_NAME = MGSKosmicTask;
 			};

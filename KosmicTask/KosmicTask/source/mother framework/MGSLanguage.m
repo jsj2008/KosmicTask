@@ -10,6 +10,7 @@
 #import "MGSLanguageProperty.h"
 
 NSString *MGSInputStyle = @"InputStyle";
+NSString *MGSLanguageCodeTemplateResourcePath = @"Language/Code";
 
 #define MGS_PROP_COPY(METHOD) self.METHOD = copy.METHOD
 
@@ -381,6 +382,17 @@ initBuildResultFlags;
 
 /*
  
+ - taskInputCodeTemplateName:
+ 
+ */
+- (NSString *)taskInputCodeTemplateName:(NSDictionary *)taskInfo
+{
+    #pragma unused(taskInfo)
+    
+    return @"task-input";
+}
+/*
+ 
  - taskInputCodeTemplate:
  
  */
@@ -388,7 +400,7 @@ initBuildResultFlags;
 {
 #pragma unused(taskInfo)
     
-    NSString *templateString = [self codeTemplateBundleResourceWithName:@"taskInputCodeTemplate" extension:@"txt"];
+    NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskInputCodeTemplateName:taskInfo] extension:@"mustache"];
     if (!templateString) {
         templateString = NSLocalizedString(@"no task input template available", @"comment");
     }
@@ -397,35 +409,16 @@ initBuildResultFlags;
 
 /*
  
- - taskInputSeparatorCodeTemplate:
- 
+ - taskInputsCodeTemplateName:
+  
  */
-- (NSString *)taskInputSeparatorCodeTemplate:(NSDictionary *)taskInfo
+- (NSString *)taskInputsCodeTemplateName:(NSDictionary *)taskInfo
 {
 #pragma unused(taskInfo)
     
-    NSString *templateString = [self codeTemplateBundleResourceWithName:@"taskInputSeparatorCodeTemplate" extension:@"txt"];
-    if (!templateString) {
-        templateString = NSLocalizedString(@"no task input separator template available", @"comment");
-    }
-    return templateString;
+    return @"task-inputs";
 }
 
-/*
- 
- - taskInputDuplicateCodeTemplate:
- 
- */
-- (NSString *)taskInputDuplicateCodeTemplate:(NSDictionary *)taskInfo
-{
-#pragma unused(taskInfo)
-    
-    NSString *templateString = [self codeTemplateBundleResourceWithName:@"taskInputDuplicateCodeTemplate" extension:@"txt"];
-    if (!templateString) {
-        templateString = NSLocalizedString(@"no task input duplicate template available", @"comment");
-    }
-    return templateString;
-}
 /*
  
  - taskInputsCodeTemplate:
@@ -435,13 +428,51 @@ initBuildResultFlags;
 {
 #pragma unused(taskInfo)
     
-    NSString *templateString = [self codeTemplateBundleResourceWithName:@"taskInputsCodeTemplate" extension:@"txt"];
+    NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskInputsCodeTemplateName:taskInfo] extension:@"mustache"];
     if (!templateString) {
         templateString = NSLocalizedString(@"no task inputs template available", @"comment");
     }
     return templateString;
 }
 
+/*
+ 
+ - taskEntryCodeTemplateName:
+ 
+ */
+- (NSString *)taskEntryCodeTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    return @"task-entry";
+}
+/*
+ 
+ - taskEntryCodeTemplate:
+ 
+ */
+- (NSString *)taskEntryCodeTemplate:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskEntryCodeTemplateName:taskInfo] extension:@"mustache"];
+    if (!templateString) {
+        templateString = NSLocalizedString(@"no task entry template available", @"comment");
+    }
+    return templateString;
+}
+
+/*
+ 
+ - taskBodyCodeTemplateName:
+ 
+ */
+- (NSString *)taskBodyCodeTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    return @"task-body";
+}
 /*
  
  - taskBodyCodeTemplate:
@@ -451,7 +482,7 @@ initBuildResultFlags;
 {
     #pragma unused(taskInfo)
 
-    NSString *templateString = [self codeTemplateBundleResourceWithName:@"taskBodyCodeTemplate" extension:@"txt"];
+    NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskBodyCodeTemplateName:taskInfo] extension:@"mustache"];
     if (!templateString) {
         templateString = NSLocalizedString(@"no task body template available", @"comment");
     }
@@ -467,7 +498,7 @@ initBuildResultFlags;
 {
     NSString *templateString = nil;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSString *resourcePath = [bundle pathForResource:resourceName ofType:extension inDirectory:@"Language/Code"];
+    NSString *resourcePath = [bundle pathForResource:resourceName ofType:extension inDirectory:MGSLanguageCodeTemplateResourcePath];
     NSError *error = nil;
     templateString = [NSString stringWithContentsOfFile:resourcePath encoding:NSUTF8StringEncoding error:&error];
     if (error) {
@@ -483,6 +514,20 @@ initBuildResultFlags;
 - (NSDictionary *)codeProperties
 {
     return @{};
+}
+
+/*
+ 
+ - codeTemplateResourcePath
+ 
+ */
+- (NSString *)codeTemplateResourcePath
+{
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *resourcePath = [bundle resourcePath];
+    NSString *codeTemplateResourcePath = [resourcePath stringByAppendingPathComponent:MGSLanguageCodeTemplateResourcePath];
+    
+    return codeTemplateResourcePath;
 }
 #pragma mark -
 #pragma mark System version

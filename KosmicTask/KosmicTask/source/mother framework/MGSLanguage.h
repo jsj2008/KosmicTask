@@ -169,10 +169,14 @@ typedef NSInteger MGSBuildResultFlags;
 - (BOOL)isMissingProperty:(id)value;
 - (BOOL)validateOSVersion:(unsigned)major minor:(unsigned)minor bugFix:(unsigned)bugFix;
 - (NSString *)taskInputsCodeTemplate:(NSDictionary *)taskInfo;
+- (NSString *)taskInputsCodeTemplateName:(NSDictionary *)taskInfo;
 - (NSString *)taskInputCodeTemplate:(NSDictionary *)taskInfo;
+- (NSString *)taskInputCodeTemplateName:(NSDictionary *)taskInfo;
 - (NSString *)taskBodyCodeTemplate:(NSDictionary *)taskInfo;
-- (NSString *)taskInputSeparatorCodeTemplate:(NSDictionary *)taskInfo;
+- (NSString *)taskBodyCodeTemplateName:(NSDictionary *)taskInfo;
 - (NSDictionary *)codeProperties;
 - (NSString *)codeTemplateBundleResourceWithName:(NSString *)resourceName extension:(NSString *)extension;
-- (NSString *)taskInputDuplicateCodeTemplate:(NSDictionary *)taskInfo;
+- (NSString *)codeTemplateResourcePath;
+- (NSString *)taskEntryCodeTemplate:(NSDictionary *)taskInfo;
+- (NSString *)taskEntryCodeTemplateName:(NSDictionary *)taskInfo;
 @end

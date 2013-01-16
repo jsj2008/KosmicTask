@@ -8,12 +8,18 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSResourceItem.h"
+
+#ifdef MGS_USE_MGTemplateEngine
 #import <MGTemplateEngine/MGTemplateEngine.h>
+#endif
 
 @class MGSScript;
 
+#ifdef MGS_USE_MGTemplateEngine
 @interface MGSLanguageTemplateResource : MGSResourceItem <MGTemplateEngineDelegate> {
-
+#else
+@interface MGSLanguageTemplateResource : MGSResourceItem {
+#endif
 
 }
 

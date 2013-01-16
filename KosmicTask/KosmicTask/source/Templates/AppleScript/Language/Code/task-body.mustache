@@ -3,11 +3,11 @@
 	{{task-function}}
 
 *)
-on {{task-function}} ({{task-inputs}})
+{{> task-entry}}
 
 	-- Insert task code here
 
 	-- Return result
-	return "Task result"
+	return {{#task-result?}}{{.}}{{^}}"{{task-result-message}}"{{/}}
 
 end {{task-function}}

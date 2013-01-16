@@ -8,9 +8,14 @@
 
 #import "MGSLanguageTemplateResource.h"
 #import "MGSResourceBrowserNode.h"
+
+#ifdef MGS_USE_MGTemplateEngine
 #import "MGTemplateEngine/ICUTemplateMatcher.h"
 #import "MGTemplateEngine/RegexKitLite.h"
+#endif
+
 #import "GRMustache.h"
+#import "YAMLKit/RegexKitLite.h"
 
 // class extension
 @interface MGSLanguageTemplateResource()
@@ -81,6 +86,8 @@
 #pragma mark -
 #pragma mark MGTemplateEngineDelegate
 
+#ifdef MGS_USE_MGTemplateEngine
+
 /*
  
  - templateEngine:blockStarted:
@@ -131,7 +138,7 @@
 	
 	NSLog(@"Template error: %@", error);
 }
-
+#endif
 
 #pragma mark -
 #pragma mark String resource
@@ -182,12 +189,14 @@
     switch (templateEngine) {
         case 0:
         {
+#ifdef MGS_USE_MGTemplateEngine
             MGTemplateEngine *engine = [MGTemplateEngine templateEngine];
             [engine setDelegate:self];
             [engine setMatcher:[ICUTemplateMatcher matcherWithTemplateEngine:engine]];
 	
             // Process the template and display the results.
             output = [engine processTemplate:template withVariables:variables];
+#endif
         }
             break;
             

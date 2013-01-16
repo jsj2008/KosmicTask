@@ -13,14 +13,17 @@
 #import "MGSAppController.h"
 #import "MGSParameterPlugin.h"
 
+#ifdef MGS_USE_MGTemplateEngine
 #import "MGTemplateEngine/ICUTemplateMatcher.h"
+#endif
+
 #import "GRMustache.h"
 
 char MGSScriptTypeContext;
 
 @interface MGSLanguageFunctionDescriptor()
 - (MGSLanguage *)scriptLanguage;
-- (NSString *)generateCodeStringFromTemplate:(NSString *)template;
+- (NSString *)generateCodeStringFromTemplateName:(NSString *)template;
 - (void)updateLanguageProperties;
 
 @property (assign) MGSLanguage *scriptLanguage;
@@ -77,20 +80,42 @@ char MGSScriptTypeContext;
  */
 - (NSString *)generateCodeString
 {
-    NSString *codeString = nil;
+    NSString *codeString = @"[A code generation error occurred. See the application log for details.]";
     
-    switch (self.functionCodeStyle) {
-        case kMGSFunctionCodeTaskInputs:
-            codeString = [self generateTaskInputsCodeString];
-            break;
-            
-        case kMGSFunctionCodeTaskBody:
-            codeString = [self generateTaskBodyCodeString];
-           break;
-            
-        default:
-            codeString = @"[invalid]";
-            break;
+    @try {
+        switch (self.functionCodeStyle) {
+            case kMGSFunctionCodeTaskInputs:
+
+            case kMGSFunctionCodeTaskEntry:
+                codeString = [self generateTaskEntryCodeString];
+                break;
+                
+            case kMGSFunctionCodeTaskBody:
+                codeString = [self generateTaskBodyCodeString];
+               break;
+                
+            default:
+                break;
+        }
+    } @catch (NSException *e) {
+        NSLog(@"%@", e);
+    }
+    
+    return codeString;
+}
+
+/*
+ 
+ - generateTaskEntryCodeString
+ 
+ */
+- (NSString *)generateTaskEntryCodeString
+{
+    NSString *codeString = @"[task entry code not available]";
+    
+    if (self.scriptLanguage) {
+        NSString *codeTemplate = [self.scriptLanguage taskEntryCodeTemplateName:nil];
+        codeString = [self generateCodeStringFromTemplateName:codeTemplate];
     }
     
     return codeString;
@@ -106,8 +131,8 @@ char MGSScriptTypeContext;
     NSString *codeString = @"[task inputs code not available]";
 
     if (self.scriptLanguage) {
-        NSString *codeTemplate = [self.scriptLanguage taskInputsCodeTemplate:nil];
-        codeString = [self generateCodeStringFromTemplate:codeTemplate];
+        NSString *codeTemplate = [self.scriptLanguage taskInputsCodeTemplateName:nil];
+        codeString = [self generateCodeStringFromTemplateName:codeTemplate];
     }
     
     return codeString;
@@ -123,8 +148,28 @@ char MGSScriptTypeContext;
     NSString *codeString = @"[task body code not available]";
 
     if (self.scriptLanguage) {
-        NSString *codeTemplate = [self.scriptLanguage taskBodyCodeTemplate:nil];
-        codeString = [self generateCodeStringFromTemplate:codeTemplate];        
+        NSString *codeTemplate = [self.scriptLanguage taskBodyCodeTemplateName:nil];
+        codeString = [self generateCodeStringFromTemplateName:codeTemplate];        
+    }
+
+    return codeString;
+}
+
+/*
+ 
+ - generateCodeStringFromTemplateName:
+ 
+ */
+- (NSString *)generateCodeStringFromTemplateName:(NSString *)name
+{
+    NSString *codeString = @"[code not available]";
+
+    NSMutableDictionary *templateVariables = [self templateVariables];
+
+    // run the template
+    if (templateVariables) {
+        NSError *error = nil;
+        codeString = [self processTemplateName:name object:templateVariables error:&error];
     }
 
     return codeString;
@@ -138,11 +183,29 @@ char MGSScriptTypeContext;
 - (NSString *)generateCodeStringFromTemplate:(NSString *)template
 {
     NSString *codeString = @"[code not available]";
-
     
-    NSArray *taskInputsList = [self normalisedParameterNames];
-    NSString *taskInputs = [self normalisedParameterNamesString];
+    NSMutableDictionary *templateVariables = [self templateVariables];
+
+    // run the template
+    if (templateVariables) {
+        NSError *error = nil;
+        codeString = [self processTemplate:template object:templateVariables error:&error];
+    }
+    
+    return codeString;
+}
+
+/*
+ 
+ - templateVariables
+ 
+ */
+- (NSMutableDictionary *)templateVariables
+{
+    NSArray *taskInputs = [self normalisedParameterNames:@{@"index":@(NO)}];
+    NSString *taskInputsString = [self normalisedParameterNamesString];
     NSString *functionName = @"";
+    NSString *taskResult = nil;
     
     NSDictionary *codeProperties = [self.scriptLanguage codeProperties];
     NSString *inputStyle = [codeProperties objectForKey:MGSInputStyle];
@@ -154,19 +217,25 @@ char MGSScriptTypeContext;
     }  else if ([inputStyle isEqualToString:@"variable"]) {
         
     }
-    // prepare template variables
-    if (!taskInputs) taskInputs = @"";
-    if (!functionName) functionName = @"";
-    if (!taskInputsList) taskInputsList = [NSArray new];
-    NSDictionary *templateVariables = @{@"task-function":functionName, @"task-inputs":taskInputs, @"task-inputs-list":taskInputsList};
-
-    // run the template
-    if (templateVariables) {
-        codeString = [self processTemplate:template object:templateVariables error:NULL];
+    
+    if ([taskInputs count] > 0) {
+        taskResult = [taskInputs objectAtIndex:0];
     }
+    
+    // prepare template variables
+    if ([taskInputs count] == 0) {
+        taskInputs = nil;
+    }
+    NSMutableDictionary *templateVariables = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                              @"Task result", @"task-result-message", nil];
+    if (taskInputs) [templateVariables setObject:taskInputs forKey:@"task-inputs"];
+    if (taskInputsString) [templateVariables setObject:taskInputsString forKey:@"task-input-variables"];
+    if (functionName) [templateVariables setObject:functionName forKey:@"task-function"];
+    if (taskResult) [templateVariables setObject:taskResult forKey:@"task-result?"];
 
-    return codeString;
+    return templateVariables;
 }
+
 #pragma mark -
 #pragma mark Parameters
 
@@ -175,7 +244,7 @@ char MGSScriptTypeContext;
  - normalisedParameterNames
  
  */
-- (NSArray *)normalisedParameterNames
+- (NSArray *)normalisedParameterNames:(NSDictionary *)options
 {
     MGSScriptParameterManager *parameterManager = self.script.parameterHandler;
     NSUInteger parameterCount = [parameterManager count];
@@ -191,27 +260,33 @@ char MGSScriptTypeContext;
             parameterName = @"missing";
         }
         NSString *normalisedName = [self normalisedParameterName:[parameter name] typeName:parameterName];
-        [normalisedNames addObject:normalisedName];
+        if (normalisedName) {
+            [normalisedNames addObject:normalisedName];
+        }
     }
  
     // make parameter names unique
     [self makeObjectsUnique:normalisedNames];
 
-    // format inputs using template
-    
-    NSString *inputTemplate = [self.scriptLanguage taskInputCodeTemplate:nil];
-    for (NSUInteger idx = 0; idx < [normalisedNames count]; idx++) {
-        NSString *normalisedName = [normalisedNames objectAtIndex:idx];
-     
-        // MGTemplateEngine is behaving erratically with these keys when the template contains
-        // just {{task-input}}
-        NSDictionary *variables = @{@"task-input":normalisedName, @"task-input-index-1-based":@(idx+1), @"task-input-index-0-based":@(idx)};
-        
-        normalisedName = [self processTemplate:inputTemplate object:variables error:NULL];
+    // index the inputs
+    if ([[options objectForKey:@"index"] boolValue] == YES) {
 
-        [normalisedNames replaceObjectAtIndex:idx withObject:normalisedName];
+        NSString *templateName = [self.scriptLanguage taskInputCodeTemplateName:nil];
+
+        // format inputs using template
+        for (NSUInteger idx = 0; idx < [normalisedNames count]; idx++) {
+            NSString *normalisedName = [normalisedNames objectAtIndex:idx];
+            
+            NSDictionary *variables = @{@"task-input":normalisedName, @"task-input-index-1-based?":@(idx+1), @"task-input-index-0-based?":@(idx)};
+            
+            NSError *error = nil;
+            normalisedName = [self processTemplateName:templateName object:variables error:&error];
+            
+            if (normalisedName) {
+                [normalisedNames replaceObjectAtIndex:idx withObject:normalisedName];
+            }
+        }
     }
-    
     return normalisedNames;
 }
 
@@ -224,7 +299,7 @@ char MGSScriptTypeContext;
 {
     // get dictionary of object indexes
     NSDictionary *indexDict = [parameterNames mgs_objectIndexes];
-    NSString *inputTemplate = [self.scriptLanguage taskInputDuplicateCodeTemplate:nil];
+    NSString *inputTemplateName = [self.scriptLanguage taskInputCodeTemplateName:nil];
     
     // make the names unique by adding an integer identifier if name non unique
     for (NSString *key in [indexDict allKeys]) {
@@ -236,9 +311,10 @@ char MGSScriptTypeContext;
 #pragma unused(stop)
  
                 NSString *parameterName = [parameterNames objectAtIndex:idx];
-                
+                NSError *error = nil;
+
                 // format input using template
-                parameterName = [self processTemplate:inputTemplate object:@{@"task-input":parameterName, @"task-input-id":@(identifier)} error:NULL];
+                parameterName = [self processTemplateName:inputTemplateName object:@{@"task-input":parameterName, @"task-input-id?":@(identifier)} error:&error];
                 
                 // re normalise using the parameter name but don't do case processing
                 // this time around
@@ -247,7 +323,9 @@ char MGSScriptTypeContext;
                 parameterName = [self normalisedParameterName:parameterName];
                 _functionArgumentCase = argumentCase;
 
-                [parameterNames replaceObjectAtIndex:idx withObject:parameterName];
+                if (parameterName) {
+                    [parameterNames replaceObjectAtIndex:idx withObject:parameterName];
+                }
                 identifier++;
             }];
         }
@@ -260,22 +338,53 @@ char MGSScriptTypeContext;
  */
 - (NSString *)normalisedParameterNamesString
 {
-    NSArray *taskInputsList = [self normalisedParameterNames];    
-    NSMutableString *nameString = [NSMutableString new];
+    NSArray *taskInputsList = [self normalisedParameterNames:@{@"index":@(YES)}];
 
+    NSMutableArray *taskInputs = nil;
     
+    if ([taskInputsList count] > 0) {
+        taskInputs = [NSMutableArray arrayWithCapacity:[taskInputsList count]];
+        for (NSUInteger idx = 0; idx < [taskInputsList count]; idx++) {
+            NSString *taskInput = [taskInputsList objectAtIndex:idx];
+            NSMutableDictionary *taskInputDict = [NSMutableDictionary dictionaryWithCapacity:2];
+            [taskInputDict setObject:taskInput forKey:@"task-input"];
+            
+            if (idx == [taskInputsList count] - 1) {
+                [taskInputDict setObject:@(YES) forKey:@"last-item?"];
+            }
+            [taskInputs addObject:taskInputDict];
+            
+        }
+    } else {
+        taskInputsList = nil;
+        
+    }
+    
+    NSString *templateName = [self.scriptLanguage taskInputsCodeTemplateName:nil];
+
+    NSError *error = nil;
+    NSMutableDictionary *templateVariables = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                              @"No task inputs defined", @"task-inputs-message", nil];
+    if (taskInputsList) [templateVariables setObject:taskInputsList forKey:@"task-inputs-list"];
+    if (taskInputs) [templateVariables setObject:taskInputs forKey:@"task-inputs"];
+    
+    NSString *nameString = [self processTemplateName:templateName object:templateVariables error:&error];
+
+ /*
+*/
+/*
     // apply template separator
-    NSString *separatorTemplate = [self.scriptLanguage taskInputSeparatorCodeTemplate:nil];
     for (NSUInteger idx = 0; idx < [taskInputsList count]; idx++) {
         NSString *taskInput = [taskInputsList objectAtIndex:idx];
         
-        // apply separator template too all inputs excpet the last one
+        // apply separator template too all inputs except the last one
         if (idx < [taskInputsList count] - 1) {
-            taskInput = [self processTemplate:separatorTemplate object:@{@"task-input":taskInput, @"input-index-1-based":@(idx+1), @"input-index-0-based":@(idx)} error:NULL];
+            taskInput = [self processTemplate:separatorTemplateName object:@{@"task-input":taskInput} error:NULL];
          }
         [nameString appendString:taskInput];
 
     }
+*/
     
     return nameString;
 }
@@ -433,6 +542,18 @@ char MGSScriptTypeContext;
         language = [[languagePlugin languageClass] new];
     }
     self.scriptLanguage = language;
+    
+    // get the template repository.
+    // we need to access templates from the repository if our templates include partials (references to other templates)
+    NSString *templateRepositoryPath = [self.scriptLanguage codeTemplateResourcePath];
+    _templateRepository = [GRMustacheTemplateRepository templateRepositoryWithDirectory:templateRepositoryPath
+                                                                      templateExtension:@"mustache"
+                                                                               encoding:NSUTF8StringEncoding];
+    
+    if (!_templateRepository) {
+        MLogInfo(@"Code template repository not found at %@", templateRepositoryPath);
+    }
+
 }
 
 #pragma mark -
@@ -462,14 +583,19 @@ char MGSScriptTypeContext;
  - processTemplate:object:error
  
  */
--(NSString *)processTemplate:(NSString *)inputTemplate object:(NSDictionary *)variables error:(NSError **)error
+- (NSString *)processTemplate:(NSString *)template object:(NSDictionary *)variables error:(NSError **)error
 {
     NSString *output = nil;
+    if (error != NULL) {
+        *error = nil;
+    }
     
     NSUInteger templateEngine = 1;
     
     switch (templateEngine) {
         case 0:
+
+#ifdef MGS_USE_MGTemplateEngine
             
             // configure the template engine
             if (!_templateEngine) {
@@ -478,36 +604,57 @@ char MGSScriptTypeContext;
                 [_templateEngine setMatcher:[ICUTemplateMatcher matcherWithTemplateEngine:_templateEngine]];
             }
             
-            /* MGTemplateEngine was behaving erratically with these keys when the template contains
-             just {{task-input}}
-             NSDictionary *variables = @{@"task-input":normalisedName, @"task-input-index-1-based":@(idx+1), @"task-input-index-0-based":@(idx)};
-             
-             presumably this is a regex parsing issue. 
-             appending a space to the template resolves matters.
-             
-             updating RegexKitLite fixed the issue.
-             
-             */
-            //NSString *inputTemplate = [NSString stringWithFormat:@"%@ ", inputTemplate];
-            output = [_templateEngine processTemplate:inputTemplate
-                                        withVariables:variables];
-            //output = [output substringToIndex:[output length] - 1];
+            output = [_templateEngine processTemplate:template withVariables:variables];
+#endif
             break;
             
-        case 1:
             /*
              
              GRMustache is much more capable and includes tests.
-             GC support seems okay when just add build support.
              
              */
+        case 1:
+            // render template string
             output = [GRMustacheTemplate renderObject:variables
-                                           fromString:inputTemplate
+                                           fromString:template
                                                 error:error];
+            
+            if (error != NULL && *error) {               
+                [NSException raise:@"Code template exception" format:@"Template error : %@", *error];
+            }
+
             break;
+            
     }
     
     return output;
 }
 
+/*
+ 
+ - processTemplateName:object:error
+ 
+ */
+- (NSString *)processTemplateName:(NSString *)name object:(NSDictionary *)variables error:(NSError **)error
+{
+    NSString *output = nil;
+    
+    if (error != NULL) {
+        *error = nil;
+    }
+    
+     // input is a template name.
+    // acessing the template via the repository means that partials can be called
+    GRMustacheTemplate *template = [_templateRepository templateNamed:name error:error];
+    if ((error != NULL && *error) || !template) {
+        [NSException raise:@"Code template exception" format:@"Template error : %@", *error ? *error : @"unknown"];
+    }
+    
+    output = [template renderObject:variables error:error];
+    if ((error != NULL && *error) || !output) {
+        [NSException raise:@"Code template exception" format:@"Template error : %@",  *error ? *error : @"unknown"];
+    }
+    
+    return output;
+}
 @end

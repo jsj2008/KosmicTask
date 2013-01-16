@@ -10,6 +10,7 @@
 
 @class MGSScript;
 @class MGSLanguage;
+@class GRMustacheTemplateRepository;
 
 enum _MGSFunctionArgumentName {
     kMGSFunctionArgumentName = 0,
@@ -38,6 +39,7 @@ typedef NSUInteger MGSFunctionArgumentStyle;
 enum _MGSFunctionCodeStyle {
     kMGSFunctionCodeTaskInputs = 0,
     kMGSFunctionCodeTaskBody = 1,
+    kMGSFunctionCodeTaskEntry = 2,
 };
 typedef NSUInteger MGSFunctionCodeStyle;
 
@@ -47,7 +49,11 @@ typedef NSUInteger MGSFunctionCodeStyle;
     MGSFunctionArgumentStyle _functionArgumentStyle;
     MGSFunctionCodeStyle _functionCodeStyle;
     MGSScript *_script;
+    GRMustacheTemplateRepository *_templateRepository;
+    
+#ifdef MGS_USE_MGTemplateEngine    
     id _templateEngine;
+#endif
     MGSLanguage *_scriptLanguage;
 }
 
@@ -61,10 +67,13 @@ typedef NSUInteger MGSFunctionCodeStyle;
 - (NSString *)generateCodeString;
 - (NSString *)generateTaskInputsCodeString;
 - (NSString *)generateTaskBodyCodeString;
-- (NSArray *)normalisedParameterNames;
+- (NSString *)generateTaskEntryCodeString;
+- (NSArray *)normalisedParameterNames:(NSDictionary *)options;
 - (NSString *)normalisedParameterNamesString;
 - (NSString *)normalisedParameterName:(NSString *)name typeName:(NSString *)typeName;
 - (NSString *)normalisedParameterName:(NSString *)name;
 - (void)makeObjectsUnique:(NSMutableArray *)parameterNames;
 - (NSString *)processTemplate:(NSString *)inputTemplate object:(NSDictionary *)variables error:(NSError **)error;
+- (NSString *)processTemplateName:(NSString *)templateName object:(NSDictionary *)variables error:(NSError **)error;
+- (NSMutableDictionary *)templateVariables;
 @end

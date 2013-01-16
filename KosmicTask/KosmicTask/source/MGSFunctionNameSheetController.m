@@ -143,11 +143,14 @@ char MGSFunctionNameContext;
  */
 - (void)generateFunctionCodeString
 {
-    NSString *functionString = NSLocalizedString(@"[missing]", @"Missing language function code");
+    NSString *functionString = nil;
     
     [self.functionDescriptor setScript:self.script];
     functionString = [self.functionDescriptor generateCodeString];
     
+    if (!functionString) {
+        functionString = NSLocalizedString(@"[missing]", @"Missing language function code");
+    }
     _fragaria.string = functionString;
 }
 

@@ -759,7 +759,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
  */
 -(void)mouseDragged:(NSEvent *)event
 {
-    // delay kicking off the actual drag untilwe get the first drag event
+    // delay kicking off the actual drag until we get the first drag event
     if (self.dragging && !_mouseDragged) {
         if ([self.delegate respondsToSelector:@selector(dragParameterView:event:)]) {
             [self.delegate dragParameterView:self event:event];
