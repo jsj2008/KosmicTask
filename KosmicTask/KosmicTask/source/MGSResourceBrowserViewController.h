@@ -11,22 +11,23 @@
 #import "MGSResourceBrowserNode.h"
 #import "MGSLanguageTemplateResource.h"
 
-@class MGSFragaria;
 @class MGSLanguageProperty;
 @class MGSSettingsOutlineViewController;
 @class MGSResourceDocumentViewController;
+@class MGSScript;
+@class MGSResourceCodeViewController;
 
 @interface MGSResourceBrowserViewController : NSViewController <NSTextViewDelegate, NSSplitViewDelegate>{
 
 	MGSSettingsOutlineViewController *settingsOutlineViewController;
 	
 	IBOutlet MGSResourceDocumentViewController *resourceDocumentViewController;
+	IBOutlet MGSResourceCodeViewController *resourceCodeViewController;
 	
 	// views
 	IBOutlet NSSplitView *splitViewMain;
 	IBOutlet NSView *splitViewMainDrag;
 	IBOutlet NSSplitView *splitViewResource;
-	IBOutlet NSView *editorHostView;
 	IBOutlet NSOutlineView *resourceOutlineView;
     IBOutlet NSView *resourceView;
     IBOutlet NSView *emptyResourceView;
@@ -35,18 +36,17 @@
 	IBOutlet NSTableView *resourceTableView;
 	IBOutlet NSView *settingsView;
 	IBOutlet NSTextField *tableItemCount;
-	
+	IBOutlet NSView *resourceTabHostView;
+    
 	NSString *title;
-	
-	NSTextView *editorTextView;
-	MGSFragaria *fragaria;	// fragaria instance
 	
 	// languages
 	NSArray *languagePlugins;
 	MGSLanguagePlugin *languagePlugin;
 	NSString *defaultScriptType;
 	MGSLanguageProperty *selectedLanguageProperty;
-	
+	MGSScript *script;
+    
 	// resources
 	NSMutableArray *resourceTree;
 	NSMutableArray *resourceArray;
@@ -114,7 +114,8 @@
 
 @property (copy) NSArray *languagePlugins;
 @property (assign) MGSLanguagePlugin *languagePlugin;
-@property (copy) NSString *defaultScriptType;;
+@property (copy) NSString *defaultScriptType;
+@property (assign) MGSScript *script;
 
 @property (copy) NSString *addResourceMenuTitle;
 @property (copy) NSString *deleteResourceMenuTitle;

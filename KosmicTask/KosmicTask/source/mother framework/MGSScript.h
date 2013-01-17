@@ -185,8 +185,6 @@ typedef NSInteger MGSScriptRepresentation;
 
 - (BOOL)saveToPath:(NSString *)path error:(MGSError **)mgsError;
 - (void)removeScriptCode;
-- (NSString *)templateSource:(NSString *)insertion;
-- (NSString *)templateSourcePrompt;
 - (BOOL)syncWithScript:(MGSScript *)syncScript error:(MGSError **)mgsError;
 - (NSData *)executableData;
 - (NSString *)subroutineTemplate;

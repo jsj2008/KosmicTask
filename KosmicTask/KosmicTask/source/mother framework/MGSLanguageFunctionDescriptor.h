@@ -63,6 +63,7 @@ typedef NSUInteger MGSFunctionCodeStyle;
 @property MGSFunctionCodeStyle functionCodeStyle;
 @property (assign) MGSScript *script;
 
+- (id)initWithScript:(MGSScript *)script;
 - (void)copyFunctionArgumentsFromDescriptor:(MGSLanguageFunctionDescriptor *)descriptor;
 - (NSString *)generateCodeString;
 - (NSString *)generateTaskInputsCodeString;

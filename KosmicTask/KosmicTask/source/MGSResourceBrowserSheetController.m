@@ -8,6 +8,7 @@
 
 #import "MGSResourceBrowserSheetController.h"
 #import "MGSLanguageTemplateResource.h"
+#import "MGSLanguageFunctionDescriptor.h"
 
 // class extension
 @interface MGSResourceBrowserSheetController()
@@ -20,7 +21,7 @@ const char MGSContextResourcesChanged;
 
 @implementation MGSResourceBrowserSheetController
 
-@synthesize resourceBrowserViewController, resourceText, scriptType, resourcesChanged, languagePropertyManager;
+@synthesize resourceBrowserViewController, resourceText, scriptType, resourcesChanged, languagePropertyManager, script;
 
 /*
  
@@ -118,10 +119,17 @@ const char MGSContextResourcesChanged;
 - (IBAction)ok:(id)sender
 {
 #pragma unused(sender)
-	
+	self.languagePropertyManager = [resourceBrowserViewController.languagePropertyManager copy];
+
 	scriptType = [resourceBrowserViewController.languagePlugin scriptType];
-	MGSLanguageTemplateResource *templateResource = [resourceBrowserViewController selectedTemplate];
-	
+
+	MGSScript *script = [MGSScript new];
+    [script setScriptType:scriptType];
+    [script updateLanguagePropertyManager:self.languagePropertyManager];
+    
+    MGSLanguageFunctionDescriptor *descriptor = [[MGSLanguageFunctionDescriptor alloc] initWithScript:script];
+    NSMutableDictionary *templateVariables = [descriptor templateVariables];
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeStyle:kCFDateFormatterShortStyle];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -132,13 +140,14 @@ const char MGSContextResourcesChanged;
 							   scriptType, @"script",
                                date, @"date",
 							   nil];
-	
-	NSString *stringResource = [templateResource stringResourceWithVariables:variables];
+	[templateVariables addEntriesFromDictionary:variables];
+    
+    MGSLanguageTemplateResource *templateResource = [resourceBrowserViewController selectedTemplate];
+	NSString *stringResource = [templateResource stringResourceWithVariables:templateVariables];
 	if (stringResource) {
 		resourceText = stringResource;
 	}
 	
-	self.languagePropertyManager = [resourceBrowserViewController.languagePropertyManager copy];
 	
 	[self closeSheet:1];
 }

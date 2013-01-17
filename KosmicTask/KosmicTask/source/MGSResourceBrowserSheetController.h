@@ -10,6 +10,7 @@
 #import "MGSResourceBrowserViewController.h"
 
 @class MGSLanguagePropertyManager;
+@class MGSScript;
 
 @interface MGSResourceBrowserSheetController : NSWindowController {
 	MGSResourceBrowserViewController *resourceBrowserViewController;
@@ -17,6 +18,7 @@
 	IBOutlet NSButton *okButton;
 	NSString *resourceText;
 	NSString *scriptType;
+    MGSScript *script;
 	BOOL resourcesChanged;
 	MGSLanguagePropertyManager *languagePropertyManager;
 }
@@ -26,6 +28,7 @@
 @property (copy) NSString *scriptType;
 @property BOOL resourcesChanged;
 @property (copy, readonly) MGSLanguagePropertyManager *languagePropertyManager;
+@property (assign) MGSScript *script;
 
 - (IBAction)ok:(id)sender;
 - (IBAction)cancel:(id)sender;

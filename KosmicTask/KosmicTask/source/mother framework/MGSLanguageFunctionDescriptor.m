@@ -45,6 +45,17 @@ char MGSScriptTypeContext;
  */
 - (id)init
 {
+    return [self initWithScript:nil];
+}
+
+
+/*
+ 
+ initWithScript:
+ 
+ */
+- (id)initWithScript:(MGSScript *)script
+{
     self = [super init];
     if (self) {
         _functionArgumentName = kMGSFunctionArgumentName;
@@ -52,11 +63,14 @@ char MGSScriptTypeContext;
         _functionArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
         _functionCodeStyle = kMGSFunctionCodeTaskInputs;
         
+        if (script) {
+            self.script = script;
+        }
     }
     
     return self;
+    
 }
-
 /*
  
  - copyFunctionArgumentsFromDescriptor:

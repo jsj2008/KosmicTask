@@ -8,7 +8,6 @@
 
 #import "MGSResourceBrowserViewController.h"
 #import "NSSplitView_Mugginsoft.h"
-#import <MGSFragaria/MGSFragaria.h>
 #import "MGSLanguagePluginController.h"
 #import "NSWindow_Mugginsoft.h"
 #import "MGSImageManager.h"
@@ -21,6 +20,7 @@
 #import "MGSSettingsOutlineViewController.h"
 #import "MGSResourceDocumentViewController.h"
 #import "NSView_Mugginsoft.h"
+#import "MGSResourceCodeViewController.h"
 
 // resource tab indexes
 #define MGS_DOCUMENT_TAB_INDEX 0
@@ -76,7 +76,7 @@ const char MGSResourceArrangedObjectsContext;
  resourceTree, resourceArray, resourceTabIndex, requiredResourceSelected, requiredResourceClass, 
 resourceChildTabIndex, infoResource, newResourceClass, addResourceMenuTitle, deleteResourceMenuTitle,
 selectedResourcesManager, title, editable, resourceEditable, viewFrameDefaults, defaultScriptType,
-requiredResourceDoubleClicked, selectedLanguageProperty;
+requiredResourceDoubleClicked, selectedLanguageProperty, script;
 
 @synthesize tableCanDeleteResource, tableCanDuplicateResource, tableCanAddResource, tableCanDefaultResource;
 @synthesize outlineCanAddResource, outlineCanDeleteResource, outlineCanDuplicateResource, outlineCanDefaultResource;
@@ -121,27 +121,10 @@ requiredResourceDoubleClicked, selectedLanguageProperty;
 	settingsOutlineViewController.delegate = self;
 	settingsView = [settingsOutlineViewController view];	// trigger load
 	
-	// create Fragaria instance
-	fragaria = [[MGSFragaria alloc] init];
 	
-	//
-	// define initial object configuration
-	//
-	// see MGSFragaria.h for details
-	//
-	[fragaria setObject:[NSNumber numberWithBool:YES] forKey:MGSFOIsSyntaxColoured];
-	[fragaria setObject:[NSNumber numberWithBool:YES] forKey:MGSFOShowLineNumberGutter];
-	[fragaria setObject:self forKey:MGSFODelegate];
-	
-	// embed in our host view
-	[fragaria embedInView:editorHostView];
-	editorTextView = [fragaria objectForKey:ro_MGSFOTextView];
-	
-    // turn off auto text replacement for items such as ...
-    // as it can cause certain scripts to fail to build e.g: Python
-    [editorTextView setAutomaticDataDetectionEnabled:NO];
-	[editorTextView setAutomaticTextReplacementEnabled:NO];
-    
+    [resourceTabView setFrame:[resourceTabHostView frame]];
+    [resourceTabHostView addSubview:resourceTabView];
+        
 	[[MGSLanguagePluginController sharedController] resolvePluginResources];
 	 
 	// KVO
@@ -197,10 +180,6 @@ requiredResourceDoubleClicked, selectedLanguageProperty;
 	
 	[[resourceTableView tableColumnWithIdentifier:@"origin"] bind:NSValueBinding toObject:resourceArrayController withKeyPath:@"arrangedObjects.representedObject.origin" options:[NSDictionary dictionaryWithObjectsAndKeys:[MGSOriginTransformer new], NSValueTransformerBindingOption, nil]];
 	[[[resourceTableView tableColumnWithIdentifier:@"origin"] headerCell] setImage:[NSImage imageNamed:@"GearSmall"]];
-	
-	// fragaria
-	[editorTextView bind:NSEditableBinding toObject:self withKeyPath:@"editable" options:nil];
-	[editorTextView bind:[NSEditableBinding stringByAppendingString:@"2"] toObject:self withKeyPath:@"resourceEditable" options:nil];
 	
 	initialTableItemFrame = [tableItemCount frame];
 }
@@ -1036,11 +1015,11 @@ clearTree:
 		
 		// set the string.
 		NSString *stringResource = [self.selectedResource stringResource];
-		[fragaria setString:stringResource];
+		[resourceCodeViewController setString:stringResource];
 		
 		// set text syntax definition
 		NSString *syntaxDefinition = [self.languagePlugin syntaxDefinition];
-		[fragaria setObject:syntaxDefinition forKey:MGSFOSyntaxDefinitionName];
+        [resourceCodeViewController setSyntaxDefinition:syntaxDefinition];
 		
 		self.resourceTabIndex = MGS_TEMPLATE_TAB_INDEX;
 		
@@ -1149,6 +1128,7 @@ clearTree:
 	[resourceTableView setMenu:menu];
 	
 	settingsOutlineViewController.editable = self.editable;
+    resourceCodeViewController.editable = self.editable;
 }
 /*
  
@@ -1160,6 +1140,7 @@ clearTree:
     resourceEditable = aBool;
     
     settingsOutlineViewController.resourceEditable = self.resourceEditable;
+    resourceCodeViewController.resourceEditable = self.resourceEditable;
 }
 
 /*
@@ -1197,9 +1178,9 @@ clearTree:
 	[resourceTreeController commitEditing];
 	[resourceController commitEditing];
 	
-	// fragaria is not bound so we commit our edit manually
+	// code text view is not bound so we commit our edit manually
 	if ([self.selectedResource isKindOfClass:[MGSLanguageTemplateResource class]]) {
-		self.selectedResource.stringResource = [[fragaria string] copy];
+		self.selectedResource.stringResource = resourceCodeViewController.string;
 	}
 	
 }
@@ -1519,7 +1500,10 @@ clearTree:
 	
 	NSTabViewItem *tabViewSettings1 = [resourceTabView tabViewItemAtIndex:MGS_SETTINGS_TAB_INDEX];
 	NSTabViewItem *tabViewSettings2 = [resourceChildTabView tabViewItemAtIndex:MGS_SETTINGS_CHILD_TAB_INDEX];
-	
+
+    //NSTabViewItem *tabViewCode1 = [resourceTabView tabViewItemAtIndex:MGS_TEMPLATE_TAB_INDEX];
+	NSTabViewItem *tabViewCode2 = [resourceChildTabView tabViewItemAtIndex:MGS_EDITOR_CHILD_TAB_INDEX];
+
 	// add sub view to required view hierarchy
 	if (idx == MGS_DOCUMENT_TAB_INDEX) {
 		if ([tabViewDoc1 view] != [resourceDocumentViewController view]) {
@@ -1534,6 +1518,10 @@ clearTree:
 		if ([tabViewSettings2 view] != settingsView) {
 			[tabViewSettings1 setView:[[NSView alloc] initWithFrame:[settingsView frame]]];
 			[tabViewSettings2 setView:settingsView];
+		}
+		if ([tabViewCode2 view] != [resourceCodeViewController view]) {
+			//[tabViewCode1 setView:[[NSView alloc] initWithFrame:[[resourceCodeViewController view] frame]]];
+			[tabViewCode2 setView:[resourceCodeViewController view]];
 		}
 	} else if (idx == MGS_SETTINGS_TAB_INDEX) {
 		if ([tabViewSettings1 view] != settingsView) {

@@ -2385,35 +2385,7 @@ errorExit:;
 	[[self dict] removeObjectForKey:MGSScriptKeyCode];
 }
 
-/*
- 
- template script source prompt
- 
- */
-- (NSString *)templateSourcePrompt
-{
-	NSString *resultKey = [[MGSResultFormat dataKeys] objectAtIndex:0];
-	NSString *errorKey = [[MGSResultFormat errorKeys] objectAtIndex:0];
-	
-	resultKey = [MGSResultFormat formatResultKey:resultKey];
-	errorKey = [MGSResultFormat formatResultKey:errorKey];
-	
-	NSString *fmt = NSLocalizedString(@"try\n\tset myResult to missing value\n\n\t-- insert AppleScript here and compute myResult\n\n\treturn {%@:myResult}\n\non error errorMessage number errorNumber\n\n\treturn {%@:errorMessage}\n\nend try", @"AppleScript template script insert prompt");
-	return [NSString stringWithFormat:fmt, resultKey, errorKey];
-}
-/*
- 
- template script source code for new scripts
- 
- */
-- (NSString *)templateSource:(NSString *)insertion
-{
-#pragma unused(insertion)
-	//return [[[[self languagePlugin] applicationResourcesManager] templateManager] scriptTemplate:self withInsertion:insertion];
-	
-	// hmm - dubious
-	return @"";
-}
+
 /*
  
  subroutine template 
@@ -2421,7 +2393,6 @@ errorExit:;
  */
 - (NSString *)subroutineTemplate
 {
-	//return [[self templateManager] scriptSubroutineTemplate:self];
 	return @"Sat 28 Aug 2010 16:55:52 IST";
 }
 

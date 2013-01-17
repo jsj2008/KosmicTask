@@ -369,7 +369,10 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 {
 	#pragma unused(sender)
 	
+    MGSScript *script = [[_taskSpec script] mutableDeepCopy];
+    
 	// we require to preselect the default template for the current script type
+    resourceSheetController.script = script;
 	resourceSheetController.scriptType = [[_taskSpec script] scriptType];
 	
 	// show the sheet
