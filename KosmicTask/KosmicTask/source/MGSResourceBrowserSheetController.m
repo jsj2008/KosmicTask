@@ -108,6 +108,16 @@ const char MGSContextResourcesChanged;
 	resourceBrowserViewController.defaultScriptType = type;
 }
 
+/*
+ 
+ - setScript:
+ 
+ */
+- (void)setScript:(MGSScript *)theScript
+{
+    script = theScript;
+    resourceBrowserViewController.script = theScript;
+}
 #pragma mark -
 #pragma mark Actions
 
@@ -119,6 +129,8 @@ const char MGSContextResourcesChanged;
 - (IBAction)ok:(id)sender
 {
 #pragma unused(sender)
+    
+    /*
 	self.languagePropertyManager = [resourceBrowserViewController.languagePropertyManager copy];
 
 	scriptType = [resourceBrowserViewController.languagePlugin scriptType];
@@ -147,8 +159,9 @@ const char MGSContextResourcesChanged;
 	if (stringResource) {
 		resourceText = stringResource;
 	}
+	*/
 	
-	
+    resourceText = self.resourceBrowserViewController.scriptString;
 	[self closeSheet:1];
 }
 

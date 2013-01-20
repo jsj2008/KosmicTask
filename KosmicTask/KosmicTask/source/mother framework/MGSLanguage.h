@@ -177,6 +177,7 @@ typedef NSInteger MGSBuildResultFlags;
 - (NSDictionary *)codeProperties;
 - (NSString *)codeTemplateBundleResourceWithName:(NSString *)resourceName extension:(NSString *)extension;
 - (NSString *)codeTemplateResourcePath;
-- (NSString *)taskEntryCodeTemplate:(NSDictionary *)taskInfo;
-- (NSString *)taskEntryCodeTemplateName:(NSDictionary *)taskInfo;
+//- (NSString *)taskFunctionCodeTemplate:(NSDictionary *)taskInfo;
+- (NSString *)taskFunctionCodeTemplateName:(NSDictionary *)taskInfo;
+- (NSString *)taskInputVariablesCodeTemplateName:(NSDictionary *)taskInfo;
 @end

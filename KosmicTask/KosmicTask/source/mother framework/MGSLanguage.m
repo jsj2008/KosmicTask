@@ -10,7 +10,7 @@
 #import "MGSLanguageProperty.h"
 
 NSString *MGSInputStyle = @"InputStyle";
-NSString *MGSLanguageCodeTemplateResourcePath = @"Language/Code";
+NSString *MGSLanguageCodeTemplateResourcePath = @"Language/Mustache";
 
 #define MGS_PROP_COPY(METHOD) self.METHOD = copy.METHOD
 
@@ -416,7 +416,7 @@ initBuildResultFlags;
 {
 #pragma unused(taskInfo)
     
-    return @"task-inputs";
+    return @"task-input-variables";
 }
 
 /*
@@ -430,22 +430,35 @@ initBuildResultFlags;
     
     NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskInputsCodeTemplateName:taskInfo] extension:@"mustache"];
     if (!templateString) {
-        templateString = NSLocalizedString(@"no task inputs template available", @"comment");
+        templateString = NSLocalizedString(@"no task input variables template available", @"comment");
     }
     return templateString;
 }
 
 /*
  
- - taskEntryCodeTemplateName:
+ - taskFunctionCodeTemplateName:
  
  */
-- (NSString *)taskEntryCodeTemplateName:(NSDictionary *)taskInfo
+- (NSString *)taskFunctionCodeTemplateName:(NSDictionary *)taskInfo
 {
 #pragma unused(taskInfo)
     
-    return @"task-entry";
+    return @"task-function";
 }
+
+/*
+ 
+ - taskInputVariablesCodeTemplateName:
+ 
+ */
+- (NSString *)taskInputVariablesCodeTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    return @"task-input-variables";
+}
+
 /*
  
  - taskEntryCodeTemplate:
@@ -455,9 +468,9 @@ initBuildResultFlags;
 {
 #pragma unused(taskInfo)
     
-    NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskEntryCodeTemplateName:taskInfo] extension:@"mustache"];
+    NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskFunctionCodeTemplateName:taskInfo] extension:@"mustache"];
     if (!templateString) {
-        templateString = NSLocalizedString(@"no task entry template available", @"comment");
+        templateString = NSLocalizedString(@"no task function template available", @"comment");
     }
     return templateString;
 }

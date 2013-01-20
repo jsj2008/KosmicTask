@@ -164,5 +164,6 @@
 
 - (void)saveViewState;
 - (MGSLanguagePropertyManager *)languagePropertyManager;
+- (NSString *)scriptString;
 
 @end

@@ -67,6 +67,7 @@ const char MGSResourceTreeSelectedObjectsContext;
 const char MGSSettingsTreeSelectedObjectsContext;
 const char MGSSettingsTreeEditedContext;
 const char MGSDocumentEditedContext;
+const char MGSCodeEditedContext;
 const char MGSDocumentModeContext;
 const char MGSResourceArrangedObjectsContext;
 
@@ -133,6 +134,7 @@ requiredResourceDoubleClicked, selectedLanguageProperty, script;
 	[settingsOutlineViewController addObserver:self forKeyPath:@"selectedLanguageProperty" options:0 context:(void *)&MGSSettingsTreeSelectedObjectsContext];
 	[settingsOutlineViewController addObserver:self forKeyPath:@"documentEdited" options:0 context:(void *)&MGSSettingsTreeEditedContext];
 	[resourceDocumentViewController addObserver:self forKeyPath:@"documentEdited" options:0 context:(void *)&MGSDocumentEditedContext];
+	[resourceCodeViewController addObserver:self forKeyPath:@"documentEdited" options:0 context:(void *)&MGSCodeEditedContext];
 	[resourceDocumentViewController addObserver:self forKeyPath:@"mode" options:NSKeyValueObservingOptionPrior context:(void *)&MGSDocumentModeContext];
 
     [resourceArrayController addObserver:self forKeyPath:@"arrangedObjects" options:0 context:(void *)&MGSResourceArrangedObjectsContext];
@@ -846,6 +848,7 @@ clearTree:
 	self.documentEdited = NO;	
 	settingsOutlineViewController.documentEdited = NO;
 	resourceDocumentViewController.documentEdited = NO;
+    resourceCodeViewController.documentEdited = NO;
 }
 
 /*
@@ -1013,14 +1016,23 @@ clearTree:
 				
 		NSAssert(self.languagePlugin, @"languagePlugin nil");
 		
-		// set the string.
-		NSString *stringResource = [self.selectedResource stringResource];
-		[resourceCodeViewController setString:stringResource];
-		
-		// set text syntax definition
-		NSString *syntaxDefinition = [self.languagePlugin syntaxDefinition];
-        [resourceCodeViewController setSyntaxDefinition:syntaxDefinition];
-		
+        // get script that will be used to populate the selected template resource
+        MGSScript *theScript = self.script;
+        if (!theScript) {
+            
+            // we don't have a script so allocate one
+            theScript = [MGSScript new];
+            NSString *scriptType = [self.languagePlugin scriptType];
+            [theScript setScriptType:scriptType];
+            [theScript updateLanguagePropertyManager:[self.languagePropertyManager copy]];
+        }
+
+        // set the script
+        resourceCodeViewController.script = theScript;
+        
+        // set the resource
+        resourceCodeViewController.languageTemplateResource = (id)self.selectedResource;
+
 		self.resourceTabIndex = MGS_TEMPLATE_TAB_INDEX;
 		
 	} else if ([self.selectedResource isKindOfClass:[MGSLanguageDocumentResource class]]) {			
@@ -1164,6 +1176,26 @@ clearTree:
     documentEdited = value;
 }
 
+/*
+ 
+ - setScript:
+ 
+ */
+- (void)setScript:(MGSScript *)theScript
+{
+    script = theScript;
+    resourceCodeViewController.script = theScript;
+}
+
+/*
+ 
+ - scriptString
+ 
+ */
+- (NSString *)scriptString
+{
+    return resourceCodeViewController.string;
+}
 #pragma mark -
 #pragma mark Editing
 
@@ -1177,12 +1209,7 @@ clearTree:
 	[resourceArrayController commitEditing];
 	[resourceTreeController commitEditing];
 	[resourceController commitEditing];
-	
-	// code text view is not bound so we commit our edit manually
-	if ([self.selectedResource isKindOfClass:[MGSLanguageTemplateResource class]]) {
-		self.selectedResource.stringResource = resourceCodeViewController.string;
-	}
-	
+	[resourceCodeViewController commitEditing];
 }
 
 /*
@@ -1251,6 +1278,13 @@ clearTree:
 		}
 		
 		return;
+    } else if (context == &MGSCodeEditedContext) {
+            
+            if (resourceCodeViewController.documentEdited) {
+                self.documentEdited = YES;
+            }
+            
+            return;
 	} else if (context == &MGSDocumentModeContext) {
 		[resourceController commitEditing];
 		return;

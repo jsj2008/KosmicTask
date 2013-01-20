@@ -7,14 +7,21 @@
 //
 
 #import "MGSResourceCodeViewController.h"
+#import "MGSLanguageTemplateResource.h"
+#import "MGSScript.h"
+#import "MGSLanguageFunctionDescriptor.h"
+#import "MGSLanguagePlugin.h"
+#import "MLog.h"
 
 @interface MGSResourceCodeViewController ()
-
+- (void)setString:(NSString *)string;
+- (void)setSyntaxDefinition:(NSString *)syntaxDefinition;
+- (void)updateCodeDisplay;
 @end
 
 @implementation MGSResourceCodeViewController
 
-@synthesize editable, resourceEditable;
+@synthesize editable, resourceEditable, languageTemplateResource, script, documentEdited, selectedCodeSegmentIndex, templateDisplayed, delegate;
 
 /*
  
@@ -27,6 +34,7 @@
     if (self) {
         editable = NO;
         resourceEditable = NO;
+        selectedCodeSegmentIndex = kMGSScriptCodeSegmentIndex;
     }
     
     return self;
@@ -63,14 +71,60 @@
     [editorTextView setAutomaticDataDetectionEnabled:NO];
 	[editorTextView setAutomaticTextReplacementEnabled:NO];
     
-	// fragaria
+	// bindings
 	[editorTextView bind:NSEditableBinding toObject:self withKeyPath:@"editable" options:nil];
 	[editorTextView bind:[NSEditableBinding stringByAppendingString:@"2"] toObject:self withKeyPath:@"resourceEditable" options:nil];
+    [editorTextView bind:[NSEditableBinding stringByAppendingString:@"3"] toObject:self withKeyPath:@"templateDisplayed" options:nil];
+    [codeSegmentedControl bind:NSSelectedIndexBinding toObject:self withKeyPath:@"selectedCodeSegmentIndex" options:nil];
 }
 
 #pragma mark -
 #pragma mark Accessors
 
+/*
+ 
+ - setSelectedCodeSegmentIndex:
+ 
+ */
+- (void)setSelectedCodeSegmentIndex:(MGSCodeSegmentIndex)theIndex
+{
+    // if template has been edited the we need to save the resource
+    if (self.documentEdited && selectedCodeSegmentIndex == kMGSTemplateCodeSegmentIndex) {
+        if ([self.delegate respondsToSelector:@selector(saveDocument:)]) {
+            [self.delegate saveDocument:self];
+        }
+    }
+
+    NSString *scriptCodeSegmentTitle = nil;
+    NSString *templateCodeSegmentTitle = nil;
+    if (self.resourceEditable) {
+        scriptCodeSegmentTitle = NSLocalizedString(@"View", @"");
+        templateCodeSegmentTitle = NSLocalizedString(@"Edit", @"");
+    } else {
+        scriptCodeSegmentTitle = NSLocalizedString(@"Script", @"");
+        templateCodeSegmentTitle = NSLocalizedString(@"Template", @"");
+        
+    }
+    
+    switch (theIndex) {
+        case kMGSScriptCodeSegmentIndex:
+            self.templateDisplayed = NO;
+            break;
+            
+        case kMGSTemplateCodeSegmentIndex:
+            self.templateDisplayed = YES;
+            break;
+            
+        default:
+            return;
+    }
+    
+    [codeSegmentedControl setLabel:scriptCodeSegmentTitle forSegment:kMGSScriptCodeSegmentIndex];
+    [codeSegmentedControl setLabel:templateCodeSegmentTitle forSegment:kMGSTemplateCodeSegmentIndex];
+    
+    selectedCodeSegmentIndex = theIndex;
+    [self updateCodeDisplay];
+}
 /*
  
  - string
@@ -83,14 +137,91 @@
 
 /*
  
+ - setLanguageTemplateResource:
+ 
+ */
+- (void)setLanguageTemplateResource:(MGSLanguageTemplateResource *)resource
+{
+    languageTemplateResource = resource;
+    
+    [self updateCodeDisplay];
+}
+
+/*
+ 
+ - updateCodeDisplay
+ 
+ */
+- (void)updateCodeDisplay
+{
+    NSString *stringResource = @"";
+    
+    if (selectedCodeSegmentIndex == kMGSScriptCodeSegmentIndex) {
+        /*
+         
+         the template system will raise an execption if the template cannot be processed
+         
+         */
+        @try {
+            stringResource = @"\n[template could not be rendered - see log for details]";
+            
+            MGSLanguageFunctionDescriptor *descriptor = [[MGSLanguageFunctionDescriptor alloc] initWithScript:self.script];
+            NSMutableDictionary *templateVariables = [descriptor templateVariables];
+            
+            NSString *entryCodeString = [descriptor generateTaskFunctionCodeString];
+            if (entryCodeString) {
+                [templateVariables setObject:entryCodeString forKey:@"task-function"];
+            }
+            
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setTimeStyle:kCFDateFormatterShortStyle];
+            [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+            NSString *date = [dateFormatter stringFromDate:[NSDate date]];
+            
+            NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys:
+                                       [MGSScript defaultAuthor], @"author",
+                                       script.scriptType, @"script",
+                                       date, @"date",
+                                       nil];
+            [templateVariables addEntriesFromDictionary:variables];
+            
+            stringResource = [languageTemplateResource stringResourceWithVariables:templateVariables];
+            
+        } @catch (NSException *e) {
+            MLogInfo(@"Exception: %@", e);
+        }
+    } else {
+        stringResource = [languageTemplateResource stringResource];
+    }
+    
+    [self setString:stringResource];
+    
+}
+/*
+ 
+ - Script:
+ 
+ */
+- (void)setScript:(MGSScript *)theScript
+{
+    script = theScript;
+    
+    // set text syntax definition
+    NSString *syntaxDefinition = [script.languagePlugin syntaxDefinition];
+    [self setSyntaxDefinition:syntaxDefinition];
+}
+/*
+ 
  - setString:
  
  */
 - (void)setString:(NSString *)string
 {
+    if (!string) {
+        string = @"";
+    }
     [fragaria setString:string];
 }
-
 /*
  
  - setSyntaxDefinition:
@@ -100,4 +231,48 @@
 {
     [fragaria setObject:syntaxDefinition forKey:MGSFOSyntaxDefinitionName];
 }
+
+#pragma mark -
+#pragma mark NSTextView delegate
+/*
+ 
+ - textDidChange:
+ 
+ */
+- (void)textDidChange:(NSNotification *)notification
+{
+#pragma unused(notification)
+	
+	self.documentEdited = YES;
+}
+
+/*
+ 
+ - controlTextDidChange:
+ 
+ */
+- (void)controlTextDidChange:(NSNotification *)notification
+{
+#pragma unused(notification)
+	
+	self.documentEdited = YES;
+}
+
+#pragma mark -
+#pragma mark NSViewController
+/*
+ 
+ - commitEditing
+ 
+ */
+- (BOOL)commitEditing
+{
+    BOOL success = [super commitEditing];
+    
+    // code text view is not bound so we commit our edit manually
+    self.languageTemplateResource.stringResource = self.string;
+
+    return success;
+}
+
 @end

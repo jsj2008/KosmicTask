@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "GRMustache.h"
 
 @class MGSScript;
 @class MGSLanguage;
@@ -68,13 +69,15 @@ typedef NSUInteger MGSFunctionCodeStyle;
 - (NSString *)generateCodeString;
 - (NSString *)generateTaskInputsCodeString;
 - (NSString *)generateTaskBodyCodeString;
+- (NSString *)generateTaskFunctionCodeString;
 - (NSString *)generateTaskEntryCodeString;
 - (NSArray *)normalisedParameterNames:(NSDictionary *)options;
 - (NSString *)normalisedParameterNamesString;
 - (NSString *)normalisedParameterName:(NSString *)name typeName:(NSString *)typeName;
 - (NSString *)normalisedParameterName:(NSString *)name;
 - (void)makeObjectsUnique:(NSMutableArray *)parameterNames;
-- (NSString *)processTemplate:(NSString *)inputTemplate object:(NSDictionary *)variables error:(NSError **)error;
+//- (NSString *)processTemplate:(NSString *)inputTemplate object:(NSDictionary *)variables error:(NSError **)error;
 - (NSString *)processTemplateName:(NSString *)templateName object:(NSDictionary *)variables error:(NSError **)error;
+- (GRMustacheTemplate *)templateName:(NSString *)name  error:(NSError **)error;
 - (NSMutableDictionary *)templateVariables;
 @end

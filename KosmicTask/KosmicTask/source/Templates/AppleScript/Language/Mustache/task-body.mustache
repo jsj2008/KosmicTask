@@ -1,13 +1,13 @@
 (*
 
-	{{task-function}}
+{{task-function-name}}
 
 *)
-{{> task-entry}}
+{{>task-function}}
 
 	-- Insert task code here
 
 	-- Return result
 	return {{#task-result?}}{{.}}{{^}}"{{task-result-message}}"{{/}}
 
-end {{task-function}}
+end {{task-function-name}}
