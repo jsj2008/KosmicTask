@@ -10,6 +10,38 @@
 
 extern NSString *MGSInputStyle;
 
+enum _MGSFunctionArgumentName {
+    kMGSFunctionArgumentName = 0,
+    kMGSFunctionArgumentNameAndType = 1,
+    kMGSFunctionArgumentType = 2,
+    kMGSFunctionArgumentTypeAndName = 3,
+};
+typedef NSUInteger MGSFunctionArgumentName;
+
+enum _MGSFunctionArgumentCase {
+    kMGSFunctionArgumentCamelCase= 0,
+    kMGSFunctionArgumentLowerCase = 1,
+    kMGSFunctionArgumentInputCase = 2,
+    kMGSFunctionArgumentPascalCase = 3,
+    kMGSFunctionArgumentUpperCase = 4,
+};
+typedef NSUInteger MGSFunctionArgumentCase;
+
+enum _MGSFunctionArgumentStyle {
+    kMGSFunctionArgumentHyphenated = 0,
+    kMGSFunctionArgumentUnderscoreSeparated = 1,
+    kMGSFunctionArgumentWhitespaceRemoved = 2,
+};
+typedef NSUInteger MGSFunctionArgumentStyle;
+
+enum _MGSFunctionCodeStyle {
+    kMGSFunctionCodeTaskInputs = 0,
+    kMGSFunctionCodeTaskBody = 1,
+    kMGSFunctionCodeTaskEntry = 2,
+};
+typedef NSUInteger MGSFunctionCodeStyle;
+
+
 enum _eMGSLanguageType {
 	kMGSInterpretedLanguage = 0,
 	kMGSCompiledLanguage,
@@ -102,12 +134,20 @@ typedef NSInteger MGSBuildResultFlags;
 	NSArray *initSourceFileExtensions;
 	
 	NSString *initTaskRunnerClassName;
-	MGSBuildResultFlags initBuildResultFlags;	
+	MGSBuildResultFlags initBuildResultFlags;
+    
+    MGSFunctionArgumentName initInputArgumentName;
+    MGSFunctionArgumentCase initInputArgumentCase;
+    MGSFunctionArgumentStyle initInputArgumentStyle;
 }
 
 @property eMGSLanguageType initLanguageType;
 @property eMGSProcessType initExecutorProcessType;
 @property eMGSProcessType initBuildProcessType;
+
+@property MGSFunctionArgumentName initInputArgumentName;
+@property MGSFunctionArgumentCase initInputArgumentCase;
+@property MGSFunctionArgumentStyle initInputArgumentStyle;
 
 @property BOOL initCanBuild;
 @property BOOL initSeparateSyntaxChecker;
@@ -168,16 +208,11 @@ typedef NSInteger MGSBuildResultFlags;
 
 - (BOOL)isMissingProperty:(id)value;
 - (BOOL)validateOSVersion:(unsigned)major minor:(unsigned)minor bugFix:(unsigned)bugFix;
-- (NSString *)taskInputsCodeTemplate:(NSDictionary *)taskInfo;
 - (NSString *)taskInputsCodeTemplateName:(NSDictionary *)taskInfo;
-- (NSString *)taskInputCodeTemplate:(NSDictionary *)taskInfo;
 - (NSString *)taskInputCodeTemplateName:(NSDictionary *)taskInfo;
-- (NSString *)taskBodyCodeTemplate:(NSDictionary *)taskInfo;
 - (NSString *)taskBodyCodeTemplateName:(NSDictionary *)taskInfo;
 - (NSDictionary *)codeProperties;
-- (NSString *)codeTemplateBundleResourceWithName:(NSString *)resourceName extension:(NSString *)extension;
 - (NSString *)codeTemplateResourcePath;
-//- (NSString *)taskFunctionCodeTemplate:(NSDictionary *)taskInfo;
 - (NSString *)taskFunctionCodeTemplateName:(NSDictionary *)taskInfo;
 - (NSString *)taskInputVariablesCodeTemplateName:(NSDictionary *)taskInfo;
 @end

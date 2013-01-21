@@ -34,6 +34,11 @@
 		self.initTaskRunnerClassName = @"MGSBashScriptRunner";
 		self.initTaskProcessName = @"KosmicTaskBashRunner";
 		self.initCanIgnoreBuildWarnings = YES;
+        
+        // code template processing
+        self.initInputArgumentName = kMGSFunctionArgumentName;
+        self.initInputArgumentCase = kMGSFunctionArgumentUpperCase;
+        self.initInputArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
 	}
 	
 	return self;

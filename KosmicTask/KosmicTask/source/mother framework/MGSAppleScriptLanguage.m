@@ -48,6 +48,11 @@
 		self.initTaskRunnerClassName = @"MGSAppleScriptRunner";
 		self.initTaskProcessName = @"KosmicTaskAppleScriptRunner";
 		self.initBuildResultFlags = kMGSScriptSourceRTF | kMGSCompiledScript;
+        
+        // code template processing
+        self.initInputArgumentName = kMGSFunctionArgumentName;
+        self.initInputArgumentCase = kMGSFunctionArgumentCamelCase;
+        self.initInputArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
 	}
 	
 	return self;
@@ -56,31 +61,6 @@
 #pragma mark -
 #pragma mark Code generation
 
-/*
- 
- - taskInputsCodeTemplate
- 
- */
-- (NSString *)taskInputsCodeTemplate:(NSDictionary *)taskInfo
-{
-#pragma unused(taskInfo)
-    
-    NSString *template = [super taskInputsCodeTemplate:taskInfo];
-    return template;
-}
-
-/*
- 
- - taskBodyCodeTemplate:
- 
- */
-- (NSString *)taskBodyCodeTemplate:(NSDictionary *)taskInfo
-{
-    #pragma unused(taskInfo)
-    
-    NSString *template = [super taskBodyCodeTemplate:taskInfo];
-    return template;
-}
 
 /*
  

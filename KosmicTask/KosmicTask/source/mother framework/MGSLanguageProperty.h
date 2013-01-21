@@ -27,6 +27,7 @@ enum {
 	kMGSRunRequest,
 	kMGSCocoaRequest,
 	kMGSResultRepresentationRequest,
+    kMGSTemplateProcessingRequest,
 };
 typedef NSInteger MGSLanguageRequestType;
 

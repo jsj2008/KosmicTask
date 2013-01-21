@@ -231,7 +231,10 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
 		}
 		newValue = text;
 	}*/
-	
+	if ([value isKindOfClass:[NSString class]] && [value isEqual:@"Whitespace removed"]) {
+        NSLog(@"got it");
+    }
+         
 	value = newValue;
 	self.hasInitialValue = ([value isEqualTo:initialValue]) ? YES : NO;
 	self.canReset = !self.hasInitialValue;

@@ -65,7 +65,10 @@ initNativeObjectsAsYamlSupport,
 initDisplayName,
 initSyntaxDefinition,
 initTaskRunnerClassName,
-initBuildResultFlags;
+initBuildResultFlags,
+initInputArgumentName,
+initInputArgumentCase,
+initInputArgumentStyle;
 
 #pragma mark -
 #pragma mark Class methods
@@ -256,6 +259,11 @@ initBuildResultFlags;
 		
 		// source file extensions
 		initSourceFileExtensions = [NSArray new];
+        
+        // code template processing
+        initInputArgumentName = kMGSFunctionArgumentName;
+        initInputArgumentCase = kMGSFunctionArgumentCamelCase;
+        initInputArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
 	}
 	return self;
 }
@@ -340,7 +348,10 @@ initBuildResultFlags;
 	MGS_PROP_COPY(initSyntaxDefinition);
 	MGS_PROP_COPY(initTaskRunnerClassName);
 	MGS_PROP_COPY(initBuildResultFlags);
-		
+    MGS_PROP_COPY(initInputArgumentName);
+    MGS_PROP_COPY(initInputArgumentCase);
+    MGS_PROP_COPY(initInputArgumentStyle);
+    
 	return copy;
 }
 
@@ -391,21 +402,6 @@ initBuildResultFlags;
     
     return @"task-input";
 }
-/*
- 
- - taskInputCodeTemplate:
- 
- */
-- (NSString *)taskInputCodeTemplate:(NSDictionary *)taskInfo
-{
-#pragma unused(taskInfo)
-    
-    NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskInputCodeTemplateName:taskInfo] extension:@"mustache"];
-    if (!templateString) {
-        templateString = NSLocalizedString(@"no task input template available", @"comment");
-    }
-    return templateString;
-}
 
 /*
  
@@ -417,22 +413,6 @@ initBuildResultFlags;
 #pragma unused(taskInfo)
     
     return @"task-input-variables";
-}
-
-/*
- 
- - taskInputsCodeTemplate:
- 
- */
-- (NSString *)taskInputsCodeTemplate:(NSDictionary *)taskInfo
-{
-#pragma unused(taskInfo)
-    
-    NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskInputsCodeTemplateName:taskInfo] extension:@"mustache"];
-    if (!templateString) {
-        templateString = NSLocalizedString(@"no task input variables template available", @"comment");
-    }
-    return templateString;
 }
 
 /*
@@ -461,22 +441,6 @@ initBuildResultFlags;
 
 /*
  
- - taskEntryCodeTemplate:
- 
- */
-- (NSString *)taskEntryCodeTemplate:(NSDictionary *)taskInfo
-{
-#pragma unused(taskInfo)
-    
-    NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskFunctionCodeTemplateName:taskInfo] extension:@"mustache"];
-    if (!templateString) {
-        templateString = NSLocalizedString(@"no task function template available", @"comment");
-    }
-    return templateString;
-}
-
-/*
- 
  - taskBodyCodeTemplateName:
  
  */
@@ -486,39 +450,7 @@ initBuildResultFlags;
     
     return @"task-body";
 }
-/*
- 
- - taskBodyCodeTemplate:
- 
- */
-- (NSString *)taskBodyCodeTemplate:(NSDictionary *)taskInfo
-{
-    #pragma unused(taskInfo)
 
-    NSString *templateString = [self codeTemplateBundleResourceWithName:[self taskBodyCodeTemplateName:taskInfo] extension:@"mustache"];
-    if (!templateString) {
-        templateString = NSLocalizedString(@"no task body template available", @"comment");
-    }
-    return templateString;
-}
-
-/*
- 
- - codeTemplateBundleResourceWithName:extension:
- 
- */
-- (NSString *)codeTemplateBundleResourceWithName:(NSString *)resourceName extension:(NSString *)extension
-{
-    NSString *templateString = nil;
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSString *resourcePath = [bundle pathForResource:resourceName ofType:extension inDirectory:MGSLanguageCodeTemplateResourcePath];
-    NSError *error = nil;
-    templateString = [NSString stringWithContentsOfFile:resourcePath encoding:NSUTF8StringEncoding error:&error];
-    if (error) {
-        templateString = nil;
-    }
-    return templateString;
-}
 /*
  
  - codeProperties
@@ -534,6 +466,7 @@ initBuildResultFlags;
  - codeTemplateResourcePath
  
  */
+
 - (NSString *)codeTemplateResourcePath
 {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];

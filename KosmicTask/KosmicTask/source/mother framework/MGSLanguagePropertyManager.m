@@ -25,6 +25,9 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 - (NSString *)stringForOnRunTask:(eMGSOnRunTask)value;
 - (NSDictionary *)languageProperties;
 - (void)initialisePropertiesWithManager:(MGSLanguagePropertyManager *)manager;
+- (NSString *)stringForLanguageInputArgumentName:(MGSFunctionArgumentName)argumentName;
+- (NSString *)stringForLanguageInputArgumentCase:(MGSFunctionArgumentCase)argumentCase;
+- (NSString *)stringForLanguageInputArgumentStyle:(MGSFunctionArgumentStyle)argumentStyle;
 
 @property (copy) MGSLanguage *language;
 @end
@@ -547,8 +550,6 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 		
 	}
 	
-	
-	
 	/*====================================
 	 
 	 run configuration properties
@@ -619,7 +620,84 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 		[langProp setInfoText: [self localizedString:@"MGSRunClassInfo"]];
 		[langProperties setObject:langProp forKey:langProp.key];
 	}
-		
+
+    /*====================================
+	 
+	 task template processing
+	 
+	 =====================================*/
+    
+	// input argument name filter
+	propOptions = [NSMutableDictionary dictionaryWithCapacity:5];
+    NSArray *propIndexes = @[@(kMGSFunctionArgumentName),
+                            @(kMGSFunctionArgumentNameAndType),
+                            @(kMGSFunctionArgumentType),
+                            @(kMGSFunctionArgumentTypeAndName)];
+    for (NSNumber *propIndex in propIndexes) {
+        [propOptions
+            setObject:[self stringForLanguageInputArgumentName:[propIndex unsignedIntegerValue]]
+                forKey:propIndex];
+    }
+
+	langProp = [[MGSLanguageProperty alloc]
+				initWithKey: MGS_LP_InputArgumentName
+				name: [self localizedString:@"MGSInputArgumentNameName"]
+				value:[self stringForLanguageInputArgumentName:language.initInputArgumentName]];
+	[langProp setRequestType:kMGSTemplateProcessingRequest];
+	[langProp setOptionValues:propOptions];
+	[langProp setInfoText: [self localizedString:@"MGSInputArgumentNameInfo"]];
+	[langProperties setObject:langProp forKey:langProp.key];
+    
+    // input argument case filter
+	propOptions = [NSMutableDictionary dictionaryWithCapacity:5];
+    propIndexes = @[@(kMGSFunctionArgumentCamelCase),
+                        @(kMGSFunctionArgumentLowerCase),
+                        @(kMGSFunctionArgumentInputCase),
+                        @(kMGSFunctionArgumentPascalCase),
+                        @(kMGSFunctionArgumentUpperCase)];
+    
+    for (NSNumber *propIndex in propIndexes) {
+        [propOptions
+         setObject:[self stringForLanguageInputArgumentCase:[propIndex unsignedIntegerValue]]
+         forKey:propIndex];
+    }
+    
+	langProp = [[MGSLanguageProperty alloc]
+				initWithKey: MGS_LP_InputArgumentCase
+				name: [self localizedString:@"MGSInputArgumentCaseName"]
+				value:[self stringForLanguageInputArgumentName:language.initInputArgumentCase]];
+	[langProp setRequestType:kMGSTemplateProcessingRequest];
+	[langProp setOptionValues:propOptions];
+	[langProp setInfoText: [self localizedString:@"MGSInputArgumentCaseInfo"]];
+	[langProperties setObject:langProp forKey:langProp.key];
+
+    // input argument style filter
+	propOptions = [NSMutableDictionary dictionaryWithCapacity:5];
+    propIndexes = @[@(kMGSFunctionArgumentHyphenated),
+                        @(kMGSFunctionArgumentUnderscoreSeparated),
+                        @(kMGSFunctionArgumentWhitespaceRemoved)];
+    
+    for (NSNumber *propIndex in propIndexes) {
+        [propOptions
+         setObject:[self stringForLanguageInputArgumentStyle:[propIndex unsignedIntegerValue]]
+         forKey:propIndex];
+    }
+    
+	langProp = [[MGSLanguageProperty alloc]
+				initWithKey: MGS_LP_InputArgumentStyle
+				name: [self localizedString:@"MGSInputArgumentStyleName"]
+				value:[self stringForLanguageInputArgumentStyle:language.initInputArgumentStyle]];
+	[langProp setRequestType:kMGSTemplateProcessingRequest];
+	[langProp setOptionValues:propOptions];
+	[langProp setInfoText: [self localizedString:@"MGSInputArgumentStyleInfo"]];
+	[langProperties setObject:langProp forKey:langProp.key];
+
+    /*====================================
+	 
+	 conclusion
+	 
+	 =====================================*/
+    
 	// set delegate
 	for (langProp in [langProperties allValues]) {
 		langProp.delegate = self;
@@ -933,6 +1011,94 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 	}
 	return text;
 }
+
+/*
+ 
+ - stringForLanguageInputArgumentName:
+ 
+ */
+- (NSString *)stringForLanguageInputArgumentName:(MGSFunctionArgumentName)argumentName
+{
+	NSString *text = NSLocalizedString(@"unknown" , @"Unknown input argument name format");
+	switch (argumentName) {
+
+        case kMGSFunctionArgumentName:
+			text = NSLocalizedString(@"Input Name" , @"Input argument name format");
+            break;
+            
+        case kMGSFunctionArgumentNameAndType:
+			text = NSLocalizedString(@"Input Name and Type" , @"Input argument name format");
+            break;
+            
+        case kMGSFunctionArgumentType:
+			text = NSLocalizedString(@"Input Type" , @"Input argument name format");
+            break;
+            
+        case kMGSFunctionArgumentTypeAndName:
+			text = NSLocalizedString(@"Input Type and Name" , @"Input argument name format");
+            break;
+	}
+	return text;
+}
+
+/*
+ 
+ - stringForLanguageInputArgumentCase:
+ 
+ */
+- (NSString *)stringForLanguageInputArgumentCase:(MGSFunctionArgumentCase)argumentCase
+{
+	NSString *text = NSLocalizedString(@"unknown" , @"Unknown input argument case format");
+	switch (argumentCase) {
+            
+        case kMGSFunctionArgumentCamelCase:
+			text = NSLocalizedString(@"Camel Case" , @"Input argument case format");
+            break;
+            
+        case kMGSFunctionArgumentLowerCase:
+			text = NSLocalizedString(@"Lower Case" , @"Input argument case format");
+            break;
+            
+        case kMGSFunctionArgumentInputCase:
+			text = NSLocalizedString(@"InputCase" , @"Input argument case format");
+            break;
+            
+        case kMGSFunctionArgumentPascalCase:
+			text = NSLocalizedString(@"Pascal Case" , @"Input argument case format");
+            break;
+            
+        case kMGSFunctionArgumentUpperCase:
+			text = NSLocalizedString(@"Upper Case" , @"Input argument case format");
+            break;
+	}
+	return text;
+}
+
+/*
+ 
+ - stringForLanguageInputArgumentStyle:
+ 
+ */
+- (NSString *)stringForLanguageInputArgumentStyle:(MGSFunctionArgumentStyle)argumentStyle
+{
+	NSString *text = NSLocalizedString(@"unknown" , @"Unknown input argument style format");
+	switch (argumentStyle) {
+            
+        case kMGSFunctionArgumentHyphenated:
+			text = NSLocalizedString(@"Hyphenated" , @"Input argument style format");
+            break;
+            
+        case kMGSFunctionArgumentUnderscoreSeparated:
+			text = NSLocalizedString(@"Underscore Separated" , @"Input argument style format");
+            break;
+            
+        case kMGSFunctionArgumentWhitespaceRemoved:
+			text = NSLocalizedString(@"Whitespace removed" , @"Input argument style format");
+            break;
+	}
+	return text;
+}
+
 /*
  
  - stringForBool:
@@ -1029,6 +1195,14 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 																			  @"", @"value",
 																			  [NSNumber numberWithBool:NO], @"editable",
 																			  nil]];
+	// template processing root
+	name = NSLocalizedString(@"Template Processing", @"Template processing tree name");
+	NSTreeNode *templateProcessingRootNode = [NSTreeNode treeNodeWithRepresentedObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                                          name, @"name",
+                                                                                          @"", @"value",
+                                                                                          [NSNumber numberWithBool:NO], @"editable",
+                                                                                          nil]];
+
 	NSTreeNode *rootNode = nil;
 	
 	NSMutableArray *properties = [NSMutableArray arrayWithArray:[self allProperties]];
@@ -1063,7 +1237,11 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 				case kMGSResultRepresentationRequest:
 					rootNode = resultRepresentationRootNode;
 					break;
-					
+
+                case kMGSTemplateProcessingRequest:
+					rootNode = templateProcessingRootNode;
+					break;
+
 				default:
 					rootNode = langRootNode;
 					break;
@@ -1079,6 +1257,7 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 	[tree addObject:langRootNode];
 	[tree addObject:resultRepresentationRootNode];
 	[tree addObject:runRootNode];
+    [tree addObject:templateProcessingRootNode];
 	[tree addObject:interfaceRootNode];
 	
 	return tree;

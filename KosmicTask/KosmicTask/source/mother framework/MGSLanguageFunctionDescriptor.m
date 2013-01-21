@@ -12,6 +12,7 @@
 #import "MGSParameterPluginController.h"
 #import "MGSAppController.h"
 #import "MGSParameterPlugin.h"
+#import "GRMustache.h"
 
 #ifdef MGS_USE_MGTemplateEngine
 #import "MGTemplateEngine/ICUTemplateMatcher.h"
@@ -23,6 +24,7 @@ char MGSScriptTypeContext;
 - (MGSLanguage *)scriptLanguage;
 - (NSString *)generateCodeStringFromTemplateName:(NSString *)template;
 - (void)updateLanguageProperties;
+- (GRMustacheTemplate *)templateName:(NSString *)name  error:(NSError **)error;
 
 @property (assign) MGSLanguage *scriptLanguage;
 @end
@@ -92,7 +94,7 @@ char MGSScriptTypeContext;
  */
 - (NSString *)generateCodeString
 {
-    NSString *codeString = @"[A code generation error occurred. See the application log for details.]";
+    NSString *codeString = nil;
     
     @try {
         switch (self.functionCodeStyle) {
@@ -126,8 +128,15 @@ char MGSScriptTypeContext;
     NSString *codeString = nil;
     
     if (self.scriptLanguage) {
-        NSString *codeTemplate = [self.scriptLanguage taskFunctionCodeTemplateName:nil];
-        codeString = [self generateCodeStringFromTemplateName:codeTemplate];
+        
+        // look for function template
+        NSString *templateName = [self.scriptLanguage taskFunctionCodeTemplateName:nil];
+        
+        // if no function template available then use input variables template
+        if (![self templateNameExists:templateName]) {
+            templateName = [self.scriptLanguage taskInputVariablesCodeTemplateName:nil];
+        }
+        codeString = [self generateCodeStringFromTemplateName:templateName];
     }
     
     return codeString;
@@ -654,7 +663,6 @@ char MGSScriptTypeContext;
  */
 - (NSString *)processTemplateName:(NSString *)name object:(NSDictionary *)variables error:(NSError **)error
 {
-    BOOL raise = NO;
     NSString *output = nil;
     
     if (error != NULL) {
@@ -663,19 +671,16 @@ char MGSScriptTypeContext;
     
     // input is a template name.
     GRMustacheTemplate *template = [self templateName:name error:error];
-    if (error != NULL && *error) {
+    if (!template) {
         return output;
     }
-        
+    
+    // render object
     output = [template renderObject:variables error:error];
-    if ((error != NULL && *error) || !output) {
-        if (raise) {
-            [NSException raise:@"Code template exception" format:@"Template error : %@", *error];
-        } else {
-            MLogInfo(@"Code Template error: %@", *error);
-            output = nil;
-        }
-        
+    
+    // if caller does not receive error info then log simple error
+    if (error == NULL && !output) {
+        MLogInfo(@"Template process error: %@ %@", self.script.scriptType, name);
     }
     
     return output;
@@ -688,8 +693,6 @@ char MGSScriptTypeContext;
  */
 - (GRMustacheTemplate *)templateName:(NSString *)name  error:(NSError **)error
 {
-    BOOL raise = NO;
-    
     if (error != NULL) {
         *error = nil;
     }
@@ -697,17 +700,23 @@ char MGSScriptTypeContext;
     // input is a template name.
     // acessing the template via the repository means that partials can be called
     GRMustacheTemplate *template = [_templateRepository templateNamed:name error:error];
-    if ((error != NULL && *error) || !template) {
-
-        if (raise) {
-            [NSException raise:@"Code template exception" format:@"Template error : %@", *error];
-        } else {
-            MLogInfo(@"Code Template error: %@", *error);
-            template = nil;
-        }
+    if (error == NULL && !template) {
+        MLogInfo(@"Code template name error: %@ %@", self.script.scriptType, name);
     }
     
     return template;
 }
 
+/*
+ 
+ - templateNameExists:
+ 
+ */
+- (BOOL)templateNameExists:(NSString *)name
+{
+    NSError *error = nil;
+    BOOL exists = [self templateName:name error:&error] != nil ? YES : NO;
+    
+    return exists;
+}
 @end
