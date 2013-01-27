@@ -15,7 +15,8 @@
 
 enum {
     kMGSScriptCodeSegmentIndex = 0,
-    kMGSTemplateCodeSegmentIndex
+    kMGSTemplateCodeSegmentIndex = 1,
+    kMGSVariablesCodeSegmentIndex = 2,
 };
 typedef NSUInteger MGSCodeSegmentIndex;
 
@@ -30,9 +31,9 @@ typedef NSUInteger MGSCodeSegmentIndex;
     BOOL documentEdited;
     MGSCodeSegmentIndex selectedCodeSegmentIndex;
     IBOutlet NSSegmentedControl *codeSegmentedControl;
-    BOOL templateDisplayed;
     IBOutlet id delegate;
-    
+    BOOL textViewEditable;
+    BOOL textEditable;
 }
 
 @property BOOL editable;
@@ -41,8 +42,8 @@ typedef NSUInteger MGSCodeSegmentIndex;
 @property MGSScript *script;
 @property BOOL documentEdited;
 @property MGSCodeSegmentIndex selectedCodeSegmentIndex;
-@property BOOL templateDisplayed;
 @property id delegate;
 
-- (NSString *)string;
+
+- (NSString *)scriptString;
 @end

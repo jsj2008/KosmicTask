@@ -52,6 +52,7 @@
 #import "MGSBrowserViewControlStrip.h"
 #import "MGSMainViewCOntroller.h"
 #import "PLMailer.h"
+#import "GRMustache.h"
 
 // class extension
 @interface MGSAppController()
@@ -1339,6 +1340,8 @@
 		forEventClass:kInternetEventClass 
 		andEventID:kAEGetURL];
     
+    // configure text rendering
+    [GRMustacheConfiguration defaultConfiguration].contentType = GRMustacheContentTypeText;
 }
 
 /*

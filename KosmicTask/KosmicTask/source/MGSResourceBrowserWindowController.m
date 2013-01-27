@@ -94,14 +94,27 @@ const char MGSContextDocumentEdited;
 	}
 	
 	nibLoaded = YES;
-	
+
+    // define a script to be used to demonstrate template tendering.
+    NSString *inputName = NSLocalizedString(@"task input", @"comment");
+    MGSScript *script = [MGSScript new];
+    
+    // define some default parameters
+    for (NSUInteger i = 0; i < 2; i++) {
+        MGSScriptParameter *parameter = [MGSScriptParameter new];
+        parameter.name = inputName;
+        [script.parameterHandler insertItem:parameter atIndex:i];
+    }
+    
+
 	// load the resource browser view
 	resourceBrowserViewController = [[MGSResourceBrowserViewController alloc] init];
 	[resourceBrowserViewController view];
 	[[resourceBrowserViewController view] setFrame:[[self.window contentView] frame]];
 	resourceBrowserViewController.editable = YES;
-	[resourceBrowserViewController buildResourceTree];
-	
+    resourceBrowserViewController.script = script;
+	[resourceBrowserViewController buildResourceTree];	
+    
 	// insert into content
 	[self.window setContentView:[resourceBrowserViewController view]];
 	

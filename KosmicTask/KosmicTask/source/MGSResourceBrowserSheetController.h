@@ -17,7 +17,6 @@
 	IBOutlet NSView *templateView;
 	IBOutlet NSButton *okButton;
 	NSString *resourceText;
-	NSString *scriptType;
     MGSScript *script;
 	BOOL resourcesChanged;
 	MGSLanguagePropertyManager *languagePropertyManager;
@@ -25,7 +24,6 @@
 
 @property (readonly) MGSResourceBrowserViewController *resourceBrowserViewController;
 @property (readonly, copy) NSString *resourceText;
-@property (copy) NSString *scriptType;
 @property BOOL resourcesChanged;
 @property (copy, readonly) MGSLanguagePropertyManager *languagePropertyManager;
 @property (assign) MGSScript *script;

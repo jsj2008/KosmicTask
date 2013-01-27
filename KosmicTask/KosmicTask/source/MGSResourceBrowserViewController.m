@@ -1022,10 +1022,11 @@ clearTree:
             
             // we don't have a script so allocate one
             theScript = [MGSScript new];
-            NSString *scriptType = [self.languagePlugin scriptType];
-            [theScript setScriptType:scriptType];
-            [theScript updateLanguagePropertyManager:[self.languagePropertyManager copy]];
         }
+
+        NSString *scriptType = [self.languagePlugin scriptType];
+        [theScript setScriptType:scriptType];
+        [theScript updateLanguagePropertyManager:[self.languagePropertyManager copy]];
 
         // set the script
         resourceCodeViewController.script = theScript;
@@ -1194,7 +1195,7 @@ clearTree:
  */
 - (NSString *)scriptString
 {
-    return resourceCodeViewController.string;
+    return resourceCodeViewController.scriptString;
 }
 #pragma mark -
 #pragma mark Editing

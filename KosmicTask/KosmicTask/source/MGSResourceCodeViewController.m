@@ -14,14 +14,25 @@
 #import "MLog.h"
 
 @interface MGSResourceCodeViewController ()
-- (void)setString:(NSString *)string;
+- (void)setViewString:(NSString *)string;
 - (void)setSyntaxDefinition:(NSString *)syntaxDefinition;
 - (void)updateCodeDisplay;
+- (void)updateSyntaxDefinition;
+- (void)updateCodeSegmentControl;
+- (NSString *)stringForCodeSegmentIndex:(MGSCodeSegmentIndex)segmentIndex;
+
+@property BOOL textViewEditable;
+@property BOOL textEditable;
+
 @end
+
+char MGSTextViewEditableContext;
 
 @implementation MGSResourceCodeViewController
 
-@synthesize editable, resourceEditable, languageTemplateResource, script, documentEdited, selectedCodeSegmentIndex, templateDisplayed, delegate;
+@synthesize textViewEditable;
+
+@synthesize editable, resourceEditable, languageTemplateResource, script, documentEdited, selectedCodeSegmentIndex, delegate, textEditable;
 
 /*
  
@@ -71,13 +82,37 @@
     [editorTextView setAutomaticDataDetectionEnabled:NO];
 	[editorTextView setAutomaticTextReplacementEnabled:NO];
     
-	// bindings
-	[editorTextView bind:NSEditableBinding toObject:self withKeyPath:@"editable" options:nil];
-	[editorTextView bind:[NSEditableBinding stringByAppendingString:@"2"] toObject:self withKeyPath:@"resourceEditable" options:nil];
-    [editorTextView bind:[NSEditableBinding stringByAppendingString:@"3"] toObject:self withKeyPath:@"templateDisplayed" options:nil];
+	// bindings    
+    [editorTextView bind:NSEditableBinding toObject:self withKeyPath:@"textViewEditable" options:nil];
     [codeSegmentedControl bind:NSSelectedIndexBinding toObject:self withKeyPath:@"selectedCodeSegmentIndex" options:nil];
+    
+    [self addObserver:self forKeyPath:@"editable" options:0 context:&MGSTextViewEditableContext];
+    [self addObserver:self forKeyPath:@"resourceEditable" options:0 context:&MGSTextViewEditableContext];
+    [self addObserver:self forKeyPath:@"textEditable" options:0 context:&MGSTextViewEditableContext];
+    
+    self.selectedCodeSegmentIndex  = kMGSScriptCodeSegmentIndex;
+    
+    [self updateCodeSegmentControl];
 }
 
+#pragma mark -
+#pragma mark Accessors
+
+/*
+ 
+ - observeValueForKeyPath:ofObject:change:context:
+ 
+ */
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+#pragma unused(keyPath)
+#pragma unused(object)
+#pragma unused(change)
+    
+    if (context == &MGSTextViewEditableContext) {
+        self.textViewEditable = self.resourceEditable && self.editable && self.textEditable;
+    }
+}
 #pragma mark -
 #pragma mark Accessors
 
@@ -95,46 +130,25 @@
         }
     }
 
-    NSString *scriptCodeSegmentTitle = nil;
-    NSString *templateCodeSegmentTitle = nil;
-    if (self.resourceEditable) {
-        scriptCodeSegmentTitle = NSLocalizedString(@"View", @"");
-        templateCodeSegmentTitle = NSLocalizedString(@"Edit", @"");
-    } else {
-        scriptCodeSegmentTitle = NSLocalizedString(@"Script", @"");
-        templateCodeSegmentTitle = NSLocalizedString(@"Template", @"");
-        
-    }
-    
     switch (theIndex) {
         case kMGSScriptCodeSegmentIndex:
-            self.templateDisplayed = NO;
+            self.textEditable = NO;
             break;
             
         case kMGSTemplateCodeSegmentIndex:
-            self.templateDisplayed = YES;
+            self.textEditable = YES;
             break;
             
+        case kMGSVariablesCodeSegmentIndex:
+            self.textEditable = NO;
+            break;
         default:
             return;
     }
-    
-    [codeSegmentedControl setLabel:scriptCodeSegmentTitle forSegment:kMGSScriptCodeSegmentIndex];
-    [codeSegmentedControl setLabel:templateCodeSegmentTitle forSegment:kMGSTemplateCodeSegmentIndex];
-    
+
     selectedCodeSegmentIndex = theIndex;
     [self updateCodeDisplay];
 }
-/*
- 
- - string
-
- */
-- (NSString *)string
-{
-    return [[fragaria string] copy];
-}
-
 /*
  
  - setLanguageTemplateResource:
@@ -154,9 +168,21 @@
  */
 - (void)updateCodeDisplay
 {
+    NSString *stringResource = [self stringForCodeSegmentIndex:selectedCodeSegmentIndex];
+    [self setViewString:stringResource];
+    [self updateSyntaxDefinition];
+}
+/*
+ 
+ - stringForCodeSegmentIndex
+ 
+ */
+- (NSString *)stringForCodeSegmentIndex:(MGSCodeSegmentIndex)segmentIndex
+{
     NSString *stringResource = @"";
     
-    if (selectedCodeSegmentIndex == kMGSScriptCodeSegmentIndex) {
+    if (segmentIndex == kMGSScriptCodeSegmentIndex ||
+        segmentIndex == kMGSVariablesCodeSegmentIndex) {
         /*
          
          the template system will raise an execption if the template cannot be processed
@@ -185,7 +211,25 @@
                                        nil];
             [templateVariables addEntriesFromDictionary:variables];
             
-            stringResource = [languageTemplateResource stringResourceWithVariables:templateVariables];
+            if (segmentIndex == kMGSScriptCodeSegmentIndex) {
+                stringResource = [languageTemplateResource stringResourceWithVariables:templateVariables];
+            } else {
+                Class jsonClass = NSClassFromString(@"NSJSONSerialization");
+                
+                // display variables as JSON if possible
+                if (jsonClass) {
+                    NSError *jsonError = nil;
+                    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:templateVariables options:NSJSONWritingPrettyPrinted error:&jsonError];
+                    if (!jsonData) {
+                        stringResource = [jsonError description];
+                    } else {
+                        stringResource = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                    }
+                    
+                } else {
+                    stringResource = [templateVariables description];
+                }
+            }
             
         } @catch (NSException *e) {
             MLogInfo(@"Exception: %@", e);
@@ -194,8 +238,7 @@
         stringResource = [languageTemplateResource stringResource];
     }
     
-    [self setString:stringResource];
-    
+    return stringResource;
 }
 /*
  
@@ -205,17 +248,32 @@
 - (void)setScript:(MGSScript *)theScript
 {
     script = theScript;
-    
-    // set text syntax definition
-    NSString *syntaxDefinition = [script.languagePlugin syntaxDefinition];
-    [self setSyntaxDefinition:syntaxDefinition];
+
+    [self updateSyntaxDefinition];
 }
 /*
  
- - setString:
+ - scriptString
  
  */
-- (void)setString:(NSString *)string
+- (NSString *)scriptString
+{
+    NSString *theString = nil;
+    
+    if (self.selectedCodeSegmentIndex == kMGSScriptCodeSegmentIndex) {
+       theString = [[fragaria string] copy];
+    } else {
+        theString = [self stringForCodeSegmentIndex:kMGSScriptCodeSegmentIndex];
+    }
+    
+    return theString;
+}
+/*
+ 
+ - setViewString:
+ 
+ */
+- (void)setViewString:(NSString *)string
 {
     if (!string) {
         string = @"";
@@ -230,6 +288,67 @@
 - (void)setSyntaxDefinition:(NSString *)syntaxDefinition
 {
     [fragaria setObject:syntaxDefinition forKey:MGSFOSyntaxDefinitionName];
+}
+
+/*
+ 
+ - setTextViewEditable:
+ 
+ */
+- (void)setTextViewEditable:(BOOL)value
+{
+    textViewEditable = value;
+    [self updateCodeSegmentControl];
+}
+#pragma mark -
+#pragma mark User interface
+/*
+ 
+ - updateCodeSegmentControl
+ 
+ */
+- (void)updateCodeSegmentControl
+{
+    NSString *scriptCodeSegmentTitle = nil;
+    NSString *templateCodeSegmentTitle = nil;
+    if (self.textViewEditable) {
+        scriptCodeSegmentTitle = NSLocalizedString(@"Code", @"");
+        templateCodeSegmentTitle = NSLocalizedString(@"Edit", @"");
+    } else {
+        scriptCodeSegmentTitle = NSLocalizedString(@"Code", @"");
+        templateCodeSegmentTitle = NSLocalizedString(@"Template", @"");
+        
+    }
+    
+    [codeSegmentedControl setLabel:scriptCodeSegmentTitle forSegment:kMGSScriptCodeSegmentIndex];
+    [codeSegmentedControl setLabel:templateCodeSegmentTitle forSegment:kMGSTemplateCodeSegmentIndex];
+    [codeSegmentedControl setNeedsDisplay];
+}
+#pragma mark -
+#pragma mark Syntax management
+
+/*
+ 
+ - updateSyntaxDefinition
+ 
+ */
+- (void)updateSyntaxDefinition
+{
+    NSString *syntaxDefinition = @"none";
+    
+    switch (self.selectedCodeSegmentIndex) {
+        case kMGSScriptCodeSegmentIndex:
+        case kMGSTemplateCodeSegmentIndex:
+            if (script) {
+                syntaxDefinition = [script.languagePlugin syntaxDefinition];
+            }
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self setSyntaxDefinition:syntaxDefinition];
 }
 
 #pragma mark -
@@ -269,9 +388,13 @@
 {
     BOOL success = [super commitEditing];
     
-    // code text view is not bound so we commit our edit manually
-    self.languageTemplateResource.stringResource = self.string;
-
+    // code text view is not bound so we commit our edit manually.
+    
+    // save template
+    if (self.selectedCodeSegmentIndex == kMGSTemplateCodeSegmentIndex && self.documentEdited) {
+        self.languageTemplateResource.stringResource = [[fragaria string] copy];
+    }
+    
     return success;
 }
 

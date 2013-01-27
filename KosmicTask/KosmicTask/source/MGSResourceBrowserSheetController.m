@@ -21,7 +21,7 @@ const char MGSContextResourcesChanged;
 
 @implementation MGSResourceBrowserSheetController
 
-@synthesize resourceBrowserViewController, resourceText, scriptType, resourcesChanged, languagePropertyManager, script;
+@synthesize resourceBrowserViewController, resourceText, resourcesChanged, languagePropertyManager, script;
 
 /*
  
@@ -99,17 +99,6 @@ const char MGSContextResourcesChanged;
 
 /*
  
- - setScriptType:
- 
- */
-- (void)setScriptType:(NSString *)type
-{
-	scriptType = type;
-	resourceBrowserViewController.defaultScriptType = type;
-}
-
-/*
- 
  - setScript:
  
  */
@@ -117,6 +106,7 @@ const char MGSContextResourcesChanged;
 {
     script = theScript;
     resourceBrowserViewController.script = theScript;
+    resourceBrowserViewController.defaultScriptType = theScript.scriptType;
 }
 #pragma mark -
 #pragma mark Actions

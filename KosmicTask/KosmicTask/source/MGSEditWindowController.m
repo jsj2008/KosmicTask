@@ -373,7 +373,6 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     
 	// we require to preselect the default template for the current script type
     resourceSheetController.script = script;
-	resourceSheetController.scriptType = [[_taskSpec script] scriptType];
 	
 	// show the sheet
 	[NSApp beginSheet:[resourceSheetController window] 
@@ -401,7 +400,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			// template selected
 		case 1:;
 			// update script type if it has changed
-			NSString *scriptType = resourceSheetController.scriptType;
+			NSString *scriptType = resourceSheetController.script.scriptType;
 			if (![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
 				[_taskSpec.script setScriptType:scriptType];
 			}

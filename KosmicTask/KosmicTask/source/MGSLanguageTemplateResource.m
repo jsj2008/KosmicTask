@@ -178,6 +178,15 @@
  
  - stringResourceWithVariables:
  
+ 
+ Unicode stuff:
+ 
+ http://www.unicode.org/versions/Unicode6.2.0/
+ 
+ Character categories eg: Marks
+ 
+ http://www.fileformat.info/info/unicode/category/index.htm
+ 
  */
 - (NSString *)stringResourceWithVariables:(NSDictionary *)variables
 {
