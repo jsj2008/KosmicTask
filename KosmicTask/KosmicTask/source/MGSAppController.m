@@ -1762,6 +1762,9 @@
     [appDefaults setObject:@YES forKey:MGSShowPortMapperRouterIncompatible];
     [appDefaults setObject:@YES forKey:MGSShowPortMapperRouterNotFound];
 
+    // task editing preferences
+    [appDefaults setObject:[NSNumber numberWithInteger:kMGSScriptHelperTemplateBrowser] forKey:MGSTaskEmptyScriptHelper];
+    
 	//
 	// register app defaults
 	//

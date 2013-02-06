@@ -82,6 +82,8 @@ NSString *MGSMachineTaskTimeoutUnits = @"MGSMachineTaskTimeoutUnits";
 NSString *MGSShowPortMapperRouterIncompatible = @"MGSShowPortMapperRouterIncompatible";
 NSString *MGSShowPortMapperRouterNotFound = @"MGSShowPortMapperRouterNotFound";
 
+NSString *MGSTaskEmptyScriptHelper = @"MGSTaskEmptyScriptHelper";
+
 static CFStringRef appID = CFSTR("com.mugginsoft.kosmictask");
 
 static MGSPreferences *_standardUserDefaults = nil;
