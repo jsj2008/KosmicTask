@@ -237,7 +237,6 @@
 								<string key="NSFrame">{{318, 3}, {16, 16}}</string>
 								<reference key="NSSuperview" ref="455036051"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSImageCell" key="NSCell" id="305847652">
 									<int key="NSCellFlags">134217728</int>
@@ -357,7 +356,6 @@
 						<string key="NSFrame">{{2, -3}, {196, 17}}</string>
 						<reference key="NSSuperview" ref="279410474"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="199168944">
 							<int key="NSCellFlags">67108928</int>
@@ -744,7 +742,6 @@
 						<string key="NSFrame">{{2, -2}, {194, 17}}</string>
 						<reference key="NSSuperview" ref="845738929"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="693015250">
 							<int key="NSCellFlags">67108928</int>
@@ -815,7 +812,7 @@
 						<string key="NSFrame">{{76, 21}, {24, 24}}</string>
 						<reference key="NSSuperview" ref="533333231"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="612623420"/>
+						<reference key="NSNextKeyView" ref="368725724"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="25906362">
 							<int key="NSCellFlags">67108864</int>
@@ -846,7 +843,7 @@
 						<string key="NSFrame">{{74, 1}, {29, 14}}</string>
 						<reference key="NSSuperview" ref="533333231"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="892470999"/>
+						<reference key="NSNextKeyView" ref="96383194"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="141369628">
 							<int key="NSCellFlags">67108928</int>
@@ -894,7 +891,6 @@
 						<string key="NSFrame">{{268, 1}, {63, 14}}</string>
 						<reference key="NSSuperview" ref="533333231"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="333336755">
 							<int key="NSCellFlags">67108928</int>
@@ -913,7 +909,7 @@
 						<string key="NSFrame">{{130, 21}, {44, 24}}</string>
 						<reference key="NSSuperview" ref="533333231"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="892873996"/>
+						<reference key="NSNextKeyView" ref="612623420"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="558717867">
 							<int key="NSCellFlags">67108864</int>
@@ -948,7 +944,7 @@
 						<string key="NSFrame">{{134, 1}, {36, 14}}</string>
 						<reference key="NSSuperview" ref="533333231"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="744421160"/>
+						<reference key="NSNextKeyView" ref="892470999"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="319359076">
 							<int key="NSCellFlags">67108928</int>
@@ -967,7 +963,7 @@
 						<string key="NSFrame">{{209, 21}, {24, 24}}</string>
 						<reference key="NSSuperview" ref="533333231"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="368725724"/>
+						<reference key="NSNextKeyView" ref="892873996"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="782670734">
 							<int key="NSCellFlags">67108864</int>
@@ -998,7 +994,7 @@
 						<string key="NSFrame">{{194, 1}, {58, 14}}</string>
 						<reference key="NSSuperview" ref="533333231"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="96383194"/>
+						<reference key="NSNextKeyView" ref="744421160"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="1013841432">
 							<int key="NSCellFlags">67108928</int>
@@ -1072,7 +1068,7 @@
 				<string key="NSClassName">MGSScriptToolViewController</string>
 			</object>
 			<object class="NSCustomView" id="626392015">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1081,6 +1077,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{8, 16}, {137, 25}}</string>
 						<reference key="NSSuperview" ref="626392015"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="184492334"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSSegmentedCell" key="NSCell" id="85282371">
@@ -1142,6 +1139,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{6, -2}, {142, 17}}</string>
 						<reference key="NSSuperview" ref="626392015"/>
+						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="12976850">
 							<int key="NSCellFlags">67108928</int>
@@ -1156,6 +1154,8 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{155, 50}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="496875952"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -1202,7 +1202,7 @@
 				</object>
 			</object>
 			<object class="NSCustomView" id="110171688">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1211,6 +1211,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{2, 12}, {38, 25}}</string>
 						<reference key="NSSuperview" ref="110171688"/>
+						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSSegmentedCell" key="NSCell" id="331267410">
 							<int key="NSCellFlags">67108864</int>
@@ -1238,6 +1239,8 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{50, 50}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomObject" id="532176792">
@@ -1329,14 +1332,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">showTemplateSheet:</string>
-						<reference key="source" ref="295848996"/>
-						<reference key="destination" ref="612623420"/>
-					</object>
-					<int key="connectionID">577</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">showResourceBrowserWindow:</string>
 						<reference key="source" ref="295848996"/>
 						<reference key="destination" ref="892873996"/>
@@ -1353,11 +1348,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">showFunctionSheet:</string>
+						<string key="label">showCodeAssistantSheet:</string>
 						<reference key="source" ref="295848996"/>
 						<reference key="destination" ref="368725724"/>
 					</object>
-					<int key="connectionID">608</int>
+					<int key="connectionID">609</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showTemplateBrowserSheet:</string>
+						<reference key="source" ref="295848996"/>
+						<reference key="destination" ref="612623420"/>
+					</object>
+					<int key="connectionID">610</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2746,7 +2749,7 @@
 						<object class="IBToolTipAttribute" key="NS.object.0">
 							<string key="name">ToolTip</string>
 							<reference key="object" ref="612623420"/>
-							<string key="toolTip">Insert Script Template</string>
+							<string key="toolTip">Insert Template from Browser</string>
 						</object>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2795,7 +2798,7 @@
 						<object class="IBToolTipAttribute" key="NS.object.0">
 							<string key="name">ToolTip</string>
 							<reference key="object" ref="368725724"/>
-							<string key="toolTip">Insert Script Template</string>
+							<string key="toolTip">Insert Code from Assistant</string>
 						</object>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2815,7 +2818,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">608</int>
+			<int key="maxID">610</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3389,8 +3392,8 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>buildAndRunDocumentScript:</string>
 							<string>compileDocumentScript:</string>
-							<string>showFunctionSheet:</string>
-							<string>showTemplateSheet:</string>
+							<string>showCodeAssistantSheet:</string>
+							<string>showTemplateBrowserSheet:</string>
 							<string>viewMenuEditModeSelected:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -3408,8 +3411,8 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>buildAndRunDocumentScript:</string>
 							<string>compileDocumentScript:</string>
-							<string>showFunctionSheet:</string>
-							<string>showTemplateSheet:</string>
+							<string>showCodeAssistantSheet:</string>
+							<string>showTemplateBrowserSheet:</string>
 							<string>viewMenuEditModeSelected:</string>
 						</object>
 						<object class="NSArray" key="dict.values">
@@ -3423,11 +3426,11 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">showFunctionSheet:</string>
+								<string key="name">showCodeAssistantSheet:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">showTemplateSheet:</string>
+								<string key="name">showTemplateBrowserSheet:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">

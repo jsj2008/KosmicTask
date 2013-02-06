@@ -25,7 +25,7 @@
 #import "MGSResultFormat.h"
 #import "MGSLanguagePluginController.h"
 #import "MGSLanguageTemplateResourcesManager.h"
-#import "MGSLanguageFunctionDescriptor.h"
+#import "MGSLanguageCodeDescriptor.h"
 
 // script file versions
 #define MGS_SCRIPT_FILE_VERSION_1_0 @"1.0"

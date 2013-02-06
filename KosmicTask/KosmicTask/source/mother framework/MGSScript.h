@@ -41,7 +41,7 @@ typedef NSInteger MGSScriptRepresentation;
 @class MGSNetAttachments;
 @class MGSLanguagePlugin;
 @class MGSLanguagePropertyManager;
-@class MGSLanguageFunctionDescriptor;
+@class MGSLanguageCodeDescriptor;
 
 @interface MGSScript : MGSDictionary {
 	//

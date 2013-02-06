@@ -14,6 +14,13 @@
 #import "MGSEditWindow.h"
 #import "MGSResourceBrowserSheetController.h"
 
+enum eMGSScriptHelper {
+    kMGSScriptHelperNone = 0,
+    kMGSScriptHelperTemplateBrowser = 1,
+    kMGSScriptHelperCodeAssistant = 2,
+};
+typedef NSInteger MGSScriptHelper;
+
 @class MGSEditWindowController;
 @class MGSTaskSpecifier;
 @class MGSToolbarController;
@@ -23,7 +30,7 @@
 @class MGSSaveActionSheetController;
 @class MGSError;
 @class MGSRequestTabScrollView;
-@class MGSFunctionNameSheetController;
+@class MGSCodeAssistantSheetController;
 
 @protocol MGSEditWindowDelegate
 @required
@@ -45,7 +52,7 @@
 
 	MGSTaskSpecifier *_taskSpec;
 	MGSSaveActionSheetController *_saveActionSheetController;
-    MGSFunctionNameSheetController *functionNameSheetController;
+    MGSCodeAssistantSheetController *codeAssistantSheetController;
     
 	BOOL _closeWindowAfterSave;
 	BOOL _silentClose;
@@ -55,8 +62,8 @@
 @property (assign) MGSTaskSpecifier *taskSpec;
 
 - (IBAction)viewMenuEditModeSelected:(id)sender;
-- (IBAction)showTemplateSheet:(id)sender;
-- (IBAction)showFunctionSheet:(id)sender;
+- (IBAction)showTemplateBrowserSheet:(id)sender;
+- (IBAction)showCodeAssistantSheet:(id)sender;
 
 - (void)setDelegate:(id <MGSEditWindowDelegate>) object;
 - (BOOL)commitPendingEdits;

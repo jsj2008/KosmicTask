@@ -10,7 +10,7 @@
 
 extern NSString *MGSInputStyle;
 
-enum _MGSFunctionArgumentName {
+enum _eMGSFunctionArgumentName {
     kMGSFunctionArgumentName = 0,
     kMGSFunctionArgumentNameAndType = 1,
     kMGSFunctionArgumentType = 2,
@@ -18,7 +18,7 @@ enum _MGSFunctionArgumentName {
 };
 typedef NSUInteger MGSFunctionArgumentName;
 
-enum _MGSFunctionArgumentCase {
+enum _eMGSFunctionArgumentCase {
     kMGSFunctionArgumentCamelCase= 0,
     kMGSFunctionArgumentLowerCase = 1,
     kMGSFunctionArgumentInputCase = 2,
@@ -27,20 +27,19 @@ enum _MGSFunctionArgumentCase {
 };
 typedef NSUInteger MGSFunctionArgumentCase;
 
-enum _MGSFunctionArgumentStyle {
+enum _eMGSFunctionArgumentStyle {
     kMGSFunctionArgumentHyphenated = 0,
     kMGSFunctionArgumentUnderscoreSeparated = 1,
     kMGSFunctionArgumentWhitespaceRemoved = 2,
 };
 typedef NSUInteger MGSFunctionArgumentStyle;
 
-enum _MGSFunctionCodeStyle {
-    kMGSFunctionCodeTaskInputs = 0,
-    kMGSFunctionCodeTaskBody = 1,
-    kMGSFunctionCodeTaskEntry = 2,
+enum _eMGSCodeDescriptorCodeStyle {
+    kMGSCodeDescriptorTaskInputs = 0,
+    kMGSCodeDescriptorTaskBody = 1,
+    kMGSCodeDescriptorTaskEntry = 2,
 };
-typedef NSUInteger MGSFunctionCodeStyle;
-
+typedef NSUInteger MGSCodeDescriptorCodeStyle;
 
 enum _eMGSLanguageType {
 	kMGSInterpretedLanguage = 0,

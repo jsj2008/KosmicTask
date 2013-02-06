@@ -31,5 +31,6 @@
 - (IBAction)ok:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)openFile:(id)sender;
+- (IBAction)openCodeSheetAction:(id)sender;
 
 @end

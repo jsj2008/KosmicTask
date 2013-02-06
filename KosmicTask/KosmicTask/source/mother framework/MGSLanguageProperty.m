@@ -232,7 +232,8 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
 		newValue = text;
 	}*/
 	if ([value isKindOfClass:[NSString class]] && [value isEqual:@"Whitespace removed"]) {
-        NSLog(@"got it");
+        
+        // NSLog(@"got it");
     }
          
 	value = newValue;

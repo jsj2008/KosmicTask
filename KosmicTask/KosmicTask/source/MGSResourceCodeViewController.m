@@ -9,7 +9,7 @@
 #import "MGSResourceCodeViewController.h"
 #import "MGSLanguageTemplateResource.h"
 #import "MGSScript.h"
-#import "MGSLanguageFunctionDescriptor.h"
+#import "MGSLanguageCodeDescriptor.h"
 #import "MGSLanguagePlugin.h"
 #import "MLog.h"
 
@@ -191,7 +191,7 @@ char MGSTextViewEditableContext;
         @try {
             stringResource = @"\n[template could not be rendered - see log for details]";
             
-            MGSLanguageFunctionDescriptor *descriptor = [[MGSLanguageFunctionDescriptor alloc] initWithScript:self.script];
+            MGSLanguageCodeDescriptor *descriptor = [[MGSLanguageCodeDescriptor alloc] initWithScript:self.script];
             NSMutableDictionary *templateVariables = [descriptor templateVariables];
             
             NSString *entryCodeString = [descriptor generateTaskFunctionCodeString];

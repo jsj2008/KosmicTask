@@ -577,6 +577,24 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	[[_fragaria textMenuController] shiftLeftAction:self];
 }
 
+/*
+ 
+ - insertText:
+ 
+ */
+- (void)insertText:(NSString *)newText
+{
+    NSString *text = [_fragaria string];
+    NSRange selectedRange = [_fragariaTextView selectedRange];
+    if (selectedRange.location != NSNotFound && selectedRange.length > 0) {
+        text = [text stringByReplacingCharactersInRange:selectedRange withString:newText];
+    } else {
+        text = [NSString stringWithFormat:@"%@\n%@", newText, text];
+        selectedRange = NSMakeRange(0, 0);
+    }
+    _fragaria.string = text;
+    [_fragariaTextView scrollRangeToVisible:selectedRange];
+}
 #pragma mark -
 #pragma mark Font handling
 

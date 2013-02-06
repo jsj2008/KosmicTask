@@ -125,9 +125,9 @@ requiredResourceDoubleClicked, selectedLanguageProperty, script;
 	
     [resourceTabView setFrame:[resourceTabHostView frame]];
     [resourceTabHostView addSubview:resourceTabView];
-        
+    
 	[[MGSLanguagePluginController sharedController] resolvePluginResources];
-	 
+    
 	// KVO
 	[resourceArrayController addObserver:self forKeyPath:@"selectedObjects" options:0 context:(void *)&MGSResourceSelectedObjectsContext];
 	[resourceTreeController addObserver:self forKeyPath:@"selectedObjects" options:0 context:(void *)&MGSResourceTreeSelectedObjectsContext];

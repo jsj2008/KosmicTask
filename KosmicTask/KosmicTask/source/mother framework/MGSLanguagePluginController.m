@@ -215,6 +215,13 @@ static MGSLanguagePluginController *mgs_sharedController = nil;
 	 
 	 */
 	[self loadPluginResources];
+    
+    /*
+     
+     because of the lazy behaviour implementation we just need to access the managers
+     for each plugin to force loading
+     
+     */
 	[[self instances] makeObjectsPerformSelector:@selector(userResourcesManager)];
 	[[self instances] makeObjectsPerformSelector:@selector(applicationResourcesManager)];
 }

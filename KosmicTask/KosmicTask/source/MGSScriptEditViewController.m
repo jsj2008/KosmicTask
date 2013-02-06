@@ -1367,4 +1367,16 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	
 }
 
+#pragma mark -
+#pragma mark text handling
+
+/*
+ 
+ - insertText:
+ 
+ */
+- (void)insertText:(NSString *)text
+{
+    [scriptViewController insertText:text];
+}
 @end

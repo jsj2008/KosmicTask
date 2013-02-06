@@ -10,7 +10,7 @@
 #import "KosmicTaskController.h"
 #import "NSString_Mugginsoft.h"
 #import "NSArray_Mugginsoft.h"
-#import "MGSLanguageFunctionDescriptor.h"
+#import "MGSLanguageCodeDescriptor.h"
 
 /*
  common macros defined in SenTestingKit.h

@@ -36,7 +36,7 @@
 #import "MGSRequestTabScrollView.h"
 #import "MGSAPLicenceCode.h"
 #import "MGSApplicationMenu.h"
-#import "MGSFunctionNameSheetController.h"
+#import "MGSCodeAssistantSheetController.h"
 
 #define ACTION_TAB 0
 #define SCRIPT_TAB 1
@@ -60,7 +60,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (void)showTemplateSheet_:(id)sender;
 - (BOOL)changeEditMode:(eMGSMotherEditMode)mode;
 
-- (void)functionNameSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void)functionNameSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 @end
 
 @interface MGSEditWindowController(Private)
@@ -341,10 +341,10 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 
 /*
  
- - showTemplateSheet:
+ - showTemplateBrowserSheet:
  
  */
-- (IBAction)showTemplateSheet:(id)sender
+- (IBAction)showTemplateBrowserSheet:(id)sender
 {
 #pragma unused(sender)
 	
@@ -420,7 +420,13 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 		case 2:
 			[self openFile:self];
 			break;
-	}
+
+            // show code sheet
+		case 3:
+			[self showCodeAssistantSheet:self];
+			break;
+
+    }
 }
 
 #pragma mark -
@@ -431,22 +437,22 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
  - showFunctionSheet:
  
  */
-- (IBAction)showFunctionSheet:(id)sender
+- (IBAction)showCodeAssistantSheet:(id)sender
 {
 #pragma unused(sender)
 	
 	// load the resource sheet controller.
 	// use the cached controller if available and resources have not been modified
-	if (!functionNameSheetController) {
-		functionNameSheetController = [[MGSFunctionNameSheetController alloc] init];
-		[functionNameSheetController window];
+	if (!codeAssistantSheetController) {
+		codeAssistantSheetController = [[MGSCodeAssistantSheetController alloc] init];
+		[codeAssistantSheetController window];
 	}
 	
 	// we require to preselect the default template for the current script type
-	functionNameSheetController.script = [_taskSpec script];
+	codeAssistantSheetController.script = [_taskSpec script];
 	
 	// show the sheet
-	[NSApp beginSheet:[functionNameSheetController window]
+	[NSApp beginSheet:[codeAssistantSheetController window]
 	   modalForWindow:self.window
 		modalDelegate:self
 	   didEndSelector:@selector(functionNameSheetDidEnd:returnCode:contextInfo:)
@@ -459,21 +465,47 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
  - functionNameSheetDidEnd:returnCode:contextInfo:
  
  */
-- (void)functionNameSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+- (void)functionNameSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 #pragma unused(sheet)
 #pragma unused(contextInfo)
-	
-	switch (returnCode) {
+
+	switch ((MGSCodeAssistantSheetReturnValue)returnCode) {
             
-			// quit
-		case 0:
+			// OK - no action required
+		case kMGSCodeAssistantSheetReturnOk:
 			break;
 			
-		case 1:;
+            // data copied to clipboard.
+            // no further action required
+		case kMGSCodeAssistantSheetReturnCopy:
 			break;
             
-	}
+            // insert selected data
+		case kMGSCodeAssistantSheetReturnInsert:
+            {
+                // get data to be inserted
+                NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+                NSString *codeString = [pasteboard stringForType:NSStringPboardType];
+                
+                // insert at current selection point
+                [scriptEditViewController insertText:codeString];
+            }
+            break;
+            
+            // show template sheet
+        case kMGSCodeAssistantSheetReturnShowTemplate:
+            [self showTemplateBrowserSheet:self];
+            break;
+
+            // show file sheet
+        case kMGSCodeAssistantSheetReturnShowFile:
+            [self openFile:self];
+			break;
+            
+        case kMGSCodeAssistantSheetReturnShowRunSettings:
+            break;
+    }
 }
 
 #pragma mark -
@@ -611,8 +643,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 		}
 		
 		// show template/function sheet
-	} else if  (theAction == @selector(showTemplateSheet:) ||
-                theAction == @selector(showFunctionSheet:)) {
+	} else if  (theAction == @selector(showTemplateBrowserSheet:) ||
+                theAction == @selector(showCodeAssistantSheet:)) {
 		enabled = NO;
 		
 		// can only show sheet when script mode selected
@@ -1323,11 +1355,26 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			
 		case kMGSMotherEditModeScript:;
 			
-			NSString *scriptSource = [[[_taskSpec script] scriptCode] source];
-			
-			// show template sheet if no source
+			NSString *scriptSource = [[[_taskSpec script] scriptCode] source];			
+            scriptSource = [scriptSource stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            
+			// show helper sheet if no source
 			if (!scriptSource || [scriptSource length] == 0) {
-				[self showTemplateSheet:self];
+                
+                MGSScriptHelper helper = [[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskEmptyScriptHelper];
+                switch (helper) {
+                    case kMGSScriptHelperTemplateBrowser:
+                        [self showTemplateBrowserSheet:self];
+                        break;
+                    
+                    case kMGSScriptHelperCodeAssistant:
+                        [self showCodeAssistantSheet:self];
+                        break;
+                        
+                    default:
+                        break;
+                    
+                }
 			}
 			
 			break;

@@ -8,7 +8,7 @@
 
 #import "MGSResourceBrowserSheetController.h"
 #import "MGSLanguageTemplateResource.h"
-#import "MGSLanguageFunctionDescriptor.h"
+#import "MGSLanguageCodeDescriptor.h"
 
 // class extension
 @interface MGSResourceBrowserSheetController()
@@ -176,6 +176,18 @@ const char MGSContextResourcesChanged;
 #pragma unused(sender)
 	[self closeSheet:2];
 }
+
+/*
+ 
+ - openCodeSheetAction:
+ 
+ */
+- (IBAction)openCodeSheetAction:(id)sender
+{
+#pragma unused(sender)
+	[self closeSheet:3];
+}
+
 /*
  
  - closeSheet:
