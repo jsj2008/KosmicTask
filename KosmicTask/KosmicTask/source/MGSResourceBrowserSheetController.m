@@ -13,6 +13,7 @@
 // class extension
 @interface MGSResourceBrowserSheetController()
 - (void)closeSheet:(NSInteger)returnCode;
+- (void)copySelectionToPasteBoard;
 @property (copy) MGSLanguagePropertyManager *languagePropertyManager;
 @end
 
@@ -88,7 +89,7 @@ const char MGSContextResourcesChanged;
 #pragma unused(change)
 	
 	if (context == (void *)&MGSContextRequiredResourceDoubleClicked) {
-		[self ok:self];
+		[self insertTemplateAction:self];
 	} else if (context == (void *)&MGSContextResourcesChanged) {
 		self.resourcesChanged = YES;
 	}
@@ -108,51 +109,37 @@ const char MGSContextResourcesChanged;
     resourceBrowserViewController.script = theScript;
     resourceBrowserViewController.defaultScriptType = theScript.scriptType;
 }
+
+#pragma mark -
+#pragma mark Text selection handling
+/*
+ 
+ - copySelectionToPasteBoard
+ 
+ */
+- (void)copySelectionToPasteBoard
+{
+    NSString *text = self.resourceBrowserViewController.scriptString;
+    if (text) {
+        NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+        [pasteboard clearContents];
+        [pasteboard setString:text forType:NSStringPboardType];
+    }
+}
 #pragma mark -
 #pragma mark Actions
 
 /*
  
- - ok:
+ - insertTemplateAction:
  
  */
-- (IBAction)ok:(id)sender
+- (IBAction)insertTemplateAction:(id)sender
 {
 #pragma unused(sender)
-    
-    /*
-	self.languagePropertyManager = [resourceBrowserViewController.languagePropertyManager copy];
-
-	scriptType = [resourceBrowserViewController.languagePlugin scriptType];
-
-	MGSScript *script = [MGSScript new];
-    [script setScriptType:scriptType];
-    [script updateLanguagePropertyManager:self.languagePropertyManager];
-    
-    MGSLanguageFunctionDescriptor *descriptor = [[MGSLanguageFunctionDescriptor alloc] initWithScript:script];
-    NSMutableDictionary *templateVariables = [descriptor templateVariables];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeStyle:kCFDateFormatterShortStyle];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    NSString *date = [dateFormatter stringFromDate:[NSDate date]];
-    
-	NSDictionary *variables = [NSDictionary dictionaryWithObjectsAndKeys: 
-							   [MGSScript defaultAuthor], @"author", 
-							   scriptType, @"script",
-                               date, @"date",
-							   nil];
-	[templateVariables addEntriesFromDictionary:variables];
-    
-    MGSLanguageTemplateResource *templateResource = [resourceBrowserViewController selectedTemplate];
-	NSString *stringResource = [templateResource stringResourceWithVariables:templateVariables];
-	if (stringResource) {
-		resourceText = stringResource;
-	}
-	*/
-	
+    [self copySelectionToPasteBoard];
     resourceText = self.resourceBrowserViewController.scriptString;
-	[self closeSheet:1];
+	[self closeSheet:kMGSResourceBrowserSheetReturnInsert];
 }
 
 /*
@@ -163,9 +150,20 @@ const char MGSContextResourcesChanged;
 - (IBAction)cancel:(id)sender
 {
 #pragma unused(sender)
-	[self closeSheet:0];
+	[self closeSheet:kMGSResourceBrowserSheetReturnCancel];
 }
 
+/*
+ 
+ - copyToPasteboardAction:
+ 
+ */
+- (IBAction)copyToPasteboardAction:(id)sender
+{
+#pragma unused(sender)
+    [self copySelectionToPasteBoard];
+	[self closeSheet:kMGSResourceBrowserSheetReturnCopy];    
+}
 /*
  
  - openFile:
@@ -174,18 +172,18 @@ const char MGSContextResourcesChanged;
 - (IBAction)openFile:(id)sender
 {
 #pragma unused(sender)
-	[self closeSheet:2];
+	[self closeSheet:kMGSResourceBrowserSheetReturnShowFile];
 }
 
 /*
  
- - openCodeSheetAction:
+ - openCodeAssistantAction:
  
  */
-- (IBAction)openCodeSheetAction:(id)sender
+- (IBAction)openCodeAssistantAction:(id)sender
 {
 #pragma unused(sender)
-	[self closeSheet:3];
+	[self closeSheet:kMGSResourceBrowserSheetReturnShowCodeAssistant];
 }
 
 /*

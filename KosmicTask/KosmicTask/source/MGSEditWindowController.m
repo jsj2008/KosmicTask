@@ -56,11 +56,11 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (void)compileAlertSheetDidEnd: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
 - (void)disconnectedAlertSheetDidEnd: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
 - (void)saveActionSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
-- (void)resourceSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void)templateBrowserSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)showTemplateSheet_:(id)sender;
 - (BOOL)changeEditMode:(eMGSMotherEditMode)mode;
 
-- (void)functionNameSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)codeAssistantSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 @end
 
 @interface MGSEditWindowController(Private)
@@ -378,51 +378,56 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	[NSApp beginSheet:[resourceSheetController window] 
 	   modalForWindow:self.window 
 		modalDelegate:self 
-	   didEndSelector:@selector(resourceSheetDidEnd:returnCode:contextInfo:) 
+	   didEndSelector:@selector(templateBrowserSheetDidEnd:returnCode:contextInfo:)
 		  contextInfo:NULL];
 }
 /*
  
- - resourceSheetDidEnd:returnCode:contextInfo:
+ - templateBrowserSheetDidEnd:returnCode:contextInfo:
  
  */
-- (void)resourceSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+- (void)templateBrowserSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
 	#pragma unused(sheet)
 	#pragma unused(contextInfo)
 	
 	switch (returnCode) {
 		
-			// quit
-		case 0:
+			// cancel
+		case kMGSResourceBrowserSheetReturnCancel:
 			break;
-			
-			// template selected
-		case 1:;
-			// update script type if it has changed
-			NSString *scriptType = resourceSheetController.script.scriptType;
-			if (![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
-				[_taskSpec.script setScriptType:scriptType];
-			}
 
-			// update the language property manager
-			[_taskSpec.script updateLanguagePropertyManager:resourceSheetController.languagePropertyManager];
+            // copy
+		case kMGSResourceBrowserSheetReturnCopy:
+			break;
 
-			// get the template text
-			NSString *templateText = resourceSheetController.resourceText;
-			
-			// update the model
-			[[[_taskSpec script] scriptCode] setSource:templateText];
+			// insert template
+		case kMGSResourceBrowserSheetReturnInsert:
+            {
+                // update script type if it has changed
+                NSString *scriptType = resourceSheetController.script.scriptType;
+                if (![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
+                    [_taskSpec.script setScriptType:scriptType];
+                }
 
+                // update the language property manager
+                [_taskSpec.script updateLanguagePropertyManager:resourceSheetController.languagePropertyManager];
+
+                // get the template text
+                NSString *templateText = resourceSheetController.resourceText;
+                
+                // update the model
+                [[[_taskSpec script] scriptCode] setSource:templateText];
+            }
 			break;
 		
 			// open file
-		case 2:
+		case kMGSResourceBrowserSheetReturnShowFile:
 			[self openFile:self];
 			break;
 
-            // show code sheet
-		case 3:
+            // show code assistant
+		case kMGSResourceBrowserSheetReturnShowCodeAssistant:
 			[self showCodeAssistantSheet:self];
 			break;
 
@@ -440,32 +445,33 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (IBAction)showCodeAssistantSheet:(id)sender
 {
 #pragma unused(sender)
-	
+    
 	// load the resource sheet controller.
 	// use the cached controller if available and resources have not been modified
 	if (!codeAssistantSheetController) {
 		codeAssistantSheetController = [[MGSCodeAssistantSheetController alloc] init];
-		[codeAssistantSheetController window];
+        [codeAssistantSheetController window];
 	}
-	
-	// we require to preselect the default template for the current script type
+    
+    // we require to preselect the default template for the current script type
 	codeAssistantSheetController.script = [_taskSpec script];
-	
+    
 	// show the sheet
 	[NSApp beginSheet:[codeAssistantSheetController window]
 	   modalForWindow:self.window
 		modalDelegate:self
-	   didEndSelector:@selector(functionNameSheetDidEnd:returnCode:contextInfo:)
+	   didEndSelector:@selector(codeAssistantSheetDidEnd:returnCode:contextInfo:)
 		  contextInfo:NULL];
-    
+
+    return;
 }
 
 /*
  
- - functionNameSheetDidEnd:returnCode:contextInfo:
+ - codeAssistantSheetDidEnd:returnCode:contextInfo:
  
  */
-- (void)functionNameSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)codeAssistantSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
 #pragma unused(sheet)
 #pragma unused(contextInfo)

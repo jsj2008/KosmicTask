@@ -158,10 +158,10 @@ char MGSFunctionNameContext;
     NSString *text = [_fragaria string];
     
     // if a valid selection range exists then use it
-    if (selectedRange.location != NSNotFound && selectedRange.length > 0) {
+    if (NO && selectedRange.location != NSNotFound && selectedRange.length > 0) {
         text = [text substringWithRange:selectedRange];
     }
-	//NSData *data = [attString RTFFromRange:NSMakeRange(0, [attString length]) documentAttributes:nil];
+    
 	NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
 	[pasteboard clearContents];
 	[pasteboard setString:text forType:NSStringPboardType];
@@ -200,7 +200,9 @@ char MGSFunctionNameContext;
 {
     _scriptType = name;
 	[_fragaria setObject:_scriptType forKey:MGSFOSyntaxDefinitionName];
-    self.script.scriptType = _scriptType;
+    if (self.script.scriptType != _scriptType) {
+        self.script.scriptType = _scriptType;
+    }
 }
 
 #pragma mark -

@@ -12,6 +12,15 @@
 @class MGSLanguagePropertyManager;
 @class MGSScript;
 
+enum {
+    kMGSResourceBrowserSheetReturnCancel,
+    kMGSResourceBrowserSheetReturnCopy,
+    kMGSResourceBrowserSheetReturnInsert,
+    kMGSResourceBrowserSheetReturnShowCodeAssistant,
+    kMGSResourceBrowserSheetReturnShowFile,
+};
+typedef NSInteger MGSResourceBrowserSheetReturnValue;
+
 @interface MGSResourceBrowserSheetController : NSWindowController {
 	MGSResourceBrowserViewController *resourceBrowserViewController;
 	IBOutlet NSView *templateView;
@@ -28,9 +37,11 @@
 @property (copy, readonly) MGSLanguagePropertyManager *languagePropertyManager;
 @property (assign) MGSScript *script;
 
-- (IBAction)ok:(id)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)copyToPasteboardAction:(id)sender;
+- (IBAction)insertTemplateAction:(id)sender;
+- (IBAction)openCodeAssistantAction:(id)sender;
 - (IBAction)openFile:(id)sender;
-- (IBAction)openCodeSheetAction:(id)sender;
+
 
 @end
