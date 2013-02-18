@@ -1391,7 +1391,7 @@ const char MGSContextStartupComplete;
 									 defaultButton: nil
 								   alternateButton: nil
 									   otherButton: nil
-						 informativeTextWithFormat: alertInfo];
+						 informativeTextWithFormat: @"%@", alertInfo];
 	
 	// run dialog
 	[alert beginSheetModalForWindow:[self window] modalDelegate:self didEndSelector:@selector(validatedConnectionLimitAlertDidEnd:returnCode:contextInfo:) contextInfo:NULL];

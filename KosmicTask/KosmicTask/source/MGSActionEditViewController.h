@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MGSActionParameterEditViewController.h"
 
 @class MGSActionDetailEditViewController;
 @class MGSActionParameterEditViewController;
@@ -33,5 +34,6 @@
 
 - (BOOL)commitPendingEdits;
 - (void)dispose;
-
+- (MGSParameterViewConfigurationFlags)parameterViewConfigurationFlags;
+- (void)setParameterViewConfigurationFlags:(MGSParameterViewConfigurationFlags)flag;
 @end

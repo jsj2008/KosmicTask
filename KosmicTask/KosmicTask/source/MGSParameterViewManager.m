@@ -354,9 +354,9 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
         self.selectedParameterViewController = [_viewControllers objectAtIndex:idx];
     }
 
-	// inform delegate that view closed
-	if (_delegate && [_delegate respondsToSelector:@selector(parameterViewDidClose:)]) {
-		[_delegate parameterViewDidClose:viewController];
+	// inform delegate that view removed
+	if (_delegate && [_delegate respondsToSelector:@selector(parameterViewRemoved:)]) {
+		[_delegate parameterViewRemoved:viewController];
 	}
     
     
@@ -397,6 +397,11 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 - (void)parameterViewControllerTypeDidChange:(MGSParameterViewController *)viewController
 {
 #pragma unused(viewController)
+    
+    // inform delegate that view type changed
+	if (_delegate && [_delegate respondsToSelector:@selector(parameterViewTypeChanged:)]) {
+		[_delegate parameterViewTypeChanged:viewController];
+	}
 }
 /*
  

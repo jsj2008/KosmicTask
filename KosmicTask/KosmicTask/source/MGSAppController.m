@@ -1764,6 +1764,7 @@
 
     // task editing preferences
     [appDefaults setObject:[NSNumber numberWithInteger:kMGSScriptHelperTemplateBrowser] forKey:MGSTaskEmptyScriptHelper];
+    [appDefaults setObject:[NSNumber numberWithInteger:kMGSScriptHelperCodeAssistant] forKey:MGSTaskInputChangeScriptHelper];
     
 	//
 	// register app defaults

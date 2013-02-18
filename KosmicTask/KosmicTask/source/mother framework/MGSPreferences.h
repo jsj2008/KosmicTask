@@ -82,6 +82,7 @@ extern NSString *MGSTaskLoadingAnimationDelay;
 extern NSString *MGSShowPortMapperRouterIncompatible;
 extern NSString *MGSShowPortMapperRouterNotFound;
 extern NSString *MGSTaskEmptyScriptHelper;
+extern NSString *MGSTaskInputChangeScriptHelper;
 
 @interface MGSPreferences : NSObject {
 

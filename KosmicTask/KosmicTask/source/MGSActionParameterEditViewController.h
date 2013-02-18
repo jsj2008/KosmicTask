@@ -15,6 +15,14 @@
 @class MGSParameterSplitView;
 @class MGSGradientView;
 
+enum _eMGSParameterViewConfigurationFlags {
+    kMGSParameterViewAddedFlag = 0x01,
+    kMGSParameterViewRemovedFlag = 0x02,
+    kMGSParameterViewMovedFlag = 0x04,
+    kMGSParameterViewTypeChangedFlag = 0x08,
+};
+typedef NSUInteger MGSParameterViewConfigurationFlags;
+
 @interface MGSActionParameterEditViewController : NSViewController {
 	IBOutlet MGSGradientView *_toolGradientView;
 	IBOutlet NSTextField *inputCountText;						// number of inputs
@@ -31,10 +39,12 @@
 	MGSScriptParameterManager *_parameterHandler;
 	
 	NSInteger _inputCount;
+    MGSParameterViewConfigurationFlags _parameterViewConfigurationFlags;
 }
 @property NSInteger inputCount;
 @property MGSTaskSpecifier *action;
 @property NSView *parameterView;
+@property (readwrite) MGSParameterViewConfigurationFlags parameterViewConfigurationFlags;
 
 - (IBAction)segmentClick:(id)sender;
 - (IBAction)copyHandlerTemplate:(id)sender;

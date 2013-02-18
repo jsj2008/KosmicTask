@@ -37,12 +37,14 @@ char MGSParameterViewManagerUndoContext;
 @interface MGSActionParameterEditViewController ()
 - (void)updateRemoveInputSegmentEnabledStatus;
 - (void)updateUndoInputSegmentEnabledStatus;
+- (void)parameterViewModified:(MGSParameterViewConfigurationFlags)flag;
 @end
 
 @implementation MGSActionParameterEditViewController
 @synthesize inputCount = _inputCount;
 @synthesize action = _action;
 @synthesize parameterView;
+@synthesize parameterViewConfigurationFlags = _parameterViewConfigurationFlags;
 
 /*
  
@@ -258,13 +260,22 @@ char MGSParameterViewManagerUndoContext;
 	return;
 }
 
+/*
+ 
+ - parameterViewModified:
+ 
+ */
+- (void)parameterViewModified:(MGSParameterViewConfigurationFlags)flag
+{
+    self.parameterViewConfigurationFlags |= flag;
+}
 #pragma mark MGSParameterViewManager delegate methods
 /*
  
- parameter view did close
+ parameterViewRemoved:
  
  */
-- (void)parameterViewDidClose:(MGSParameterViewController *)viewController
+- (void)parameterViewRemoved:(MGSParameterViewController *)viewController
 {
 	#pragma unused(viewController)
 	
@@ -275,6 +286,8 @@ char MGSParameterViewManagerUndoContext;
 	
 	// document edited
 	[[[self view] window] setDocumentEdited:YES];
+    
+    [self parameterViewModified:kMGSParameterViewRemovedFlag];
 }
 
 /*
@@ -293,6 +306,8 @@ char MGSParameterViewManagerUndoContext;
 	
 	// document edited
 	[[[self view] window] setDocumentEdited:YES];
+    
+    [self parameterViewModified:kMGSParameterViewAddedFlag];
 }
 
 /*
@@ -306,6 +321,23 @@ char MGSParameterViewManagerUndoContext;
 	
 	// document edited
 	[[[self view] window] setDocumentEdited:YES];
+    
+    [self parameterViewModified:kMGSParameterViewMovedFlag];
+}
+
+/*
+ 
+ - parameterViewTypeChanged:
+ 
+ */
+- (void)parameterViewTypeChanged:(MGSParameterViewController *)viewController
+{
+#pragma unused(viewController)
+	
+	// document edited
+	[[[self view] window] setDocumentEdited:YES];
+    
+    [self parameterViewModified:kMGSParameterViewTypeChangedFlag];
 }
 
 @end

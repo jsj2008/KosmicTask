@@ -113,7 +113,7 @@
 										 defaultButton: nil
 									   alternateButton: nil
 										   otherButton: nil
-							 informativeTextWithFormat: alertInfo];
+							 informativeTextWithFormat: @"%@", alertInfo];
 		
 		//NSString *context = CFRetain(@"openFile");
 		

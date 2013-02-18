@@ -61,6 +61,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (BOOL)changeEditMode:(eMGSMotherEditMode)mode;
 
 - (void)codeAssistantSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)inputConfigurationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 @end
 
 @interface MGSEditWindowController(Private)
@@ -337,7 +338,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	
 
 #pragma mark -
-#pragma mark Templates 
+#pragma mark Template Browser Sheet
 
 /*
  
@@ -435,7 +436,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 }
 
 #pragma mark -
-#pragma mark Input Function
+#pragma mark Code Assistant sheet
 
 /*
  
@@ -1282,7 +1283,40 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	}
 	
 }
-
+/*
+ 
+ - inputConfigurationAlertDidEnd:returnCode:contextInfo:
+ 
+ */
+- (void)inputConfigurationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+#pragma unused(alert)
+#pragma unused(returnCode)
+#pragma unused(contextInfo)
+    
+    switch (returnCode) {
+        case NSAlertAlternateReturn:
+            
+            // in order to chain sheets correctly we need to order the alert out
+            [[alert window] orderOut:self];
+            
+            // clear any flags now as we want to ensure the display of the code assistamt
+            if (actionEditViewController.parameterViewConfigurationFlags != 0) {
+                actionEditViewController.parameterViewConfigurationFlags = 0;
+            }
+            
+            // switch to the edit view
+            [self requestEditTask:self];
+            
+            // show the code assistant
+            [self showCodeAssistantSheet:self];
+            
+            break;
+            
+        default:
+            break;
+    }
+}
 /*
  
  prepare for save
@@ -1347,7 +1381,10 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	int mode = [[[notification userInfo] objectForKey:MGSNoteModeKey] intValue];
 	//int prevMode = [[[notification userInfo] objectForKey:MGSNotePrevModeKey] intValue];
 	_editMode = mode;
-	
+    MGSScriptHelper helper = kMGSScriptHelperNone;
+    BOOL clearInputChangedFlags = NO;
+    BOOL showInputWarningIfAppropriate = NO;
+    
 	NSAssert(mode >=0 && mode < [tabView numberOfTabViewItems], @"tabview invalid edit mode");
 	
 	// select tabview item for mode
@@ -1360,35 +1397,72 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			break;
 			
 		case kMGSMotherEditModeScript:;
-			
-			NSString *scriptSource = [[[_taskSpec script] scriptCode] source];			
-            scriptSource = [scriptSource stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            
-			// show helper sheet if no source
-			if (!scriptSource || [scriptSource length] == 0) {
+            {
+                NSString *scriptSource = [[[_taskSpec script] scriptCode] source];			
+                scriptSource = [scriptSource stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 
-                MGSScriptHelper helper = [[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskEmptyScriptHelper];
-                switch (helper) {
-                    case kMGSScriptHelperTemplateBrowser:
-                        [self showTemplateBrowserSheet:self];
-                        break;
+                // show helper sheet if no source
+                if (!scriptSource || [scriptSource length] == 0) {
                     
-                    case kMGSScriptHelperCodeAssistant:
-                        [self showCodeAssistantSheet:self];
-                        break;
-                        
-                    default:
-                        break;
+                    helper = [[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskEmptyScriptHelper];
                     
-                }
-			}
-			
+                // show helper sheet if inputs have changed
+                } else if (actionEditViewController.parameterViewConfigurationFlags != 0) {
+                    
+                    showInputWarningIfAppropriate = YES;
+                    
+                    helper = [[NSUserDefaults standardUserDefaults] integerForKey:MGSTaskInputChangeScriptHelper];
+                    
+                 }
+                
+                clearInputChangedFlags = YES;
+           }
 			break;
 			
-		case kMGSMotherEditModeRun:			
+		case kMGSMotherEditModeRun:
+            if (actionEditViewController.parameterViewConfigurationFlags != 0) {
+
+                showInputWarningIfAppropriate = YES;
+                
+                // we don't clear parameterViewConfigurationFlags because the user
+                // hasn't yet taken the opportunity to edit the script
+			}
 			break;
 	}
-}	
+    
+    switch (helper) {
+        case kMGSScriptHelperTemplateBrowser:
+            [self showTemplateBrowserSheet:self];
+            break;
+            
+        case kMGSScriptHelperCodeAssistant:
+            [self showCodeAssistantSheet:self];
+            break;
+            
+        default:
+            {
+                if (showInputWarningIfAppropriate) {
+                    NSString *changeString = [self stringForParameterViewConfigurationFlags:actionEditViewController.parameterViewConfigurationFlags];
+                    NSAlert *alert = [NSAlert alertWithMessageText: NSLocalizedString(@"Task inputs have changed", @"Task input configuration change alert title")
+                                                     defaultButton: nil
+                                                   alternateButton: @"Code Assistant..."
+                                                       otherButton: nil
+                                         informativeTextWithFormat: @"%@\n\nCheck that the script arguments match the task inputs. The Code Assistant can identify the correct arguments.", changeString];
+                    
+                    // run dialog
+                    [alert beginSheetModalForWindow:[self window] modalDelegate:self didEndSelector:@selector(inputConfigurationAlertDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+                }
+            }
+            break;
+            
+    }
+
+
+    if (clearInputChangedFlags) {
+        actionEditViewController.parameterViewConfigurationFlags = 0;
+    }
+
+}
 
 /*
  
@@ -1472,6 +1546,42 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	
 	// mark document as edited
 	[[self window] setDocumentEdited:YES];
+}
+
+#pragma mark -
+#pragma mark String methods
+
+/*
+ 
+ - stringForParameterViewConfigurationFlags;
+ 
+ */
+- (NSString *)stringForParameterViewConfigurationFlags:(MGSParameterViewConfigurationFlags)flags
+{
+    NSMutableString *string = [NSMutableString new];
+
+    NSString *sep = @".";
+
+    // adding normally also includes a type change but it's too much information.
+    // so just record type change when no add.
+    if (flags & kMGSParameterViewAddedFlag) {
+        [string appendFormat:@"%@%@ ", NSLocalizedString(@"Input added", @"input added"), sep];
+    } else if (flags & kMGSParameterViewTypeChangedFlag) {
+        [string appendFormat:@"%@%@", NSLocalizedString(@"Input type changed", @"input type changed"), sep];
+    }
+    
+    if (flags & kMGSParameterViewRemovedFlag) {
+        [string appendFormat:@"%@%@ ", NSLocalizedString(@"Input deleted", @"input deleted"), sep];
+    }
+    if (flags & kMGSParameterViewMovedFlag) {
+        [string appendFormat:@"%@%@ ", NSLocalizedString(@"Input moved", @"input moved"), sep];
+    }
+    
+    NSString *output = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    //output = [output stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:sep]];
+    output = [output stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    return output;
 }
 
 #pragma mark -

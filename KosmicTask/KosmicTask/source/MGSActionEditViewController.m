@@ -8,7 +8,6 @@
 
 #import "MGSActionEditViewController.h"
 #import "MGSActionDetailEditViewController.h"
-#import "MGSActionParameterEditViewController.h"
 #import "NSView_Mugginsoft.h"
 #import "MGSTaskSpecifier.h"
 #import "MGSActionViewController.h"
@@ -171,6 +170,24 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+/*
+ 
+ - parameterViewConfigurationFlags
+ 
+ */
+- (MGSParameterViewConfigurationFlags)parameterViewConfigurationFlags
+{
+    return actionParameterController.parameterViewConfigurationFlags;
+}
+/*
+ 
+ - setParameterViewConfigurationFlags
+ 
+ */
+- (void)setParameterViewConfigurationFlags:(MGSParameterViewConfigurationFlags)flag
+{
+    actionParameterController.parameterViewConfigurationFlags = flag;
+}
 #pragma mark NSSplitView delegate messages
 //
 // splitview delegate
