@@ -1147,7 +1147,7 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSSegmentedControl" id="703492377">
 						<reference key="NSNextResponder" ref="496692649"/>
-						<int key="NSvFlags">265</int>
+						<int key="NSvFlags">-2147483383</int>
 						<string key="NSFrame">{{478, 452}, {201, 19}}</string>
 						<reference key="NSSuperview" ref="496692649"/>
 						<reference key="NSNextKeyView" ref="15263927"/>
@@ -1187,21 +1187,29 @@
 							<object class="NSCustomView" id="79959470">
 								<reference key="NSNextResponder" ref="15263927"/>
 								<int key="NSvFlags">274</int>
-								<string key="NSFrameSize">{699, 444}</string>
+								<string key="NSFrameSize">{699, 440}</string>
 								<reference key="NSSuperview" ref="15263927"/>
 								<reference key="NSNextKeyView"/>
 								<string key="NSClassName">NSView</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{699, 445}</string>
+						<string key="NSFrameSize">{699, 441}</string>
 						<reference key="NSSuperview" ref="496692649"/>
 						<reference key="NSNextKeyView" ref="79959470"/>
 						<string key="NSClassName">MGSBorderView</string>
 					</object>
+					<object class="NSCustomView" id="733937589">
+						<reference key="NSNextResponder" ref="496692649"/>
+						<int key="NSvFlags">266</int>
+						<string key="NSFrame">{{0, 440}, {699, 22}}</string>
+						<reference key="NSSuperview" ref="496692649"/>
+						<reference key="NSNextKeyView" ref="703492377"/>
+						<string key="NSClassName">PSMTabBarControl</string>
+					</object>
 				</array>
 				<string key="NSFrameSize">{699, 471}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSNextKeyView" ref="703492377"/>
+				<reference key="NSNextKeyView" ref="733937589"/>
 			</object>
 			<object class="NSCustomObject" id="947656498">
 				<string key="NSClassName">MGSResourceCodeViewController</string>
@@ -3109,6 +3117,22 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 					</object>
 					<int key="connectionID">839</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tabBar</string>
+						<reference key="source" ref="947656498"/>
+						<reference key="destination" ref="733937589"/>
+					</object>
+					<int key="connectionID">841</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="733937589"/>
+						<reference key="destination" ref="947656498"/>
+					</object>
+					<int key="connectionID">842</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -3987,6 +4011,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<array class="NSMutableArray" key="children">
 							<reference ref="15263927"/>
 							<reference ref="703492377"/>
+							<reference ref="733937589"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Code view</string>
@@ -4006,7 +4031,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							<reference ref="79959470"/>
 						</array>
 						<reference key="parent" ref="496692649"/>
-						<string key="objectName">view</string>
+						<string key="objectName">BorderView</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">831</int>
@@ -4023,6 +4048,11 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 						<int key="objectID">834</int>
 						<reference key="object" ref="947656498"/>
 						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">840</int>
+						<reference key="object" ref="733937589"/>
+						<reference key="parent" ref="496692649"/>
 					</object>
 				</array>
 			</object>
@@ -4194,6 +4224,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 				<string key="832.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<integer value="0" key="832.IBSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="834.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="840.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="90.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="91.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
@@ -4201,7 +4232,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">839</int>
+			<int key="maxID">842</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>

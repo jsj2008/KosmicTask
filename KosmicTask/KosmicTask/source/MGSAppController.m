@@ -1766,6 +1766,9 @@
     [appDefaults setObject:[NSNumber numberWithInteger:kMGSScriptHelperTemplateBrowser] forKey:MGSTaskEmptyScriptHelper];
     [appDefaults setObject:[NSNumber numberWithInteger:kMGSScriptHelperCodeAssistant] forKey:MGSTaskInputChangeScriptHelper];
     
+    // code assistant preferences
+    [appDefaults setObject:@"a the but is" forKey:MGSTaskInputArgumentExclusions];
+    
 	//
 	// register app defaults
 	//

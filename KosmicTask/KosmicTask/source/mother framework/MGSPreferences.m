@@ -84,6 +84,7 @@ NSString *MGSShowPortMapperRouterNotFound = @"MGSShowPortMapperRouterNotFound";
 
 NSString *MGSTaskEmptyScriptHelper = @"MGSTaskEmptyScriptHelper";
 NSString *MGSTaskInputChangeScriptHelper = @"MGSTaskInputChangeScriptHelper";
+NSString *MGSTaskInputArgumentExclusions = @"MGSTaskInputArgumentExclusions";
 
 static CFStringRef appID = CFSTR("com.mugginsoft.kosmictask");
 

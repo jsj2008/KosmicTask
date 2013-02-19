@@ -928,6 +928,9 @@
 		ABA4F10A0EA91C7E00165602 /* NSString-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA4F1060EA91C7E00165602 /* NSString-Base64Extensions.m */; };
 		ABA562B00E2CC74500C5E787 /* NSString_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC34BE30D78562800EC8C13 /* NSString_Mugginsoft.m */; };
 		ABA563200E2CDB3500C5E787 /* MGSStopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA5631F0E2CDB3500C5E787 /* MGSStopButton.m */; };
+		ABA56B6516D29E7300B509D8 /* MGSTabViewItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA56B6416D29E7300B509D8 /* MGSTabViewItemModel.m */; };
+		ABA56B6816D2AF5C00B509D8 /* MGSKosmicCardTabStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA56B6716D2AF5C00B509D8 /* MGSKosmicCardTabStyle.m */; };
+		ABA56B6F16D39B7600B509D8 /* MGSKosmicUnityTabStyle2.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA56B6E16D39B7600B509D8 /* MGSKosmicUnityTabStyle2.m */; };
 		ABA623DE0E0284C0000E5694 /* MGSDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA623DD0E0284C0000E5694 /* MGSDescriptionViewController.m */; };
 		ABA62B8F0D297C4B00744BCD /* MGSScriptPlist.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA62B8D0D297C4B00744BCD /* MGSScriptPlist.h */; };
 		ABA62B900D297C4B00744BCD /* MGSScriptPlist.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA62B8E0D297C4B00744BCD /* MGSScriptPlist.m */; };
@@ -4561,6 +4564,12 @@
 		ABA4F1060EA91C7E00165602 /* NSString-Base64Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString-Base64Extensions.m"; sourceTree = "<group>"; };
 		ABA5631E0E2CDB3500C5E787 /* MGSStopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSStopButton.h; sourceTree = "<group>"; };
 		ABA5631F0E2CDB3500C5E787 /* MGSStopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSStopButton.m; sourceTree = "<group>"; };
+		ABA56B6316D29E7300B509D8 /* MGSTabViewItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTabViewItemModel.h; sourceTree = "<group>"; };
+		ABA56B6416D29E7300B509D8 /* MGSTabViewItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSTabViewItemModel.m; sourceTree = "<group>"; };
+		ABA56B6616D2AF5B00B509D8 /* MGSKosmicCardTabStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSKosmicCardTabStyle.h; sourceTree = "<group>"; };
+		ABA56B6716D2AF5C00B509D8 /* MGSKosmicCardTabStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSKosmicCardTabStyle.m; sourceTree = "<group>"; };
+		ABA56B6D16D39B7500B509D8 /* MGSKosmicUnityTabStyle2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSKosmicUnityTabStyle2.h; sourceTree = "<group>"; };
+		ABA56B6E16D39B7600B509D8 /* MGSKosmicUnityTabStyle2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSKosmicUnityTabStyle2.m; sourceTree = "<group>"; };
 		ABA623DC0E0284C0000E5694 /* MGSDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSDescriptionViewController.h; sourceTree = "<group>"; };
 		ABA623DD0E0284C0000E5694 /* MGSDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSDescriptionViewController.m; sourceTree = "<group>"; };
 		ABA62B8D0D297C4B00744BCD /* MGSScriptPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptPlist.h; sourceTree = "<group>"; };
@@ -7211,6 +7220,12 @@
 			children = (
 				AB3F9D4E1667ECA0003357D9 /* MGSKosmicUnityTabStyle.h */,
 				AB3F9D4F1667ECA0003357D9 /* MGSKosmicUnityTabStyle.m */,
+				ABA56B6316D29E7300B509D8 /* MGSTabViewItemModel.h */,
+				ABA56B6416D29E7300B509D8 /* MGSTabViewItemModel.m */,
+				ABA56B6616D2AF5B00B509D8 /* MGSKosmicCardTabStyle.h */,
+				ABA56B6716D2AF5C00B509D8 /* MGSKosmicCardTabStyle.m */,
+				ABA56B6D16D39B7500B509D8 /* MGSKosmicUnityTabStyle2.h */,
+				ABA56B6E16D39B7600B509D8 /* MGSKosmicUnityTabStyle2.m */,
 			);
 			name = PSMTabBarControl;
 			sourceTree = "<group>";
@@ -12271,6 +12286,9 @@
 				AB81FF1C1699C018003FB984 /* MGSCodeAssistantSheetController.m in Sources */,
 				ABD6AB4C169F361E00C97C3A /* MGSLanguageCodeDescriptor.m in Sources */,
 				ABF1364C16A88EC100931BA3 /* MGSResourceCodeViewController.m in Sources */,
+				ABA56B6516D29E7300B509D8 /* MGSTabViewItemModel.m in Sources */,
+				ABA56B6816D2AF5C00B509D8 /* MGSKosmicCardTabStyle.m in Sources */,
+				ABA56B6F16D39B7600B509D8 /* MGSKosmicUnityTabStyle2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

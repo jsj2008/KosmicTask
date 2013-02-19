@@ -8,9 +8,20 @@
 
 #import <Cocoa/Cocoa.h>
 
+enum eMGSBorderViewFlags {
+  kMGSBorderViewTop = 0x01,
+  kMGSBorderViewRight = 0x02,
+  kMGSBorderViewBottom = 0x04,
+  kMGSBorderViewLeft = 0x08
+};
+typedef NSUInteger MGSBorderViewFlags;
 
 @interface MGSBorderView : NSView {
-
+    NSColor *_borderColor;
+    MGSBorderViewFlags _borderFlags;
 }
+
+@property (retain) NSColor *borderColor;
+@property (assign) MGSBorderViewFlags borderFlags;
 
 @end

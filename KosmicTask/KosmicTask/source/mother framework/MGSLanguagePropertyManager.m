@@ -692,6 +692,17 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 	[langProp setInfoText: [self localizedString:@"MGSInputArgumentStyleInfo"]];
 	[langProperties setObject:langProp forKey:langProp.key];
 
+    // input argument prefix
+    langProp = [[MGSLanguageProperty alloc]
+                initWithKey: MGS_LP_InputArgumentPrefix
+                name: [self localizedString:@"MGSInputArgumentPrefixName"]
+                value:language.initInputArgumentPrefix];
+    [langProp setRequestType:kMGSTemplateProcessingRequest];
+    langProp.editable = YES;
+    langProp.allowReset = YES;
+    [langProp setInfoText:[self localizedString:@"MGSInputArgumentPrefixInfo"]];
+    [langProperties setObject:langProp forKey:langProp.key];
+    
     /*====================================
 	 
 	 conclusion

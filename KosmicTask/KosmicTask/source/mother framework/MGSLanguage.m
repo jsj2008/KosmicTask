@@ -68,7 +68,8 @@ initTaskRunnerClassName,
 initBuildResultFlags,
 initInputArgumentName,
 initInputArgumentCase,
-initInputArgumentStyle;
+initInputArgumentStyle,
+initInputArgumentPrefix;
 
 #pragma mark -
 #pragma mark Class methods
@@ -264,6 +265,7 @@ initInputArgumentStyle;
         initInputArgumentName = kMGSFunctionArgumentName;
         initInputArgumentCase = kMGSFunctionArgumentCamelCase;
         initInputArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
+        initInputArgumentPrefix = @"";
 	}
 	return self;
 }
@@ -351,6 +353,7 @@ initInputArgumentStyle;
     MGS_PROP_COPY(initInputArgumentName);
     MGS_PROP_COPY(initInputArgumentCase);
     MGS_PROP_COPY(initInputArgumentStyle);
+    MGS_PROP_COPY(initInputArgumentPrefix);
     
 	return copy;
 }

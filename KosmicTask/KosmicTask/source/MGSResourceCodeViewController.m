@@ -12,6 +12,11 @@
 #import "MGSLanguageCodeDescriptor.h"
 #import "MGSLanguagePlugin.h"
 #import "MLog.h"
+#import <PSMTabBarControl/PSMTabBarControl.h>
+#import <PSMTabBarControl/PSMTabStyle.h>
+#import "MGSTabViewItemModel.h"
+#import "MGSKosmicCardTabStyle.h"
+#import "MGSKosmicUnityTabStyle2.h"
 
 @interface MGSResourceCodeViewController ()
 - (void)setViewString:(NSString *)string;
@@ -20,6 +25,7 @@
 - (void)updateSyntaxDefinition;
 - (void)updateCodeSegmentControl;
 - (NSString *)stringForCodeSegmentIndex:(MGSCodeSegmentIndex)segmentIndex;
+- (void)configureTabBar;
 
 @property BOOL textViewEditable;
 @property BOOL textEditable;
@@ -91,8 +97,88 @@ char MGSTextViewEditableContext;
     [self addObserver:self forKeyPath:@"textEditable" options:0 context:&MGSTextViewEditableContext];
     
     self.selectedCodeSegmentIndex  = kMGSScriptCodeSegmentIndex;
-    
+
+    // configure tab bar
+    [self configureTabBar];
+
     [self updateCodeSegmentControl];
+}
+
+#pragma mark -
+#pragma mark TabBar configuration and delegate methods
+
+/*
+ 
+ - configureTabBar
+ 
+ */
+- (void)configureTabBar
+{
+    [[tabBar class] registerTabStyleClass:[MGSKosmicCardTabStyle class]];
+    [[tabBar class] registerTabStyleClass:[MGSKosmicUnityTabStyle2 class]];
+    
+    // we don't host our views in an NSTabView instance but tabBar requires one
+    NSTabView *tabView = [[NSTabView alloc] initWithFrame:editorHostView.frame];
+    tabView.delegate = (id)tabBar;
+    tabBar.tabView = tabView;
+    
+    // remove any tabs present in the nib
+    for (NSTabViewItem *item in [tabView tabViewItems]) {
+		[tabView removeTabViewItem:item];
+	}
+    
+	MGSTabViewItemModel *newModel = [[MGSTabViewItemModel alloc] init];
+	NSTabViewItem *newItem = [(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:newModel];
+	[newItem setLabel:@"Code"];
+	[tabBar.tabView addTabViewItem:newItem];
+    
+    newModel = [[MGSTabViewItemModel alloc] init];
+	newItem = [(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:newModel];
+	[newItem setLabel:@"Template"];
+	[tabBar.tabView addTabViewItem:newItem];
+    
+    newModel = [[MGSTabViewItemModel alloc] init];
+	newItem = [(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:newModel];
+	[newItem setLabel:@"Variables"];
+	[tabBar.tabView addTabViewItem:newItem];
+    
+    // PSMUnifiedTabStyle, PSMAdiumTabStyle, PSMAquaTabStyle, PSMMetalTabStyle, PSMLiveChatTabStyle, PSMCardTabStyle
+    // MGSKosmicCardTabStyle, MGSKosmicUnityTabStyle
+    [tabBar setDisableTabClose:YES];
+    [tabBar setCellMinWidth:80];
+    [tabBar setCellOptimumWidth:100];
+
+    BOOL useAdium = YES;
+    if (useAdium) {
+        [tabBar setStyleNamed:[MGSKosmicUnityTabStyle2 name]];
+    } else {
+        [tabBar setStyleNamed:[MGSKosmicCardTabStyle name]];
+        NSView *borderView = editorHostView;
+        NSRect borderFrame = [borderView frame];
+        NSRect tabFrame = [tabBar frame];
+        CGFloat gutterWidth = [[NSUserDefaults standardUserDefaults] floatForKey:MGSFragariaPrefsGutterWidth];
+        
+        tabFrame.size.width = borderFrame.size.width - gutterWidth;
+        tabFrame.origin.x =  borderFrame.origin.x + gutterWidth;
+        [tabBar setFrame:tabFrame];
+    }
+    
+    [tabBar.tabView bind:NSSelectedIndexBinding toObject:self withKeyPath:@"selectedCodeSegmentIndex" options:nil];
+}
+
+/*
+ 
+ - tabView:didSelectTabViewItem:
+ 
+ */
+- (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
+{
+    NSInteger tabIndex = [aTabView indexOfTabViewItem:tabViewItem];
+    
+    if (tabIndex == 0) {
+
+    } else {
+    }
 }
 
 #pragma mark -
@@ -298,6 +384,16 @@ char MGSTextViewEditableContext;
 - (void)setTextViewEditable:(BOOL)value
 {
     textViewEditable = value;
+    //[self updateCodeSegmentControl];
+}
+/*
+ 
+ - setResourceEditable:
+ 
+ */
+- (void)setResourceEditable:(BOOL)value
+{
+    resourceEditable = value;
     [self updateCodeSegmentControl];
 }
 #pragma mark -
@@ -309,20 +405,20 @@ char MGSTextViewEditableContext;
  */
 - (void)updateCodeSegmentControl
 {
-    NSString *scriptCodeSegmentTitle = nil;
     NSString *templateCodeSegmentTitle = nil;
-    if (self.textViewEditable) {
-        scriptCodeSegmentTitle = NSLocalizedString(@"Code", @"");
-        templateCodeSegmentTitle = NSLocalizedString(@"Edit", @"");
+    if (self.resourceEditable) {
+        templateCodeSegmentTitle = NSLocalizedString(@"Edit Template", @"");
     } else {
-        scriptCodeSegmentTitle = NSLocalizedString(@"Code", @"");
         templateCodeSegmentTitle = NSLocalizedString(@"Template", @"");
         
     }
     
-    [codeSegmentedControl setLabel:scriptCodeSegmentTitle forSegment:kMGSScriptCodeSegmentIndex];
     [codeSegmentedControl setLabel:templateCodeSegmentTitle forSegment:kMGSTemplateCodeSegmentIndex];
     [codeSegmentedControl setNeedsDisplay];
+    
+    NSTabView *tabView = tabBar.tabView;
+    NSTabViewItem *tabItem = [tabView tabViewItemAtIndex:1];
+    tabItem.label = templateCodeSegmentTitle;
 }
 #pragma mark -
 #pragma mark Syntax management

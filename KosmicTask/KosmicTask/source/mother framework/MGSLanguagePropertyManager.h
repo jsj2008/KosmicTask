@@ -67,6 +67,7 @@ extern NSString * const MGSNoteKeyLanguageProperty;
 #define MGS_LP_InputArgumentName @"InputArgumentName"
 #define MGS_LP_InputArgumentCase @"InputArgumentCase"
 #define MGS_LP_InputArgumentStyle @"InputArgumentStyle"
+#define MGS_LP_InputArgumentPrefix @"InputArgumentPrefix"
 
 #define MGS_LP_Resource_ID 0
 #define MGS_LP_PropertyResource_ID 1

@@ -10,6 +10,12 @@
 #import <MGSFragaria/MGSFragaria.h>
 #import "MGSScript.h"
 #import "MGSLanguagePluginController.h"
+#import <PSMTabBarControl/PSMTabBarControl.h>
+#import <PSMTabBarControl/PSMTabStyle.h>
+#import "MGSTabViewItemModel.h"
+#import "MGSKosmicCardTabStyle.h"
+#import "MGSKosmicUnityTabStyle2.h"
+#import "MGSBorderView.h"
 
 char MGSFunctionNameContext;
 
@@ -18,9 +24,11 @@ char MGSFunctionNameContext;
 - (void)closeSheet:(NSInteger)returnCode;
 - (void)generateFunctionCodeString;
 - (void)copySelectionToPasteBoard;
+- (void)configureTabBar;
 
 @property (copy, readwrite) NSArray *scriptTypes;
 @property MGSLanguageCodeDescriptor *languageCodeDescriptor;
+@property BOOL showInfoTextImage;
 
 @end
 
@@ -30,6 +38,8 @@ char MGSFunctionNameContext;
 @synthesize scriptType = _scriptType;
 @synthesize languageCodeDescriptor = _languageCodeDescriptor;
 @synthesize script = _script;
+@synthesize showInfoTextImage = _showInfoTextImage;
+@synthesize infoText = _infoText;
 
 /*
  
@@ -89,9 +99,6 @@ char MGSFunctionNameContext;
     [_argumentCasePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.functionArgumentCase" options:nil];
     [_argumentStylePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.functionArgumentStyle" options:nil];
     
-    // bind the segmented control
-    [_codeSegmentedControl bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.descriptorCodeStyle" options:nil];
-    
     // add observers
     [self addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSFunctionNameContext];
     [self addObserver:self forKeyPath:@"languageCodeDescriptor.functionArgumentName" options:0 context:&MGSFunctionNameContext];
@@ -100,8 +107,80 @@ char MGSFunctionNameContext;
     [self addObserver:self forKeyPath:@"languageCodeDescriptor.descriptorCodeStyle" options:0 context:&MGSFunctionNameContext];
     
     [self generateFunctionCodeString];
+    
+    // configure tab bar
+    [self configureTabBar];
+    
 }
 
+#pragma mark -
+#pragma mark TabBar configuration and delegate methods
+
+/*
+ 
+ - configureTabBar
+ 
+ */
+- (void)configureTabBar
+{
+    [[tabBar class] registerTabStyleClass:[MGSKosmicUnityTabStyle2 class]];
+    [[tabBar class] registerTabStyleClass:[MGSKosmicCardTabStyle class]];
+    
+    // we don't host our views in an NSTabView instance but tabBar requires one
+    NSTabView *tabView = [[NSTabView alloc] initWithFrame:_fragariaHostView.frame];
+    tabView.delegate = (id)tabBar;
+    tabBar.tabView = tabView;
+    
+    // remove any tabs present in the nib
+    for (NSTabViewItem *item in [tabView tabViewItems]) {
+		[tabView removeTabViewItem:item];
+	}
+    
+    // configure tab bar
+	MGSTabViewItemModel *newModel = [[MGSTabViewItemModel alloc] init];
+	NSTabViewItem *newItem = [(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:newModel];
+	[newItem setLabel:@"Task Inputs"];
+	[tabBar.tabView addTabViewItem:newItem];
+    
+    newModel = [[MGSTabViewItemModel alloc] init];
+	newItem = [(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:newModel];
+	[newItem setLabel:@"Task Body"];
+	[tabBar.tabView addTabViewItem:newItem];
+    
+    [tabBar setStyleNamed:[MGSKosmicUnityTabStyle2 name]];
+    [tabBar setDisableTabClose:YES];
+    [tabBar setCellMinWidth:80];
+    [tabBar setCellOptimumWidth:100];
+    
+    if (NO) {
+        NSView *borderView = _fragariaHostView.superview;
+        NSRect borderFrame = [borderView frame];
+        NSRect tabFrame = [tabBar frame];
+        CGFloat gutterWidth = [[NSUserDefaults standardUserDefaults] floatForKey:MGSFragariaPrefsGutterWidth];
+        
+        tabFrame.size.width = borderFrame.size.width - gutterWidth;
+        tabFrame.origin.x =  borderFrame.origin.x + gutterWidth;
+        [tabBar setFrame:tabFrame];
+    }
+
+    _borderView.borderFlags = (kMGSBorderViewTop | kMGSBorderViewBottom );
+}
+
+/*
+ 
+ - tabView:didSelectTabViewItem:
+ 
+ */
+- (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
+{
+    NSInteger tabIndex = [aTabView indexOfTabViewItem:tabViewItem];
+    
+    if (tabIndex == 0) {
+        self.languageCodeDescriptor.descriptorCodeStyle = 0;
+    } else {
+        self.languageCodeDescriptor.descriptorCodeStyle = 1;
+    }
+}
 #pragma mark -
 #pragma mark Accessors
 
@@ -114,6 +193,23 @@ char MGSFunctionNameContext;
 {
     _script = script;
     self.scriptType = [_script scriptType];
+}
+
+/*
+ 
+ - setInfoText:
+ 
+ */
+- (void)setInfoText:(NSString *)infoText
+{
+    infoText = [infoText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    _infoText =  infoText;
+    
+    if ([_infoText length] > 0) {
+        self.showInfoTextImage = YES;
+    } else {
+        self.showInfoTextImage = NO;
+    }
 }
 #pragma mark -
 #pragma mark KVO

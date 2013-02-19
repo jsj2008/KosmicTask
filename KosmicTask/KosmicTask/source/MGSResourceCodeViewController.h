@@ -12,6 +12,7 @@
 @class MGSFragaria;
 @class MGSLanguageTemplateResource;
 @class MGSScript;
+@class PSMTabBarControl;
 
 enum {
     kMGSScriptCodeSegmentIndex = 0,
@@ -34,6 +35,7 @@ typedef NSUInteger MGSCodeSegmentIndex;
     IBOutlet id delegate;
     BOOL textViewEditable;
     BOOL textEditable;
+    IBOutlet PSMTabBarControl *tabBar;
 }
 
 @property BOOL editable;

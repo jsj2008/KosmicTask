@@ -12,6 +12,8 @@
 @class MGSFragaria;
 @class MGSLanguageCodeDescriptor;
 @class MGSScript;
+@class PSMTabBarControl;
+@class MGSBorderView;
 
 enum {
   kMGSCodeAssistantSheetReturnOk,
@@ -29,17 +31,20 @@ typedef NSInteger MGSCodeAssistantSheetReturnValue;
     IBOutlet NSPopUpButton *_argumentNamePopupButton;
     IBOutlet NSPopUpButton *_argumentCasePopupButton;
     IBOutlet NSPopUpButton *_argumentStylePopupButton;
-    IBOutlet NSSegmentedControl *_codeSegmentedControl;
     IBOutlet NSTextField *_runConfigurationTextField;
+    IBOutlet PSMTabBarControl *tabBar;
     
     MGSLanguageCodeDescriptor *_languageCodeDescriptor;
     
     MGSScript *_script;
     MGSFragaria *_fragaria;
+    IBOutlet MGSBorderView *_borderView;
 	IBOutlet NSView *_fragariaHostView; // fragria host view
 	NSTextView *_fragariaTextView;
     NSArray *_scriptTypes;
     NSString *_scriptType;
+    BOOL _showInfoTextImage;
+    NSString *_infoText;
 }
 
 - (IBAction)ok:(id)sender;
@@ -52,5 +57,5 @@ typedef NSInteger MGSCodeAssistantSheetReturnValue;
 @property (copy, readonly) NSArray *scriptTypes;
 @property (copy) NSString *scriptType;
 @property MGSScript *script;
-
+@property (copy) NSString *infoText;
 @end
