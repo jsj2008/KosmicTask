@@ -3,4 +3,4 @@
 # Insert task code here
 
 # Return result
-echo {{#task-result?}}${{.}}{{^}}"{{task-result-message}}"{{/}}
+echo {{#task-result?}}"${{.}}"{{^}}"{{task-result-message}}"{{/}}
