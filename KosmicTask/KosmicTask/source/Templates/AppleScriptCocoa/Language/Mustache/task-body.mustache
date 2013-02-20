@@ -1,13 +1,19 @@
-(*
+property taskController : class "KosmicTaskController"
 
-{{task-function-name}}
+script {{ task-class-name }}
+	property parent : class "NSObject"    
+    (*
 
-*)
-{{>task-function}}
+    Task entry point
 
-	-- Insert task code here
+    *)
+    {{>task-function}}
 
-	-- Return result
-	return {{#task-result?}}{{.}}{{^}}"{{task-result-message}}"{{/}}
+        -- Insert task code here
 
-end {{task-function-name}}
+        -- Return result
+        return {{#task-result?}}{{.}}{{^}}"{{task-result-message}}"{{/}}
+
+    end {{task-function-name}}
+
+end script

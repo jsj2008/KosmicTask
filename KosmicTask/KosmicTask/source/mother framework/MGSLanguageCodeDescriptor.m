@@ -132,11 +132,13 @@ char MGSScriptTypeContext;
         // look for function template
         NSString *templateName = [self.scriptLanguage taskFunctionCodeTemplateName:nil];
         
-        // if no function template available then use input variables template
-        if (![self templateNameExists:templateName]) {
-            templateName = [self.scriptLanguage taskInputVariablesCodeTemplateName:nil];
+        // if no function template available then use input variables 
+        if (![self templateNameExists:templateName]) {            
+            NSMutableDictionary *templateVariables = [self templateVariables];
+            codeString = [templateVariables objectForKey:@"task-input-variables"];
+        } else {
+            codeString = [self generateCodeStringFromTemplateName:templateName];
         }
-        codeString = [self generateCodeStringFromTemplateName:templateName];
     }
     
     return codeString;
@@ -224,13 +226,15 @@ char MGSScriptTypeContext;
     NSString *taskInputsString = [self normalisedParameterNamesString];    
     NSString *functionName = @"";
     NSString *taskResult = nil;
-    
+    NSString *runClassName = nil;
+    NSString *taskEntryMessage = NSLocalizedString(@"Task entry point", @"Task entry point message");
     NSDictionary *codeProperties = [self.scriptLanguage codeProperties];
     NSString *inputStyle = [codeProperties objectForKey:MGSInputStyle];
     if ([inputStyle isEqualToString:@"function"]) {
         
         // format task inputs for function input style
         functionName = self.script.subroutine;
+        runClassName = self.script.runClass;
         
     }  else if ([inputStyle isEqualToString:@"variable"]) {
         
@@ -249,7 +253,9 @@ char MGSScriptTypeContext;
     if (taskInputs) [templateVariables setObject:taskInputs forKey:@"task-inputs"];
     if (taskInputsString) [templateVariables setObject:taskInputsString forKey:@"task-input-variables"];
     if (functionName) [templateVariables setObject:functionName forKey:@"task-function-name"];
+    if (runClassName) [templateVariables setObject:runClassName forKey:@"task-class-name"];
     if (taskResult) [templateVariables setObject:taskResult forKey:@"task-result?"];
+    if (taskEntryMessage) [templateVariables setObject:taskEntryMessage forKey:@"task-entry-message"];
 
     return templateVariables;
 }

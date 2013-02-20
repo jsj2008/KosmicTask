@@ -31,5 +31,5 @@
 	}
 	
 	return self;
-}		
+}
 @end

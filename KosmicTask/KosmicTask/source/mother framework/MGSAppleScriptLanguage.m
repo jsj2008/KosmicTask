@@ -58,17 +58,4 @@
 	return self;
 }
 
-#pragma mark -
-#pragma mark Code generation
-
-
-/*
- 
- - codeProperties
- 
- */
-- (NSDictionary *)codeProperties
-{
-    return @{MGSInputStyle:@"function"};
-}
 @end

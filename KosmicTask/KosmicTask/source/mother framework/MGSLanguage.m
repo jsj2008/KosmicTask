@@ -461,7 +461,18 @@ initInputArgumentPrefix;
  */
 - (NSDictionary *)codeProperties
 {
-    return @{};
+    NSMutableDictionary *codeProps = [NSMutableDictionary dictionaryWithCapacity:2];
+    
+    // do we pass inputs as variables or via a function
+    NSString *inputStyle = nil;
+    if (initExecutorProcessType == kMGSInProcess) {
+       inputStyle = @"function";
+    } else {
+       inputStyle = @"variable"; 
+    }
+    [codeProps setObject:inputStyle forKey:MGSInputStyle];
+     
+    return codeProps;
 }
 
 /*
