@@ -25,6 +25,7 @@ char MGSScriptTypeContext;
 - (NSString *)generateCodeStringFromTemplateName:(NSString *)template;
 - (void)updateLanguageProperties;
 - (GRMustacheTemplate *)templateName:(NSString *)name  error:(NSError **)error;
+- (NSString *)templateErrorString:(NSError *)error;
 
 @property (assign) MGSLanguage *scriptLanguage;
 @end
@@ -154,8 +155,15 @@ char MGSScriptTypeContext;
     NSString *codeString = nil;
     
     if (self.scriptLanguage) {
-        NSString *codeTemplate = [self.scriptLanguage taskFunctionCodeTemplateName:nil];
-        codeString = [self generateCodeStringFromTemplateName:codeTemplate];
+        
+        NSDictionary *codeProperties = [self.scriptLanguage codeProperties];
+        NSString *inputStyle = [codeProperties objectForKey:MGSInputStyle];
+        
+        // script must support function inputs
+        if ([inputStyle isEqualToString:@"function"]) {
+            NSString *codeTemplate = [self.scriptLanguage taskFunctionCodeTemplateName:nil];
+            codeString = [self generateCodeStringFromTemplateName:codeTemplate];
+        }
     }
     
     return codeString;
@@ -210,6 +218,9 @@ char MGSScriptTypeContext;
     if (templateVariables) {
         NSError *error = nil;
         codeString = [self processTemplateName:name object:templateVariables error:&error];
+        if (error) {
+            codeString = [self templateErrorString:error];
+        }
     }
 
     return codeString;
@@ -224,7 +235,7 @@ char MGSScriptTypeContext;
 {
     NSArray *taskInputs = [self normalisedParameterNames:@{@"index":@(NO)}];
     NSString *taskInputsString = [self normalisedParameterNamesString];    
-    NSString *functionName = @"";
+    NSString *functionName = nil;
     NSString *taskResult = nil;
     NSString *runClassName = nil;
     NSString *taskEntryMessage = NSLocalizedString(@"Task entry point", @"Task entry point message");
@@ -258,6 +269,23 @@ char MGSScriptTypeContext;
     if (taskEntryMessage) [templateVariables setObject:taskEntryMessage forKey:@"task-entry-message"];
 
     return templateVariables;
+}
+
+#pragma mark -
+#pragma mark Error Handling
+
+/*
+ 
+ - templateErrorString:
+ 
+ */
+- (NSString *)templateErrorString:(NSError *)error
+{
+    NSString *string = @"";
+    if (error) {
+        string = [NSString stringWithFormat:@"Template error : %@", [error  localizedDescription]];
+    }
+    return string;
 }
 
 #pragma mark -
@@ -305,7 +333,10 @@ char MGSScriptTypeContext;
             
             NSError *error = nil;
             normalisedName = [self processTemplateName:templateName object:variables error:&error];
-            
+            if (error) {
+                normalisedName = [self templateErrorString:error];
+            }
+
             if (normalisedName) {
                 [normalisedNames replaceObjectAtIndex:idx withObject:normalisedName];
             }
@@ -339,6 +370,9 @@ char MGSScriptTypeContext;
 
                 // format input using template
                 parameterName = [self processTemplateName:inputTemplateName object:@{@"task-input":parameterName, @"task-input-id?":@(identifier)} error:&error];
+                if (error) {
+                    parameterName = [self templateErrorString:error];
+                }
                 
                 // re normalise using the parameter name but don't do case processing
                 // this time around
@@ -393,6 +427,9 @@ char MGSScriptTypeContext;
     if (taskInputs) [templateVariables setObject:taskInputs forKey:@"task-inputs"];
     
     NSString *nameString = [self processTemplateName:templateName object:templateVariables error:&error];
+    if (error) {
+        nameString = [self templateErrorString:error];
+    }
 
  /*
 */

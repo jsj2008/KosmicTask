@@ -215,6 +215,9 @@
             output = [GRMustacheTemplate renderObject:variables
                                    fromString:template
                                         error:&error];
+            if (error) {
+                output = [NSString stringWithFormat:@"Template error: %@", [error localizedDescription]];
+            }
         }
             break;
     }
