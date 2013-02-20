@@ -265,7 +265,7 @@ char MGSScriptTypeContext;
     if (taskInputsString) [templateVariables setObject:taskInputsString forKey:@"task-input-variables"];
     if (functionName) [templateVariables setObject:functionName forKey:@"task-function-name"];
     if (runClassName) [templateVariables setObject:runClassName forKey:@"task-class-name"];
-    if (taskResult) [templateVariables setObject:taskResult forKey:@"task-result?"];
+    if (taskResult) [templateVariables setObject:taskResult forKey:@"task-result"];
     if (taskEntryMessage) [templateVariables setObject:taskEntryMessage forKey:@"task-entry-message"];
 
     return templateVariables;
@@ -329,7 +329,7 @@ char MGSScriptTypeContext;
         for (NSUInteger idx = 0; idx < [normalisedNames count]; idx++) {
             NSString *normalisedName = [normalisedNames objectAtIndex:idx];
             
-            NSDictionary *variables = @{@"task-input":normalisedName, @"task-input-index-1-based?":@(idx+1), @"task-input-index-0-based?":@(idx)};
+            NSDictionary *variables = @{@"task-input":normalisedName, @"task-input-index":@(idx+1), @"task-input-index-0":@(idx)};
             
             NSError *error = nil;
             normalisedName = [self processTemplateName:templateName object:variables error:&error];
@@ -369,7 +369,7 @@ char MGSScriptTypeContext;
                 NSError *error = nil;
 
                 // format input using template
-                parameterName = [self processTemplateName:inputTemplateName object:@{@"task-input":parameterName, @"task-input-id?":@(identifier)} error:&error];
+                parameterName = [self processTemplateName:inputTemplateName object:@{@"task-input":parameterName, @"task-input-id":@(identifier)} error:&error];
                 if (error) {
                     parameterName = [self templateErrorString:error];
                 }
@@ -408,7 +408,7 @@ char MGSScriptTypeContext;
             [taskInputDict setObject:taskInput forKey:@"task-input"];
             
             if (idx == [taskInputsList count] - 1) {
-                [taskInputDict setObject:@(YES) forKey:@"last-item?"];
+                [taskInputDict setObject:@(YES) forKey:@"last-item"];
             }
             [taskInputs addObject:taskInputDict];
             

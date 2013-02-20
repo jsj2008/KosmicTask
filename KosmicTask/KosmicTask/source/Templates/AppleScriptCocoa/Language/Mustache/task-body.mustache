@@ -12,7 +12,7 @@ script {{ task-class-name }}
         -- Insert task code here
 
         -- Return result
-        return {{#task-result?}}{{.}}{{^}}"{{task-result-message}}"{{/}}
+        return {{#task-result}}{{.}}{{^}}"{{task-result-message}}"{{/}}
 
     end {{task-function-name}}
 
