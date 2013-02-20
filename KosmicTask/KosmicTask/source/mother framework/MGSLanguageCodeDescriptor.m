@@ -354,7 +354,7 @@ char MGSScriptTypeContext;
 {
     // get dictionary of object indexes
     NSDictionary *indexDict = [parameterNames mgs_objectIndexes];
-    NSString *inputTemplateName = [self.scriptLanguage taskInputCodeTemplateName:nil];
+    NSString *inputTemplateName = [self.scriptLanguage taskInputNameCodeTemplateName:nil];
     
     // make the names unique by adding an integer identifier if name non unique
     for (NSString *key in [indexDict allKeys]) {
