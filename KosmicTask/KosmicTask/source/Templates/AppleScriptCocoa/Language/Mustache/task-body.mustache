@@ -1,18 +1,19 @@
 property taskController : class "KosmicTaskController"
 
 script {{ task-class-name }}
-	property parent : class "NSObject"    
-    (*
+	property parent : class "NSObject"
+	(*
 
-    Task entry point
+	{{ task-entry-message }}
 
-    *)
-    {{>task-function}}
+	*)
+	{{>task-function}}
 
-        -- Insert task code here
-
-        -- Return result
-        return {{#task-result}}{{.}}{{^}}"{{task-result-message}}"{{/}}
+		-- {{ task-form-result-message }}
+		set taskResult to "{{ task-default-result }}"
+		
+		-- {{ task-return-result-message }}
+        return taskResult
 
     end {{task-function-name}}
 

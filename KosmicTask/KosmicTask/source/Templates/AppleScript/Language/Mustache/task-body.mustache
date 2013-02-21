@@ -1,13 +1,14 @@
 (*
 
-{{task-function-name}}
+{{ task-function-name }}
 
 *)
-{{>task-function}}
+{{> task-function }}
 
-	-- Insert task code here
+	-- {{ task-form-result-message }}
+	set taskResult to "{{ task-default-result }}"
+	
+	-- {{ task-return-result-message }}
+	return taskResult
 
-	-- Return result
-	return {{#task-result}}{{.}}{{^}}"{{task-result-message}}"{{/}}
-
-end {{task-function-name}}
+end {{ task-function-name }}

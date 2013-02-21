@@ -1,6 +1,7 @@
 {{task-input-variables}}
 
-# Insert task code here
+# {{ task-form-result-message }}
+RESULT="{{ task-default-result }}"
 
-# Return result
-echo {{#task-result}}"${{.}}"{{^}}"{{task-result-message}}"{{/}}
+# {{ task-return-result-message }}
+echo "$RESULT"

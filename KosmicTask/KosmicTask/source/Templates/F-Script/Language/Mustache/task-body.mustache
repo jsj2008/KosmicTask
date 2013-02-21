@@ -5,8 +5,9 @@
 "
 {{>task-function}}
 
-	" Insert task code here "
-
-	" Return result "
-	'Task result'.
+	" {{ task-form-result-message }} "
+	taskResult := '{{ task-default-result }}'.
+	
+	" {{ task-return-result-message }} "
+	taskResult.
 ]

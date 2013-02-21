@@ -1,17 +1,19 @@
 class {{ task-class-name }}
 { 
-    /*
+	/*
 
-    {{ task-entry-message }}
+	{{ task-entry-message }}
 
-    */	
-    public static void main(String args[])
-    {
-        {{task-input-variables}}
+	*/
+	public static void main(String args[])
+	{
 
-        // Insert task code here 
+{{ task-input-variables }}
 
-        // Return result
-        System.out.println("result");
-    }
+		// {{ task-form-result-message }}
+		String taskResult = "{{ task-default-result }}";
+		
+		// {{ task-return-result-message }}
+		System.out.println(taskResult);
+	}
 }

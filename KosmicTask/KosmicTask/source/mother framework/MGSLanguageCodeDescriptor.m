@@ -26,6 +26,7 @@ char MGSScriptTypeContext;
 - (void)updateLanguageProperties;
 - (GRMustacheTemplate *)templateName:(NSString *)name  error:(NSError **)error;
 - (NSString *)templateErrorString:(NSError *)error;
+- (id)normalizeTemplateVariable:(id)inputObject;
 
 @property (assign) MGSLanguage *scriptLanguage;
 @end
@@ -239,16 +240,25 @@ char MGSScriptTypeContext;
     NSString *taskResult = nil;
     NSString *runClassName = nil;
     NSString *taskEntryMessage = NSLocalizedString(@"Task entry point", @"Task entry point message");
+    NSString *taskCodeMessage = NSLocalizedString(@"Enter task code here", @"Task code message");
+    NSString *taskReturnResultMessage = NSLocalizedString(@"Return task result", @"Task return result message");
+    NSString *taskFormResultMessage = NSLocalizedString(@"Form task result", @"Task form result message");
+    NSString *taskDefaultResult = NSLocalizedString(@"default task result", @"Task default result");
+    
     NSDictionary *codeProperties = [self.scriptLanguage codeProperties];
     NSString *inputStyle = [codeProperties objectForKey:MGSInputStyle];
     if ([inputStyle isEqualToString:@"function"]) {
         
         // format task inputs for function input style
         functionName = self.script.subroutine;
-        runClassName = self.script.runClass;
         
     }  else if ([inputStyle isEqualToString:@"variable"]) {
         
+    }
+
+    runClassName = self.script.runClass;
+    if ([runClassName length] == 0) {
+        runClassName = nil;
     }
     
     if ([taskInputs count] > 0) {
@@ -258,19 +268,65 @@ char MGSScriptTypeContext;
     // prepare template variables
     if ([taskInputs count] == 0) {
         taskInputs = nil;
+    } else {
+        taskInputs = [self normalizeTemplateVariable:taskInputs];
     }
-    NSMutableDictionary *templateVariables = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                              @"Task result", @"task-result-message", nil];
+    NSMutableDictionary *templateVariables = [NSMutableDictionary dictionaryWithCapacity:15];
     if (taskInputs) [templateVariables setObject:taskInputs forKey:@"task-inputs"];
     if (taskInputsString) [templateVariables setObject:taskInputsString forKey:@"task-input-variables"];
     if (functionName) [templateVariables setObject:functionName forKey:@"task-function-name"];
     if (runClassName) [templateVariables setObject:runClassName forKey:@"task-class-name"];
     if (taskResult) [templateVariables setObject:taskResult forKey:@"task-result"];
     if (taskEntryMessage) [templateVariables setObject:taskEntryMessage forKey:@"task-entry-message"];
+    if (taskCodeMessage) [templateVariables setObject:taskCodeMessage forKey:@"task-code-message"];
+    if (taskReturnResultMessage) [templateVariables setObject:taskReturnResultMessage forKey:@"task-return-result-message"];
+    if (taskFormResultMessage) [templateVariables setObject:taskFormResultMessage forKey:@"task-form-result-message"];
+    if (taskDefaultResult) [templateVariables setObject:taskDefaultResult forKey:@"task-default-result"];
 
     return templateVariables;
 }
 
+#pragma mark
+#pragma mark Template variable normalization
+/*
+ 
+ - normalizeTemplateVariable:
+ 
+ */
+- (id)normalizeTemplateVariable:(id)inputObject
+{
+    id outputObject = nil;
+    
+    if ([inputObject isKindOfClass:[NSArray class]]) {
+        
+        NSArray *inputArray = inputObject;
+        NSMutableArray *outputArray = [NSMutableArray arrayWithCapacity:[inputArray count]];
+        for (NSUInteger i = 0; i < [inputArray count]; i++) {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+            [dict setObject:[inputArray objectAtIndex:i] forKey:@"name"];
+            [dict setObject:@(i) forKey:@"index-0"];
+            [dict setObject:@(i+1) forKey:@"index-1"];
+            if ((i + 1) % 2 == 0) {
+                [dict setObject:@"yes" forKey:@"even"];
+            } else {
+                [dict setObject:@"yes" forKey:@"odd"];
+            }
+            if (i == 0) {
+                [dict setObject:@"yes" forKey:@"first"];
+            }
+            if (i == ([inputArray count] - 1)) {
+                [dict setObject:@"yes" forKey:@"last"];
+            }
+            [outputArray addObject:dict];
+        }
+        
+        outputObject = outputArray;
+    } else {
+        outputObject = inputObject;
+    }
+         
+    return outputObject;
+}
 #pragma mark -
 #pragma mark Error Handling
 
@@ -329,7 +385,7 @@ char MGSScriptTypeContext;
         for (NSUInteger idx = 0; idx < [normalisedNames count]; idx++) {
             NSString *normalisedName = [normalisedNames objectAtIndex:idx];
             
-            NSDictionary *variables = @{@"task-input":normalisedName, @"task-input-index":@(idx+1), @"task-input-index-0":@(idx)};
+            NSDictionary *variables = @{@"name":normalisedName, @"index-1":@(idx+1), @"index-0":@(idx)};
             
             NSError *error = nil;
             normalisedName = [self processTemplateName:templateName object:variables error:&error];
@@ -369,7 +425,7 @@ char MGSScriptTypeContext;
                 NSError *error = nil;
 
                 // format input using template
-                parameterName = [self processTemplateName:inputTemplateName object:@{@"task-input":parameterName, @"task-input-id":@(identifier)} error:&error];
+                parameterName = [self processTemplateName:inputTemplateName object:@{@"name":parameterName, @"index-1":@(identifier)} error:&error];
                 if (error) {
                     parameterName = [self templateErrorString:error];
                 }
@@ -401,28 +457,20 @@ char MGSScriptTypeContext;
     NSMutableArray *taskInputs = nil;
     
     if ([taskInputsList count] > 0) {
-        taskInputs = [NSMutableArray arrayWithCapacity:[taskInputsList count]];
-        for (NSUInteger idx = 0; idx < [taskInputsList count]; idx++) {
-            NSString *taskInput = [taskInputsList objectAtIndex:idx];
-            NSMutableDictionary *taskInputDict = [NSMutableDictionary dictionaryWithCapacity:2];
-            [taskInputDict setObject:taskInput forKey:@"task-input"];
-            
-            if (idx == [taskInputsList count] - 1) {
-                [taskInputDict setObject:@(YES) forKey:@"last-item"];
-            }
-            [taskInputs addObject:taskInputDict];
-            
-        }
+        taskInputs = [self normalizeTemplateVariable:taskInputsList];
     } else {
         taskInputsList = nil;
         
     }
     
     NSString *templateName = [self.scriptLanguage taskInputsCodeTemplateName:nil];
+    NSString *taskInputVariablesMessage = NSLocalizedString(@"Task input variables", @"Task input variables message");
+    NSString *taskInputsMissingMessage = NSLocalizedString(@"No task inputs defined", @"No task inputs defined message");
 
     NSError *error = nil;
-    NSMutableDictionary *templateVariables = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                              @"No task inputs defined", @"task-inputs-message", nil];
+    NSMutableDictionary *templateVariables = [NSMutableDictionary dictionaryWithCapacity:10];
+    if (taskInputVariablesMessage) [templateVariables setObject:taskInputVariablesMessage forKey:@"task-input-variables-message"];
+    if (taskInputsMissingMessage) [templateVariables setObject:taskInputsMissingMessage forKey:@"task-inputs-missing-message"];
     if (taskInputsList) [templateVariables setObject:taskInputsList forKey:@"task-inputs-list"];
     if (taskInputs) [templateVariables setObject:taskInputs forKey:@"task-inputs"];
     
@@ -430,22 +478,6 @@ char MGSScriptTypeContext;
     if (error) {
         nameString = [self templateErrorString:error];
     }
-
- /*
-*/
-/*
-    // apply template separator
-    for (NSUInteger idx = 0; idx < [taskInputsList count]; idx++) {
-        NSString *taskInput = [taskInputsList objectAtIndex:idx];
-        
-        // apply separator template too all inputs except the last one
-        if (idx < [taskInputsList count] - 1) {
-            taskInput = [self processTemplate:separatorTemplateName object:@{@"task-input":taskInput} error:NULL];
-         }
-        [nameString appendString:taskInput];
-
-    }
-*/
     
     return nameString;
 }
