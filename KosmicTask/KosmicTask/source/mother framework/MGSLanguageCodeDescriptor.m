@@ -311,7 +311,7 @@ char MGSScriptTypeContext;
     if (taskFormResultMessage) [templateVariables setObject:taskFormResultMessage forKey:@"task-form-result-message"];
     if (taskDefaultResult) [templateVariables setObject:taskDefaultResult forKey:@"task-default-result"];
     if (taskInputVariablesMessage) [templateVariables setObject:taskInputVariablesMessage forKey:@"task-input-variables-message"];
-    if (taskInputsMissingMessage) [templateVariables setObject:taskInputsMissingMessage forKey:@"task-inputs-undefined-message"];    
+    if (taskInputsMissingMessage) [templateVariables setObject:taskInputsMissingMessage forKey:@"task-inputs-undefined-message"];
 }
 
 /*

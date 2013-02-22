@@ -1,6 +1,6 @@
-	" {{ task-input-result-message }} "
+	" {{ task-form-result-message }} "
 	{{# task-inputs }}{{# first }}taskResult := {{/}}({{ name }} description){{^last}} ++ '\n' ++ {{/}}{{#last}}.{{/}} {{^}}taskResult := '{{ task-inputs-undefined-message }}'.
 	{{/}}
 	
-	" Return task result "
+	" {{ task-input-result-message}} "
 	taskResult.

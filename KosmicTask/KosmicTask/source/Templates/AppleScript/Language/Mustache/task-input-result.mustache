@@ -1,0 +1,5 @@
+		-- {{ task-form-result-message }}
+		set taskResult to {{# task-input-variables }}{ {{.}} }{{^}}"{{ task-inputs-undefined-message }}"{{/}} 
+	
+		-- {{ task-input-result-message }}
+		return taskResult

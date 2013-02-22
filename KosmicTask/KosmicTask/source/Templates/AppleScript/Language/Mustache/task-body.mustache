@@ -4,11 +4,15 @@
 
 *)
 {{> task-function }}
-
-	-- {{ task-form-result-message }}
-	set taskResult to "{{ task-default-result }}"
 	
-	-- {{ task-input-result-message }}
-	return taskResult
+	try
+	
+{{> task-input-result }}
 
+	on error errorMessage number errorNumber
+
+		return {kosmicError:errorMessage}
+
+	end try
+	
 end {{ task-function-name }}
