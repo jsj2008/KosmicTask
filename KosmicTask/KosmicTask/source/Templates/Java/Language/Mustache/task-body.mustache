@@ -8,12 +8,7 @@ class {{ task-class-name }}
 	public static void main(String args[])
 	{
 
-{{ task-input-variables }}
-
-		// {{ task-form-result-message }}
-		String taskResult = "{{ task-default-result }}";
-		
-		// {{ task-input-result-message }}
-		System.out.println(taskResult);
+{{ task-input-variables }}  
+{{> task-input-result }}  
 	}
 }
