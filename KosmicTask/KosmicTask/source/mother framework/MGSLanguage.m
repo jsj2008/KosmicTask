@@ -418,6 +418,19 @@ initInputArgumentPrefix;
     return @"task-input";
 }
 
+
+/*
+ 
+ - taskInputResultCodeTemplateName:
+ 
+ */
+- (NSString *)taskInputResultCodeTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    return @"task-input-result";
+}
+
 /*
  
  - taskInputsCodeTemplateName:

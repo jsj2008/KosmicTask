@@ -1,0 +1,4 @@
+	// {{ task-input-result-message }}
+	{{# task-inputs }}printf("%s\n", {{ name }});
+	{{^}}printf("{{ task-inputs-undefined-message }}\n");
+	{{/}}

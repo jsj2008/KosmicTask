@@ -27,6 +27,7 @@ char MGSScriptTypeContext;
 - (GRMustacheTemplate *)templateName:(NSString *)name  error:(NSError **)error;
 - (NSString *)templateErrorString:(NSError *)error;
 - (id)normalizeTemplateVariable:(id)inputObject;
+- (void)addTemplateVariableMessages:(NSMutableDictionary *)templateVariables;
 
 @property (assign) MGSLanguage *scriptLanguage;
 @end
@@ -227,6 +228,8 @@ char MGSScriptTypeContext;
     return codeString;
 }
 
+#pragma mark
+#pragma mark Template variables
 /*
  
  - templateVariables
@@ -234,17 +237,21 @@ char MGSScriptTypeContext;
  */
 - (NSMutableDictionary *)templateVariables
 {
-    NSArray *taskInputs = [self normalisedParameterNames:@{@"index":@(NO)}];
-    NSString *taskInputsString = [self normalisedParameterNamesString];    
-    NSString *functionName = nil;
-    NSString *taskResult = nil;
-    NSString *runClassName = nil;
-    NSString *taskEntryMessage = NSLocalizedString(@"Task entry point", @"Task entry point message");
-    NSString *taskCodeMessage = NSLocalizedString(@"Enter task code here", @"Task code message");
-    NSString *taskReturnResultMessage = NSLocalizedString(@"Return task result", @"Task return result message");
-    NSString *taskFormResultMessage = NSLocalizedString(@"Form task result", @"Task form result message");
-    NSString *taskDefaultResult = NSLocalizedString(@"default task result", @"Task default result");
+    NSError *error = nil;
     
+    // generate task inputs
+    NSArray *taskInputs = [self normalisedParameterNames:@{@"index":@(NO)}];
+    NSString *taskInputsString = [self normalisedParameterNamesString];
+    if ([taskInputs count] == 0) {
+        taskInputs = nil;
+    } else {
+        taskInputs = [self normalizeTemplateVariable:taskInputs];
+    }
+    
+    // query class properties
+    NSString *functionName = nil;
+    NSString *runClassName = nil;
+
     NSDictionary *codeProperties = [self.scriptLanguage codeProperties];
     NSString *inputStyle = [codeProperties objectForKey:MGSInputStyle];
     if ([inputStyle isEqualToString:@"function"]) {
@@ -261,33 +268,52 @@ char MGSScriptTypeContext;
         runClassName = nil;
     }
     
-    if ([taskInputs count] > 0) {
-        taskResult = [taskInputs objectAtIndex:0];
-    }
-    
-    // prepare template variables
-    if ([taskInputs count] == 0) {
-        taskInputs = nil;
-    } else {
-        taskInputs = [self normalizeTemplateVariable:taskInputs];
-    }
+    // define template variables
     NSMutableDictionary *templateVariables = [NSMutableDictionary dictionaryWithCapacity:15];
     if (taskInputs) [templateVariables setObject:taskInputs forKey:@"task-inputs"];
     if (taskInputsString) [templateVariables setObject:taskInputsString forKey:@"task-input-variables"];
     if (functionName) [templateVariables setObject:functionName forKey:@"task-function-name"];
     if (runClassName) [templateVariables setObject:runClassName forKey:@"task-class-name"];
-    if (taskResult) [templateVariables setObject:taskResult forKey:@"task-result"];
-    if (taskEntryMessage) [templateVariables setObject:taskEntryMessage forKey:@"task-entry-message"];
-    if (taskCodeMessage) [templateVariables setObject:taskCodeMessage forKey:@"task-code-message"];
-    if (taskReturnResultMessage) [templateVariables setObject:taskReturnResultMessage forKey:@"task-return-result-message"];
-    if (taskFormResultMessage) [templateVariables setObject:taskFormResultMessage forKey:@"task-form-result-message"];
-    if (taskDefaultResult) [templateVariables setObject:taskDefaultResult forKey:@"task-default-result"];
+    [self addTemplateVariableMessages:templateVariables];
 
+    // add task input result
+    NSString *templateName = [self.scriptLanguage taskInputResultCodeTemplateName:nil];
+    if ([self templateNameExists:templateName]) {
+        NSString *taskInputResult = [self processTemplateName:templateName object:templateVariables error:&error];
+        if (error) {
+            taskInputResult = [self templateErrorString:error];
+        }
+        if (taskInputResult) [templateVariables setObject:taskInputResult forKey:@"task-input-result"];
+
+    }
+    
     return templateVariables;
 }
 
-#pragma mark
-#pragma mark Template variable normalization
+/*
+ 
+ - addTemplateVariableMessages:
+ 
+ */
+- (void)addTemplateVariableMessages:(NSMutableDictionary *)templateVariables
+{
+    NSString *taskEntryMessage = NSLocalizedString(@"Task entry point", @"Task entry point message");
+    NSString *taskCodeMessage = NSLocalizedString(@"Enter task code here", @"Task code message");
+    NSString *taskInputResultMessage = NSLocalizedString(@"Return inputs as task result", @"Task input result message");
+    NSString *taskFormResultMessage = NSLocalizedString(@"Form task result", @"Task form result message");
+    NSString *taskDefaultResult = NSLocalizedString(@"Default task result", @"Task default result");
+    NSString *taskInputVariablesMessage = NSLocalizedString(@"Task input variables", @"Task input variables message");
+    NSString *taskInputsMissingMessage = NSLocalizedString(@"No task inputs defined", @"No task inputs defined message");
+
+    if (taskEntryMessage) [templateVariables setObject:taskEntryMessage forKey:@"task-entry-message"];
+    if (taskCodeMessage) [templateVariables setObject:taskCodeMessage forKey:@"task-code-message"];
+    if (taskInputResultMessage) [templateVariables setObject:taskInputResultMessage forKey:@"task-input-result-message"];
+    if (taskFormResultMessage) [templateVariables setObject:taskFormResultMessage forKey:@"task-form-result-message"];
+    if (taskDefaultResult) [templateVariables setObject:taskDefaultResult forKey:@"task-default-result"];
+    if (taskInputVariablesMessage) [templateVariables setObject:taskInputVariablesMessage forKey:@"task-input-variables-message"];
+    if (taskInputsMissingMessage) [templateVariables setObject:taskInputsMissingMessage forKey:@"task-inputs-undefined-message"];    
+}
+
 /*
  
  - normalizeTemplateVariable:
@@ -385,10 +411,15 @@ char MGSScriptTypeContext;
         for (NSUInteger idx = 0; idx < [normalisedNames count]; idx++) {
             NSString *normalisedName = [normalisedNames objectAtIndex:idx];
             
-            NSDictionary *variables = @{@"name":normalisedName, @"index-1":@(idx+1), @"index-0":@(idx)};
+            // build template variables
+            NSMutableDictionary *templateVariables = [NSMutableDictionary dictionaryWithCapacity:10];
+            [templateVariables setObject:normalisedName forKey:@"name"];
+            [templateVariables setObject:@(idx+1) forKey:@"index-1"];
+            [templateVariables setObject:@(idx) forKey:@"index-0"];
+            [self addTemplateVariableMessages:templateVariables];
             
             NSError *error = nil;
-            normalisedName = [self processTemplateName:templateName object:variables error:&error];
+            normalisedName = [self processTemplateName:templateName object:templateVariables error:&error];
             if (error) {
                 normalisedName = [self templateErrorString:error];
             }
@@ -424,8 +455,15 @@ char MGSScriptTypeContext;
                 NSString *parameterName = [parameterNames objectAtIndex:idx];
                 NSError *error = nil;
 
+                // build template variables
+                NSMutableDictionary *templateVariables = [NSMutableDictionary dictionaryWithCapacity:10];
+                [templateVariables setObject:parameterName forKey:@"name"];
+                [templateVariables setObject:@(identifier) forKey:@"index-1"];
+                [templateVariables setObject:@(identifier - 1) forKey:@"index-0"];
+                [self addTemplateVariableMessages:templateVariables];
+
                 // format input using template
-                parameterName = [self processTemplateName:inputTemplateName object:@{@"name":parameterName, @"index-1":@(identifier)} error:&error];
+                parameterName = [self processTemplateName:inputTemplateName object:templateVariables error:&error];
                 if (error) {
                     parameterName = [self templateErrorString:error];
                 }
@@ -458,21 +496,16 @@ char MGSScriptTypeContext;
     
     if ([taskInputsList count] > 0) {
         taskInputs = [self normalizeTemplateVariable:taskInputsList];
-    } else {
-        taskInputsList = nil;
-        
     }
     
     NSString *templateName = [self.scriptLanguage taskInputsCodeTemplateName:nil];
-    NSString *taskInputVariablesMessage = NSLocalizedString(@"Task input variables", @"Task input variables message");
-    NSString *taskInputsMissingMessage = NSLocalizedString(@"No task inputs defined", @"No task inputs defined message");
 
     NSError *error = nil;
+    
+    // build template variables
     NSMutableDictionary *templateVariables = [NSMutableDictionary dictionaryWithCapacity:10];
-    if (taskInputVariablesMessage) [templateVariables setObject:taskInputVariablesMessage forKey:@"task-input-variables-message"];
-    if (taskInputsMissingMessage) [templateVariables setObject:taskInputsMissingMessage forKey:@"task-inputs-missing-message"];
-    if (taskInputsList) [templateVariables setObject:taskInputsList forKey:@"task-inputs-list"];
     if (taskInputs) [templateVariables setObject:taskInputs forKey:@"task-inputs"];
+    [self addTemplateVariableMessages:templateVariables];
     
     NSString *nameString = [self processTemplateName:templateName object:templateVariables error:&error];
     if (error) {

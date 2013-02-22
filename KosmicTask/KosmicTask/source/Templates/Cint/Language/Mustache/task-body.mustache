@@ -3,13 +3,7 @@
 int main(int argc, char *argv[])
 {
 
-{{ task-input-variables }}
-
-	// {{ task-form-result-message }}
-	char *taskResult = "{{ task-default-result }}";
-    
-    // {{ task-return-result-message }}
-    printf("%s\n", taskResult);
-    
+{{ task-input-variables }}  
+{{> task-input-result }}    
     return 0;
 }
