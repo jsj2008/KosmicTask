@@ -1,6 +1,5 @@
-	" {{ task-form-result-message }} "
-	{{# task-inputs }}{{# first }}taskResult := {{/}}({{ name }} description){{^last}} ++ '\n' ++ {{/}}{{#last}}.{{/}} {{^}}taskResult := '{{ task-inputs-undefined-message }}'.
-	{{/}}
+{{tab}}" {{ task-form-result-message }} "
+{{# task-inputs }}{{# first }}{{tab}}taskResult := {{/}}({{ name }} description){{^last}} ++ '\n' ++ {{/}}{{#last}}.{{/}} {{^}}{{tab}}taskResult := '{{ task-inputs-undefined-message }}'.{{/}}
 	
-	" {{ task-input-result-message}} "
-	taskResult.
+{{tab}}" {{ task-input-result-message}} "
+{{tab}}taskResult.

@@ -1,4 +1,2 @@
-		// {{ task-input-result-message }}
-		{{#task-inputs}}System.out.println({{name}});
-		{{^}}System.out.println("{{ task-inputs-undefined-message }}");
-		{{/}}
+{{tab2}}// {{ task-input-result-message }}
+{{#task-inputs}}{{tab2}}System.out.println({{name}});{{^last}}{{eol}}{{/}}{{^}}{{tab2}}System.out.println("{{ task-inputs-undefined-message }}");{{/}}

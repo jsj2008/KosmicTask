@@ -1,4 +1,1 @@
-{{#task-inputs}}{{#first}}		// {{task-input-variables-message}} {{/}}{{/}}
-{{#task-inputs}}		{{name}}
-{{^}}		// {{task-inputs-undefined-message}}
-{{/}}
+{{#task-inputs}}{{#first}}{{tab2}}// {{task-input-variables-message}}{{eol}}{{/}}{{/}}{{#task-inputs}}{{tab2}}{{name}}{{^last}}{{eol}}{{/}}{{^}}{{tab2}}// {{task-inputs-undefined-message}}{{/}}

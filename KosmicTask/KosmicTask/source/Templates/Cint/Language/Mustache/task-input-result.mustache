@@ -1,4 +1,2 @@
-	// {{ task-input-result-message }}
-	{{# task-inputs }}printf("%s\n", {{ name }});
-	{{^}}printf("{{ task-inputs-undefined-message }}\n");
-	{{/}}
+{{tab}}// {{ task-input-result-message }}
+{{# task-inputs }}{{tab}}printf("%s\n", {{ name }});{{^last}}{{eol}}{{/}}{{^}}{{tab}}printf("{{ task-inputs-undefined-message }}\n");{{/}}

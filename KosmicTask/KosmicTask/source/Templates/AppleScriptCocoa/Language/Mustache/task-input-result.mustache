@@ -1,5 +1,5 @@
-			-- {{ task-form-result-message }}
-			set taskResult to {{# task-input-variables }}{ {{.}} }{{^}}"{{ task-inputs-undefined-message }}"{{/}}
+{{tab3}}-- {{ task-form-result-message }}
+{{tab3}}set taskResult to {{# task-input-variables }}{ {{.}} }{{^}}"{{ task-inputs-undefined-message }}"{{/}}
 	
-			-- {{ task-input-result-message }}
-			return taskResult
+{{tab3}}-- {{ task-input-result-message }}
+{{tab3}}return taskResult
