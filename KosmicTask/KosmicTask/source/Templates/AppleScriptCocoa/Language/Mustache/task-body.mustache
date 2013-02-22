@@ -7,14 +7,18 @@ script {{ task-class-name }}
 	{{ task-entry-message }}
 
 	*)
-	{{>task-function}}
+	{{> task-function }}
 
-		-- {{ task-form-result-message }}
-		set taskResult to "{{ task-default-result }}"
-		
-		-- {{ task-input-result-message }}
-        return taskResult
+		try
+	
+{{> task-input-result }}
 
-    end {{task-function-name}}
+		on error errorMessage number errorNumber
+
+			return {kosmicError:errorMessage}
+
+		end try
+
+    end {{ task-function-name }}
 
 end script

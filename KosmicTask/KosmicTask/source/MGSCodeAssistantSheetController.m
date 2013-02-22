@@ -139,12 +139,12 @@ char MGSFunctionNameContext;
     // configure tab bar
 	MGSTabViewItemModel *newModel = [[MGSTabViewItemModel alloc] init];
 	NSTabViewItem *newItem = [(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:newModel];
-	[newItem setLabel:@"Task Inputs"];
+	[newItem setLabel:@"Task Body"];
 	[tabBar.tabView addTabViewItem:newItem];
     
     newModel = [[MGSTabViewItemModel alloc] init];
 	newItem = [(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:newModel];
-	[newItem setLabel:@"Task Body"];
+	[newItem setLabel:@"Task Inputs"];
 	[tabBar.tabView addTabViewItem:newItem];
     
     [tabBar setStyleNamed:[MGSKosmicUnityTabStyle2 name]];
@@ -176,9 +176,9 @@ char MGSFunctionNameContext;
     NSInteger tabIndex = [aTabView indexOfTabViewItem:tabViewItem];
     
     if (tabIndex == 0) {
-        self.languageCodeDescriptor.descriptorCodeStyle = 0;
+        self.languageCodeDescriptor.descriptorCodeStyle = kMGSCodeDescriptorTaskBody;
     } else {
-        self.languageCodeDescriptor.descriptorCodeStyle = 1;
+        self.languageCodeDescriptor.descriptorCodeStyle = kMGSCodeDescriptorTaskInputs;
     }
 }
 #pragma mark -
