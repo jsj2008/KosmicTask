@@ -30,7 +30,7 @@
 {
 	MGSScriptParameter *parameter = [self newDict];
 	
-	[parameter setName:NSLocalizedString(@"Input", @"New input parameter name")];
+	[parameter setName:NSLocalizedString(@"Task Input", @"New input parameter name")];
 	[parameter setDescription:[self defaultDescription]];
 	
 	// set default plugin class name
