@@ -218,4 +218,5 @@ typedef NSInteger MGSBuildResultFlags;
 - (NSString *)taskInputVariablesCodeTemplateName:(NSDictionary *)taskInfo;
 - (NSString *)taskInputNameCodeTemplateName:(NSDictionary *)taskInfo;
 - (NSString *)taskInputResultCodeTemplateName:(NSDictionary *)taskInfo;
+- (NSString *)taskHeaderCodeTemplateName:(NSDictionary *)taskInfo;
 @end

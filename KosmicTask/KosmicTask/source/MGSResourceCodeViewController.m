@@ -285,6 +285,7 @@ char MGSTextViewEditableContext;
                 [templateVariables setObject:entryCodeString forKey:@"task-function"];
             }
             
+            /*
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setTimeStyle:kCFDateFormatterShortStyle];
             [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -296,6 +297,7 @@ char MGSTextViewEditableContext;
                                        date, @"date",
                                        nil];
             [templateVariables addEntriesFromDictionary:variables];
+            */
             
             if (segmentIndex == kMGSScriptCodeSegmentIndex) {
                 stringResource = [languageTemplateResource stringResourceWithVariables:templateVariables];

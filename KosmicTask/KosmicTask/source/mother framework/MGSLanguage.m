@@ -433,6 +433,18 @@ initInputArgumentPrefix;
 
 /*
  
+ - taskHeaderCodeTemplateName:
+ 
+ */
+- (NSString *)taskHeaderCodeTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    return @"task-header";
+}
+
+/*
+ 
  - taskInputsCodeTemplateName:
   
  */

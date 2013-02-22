@@ -276,7 +276,7 @@ char MGSScriptTypeContext;
     if (runClassName) [templateVariables setObject:runClassName forKey:@"task-class-name"];
     [self addDefaultTemplateVariables:templateVariables];
 
-    // add task input result
+    // add task input result key
     NSString *templateName = [self.scriptLanguage taskInputResultCodeTemplateName:nil];
     if ([self templateNameExists:templateName]) {
         NSString *taskInputResult = [self processTemplateName:templateName object:templateVariables error:&error];
@@ -286,7 +286,18 @@ char MGSScriptTypeContext;
         if (taskInputResult) [templateVariables setObject:taskInputResult forKey:@"task-input-result"];
 
     }
-    
+
+    // add task header key
+    templateName = [self.scriptLanguage taskHeaderCodeTemplateName:nil];
+    if ([self templateNameExists:templateName]) {
+        NSString *taskHeader = [self processTemplateName:templateName object:templateVariables error:&error];
+        if (error) {
+            taskHeader = [self templateErrorString:error];
+        }
+        if (taskHeader) [templateVariables setObject:taskHeader forKey:@"task-header"];
+        
+    }
+
     return templateVariables;
 }
 
@@ -309,7 +320,14 @@ char MGSScriptTypeContext;
     NSString *taskTab = NSLocalizedString(@"\t", @"Task tab");
     NSString *taskTabX2 = NSLocalizedString(@"\t\t", @"Task tab x 2");
     NSString *taskTabX3 = NSLocalizedString(@"\t\t\t", @"Task tab x 3");
+    NSString *author = [MGSScript defaultAuthor];
+    NSString *script = self.script.scriptType;
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:kCFDateFormatterShortStyle];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    NSString *date = [dateFormatter stringFromDate:[NSDate date]];
+
     if (taskEntryMessage) [templateVariables setObject:taskEntryMessage forKey:@"task-entry-message"];
     if (taskCodeMessage) [templateVariables setObject:taskCodeMessage forKey:@"task-code-message"];
     if (taskInputResultMessage) [templateVariables setObject:taskInputResultMessage forKey:@"task-input-result-message"];
@@ -322,6 +340,10 @@ char MGSScriptTypeContext;
     if (taskTab) [templateVariables setObject:taskTab forKey:@"tab"];
     if (taskTabX2) [templateVariables setObject:taskTabX2 forKey:@"tab2"];
     if (taskTabX3) [templateVariables setObject:taskTabX3 forKey:@"tab3"];
+    if (author) [templateVariables setObject:author forKey:@"author"];
+    if (script) [templateVariables setObject:script forKey:@"script"];
+    if (date) [templateVariables setObject:date forKey:@"date"];
+    
 }
 
 /*
