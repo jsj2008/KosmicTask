@@ -1,0 +1,2 @@
+# {{ task-input-result-message }}
+{{# task-inputs }}echo "${{ name }}"{{^last}}{{eol}}{{/}}{{^}}echo "{{ task-inputs-undefined-message }}"{{/}}
