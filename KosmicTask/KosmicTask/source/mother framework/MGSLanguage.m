@@ -10,7 +10,7 @@
 #import "MGSLanguageProperty.h"
 
 NSString *MGSInputStyle = @"InputStyle";
-NSString *MGSLanguageCodeTemplateResourcePath = @"Language/Mustache";
+NSString *MGSLanguageCodeTemplateResourcePath = @"Mustache";
 
 #define MGS_PROP_COPY(METHOD) self.METHOD = copy.METHOD
 
