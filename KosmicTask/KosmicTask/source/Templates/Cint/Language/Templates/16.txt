@@ -1,21 +1,13 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits: 
-
-Notes:
-
-*/
+{{ task-header }}
 #include <iostream>
 #include <string>
 
 class KosmicTask {  
 	public:           
   	
-  	KosmicTask() { 
+  	KosmicTask(int argc, char *argv[]) { 
+ 
+{{ task-input-variables }}
   		
   		// define result
   		string result = "---\n";
@@ -67,7 +59,15 @@ class KosmicTask {
 
 };
  
+/*
+  	
+{{ task-entry-message }}
+  	
+*/
 int main(int argc, char *argv[]) 
 {
-	KosmicTask kosmic;
+	
+{{ task-input-variables }}
+		
+	KosmicTask *kosmic = new KosmicTask(argc, argv);
 }

@@ -1,18 +1,11 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/
+{{ task-header }}
 #include <stdio.h>
 
 int main() 
 {
+
+{{ task-input-variables }}
+
 	char *item1 = "item 1";
 	char *item2 = "item 2";
 	char *key1 = "key 1";

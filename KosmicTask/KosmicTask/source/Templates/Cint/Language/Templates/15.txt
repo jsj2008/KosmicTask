@@ -1,20 +1,13 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/
+{{ task-header }}
 #include <stdio.h>
 #include <unistd.h>
 
 int main() 
 {
-	// filnames buffer
+	
+{{ task-input-variables }}
+
+	// filenames buffer
 	char files[1000];
 	
 	// define command

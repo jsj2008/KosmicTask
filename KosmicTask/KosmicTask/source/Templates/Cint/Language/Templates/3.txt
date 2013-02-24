@@ -1,14 +1,4 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/ 
+{{ task-header }}
 #include <iostream.h>
 
 class Worker {  
@@ -32,7 +22,9 @@ class Worker1 {
 class KosmicTask {  
 	public:           
   	
-  	KosmicTask() { 
+  	KosmicTask(int argc, char *argv[]) { 
+
+{{ task-input-variables }}
   		
   		// dynamic
   		Worker *object = new Worker();
@@ -45,9 +37,17 @@ class KosmicTask {
 
 };
  
- 
+/*
+  	
+{{ task-entry-message }}
+  	
+*/
 int main(int argc, char *argv[]) 
 {
-	KosmicTask kosmic;
+	
+{{ task-input-variables }}
+		
+	KosmicTask *kosmic = new KosmicTask(argc, argv);
+
 }
 

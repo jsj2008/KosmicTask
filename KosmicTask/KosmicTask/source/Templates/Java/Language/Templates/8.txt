@@ -1,19 +1,17 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/
+{{ task-header }}
 import java.io.*;
-class kosmicTask
+class {{ task-class-name }}
 { 
+	/*
+	
+	{{ task-entry-message }}
+	
+	*/
 	public static void main(String args[]) throws Exception
     {
+    	
+{{ task-input-variables }}
+    	
     	// define result
     	String result = "";
     	

@@ -1,18 +1,12 @@
---
--- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
---
--- Credits:
---
--- Notes:  
---
+{{task-header}}
 
 (*
  
-kosmicTask
+{{ task-entry-message }}
 
 *)
-on KosmicTask()
-	
+{{ task-function }}
+
 	try
 		
 		-- define files list
@@ -53,6 +47,6 @@ on KosmicTask()
 		
 		return {kosmicError:errorMessage}
 		
-	end try
+	end try	
 	
-end KosmicTask
+end {{ task-function-name }}

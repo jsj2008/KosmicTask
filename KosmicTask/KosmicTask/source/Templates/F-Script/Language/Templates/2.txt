@@ -1,19 +1,6 @@
-"
+{{ task-header }}
+{{ task-function }}
 
-Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
+{{ task-input-result }}
 
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-"
-[:a :b |
-	
-	" concatenate our parameters "
-	result := 'task parameters are ' ++ a ++ ' and ' ++ b.
-	
-	" return our result "
-	result.
 ]

@@ -1,41 +1,31 @@
---
--- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
---
--- Credits: 
---
--- Notes: 
---
+{{task-header}}
 
 -- KosmicTask controller
 property taskController : class "KosmicTaskController"
 
-script KosmicTask
+script {{ task-class-name }}
 	property parent : class "NSObject"
 	
 	-- script properties
-	property myResult : missing value 
+	property taskResult : missing value 
 	
 	(*
  
-	kosmicTask
+	{{ task-entry-message }}
 	
 	*)
-	on KosmicTask(a, b)
+	{{ task-function }}
 	
 		try
 		
-			-- compute myResult
-			set myResult to {a, b}
-		
-			-- return result record
-			return {kosmicName:"Argument list", kosmicData:myResult}
-		
+{{ task-input-result }}
+				
 		on error errorMessage number errorNumber
 
 			return {kosmicError:errorMessage}
 
 		end try
 
-	end KosmicTask
+	end {{ task-function-name }}
 
 end script

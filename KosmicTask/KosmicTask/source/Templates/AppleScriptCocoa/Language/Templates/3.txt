@@ -1,10 +1,4 @@
---
--- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
---
--- Credits:
---
--- Notes: 
---
+{{task-header}}
 
 -- Cocoa system framework class
 property ABAddressBook : class "ABAddressBook"
@@ -12,15 +6,15 @@ property ABAddressBook : class "ABAddressBook"
 -- Cocoa enumerations and constants
 property kABFirstNameProperty : my kABFirstNameProperty
 
-script KosmicTask
+script {{ task-class-name }}
 	property parent : class "NSObject"
 	
 	(*
 	 
-	task entry point
+	{{ task-entry-message }}
 	
 	*)
-	on KosmicTask()
+	{{ task-function }}
 		
 		-- access the framework class
 		set thePerson to ABAddressBook's sharedAddressBook's |me|
@@ -29,6 +23,6 @@ script KosmicTask
 		-- return result
 		return myName
 		
-	end KosmicTask
+	end {{ task-function-name }}
 	
 end script

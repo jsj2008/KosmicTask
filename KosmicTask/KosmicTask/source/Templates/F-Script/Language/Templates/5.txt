@@ -1,15 +1,6 @@
-"
-
-Created by {{ author }} on {% now | date_format: 'dd MMM yyyy HH:mm:ss' %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-"
-[	
+{{ task-header }}
+{{ task-function }}
+	
 	" form our dictionary "
 	result := #{'key 1' -> 'item 1', 'key 2' ->'item 2'}.
 	

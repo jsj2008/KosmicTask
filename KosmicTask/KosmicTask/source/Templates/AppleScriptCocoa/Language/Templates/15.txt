@@ -1,10 +1,4 @@
---
--- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
---
--- Credits:
---
--- Notes: 
---
+{{task-header}}
 
 -- Cocoa classes
 property NSDictionary : class "NSDictionary"
@@ -13,7 +7,7 @@ property NSMutableDictionary : class "NSMutableDictionary"
 -- KosmicTask controller
 property taskController : class "KosmicTaskController"
 
-script KosmicTask
+script {{ task-class-name }}
 	property parent : class "NSObject"
 	
 	-- script properties
@@ -21,10 +15,10 @@ script KosmicTask
 	
 	(*
 	 
-	task entry point
+	{{ task-entry-message }}
 	
 	*)
-	on KosmicTask()
+	{{ task-function }}
 		
 		try
 			
@@ -52,6 +46,6 @@ script KosmicTask
 
 		end try
 
-	end KosmicTask
+	end {{ task-function-name }}
 		
 end script

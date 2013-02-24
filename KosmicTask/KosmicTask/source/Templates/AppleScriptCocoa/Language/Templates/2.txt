@@ -1,10 +1,4 @@
---
--- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
---
--- Credits:
---
--- Notes: 
---
+{{task-header}}
 
 -- KosmicTask controller
 property taskController : class "KosmicTaskController"
@@ -13,7 +7,7 @@ property taskController : class "KosmicTaskController"
 property NSApplication : class "NSApplication"
 property NSTimer : class "NSTimer"
 
-script KosmicTask
+script {{ task-class-name }}
 	property parent : class "NSObject"
 	
 	property delayRepeat : 3
@@ -22,10 +16,10 @@ script KosmicTask
 	
 	(*
 	
-	task entry point
+	{{ task-entry-message }}
 	
 	*)
-	on kosmicTask()
+	{{ task-function }}
 		
 		-- log timer started
 		taskController's log_("Timer started...")
@@ -36,7 +30,7 @@ script KosmicTask
 		-- keep our task running
 		taskController's keepTaskRunning()
 		
-	end kosmicTask
+	end {{ task-function-name }}
 	
 	(*
 	

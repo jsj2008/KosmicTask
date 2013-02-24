@@ -1,23 +1,20 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/
-
+{{ task-header }}
 import java.util.HashMap;
 import java.util.ArrayList;
 import com.mugginsoft.KosmicTaskController;
 
-class kosmicTask
+class {{ task-class-name }}
 { 
+	/*
+	
+	{{ task-entry-message }}
+	
+	*/
 	public static void main(String args[])
     {
+    	
+{{ task-input-variables }}
+    	
     	String name = "name";
     	String radius = "radius";
     	String satellites = "satellites";

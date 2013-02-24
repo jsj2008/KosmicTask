@@ -1,27 +1,29 @@
---
--- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
---
--- Credits:
---
--- Notes:  
---
+{{task-header}}
+
+(*
+
+{{ task-entry-message }}
+
+*)	
+on run { {{task-input-variables}} }	
 	
-try
+	try
+			
+		-- compute task result
+		set myResult to "Hello, kosmos!"
 		
-	-- compute task result
-	set myResult to "Hello, kosmos!"
-	
-	
-	-- send value to log
-	log "Goodbye, kosmos!"
-	
-	-- return result record
-	return {kosmicData:myResult}
 		
-on error errorMessage number errorNumber
-
-	return {kosmicError:errorMessage}
-
-end try
-
+		-- send value to log
+		log "Goodbye, kosmos!"
+		
+		-- return result record
+		return {kosmicData:myResult}
+			
+	on error errorMessage number errorNumber
+	
+		return {kosmicError:errorMessage}
+	
+	end try
+	
+end run
 		

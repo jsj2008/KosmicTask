@@ -1,18 +1,16 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/
-class kosmicTask
-{ 
+{{ task-header }}
+class {{ task-class-name }}
+{
+	/*
+	
+	{{ task-entry-message }}
+	
+	*/	 
 	public static void main(String args[])
     {
+    	
+{{ task-input-variables }}
+    	
     	String items1 = "item 1";
     	String items2 = "item 1";
   

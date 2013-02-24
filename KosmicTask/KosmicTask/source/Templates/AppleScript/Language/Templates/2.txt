@@ -1,25 +1,15 @@
---
--- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
---
--- Credits:
---
--- Notes:  
---
+{{task-header}}
 
 (*
  
-kosmicTask
+{{ task-entry-message }}
 
 *)
-on KosmicTask(a, b)
-	
+{{ task-function }}	
+
 	try
 		
-		-- compute myResult
-		set myResult to {a, b}
-		
-		-- return result record
-		return {kosmicName:"Argument list", kosmicData:myResult}
+{{ task-input-result }}
 		
 	on error errorMessage number errorNumber
 
@@ -27,5 +17,5 @@ on KosmicTask(a, b)
 
 	end try
 
-end KosmicTask
+end {{ task-function-name }}
 		

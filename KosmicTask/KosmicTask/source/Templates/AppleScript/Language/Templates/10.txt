@@ -1,17 +1,12 @@
---
--- Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
---
--- Credits:
---
--- Notes:  
---
+{{task-header}}
 
 (*
 
-explicit run handler
+{{ task-entry-message }}
 
 *)
-on run {}
+on run { {{task-input-variables}} }	
+
 	try
 		
 		-- compute task result

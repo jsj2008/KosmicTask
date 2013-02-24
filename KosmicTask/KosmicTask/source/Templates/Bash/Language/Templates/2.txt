@@ -1,18 +1,13 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# the number of task arguments is:
-# $#
-#
-# task arguments are accessed as:
-# $1 .. $n
-# 
+{{ task-header }}
+
 numArgs=$#
 echo "$numArgs command-line arguments."
+
+{{ task-input-variables }}
+
+{{ task-input-result }}
+
+# or
 
 # "$@" expands to all command line arguments
 for var in "$@"

@@ -1,32 +1,32 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits: 
-
-Notes:
-
-*/
+{{ task-header }}
 #include <iostream.h>
 
 class KosmicTask {  
 	public:           
   
-  	
   	KosmicTask(int argc, char *argv[]) { 
 
-    	cout << "argument count is " << argc - 1 << endl;
+{{ task-input-variables }}
+
+		cout << "argument count is " << argc - 1 << endl;
     
-   	 	for (int x = 1; x < argc; x++) {
-        	cout << argv[x] << endl;
-    	}  	
+		// Return task inputs
+		{{#task-inputs}}cout << {{name}} << endl;
+		{{^}}cout << "no inputs defined" << endl;
+		{{/}}	
     }   
 
 };
  
+/*
+  	
+{{ task-entry-message }}
+  	
+*/
 int main(int argc, char *argv[]) 
 {
+	
+{{ task-input-variables }}
+		
 	KosmicTask *kosmic = new KosmicTask(argc, argv);
 }
