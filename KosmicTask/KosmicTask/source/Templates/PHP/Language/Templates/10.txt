@@ -1,23 +1,9 @@
 <?php
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# the number of task arguments is:
-# $numArgs = $argc;
-# or
-# $numArgs = $_SERVER['argc'] - 1;
-#
-# task arguments are accessed as:
-# $argv[1] .. $argv[$argc]
-# or
-# $_SERVER['argv'][1] .. $_SERVER['argv'][$numArgs]
-#
+{{ task-header }}
 
 require_once "KosmicTaskController.php";
+
+{{ task-input-variables }}
 
 $name = 'name';
 $radius = 'radius';

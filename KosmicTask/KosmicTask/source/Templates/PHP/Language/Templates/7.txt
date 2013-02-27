@@ -1,21 +1,7 @@
 <?php
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# the number of task arguments is:
-# $numArgs = $argc;
-# or
-# $numArgs = $_SERVER['argc'] - 1;
-#
-# task arguments are accessed as:
-# $argv[1] .. $argv[$argc]
-# or
-# $_SERVER['argv'][1] .. $_SERVER['argv'][$numArgs]
-#
+{{ task-header }}
+
+{{ task-input-variables }}
 
 # inline dictionary
 $items = "{key1: item 1, key2: item 2}";
