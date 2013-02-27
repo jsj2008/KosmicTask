@@ -1,19 +1,9 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/
+{{ task-header }}
 
 // load the AddressBook framework
 loadFramework("AddressBook")
 	
-function kosmicTask() 
+{{ task-function }} 
 {
 	try {
 		

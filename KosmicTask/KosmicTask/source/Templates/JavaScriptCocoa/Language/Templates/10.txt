@@ -1,14 +1,4 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/
+{{ task-header }}
 
 //
 // Objective-J, JSTalk - like syntax
@@ -33,8 +23,12 @@ class Person < NSObject
     }
 }
 
-// task entry point
-function kosmicTask() 
+/*
+
+	{{ task-entry-message }}
+	
+*/
+{{ task-function }}
 {
 	// create class instance
 	var me = Person.instance

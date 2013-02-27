@@ -1,14 +1,5 @@
-/*
+{{task-header}}
 
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/
 // define class
 class KosmicTask < NSObject
 {
@@ -42,8 +33,12 @@ class KosmicTask < NSObject
     }
 }
 
-// task entry point
-function kosmicTask() 
+/*
+
+	{{ task-entry-message }}
+	
+*/
+{{ task-function }}
 {
 	// allocate a task object
 	var task = KosmicTask.instance

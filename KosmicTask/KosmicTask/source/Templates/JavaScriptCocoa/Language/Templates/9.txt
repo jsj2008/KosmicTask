@@ -1,17 +1,6 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/
-function kosmicTask() 
+{{ task-header }}
+{{ task-function }}
 {
-
 	// Mercury
 	var satellites = new Array("none");
 	var Mercury  = {name: "Mercury", radius: -1, satellites: satellites};	// Javascript literal associative array

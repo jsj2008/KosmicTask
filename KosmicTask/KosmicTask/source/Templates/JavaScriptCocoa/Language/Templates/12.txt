@@ -1,20 +1,10 @@
-/*
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-*/
+{{ task-header }}
 
 // load the ScriptingBridge framework
 loadFramework("ScriptingBridge")
 	
-function kosmicTask() 
-{
+{{ task-function }}
+{	
 	// log application access
 	log("Accessing Finder...");
 	
