@@ -1,13 +1,6 @@
---[[
+{{ task-header }}
 
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
+{{ task-input-variables }}
 
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-]]
 -- return a YAML inline format array
 print "--- [item 1, item 2]"

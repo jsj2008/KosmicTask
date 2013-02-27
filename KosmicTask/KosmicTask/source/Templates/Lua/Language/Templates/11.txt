@@ -1,15 +1,8 @@
---[[
+{{ task-header }}
 
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-]]
 require "KosmicTaskController"
+
+{{ task-input-variables }}
 
 -- build table of planets
 planets = {"Mercury", "Venus", "Earth"}
