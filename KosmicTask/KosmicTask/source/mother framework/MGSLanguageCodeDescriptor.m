@@ -307,7 +307,17 @@ char MGSScriptTypeContext;
         }
         if (taskHeader) [templateVariables setObject:taskHeader forKey:@"task-input-conditional"];        
     }
-    
+
+    // add task class function key
+    templateName = [self.scriptLanguage taskClassFunctionCodeTemplateName:nil];
+    if ([self templateNameExists:templateName]) {
+        NSString *taskHeader = [self processTemplateName:templateName object:templateVariables error:&error];
+        if (error) {
+            taskHeader = [self templateErrorString:error];
+        }
+        if (taskHeader) [templateVariables setObject:taskHeader forKey:@"task-class-function"];
+    }
+
     
     return templateVariables;
 }

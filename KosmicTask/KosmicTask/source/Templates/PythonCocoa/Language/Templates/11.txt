@@ -1,19 +1,8 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# Python Apple Event automation using py appscript
-#
-# Links:
-#
-#
+{{ task-header }}
 import ScriptingBridge
 import sys
 
-def kosmictask():
+{{ task-function }}
 	
 	# log application access
 	print >> sys.stderr, "Accessing Finder..."

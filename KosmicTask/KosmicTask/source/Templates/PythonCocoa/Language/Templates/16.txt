@@ -1,29 +1,15 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# Links:
-#
-# Apple's take on accessing Cocoa from Python
-# http://developer.apple.com/cocoa/pyobjc.html
-#
-# PyObjC documentation (including framework API notes)
-# http://pyobjc.sourceforge.net/documentation/
-#
+{{ task-header }}
 import Foundation
 
 # KosmicTask controller
 taskController = Foundation.NSClassFromString("KosmicTaskController")
 
-class KosmicTask (Foundation.NSObject):
+class {{ task-class-name }} (Foundation.NSObject):
     	
 	#
-	# task entry point
+	# {{ task-entry-message }}
 	#
-	def kosmictask(self):
+{{ task-class-function }}
 
 		# create NSDictionary instance
 		dict = Foundation.NSDictionary.dictionaryWithObjectsAndKeys_("key 1", "item 1", "key 2", "item 2", None)

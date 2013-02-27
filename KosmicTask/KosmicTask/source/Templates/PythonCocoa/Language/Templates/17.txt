@@ -1,18 +1,4 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# Links:
-#
-# Apple's take on accessing Cocoa from Python
-# http://developer.apple.com/cocoa/pyobjc.html
-#
-# PyObjC documentation (including framework API notes)
-# http://pyobjc.sourceforge.net/documentation/
-#
+{{ task-header }}
 import Foundation
 import AppKit
 import sys
@@ -20,7 +6,7 @@ import sys
 # KosmicTask controller
 taskController = Foundation.NSClassFromString("KosmicTaskController")
 
-def kosmictask():
+{{ task-function }}
 
 	try:
 		# send to stderr directly - requires import sys

@@ -1,26 +1,8 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# Links:
-#
-# Apple's take on accessing Cocoa from Python
-# http://developer.apple.com/cocoa/pyobjc.html
-#
-# PyObjC documentation (including framework API notes)
-# http://pyobjc.sourceforge.net/documentation/
-#
+{{ task-header }}
 import AppKit
 
-def kosmictask(a , b):
+{{ task-function }}
 
 	AppKit.NSLog("task parameters are %@ and %@", a, b)
 
-	# call Cocoa
-	result = AppKit.NSString.stringWithString_("Hello, kosmos!")
-	
-	# return object
-	return result
+{{ task-input-result }}
