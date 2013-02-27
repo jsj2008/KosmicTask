@@ -563,6 +563,7 @@
 		AB7563A21639C1560067BFC6 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = AB7563A01639C1560067BFC6 /* Reachability.h */; };
 		AB7563A31639C1560067BFC6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7563A11639C1560067BFC6 /* Reachability.m */; };
 		AB75EABC0E9C166E0036F83D /* MGSResultFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB75EABB0E9C166E0036F83D /* MGSResultFooterView.m */; };
+		AB773B5716DE1358003F01FA /* Mustache in Resources */ = {isa = PBXBuildFile; fileRef = AB773B5616DE1358003F01FA /* Mustache */; };
 		AB77742F159A5774002BE674 /* MGSChildScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB77742D159A4EA2002BE674 /* MGSChildScrollView.m */; };
 		AB7812E20D58875B00C19FAB /* MGSTimeIntervalTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7812E10D58875B00C19FAB /* MGSTimeIntervalTransformer.m */; };
 		AB7958D5165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7958D4165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m */; };
@@ -4132,6 +4133,7 @@
 		AB7563A11639C1560067BFC6 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		AB75EABA0E9C166E0036F83D /* MGSResultFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSResultFooterView.h; sourceTree = "<group>"; };
 		AB75EABB0E9C166E0036F83D /* MGSResultFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSResultFooterView.m; sourceTree = "<group>"; };
+		AB773B5616DE1358003F01FA /* Mustache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mustache; path = Templates/JavaScript/Mustache; sourceTree = SOURCE_ROOT; };
 		AB77742C159A4EA2002BE674 /* MGSChildScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSChildScrollView.h; sourceTree = "<group>"; };
 		AB77742D159A4EA2002BE674 /* MGSChildScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSChildScrollView.m; sourceTree = "<group>"; };
 		AB7812E00D58875B00C19FAB /* MGSTimeIntervalTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTimeIntervalTransformer.h; sourceTree = "<group>"; };
@@ -7447,6 +7449,7 @@
 		AB6677341205BC55006763E2 /* JavaScript */ = {
 			isa = PBXGroup;
 			children = (
+				AB773B5616DE1358003F01FA /* Mustache */,
 				AB4CF6EA1226C17800CB2E39 /* Language */,
 				AB6677351205BC76006763E2 /* MGSJavaScriptRunner.h */,
 				AB6677361205BC76006763E2 /* MGSJavaScriptRunner.m */,
@@ -11612,6 +11615,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB4CF7061226C17800CB2E39 /* Language in Resources */,
+				AB773B5716DE1358003F01FA /* Mustache in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
