@@ -1,26 +1,12 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# Ruby Apple Event automation using Scripting Bridge
-#
-# the number of task arguments is:
-# numArgs = ARGV.length
-#
-# task arguments are accessed as:
-# ARGV[0] .. ARGV[numArgs]
-#
-# Links:
-#
-#
+{{ task-header }}
+
 require 'osx/cocoa'
 require "KosmicTaskController"
 
 include OSX
 OSX.require_framework 'ScriptingBridge'
+
+{{ task-input-variables }}
 
 begin
 
