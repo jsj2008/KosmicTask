@@ -1,18 +1,7 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# the number of task arguments is:
-# $numArgs = $#ARGV + 1;
-#
-# task arguments are accessed as:
-# $ARGV[0] .. $ARGV[$numArgs]
-# 
-
+{{ task-header }}
 use warnings;
+
+{{ task-input-variables }}
 
 # return a YAML inline format dictionary
 print "--- {key1: item 1, key2: item 2}";

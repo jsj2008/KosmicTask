@@ -1,19 +1,8 @@
-#
-# Created by {{ author }} on {% now | date_format => "dd MMM yyyy HH =>mm =>ss" %}
-#
-# Credits =>
-#
-# Notes => 
-#
-# the number of task arguments is =>
-# $numArgs = $#ARGV + 1;
-#
-# task arguments are accessed as =>
-# $ARGV[0] .. $ARGV[$numArgs]
-# 
+{{ task-header }}
 use warnings;
-
 use KosmicTaskController;
+
+{{ task-input-variables }}
 
 # Mercury
 $satellites = ["none"];

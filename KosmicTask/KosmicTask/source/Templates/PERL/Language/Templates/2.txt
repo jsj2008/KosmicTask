@@ -1,21 +1,9 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# the number of task arguments is:
-# $numArgs = $#ARGV + 1;
-#
-# task arguments are accessed as:
-# $ARGV[0] .. $ARGV[$numArgs]
-# 
+{{ task-header }}
+use warnings;
+
+{{ task-input-variables }}
+
 $numArgs = $#ARGV + 1;
 print "$numArgs command-line arguments.\n";
 
-foreach $argnum (0 .. $#ARGV) {
-
-   print "$ARGV[$argnum]\n";
-
-}
+{{ task-input-result }}

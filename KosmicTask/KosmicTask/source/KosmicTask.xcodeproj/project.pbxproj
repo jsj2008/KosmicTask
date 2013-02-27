@@ -565,6 +565,9 @@
 		AB75EABC0E9C166E0036F83D /* MGSResultFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB75EABB0E9C166E0036F83D /* MGSResultFooterView.m */; };
 		AB773B5716DE1358003F01FA /* Mustache in Resources */ = {isa = PBXBuildFile; fileRef = AB773B5616DE1358003F01FA /* Mustache */; };
 		AB773B5916DE1BE1003F01FA /* Mustache in Resources */ = {isa = PBXBuildFile; fileRef = AB773B5816DE1BE1003F01FA /* Mustache */; };
+		AB773B5B16DE2572003F01FA /* Mustache in Resources */ = {isa = PBXBuildFile; fileRef = AB773B5A16DE2572003F01FA /* Mustache */; };
+		AB773B5D16DE27D2003F01FA /* Mustache in Resources */ = {isa = PBXBuildFile; fileRef = AB773B5C16DE27D2003F01FA /* Mustache */; };
+		AB773B5F16DE28FE003F01FA /* Mustache in Resources */ = {isa = PBXBuildFile; fileRef = AB773B5E16DE28FE003F01FA /* Mustache */; };
 		AB77742F159A5774002BE674 /* MGSChildScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB77742D159A4EA2002BE674 /* MGSChildScrollView.m */; };
 		AB7812E20D58875B00C19FAB /* MGSTimeIntervalTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7812E10D58875B00C19FAB /* MGSTimeIntervalTransformer.m */; };
 		AB7958D5165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7958D4165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m */; };
@@ -4136,6 +4139,9 @@
 		AB75EABB0E9C166E0036F83D /* MGSResultFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSResultFooterView.m; sourceTree = "<group>"; };
 		AB773B5616DE1358003F01FA /* Mustache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mustache; path = Templates/JavaScript/Mustache; sourceTree = SOURCE_ROOT; };
 		AB773B5816DE1BE1003F01FA /* Mustache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mustache; path = Templates/JavaScriptCocoa/Mustache; sourceTree = SOURCE_ROOT; };
+		AB773B5A16DE2572003F01FA /* Mustache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mustache; path = Templates/Lua/Mustache; sourceTree = SOURCE_ROOT; };
+		AB773B5C16DE27D2003F01FA /* Mustache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mustache; path = Templates/PERL/Mustache; sourceTree = SOURCE_ROOT; };
+		AB773B5E16DE28FE003F01FA /* Mustache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mustache; path = Templates/LuaCocoa/Mustache; sourceTree = SOURCE_ROOT; };
 		AB77742C159A4EA2002BE674 /* MGSChildScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSChildScrollView.h; sourceTree = "<group>"; };
 		AB77742D159A4EA2002BE674 /* MGSChildScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSChildScrollView.m; sourceTree = "<group>"; };
 		AB7812E00D58875B00C19FAB /* MGSTimeIntervalTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTimeIntervalTransformer.h; sourceTree = "<group>"; };
@@ -6860,6 +6866,7 @@
 		AB19168112AFDA1D00710031 /* LuaCocoa */ = {
 			isa = PBXGroup;
 			children = (
+				AB773B5E16DE28FE003F01FA /* Mustache */,
 				AB9CD4D812AFE54400F17779 /* Language */,
 				AB1916F312AFDD6100710031 /* MGSLuaCocoaRunner.h */,
 				AB1916F412AFDD6100710031 /* MGSLuaCocoaRunner.m */,
@@ -7441,6 +7448,7 @@
 		AB5CDAA5118AF2A600C545CD /* Perl runner */ = {
 			isa = PBXGroup;
 			children = (
+				AB773B5C16DE27D2003F01FA /* Mustache */,
 				AB4CF7231226C1E700CB2E39 /* Language */,
 				AB5CDAAA118AF30400C545CD /* MGSPerlScriptRunner.h */,
 				AB5CDAAB118AF30400C545CD /* MGSPerlScriptRunner.m */,
@@ -9128,6 +9136,7 @@
 		ABE7850E13251EC900663CBB /* Lua */ = {
 			isa = PBXGroup;
 			children = (
+				AB773B5A16DE2572003F01FA /* Mustache */,
 				ABD054DE1325231A00A728B8 /* Language */,
 				ABE7850F13251F7300663CBB /* MGSLuaScriptRunner.h */,
 				ABE7851013251F7300663CBB /* MGSLuaScriptRunner.m */,
@@ -11547,6 +11556,7 @@
 			files = (
 				AB85A2A412B01E9F0009B7DC /* MGSLuaScriptExecutor.lua in Resources */,
 				AB9CD50412AFE54400F17779 /* Language in Resources */,
+				AB773B5F16DE28FE003F01FA /* Mustache in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11637,6 +11647,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB4CF7401226C1E700CB2E39 /* Language in Resources */,
+				AB773B5D16DE27D2003F01FA /* Mustache in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11787,6 +11798,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABD054DF1325231A00A728B8 /* Language in Resources */,
+				AB773B5B16DE2572003F01FA /* Mustache in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
