@@ -1,19 +1,9 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# the number of task arguments is:
-# numArgs = len(sys.argv) - 1
-#
-# task arguments are accessed as:
-# sys.argv[1] .. sys.argv[numArgs]
-#
+{{ task-header }}
+{{ task-input-conditional }}
 import os
 import time
-import sys
+
+{{ task-input-variables }}
 
 try:
 

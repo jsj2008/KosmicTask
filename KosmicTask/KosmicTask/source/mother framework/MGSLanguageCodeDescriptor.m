@@ -298,6 +298,17 @@ char MGSScriptTypeContext;
         
     }
 
+    // add task input conditional key
+    templateName = [self.scriptLanguage taskInputConditionalCodeTemplateName:nil];
+    if ([self templateNameExists:templateName]) {
+        NSString *taskHeader = [self processTemplateName:templateName object:templateVariables error:&error];
+        if (error) {
+            taskHeader = [self templateErrorString:error];
+        }
+        if (taskHeader) [templateVariables setObject:taskHeader forKey:@"task-input-conditional"];        
+    }
+    
+    
     return templateVariables;
 }
 

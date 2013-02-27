@@ -493,6 +493,18 @@ initInputArgumentPrefix;
 
 /*
  
+ - taskInputConditionalCodeTemplateName:
+ 
+ */
+- (NSString *)taskInputConditionalCodeTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    return @"task-input-conditional";
+}
+
+/*
+ 
  - codeProperties
  
  */

@@ -1,20 +1,8 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# Links:
-#
-#
-# the number of task arguments is:
-# numArgs = len(sys.argv) - 1
-#
-# task arguments are accessed as:
-# sys.argv[1] .. sys.argv[numArgs]
-#
+{{ task-header }}
+{{ task-input-conditional }}
 import ScriptingBridge
+
+{{ task-input-variables }}
 	
 # get application - for more information see the Python Usage document
 app = ScriptingBridge.SBApplication.applicationWithBundleIdentifier_("com.apple.finder")
