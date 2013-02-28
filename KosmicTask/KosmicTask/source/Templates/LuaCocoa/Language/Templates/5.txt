@@ -1,18 +1,8 @@
---[[
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-]]
+{{ task-header }}
 
 LuaCocoa.import("ScriptingBridge")
 
-function kosmicTask()
+{{ task-function}}
 
 	-- log application access
 	io.stderr:write("Accessing Finder...\n")

@@ -1,16 +1,7 @@
---[[
+{{ task-header }}
+{{ task-function}}
 
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-]]
-function kosmicTask()
 	-- return a literal dictionary
-	-- [ ] notation is only required for keynames contining spaces
+	-- [ ] notation is only required for keynames containing spaces
 	return {['key 1'] = 'item 1', ['key 2'] = 'item 2'}
 end

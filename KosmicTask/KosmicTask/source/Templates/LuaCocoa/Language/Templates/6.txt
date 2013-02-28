@@ -1,14 +1,4 @@
---[[
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-]]
+{{ task-header }}
 
 -- create class definitition
 personClass = LuaCocoa.CreateClass("Person", NSObject)
@@ -35,7 +25,12 @@ personClass["description"] =
 	"-@@:" -- for type encoding see http://developer.apple.com/library/ios/#documentation/cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html
 }
 
-function kosmicTask()
+--[[
+
+	{{ task-entry-message }}
+
+]]
+{{ task-function }}
 	local person = personClass:alloc():initWithFirstName_lastName_("Kosmic", "Stuff")
 	return person:description()
 end

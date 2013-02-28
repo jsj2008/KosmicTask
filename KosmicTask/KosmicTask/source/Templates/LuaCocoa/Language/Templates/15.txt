@@ -1,18 +1,8 @@
---[[
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-]]
+{{ task-header }}
 
 LuaCocoa.import("AddressBook")
 
-function kosmicTask()
+{{ task-function}}
 	
 	local person = ABAddressBook:sharedAddressBook():me()
 	

@@ -1,2 +1,5 @@
--- {{ task-input-result-message }}
-{{# task-inputs }}print({{ name }}){{^last}}{{eol}}{{/}}{{^}}print('{{ task-inputs-undefined-message }}'){{/}}
+{{tab}}-- {{ task-form-result-message }}
+{{tab}}taskResult = {{# task-input-variables }}{ {{.}} }{{^}}"{{ task-inputs-undefined-message }}"{{/}}
+	
+{{tab}}-- {{ task-input-result-message }}
+{{tab}}return taskResult

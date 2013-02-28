@@ -1,14 +1,4 @@
---[[
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-]]
+{{ task-header }}
 
 LuaCocoa.import("Foundation")
 
@@ -17,7 +7,6 @@ taskController = KosmicTaskController
 
 -- create class definition
 KosmicTask = LuaCocoa.CreateClass("KosmicTask", NSObject)
-
 
 -- method: start
 KosmicTask["start"] = 
@@ -65,8 +54,12 @@ KosmicTask["timerFired_"] =
 	"-v@:@"
 }
 
--- task entry point
-function kosmicTask()
+--[[
+
+{{ task-entry-message }}
+ 
+]]
+{{ task-function}}
 
 	-- allocate our task object
 	task = KosmicTask:alloc():init()

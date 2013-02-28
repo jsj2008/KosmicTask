@@ -1,15 +1,6 @@
---[[
+{{ task-header }}
+{{ task-function}}
 
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-]]
-function kosmicTask()
 	-- form NSDictionary instance
 	local dict = NSDictionary:dictionaryWithDictionary_({["key 1"] = "item 1", ["key 2"] = "item 2"})
 	

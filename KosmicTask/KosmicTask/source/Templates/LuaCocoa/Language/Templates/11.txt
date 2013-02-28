@@ -1,15 +1,6 @@
---[[
+{{ task-header }}
+{{ task-function}}
 
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-]]
-function kosmicTask()
 	-- return a NSArray instance
 	return NSArray:arrayWithArray_({"item 1", "item 2"})
 end

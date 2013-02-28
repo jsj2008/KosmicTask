@@ -1,18 +1,8 @@
---[[
-
-Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-
-Script: {{ script }}
-
-Credits:
-
-Notes:
-
-]]
+{{ task-header }}
 
 LuaCocoa.import("Foundation")
 
-function kosmicTask()
+{{ task-function}}
 
 	-- get the kosmicTaskController class
 	local taskController = KosmicTaskController
