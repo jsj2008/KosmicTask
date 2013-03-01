@@ -1,16 +1,6 @@
-#
-# Created by {{ author }} on {% now | date_format: "dd MMM yyyy HH:mm:ss" %}
-#
-# Credits:
-#
-# Notes: 
-#
-# the number of task arguments is:
-# $argc
-#
-# task arguments are accessed as:
-# [lindex $argv 0] .. [lindex $argv [expr $argc - 1]]
-# 
+{{ task-header }}
+
+{{ task-input-variables }}
 
 # return a properly escaped YAML inline format array
 puts "---"

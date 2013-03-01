@@ -573,6 +573,7 @@
 		AB773B6516DEA75F003F01FA /* Mustache in Resources */ = {isa = PBXBuildFile; fileRef = AB773B6416DEA75F003F01FA /* Mustache */; };
 		AB773B6716DEB2A1003F01FA /* Mustache in Resources */ = {isa = PBXBuildFile; fileRef = AB773B6616DEB2A1003F01FA /* Mustache */; };
 		AB773B6B16DFF41E003F01FA /* Mustache in Resources */ = {isa = PBXBuildFile; fileRef = AB773B6A16DFF41D003F01FA /* Mustache */; };
+		AB773B6D16E0039E003F01FA /* Mustache in Resources */ = {isa = PBXBuildFile; fileRef = AB773B6C16E0039E003F01FA /* Mustache */; };
 		AB77742F159A5774002BE674 /* MGSChildScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB77742D159A4EA2002BE674 /* MGSChildScrollView.m */; };
 		AB7812E20D58875B00C19FAB /* MGSTimeIntervalTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7812E10D58875B00C19FAB /* MGSTimeIntervalTransformer.m */; };
 		AB7958D5165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7958D4165B90DC00AB0F99 /* JSCocoaController+Mugginsoft.m */; };
@@ -4152,6 +4153,7 @@
 		AB773B6416DEA75F003F01FA /* Mustache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mustache; path = Templates/PythonCocoa/Mustache; sourceTree = SOURCE_ROOT; };
 		AB773B6616DEB2A1003F01FA /* Mustache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mustache; path = Templates/Ruby/Mustache; sourceTree = SOURCE_ROOT; };
 		AB773B6A16DFF41D003F01FA /* Mustache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mustache; path = Templates/RubyCocoa/Mustache; sourceTree = SOURCE_ROOT; };
+		AB773B6C16E0039E003F01FA /* Mustache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Mustache; path = Templates/Tclsh/Mustache; sourceTree = SOURCE_ROOT; };
 		AB77742C159A4EA2002BE674 /* MGSChildScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSChildScrollView.h; sourceTree = "<group>"; };
 		AB77742D159A4EA2002BE674 /* MGSChildScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSChildScrollView.m; sourceTree = "<group>"; };
 		AB7812E00D58875B00C19FAB /* MGSTimeIntervalTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTimeIntervalTransformer.h; sourceTree = "<group>"; };
@@ -7362,6 +7364,7 @@
 		AB4CF7E11226C2A100CB2E39 /* tclsh */ = {
 			isa = PBXGroup;
 			children = (
+				AB773B6C16E0039E003F01FA /* Mustache */,
 				AB4CF7E21226C2BB00CB2E39 /* Language */,
 				AB69B450118B0A1600903D1D /* MGSTclshScriptRunner.h */,
 				AB69B451118B0A1600903D1D /* MGSTclshScriptRunner.m */,
@@ -11562,6 +11565,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB4CF8001226C2BB00CB2E39 /* Language in Resources */,
+				AB773B6D16E0039E003F01FA /* Mustache in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
