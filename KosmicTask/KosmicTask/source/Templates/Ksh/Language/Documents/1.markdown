@@ -14,7 +14,7 @@ Korn shell tasks return results to the client by printing to stdout.
 
 To return structured data, including the contents of files, Korn shell powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML).
 
-KosmicTask supports both the YAML inline and block formats.
+KosmicTask supports both the YAML and JSON formats.
 
 	# return a YAML inline format dictionary
 	echo "---"
@@ -27,7 +27,7 @@ KosmicTask supports the returning of file contents within task results.
 
 KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
 
-For Korn shell powered tasks files are returned as results using the following YAML dictionary syntax:
+For Korn shell powered tasks files are returned as results using the following JSON dictionary syntax:
 
 	FILE="capture.png"
 	echo "---"
@@ -44,7 +44,7 @@ Korn shell powered tasks can create temporary files simply by creating files in 
 	# capture screen
 	screencapture -t png $FILE
 	
-	# return a YAML inline format dictionary
+	# return a JSON format dictionary
 	echo "---"
 	echo "{kosmicFile: $FILE, kosmicInfo: file returned}"
 
