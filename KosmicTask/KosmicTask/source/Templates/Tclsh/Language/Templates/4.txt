@@ -2,13 +2,13 @@
 
 {{ task-input-variables }}
 
-# an escaped inline array
+# an escaped JSON array
 set items "\[item 1, item 2]"
 
 # css
 set css "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
 
-# return a YAML inline format dictionary with the array as data
+# return a JSON format dictionary with the array as data
 set result "{kosmicData: $items , kosmicStyle: '$css'}"
 
 puts "---"

@@ -2,7 +2,7 @@
 
 {{ task-input-variables }}
 
-# an inline dictionary
+# an JSON dictionary
 set item1 "item 1"
 set item2 "item 2"
 set items "{key1: $item1, key2: $item2}"
@@ -10,7 +10,7 @@ set items "{key1: $item1, key2: $item2}"
 # css
 set css "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
 
-# return a YAML inline format dictionary with dictionary as data
+# return a JSON format dictionary with dictionary as data
 set result "{kosmicData: $items, kosmicStyle: '$css'}"
 
 puts "---"

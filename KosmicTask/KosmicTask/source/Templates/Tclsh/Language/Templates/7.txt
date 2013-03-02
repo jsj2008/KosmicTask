@@ -18,7 +18,7 @@ proc runTask {} {
 		error "Error running $command"
 	}
 	    
-	# return a YAML inline format dictionary with filename
+	# return a JSON format dictionary with filename
 	set result "{kosmicFile: $file, kosmicName: $command, kosmicInfo: file returned}"
 	
 	return $result
