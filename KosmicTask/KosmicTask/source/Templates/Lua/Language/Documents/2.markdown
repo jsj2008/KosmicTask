@@ -11,7 +11,7 @@ Result Objects
 
 Lua tasks return results to the client by printing to stdout.
 
-To return structured data, including the contents of files, Lua powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+To return structured data, including the contents of files, Lua powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML and JSON formats.
 
 Lua tasks may either print YAML strings directly or make use of the provided **KosmicTaskController** module. This module provides a convenience function that prints native Lua tables as YAML formatted strings.
 
@@ -36,7 +36,7 @@ KosmicTask supports the returning of file contents within task results.
 
 KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
 
-For Lua powered tasks files are returned as results using the following YAML dictionary syntax:
+For Lua powered tasks files are returned as results using the following JSON dictionary syntax:
 
 	file = "capture.png"
 	result = string.format("--- {kosmicFile: %s}" , file)
@@ -53,7 +53,7 @@ Lua powered tasks can create temporary files simply by creating files in the cur
 	-- capture screen
 	os.execute("screencapture -t png " .. file)
 	
-	-- return a YAML inline format dictionary with filename
+	-- return a JSON format dictionary with filename
 	local result = string.format("--- {kosmicFile: %s, kosmicInfo: file returned}", file)
 	print(result)
 

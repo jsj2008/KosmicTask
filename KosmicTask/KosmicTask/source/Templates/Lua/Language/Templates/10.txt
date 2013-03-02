@@ -39,7 +39,7 @@ function runTask()
 		files = files .. file
 	end
 	
-	-- return a YAML inline format dictionary with array of filenames
+	-- return a JSON format dictionary with array of filenames
 	local result = string.format("--- {kosmicFile: [%s], kosmicName: %s, kosmicInfo: files returned}", files, command)
 	
 	print(result)

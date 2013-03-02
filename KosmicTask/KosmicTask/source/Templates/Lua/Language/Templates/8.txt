@@ -8,7 +8,7 @@ local items = "{key1: item 1, key2: item 2}"
 -- define CSS styling string
 local css = 'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'
 	
--- form result dictionary
+-- form JSON format dictionary
 local result = string.format("--- {kosmicData: %s, kosmicStyle: '%s'}", items, css)
 	
 print(result)
