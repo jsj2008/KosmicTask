@@ -31,9 +31,9 @@ Result Objects
 
 JavaScript tasks may generally return numbers and strings directly from the task run function. Some other objects may also be rendered in an intelligible format when returned directly.
 
-To return structured data reliably, including the contents of files, JavaScript powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+To return structured data reliably, including the contents of files, JavaScript powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML and JSON formats.
 
-JavaScript tasks may either return YAML strings directly or make use of the provided **KosmicTaskController** class. This class (which is automatically added to the JavaScript global context) provides a convenience method that converts native JavaScript objects such as Array and Object into the required YAML format string.
+JavaScript tasks may either return YAML or JSON format strings directly or make use of the provided **KosmicTaskController** class. This class (which is automatically added to the JavaScript global context) provides a convenience method that converts native JavaScript objects such as Array and Object into the required YAML format string.
 
 	function kosmicTask() 
 	{
@@ -66,7 +66,7 @@ Javascript cannot directly access the file system to create a file but a task ma
 
 	file = "'~/somefile.txt'";
 		
-	// return a YAML inline dictionary
+	// return a JSON dictionary
 	result = "--- {kosmicFile: " + file + "}";
 
 
@@ -88,5 +88,3 @@ Syntax Checking
 ---------------
 
 On Intel powered macs enhanced syntax checking is supplied by [JavaScriptLint](http://www.javascriptlint.com/)
-
-On non Intel powered machines the default WebKit implementation is used.
