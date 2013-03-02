@@ -25,7 +25,7 @@ The CINT C and C++ tasks return results to the client by printing to stdout.
 
 To return structured data, including the contents of files, CINT powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML).
 
-KosmicTask supports both the YAML inline and block formats.
+KosmicTask supports both the YAML and JSON formats.
 
 	#include <stdio.h>
 	
@@ -34,7 +34,7 @@ KosmicTask supports both the YAML inline and block formats.
 		char *item1 = "item 1";
 		char *item2 = "item 2";
 		
-		// return a YAML inline format array
+		// return a JSON format array
 		printf("--- [%s, %s]", item1, item2);
 	    return 0;
 	}
@@ -69,7 +69,7 @@ CINT powered tasks can create temporary files simply by creating files in the cu
 		// execute command
 		system(command);
 		
-		// return a YAML inline format dictionary
+		// return a JSON format dictionary
 		printf("--- {kosmicFile: %s, kosmicInfo: file returned}", file);
 		
 	    return 0;

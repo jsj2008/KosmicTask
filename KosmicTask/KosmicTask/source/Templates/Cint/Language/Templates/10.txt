@@ -13,7 +13,7 @@ int main()
 	// css
 	char *css = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;";
 	
-	// return array as data in a YAML inline format dictionary
+	// return array as data in a JSON format dictionary
 	printf("--- {kosmicData: [%s, %s], kosmicStyle: '%s'}", item1, item2, css);
 	
     return 0;
