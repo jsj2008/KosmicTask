@@ -9,13 +9,13 @@ echo "---"
 # select format type (result is the same)
 if ( $type == 1 ) then 
 
-	# return a YAML inline format array
+	# return a JSON format array
 	set array="[item 1, item 2]"
 	echo "$array"
 
 else
 
-	# return a YAML block format array
+	# return a YAML format array
 	echo "- item 1"
 	echo "- item 2"
 

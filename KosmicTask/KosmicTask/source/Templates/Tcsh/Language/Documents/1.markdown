@@ -15,7 +15,7 @@ Tenex C shell tasks return results to the client by printing to stdout.
 
 To return structured data, including the contents of files, Tenex C shell powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML).
 
-KosmicTask supports both the YAML inline and block formats.
+KosmicTask supports both the YAML and JSON formats.
 
 	# return YAML block format array
 	echo "---"
@@ -28,7 +28,7 @@ KosmicTask supports both the YAML inline and block formats.
 	echo "- Uranus"
 	echo "- Neptune"
 
-Inline format.
+JSON format.
 
 	# inline dictionary
 	set item1 = "item 1"
@@ -38,7 +38,7 @@ Inline format.
 	# css
 	set css="'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'"
 	
-	# return a YAML inline format dictionary with our dictionary as the data
+	# return a JSON format dictionary with our dictionary as the data
 	echo "---"
 	echo "{kosmicData: $dict , kosmicStyle: $css}"
 
@@ -50,7 +50,7 @@ KosmicTask supports the returning of file contents within task results.
 
 KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
 
-For Tenex C shell powered tasks files are returned as results using the following YAML dictionary syntax:
+For Tenex C shell powered tasks files are returned as results using the following JSON dictionary syntax:
 
 	set file="capture.png"
 	echo "--- {kosmicFile: $file}"
@@ -66,7 +66,7 @@ Tenex C shell powered tasks can create temporary files simply by creating files 
 	# capture screen
 	screencapture -t png $file
 	
-	# return a YAML inline format dictionary
+	# return a JSON format dictionary
 	echo "{kosmicFile: $file}"
 	
 

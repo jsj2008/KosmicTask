@@ -11,7 +11,7 @@ if ( $type == 1 ) then
 	set item1 = "item 1"
 	set item2 = "item 2"
 	
-	# return a YAML inline format dictionary
+	# return a JSON format dictionary
 	echo "{key1: $item1, key2: $item2}"
 
 else
@@ -19,7 +19,7 @@ else
 	set item3 = "item 3"
 	set item4 = "item 4"
 
-	# return a YAML block format dictionary
+	# return a YAML format dictionary
 	echo "key 3: $item3"
 	echo "key 4: $item4"
 
