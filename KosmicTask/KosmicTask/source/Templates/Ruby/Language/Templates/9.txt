@@ -19,7 +19,7 @@ begin
  		raise "Error running #{command}" 
  	end
  	
-	# return a YAML inline format dictionary with filename
+	# return a JSON format dictionary with filename
 	result = "{kosmicFile: %s, kosmicName: %s, kosmicInfo: file returned}" % [file, command]
 	
 rescue => e
