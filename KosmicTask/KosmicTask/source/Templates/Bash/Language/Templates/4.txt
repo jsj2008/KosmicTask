@@ -2,11 +2,11 @@
 
 {{ task-input-variables }}
 
-# YAML inline format array
+# JSON format array
 ARRAY="[item 1, item 2]"
 
 # css
 STYLE="'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'"
 
-# we return a YAML inline format dictionary with our array as the data
+# we return a JSON format dictionary with our array as the data
 echo "--- {kosmicData: $ARRAY, kosmicStyle: $STYLE}"

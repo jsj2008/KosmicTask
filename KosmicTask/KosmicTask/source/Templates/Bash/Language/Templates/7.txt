@@ -22,7 +22,7 @@ if [ $? != 0 ]; then
     exit 1
 } fi
 
-# return a YAML inline format dictionary
+# return a JSON format dictionary
 echo "---"
 echo "{kosmicName: $COMMAND, kosmicFile: $FILE, kosmicInfo: file returned}"
 

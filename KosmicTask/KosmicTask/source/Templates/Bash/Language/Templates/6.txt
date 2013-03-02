@@ -2,7 +2,7 @@
 
 {{ task-input-variables }}
 
-# YAML inline format dictionary
+# JSON format dictionary
 item1='item 1'
 item2='item 2'
 DICTIONARY="{key1: $item1, key2: $item2}"
@@ -10,5 +10,5 @@ DICTIONARY="{key1: $item1, key2: $item2}"
 # css
 STYLE="'color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;'"
 
-# return a YAML inline format dictionary with our dictionary as the data
+# return a JSON format dictionary with our dictionary as the data
 echo "--- {kosmicData: $DICTIONARY , kosmicStyle: $STYLE}"
