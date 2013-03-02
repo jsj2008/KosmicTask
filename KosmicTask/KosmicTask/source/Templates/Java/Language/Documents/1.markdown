@@ -25,7 +25,7 @@ Java returns results to the client by printing to stdout.
 
 To return structured data, including the contents of files, Java powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
 
-Tasks may either print YAML directly to stdout or make use of the provided **KosmicTaskController** class. This class provides a convenience method that prints native Java objects such as ArrayList and HashMap directly to stdout in the required YAML format.
+Tasks may either print YAML / JSON directly to stdout or make use of the provided **KosmicTaskController** class. This class provides a convenience method that prints native Java objects such as ArrayList and HashMap directly to stdout in the required YAML format.
 
 	import java.util.ArrayList;
 	import com.mugginsoft.KosmicTaskController;
@@ -60,7 +60,7 @@ KosmicTask supports the returning of file contents within task results.
 
 KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
 
-For Java powered tasks files are returned as results using the following YAML dictionary syntax:
+For Java powered tasks files are returned as results using the following JSON dictionary syntax:
 
 	String filename = "filename.png";
 	String result = String.format("--- {kosmicFile: %s}", filename);
@@ -83,7 +83,7 @@ Java powered tasks can create temporary files simply by creating files in the cu
 	    		String cmd = String.format("screencapture -t png %s", filename);
 	    		Runtime.getRuntime().exec(cmd);
 	    	
-	    		// return a YAML inline format dictionary with filename
+	    		// return a JSON format dictionary with filename
 	    		String result = String.format("--- {kosmicFile: %s , kosmicInfo: file returned}", filename);
 	
 				System.out.println(result);

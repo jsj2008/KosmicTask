@@ -14,7 +14,7 @@ class {{ task-class-name }}
     	String items1 = "item 1";
     	String items2 = "item 1";
   
-    	// return a YAML inline format dictionary
+    	// return a JSON format dictionary
     	String items =  String.format("--- {key1: %s, key2: %s}", items1, items2);
     	
 		System.out.println(items);

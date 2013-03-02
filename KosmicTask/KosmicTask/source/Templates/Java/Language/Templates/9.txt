@@ -54,7 +54,7 @@ class {{ task-class-name }}
     			filenames += filename ;
     		}
     		
-    		// format a YAML inline format dictionary result with filename
+    		// format a JSON format dictionary result with filename
     		result = String.format("--- {kosmicName: %s, kosmicFile: [%s] , kosmicInfo: files returned}", command, filenames);
 
 		} catch (Exception e) {

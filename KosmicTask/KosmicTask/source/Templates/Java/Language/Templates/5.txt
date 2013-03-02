@@ -17,7 +17,7 @@ class {{ task-class-name }}
     	// CSS format string
     	String css = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;";
     	
-    	// return a YAML inline format dictionary with the array as the data
+    	// return a JSON format dictionary with the array as the data
     	String result = String.format("--- {kosmicData: %s, kosmicStyle: '%s'}", items, css);
     	
 		System.out.println(result);
