@@ -29,12 +29,12 @@ echo "---"
 # select format type (result is the same)
 if ( $type == 1 ) then 
 
-	# return a YAML inline format dictionary
+	# return a JSON format dictionary
 	echo "{kosmicName: $command, kosmicFile: $file, kosmicInfo: file returned}"
 
 else
 
-	# return a YAML block format dictionary
+	# return a YAML format dictionary
 	echo "kosmicName: $command"
 	echo "kosmicFile: $file"
 	echo "kosmicInfo: file returned"

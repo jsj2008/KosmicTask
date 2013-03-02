@@ -14,7 +14,7 @@ The C shell returns results to the client by printing to stdout.
 
 To return structured data, including the contents of files, C shell powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML).
 
-KosmicTask supports both the YAML inline and block formats.
+KosmicTask supports both the YAML and JSON formats.
 
 	# return a YAML block format array
 	echo "---"
@@ -27,9 +27,9 @@ KosmicTask supports both the YAML inline and block formats.
 	echo "- Uranus"
 	echo "- Neptune"
 
-Inline format.
+JSON format.
 
-	# return a YAML inline format dictionary
+	# return a JSON format dictionary
 	set item1 = "item 1"
 	set item2 = "item 2"
 		
@@ -43,7 +43,7 @@ KosmicTask supports the returning of file contents within task results.
 
 KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
 
-For C shell powered tasks files are returned as results using the following YAML dictionary syntax:
+For C shell powered tasks files are returned as results using the following JSON dictionary syntax:
 
 	set file="capture.png"
 	echo "---"
@@ -63,7 +63,7 @@ C shell powered tasks can create temporary files simply by creating files in the
 	# YAML document header
 	echo "---"
 	
-	# return a YAML inline format dictionary
+	# return a JSON format dictionary
 	echo "{kosmicFile: $file, kosmicInfo: file returned}"
 
 
