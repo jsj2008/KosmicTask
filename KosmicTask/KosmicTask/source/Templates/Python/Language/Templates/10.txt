@@ -39,7 +39,7 @@ try:
 		time.sleep(1)
 	
 	
-	# return a YAML inline format dictionary with array of filenames
+	# return a JSON format dictionary with array of filenames
 	print "--- {kosmicFile: [%s], kosmicName: %s, kosmicInfo: files returned}" % (files, command)
 	
 except Exception as ex:

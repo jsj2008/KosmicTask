@@ -21,7 +21,7 @@ try:
 	if status <> 0:
 		raise Exception("Error running %s" % command)
 	
-	# return a YAML inline format dictionary with filename
+	# return a JSON format dictionary with filename
 	print "--- {kosmicFile: %s, kosmicName: %s, kosmicInfo: file returned}" % (file, command)
 	
 except Exception as ex:

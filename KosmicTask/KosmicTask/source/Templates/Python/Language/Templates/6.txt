@@ -3,13 +3,13 @@
 
 {{ task-input-variables }}
 
-# inline array
+# JSON array
 items = "[item 1, item 2]"
 
 # css
 css = "color:green;font-weight:bold;font-style:italic;text-decoration:underline;font-size:18pt;"
 
-# return a YAML inline format dictionary with array as data
+# return a JSON format dictionary with array as data
 result = "--- {kosmicData: %s, kosmicStyle: '%s'}" % (items, css)
 
 print result

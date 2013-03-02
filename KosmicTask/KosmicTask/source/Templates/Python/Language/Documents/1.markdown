@@ -13,7 +13,7 @@ Result Objects
 
 Python tasks return results to the client by printing to stdout.
 
-To return structured data, including the contents of files, Python powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML inline and block formats.
+To return structured data, including the contents of files, Python powered tasks should format result data using [YAML](http://en.wikipedia.org/wiki/YAML). KosmicTask supports both the YAML and JSON formats.
 
 Python tasks may either print YAML strings directly or make use of the provided **KosmicTaskController** class. This class provides a static convenience function that prints native Python objects such as arrays and dictionaries as YAML formatted strings.
 
@@ -39,7 +39,7 @@ KosmicTask supports the returning of file contents within task results.
 
 KosmicTask automatically looks for a **kosmicFile** record containing file paths within a dictionary type result object. If found, KosmicTask will return the contents of the file or files to the client.
 
-For Python powered tasks files are returned as results using the following YAML dictionary syntax:
+For Python powered tasks files are returned as results using the following JSON dictionary syntax:
 
 	file = "capture.png"
 	print "--- {kosmicFile: %s}" % file
@@ -55,7 +55,7 @@ Python powered tasks can create temporary files simply by creating files in the 
 	# capture screen
 	os.system("screencapture -t png " + file)
 	
-	# return a YAML inline format dictionary with filename
+	# return a JSON format dictionary with filename
 	print "--- {kosmicFile: %s, kosmicInfo: file returned}" % file
 
 
