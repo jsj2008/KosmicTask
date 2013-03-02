@@ -20,7 +20,7 @@ try {
 		throw new Exception("Error running $command");
 	}
 	
-	# return a YAML inline format dictionary with filename
+	# return a JSON format dictionary with filename
 	echo "--- {kosmicFile: $file, kosmicName: $command, kosmicInfo: file returned}";
 
 } catch(Exception $e) {

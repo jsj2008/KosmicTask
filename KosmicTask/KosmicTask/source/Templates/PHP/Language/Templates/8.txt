@@ -38,7 +38,7 @@ try {
 		sleep(1);
 	}
 	
-	# return a YAML inline format dictionary with an array of filenames
+	# return a JSON format dictionary with an array of filenames
 	print "--- {kosmicFile: [$FILES], kosmicName: $command, kosmicInfo: files returned}";
 
 } catch(Exception $e) {
