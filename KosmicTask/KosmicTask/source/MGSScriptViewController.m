@@ -592,7 +592,9 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
         text = [NSString stringWithFormat:@"%@\n%@", newText, text];
         selectedRange = NSMakeRange(0, 0);
     }
-    _fragaria.string = text;
+    
+    [[[_taskSpec script] scriptCode] setSource:text];
+    
     [_fragariaTextView scrollRangeToVisible:selectedRange];
 }
 #pragma mark -

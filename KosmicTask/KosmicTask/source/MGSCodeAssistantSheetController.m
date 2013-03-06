@@ -295,10 +295,12 @@ char MGSFunctionNameContext;
 - (void)setScriptType:(NSString *)name
 {
     _scriptType = name;
-	[_fragaria setObject:_scriptType forKey:MGSFOSyntaxDefinitionName];
+    
     if (self.script.scriptType != _scriptType) {
         self.script.scriptType = _scriptType;
     }
+    MGSLanguagePlugin *languagePlugin = [self.script languagePlugin];
+    [_fragaria setObject:[languagePlugin syntaxDefinition] forKey:MGSFOSyntaxDefinitionName];
 }
 
 #pragma mark -
