@@ -17,7 +17,7 @@
 #import "MGSKosmicUnityTabStyle2.h"
 #import "MGSBorderView.h"
 
-char MGSFunctionNameContext;
+char MGSFunctionCodeContext;
 
 // class extension
 @interface MGSCodeAssistantSheetController ()
@@ -100,11 +100,15 @@ char MGSFunctionNameContext;
     [_argumentStylePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.functionArgumentStyle" options:nil];
     
     // add observers
-    [self addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSFunctionNameContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.functionArgumentName" options:0 context:&MGSFunctionNameContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.functionArgumentCase" options:0 context:&MGSFunctionNameContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.functionArgumentStyle" options:0 context:&MGSFunctionNameContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.descriptorCodeStyle" options:0 context:&MGSFunctionNameContext];
+    [self addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSFunctionCodeContext];
+    [self addObserver:self forKeyPath:@"languageCodeDescriptor.functionArgumentName" options:0 context:&MGSFunctionCodeContext];
+    [self addObserver:self forKeyPath:@"languageCodeDescriptor.functionArgumentCase" options:0 context:&MGSFunctionCodeContext];
+    [self addObserver:self forKeyPath:@"languageCodeDescriptor.functionArgumentStyle" options:0 context:&MGSFunctionCodeContext];
+    [self addObserver:self forKeyPath:@"languageCodeDescriptor.descriptorCodeStyle" options:0 context:&MGSFunctionCodeContext];
+    
+    // observe user default
+    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[@"values." stringByAppendingString:MGSTaskInputArgumentPrefix] options:NSKeyValueObservingOptionNew context:&MGSFunctionCodeContext];
+    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[@"values." stringByAppendingString:MGSTaskInputArgumentExclusions] options:NSKeyValueObservingOptionNew context:&MGSFunctionCodeContext];
     
     [self generateFunctionCodeString];
     
@@ -191,7 +195,7 @@ char MGSFunctionNameContext;
  */
 - (void)setScript:(MGSScript *)script
 {
-    _script = script;
+    _script = [script mutableDeepCopy];
     self.scriptType = [_script scriptType];
 }
 
@@ -225,7 +229,7 @@ char MGSFunctionNameContext;
 #pragma unused(object)
 #pragma unused(change)
     
-	if (context == &MGSFunctionNameContext) {
+	if (context == &MGSFunctionCodeContext) {
         [self generateFunctionCodeString];
     }
     
@@ -275,11 +279,13 @@ char MGSFunctionNameContext;
  */
 - (void)generateFunctionCodeString
 {
-    NSString *functionString = nil;
-    
+    // setup the descriptor
     [self.languageCodeDescriptor setScript:self.script];
-    functionString = [self.languageCodeDescriptor generateCodeString];
-    
+    self.languageCodeDescriptor.functionArgumentPrefix = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentPrefix"];
+    self.languageCodeDescriptor.functionArgumentNameExclusions = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentExclusions"];;
+
+    // generate code string
+    NSString *functionString = [self.languageCodeDescriptor generateCodeString];
     if (!functionString) {
         functionString = NSLocalizedString(@"[Code generation failed. See the log for details.]", @"Missing language function code");
     }
@@ -299,8 +305,33 @@ char MGSFunctionNameContext;
     if (self.script.scriptType != _scriptType) {
         self.script.scriptType = _scriptType;
     }
+        
+    // get language
     MGSLanguagePlugin *languagePlugin = [self.script languagePlugin];
+    MGSLanguage *language = languagePlugin.language;
+    
+    // configure Fragaria syntax highlighting
     [_fragaria setObject:[languagePlugin syntaxDefinition] forKey:MGSFOSyntaxDefinitionName];
+    
+    // enable allowed argument styles
+    NSArray *menuTags = @[ @(kMGSFunctionArgumentUnderscoreSeparated), @(kMGSFunctionArgumentWhitespaceRemoved)];
+    NSMenuItem *menuItem = nil;
+    for (NSNumber *tag in menuTags) {
+        menuItem = [[_argumentStylePopupButton menu] itemWithTag:[tag integerValue]];
+        BOOL hidden = YES;
+        if (language.initInputArgumentStyleAllowedFlags & [tag integerValue]) {
+            hidden = NO;
+        }
+        [menuItem setHidden:hidden];
+    }
+        
+    self.languageCodeDescriptor.functionArgumentName = language.initInputArgumentName;
+    self.languageCodeDescriptor.functionArgumentStyle = language.initInputArgumentStyle;
+    self.languageCodeDescriptor.functionArgumentCase = language.initInputArgumentCase;
+    
+    // display on run task
+    NSInteger onRunTask = [_script onRun].integerValue;
+    [_runConfigurationTextField setStringValue:[_script.languagePropertyManager stringForOnRunTask:onRunTask]];
 }
 
 #pragma mark -

@@ -491,6 +491,9 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             // insert selected data
 		case kMGSCodeAssistantSheetReturnInsert:
             {
+                // update script
+                _taskSpec.script = codeAssistantSheetController.script;
+                
                 // get data to be inserted
                 NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
                 NSString *codeString = [pasteboard stringForType:NSStringPboardType];
@@ -510,7 +513,9 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             [self openFile:self];
 			break;
             
+            // show settings sheet
         case kMGSCodeAssistantSheetReturnShowRunSettings:
+            [scriptEditViewController showSettings:self];
             break;
     }
 }

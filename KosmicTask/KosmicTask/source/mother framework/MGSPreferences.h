@@ -84,6 +84,7 @@ extern NSString *MGSShowPortMapperRouterNotFound;
 extern NSString *MGSTaskEmptyScriptHelper;
 extern NSString *MGSTaskInputChangeScriptHelper;
 extern NSString *MGSTaskInputArgumentExclusions;
+extern NSString *MGSTaskInputArgumentPrefix;
 
 @interface MGSPreferences : NSObject {
 

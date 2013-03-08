@@ -7,7 +7,6 @@
 //
 
 #import "MGSLanguagePropertyManager.h"
-#import "MGSLanguage.h"
 #import "MLog.h"
 
 
@@ -22,7 +21,6 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 - (NSString *)stringForBool:(BOOL)value;
 - (NSString *)localizedString:(NSString *)key;
 - (NSString *)stringForLanguageType:(eMGSLanguageType)format;
-- (NSString *)stringForOnRunTask:(eMGSOnRunTask)value;
 - (NSDictionary *)languageProperties;
 - (void)initialisePropertiesWithManager:(MGSLanguagePropertyManager *)manager;
 - (NSString *)stringForLanguageInputArgumentName:(MGSFunctionArgumentName)argumentName;
@@ -673,8 +671,7 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 
     // input argument style filter
 	propOptions = [NSMutableDictionary dictionaryWithCapacity:5];
-    propIndexes = @[@(kMGSFunctionArgumentHyphenated),
-                        @(kMGSFunctionArgumentUnderscoreSeparated),
+    propIndexes = @[    @(kMGSFunctionArgumentUnderscoreSeparated),
                         @(kMGSFunctionArgumentWhitespaceRemoved)];
     
     for (NSNumber *propIndex in propIndexes) {
@@ -1094,11 +1091,7 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 {
 	NSString *text = NSLocalizedString(@"unknown" , @"Unknown input argument style format");
 	switch (argumentStyle) {
-            
-        case kMGSFunctionArgumentHyphenated:
-			text = NSLocalizedString(@"Hyphenated" , @"Input argument style format");
-            break;
-            
+                        
         case kMGSFunctionArgumentUnderscoreSeparated:
 			text = NSLocalizedString(@"Underscore Separated" , @"Input argument style format");
             break;

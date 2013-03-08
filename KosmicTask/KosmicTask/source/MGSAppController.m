@@ -1768,6 +1768,7 @@
     
     // code assistant preferences
     [appDefaults setObject:@"a the but is" forKey:MGSTaskInputArgumentExclusions];
+    [appDefaults setObject:@"" forKey:MGSTaskInputArgumentPrefix];
     
 	//
 	// register app defaults

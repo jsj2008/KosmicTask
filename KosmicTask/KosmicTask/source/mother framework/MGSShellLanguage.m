@@ -28,6 +28,9 @@
 		// interface
 		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"sh", nil];
 		self.initScriptTypeFamily = @"Shell";
+        
+        self.initInputArgumentCase = kMGSFunctionArgumentUpperCase;
+        self.initInputArgumentStyle = kMGSFunctionArgumentUnderscoreSeparated;
 	}
 	
 	return self;

@@ -21,6 +21,8 @@
     MGSCodeDescriptorCodeStyle _descriptorCodeStyle;
     MGSScript *_script;
     GRMustacheTemplateRepository *_templateRepository;
+    NSString *_functionArgumentPrefix;
+    NSString *_functionArgumentNameExclusions;
     
 #ifdef MGS_USE_MGTemplateEngine    
     id _templateEngine;
@@ -32,6 +34,8 @@
 @property MGSFunctionArgumentCase functionArgumentCase;
 @property MGSFunctionArgumentStyle functionArgumentStyle;
 @property MGSCodeDescriptorCodeStyle descriptorCodeStyle;
+@property (copy) NSString *functionArgumentPrefix;
+@property (copy) NSString *functionArgumentNameExclusions;
 @property (assign) MGSScript *script;
 
 - (id)initWithScript:(MGSScript *)script;

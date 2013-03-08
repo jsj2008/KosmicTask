@@ -11,26 +11,25 @@
 extern NSString *MGSInputStyle;
 
 enum _eMGSFunctionArgumentName {
-    kMGSFunctionArgumentName = 0,
-    kMGSFunctionArgumentNameAndType = 1,
-    kMGSFunctionArgumentType = 2,
-    kMGSFunctionArgumentTypeAndName = 3,
+    kMGSFunctionArgumentName = 1 << 0,
+    kMGSFunctionArgumentNameAndType = 1 << 1,
+    kMGSFunctionArgumentType = 1 << 2,
+    kMGSFunctionArgumentTypeAndName = 1 << 3,
 };
 typedef NSUInteger MGSFunctionArgumentName;
 
-enum _eMGSFunctionArgumentCase {
-    kMGSFunctionArgumentCamelCase= 0,
-    kMGSFunctionArgumentLowerCase = 1,
-    kMGSFunctionArgumentInputCase = 2,
-    kMGSFunctionArgumentPascalCase = 3,
-    kMGSFunctionArgumentUpperCase = 4,
+enum _eMGSFunctionArgumentCaseFlags {
+    kMGSFunctionArgumentCamelCase= 1 << 0,
+    kMGSFunctionArgumentLowerCase = 1 << 1,
+    kMGSFunctionArgumentInputCase = 1 << 2,
+    kMGSFunctionArgumentPascalCase = 1 << 3,
+    kMGSFunctionArgumentUpperCase = 1 << 4,
 };
 typedef NSUInteger MGSFunctionArgumentCase;
 
-enum _eMGSFunctionArgumentStyle {
-    kMGSFunctionArgumentHyphenated = 0,
-    kMGSFunctionArgumentUnderscoreSeparated = 1,
-    kMGSFunctionArgumentWhitespaceRemoved = 2,
+enum _eMGSFunctionArgumentStyleFlags {
+    kMGSFunctionArgumentUnderscoreSeparated = 1 << 0,
+    kMGSFunctionArgumentWhitespaceRemoved = 1 << 1,
 };
 typedef NSUInteger MGSFunctionArgumentStyle;
 
@@ -138,6 +137,8 @@ typedef NSInteger MGSBuildResultFlags;
     MGSFunctionArgumentName initInputArgumentName;
     MGSFunctionArgumentCase initInputArgumentCase;
     MGSFunctionArgumentStyle initInputArgumentStyle;
+    MGSFunctionArgumentStyle initInputArgumentStyleAllowedFlags;
+    
     NSString *initArgumentInputPrefix;
 }
 
@@ -148,6 +149,7 @@ typedef NSInteger MGSBuildResultFlags;
 @property MGSFunctionArgumentName initInputArgumentName;
 @property MGSFunctionArgumentCase initInputArgumentCase;
 @property MGSFunctionArgumentStyle initInputArgumentStyle;
+@property MGSFunctionArgumentStyle initInputArgumentStyleAllowedFlags;
 @property (copy) NSString *initInputArgumentPrefix;
 
 @property BOOL initCanBuild;

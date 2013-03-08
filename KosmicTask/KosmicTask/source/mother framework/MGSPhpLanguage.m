@@ -45,6 +45,9 @@
 		self.initTaskRunnerClassName =  @"MGSPhpScriptRunner";
 		self.initTaskProcessName = @"KosmicTaskPhpRunner";
 		self.initCanIgnoreBuildWarnings = YES;
+        
+        self.initInputArgumentCase = kMGSFunctionArgumentLowerCase;
+        self.initInputArgumentStyle = kMGSFunctionArgumentUnderscoreSeparated;
 	}
 	
 	return self;

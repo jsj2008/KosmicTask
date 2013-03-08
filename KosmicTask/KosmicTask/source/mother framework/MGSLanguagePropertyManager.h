@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSLanguageProperty.h"
+#import "MGSLanguage.h"
 
 @class MGSLanguage;
 
@@ -96,6 +97,7 @@ extern NSString * const MGSNoteKeyLanguageProperty;
 - (void)logPropertiesAction:(id)sender;
 - (void)log;
 - (void)reinitialiseProperties;
+- (NSString *)stringForOnRunTask:(eMGSOnRunTask)value;
 
 @property (readonly,copy) MGSLanguage *language;
 @end

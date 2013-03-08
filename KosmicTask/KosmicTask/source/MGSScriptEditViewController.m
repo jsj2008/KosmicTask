@@ -33,6 +33,9 @@
 #define MIN_TOP_SPLITVIEW_HEIGHT 200
 #define MIN_BOTTOM_SPLITVIEW_HEIGHT 50
 
+#define MGS_SCRIPT_EDITOR 0
+#define MGS_SETTINGS_EDITOR 1
+
 //#define MGS_DEBUG_CONTROLLER
 
 NSString * const MGSIgnoreBuildError = @"MGSIgnoreBuildError";
@@ -615,6 +618,19 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 
 /*
  
+ -showSettings:
+ 
+ */
+- (IBAction)showSettings:(id)sender
+{
+#pragma unused(sender)
+	
+	[modeSegment setSelectedSegment:MGS_SETTINGS_EDITOR];
+    [NSApp sendAction:modeSegment.action to:self from:modeSegment];
+}
+
+/*
+ 
  - modeSegmentAction:
  
  */
@@ -627,13 +643,13 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	switch ([modeSegment selectedSegment]) {
 		
 		// edit script
-		case 0:
+		case MGS_SCRIPT_EDITOR:
 			showView = splitView;
 			hideView = [settingsOutlineViewController view];
 			break;
 			
 		// edit settings
-		case 1:
+		case MGS_SETTINGS_EDITOR:
 			
 			/*
 			 

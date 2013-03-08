@@ -96,6 +96,7 @@ extern NSString * const MGSIgnoreBuildError;
 - (IBAction)showTemplateEditor:(id)sender;
 - (IBAction)scriptTypeAction:(id)sender;
 - (IBAction)modeSegmentAction:(id)sender;
+- (IBAction)showSettings:(id)sender;
 
 - (BOOL)commitPendingEdits;
 - (BOOL)scriptBuilt;

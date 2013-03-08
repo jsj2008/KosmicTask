@@ -69,7 +69,8 @@ initBuildResultFlags,
 initInputArgumentName,
 initInputArgumentCase,
 initInputArgumentStyle,
-initInputArgumentPrefix;
+initInputArgumentPrefix,
+initInputArgumentStyleAllowedFlags;
 
 #pragma mark -
 #pragma mark Class methods
@@ -266,6 +267,8 @@ initInputArgumentPrefix;
         initInputArgumentCase = kMGSFunctionArgumentCamelCase;
         initInputArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
         initInputArgumentPrefix = @"";
+        initInputArgumentStyleAllowedFlags = kMGSFunctionArgumentUnderscoreSeparated |
+                                                kMGSFunctionArgumentWhitespaceRemoved;
 	}
 	return self;
 }

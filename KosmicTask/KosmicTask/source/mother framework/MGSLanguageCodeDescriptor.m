@@ -40,6 +40,8 @@ char MGSScriptTypeContext;
 @synthesize descriptorCodeStyle = _descriptorCodeStyle;
 @synthesize script = _script;
 @synthesize scriptLanguage = _scriptLanguage;
+@synthesize functionArgumentPrefix = _functionArgumentPrefix;
+@synthesize functionArgumentNameExclusions = _functionArgumentNameExclusions;
 
 /*
  
@@ -522,12 +524,15 @@ char MGSScriptTypeContext;
                 }
                 
                 // re normalise using the parameter name but don't do case processing
-                // this time around
+                // or prefixing this time around
                 MGSFunctionArgumentCase argumentCase = self.functionArgumentCase;
+                NSString *argumentPrefix = self.functionArgumentPrefix;
                 _functionArgumentCase = kMGSFunctionArgumentInputCase;
+                _functionArgumentPrefix = nil;
                 parameterName = [self normalisedParameterName:parameterName];
                 _functionArgumentCase = argumentCase;
-
+                _functionArgumentPrefix = argumentPrefix;
+                
                 if (parameterName) {
                     [parameterNames replaceObjectAtIndex:idx withObject:parameterName];
                 }
@@ -645,8 +650,22 @@ char MGSScriptTypeContext;
             break;
     }
     
+    // get lowercase name components
     NSMutableArray *nameComponents = [NSMutableArray arrayWithArray:[name componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+
+    // get lowercase excluded components
+    NSMutableArray *excludedNameComponents = [NSMutableArray arrayWithArray:[[self.functionArgumentNameExclusions lowercaseString] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     
+    // remove excluded components
+    for (NSString *exludedName in excludedNameComponents) {
+        for (NSString *nameComponent in [nameComponents copy]) {
+            if ([nameComponent compare:exludedName options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+                [nameComponents removeObject:nameComponent];
+            }
+        }
+    }
+
+    // set component case
     NSArray *nameComponentsCopy = [nameComponents copy];
     for (NSUInteger i = 0; i < [nameComponentsCopy count]; i++) {
         NSString *nameComponent  = [nameComponentsCopy objectAtIndex:i];
@@ -665,10 +684,7 @@ char MGSScriptTypeContext;
     // style arguments
     NSString *joinString = nil;
     switch (self.functionArgumentStyle) {
-        case kMGSFunctionArgumentHyphenated:
-            joinString = @"-";
-            break;
-            
+           
         case kMGSFunctionArgumentUnderscoreSeparated:
             joinString = @"_";
             break;
@@ -679,8 +695,12 @@ char MGSScriptTypeContext;
             break;
     }
     
+    // reconstitute components with separator and apply prefix
     NSString *normalisedName = [nameComponents componentsJoinedByString:joinString];
-
+    if (self.functionArgumentPrefix) {
+        normalisedName = [self.functionArgumentPrefix stringByAppendingString:normalisedName];
+    }
+    
     return normalisedName;
 }
 
