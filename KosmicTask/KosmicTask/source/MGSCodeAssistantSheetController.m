@@ -95,15 +95,15 @@ char MGSFunctionCodeContext;
     _languageCodeDescriptor = [[MGSLanguageCodeDescriptor alloc] init];
 
     // bind the argument tags
-    [_argumentNamePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.functionArgumentName" options:nil];
-    [_argumentCasePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.functionArgumentCase" options:nil];
-    [_argumentStylePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.functionArgumentStyle" options:nil];
+    [_argumentNamePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.inputArgumentName" options:nil];
+    [_argumentCasePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.inputArgumentCase" options:nil];
+    [_argumentStylePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.inputArgumentStyle" options:nil];
     
     // add observers
     [self addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSFunctionCodeContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.functionArgumentName" options:0 context:&MGSFunctionCodeContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.functionArgumentCase" options:0 context:&MGSFunctionCodeContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.functionArgumentStyle" options:0 context:&MGSFunctionCodeContext];
+    [self addObserver:self forKeyPath:@"languageCodeDescriptor.inputArgumentName" options:0 context:&MGSFunctionCodeContext];
+    [self addObserver:self forKeyPath:@"languageCodeDescriptor.inputArgumentCase" options:0 context:&MGSFunctionCodeContext];
+    [self addObserver:self forKeyPath:@"languageCodeDescriptor.inputArgumentStyle" options:0 context:&MGSFunctionCodeContext];
     [self addObserver:self forKeyPath:@"languageCodeDescriptor.descriptorCodeStyle" options:0 context:&MGSFunctionCodeContext];
     
     // observe user default
@@ -281,8 +281,8 @@ char MGSFunctionCodeContext;
 {
     // setup the descriptor
     [self.languageCodeDescriptor setScript:self.script];
-    self.languageCodeDescriptor.functionArgumentPrefix = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentPrefix"];
-    self.languageCodeDescriptor.functionArgumentNameExclusions = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentExclusions"];;
+    self.languageCodeDescriptor.inputArgumentPrefix = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentPrefix"];
+    self.languageCodeDescriptor.inputArgumentNameExclusions = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentExclusions"];;
 
     // generate code string
     NSString *functionString = [self.languageCodeDescriptor generateCodeString];
@@ -314,7 +314,7 @@ char MGSFunctionCodeContext;
     [_fragaria setObject:[languagePlugin syntaxDefinition] forKey:MGSFOSyntaxDefinitionName];
     
     // enable allowed argument styles
-    NSArray *menuTags = @[ @(kMGSFunctionArgumentUnderscoreSeparated), @(kMGSFunctionArgumentWhitespaceRemoved)];
+    NSArray *menuTags = @[ @(kMGSInputArgumentUnderscoreSeparated), @(kMGSInputArgumentWhitespaceRemoved)];
     NSMenuItem *menuItem = nil;
     for (NSNumber *tag in menuTags) {
         menuItem = [[_argumentStylePopupButton menu] itemWithTag:[tag integerValue]];
@@ -325,9 +325,9 @@ char MGSFunctionCodeContext;
         [menuItem setHidden:hidden];
     }
         
-    self.languageCodeDescriptor.functionArgumentName = language.initInputArgumentName;
-    self.languageCodeDescriptor.functionArgumentStyle = language.initInputArgumentStyle;
-    self.languageCodeDescriptor.functionArgumentCase = language.initInputArgumentCase;
+    self.languageCodeDescriptor.inputArgumentName = language.initInputArgumentName;
+    self.languageCodeDescriptor.inputArgumentStyle = language.initInputArgumentStyle;
+    self.languageCodeDescriptor.inputArgumentCase = language.initInputArgumentCase;
     
     // display on run task
     NSInteger onRunTask = [_script onRun].integerValue;

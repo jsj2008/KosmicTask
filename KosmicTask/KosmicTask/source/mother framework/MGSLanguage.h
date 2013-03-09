@@ -10,28 +10,28 @@
 
 extern NSString *MGSInputStyle;
 
-enum _eMGSFunctionArgumentName {
-    kMGSFunctionArgumentName = 1 << 0,
-    kMGSFunctionArgumentNameAndType = 1 << 1,
-    kMGSFunctionArgumentType = 1 << 2,
-    kMGSFunctionArgumentTypeAndName = 1 << 3,
+enum _eMGSInputArgumentName {
+    kMGSInputArgumentName = 1 << 0,
+    kMGSInputArgumentNameAndType = 1 << 1,
+    kMGSInputArgumentType = 1 << 2,
+    kMGSInputArgumentTypeAndName = 1 << 3,
 };
-typedef NSUInteger MGSFunctionArgumentName;
+typedef NSUInteger MGSInputArgumentName;
 
-enum _eMGSFunctionArgumentCaseFlags {
-    kMGSFunctionArgumentCamelCase= 1 << 0,
-    kMGSFunctionArgumentLowerCase = 1 << 1,
-    kMGSFunctionArgumentInputCase = 1 << 2,
-    kMGSFunctionArgumentPascalCase = 1 << 3,
-    kMGSFunctionArgumentUpperCase = 1 << 4,
+enum _eMGSInputArgumentCaseFlags {
+    kMGSInputArgumentCamelCase= 1 << 0,
+    kMGSInputArgumentLowerCase = 1 << 1,
+    kMGSInputArgumentInputCase = 1 << 2,
+    kMGSInputArgumentPascalCase = 1 << 3,
+    kMGSInputArgumentUpperCase = 1 << 4,
 };
-typedef NSUInteger MGSFunctionArgumentCase;
+typedef NSUInteger MGSInputArgumentCase;
 
-enum _eMGSFunctionArgumentStyleFlags {
-    kMGSFunctionArgumentUnderscoreSeparated = 1 << 0,
-    kMGSFunctionArgumentWhitespaceRemoved = 1 << 1,
+enum _eMGSInputArgumentStyleFlags {
+    kMGSInputArgumentUnderscoreSeparated = 1 << 0,
+    kMGSInputArgumentWhitespaceRemoved = 1 << 1,
 };
-typedef NSUInteger MGSFunctionArgumentStyle;
+typedef NSUInteger MGSInputArgumentStyle;
 
 enum _eMGSCodeDescriptorCodeStyle {
     kMGSCodeDescriptorTaskInputs = 0,
@@ -134,10 +134,10 @@ typedef NSInteger MGSBuildResultFlags;
 	NSString *initTaskRunnerClassName;
 	MGSBuildResultFlags initBuildResultFlags;
     
-    MGSFunctionArgumentName initInputArgumentName;
-    MGSFunctionArgumentCase initInputArgumentCase;
-    MGSFunctionArgumentStyle initInputArgumentStyle;
-    MGSFunctionArgumentStyle initInputArgumentStyleAllowedFlags;
+    MGSInputArgumentName initInputArgumentName;
+    MGSInputArgumentCase initInputArgumentCase;
+    MGSInputArgumentStyle initInputArgumentStyle;
+    MGSInputArgumentStyle initInputArgumentStyleAllowedFlags;
     
     NSString *initArgumentInputPrefix;
 }
@@ -146,10 +146,10 @@ typedef NSInteger MGSBuildResultFlags;
 @property eMGSProcessType initExecutorProcessType;
 @property eMGSProcessType initBuildProcessType;
 
-@property MGSFunctionArgumentName initInputArgumentName;
-@property MGSFunctionArgumentCase initInputArgumentCase;
-@property MGSFunctionArgumentStyle initInputArgumentStyle;
-@property MGSFunctionArgumentStyle initInputArgumentStyleAllowedFlags;
+@property MGSInputArgumentName initInputArgumentName;
+@property MGSInputArgumentCase initInputArgumentCase;
+@property MGSInputArgumentStyle initInputArgumentStyle;
+@property MGSInputArgumentStyle initInputArgumentStyleAllowedFlags;
 @property (copy) NSString *initInputArgumentPrefix;
 
 @property BOOL initCanBuild;

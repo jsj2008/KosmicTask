@@ -263,12 +263,12 @@ initInputArgumentStyleAllowedFlags;
 		initSourceFileExtensions = [NSArray new];
         
         // code template processing
-        initInputArgumentName = kMGSFunctionArgumentName;
-        initInputArgumentCase = kMGSFunctionArgumentCamelCase;
-        initInputArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
+        initInputArgumentName = kMGSInputArgumentName;
+        initInputArgumentCase = kMGSInputArgumentCamelCase;
+        initInputArgumentStyle = kMGSInputArgumentWhitespaceRemoved;
         initInputArgumentPrefix = @"";
-        initInputArgumentStyleAllowedFlags = kMGSFunctionArgumentUnderscoreSeparated |
-                                                kMGSFunctionArgumentWhitespaceRemoved;
+        initInputArgumentStyleAllowedFlags = kMGSInputArgumentUnderscoreSeparated |
+                                                kMGSInputArgumentWhitespaceRemoved;
 	}
 	return self;
 }

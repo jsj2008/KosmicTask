@@ -23,6 +23,7 @@ extern NSString * MGSDefaultStartAtLogin;
 	IBOutlet NSView *internetPrefsView;
     IBOutlet NSView *textEditingPrefsView;
     IBOutlet NSView *fontsAndColoursPrefsView;
+    IBOutlet NSView *codePrefsView;
 	IBOutlet NSMatrix *userNameDisclosureRadioButtons;
 	IBOutlet NSObjectController *internetSharingObjectController;
     IBOutlet NSObjectController *ownerObjectController;
@@ -49,6 +50,7 @@ extern NSString * MGSDefaultStartAtLogin;
     NSString *_textTabIdentifier;
     NSString *_fontTabIdentifier;
     NSString *_securityTabIdentifier;
+    NSString *_codeTabIdentifier;
     
     NSString *_selectedNetworkTabIdentifier;
     NSString *_toolbarIdentifier;

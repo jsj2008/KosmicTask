@@ -15,14 +15,14 @@
 
 
 @interface MGSLanguageCodeDescriptor : NSObject {
-    MGSFunctionArgumentName _functionArgumentName;
-    MGSFunctionArgumentCase _functionArgumentCase;
-    MGSFunctionArgumentStyle _functionArgumentStyle;
+    MGSInputArgumentName _inputArgumentName;
+    MGSInputArgumentCase _inputArgumentCase;
+    MGSInputArgumentStyle _inputArgumentStyle;
     MGSCodeDescriptorCodeStyle _descriptorCodeStyle;
     MGSScript *_script;
     GRMustacheTemplateRepository *_templateRepository;
-    NSString *_functionArgumentPrefix;
-    NSString *_functionArgumentNameExclusions;
+    NSString *_inputArgumentPrefix;
+    NSString *_inputArgumentNameExclusions;
     
 #ifdef MGS_USE_MGTemplateEngine    
     id _templateEngine;
@@ -30,16 +30,16 @@
     MGSLanguage *_scriptLanguage;
 }
 
-@property MGSFunctionArgumentName functionArgumentName;
-@property MGSFunctionArgumentCase functionArgumentCase;
-@property MGSFunctionArgumentStyle functionArgumentStyle;
+@property MGSInputArgumentName inputArgumentName;
+@property MGSInputArgumentCase inputArgumentCase;
+@property MGSInputArgumentStyle inputArgumentStyle;
 @property MGSCodeDescriptorCodeStyle descriptorCodeStyle;
-@property (copy) NSString *functionArgumentPrefix;
-@property (copy) NSString *functionArgumentNameExclusions;
+@property (copy) NSString *inputArgumentPrefix;
+@property (copy) NSString *inputArgumentNameExclusions;
 @property (assign) MGSScript *script;
 
 - (id)initWithScript:(MGSScript *)script;
-- (void)copyFunctionArgumentsFromDescriptor:(MGSLanguageCodeDescriptor *)descriptor;
+- (void)copyinputArgumentsFromDescriptor:(MGSLanguageCodeDescriptor *)descriptor;
 - (NSString *)generateCodeString;
 - (NSString *)generateTaskInputsCodeString;
 - (NSString *)generateTaskBodyCodeString;

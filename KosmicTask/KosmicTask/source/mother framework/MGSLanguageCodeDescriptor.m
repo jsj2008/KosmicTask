@@ -34,14 +34,14 @@ char MGSScriptTypeContext;
 
 @implementation MGSLanguageCodeDescriptor
 
-@synthesize functionArgumentName = _functionArgumentName;
-@synthesize functionArgumentCase = _functionArgumentCase;
-@synthesize functionArgumentStyle = _functionArgumentStyle;
+@synthesize inputArgumentName = _inputArgumentName;
+@synthesize inputArgumentCase = _inputArgumentCase;
+@synthesize inputArgumentStyle = _inputArgumentStyle;
 @synthesize descriptorCodeStyle = _descriptorCodeStyle;
 @synthesize script = _script;
 @synthesize scriptLanguage = _scriptLanguage;
-@synthesize functionArgumentPrefix = _functionArgumentPrefix;
-@synthesize functionArgumentNameExclusions = _functionArgumentNameExclusions;
+@synthesize inputArgumentPrefix = _inputArgumentPrefix;
+@synthesize inputArgumentNameExclusions = _inputArgumentNameExclusions;
 
 /*
  
@@ -63,9 +63,9 @@ char MGSScriptTypeContext;
 {
     self = [super init];
     if (self) {
-        _functionArgumentName = kMGSFunctionArgumentName;
-        _functionArgumentCase = kMGSFunctionArgumentCamelCase;
-        _functionArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
+        _inputArgumentName = kMGSInputArgumentName;
+        _inputArgumentCase = kMGSInputArgumentCamelCase;
+        _inputArgumentStyle = kMGSInputArgumentWhitespaceRemoved;
         _descriptorCodeStyle = kMGSCodeDescriptorTaskInputs;
         
         if (script) {
@@ -78,14 +78,14 @@ char MGSScriptTypeContext;
 }
 /*
  
- - copyFunctionArgumentsFromDescriptor:
+ - copyinputArgumentsFromDescriptor:
  
  */
-- (void)copyFunctionArgumentsFromDescriptor:(MGSLanguageCodeDescriptor *)descriptor
+- (void)copyinputArgumentsFromDescriptor:(MGSLanguageCodeDescriptor *)descriptor
 {
-    self.functionArgumentCase = descriptor.functionArgumentCase;
-    self.functionArgumentName = descriptor.functionArgumentName;
-    self.functionArgumentStyle = descriptor.functionArgumentStyle;
+    self.inputArgumentCase = descriptor.inputArgumentCase;
+    self.inputArgumentName = descriptor.inputArgumentName;
+    self.inputArgumentStyle = descriptor.inputArgumentStyle;
     self.descriptorCodeStyle = descriptor.descriptorCodeStyle;
 }
 
@@ -525,13 +525,13 @@ char MGSScriptTypeContext;
                 
                 // re normalise using the parameter name but don't do case processing
                 // or prefixing this time around
-                MGSFunctionArgumentCase argumentCase = self.functionArgumentCase;
-                NSString *argumentPrefix = self.functionArgumentPrefix;
-                _functionArgumentCase = kMGSFunctionArgumentInputCase;
-                _functionArgumentPrefix = nil;
+                MGSInputArgumentCase argumentCase = self.inputArgumentCase;
+                NSString *argumentPrefix = self.inputArgumentPrefix;
+                _inputArgumentCase = kMGSInputArgumentInputCase;
+                _inputArgumentPrefix = nil;
                 parameterName = [self normalisedParameterName:parameterName];
-                _functionArgumentCase = argumentCase;
-                _functionArgumentPrefix = argumentPrefix;
+                _inputArgumentCase = argumentCase;
+                _inputArgumentPrefix = argumentPrefix;
                 
                 if (parameterName) {
                     [parameterNames replaceObjectAtIndex:idx withObject:parameterName];
@@ -587,22 +587,22 @@ char MGSScriptTypeContext;
     typeName = [typeName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     // order argument name elements
-    switch (self.functionArgumentName) {
+    switch (self.inputArgumentName) {
         
-        case kMGSFunctionArgumentName:
+        case kMGSInputArgumentName:
         default:
             normalisedName = name;
             break;
             
-        case kMGSFunctionArgumentNameAndType:
+        case kMGSInputArgumentNameAndType:
             normalisedName = [NSString stringWithFormat:@"%@ %@", name, typeName];
             break;
             
-        case kMGSFunctionArgumentType:
+        case kMGSInputArgumentType:
             normalisedName = typeName;
             break;
             
-        case kMGSFunctionArgumentTypeAndName:
+        case kMGSInputArgumentTypeAndName:
             normalisedName = [NSString stringWithFormat:@"%@ %@", typeName, name];
            break;
     }
@@ -626,26 +626,26 @@ char MGSScriptTypeContext;
     SEL firstArgumentSelector = NULL;
     SEL argumentSelector = NULL;
     
-    switch (self.functionArgumentCase) {
+    switch (self.inputArgumentCase) {
             
-        case kMGSFunctionArgumentCamelCase:
+        case kMGSInputArgumentCamelCase:
             firstArgumentSelector = @selector(lowercaseString);
             argumentSelector = @selector(capitalizedString);
             break;
             
-        case kMGSFunctionArgumentLowerCase:
+        case kMGSInputArgumentLowerCase:
             argumentSelector = @selector(lowercaseString);
             break;
             
-        case kMGSFunctionArgumentInputCase:
+        case kMGSInputArgumentInputCase:
         default:
             break;
             
-        case kMGSFunctionArgumentPascalCase:
+        case kMGSInputArgumentPascalCase:
             argumentSelector = @selector(capitalizedString);
             break;
             
-        case kMGSFunctionArgumentUpperCase:
+        case kMGSInputArgumentUpperCase:
             argumentSelector = @selector(uppercaseString);
             break;
     }
@@ -654,7 +654,7 @@ char MGSScriptTypeContext;
     NSMutableArray *nameComponents = [NSMutableArray arrayWithArray:[name componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
 
     // get lowercase excluded components
-    NSMutableArray *excludedNameComponents = [NSMutableArray arrayWithArray:[[self.functionArgumentNameExclusions lowercaseString] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    NSMutableArray *excludedNameComponents = [NSMutableArray arrayWithArray:[[self.inputArgumentNameExclusions lowercaseString] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     
     // remove excluded components
     for (NSString *exludedName in excludedNameComponents) {
@@ -683,13 +683,13 @@ char MGSScriptTypeContext;
     
     // style arguments
     NSString *joinString = nil;
-    switch (self.functionArgumentStyle) {
+    switch (self.inputArgumentStyle) {
            
-        case kMGSFunctionArgumentUnderscoreSeparated:
+        case kMGSInputArgumentUnderscoreSeparated:
             joinString = @"_";
             break;
             
-        case kMGSFunctionArgumentWhitespaceRemoved:
+        case kMGSInputArgumentWhitespaceRemoved:
         default:
             joinString = @"";
             break;
@@ -697,8 +697,8 @@ char MGSScriptTypeContext;
     
     // reconstitute components with separator and apply prefix
     NSString *normalisedName = [nameComponents componentsJoinedByString:joinString];
-    if (self.functionArgumentPrefix) {
-        normalisedName = [self.functionArgumentPrefix stringByAppendingString:normalisedName];
+    if (self.inputArgumentPrefix) {
+        normalisedName = [self.inputArgumentPrefix stringByAppendingString:normalisedName];
     }
     
     return normalisedName;

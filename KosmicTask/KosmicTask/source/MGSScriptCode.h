@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSDictionary.h"
+#import "MGSLanguage.h"
 
 enum _MGSScriptCodeRepresentation {
 	MGSScriptCodeRepresentationUndefined = 0,		// undefined representation
@@ -46,4 +47,12 @@ typedef NSInteger MGSScriptCodeRepresentation;
 - (NSString *)compiledDataFormat;
 
 - (BOOL)conformToRepresentation:(MGSScriptCodeRepresentation)representation options:(NSDictionary *)options;
+
+// input name formatting
+- (MGSInputArgumentName)inputArgumentName;
+- (MGSInputArgumentCase)inputArgumentCase;
+- (MGSInputArgumentStyle)inputArgumentStyle;
+- (NSString *)inputArgumentPrefix;
+- (NSString *)inputArgumentNameExclusions;
+
 @end

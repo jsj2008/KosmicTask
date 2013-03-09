@@ -23,9 +23,9 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 - (NSString *)stringForLanguageType:(eMGSLanguageType)format;
 - (NSDictionary *)languageProperties;
 - (void)initialisePropertiesWithManager:(MGSLanguagePropertyManager *)manager;
-- (NSString *)stringForLanguageInputArgumentName:(MGSFunctionArgumentName)argumentName;
-- (NSString *)stringForLanguageInputArgumentCase:(MGSFunctionArgumentCase)argumentCase;
-- (NSString *)stringForLanguageInputArgumentStyle:(MGSFunctionArgumentStyle)argumentStyle;
+- (NSString *)stringForLanguageInputArgumentName:(MGSInputArgumentName)argumentName;
+- (NSString *)stringForLanguageInputArgumentCase:(MGSInputArgumentCase)argumentCase;
+- (NSString *)stringForLanguageInputArgumentStyle:(MGSInputArgumentStyle)argumentStyle;
 
 @property (copy) MGSLanguage *language;
 @end
@@ -627,10 +627,10 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
     
 	// input argument name filter
 	propOptions = [NSMutableDictionary dictionaryWithCapacity:5];
-    NSArray *propIndexes = @[@(kMGSFunctionArgumentName),
-                            @(kMGSFunctionArgumentNameAndType),
-                            @(kMGSFunctionArgumentType),
-                            @(kMGSFunctionArgumentTypeAndName)];
+    NSArray *propIndexes = @[@(kMGSInputArgumentName),
+                            @(kMGSInputArgumentNameAndType),
+                            @(kMGSInputArgumentType),
+                            @(kMGSInputArgumentTypeAndName)];
     for (NSNumber *propIndex in propIndexes) {
         [propOptions
             setObject:[self stringForLanguageInputArgumentName:[propIndex unsignedIntegerValue]]
@@ -648,11 +648,11 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
     
     // input argument case filter
 	propOptions = [NSMutableDictionary dictionaryWithCapacity:5];
-    propIndexes = @[@(kMGSFunctionArgumentCamelCase),
-                        @(kMGSFunctionArgumentLowerCase),
-                        @(kMGSFunctionArgumentInputCase),
-                        @(kMGSFunctionArgumentPascalCase),
-                        @(kMGSFunctionArgumentUpperCase)];
+    propIndexes = @[@(kMGSInputArgumentCamelCase),
+                        @(kMGSInputArgumentLowerCase),
+                        @(kMGSInputArgumentInputCase),
+                        @(kMGSInputArgumentPascalCase),
+                        @(kMGSInputArgumentUpperCase)];
     
     for (NSNumber *propIndex in propIndexes) {
         [propOptions
@@ -671,8 +671,8 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 
     // input argument style filter
 	propOptions = [NSMutableDictionary dictionaryWithCapacity:5];
-    propIndexes = @[    @(kMGSFunctionArgumentUnderscoreSeparated),
-                        @(kMGSFunctionArgumentWhitespaceRemoved)];
+    propIndexes = @[    @(kMGSInputArgumentUnderscoreSeparated),
+                        @(kMGSInputArgumentWhitespaceRemoved)];
     
     for (NSNumber *propIndex in propIndexes) {
         [propOptions
@@ -1025,24 +1025,24 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
  - stringForLanguageInputArgumentName:
  
  */
-- (NSString *)stringForLanguageInputArgumentName:(MGSFunctionArgumentName)argumentName
+- (NSString *)stringForLanguageInputArgumentName:(MGSInputArgumentName)argumentName
 {
 	NSString *text = NSLocalizedString(@"unknown" , @"Unknown input argument name format");
 	switch (argumentName) {
 
-        case kMGSFunctionArgumentName:
+        case kMGSInputArgumentName:
 			text = NSLocalizedString(@"Input Name" , @"Input argument name format");
             break;
             
-        case kMGSFunctionArgumentNameAndType:
+        case kMGSInputArgumentNameAndType:
 			text = NSLocalizedString(@"Input Name and Type" , @"Input argument name format");
             break;
             
-        case kMGSFunctionArgumentType:
+        case kMGSInputArgumentType:
 			text = NSLocalizedString(@"Input Type" , @"Input argument name format");
             break;
             
-        case kMGSFunctionArgumentTypeAndName:
+        case kMGSInputArgumentTypeAndName:
 			text = NSLocalizedString(@"Input Type and Name" , @"Input argument name format");
             break;
 	}
@@ -1054,28 +1054,28 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
  - stringForLanguageInputArgumentCase:
  
  */
-- (NSString *)stringForLanguageInputArgumentCase:(MGSFunctionArgumentCase)argumentCase
+- (NSString *)stringForLanguageInputArgumentCase:(MGSInputArgumentCase)argumentCase
 {
 	NSString *text = NSLocalizedString(@"unknown" , @"Unknown input argument case format");
 	switch (argumentCase) {
             
-        case kMGSFunctionArgumentCamelCase:
+        case kMGSInputArgumentCamelCase:
 			text = NSLocalizedString(@"Camel Case" , @"Input argument case format");
             break;
             
-        case kMGSFunctionArgumentLowerCase:
+        case kMGSInputArgumentLowerCase:
 			text = NSLocalizedString(@"Lower Case" , @"Input argument case format");
             break;
             
-        case kMGSFunctionArgumentInputCase:
+        case kMGSInputArgumentInputCase:
 			text = NSLocalizedString(@"InputCase" , @"Input argument case format");
             break;
             
-        case kMGSFunctionArgumentPascalCase:
+        case kMGSInputArgumentPascalCase:
 			text = NSLocalizedString(@"Pascal Case" , @"Input argument case format");
             break;
             
-        case kMGSFunctionArgumentUpperCase:
+        case kMGSInputArgumentUpperCase:
 			text = NSLocalizedString(@"Upper Case" , @"Input argument case format");
             break;
 	}
@@ -1087,16 +1087,16 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
  - stringForLanguageInputArgumentStyle:
  
  */
-- (NSString *)stringForLanguageInputArgumentStyle:(MGSFunctionArgumentStyle)argumentStyle
+- (NSString *)stringForLanguageInputArgumentStyle:(MGSInputArgumentStyle)argumentStyle
 {
 	NSString *text = NSLocalizedString(@"unknown" , @"Unknown input argument style format");
 	switch (argumentStyle) {
                         
-        case kMGSFunctionArgumentUnderscoreSeparated:
+        case kMGSInputArgumentUnderscoreSeparated:
 			text = NSLocalizedString(@"Underscore Separated" , @"Input argument style format");
             break;
             
-        case kMGSFunctionArgumentWhitespaceRemoved:
+        case kMGSInputArgumentWhitespaceRemoved:
 			text = NSLocalizedString(@"Whitespace removed" , @"Input argument style format");
             break;
 	}

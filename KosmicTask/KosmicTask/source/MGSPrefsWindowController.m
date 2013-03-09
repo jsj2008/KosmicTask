@@ -84,10 +84,12 @@ NSString *MGSDefaultStartAtLogin = @"MGSStartAtLogin";
     _fontTabIdentifier = NSLocalizedString(@"Fonts & Colours", @"Fonts & colours tab name");
     _securityTabIdentifier = NSLocalizedString(@"Security", @"Preferences tab name");
 	_internetTabIdentifier = NSLocalizedString(@"Network", @"Preferences tab name");
+    _codeTabIdentifier = NSLocalizedString(@"Code Assistant", @"Preferences tab name");
     
 	[self addView:generalPrefsView label:_generalTabIdentifier];
     [self addView:tasksPrefsView label:_tasksTabIdentifier image:[NSImage imageNamed: @"NSAdvanced"]];
     [self addView:tabsPrefsView label:_tabsTabIdentifier image:[NSImage imageNamed: @"TabsPreference"]];
+    [self addView:codePrefsView label:_codeTabIdentifier image:[NSImage imageNamed: @"TaskFunctionToolbar.tif"]];
     [self addView:textEditingPrefsView label:_textTabIdentifier image:[NSImage imageNamed: @"PencilAndPaper.icns"]];
     [self addView:fontsAndColoursPrefsView label:_fontTabIdentifier image:[NSImage imageNamed: @"FontsAndColours.icns"]];
     [self addView:securityPrefsView label:_securityTabIdentifier image:[[[MGSImageManager sharedManager] locked] copy]];

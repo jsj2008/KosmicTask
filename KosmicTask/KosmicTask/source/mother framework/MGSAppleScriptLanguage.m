@@ -50,9 +50,9 @@
 		self.initBuildResultFlags = kMGSScriptSourceRTF | kMGSCompiledScript;
         
         // code template processing
-        self.initInputArgumentName = kMGSFunctionArgumentName;
-        self.initInputArgumentCase = kMGSFunctionArgumentCamelCase;
-        self.initInputArgumentStyle = kMGSFunctionArgumentWhitespaceRemoved;
+        self.initInputArgumentName = kMGSInputArgumentName;
+        self.initInputArgumentCase = kMGSInputArgumentCamelCase;
+        self.initInputArgumentStyle = kMGSInputArgumentWhitespaceRemoved;
 	}
 	
 	return self;
