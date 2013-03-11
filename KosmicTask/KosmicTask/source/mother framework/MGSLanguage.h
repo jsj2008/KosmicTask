@@ -138,8 +138,6 @@ typedef NSInteger MGSBuildResultFlags;
     MGSInputArgumentCase initInputArgumentCase;
     MGSInputArgumentStyle initInputArgumentStyle;
     MGSInputArgumentStyle initInputArgumentStyleAllowedFlags;
-    
-    NSString *initArgumentInputPrefix;
 }
 
 @property eMGSLanguageType initLanguageType;
@@ -150,7 +148,6 @@ typedef NSInteger MGSBuildResultFlags;
 @property MGSInputArgumentCase initInputArgumentCase;
 @property MGSInputArgumentStyle initInputArgumentStyle;
 @property MGSInputArgumentStyle initInputArgumentStyleAllowedFlags;
-@property (copy) NSString *initInputArgumentPrefix;
 
 @property BOOL initCanBuild;
 @property BOOL initSeparateSyntaxChecker;

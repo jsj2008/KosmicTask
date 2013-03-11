@@ -10,6 +10,7 @@
 #import "MGSDictionary.h"
 #import "MGSScriptPlist.h"
 #import "MGSPreferences.h"
+#import "MGSLanguage.h"
 
 extern NSString *MGSScriptOriginMugginsoft;
 
@@ -244,6 +245,21 @@ typedef NSInteger MGSScriptRepresentation;
 - (NSString *)key;
 - (NSString *)keyWithString:(NSString *)aString;
 - (id)clone;
+
+// input name formatting
+- (MGSInputArgumentName)inputArgumentName;
+- (void)setInputArgumentName:(MGSInputArgumentName)value;
+
+- (MGSInputArgumentCase)inputArgumentCase;
+- (void)setInputArgumentCase:(MGSInputArgumentCase)value;
+
+- (MGSInputArgumentStyle)inputArgumentStyle;
+- (void)setInputArgumentStyle:(MGSInputArgumentStyle)value;
+
+- (NSString *)inputArgumentPrefix;
+- (void)setInputArgumentPrefix:(NSString *)value;
+- (NSString *)inputArgumentNameExclusions;
+- (void)setInputArgumentNameExclusions:(NSString *)value;
 
 @property (readonly) MGSScriptParameterManager *parameterHandler;
 @property (assign) MGSScriptCode *scriptCode;

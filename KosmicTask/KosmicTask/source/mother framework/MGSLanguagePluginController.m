@@ -194,7 +194,7 @@ static MGSLanguagePluginController *mgs_sharedController = nil;
 		
 		// save settings
 		for (MGSLanguagePlugin *plugin in [self instances]) {
-			[plugin saveSettings];
+            [plugin saveSettings];
 		}
 		
 	}

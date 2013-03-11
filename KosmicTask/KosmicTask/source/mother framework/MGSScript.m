@@ -30,7 +30,8 @@
 // script file versions
 #define MGS_SCRIPT_FILE_VERSION_1_0 @"1.0"
 #define MGS_SCRIPT_FILE_VERSION_1_1 @"1.1"
-#define MGS_SCRIPT_FILE_VERSION MGS_SCRIPT_FILE_VERSION_1_1
+#define MGS_SCRIPT_FILE_VERSION_1_2 @"1.2"
+#define MGS_SCRIPT_FILE_VERSION MGS_SCRIPT_FILE_VERSION_1_2
 
 // script origin
 NSString *MGSScriptOriginMugginsoft = @"Mugginsoft";
@@ -98,6 +99,16 @@ const char MGSLangSettingsOnRunContext;
 	[script setScriptStatus:MGSScriptStatusNew];
 	
 	[script setScriptType:[self defaultScriptType]];
+
+    // load user defaults
+    NSString *stringValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentPrefix"];
+    if (!stringValue) stringValue = @"";
+    script.inputArgumentPrefix = stringValue;
+    
+    stringValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentExclusions"];
+    if (!stringValue) stringValue = @"";
+    script.inputArgumentNameExclusions  = stringValue;
+
 	[script setUserInteractionMode:kMGSScriptUserModeCanInteractIfLocal];	// default to local interacting
 	
 	[script setAuthor:[self defaultAuthor]];
@@ -259,7 +270,7 @@ errorExit:;
  versionise dictionary
  
  */
-+ (BOOL)versioniseDictionary:(NSMutableDictionary *)dict 
++ (BOOL)versioniseDictionary:(NSMutableDictionary *)dict
 {
 	// get version
 	NSString *version = [dict objectForKey: MGSScriptKeyFileVersion];
@@ -269,6 +280,11 @@ errorExit:;
 		return NO;
 	}
 	
+    NSString *scriptType = [dict objectForKey: MGSScriptKeyScriptType];
+    if (!scriptType) {
+        return NO;
+    }
+    
 	// versionise 1.0 => 1.1
 	if ([version isEqualToString:MGS_SCRIPT_FILE_VERSION_1_0]) {
 					
@@ -304,6 +320,31 @@ errorExit:;
 
 	// versionise 1.1 => x.x
 	if ([version isEqualToString:MGS_SCRIPT_FILE_VERSION_1_1]) {
+        
+        MGSLanguagePlugin *plugin = [[MGSLanguagePluginController sharedController] pluginWithScriptType:scriptType];
+        MGSLanguage *language = plugin.language;
+        if (!language) return NO;
+        
+        // set script input argument properties
+        [dict setObject:@(language.initInputArgumentName) forKey:MGSScriptInputArgumentName];
+        [dict setObject:@(language.initInputArgumentCase) forKey:MGSScriptInputArgumentCase];
+        [dict setObject:@(language.initInputArgumentStyle) forKey:MGSScriptInputArgumentStyle];
+        
+        NSString *stringValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentPrefix"] ;
+        if (!stringValue) stringValue = @"";
+        [dict setObject:stringValue forKey:MGSScriptInputArgumentPrefix];
+        
+        stringValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentExclusions"];
+        if (!stringValue) stringValue = @"";
+        [dict setObject:stringValue forKey:MGSScriptInputArgumentNameExclusions];
+        
+		// dict is now 1.2
+		version = MGS_SCRIPT_FILE_VERSION_1_2;
+        
+		// update the file version to the current version
+		[dict setObject:version forKey:MGSScriptKeyFileVersion];
+        
+		MLogDebug(@"Updated task %@ (UUID=%@) to version %@", [dict objectForKey:MGSScriptKeyName],  [dict objectForKey:MGSScriptKeyScriptUUID], version);
 	}
 
 	return YES;
@@ -983,6 +1024,101 @@ errorExit:;
 }
 
 #pragma mark -
+#pragma mark Input arguments
+
+/*
+ 
+ - inputArgumentName
+ 
+*/
+- (MGSInputArgumentName)inputArgumentName
+{
+    return [[self objectForLocalizedKey:MGSScriptInputArgumentName] unsignedIntegerValue];
+}
+/*
+ 
+ - setInputArgumentName:
+ 
+*/
+- (void)setInputArgumentName:(MGSInputArgumentName)value
+{
+    [self setObject:@(value) forKey:MGSScriptInputArgumentName];
+}
+/*
+ 
+ - inputArgumentCase
+ 
+*/
+- (MGSInputArgumentCase)inputArgumentCase
+{
+    return [[self objectForLocalizedKey:MGSScriptInputArgumentCase] unsignedIntegerValue];
+}
+/*
+ 
+ - setInputArgumentCase:
+ 
+*/
+- (void)setInputArgumentCase:(MGSInputArgumentCase)value
+{
+    [self setObject:@(value) forKey:MGSScriptInputArgumentCase];
+}
+/*
+ 
+ - inputArgumentStyle
+ 
+*/
+- (MGSInputArgumentStyle)inputArgumentStyle
+{
+    return [[self objectForLocalizedKey:MGSScriptInputArgumentStyle] unsignedIntegerValue];
+}
+/*
+ 
+ - setInputArgumentStyle:
+ 
+*/
+- (void)setInputArgumentStyle:(MGSInputArgumentStyle)value
+{
+   [self setObject:@(value) forKey:MGSScriptInputArgumentStyle];
+}
+/*
+ 
+ - inputArgumentPrefix
+ 
+ */
+- (NSString *)inputArgumentPrefix
+{
+    return [self objectForLocalizedKey:MGSScriptInputArgumentPrefix];
+}
+/*
+ 
+ - setInputArgumentPrefix:
+ 
+ */
+- (void)setInputArgumentPrefix:(NSString *)value
+{
+    [self setObject:value forKey:MGSScriptInputArgumentPrefix];
+}
+/*
+ 
+ - inputArgumentNameExclusions
+ 
+ */
+- (NSString *)inputArgumentNameExclusions
+{
+    return [self objectForLocalizedKey:MGSScriptInputArgumentNameExclusions];
+}
+/*
+ 
+ - setInputArgumentNameExclusions:
+ 
+ */
+- (void)setInputArgumentNameExclusions:(NSString *)value
+{
+    [self setObject:value forKey:MGSScriptInputArgumentNameExclusions];
+}
+
+
+#pragma mark -
 #pragma mark Language Settings
 
 /*
@@ -1081,7 +1217,11 @@ errorExit:;
 	[[languagePropertyManager propertyForKey:MGS_LP_BuildOptions] updateValue:[self buildOptions]];
 	[[languagePropertyManager propertyForKey:MGS_LP_ExternalExecutorPath] updateValue:[self externalExecutorPath]];
 	[[languagePropertyManager propertyForKey:MGS_LP_ExecutorOptions] updateValue:[self executorOptions]];
-	
+
+    [[languagePropertyManager propertyForKey:MGS_LP_InputArgumentCase] updateOptionKey:@([self inputArgumentCase])];
+    [[languagePropertyManager propertyForKey:MGS_LP_InputArgumentStyle] updateOptionKey:@([self inputArgumentStyle])];
+    [[languagePropertyManager propertyForKey:MGS_LP_InputArgumentName] updateOptionKey:@([self inputArgumentName])];
+
 	syncingWithLanguageProperties = NO;
 
 }
@@ -1093,11 +1233,18 @@ errorExit:;
  */
 - (void)syncScriptWithLanguageProperties
 {
-	
+#warning PROBLEM here
+    if (!languagePropertyManager) {
+        return;
+    }
+    
+	NSAssert(languagePropertyManager, @"languagePropertyManager is nil");
+    id valueKey = nil;
+    
 	// onRun is mandatory.
-	MGSLanguageProperty *runClassProperty = [languagePropertyManager propertyForKey:MGS_LP_OnRunTask];
-	id onRunMode = [runClassProperty keyForOptionValue];
-	[self setOnRun:onRunMode];
+	MGSLanguageProperty *langProp = [languagePropertyManager propertyForKey:MGS_LP_OnRunTask];
+	valueKey = [langProp keyForOptionValue];
+	[self setOnRun:valueKey];
 
 	// an assertion raised here stops any new tasks from being created!
 	// so just log the condition here
@@ -1107,12 +1254,40 @@ errorExit:;
 	
 	// update script with property values
 	// absent script values cause settings to retain their default values
-	[self setSubroutine:[[languagePropertyManager propertyForKey:MGS_LP_RunFunction] value]];
-	[self setRunClass:[[languagePropertyManager propertyForKey:MGS_LP_RunClass] value]];
-	[self setExternalBuildPath:[[languagePropertyManager propertyForKey:MGS_LP_ExternalBuildPath] value]];
-	[self setBuildOptions:[[languagePropertyManager propertyForKey:MGS_LP_BuildOptions] value]];
-	[self setExternalExecutorPath:[[languagePropertyManager propertyForKey:MGS_LP_ExternalExecutorPath] value]];
-	[self setExecutorOptions:[[languagePropertyManager propertyForKey:MGS_LP_ExecutorOptions] value]];
+    langProp = [languagePropertyManager propertyForKey:MGS_LP_RunFunction];
+	[self setSubroutine:[langProp value]];
+    
+    langProp = [languagePropertyManager propertyForKey:MGS_LP_RunClass];
+	[self setRunClass:[langProp value]];
+	
+    langProp = [languagePropertyManager propertyForKey:MGS_LP_ExternalBuildPath];
+    [self setExternalBuildPath:[langProp value]];
+	
+    langProp = [languagePropertyManager propertyForKey:MGS_LP_BuildOptions];
+    [self setBuildOptions:[langProp value]];
+	
+    langProp = [languagePropertyManager propertyForKey:MGS_LP_ExternalExecutorPath];
+    [self setExternalExecutorPath:[langProp value]];
+	
+    langProp = [languagePropertyManager propertyForKey:MGS_LP_ExecutorOptions];
+    [self setExecutorOptions:[langProp value]];
+
+    langProp = [languagePropertyManager propertyForKey:MGS_LP_InputArgumentName];
+    valueKey = [langProp keyForOptionValue];
+    NSAssert([valueKey isKindOfClass:[NSNumber class]], @"NSNumber expected found %@", [valueKey class]);
+    self.inputArgumentName = [(NSNumber *)valueKey unsignedIntegerValue];
+
+    
+    langProp = [languagePropertyManager propertyForKey:MGS_LP_InputArgumentCase];
+    valueKey = [langProp keyForOptionValue];
+    NSAssert([valueKey isKindOfClass:[NSNumber class]], @"NSNumber expected found %@", [valueKey class]);
+    self.inputArgumentCase = [(NSNumber *)valueKey unsignedIntegerValue];
+
+    
+    langProp = [languagePropertyManager propertyForKey:MGS_LP_InputArgumentStyle];
+    valueKey = [langProp keyForOptionValue];
+    NSAssert([valueKey isKindOfClass:[NSNumber class]], @"NSNumber expected found %@", [valueKey class]);
+    self.inputArgumentStyle =  [(NSNumber *)valueKey unsignedIntegerValue];
 }
 
 
@@ -1239,10 +1414,7 @@ errorExit:;
 		
 	// on run task - call script, function or class function
 	} else if ([propKey isEqualToString:MGS_LP_OnRunTask]) {
-		if (propValue) {
-			optionKey = [langProperty keyForOptionValue];
-		}
-		
+        optionKey = [langProperty keyForOptionValue];
 		[self setOnRun:optionKey];
 		
 	// external build path
@@ -1260,7 +1432,19 @@ errorExit:;
 	// executor options
 	} else if ([propKey isEqualToString:MGS_LP_ExecutorOptions]) {
 		[self setExecutorOptions:propValue];
-	} 
+    
+    } else if ([propKey isEqualToString:MGS_LP_InputArgumentCase]) {
+        optionKey = [langProperty keyForOptionValue];
+        [self setInputArgumentCase:[optionKey unsignedIntegerValue]];
+
+    } else if ([propKey isEqualToString:MGS_LP_InputArgumentStyle]) {
+        optionKey = [langProperty keyForOptionValue];
+        [self setInputArgumentStyle:[optionKey unsignedIntegerValue]];
+
+    } else if ([propKey isEqualToString:MGS_LP_InputArgumentName]) {
+        optionKey = [langProperty keyForOptionValue];
+        [self setInputArgumentName:[optionKey unsignedIntegerValue]];
+    }
 }
 
 #pragma mark -

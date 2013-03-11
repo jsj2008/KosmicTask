@@ -17,14 +17,16 @@
 #import "MGSKosmicUnityTabStyle2.h"
 #import "MGSBorderView.h"
 
-char MGSFunctionCodeContext;
+char MGSInputArgumentContext;
+char MGSScriptTypeContext;
 
 // class extension
 @interface MGSCodeAssistantSheetController ()
 - (void)closeSheet:(NSInteger)returnCode;
-- (void)generateFunctionCodeString;
+- (void)generateCodeString;
 - (void)copySelectionToPasteBoard;
 - (void)configureTabBar;
+- (void)scriptTypeChanged;
 
 @property (copy, readwrite) NSArray *scriptTypes;
 @property MGSLanguageCodeDescriptor *languageCodeDescriptor;
@@ -35,7 +37,6 @@ char MGSFunctionCodeContext;
 @implementation MGSCodeAssistantSheetController
 
 @synthesize scriptTypes = _scriptTypes;
-@synthesize scriptType = _scriptType;
 @synthesize languageCodeDescriptor = _languageCodeDescriptor;
 @synthesize script = _script;
 @synthesize showInfoTextImage = _showInfoTextImage;
@@ -86,31 +87,14 @@ char MGSFunctionCodeContext;
 	[_fragariaTextView setAutomaticTextReplacementEnabled:NO];
     
     _scriptTypes = [MGSScript validScriptTypes];
-    _scriptType = @"AppleScript";
     
     // bind script type content values
 	[_scriptTypePopupButton bind:@"contentValues" toObject:self withKeyPath:@"scriptTypes" options:nil];
-	[_scriptTypePopupButton bind:NSSelectedValueBinding toObject:self withKeyPath:@"scriptType" options:nil];
     
     _languageCodeDescriptor = [[MGSLanguageCodeDescriptor alloc] init];
 
-    // bind the argument tags
-    [_argumentNamePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.inputArgumentName" options:nil];
-    [_argumentCasePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.inputArgumentCase" options:nil];
-    [_argumentStylePopupButton bind:NSSelectedTagBinding toObject:self withKeyPath:@"languageCodeDescriptor.inputArgumentStyle" options:nil];
-    
     // add observers
-    [self addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSFunctionCodeContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.inputArgumentName" options:0 context:&MGSFunctionCodeContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.inputArgumentCase" options:0 context:&MGSFunctionCodeContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.inputArgumentStyle" options:0 context:&MGSFunctionCodeContext];
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.descriptorCodeStyle" options:0 context:&MGSFunctionCodeContext];
-    
-    // observe user default
-    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[@"values." stringByAppendingString:MGSTaskInputArgumentPrefix] options:NSKeyValueObservingOptionNew context:&MGSFunctionCodeContext];
-    [[NSUserDefaultsController sharedUserDefaultsController] addObserver:self forKeyPath:[@"values." stringByAppendingString:MGSTaskInputArgumentExclusions] options:NSKeyValueObservingOptionNew context:&MGSFunctionCodeContext];
-    
-    [self generateFunctionCodeString];
+    [self addObserver:self forKeyPath:@"languageCodeDescriptor.descriptorCodeStyle" options:0 context:&MGSInputArgumentContext];
     
     // configure tab bar
     [self configureTabBar];
@@ -195,8 +179,48 @@ char MGSFunctionCodeContext;
  */
 - (void)setScript:(MGSScript *)script
 {
+    if (_script) {
+
+        // unbind the argument tags
+        [_scriptTypePopupButton unbind:NSSelectedValueBinding];
+        [_argumentNamePopupButton unbind:NSSelectedTagBinding];
+        [_argumentCasePopupButton unbind:NSSelectedTagBinding];
+        [_argumentStylePopupButton unbind:NSSelectedTagBinding];
+        [_argumentPrefix unbind:NSValueBinding];
+        [_argumentNameExclusions unbind:NSValueBinding];
+        
+        // remove observers
+        [_script removeObserver:self forKeyPath:@"scriptType"];
+        [_script removeObserver:self forKeyPath:@"inputArgumentName"];
+        [_script removeObserver:self forKeyPath:@"inputArgumentCase"];
+        [_script removeObserver:self forKeyPath:@"inputArgumentStyle"];
+        [_script removeObserver:self forKeyPath:@"inputArgumentPrefix"];
+        [_script removeObserver:self forKeyPath:@"inputArgumentNameExclusions"];
+        
+        _script = nil;
+    }
+    if (!script) return;
+    
     _script = [script mutableDeepCopy];
-    self.scriptType = [_script scriptType];
+
+    // bind the argument tags
+    [_scriptTypePopupButton bind:NSSelectedValueBinding toObject:_script withKeyPath:@"scriptType" options:nil];
+    [_argumentNamePopupButton bind:NSSelectedTagBinding toObject:_script withKeyPath:@"inputArgumentName" options:nil];
+    [_argumentCasePopupButton bind:NSSelectedTagBinding toObject:_script withKeyPath:@"inputArgumentCase" options:nil];
+    [_argumentStylePopupButton bind:NSSelectedTagBinding toObject:_script withKeyPath:@"inputArgumentStyle" options:nil];
+    [_argumentPrefix bind:NSValueBinding toObject:_script withKeyPath:@"inputArgumentPrefix" options:@{ NSContinuouslyUpdatesValueBindingOption : @(YES)}];
+    [_argumentNameExclusions bind:NSValueBinding toObject:_script withKeyPath:@"inputArgumentNameExclusions" options:@{NSContinuouslyUpdatesValueBindingOption : @(YES)}];
+    
+    // add observers
+    [_script addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSScriptTypeContext];
+    [_script addObserver:self forKeyPath:@"inputArgumentName" options:0 context:&MGSInputArgumentContext];
+    [_script addObserver:self forKeyPath:@"inputArgumentCase" options:0 context:&MGSInputArgumentContext];
+    [_script addObserver:self forKeyPath:@"inputArgumentStyle" options:0 context:&MGSInputArgumentContext];
+    [_script addObserver:self forKeyPath:@"inputArgumentPrefix" options:0 context:&MGSInputArgumentContext];
+    [_script addObserver:self forKeyPath:@"inputArgumentNameExclusions" options:0 context:&MGSInputArgumentContext];
+    
+    [self scriptTypeChanged];
+    [self generateCodeString];
 }
 
 /*
@@ -229,8 +253,11 @@ char MGSFunctionCodeContext;
 #pragma unused(object)
 #pragma unused(change)
     
-	if (context == &MGSFunctionCodeContext) {
-        [self generateFunctionCodeString];
+	if (context == &MGSInputArgumentContext) {
+        [self generateCodeString];
+    } else if (context == &MGSScriptTypeContext) {
+        [self scriptTypeChanged];
+        [self generateCodeString];
     }
     
 }
@@ -274,15 +301,13 @@ char MGSFunctionCodeContext;
 #pragma mark Code generation
 /*
  
- - generateFunctionCodeString
+ - generateCodeString
  
  */
-- (void)generateFunctionCodeString
+- (void)generateCodeString
 {
     // setup the descriptor
     [self.languageCodeDescriptor setScript:self.script];
-    self.languageCodeDescriptor.inputArgumentPrefix = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentPrefix"];
-    self.languageCodeDescriptor.inputArgumentNameExclusions = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentExclusions"];;
 
     // generate code string
     NSString *functionString = [self.languageCodeDescriptor generateCodeString];
@@ -294,22 +319,16 @@ char MGSFunctionCodeContext;
 
 /*
  
- - setScriptType:
+ - scriptTypeChanged
  
  */
 
-- (void)setScriptType:(NSString *)name
+- (void)scriptTypeChanged
 {
-    _scriptType = name;
-    
-    if (self.script.scriptType != _scriptType) {
-        self.script.scriptType = _scriptType;
-    }
-        
     // get language
     MGSLanguagePlugin *languagePlugin = [self.script languagePlugin];
     MGSLanguage *language = languagePlugin.language;
-    
+            
     // configure Fragaria syntax highlighting
     [_fragaria setObject:[languagePlugin syntaxDefinition] forKey:MGSFOSyntaxDefinitionName];
     
@@ -324,10 +343,6 @@ char MGSFunctionCodeContext;
         }
         [menuItem setHidden:hidden];
     }
-        
-    self.languageCodeDescriptor.inputArgumentName = language.initInputArgumentName;
-    self.languageCodeDescriptor.inputArgumentStyle = language.initInputArgumentStyle;
-    self.languageCodeDescriptor.inputArgumentCase = language.initInputArgumentCase;
     
     // display on run task
     NSInteger onRunTask = [_script onRun].integerValue;

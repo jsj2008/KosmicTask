@@ -84,6 +84,12 @@ extern NSString *MGSScriptKeyBuildOptions;
 extern NSString *MGSScriptKeyExternalExecutorPath;
 extern NSString *MGSScriptKeyExecutorOptions;
 
+extern NSString *MGSScriptInputArgumentName;
+extern NSString *MGSScriptInputArgumentCase;
+extern NSString *MGSScriptInputArgumentStyle;
+extern NSString *MGSScriptInputArgumentPrefix;
+extern NSString *MGSScriptInputArgumentNameExclusions;
+
 // user interaction modes
 extern NSString *MGSScriptKeyUserInteractionMode;
 

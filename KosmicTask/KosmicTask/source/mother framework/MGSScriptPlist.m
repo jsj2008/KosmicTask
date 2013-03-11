@@ -99,6 +99,11 @@ NSString *MGSScriptKeyExternalBuildPath = @"BuildPath";
 NSString *MGSScriptKeyBuildOptions = @"BuildOptions";
 NSString *MGSScriptKeyExternalExecutorPath = @"ExecutorPath";
 NSString *MGSScriptKeyExecutorOptions = @"ExecutorOptions";
+NSString *MGSScriptInputArgumentName = @"InputArgumentName";
+NSString *MGSScriptInputArgumentCase = @"InputArgumentCase";
+NSString *MGSScriptInputArgumentStyle = @"InputArgumentStyle";
+NSString *MGSScriptInputArgumentPrefix = @"InputArgumentPrefix";
+NSString *MGSScriptInputArgumentNameExclusions = @"InputArgumentNameExclusions";
 
 // change scheduling
 NSString *MGSScriptKeyScheduleForDeletion = @"ScheduleForDeletion";		// delete script on save

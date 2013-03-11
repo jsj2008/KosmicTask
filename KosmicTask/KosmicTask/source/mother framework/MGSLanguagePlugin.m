@@ -160,7 +160,13 @@ static NSOperationQueue *operationQueue = nil;
  */
 - (BOOL)saveSettings
 {
-	return [languagePropertyManager saveLanguageProperties];
+	BOOL success = YES;
+    
+    // need to think about this !
+    if (NO) {
+        success = [languagePropertyManager saveLanguageProperties];
+    }
+    return success;
 }
 
 /*

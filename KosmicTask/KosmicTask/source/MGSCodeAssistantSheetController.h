@@ -33,6 +33,8 @@ typedef NSInteger MGSCodeAssistantSheetReturnValue;
     IBOutlet NSPopUpButton *_argumentStylePopupButton;
     IBOutlet NSTextField *_runConfigurationTextField;
     IBOutlet PSMTabBarControl *tabBar;
+    IBOutlet NSTextField *_argumentPrefix;
+    IBOutlet NSTextView *_argumentNameExclusions;
     
     MGSLanguageCodeDescriptor *_languageCodeDescriptor;
     
@@ -42,7 +44,6 @@ typedef NSInteger MGSCodeAssistantSheetReturnValue;
 	IBOutlet NSView *_fragariaHostView; // fragria host view
 	NSTextView *_fragariaTextView;
     NSArray *_scriptTypes;
-    NSString *_scriptType;
     BOOL _showInfoTextImage;
     NSString *_infoText;
 }
@@ -55,7 +56,6 @@ typedef NSInteger MGSCodeAssistantSheetReturnValue;
 - (IBAction)openFileSheetAction:(id)sender;
 
 @property (copy, readonly) NSArray *scriptTypes;
-@property (copy) NSString *scriptType;
 @property MGSScript *script;
 @property (copy) NSString *infoText;
 @end

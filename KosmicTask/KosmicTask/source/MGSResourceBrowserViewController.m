@@ -53,7 +53,7 @@
 - (void)restoreViewFramesUsingDefaults:(NSDictionary *)viewDefaults;
 - (void)saveViewFramesUsingDefaults:(NSDictionary *)viewDefaults;
 - (IBAction)outlineDoubleAction:(id)sender;
-- (void)buildSettingsTree;
+- (void)buildSettingsTree:(MGSResourceItem *)resource;
 - (NSInteger)_mgs_outlineView:(NSOutlineView *)outlineView drawStyleForRow:(int)row;
 - (void)setLanguagePropertyManager:(MGSLanguagePropertyManager *)manager;
 - (void)selectClickedResource:(id)sender;
@@ -271,7 +271,7 @@ requiredResourceDoubleClicked, selectedLanguageProperty, script;
  - buildSettingsTree
  
  */
-- (void)buildSettingsTree
+- (void)buildSettingsTree:(MGSResourceItem *)resource
 {
 	// we require a language plugin
 	if (!self.languagePlugin) {
@@ -286,7 +286,7 @@ clearTree:
 	//
 	// template resource
 	//
-	if ([self.selectedResource isKindOfClass:[MGSLanguageTemplateResource class]]) {
+	if ([resource isKindOfClass:[MGSLanguageTemplateResource class]]) {
 		
 		// copy the language manager and 
 		// note that we create a copy of the manager
@@ -294,16 +294,16 @@ clearTree:
 		 
 		// reinitialise the properties so that the properties than can be reset in the
 		// original object cannot be reset in the copy.
-		// likely to be unnecessary giv changes in MGSLangaugeProperty -copyWithZone:
+		// likely to be unnecessary given changes in MGSLangaugeProperty -copyWithZone:
 		[languagePropertyManager reinitialiseProperties];
 		
 		// update with the selected template dictionary resource.
-		[languagePropertyManager updatePropertiesFromDictionary:self.selectedResource.dictionaryResource];		
+		[languagePropertyManager updatePropertiesFromDictionary:resource.dictionaryResource];
 		
 	//
 	// properties resource
 	//
-	} else if ([self.selectedResource isKindOfClass:[MGSLanguagePropertiesResource class]]) {
+	} else if ([resource isKindOfClass:[MGSLanguagePropertiesResource class]]) {
 		
 		// we want to update the property resource so we operate on the original
 		// languagePropertyManager object
@@ -460,13 +460,16 @@ clearTree:
 	}
 	
 	if ([nodeObject isKindOfClass:[MGSResourceItem class]]) {
-		
 		self.resourceName = [selectedNode name]; 
 		self.selectedResourcesManager = [nodeObject delegate];
-		self.selectedResource = nodeObject;		
 	} 
 	
-	[self buildSettingsTree];
+    if ([nodeObject isKindOfClass:[MGSResourceItem class]]) {
+		self.selectedResource = nodeObject;
+	}
+
+#warning PROBLEM HERE!
+    [self buildSettingsTree:self.selectedResource];
 }
 
 
@@ -988,6 +991,7 @@ clearTree:
 	[self.selectedResource unload];
 	selectedResource = item;
 
+    // we may pass in nil to clear the selection
 	if (!selectedResource) {
         self.resourceEditable = NO;  
         resourceDocumentViewController.selectedResource = nil;
@@ -996,7 +1000,7 @@ clearTree:
 
 	[self.selectedResource load];
 	
-	// has required resource type has been selected?
+	// has required resource type been selected?
 	self.requiredResourceSelected = [self.selectedResource isKindOfClass:[requiredResourceClass class]];
 	
 	// is the resource editable?

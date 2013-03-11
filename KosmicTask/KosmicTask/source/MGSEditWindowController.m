@@ -491,8 +491,17 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             // insert selected data
 		case kMGSCodeAssistantSheetReturnInsert:
             {
-                // update script
-                _taskSpec.script = codeAssistantSheetController.script;
+                MGSScript *assistantScript = codeAssistantSheetController.script;
+                
+                // update script properties
+                if (assistantScript.scriptType != _taskSpec.script.scriptType) {
+                    _taskSpec.script.scriptType = assistantScript.scriptType;
+                }
+                _taskSpec.script.inputArgumentName = assistantScript.inputArgumentName;
+                _taskSpec.script.inputArgumentCase = assistantScript.inputArgumentCase;
+                _taskSpec.script.inputArgumentStyle = assistantScript.inputArgumentStyle;
+                _taskSpec.script.inputArgumentPrefix = assistantScript.inputArgumentPrefix;
+                _taskSpec.script.inputArgumentNameExclusions = assistantScript.inputArgumentNameExclusions;
                 
                 // get data to be inserted
                 NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
@@ -518,6 +527,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             [scriptEditViewController showSettings:self];
             break;
     }
+    
+    codeAssistantSheetController.script = nil;
 }
 
 #pragma mark -

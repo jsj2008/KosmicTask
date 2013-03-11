@@ -69,7 +69,6 @@ initBuildResultFlags,
 initInputArgumentName,
 initInputArgumentCase,
 initInputArgumentStyle,
-initInputArgumentPrefix,
 initInputArgumentStyleAllowedFlags;
 
 #pragma mark -
@@ -266,7 +265,6 @@ initInputArgumentStyleAllowedFlags;
         initInputArgumentName = kMGSInputArgumentName;
         initInputArgumentCase = kMGSInputArgumentCamelCase;
         initInputArgumentStyle = kMGSInputArgumentWhitespaceRemoved;
-        initInputArgumentPrefix = @"";
         initInputArgumentStyleAllowedFlags = kMGSInputArgumentUnderscoreSeparated |
                                                 kMGSInputArgumentWhitespaceRemoved;
 	}
@@ -356,7 +354,7 @@ initInputArgumentStyleAllowedFlags;
     MGS_PROP_COPY(initInputArgumentName);
     MGS_PROP_COPY(initInputArgumentCase);
     MGS_PROP_COPY(initInputArgumentStyle);
-    MGS_PROP_COPY(initInputArgumentPrefix);
+    MGS_PROP_COPY(initInputArgumentStyleAllowedFlags);
     
 	return copy;
 }

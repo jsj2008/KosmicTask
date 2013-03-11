@@ -150,12 +150,17 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
  */
 - (id)keyForOptionValue
 {
+    id optionKey = nil;
+    
 	NSArray *keys = [optionValues allKeysForObject:self.value];
-	if ([keys count] == 0) {
-		return nil;
-	}
-	
-	return [keys objectAtIndex:0];
+	if ([keys count] > 0) {
+        optionKey = [keys objectAtIndex:0];
+    }
+    
+    if (!optionKey) {
+        NSLog(@"keyForOptionValue is nil for property %@ value %@", self.name, self.value);
+    }
+    return optionKey;
 }
 
 /*
@@ -201,14 +206,6 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
 		}
 	}
 	
-    // fails on OS X 10.7
-    if (NO) {
-        if (![newValue isKindOfClass:[initialValue class]]) {
-            MLogInfo(@"new value is of wrong class: %@", [newValue className]);
-            return;
-        }
-	}
-    
 	if ([newValue isEqualTo:value]) {
 		return;
 	}
@@ -222,20 +219,7 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
 		}
 	}
 	
-	/*
-	if ([newValue isKindOfClass:[NSString class]]) {
-		NSString *text = newValue;
-		text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-		if ([text length] == 0) {
-			//text = initialValue;
-		}
-		newValue = text;
-	}*/
-	if ([value isKindOfClass:[NSString class]] && [value isEqual:@"Whitespace removed"]) {
         
-        // NSLog(@"got it");
-    }
-         
 	value = newValue;
 	self.hasInitialValue = ([value isEqualTo:initialValue]) ? YES : NO;
 	self.canReset = !self.hasInitialValue;

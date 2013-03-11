@@ -67,6 +67,8 @@ char MGSScriptTypeContext;
         _inputArgumentCase = kMGSInputArgumentCamelCase;
         _inputArgumentStyle = kMGSInputArgumentWhitespaceRemoved;
         _descriptorCodeStyle = kMGSCodeDescriptorTaskInputs;
+        _inputArgumentPrefix = @"";
+        _inputArgumentNameExclusions = @"";
         
         if (script) {
             self.script = script;
@@ -75,18 +77,6 @@ char MGSScriptTypeContext;
     
     return self;
     
-}
-/*
- 
- - copyinputArgumentsFromDescriptor:
- 
- */
-- (void)copyinputArgumentsFromDescriptor:(MGSLanguageCodeDescriptor *)descriptor
-{
-    self.inputArgumentCase = descriptor.inputArgumentCase;
-    self.inputArgumentName = descriptor.inputArgumentName;
-    self.inputArgumentStyle = descriptor.inputArgumentStyle;
-    self.descriptorCodeStyle = descriptor.descriptorCodeStyle;
 }
 
 #pragma mark -
@@ -719,6 +709,12 @@ char MGSScriptTypeContext;
         [_script removeObserver:self forKeyPath:@"scriptType"];
     }
     _script = script;
+    self.inputArgumentName = _script.inputArgumentName;
+    self.inputArgumentCase =  _script.inputArgumentCase;
+    self.inputArgumentStyle =  _script.inputArgumentStyle;
+    self.inputArgumentPrefix =  _script.inputArgumentPrefix;
+    self.inputArgumentNameExclusions = _script.inputArgumentNameExclusions;
+    
     [self updateLanguageProperties];
     [_script addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSScriptTypeContext];
 }

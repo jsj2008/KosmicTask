@@ -39,7 +39,6 @@
 @property (assign) MGSScript *script;
 
 - (id)initWithScript:(MGSScript *)script;
-- (void)copyinputArgumentsFromDescriptor:(MGSLanguageCodeDescriptor *)descriptor;
 - (NSString *)generateCodeString;
 - (NSString *)generateTaskInputsCodeString;
 - (NSString *)generateTaskBodyCodeString;

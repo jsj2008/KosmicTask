@@ -1328,24 +1328,20 @@ wGw</bytes>
 					<int key="connectionID">161</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.MGSTaskInputArgumentPrefix</string>
-						<reference key="source" ref="526419148"/>
-						<reference key="destination" ref="800455386"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="526419148"/>
-							<reference key="NSDestination" ref="800455386"/>
-							<string key="NSLabel">value: values.MGSTaskInputArgumentPrefix</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.MGSTaskInputArgumentPrefix</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSContinuouslyUpdatesValue</string>
-								<boolean value="YES" key="NS.object.0"/>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_argumentNameExclusions</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="790820817"/>
 					</object>
-					<int key="connectionID">162</int>
+					<int key="connectionID">164</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">_argumentPrefix</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="526419148"/>
+					</object>
+					<int key="connectionID">165</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -1382,26 +1378,6 @@ wGw</bytes>
 						</object>
 					</object>
 					<int key="connectionID">140</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.MGSTaskInputArgumentExclusions</string>
-						<reference key="source" ref="790820817"/>
-						<reference key="destination" ref="800455386"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="790820817"/>
-							<reference key="NSDestination" ref="800455386"/>
-							<string key="NSLabel">value: values.MGSTaskInputArgumentExclusions</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.MGSTaskInputArgumentExclusions</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSContinuouslyUpdatesValue</string>
-								<boolean value="YES" key="NS.object.0"/>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">163</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2093,7 +2069,7 @@ wGw</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">163</int>
+			<int key="maxID">165</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2144,7 +2120,9 @@ wGw</bytes>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="_argumentCasePopupButton">NSPopUpButton</string>
+						<string key="_argumentNameExclusions">NSTextView</string>
 						<string key="_argumentNamePopupButton">NSPopUpButton</string>
+						<string key="_argumentPrefix">NSTextField</string>
 						<string key="_argumentStylePopupButton">NSPopUpButton</string>
 						<string key="_borderView">MGSBorderView</string>
 						<string key="_fragariaHostView">NSView</string>
@@ -2157,9 +2135,17 @@ wGw</bytes>
 							<string key="name">_argumentCasePopupButton</string>
 							<string key="candidateClassName">NSPopUpButton</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="_argumentNameExclusions">
+							<string key="name">_argumentNameExclusions</string>
+							<string key="candidateClassName">NSTextView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="_argumentNamePopupButton">
 							<string key="name">_argumentNamePopupButton</string>
 							<string key="candidateClassName">NSPopUpButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="_argumentPrefix">
+							<string key="name">_argumentPrefix</string>
+							<string key="candidateClassName">NSTextField</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="_argumentStylePopupButton">
 							<string key="name">_argumentStylePopupButton</string>
