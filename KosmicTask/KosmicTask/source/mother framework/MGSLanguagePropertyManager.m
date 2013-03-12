@@ -12,6 +12,7 @@
 
 NSString * const MGSNoteLanguagePropertyDidChangeValue = @"languagePropertyDidChangeValue";
 NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
+NSString * const MGSOptionKeySuffix = @"-key";
 
 // class extension
 @interface MGSLanguagePropertyManager ()
@@ -752,12 +753,37 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 	if (!dict) {
 		return;
 	}
-	
-	for (id key in [dict allKeys]) {
+	NSArray *allKeys = [dict allKeys];
+	for (id key in allKeys) {
+        
+        // if keyed value exists use it in preference to this value.
+        // in v1.0 we erroneously persisted values as opposed to keys.
+        NSString *optionKey = [key stringByAppendingString:MGSOptionKeySuffix];
+        if ([allKeys containsObject:optionKey]) {
+            continue;
+        }
+        
+        // get property key from option key
+        if ([key hasSuffix:MGSOptionKeySuffix]) {
+            optionKey = key;
+            key = [key substringToIndex:([key length] - [MGSOptionKeySuffix length])];
+        }
+        
+        // get property using key
 		MGSLanguageProperty *langProp = [self propertyForKey:key];
 		if (langProp) {
-			langProp.value = [dict objectForKey:key];
-		}
+             if (optionKey) {
+                 
+                 // update key
+                [langProp updateOptionKey:[dict objectForKey:optionKey]];
+            } else {
+                
+                // set value
+                langProp.value = [dict objectForKey:key];
+            }
+		} else {
+            NSLog(@"Bad language property key: %@",  key);
+        }
 	}
 }
 
@@ -878,7 +904,17 @@ NSString * const MGSNoteKeyLanguageProperty = @"languageProperty";
 		if (langProp.hasInitialValue && langProp.allowReset) continue;
 		
 		if (langProp.value && langProp.key) {
-			[dictionary setObject:langProp.value forKey:langProp.key];
+			
+            // write value
+            [dictionary setObject:langProp.value forKey:langProp.key];
+            
+            // write option key
+            if (langProp.optionValues) {
+                id optionKey = [langProp keyForOptionValue];
+                if (optionKey) {
+                    [dictionary setObject:optionKey forKey:[NSString stringWithFormat:@"%@%@", langProp.key, MGSOptionKeySuffix]];
+                }
+            }
 		}
 	}
 	

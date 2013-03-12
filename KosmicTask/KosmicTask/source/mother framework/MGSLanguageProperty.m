@@ -214,8 +214,26 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
 	if (optionValues) {
 		NSArray *keys = [optionValues allKeysForObject:newValue];
 		if ([keys count] == 0) {
-			MLogInfo(@"new value is not a valid option: %@", newValue);
-			return;
+            
+            BOOL allowCaseInsensitiveMatch = NO;
+            BOOL newValueUpdated = NO;
+            
+            if (allowCaseInsensitiveMatch && [newValue isKindOfClass:[NSString class]]) {
+                for (id optionValue in [optionValues allValues]) {
+                    if ([optionValue isKindOfClass:[NSString class]]) {
+                        if ([optionValue compare:newValue options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+                            newValue = optionValue;
+                            newValueUpdated = YES;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            if (!newValueUpdated) {
+                MLogInfo(@"new value is not a valid option: %@", newValue);
+                return;
+            }
 		}
 	}
 	
@@ -247,7 +265,7 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
 
 /*   
  
- - updateOptionKey: 
+ - updateOptionKey:
  
  */
 - (void)updateOptionKey:(id)newKey
@@ -256,7 +274,11 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
 		return;
 	}
 	id newValue = [optionValues objectForKey:newKey];
-	[self updateValue:newValue];
+    if (newValue) {
+        [self updateValue:newValue];
+    } else {
+        NSLog(@"Missing value for key %@", newKey);
+    }
 }
 
 /*

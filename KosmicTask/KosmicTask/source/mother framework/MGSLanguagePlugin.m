@@ -163,6 +163,8 @@ static NSOperationQueue *operationQueue = nil;
 	BOOL success = YES;
     
     // need to think about this !
+    // persisting values on the applciation path is futile as the data is readonly for the user
+    // and gets overwritten when the app updates.
     if (NO) {
         success = [languagePropertyManager saveLanguageProperties];
     }
