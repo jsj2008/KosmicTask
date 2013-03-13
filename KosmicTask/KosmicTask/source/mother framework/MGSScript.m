@@ -285,7 +285,11 @@ errorExit:;
         return NO;
     }
     
-	// versionise 1.0 => 1.1
+	/*
+     
+     versionise 1.0 => 1.1
+     
+     */
 	if ([version isEqualToString:MGS_SCRIPT_FILE_VERSION_1_0]) {
 					
 		// in app version 1.0 only AppleScript was supported.
@@ -318,7 +322,11 @@ errorExit:;
 		MLogDebug(@"Updated task %@ (UUID=%@) to version %@", [dict objectForKey:MGSScriptKeyName],  [dict objectForKey:MGSScriptKeyScriptUUID], version);
 	}
 
-	// versionise 1.1 => x.x
+	/*
+     
+     versionise 1.1 => 1.2
+     
+     */
 	if ([version isEqualToString:MGS_SCRIPT_FILE_VERSION_1_1]) {
         
         MGSLanguagePlugin *plugin = [[MGSLanguagePluginController sharedController] pluginWithScriptType:scriptType];
@@ -337,6 +345,15 @@ errorExit:;
         stringValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"MGSTaskInputArgumentExclusions"];
         if (!stringValue) stringValue = @"";
         [dict setObject:stringValue forKey:MGSScriptInputArgumentNameExclusions];
+        
+        // versionize parameters
+        NSArray *parameters = [dict objectForKey:MGSScriptKeyParameters];
+        for (NSMutableDictionary *parameter in parameters) {
+            
+            // add parameter UUID
+            NSString *UUID = [NSString mgs_stringWithNewUUID];
+            [parameter setObject:UUID forKey:MGSScriptKeyUUID];
+        }
         
 		// dict is now 1.2
 		version = MGS_SCRIPT_FILE_VERSION_1_2;
@@ -666,13 +683,13 @@ errorExit:;
 {
 	// copy the superclass = this will create new instance of underlying dict
 	// note that this will contain a deep copy of the dict
-	id aCopy = [super mutableCopyWithZone:zone];
+	MGSScript * aCopy = [super mutableCopyWithZone:zone];
 	
 	// copy local instance variables here
 	// create parameter handler to point into dict
 	[aCopy createParameterHandler];
 	[aCopy createCodeHandler];
-		
+
 	return aCopy;
 }
 
@@ -685,13 +702,13 @@ errorExit:;
 {
 	// copy the superclass = this will create new instance of underlying dict
 	// note that this will contain a deep copy of the dict
-	id aCopy = [super mutableDeepCopy];
+	MGSScript * aCopy = [super mutableDeepCopy];
 	
 	// copy local instance variables here
 	// create parameter handler to point into dict
 	[aCopy createParameterHandler];
 	[aCopy createCodeHandler];
-		
+	   
 	return aCopy;
 }
 

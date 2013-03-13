@@ -69,6 +69,7 @@ NSString *MGSScriptKeyParameters = @"Parameters";
 NSString *MGSScriptKeyCode = @"Code";
 NSString *MGSScriptKeyDefault = @"Default";
 NSString *MGSScriptKeyValue = @"Value";
+NSString *MGSScriptKeyUUID = @"UUID";
 NSString *MGSScriptKeyScriptUUID = @"UUID";		// script file is identified by its UUID
 NSString *MGSScriptKeyScriptVersionID = @"VersionID";		// script file version ID
 NSString *MGSScriptKeyAuthor = @"Author";

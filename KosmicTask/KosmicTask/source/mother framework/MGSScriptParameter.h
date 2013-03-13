@@ -22,12 +22,9 @@ typedef NSInteger MGSScriptParameterRepresentation;
 }
 + (NSString *)defaultDescription;
 + (id)new;
-//- (NSString *)type_;
-//- (void)setType_:(NSString *)aString;
 - (id)value;
 - (void)setValue:(id)object;
 - (id)valueOrNil;
-//- (void)setDefault:(NSString *)aString;
 - (id)defaultValue;
 - (id)mutableCopyWithZone:(NSZone *)zone;
 
@@ -46,6 +43,10 @@ typedef NSInteger MGSScriptParameterRepresentation;
 // attachment index
 - (NSInteger)attachmentIndex;
 - (void)setAttachmentIndex:(NSInteger)value;
+
+// UUID
+- (NSString *)UUID;
+- (void)setUUID:(NSString *)value;
 
 - (void)setRepresentation:(MGSScriptParameterRepresentation)value;
 - (MGSScriptParameterRepresentation)representation;

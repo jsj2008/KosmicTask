@@ -310,7 +310,6 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 //
 // set action to be performed
 //
-//
 //===============================================================
 - (void)setActionSpecifier:(MGSTaskSpecifier *)actionSpec
 {

@@ -21,6 +21,7 @@
 #import "MGSNotifications.h"
 #import "MGSPreferences.h"
 #import "MGSAttachedWindowController.h"
+#import "MGSScriptParameterManager.h"
 
 NSString *MGSIsProcessingContext =@"IsProcessing";
 static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexContext";

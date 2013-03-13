@@ -10,8 +10,15 @@
 #import "MGSMother.h"
 #import "MGSScriptPlist.h"
 #import "NSString_Mugginsoft.h"
+#import "MGSAppController.h"
+#import "MGSParameterPluginController.h"
+#import "MGSParameterPlugin.h"
 
 #define MAX_SHORT_STRING_VALUE_LENGTH 100
+
+@interface MGSScriptParameterManager()
+- (MGSScriptParameter *)scriptParameterWithUUID:(NSString *)value;
+@end
 
 @implementation MGSScriptParameterManager
 
@@ -183,4 +190,50 @@
 	return success;
 }
 
+/*
+ 
+ - copyValidValuesWithMatchingUUID:
+ 
+ */
+- (void)copyValidValuesWithMatchingUUID:(MGSScriptParameterManager *)srcManager
+{
+    for (NSInteger i = 0; i < [srcManager count]; i++) {
+        MGSScriptParameter *srcParameter = [srcManager itemAtIndex:i];
+        
+        // get parameter with matching UUID
+        MGSScriptParameter *parameter = [self scriptParameterWithUUID:srcParameter.UUID];
+        
+        // match parameter type
+        if (parameter && [parameter.typeName isEqualToString:srcParameter.typeName]) {
+            
+            // we cannot simply set the value as it may be invalid or out of range
+            // on the target parameter. hence we need to validate it using the plugin
+            MGSParameterPluginController *parameterPluginController = [[NSApp delegate] parameterPluginController];
+            MGSParameterPlugin *plugin = [parameterPluginController pluginWithClassName:parameter.typeName];
+            
+            if (plugin) {
+                parameter.value = srcParameter.value;
+            }
+        }
+    }
+
+}
+
+/*
+ 
+ - scriptParameterWithUUID:
+ 
+ */
+- (MGSScriptParameter *)scriptParameterWithUUID:(NSString *)value
+{
+	for (NSInteger i = 0; i < [self count]; i++) {
+		
+		MGSScriptParameter *parameter = [self itemAtIndex:i];
+        if ([parameter.UUID isEqualToString:value]) {
+            return parameter;
+        }
+	}
+    
+    return nil;
+}
 @end

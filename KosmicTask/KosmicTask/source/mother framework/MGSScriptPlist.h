@@ -56,6 +56,7 @@ extern NSString *MGSScriptKeyName;
 extern NSString *MGSScriptKeyParameters;
 extern NSString *MGSScriptKeyDefault;
 extern NSString *MGSScriptKeyValue;
+extern NSString *MGSScriptKeyUUID;
 extern NSString *MGSScriptKeyPublished;
 extern NSString *MGSScriptKeyProhibitSuspend;
 extern NSString *MGSScriptKeyProhibitTerminate;

@@ -23,4 +23,5 @@
 - (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation;
 - (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation options:(NSDictionary *)options;
 - (void)removeRepresentation;
+- (void)copyValidValuesWithMatchingUUID:(MGSScriptParameterManager *)parameterManager;
 @end

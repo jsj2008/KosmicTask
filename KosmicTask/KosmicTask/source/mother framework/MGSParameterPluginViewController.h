@@ -72,4 +72,5 @@ typedef NSInteger MGSProcessParameterPlist;
 - (void)processPlist:(MGSProcessParameterPlist)processOperation;
 - (void)updateSubview:(NSView *)subview resize:(BOOL)resize;
 - (void)updateFrameSize:(NSSize)newSize;
+- (BOOL)validateParameterValue:(id)newValue;
 @end

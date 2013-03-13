@@ -98,13 +98,43 @@ char MGSSliderValueContext;
 	
 	[_valueSlider setAltIncrementValue:self.incrementValue];
 }
+
+/*
+ 
+ - setParameterValue:
+ 
+ */
 - (void)setParameterValue:(id)value
 {
-	[super setParameterValue:value];
-	if (_updateSliderValue) {
-		self.sliderValue = [[self parameterValue] doubleValue];
-	}
+    if ([self validateParameterValue:value]) {
+        [super setParameterValue:value];
+        if (_updateSliderValue) {
+            self.sliderValue = [[self parameterValue] doubleValue];
+        }
+    }
 }
+
+/*
+ 
+ - validateParameterValue:
+ 
+ */
+- (BOOL)validateParameterValue:(id)newValue
+{
+#pragma unused(newValue)
+    
+    BOOL isValid = NO;
+    
+    if ([newValue isKindOfClass:[NSNumber class]]) {
+        double numberValue = [(NSNumber *)newValue doubleValue];
+        if (numberValue >= self.minValue && numberValue <= self.maxValue) {
+            isValid = YES;
+        }
+    }
+    
+    return isValid;
+}
+
 /*
  
  KVO 

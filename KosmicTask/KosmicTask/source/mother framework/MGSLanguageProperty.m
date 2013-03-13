@@ -316,7 +316,7 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
 	 perhaps the copy should perform 
 	 hasInitialValue = YES, canReset = NO ?
 	 
-	 because we aren't explicitly coping initialValue.
+	 because we aren't explicitly copying initialValue.
 	 
 	 */
 	//copy.canReset = self.canReset;

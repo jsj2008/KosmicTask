@@ -315,18 +315,32 @@
  */
 - (void)setParameterValue:(id)newValue
 {
-	_parameterValue = newValue;
-	BOOL defaultSelected = NO;
-	
-	// check if default selected
-	if (_parameterValue == nil && [self defaultValue] == nil) {
-		defaultSelected = YES;
-	} else {
-		defaultSelected = [_parameterValue isEqual:[self defaultValue]];
-	}
-	self.defaultValueSelected = defaultSelected;
+    
+    if ([self validateParameterValue:newValue]) {
+        _parameterValue = newValue;
+        BOOL defaultSelected = NO;
+        
+        // check if default selected
+        if (_parameterValue == nil && [self defaultValue] == nil) {
+            defaultSelected = YES;
+        } else {
+            defaultSelected = [_parameterValue isEqual:[self defaultValue]];
+        }
+        self.defaultValueSelected = defaultSelected;
+    }
 }
 
+/*
+ 
+ - validateParameterValue:
+ 
+ */
+- (BOOL)validateParameterValue:(id)newValue
+{
+#pragma unused(newValue)
+    
+    return YES;
+}
 /*
  
  - updateSubview:resize:

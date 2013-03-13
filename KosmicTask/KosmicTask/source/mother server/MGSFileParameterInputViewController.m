@@ -185,53 +185,98 @@
  */
 - (void)setParameterValue:(NSString *)aPath
 {
-	// _parameterValue is private
-	[super setParameterValue:aPath];
-	
-	// set image preview for file path
-	if (aPath) {
-		
-		// display non image files as icons.
-		// using the icon format for image types makes it more difficult to determine what is part of the image
-		// and what isn't
-		BOOL displayAsIcon = [NSImage isImageFile:aPath] ? NO : YES;
-		NSString *fileInfo = @"";
-		
-		// file may not exist if say restoring parameters from history and file has been deleted
-		if ([[NSFileManager defaultManager] fileExistsAtPath:aPath]) {
-			self.filePreviewImage = [NSImage imageWithPreviewOfFileAtPath:aPath ofSize:[previewImage frame].size asIcon:displayAsIcon];
-			self.fileName = [aPath lastPathComponent];
-			
-			// file attributes
-			NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:aPath error:NULL];
-			
-			// file size string
-			fileInfo = NSLocalizedString(@"Size: %@ Last modified: %@", @"File info format string below preview image");
-			NSString *fileSize = [NSString mgs_stringFromFileSize:[[attrs objectForKey:NSFileSize] unsignedLongLongValue]];
+    if ([self validateParameterValue:aPath]) {
+        
+        // _parameterValue is private
+        [super setParameterValue:aPath];
+        
+        // set image preview for file path
+        if (aPath) {
+            
+            // display non image files as icons.
+            // using the icon format for image types makes it more difficult to determine what is part of the image
+            // and what isn't
+            BOOL displayAsIcon = [NSImage isImageFile:aPath] ? NO : YES;
+            NSString *fileInfo = @"";
+            
+            // file may not exist if say restoring parameters from history and file has been deleted
+            if ([[NSFileManager defaultManager] fileExistsAtPath:aPath]) {
+                self.filePreviewImage = [NSImage imageWithPreviewOfFileAtPath:aPath ofSize:[previewImage frame].size asIcon:displayAsIcon];
+                self.fileName = [aPath lastPathComponent];
+                
+                // file attributes
+                NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:aPath error:NULL];
+                
+                // file size string
+                fileInfo = NSLocalizedString(@"Size: %@ Last modified: %@", @"File info format string below preview image");
+                NSString *fileSize = [NSString mgs_stringFromFileSize:[[attrs objectForKey:NSFileSize] unsignedLongLongValue]];
 
-			// date
-			NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-			[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-			[dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-			NSString *fileDate = [dateFormatter stringFromDate:[attrs objectForKey:NSFileModificationDate]];
-			
-			// set it
-			fileInfo = [NSString stringWithFormat:fileInfo, fileSize, fileDate];
-			
-		} else {
-			self.filePreviewImage = nil;
-			self.fileName = [aPath lastPathComponent];
-			fileInfo = NSLocalizedString(@"File not found.", @"File not found - file info format string below preview image");
-		}
-		self.fileSize = fileInfo;
+                // date
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+                [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+                NSString *fileDate = [dateFormatter stringFromDate:[attrs objectForKey:NSFileModificationDate]];
+                
+                // set it
+                fileInfo = [NSString stringWithFormat:fileInfo, fileSize, fileDate];
+                
+            } else {
+                self.filePreviewImage = nil;
+                self.fileName = [aPath lastPathComponent];
+                fileInfo = NSLocalizedString(@"File not found.", @"File not found - file info format string below preview image");
+            }
+            self.fileSize = fileInfo;
 
-	} else {
-		self.filePreviewImage = nil;
-		self.fileName = nil;
-		self.fileSize = nil;
-	}
+        } else {
+            self.filePreviewImage = nil;
+            self.fileName = nil;
+            self.fileSize = nil;
+        }
+    }
 }
 
+/*
+ 
+ - validateParameterValue:
+ 
+ */
+- (BOOL)validateParameterValue:(id)newValue
+{
+#pragma unused(newValue)
+    
+    BOOL isValid = NO;
+    
+    if (!newValue) {
+        isValid = YES;
+    } else if ([newValue isKindOfClass:[NSString class]]) {
+        
+        // check file exists
+        if ([[NSFileManager defaultManager] fileExistsAtPath:newValue]) {
+            
+            // check for matching extension            
+            NSArray *extensions = self.allowedFileTypes;
+            if (!extensions || [extensions count] == 0) {
+                isValid = YES;
+            } else {
+                NSString *fileExtension = [(NSString *)newValue pathExtension];
+                for (NSString *extension in extensions) {
+                    if ([extension compare:fileExtension options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+                        isValid = YES;
+                        break;
+                    }
+                }
+                
+            }
+            
+        } else {
+            self.filePreviewImage = nil;
+            self.fileName = [newValue lastPathComponent];
+            self.fileSize = NSLocalizedString(@"File not found.", @"File not found - file info format string below preview image");
+        }
+    }
+    
+    return isValid;
+}
 /*
  
  show finder quick look

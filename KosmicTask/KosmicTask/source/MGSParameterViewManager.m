@@ -1291,7 +1291,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
                     [NSException raise:MGSInputParameterException format:@"Changed view controller is missing for operation : %@", operation];
                 }
 
-                 // insert input
+                // insert input
                 self.selectedParameterViewController = changedViewController;
                 [self insertInputParameterAction:scriptParameter];
             }
@@ -1599,6 +1599,11 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 
     // get script parameter to duplicate
     MGSScriptParameter *scriptParameter = self.selectedParameterViewController.scriptParameter;
+    
+    // we want this parameter to be unique so that we can preserve its
+    // value during edits
+    scriptParameter = [scriptParameter mutableDeepCopy];
+    scriptParameter.UUID = [NSString mgs_stringWithNewUUID];
     
     NSUInteger sourceIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
     

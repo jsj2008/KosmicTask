@@ -133,10 +133,35 @@
  */
 - (void)setParameterValue:(id)newValue
 {
-	[super setParameterValue:newValue];
-	[self setSelectedItem:newValue];
+    if ([self validateParameterValue:newValue]) {
+        [super setParameterValue:newValue];
+        [self setSelectedItem:newValue];
+    }
 }
 
+/*
+ 
+ - validateParameterValue:
+ 
+ */
+- (BOOL)validateParameterValue:(id)newValue
+{
+#pragma unused(newValue)
+    
+    BOOL isValid = NO;
+    
+    if ([newValue isKindOfClass:[NSString class]]) {
+
+        for (NSString *aString in [_arrayController arrangedObjects]) {
+            if ([newValue isEqualToString:aString]) {
+                isValid = YES;
+                break;
+            }
+        }
+    }
+    
+    return isValid;
+}
 
 /*
  

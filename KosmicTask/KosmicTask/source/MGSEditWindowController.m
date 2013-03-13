@@ -1443,6 +1443,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 // we don't clear parameterViewConfigurationFlags because the user
                 // hasn't yet taken the opportunity to edit the script
 			}
+            
 			break;
 	}
     
@@ -1529,7 +1530,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 		case kMGSMotherEditModeScript:
 			break;
 			
-		case kMGSMotherEditModeRun:	
+		case kMGSMotherEditModeRun:
+            {
 			// update request view controller.
 			// whenever an action is successfuly run the MGSInputRequestView controller makes a deep copy of the completed action
 			// and collects it so that previously run actions can re recalled.
@@ -1538,11 +1540,20 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			// thus when an action has been executued querying MGSRequestViewController for its action returns whatever completed action
 			// is selected within the input view.
 			// hence we need to reset the actual action we are editing here.
-			self.requestViewController.actionSpecifier = [_taskSpec mutableDeepCopyAsNewInstance];	
-			
+			MGSTaskSpecifier *copyTaskSpec = [_taskSpec mutableDeepCopyAsNewInstance];
+			            
+            // sync current task input values and selection with current request view task specifier
+            MGSScriptParameterManager *parameterManager = copyTaskSpec.script.parameterHandler;
+            MGSScriptParameterManager *prevParameterManager = self.requestViewController.actionSpecifier.script.parameterHandler;
+            
+            [parameterManager copyValidValuesWithMatchingUUID:prevParameterManager];
+
+            self.requestViewController.actionSpecifier = copyTaskSpec;
+            
 			// post action change notification
 			[[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteActionSelectionChanged object:[self window]  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:self.requestViewController.actionSpecifier, MGSActionKey, nil]];
 
+            }
 			break;
 	}
 	

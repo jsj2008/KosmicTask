@@ -11,6 +11,10 @@
 #import "MGSScriptPlist.h"
 #import "MGSParameterPluginController.h"
 #import "MGSAppController.h"
+#import "NSString_Mugginsoft.h"
+
+@interface MGSScriptParameter()
+@end
 
 @implementation MGSScriptParameter
 
@@ -32,7 +36,8 @@
 	
 	[parameter setName:NSLocalizedString(@"Task Input", @"New input parameter name")];
 	[parameter setDescription:[self defaultDescription]];
-	
+	[parameter setUUID:[NSString mgs_stringWithNewUUID]];
+    
 	// set default plugin class name
 	MGSParameterPluginController *parameterPluginController = [[NSApp delegate] parameterPluginController];
 	NSString *pluginClassName = [parameterPluginController defaultPluginName];
@@ -196,12 +201,31 @@
 }
 /*
  
- set value
+ - setValue:
  
  */
 - (void)setValue:(id)object
 {
 	[self setObject:object forKey:MGSScriptKeyValue];
+}
+
+/*
+  
+ - UUID
+ 
+ */
+- (NSString *)UUID
+{
+	return [self objectForKey:MGSScriptKeyUUID];
+}
+/*
+ 
+ - setUUID:
+ 
+ */
+- (void)setUUID:(NSString *)value
+{
+	[self setObject:value forKey:MGSScriptKeyUUID];
 }
 
 /*
@@ -211,10 +235,8 @@
  */
 - (id)mutableCopyWithZone:(NSZone *)zone
 {
-	id aCopy = [super mutableCopyWithZone:zone];
-	
-	// copy local instance variables here
-	 
+	MGSScriptParameter *aCopy = [super mutableCopyWithZone:zone];
+    
 	return aCopy;
 }
 
@@ -225,10 +247,8 @@
  */
 - (id)mutableDeepCopy
 {
-	id aCopy = [super mutableDeepCopy];
-	
-	// copy local instance variables here
-	
+	MGSScriptParameter *aCopy = [super mutableDeepCopy];
+    
 	return aCopy;
 }
 
@@ -351,4 +371,6 @@
 	
 	return success;
 }
+
+
 @end
