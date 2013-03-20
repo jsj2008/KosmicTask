@@ -62,7 +62,8 @@ extern NSString * const MGSIgnoreBuildError;
     IBOutlet NSImageView *splitViewDragImage;
 	IBOutlet NSSegmentedControl *buildResultSegment;
 	IBOutlet NSTextField *buildStatusTextField;
-	
+	IBOutlet NSTextField *onRunBehaviour;
+    
 	MGSScriptViewController *scriptViewController;
 	MGSSettingsOutlineViewController *settingsOutlineViewController;
 	NSInteger buildStatusFlags;

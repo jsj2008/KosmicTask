@@ -37,6 +37,7 @@
 #define MGS_SETTINGS_EDITOR 1
 
 //#define MGS_DEBUG_CONTROLLER
+char MGSScriptOnRunContext;
 
 NSString * const MGSIgnoreBuildError = @"MGSIgnoreBuildError";
 
@@ -56,7 +57,7 @@ const char MGSSettingsEditedLanguagePropertyContext;
 - (void)showDictionary:(NSNotification *)notification;
 - (void)scriptTextChanged:(NSNotification *)notification;
 - (void)setConsoleText:(NSString *)text append:(BOOL)append options:(NSDictionary *)options;
-- (void)updateLanguageDependentProperties;
+- (void)updateLanguageDependentBuildFlags;
 - (void)requestBuild;
 - (void)disconnectedAlertSheetDidEnd: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
 - (void)buildTaskSheetDidEnd: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
@@ -243,7 +244,8 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 		// clear any existing compiled data that exists
 		[[[_taskSpec script] scriptCode] setCompiledData:nil withFormat:nil];
 
-		[self updateLanguageDependentProperties];
+        // update build flags that depend on the language type
+		[self updateLanguageDependentBuildFlags];
 		
 		self.scriptBuilt = NO;
         
@@ -252,7 +254,8 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
         self.buildConsoleResult = @"";
         self.buildResultIndex = MGS_BUILD_RESULT_INDEX_CONSOLE;
 		
-		settingsOutlineViewController.languagePropertyManager = [[_taskSpec.script languagePlugin] languagePropertyManager];
+		// update language property manager for settings outline controller
+		//settingsOutlineViewController.languagePropertyManager = [_taskSpec.script languagePropertyManager];
 
 	} else if (context == &MGSSettingsEditedContext) {
 		
@@ -268,11 +271,18 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 			self.scriptBuilt = NO;
 		}
 		
+        // sync the script with the language properties
+#warning This may be being perfomed automatically
+        //[[_taskSpec script] syncScriptWithLanguageProperties];
+        
 	} else if (context == &MGSScriptLanguagePropertyManagerContext) {
-				
+
+        // script language property manager has been updated
 		settingsOutlineViewController.languagePropertyManager = [_taskSpec.script languagePropertyManager];
 		
-	}
+	} else if (context == &MGSScriptOnRunContext) {
+        onRunBehaviour.stringValue = [[_taskSpec script] onRunString];
+    }
 }
 
 
@@ -282,15 +292,15 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 
 /*
  
- - updateLanguageDependentProperties
+ - updateLanguageDependentBuildFlags
  
  */
-- (void)updateLanguageDependentProperties
+- (void)updateLanguageDependentBuildFlags
 {
 	// build result flags indicate what build result request should contain
 	MGSBuildResultFlags buildResultFlags = [[[_taskSpec script] languagePlugin] buildResultFlags];
 	
-	// if build contains compiled data then a build is reuired
+	// if build contains compiled data then a build is required
 	if (buildResultFlags & kMGSCompiledScript) {
 		self.languageRequiresBuild = YES;
 	} else {
@@ -364,12 +374,13 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	if (_taskSpec) {
 		[_taskSpec removeObserver:self forKeyPath:@"script.scriptType"];
 		[_taskSpec removeObserver:self forKeyPath:@"script.languagePropertyManager"];
+        [_taskSpec removeObserver:self forKeyPath:@"script.onRun"];
 	}
 	
 	_taskSpec = aTaskSpec;
 	scriptViewController.taskSpec = _taskSpec;
 	
-	[self updateLanguageDependentProperties];
+	[self updateLanguageDependentBuildFlags];
 	
 	// if task is new then it will have a template set.
 	// request compilation of this template
@@ -380,10 +391,16 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 		self.scriptBuilt = YES;
 	}
 	
+    // the outline displays the language property manager for the script.
+    // the property manager and the script share properties that have to be kept in sync.
+    // syncing at present is done manually
 	settingsOutlineViewController.languagePropertyManager = [[_taskSpec script] languagePropertyManager];
 	
 	[_taskSpec addObserver:self forKeyPath:@"script.scriptType" options:NSKeyValueObservingOptionNew context:(void *)&MGSScriptTypeContext];
 	[_taskSpec addObserver:self forKeyPath:@"script.languagePropertyManager" options:NSKeyValueObservingOptionNew context:(void *)&MGSScriptLanguagePropertyManagerContext];
+	[_taskSpec addObserver:self forKeyPath:@"script.onRun" options:NSKeyValueObservingOptionNew context:(void *)&MGSScriptOnRunContext];
+	[_taskSpec addObserver:self forKeyPath:@"script.subroutine" options:NSKeyValueObservingOptionNew context:(void *)&MGSScriptOnRunContext];
+	[_taskSpec addObserver:self forKeyPath:@"script.runClass" options:NSKeyValueObservingOptionNew context:(void *)&MGSScriptOnRunContext];
     
     // initialise the build result
     self.buildStderrResult = @"";

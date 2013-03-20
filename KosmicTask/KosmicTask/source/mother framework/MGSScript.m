@@ -54,7 +54,6 @@ const char MGSLangSettingsOnRunContext;
 - (void)setExternalExecutorPath:(NSString *)aString;
 - (void)setExecutorOptions:(NSString *)aString;
 - (void)syncLanguagePropertiesWithScript;
-- (void)syncScriptWithLanguageProperties;
 - (void)retrieveLanguageProperties;
 - (void)languagePropertyDidChangeValue:(NSNotification *)note;
 - (BOOL)representationWithKeys:(NSArray *)representationKeys options:(NSDictionary *)options;
@@ -2629,6 +2628,38 @@ errorExit:;
 	}	
 	
 	return data;
+}
+
+/*
+ 
+ - onRunString
+ 
+ */
+- (NSString *)onRunString
+{
+    eMGSOnRunTask onRun = [self onRun].integerValue;
+    NSString *onRunString = nil;
+    switch (onRun) {
+            
+        case kMGSOnRunCallNone:
+            onRunString = NSLocalizedString(@"No run behaviour defined" , @"On run task value");
+            break;
+            
+        case kMGSOnRunCallScript:
+            onRunString = NSLocalizedString(@"Call script" , @"On run task value");
+            break;
+            
+        case kMGSOnRunCallScriptFunction:
+            onRunString = [NSString stringWithFormat:NSLocalizedString(@"Call function %@" , @"On run task value"), [self subroutine]];
+            break;
+            
+        case kMGSOnRunCallClassFunction:
+            onRunString = [NSString stringWithFormat:NSLocalizedString(@"Call function %@ on class %@" , @"On run task value"), [self subroutine], [self runClass]];
+            break;
+    }
+    
+    return onRunString;
+
 }
 
 #pragma mark -

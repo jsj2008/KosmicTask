@@ -14,7 +14,6 @@
 @interface MGSResourceBrowserSheetController()
 - (void)closeSheet:(NSInteger)returnCode;
 - (void)copySelectionToPasteBoard;
-@property (copy) MGSLanguagePropertyManager *languagePropertyManager;
 @end
 
 const char MGSContextRequiredResourceDoubleClicked;
@@ -22,7 +21,7 @@ const char MGSContextResourcesChanged;
 
 @implementation MGSResourceBrowserSheetController
 
-@synthesize resourceBrowserViewController, resourceText, resourcesChanged, languagePropertyManager, script;
+@synthesize resourceBrowserViewController, resourceText, resourcesChanged, script;
 
 /*
  
@@ -142,6 +141,15 @@ const char MGSContextResourcesChanged;
 	[self closeSheet:kMGSResourceBrowserSheetReturnInsert];
 }
 
+/*
+ 
+ - languagePropertyManager
+ 
+ */
+- (MGSLanguagePropertyManager *)languagePropertyManager
+{
+    return self.resourceBrowserViewController.languagePropertyManager;
+}
 /*
  
  - cancel:

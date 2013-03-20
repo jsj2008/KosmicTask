@@ -411,14 +411,28 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                     [_taskSpec.script setScriptType:scriptType];
                 }
 
+                // get a copy of the language property for the selected template resource
+                MGSLanguagePropertyManager *languagePropertyManager = resourceSheetController.languagePropertyManager;
+                NSAssert(languagePropertyManager, @"language property manager is nil");
+                
+                // sanity check
+                if (NO) {
+                    MGSLanguageProperty *langProp = [languagePropertyManager propertyForKey:MGS_LP_OnRunTask];
+                    id propertyValue = [langProp value];
+                    languagePropertyManager = [languagePropertyManager copy];
+                    langProp = [languagePropertyManager propertyForKey:MGS_LP_OnRunTask];
+                    propertyValue = [langProp value];
+                }
+                
                 // update the language property manager
-                [_taskSpec.script updateLanguagePropertyManager:resourceSheetController.languagePropertyManager];
+                [_taskSpec.script updateLanguagePropertyManager:languagePropertyManager];
 
                 // get the template text
                 NSString *templateText = resourceSheetController.resourceText;
                 
-                // update the model
-                [[[_taskSpec script] scriptCode] setSource:templateText];
+                // insert at current selection point
+                [scriptEditViewController insertText:templateText];
+
             }
 			break;
 		

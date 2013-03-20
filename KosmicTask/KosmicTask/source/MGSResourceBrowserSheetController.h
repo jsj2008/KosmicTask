@@ -28,13 +28,12 @@ typedef NSInteger MGSResourceBrowserSheetReturnValue;
 	NSString *resourceText;
     MGSScript *script;
 	BOOL resourcesChanged;
-	MGSLanguagePropertyManager *languagePropertyManager;
+
 }
 
 @property (readonly) MGSResourceBrowserViewController *resourceBrowserViewController;
 @property (readonly, copy) NSString *resourceText;
 @property BOOL resourcesChanged;
-@property (copy, readonly) MGSLanguagePropertyManager *languagePropertyManager;
 @property (assign) MGSScript *script;
 
 - (IBAction)cancel:(id)sender;
@@ -43,5 +42,5 @@ typedef NSInteger MGSResourceBrowserSheetReturnValue;
 - (IBAction)openCodeAssistantAction:(id)sender;
 - (IBAction)openFile:(id)sender;
 
-
+- (MGSLanguagePropertyManager *)languagePropertyManager;
 @end

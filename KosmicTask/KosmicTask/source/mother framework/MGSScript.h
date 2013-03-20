@@ -261,6 +261,9 @@ typedef NSInteger MGSScriptRepresentation;
 - (NSString *)inputArgumentNameExclusions;
 - (void)setInputArgumentNameExclusions:(NSString *)value;
 
+- (NSString *)onRunString;
+- (void)syncScriptWithLanguageProperties;
+
 @property (readonly) MGSScriptParameterManager *parameterHandler;
 @property (assign) MGSScriptCode *scriptCode;
 @property BOOL modelDataKVCModified;

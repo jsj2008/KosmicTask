@@ -42,27 +42,27 @@ typedef NSUInteger MGSCodeDescriptorCodeStyle;
 
 enum _eMGSLanguageType {
 	kMGSInterpretedLanguage = 0,
-	kMGSCompiledLanguage,
+	kMGSCompiledLanguage = 1,
 };
 typedef NSInteger eMGSLanguageType;
 
 enum _eMGSProcessType {
 	kMGSInProcess = 0,
-	kMGSOutOfProcess,
+	kMGSOutOfProcess = 1,
 };
 typedef NSInteger eMGSProcessType;
 
 enum _eMGSExecutableFormat {
 	kMGSSource = 0,
-	kMGSCompiled,
+	kMGSCompiled = 1,
 };
 typedef NSInteger eMGSExecutableFormat;
 
  enum _eMGSOnRunTask {
 	kMGSOnRunCallNone = 0,
-	kMGSOnRunCallScript,
-	kMGSOnRunCallScriptFunction,
-	kMGSOnRunCallClassFunction
+	kMGSOnRunCallScript = 1,
+	kMGSOnRunCallScriptFunction = 2,
+	kMGSOnRunCallClassFunction = 3
  };
 typedef NSInteger eMGSOnRunTask;
 

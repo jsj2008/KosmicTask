@@ -52,7 +52,7 @@
         // code template processing
         self.initInputArgumentName = kMGSInputArgumentName;
         self.initInputArgumentCase = kMGSInputArgumentCamelCase;
-        self.initInputArgumentStyle = kMGSInputArgumentUnderscoreSeparated;
+        self.initInputArgumentStyle = kMGSInputArgumentWhitespaceRemoved;
 	}
 	
 	return self;

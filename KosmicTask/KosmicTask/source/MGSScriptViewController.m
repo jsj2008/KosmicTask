@@ -586,9 +586,11 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 {
     NSString *text = [_fragaria string];
     NSRange selectedRange = [_fragariaTextView selectedRange];
-    if (selectedRange.location != NSNotFound && selectedRange.length > 0) {
+    if (selectedRange.location != NSNotFound && selectedRange.length > 0 && NO) {
         text = [text stringByReplacingCharactersInRange:selectedRange withString:newText];
     } else {
+        
+        // insert new text at start of range
         text = [NSString stringWithFormat:@"%@\n%@", newText, text];
         selectedRange = NSMakeRange(0, 0);
     }

@@ -53,7 +53,7 @@
 - (void)restoreViewFramesUsingDefaults:(NSDictionary *)viewDefaults;
 - (void)saveViewFramesUsingDefaults:(NSDictionary *)viewDefaults;
 - (IBAction)outlineDoubleAction:(id)sender;
-- (void)buildSettingsTree:(MGSResourceItem *)resource;
+- (void)assignLanguagePropertyManagerForResource:(MGSResourceItem *)resource;
 - (NSInteger)_mgs_outlineView:(NSOutlineView *)outlineView drawStyleForRow:(int)row;
 - (void)setLanguagePropertyManager:(MGSLanguagePropertyManager *)manager;
 - (void)selectClickedResource:(id)sender;
@@ -268,10 +268,10 @@ requiredResourceDoubleClicked, selectedLanguageProperty, script;
 
 /*
  
- - buildSettingsTree
+ - assignLanguagePropertyManagerForResource:
  
  */
-- (void)buildSettingsTree:(MGSResourceItem *)resource
+- (void)assignLanguagePropertyManagerForResource:(MGSResourceItem *)resource
 {
 	// we require a language plugin
 	if (!self.languagePlugin) {
@@ -280,7 +280,9 @@ clearTree:
 		return;
 	}
 	
-
+    //
+    // get default language property manager for language plugin
+    //
 	MGSLanguagePropertyManager *languagePropertyManager = [self.languagePlugin languagePropertyManager];
 	
 	//
@@ -467,9 +469,6 @@ clearTree:
     if ([nodeObject isKindOfClass:[MGSResourceItem class]]) {
 		self.selectedResource = nodeObject;
 	}
-
-#warning PROBLEM HERE!
-    [self buildSettingsTree:self.selectedResource];
 }
 
 
@@ -984,7 +983,7 @@ clearTree:
  */
 - (void)setSelectedResource:(MGSResourceItem *)item
 {
-	
+	// save document
 	[self saveDocument:self];
 	
 	// unload and reload external resource properties
@@ -998,11 +997,15 @@ clearTree:
         return;
     }
 
+    // load the resource
 	[self.selectedResource load];
 	
 	// has required resource type been selected?
 	self.requiredResourceSelected = [self.selectedResource isKindOfClass:[requiredResourceClass class]];
 	
+    // assign the language property manager for the selected resource
+    [self assignLanguagePropertyManagerForResource:self.selectedResource];
+    
 	// is the resource editable?
     // application resources are generally not editable.
     // user resources are.
