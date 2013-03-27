@@ -834,6 +834,20 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	#pragma unused(netRequest)
 }
 
+#pragma mark -
+#pragma mark MGSFragariaTextView delegate 
+
+/*
+ 
+ - mgsTextDidPaste:
+ 
+ */
+- (void)mgsTextDidPaste:(NSNotification *)aNotification
+{
+    #pragma unused(aNotification)
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteScriptTextPasted object:[[self view] window] userInfo:nil];
+}
 
 #pragma mark -
 #pragma mark NSTextView delegate

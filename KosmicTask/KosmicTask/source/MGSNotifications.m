@@ -44,6 +44,7 @@ NSString *MGSNoteActionSelectionChanged = @"MGSActionSelectionChanged";					// a
 NSString *MGSNoteScriptTextChanged = @"MGSScriptTextChanged";
 NSString *MGSNoteEditWindowUpdateModel = @"MGSEditWindowUpdateModel";
 NSString *MGSNoteActionSaved = @"MGSNoteActionSaved";
+NSString *MGSNoteScriptTextPasted = @"MGSNoteScriptTextPasted";
 
 // authentication
 NSString *MGSNoteAuthenticationDialogWillDisplay = @"MGSAuthenticationDialogWillDisplay";

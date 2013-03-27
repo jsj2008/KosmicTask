@@ -60,6 +60,7 @@ const char MGSLangSettingsOnRunContext;
 - (NSMutableArray *)keysForRepresentation:(MGSScriptRepresentation)representation;
 - (void)setRepresentation:(MGSScriptRepresentation)value;
 - (BOOL)conformToRepresentation:(MGSScriptRepresentation)representation options:(NSDictionary *)options;
+- (void)setObject:(id)obj forKey:(NSString *)key options:(NSDictionary *)options;
 @end
 
 @interface MGSScript(Private)
@@ -1040,6 +1041,82 @@ errorExit:;
 }
 
 #pragma mark -
+#pragma mark Object updating
+
+/*
+ 
+ - setObject:forKey:options:
+ 
+ */
+- (void)setObject:(id)obj forKey:(NSString *)key options:(NSDictionary *)options
+{
+    BOOL updateRequired = YES;
+    if (options) {
+        
+        /*
+         
+         Some of the script properties are backed by language properties that have to be kept in sync
+         with the script property value.
+         
+         */
+        NSString *languagePropertyKey = [options objectForKey:@"languagePropertyKey"];
+        if (languagePropertyKey) {
+            
+            // get language property
+            MGSLanguageProperty *langProp = [self.languagePropertyManager propertyForKey:languagePropertyKey];
+            
+            // validate the language property
+            if (!langProp) {
+                MLogInfo(@"No language property for key %@", languagePropertyKey);
+            }
+            
+            // if property is a list then validate it.
+            // our value is a key into the option list
+            else if (langProp.isList) {
+                NSArray *values = [[langProp optionValues] allKeys];    // keys are index values
+                
+                if ([values containsObject:obj]) {
+                    
+                    // update this object
+                    [self setObject:obj forKey:key];
+                    updateRequired = NO;
+                    
+                    // update the language property option value if required.
+                    // to prevent the possibility of infinite recursion only update if required.
+                    if (![obj isEqual:[langProp keyForOptionValue]]) {
+                        [langProp updateOptionKey:obj];
+                    }
+                    
+                } else {
+                    MLogInfo(@"Invalid object %@ for key %@", obj, key);
+                    
+                    // we don't want to update this object as the value is invalid.
+                    // perhaps we should set it to a known good value though?
+                    updateRequired = NO;
+                }
+            } else {
+                
+                // update this object
+                [self setObject:obj forKey:key];
+                updateRequired = NO;
+                
+                // update the language property value if required
+                // to prevent the possibility of infinite recursion only update if required.
+                if (![obj isEqual:[langProp value]]) {
+                    [langProp setValue:obj];
+                }
+            }
+        }
+    }
+    
+    // ensure object gets set
+    if (updateRequired) {
+        [self setObject:obj forKey:key];
+    }
+    
+}
+
+#pragma mark -
 #pragma mark Input arguments
 
 /*
@@ -1051,6 +1128,7 @@ errorExit:;
 {
     return [[self objectForLocalizedKey:MGSScriptInputArgumentName] unsignedIntegerValue];
 }
+
 /*
  
  - setInputArgumentName:
@@ -1058,7 +1136,8 @@ errorExit:;
 */
 - (void)setInputArgumentName:(MGSInputArgumentName)value
 {
-    [self setObject:@(value) forKey:MGSScriptInputArgumentName];
+    // update value for this object and the corresponding language property
+    [self setObject:@(value) forKey:MGSScriptInputArgumentName options:@{@"languagePropertyKey":MGS_LP_InputArgumentName}];
 }
 /*
  
@@ -1076,7 +1155,8 @@ errorExit:;
 */
 - (void)setInputArgumentCase:(MGSInputArgumentCase)value
 {
-    [self setObject:@(value) forKey:MGSScriptInputArgumentCase];
+    // update value for this object and the corresponding language property
+    [self setObject:@(value) forKey:MGSScriptInputArgumentCase options:@{@"languagePropertyKey":MGS_LP_InputArgumentCase}];
 }
 /*
  
@@ -1094,7 +1174,8 @@ errorExit:;
 */
 - (void)setInputArgumentStyle:(MGSInputArgumentStyle)value
 {
-   [self setObject:@(value) forKey:MGSScriptInputArgumentStyle];
+    // update value for this object and the corresponding language property
+    [self setObject:@(value) forKey:MGSScriptInputArgumentStyle options:@{@"languagePropertyKey":MGS_LP_InputArgumentStyle}];
 }
 /*
  
@@ -1103,6 +1184,7 @@ errorExit:;
  */
 - (NSString *)inputArgumentPrefix
 {
+    // this property is initialised from a preference rather than a language property
     return [self objectForLocalizedKey:MGSScriptInputArgumentPrefix];
 }
 /*
@@ -1121,6 +1203,7 @@ errorExit:;
  */
 - (NSString *)inputArgumentNameExclusions
 {
+    // this property is initialised from a preference rather than a language property
     return [self objectForLocalizedKey:MGSScriptInputArgumentNameExclusions];
 }
 /*
@@ -1249,7 +1332,6 @@ errorExit:;
  */
 - (void)syncScriptWithLanguageProperties
 {
-#warning PROBLEM here
     if (!languagePropertyManager) {
         return;
     }
@@ -1260,8 +1342,10 @@ errorExit:;
 	// onRun is mandatory.
 	MGSLanguageProperty *langProp = [languagePropertyManager propertyForKey:MGS_LP_OnRunTask];
 	valueKey = [langProp keyForOptionValue];
-	[self setOnRun:valueKey];
-
+    if (![self.onRun isEqual:valueKey]) {
+        self.onRun = valueKey;
+    }
+    
 	// an assertion raised here stops any new tasks from being created!
 	// so just log the condition here
 	if (![self onRun]) {
@@ -1271,39 +1355,55 @@ errorExit:;
 	// update script with property values
 	// absent script values cause settings to retain their default values
     langProp = [languagePropertyManager propertyForKey:MGS_LP_RunFunction];
-	[self setSubroutine:[langProp value]];
-    
+    if (![langProp.value isEqual:self.subroutine]) {
+        self.subroutine = langProp.value;
+    }
+          
     langProp = [languagePropertyManager propertyForKey:MGS_LP_RunClass];
-	[self setRunClass:[langProp value]];
+    if (![langProp.value isEqual:self.runClass]) {
+        self.runClass = langProp.value;
+    }
 	
     langProp = [languagePropertyManager propertyForKey:MGS_LP_ExternalBuildPath];
-    [self setExternalBuildPath:[langProp value]];
+    if (![langProp.value isEqual:self.externalBuildPath]) {
+        self.externalBuildPath = langProp.value;
+    }
 	
     langProp = [languagePropertyManager propertyForKey:MGS_LP_BuildOptions];
-    [self setBuildOptions:[langProp value]];
-	
+    if (![langProp.value isEqual:self.buildOptions]) {
+        self.buildOptions = langProp.value;
+    }
+
     langProp = [languagePropertyManager propertyForKey:MGS_LP_ExternalExecutorPath];
-    [self setExternalExecutorPath:[langProp value]];
+    if (![langProp.value isEqual:self.externalExecutorPath]) {
+        self.externalExecutorPath = langProp.value;
+    }
 	
     langProp = [languagePropertyManager propertyForKey:MGS_LP_ExecutorOptions];
-    [self setExecutorOptions:[langProp value]];
+    if (![langProp.value isEqual:self.executorOptions]) {
+        self.executorOptions = langProp.value;
+    }
 
     langProp = [languagePropertyManager propertyForKey:MGS_LP_InputArgumentName];
     valueKey = [langProp keyForOptionValue];
     NSAssert([valueKey isKindOfClass:[NSNumber class]], @"NSNumber expected found %@", [valueKey class]);
-    self.inputArgumentName = [(NSNumber *)valueKey unsignedIntegerValue];
-
+    if (self.inputArgumentName != [(NSNumber *)valueKey unsignedIntegerValue]) {
+        self.inputArgumentName = [(NSNumber *)valueKey unsignedIntegerValue];
+    }
     
     langProp = [languagePropertyManager propertyForKey:MGS_LP_InputArgumentCase];
     valueKey = [langProp keyForOptionValue];
     NSAssert([valueKey isKindOfClass:[NSNumber class]], @"NSNumber expected found %@", [valueKey class]);
-    self.inputArgumentCase = [(NSNumber *)valueKey unsignedIntegerValue];
-
+    if (self.inputArgumentCase != [(NSNumber *)valueKey unsignedIntegerValue]) {
+        self.inputArgumentCase = [(NSNumber *)valueKey unsignedIntegerValue];
+    }
     
     langProp = [languagePropertyManager propertyForKey:MGS_LP_InputArgumentStyle];
     valueKey = [langProp keyForOptionValue];
     NSAssert([valueKey isKindOfClass:[NSNumber class]], @"NSNumber expected found %@", [valueKey class]);
-    self.inputArgumentStyle =  [(NSNumber *)valueKey unsignedIntegerValue];
+    if (self.inputArgumentStyle != [(NSNumber *)valueKey unsignedIntegerValue]) {
+        self.inputArgumentStyle =  [(NSNumber *)valueKey unsignedIntegerValue];
+    }
 }
 
 
@@ -1316,7 +1416,7 @@ errorExit:;
  */
 - (void)setExternalBuildPath:(NSString *)aString
 {
-	[self setObject:aString forKey:MGSScriptKeyExternalBuildPath];
+	[self setObject:aString forKey:MGSScriptKeyExternalBuildPath  options:@{@"languagePropertyKey":MGS_LP_ExternalBuildPath}];
 }
 /*
  
@@ -1335,7 +1435,7 @@ errorExit:;
  */
 - (void)setBuildOptions:(NSString *)aString
 {
-	[self setObject:aString forKey:MGSScriptKeyBuildOptions];
+	[self setObject:aString forKey:MGSScriptKeyBuildOptions  options:@{@"languagePropertyKey":MGS_LP_BuildOptions}];
 }
 /*
  
@@ -1354,7 +1454,7 @@ errorExit:;
  */
 - (void)setExternalExecutorPath:(NSString *)aString
 {
-	[self setObject:aString forKey:MGSScriptKeyExternalExecutorPath];
+	[self setObject:aString forKey:MGSScriptKeyExternalExecutorPath options:@{@"languagePropertyKey":MGS_LP_ExternalExecutorPath}];
 }
 /*
  
@@ -1373,7 +1473,7 @@ errorExit:;
  */
 - (void)setExecutorOptions:(NSString *)aString
 {
-	[self setObject:aString forKey:MGSScriptKeyExecutorOptions];
+	[self setObject:aString forKey:MGSScriptKeyExecutorOptions  options:@{@"languagePropertyKey":MGS_LP_ExecutorOptions}];
 }
 /*
  
@@ -2528,7 +2628,7 @@ errorExit:;
  */
 - (void)setSubroutine:(NSString *)aString
 {
-	[self setObject:aString forKey:MGSScriptKeySubroutine];
+	[self setObject:aString forKey:MGSScriptKeySubroutine options:@{@"languagePropertyKey":MGS_LP_RunFunction}];
 }
 
 /*
@@ -2548,7 +2648,7 @@ errorExit:;
  */
 - (void)setRunClass:(NSString *)aString
 {
-	[self setObject:aString forKey:MGSScriptKeyRunClass];
+	[self setObject:aString forKey:MGSScriptKeyRunClass  options:@{@"languagePropertyKey":MGS_LP_RunClass}];
 }
 
 /*
@@ -2568,7 +2668,7 @@ errorExit:;
  */
 - (void)setOnRun:(NSNumber *)runMode
 {
-	[self setObject:runMode forKey:MGSScriptKeyOnRun];
+	[self setObject:runMode forKey:MGSScriptKeyOnRun options:@{@"languagePropertyKey":MGS_LP_OnRunTask}];
 }
 
 /*

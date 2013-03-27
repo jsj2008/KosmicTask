@@ -49,6 +49,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 
 // class extension
 @interface MGSEditWindowController()
+- (void)scriptTextWasPasted:(NSNotification *)notification;
 - (void)windowEditModeChanged:(NSNotification *)notification;
 - (void)subViewModelEdited:(NSNotification *)notification;
 - (void)windowEditModeWillChange:(NSNotification *)notification;
@@ -119,7 +120,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowEditModeChanged:) name:MGSNoteWindowEditModeDidChange object:[self window]];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subViewModelEdited:) name:MGSNoteViewModelEdited object:[self window]];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowEditModeWillChange:) name:MGSNoteWindowEditModeChangeRequest object:[self window]];
-	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scriptTextWasPasted:) name:MGSNoteScriptTextPasted object:[self window]];
+    
 	// note that laying out NSTabView in IB can be misleading
 	// with regard to frame and layout
 	[tabView setTabViewType:NSNoTabsNoBorder];
@@ -392,14 +394,24 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	#pragma unused(sheet)
 	#pragma unused(contextInfo)
 	
+    BOOL makeEditorFirstResponder = NO;
+    
 	switch (returnCode) {
 		
 			// cancel
 		case kMGSResourceBrowserSheetReturnCancel:
+            makeEditorFirstResponder = YES;
 			break;
 
             // copy
 		case kMGSResourceBrowserSheetReturnCopy:
+            /*
+             template text and custom data have been copied to the pasteboard.
+             - scriptTextWasPasted: will be called when a paste occurs.
+             we can then query the pasteboard for our custom data and extract it if present.
+             
+             */
+            makeEditorFirstResponder = YES;
 			break;
 
 			// insert template
@@ -433,6 +445,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 // insert at current selection point
                 [scriptEditViewController insertText:templateText];
 
+                makeEditorFirstResponder = YES;
             }
 			break;
 		
@@ -446,6 +459,10 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			[self showCodeAssistantSheet:self];
 			break;
 
+    }
+    
+    if (makeEditorFirstResponder) {
+        [self.window makeFirstResponder:[scriptEditViewController initialFirstResponder]];
     }
 }
 
@@ -491,15 +508,19 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 #pragma unused(sheet)
 #pragma unused(contextInfo)
 
+    BOOL makeEditorFirstResponder = NO;
+
 	switch ((MGSCodeAssistantSheetReturnValue)returnCode) {
             
 			// OK - no action required
 		case kMGSCodeAssistantSheetReturnOk:
+            makeEditorFirstResponder = YES;
 			break;
 			
             // data copied to clipboard.
             // no further action required
 		case kMGSCodeAssistantSheetReturnCopy:
+            makeEditorFirstResponder = YES;
 			break;
             
             // insert selected data
@@ -523,6 +544,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 
                 // insert at current selection point
                 [scriptEditViewController insertText:codeString];
+                
+                makeEditorFirstResponder = YES;
             }
             break;
             
@@ -543,6 +566,10 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     }
     
     codeAssistantSheetController.script = nil;
+    
+    if (makeEditorFirstResponder) {
+        [self.window makeFirstResponder:[scriptEditViewController initialFirstResponder]];
+    }
 }
 
 #pragma mark -
@@ -1588,6 +1615,128 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	// mark document as edited
 	[[self window] setDocumentEdited:YES];
 }
+
+/*
+ 
+ - scriptTextWasPasted:
+ 
+ */
+- (void)scriptTextWasPasted:(NSNotification *)notification
+{
+#pragma unused(notification)
+
+    NSString *key = nil;
+    NSString *logMsg = @"Missing data for key %@ in UTI %@";
+    
+    // text has been pasted into the script view.
+    // if custom data representing the language settings is present then retrieve it and use it.
+    
+    // use general pasteboard for cut and paste
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    NSArray *classes = [[NSArray alloc] initWithObjects:[NSPasteboardItem class], nil];
+    
+    // look for resource browser data
+    NSString *customUTI = @"com.mugginsoft.kosmictask.resourcebrowser.template";
+    NSDictionary *options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[customUTI]};
+    NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
+    if (copiedItems != nil) {
+        for (NSPasteboardItem *pbItem in copiedItems) {
+            if ([[pbItem types] containsObject:customUTI]) {
+                
+                NSDictionary *plist = [pbItem propertyListForType:customUTI];
+                if ([plist isKindOfClass:[NSDictionary class]]) {
+
+                    // update script type if it has changed
+                    key = @"scriptType";
+                    NSString *scriptType = [plist objectForKey:key];
+                    if ([scriptType isKindOfClass:[NSString class]] && ![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
+                        [_taskSpec.script setScriptType:scriptType];
+                    } else {
+                        MLogInfo(logMsg, key, customUTI);
+                    }
+                    
+                    // update language properties using dictionary delta
+                    key = @"languagePropertyManagerDelta";
+                    NSDictionary *propertyDict = [plist objectForKey:key];
+                    if ([propertyDict isKindOfClass:[NSDictionary class]]) {
+                        [_taskSpec.script.languagePropertyManager updatePropertiesFromDictionary:propertyDict];
+                    } else {
+                        MLogInfo(logMsg, key, customUTI);
+                    }
+                 }
+            }
+        }
+    }
+    
+    // look for code assistant data
+    customUTI = @"com.mugginsoft.kosmictask.codeassistant.template";
+    options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[customUTI]};
+    copiedItems = [pasteboard readObjectsForClasses:classes options:options];
+    if (copiedItems != nil) {
+        for (NSPasteboardItem *pbItem in copiedItems) {
+            if ([[pbItem types] containsObject:customUTI]) {
+                
+                NSDictionary *plist = [pbItem propertyListForType:customUTI];
+                if ([plist isKindOfClass:[NSDictionary class]]) {
+                    
+                    // update script type if it has changed
+                    key = @"scriptType";
+                    NSString *scriptType = [plist objectForKey:key];
+                    if ([scriptType isKindOfClass:[NSString class]] && ![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
+                        [_taskSpec.script setScriptType:scriptType];
+                    } else {
+                        MLogInfo(logMsg, key, customUTI);
+                    }
+                    
+                    // update language properties using dictionary delta
+                    key = @"inputArgumentName";
+                    id plistValue = [plist objectForKey:key];
+                    if (plistValue && [plistValue isKindOfClass:[NSNumber class]]) {
+                        _taskSpec.script.inputArgumentName = [plistValue unsignedIntegerValue];
+                    } else {
+                        MLogInfo(logMsg, key, customUTI);                        
+                    }
+                    
+                    key = @"inputArgumentCase";
+                    plistValue = [plist objectForKey:key];
+                    if (plistValue && [plistValue isKindOfClass:[NSNumber class]]) {
+                        _taskSpec.script.inputArgumentCase = [plistValue unsignedIntegerValue];
+                    } else {
+                        MLogInfo(logMsg, key, customUTI);
+                    }
+                    
+                    key = @"inputArgumentStyle";
+                    plistValue = [plist objectForKey:key];
+                    if (plistValue && [plistValue isKindOfClass:[NSNumber class]]) {
+                        _taskSpec.script.inputArgumentStyle = [plistValue unsignedIntegerValue];
+                    } else {
+                        MLogInfo(logMsg, key, customUTI);
+                    }
+                    
+                    key = @"inputArgumentPrefix";
+                    plistValue = [plist objectForKey:key];
+                    if (plistValue && [plistValue isKindOfClass:[NSString class]]) {
+                        _taskSpec.script.inputArgumentPrefix = plistValue;
+                    } else {
+                        MLogInfo(logMsg, key, customUTI);
+                    }
+                    
+                    key = @"inputArgumentNameExclusions";
+                    plistValue = [plist objectForKey:key];
+                    if (plistValue && [plistValue isKindOfClass:[NSString class]]) {
+                        _taskSpec.script.inputArgumentNameExclusions = plistValue;
+                    } else {
+                        MLogInfo(logMsg, key, customUTI);
+                    }
+                    
+                }
+            }
+        }
+    }
+
+
+}
+
 
 #pragma mark -
 #pragma mark String methods

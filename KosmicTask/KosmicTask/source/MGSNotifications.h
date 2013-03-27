@@ -68,6 +68,7 @@ extern NSString *MGSNoteMainBrowserModeChanged;
 
 extern NSString *MGSNoteScriptTextChanged;
 extern NSString *MGSNoteViewModelEdited;
+extern NSString *MGSNoteScriptTextPasted;
 
 // user info keys
 extern NSString *MGSNoteBoolStateKey;

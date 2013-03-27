@@ -118,12 +118,46 @@ const char MGSContextResourcesChanged;
  */
 - (void)copySelectionToPasteBoard
 {
+    // use general pasteboard for cut and paste
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    
+    // clear the existing contents
+    [pasteboard clearContents];
+    
+    // define array to hold pasteboard objects
+    NSMutableArray *representations = [NSMutableArray arrayWithCapacity:3];
+    
+    // add plain text representation
     NSString *text = self.resourceBrowserViewController.scriptString;
     if (text) {
-        NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-        [pasteboard clearContents];
-        [pasteboard setString:text forType:NSStringPboardType];
+        [representations addObject:text];
     }
+
+    // property list
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
+    if (dict && text) {
+        
+        // build custom data dictionary
+        
+        // script type
+        [dict setObject:self.script.scriptType forKey:@"scriptType"];
+        
+        // dictionary of modified language properties
+        NSDictionary *propertyManagerDict = [self.script.languagePropertyManager dictionaryOfModifiedProperties];
+        [dict setObject:propertyManagerDict forKey:@"languagePropertyManagerDelta"];
+        
+        // add pasteboatd item with custom data identified by custom UTI
+        NSString *templateUTI = @"com.mugginsoft.kosmictask.resourcebrowser.template";
+        NSPasteboardItem *pbItem = [[NSPasteboardItem alloc] init];
+        if ([pbItem setPropertyList:dict forType:templateUTI]) {
+            [representations addObject:pbItem];
+        } else {
+            NSLog(@"NSPasteboardItem property list not set for UTI: %@", templateUTI);
+        }
+    }
+    
+    // write objects to the pasteboard
+    [pasteboard writeObjects:representations];
 }
 #pragma mark -
 #pragma mark Actions
@@ -136,7 +170,7 @@ const char MGSContextResourcesChanged;
 - (IBAction)insertTemplateAction:(id)sender
 {
 #pragma unused(sender)
-    [self copySelectionToPasteBoard];
+    //[self copySelectionToPasteBoard];
     resourceText = self.resourceBrowserViewController.scriptString;
 	[self closeSheet:kMGSResourceBrowserSheetReturnInsert];
 }

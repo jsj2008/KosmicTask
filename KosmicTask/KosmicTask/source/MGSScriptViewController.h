@@ -10,10 +10,10 @@
 #import <OSAKit/OSAKit.h>
 #import "MGSClientNetRequest.h"
 #import "MGSViewDelegateProtocol.h"
+#import <MGSFragaria/MGSFragaria.h>
 
 @class MGSTaskSpecifier;
 @class MGSScriptViewController;
-@class MGSFragaria;
 @class MGSScript;
 
 @protocol MGSScriptViewController

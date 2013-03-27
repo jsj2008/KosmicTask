@@ -271,30 +271,49 @@ char MGSScriptTypeContext;
  */
 - (void)copySelectionToPasteBoard
 {
-	
-#ifdef MGS_FUNCTION_PASTE_RTF_DATA
+    // use general pasteboard for cut and paste
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     
-	NSAttributedString *attString = [_fragaria attributedString];
-	NSData *data = [attString RTFFromRange:NSMakeRange(0, [attString length]) documentAttributes:nil];
-	NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-	[pasteboard clearContents];
-	[pasteboard setData:data forType:NSRTFPboardType];
+    // clear the existing contents
+    [pasteboard clearContents];
     
-#else
-    NSRange selectedRange = [_fragariaTextView selectedRange];
+    // define array to hold pasteboard objects
+    NSMutableArray *representations = [NSMutableArray arrayWithCapacity:3];
+    
+    // add plain text representation
     NSString *text = [_fragaria string];
-    
-    // if a valid selection range exists then use it
-    if (NO && selectedRange.location != NSNotFound && selectedRange.length > 0) {
-        text = [text substringWithRange:selectedRange];
+    if (text) {
+        [representations addObject:text];
     }
     
-	NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-	[pasteboard clearContents];
-	[pasteboard setString:text forType:NSStringPboardType];
+    // property list
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
+    if (dict && text) {
+        
+        // build custom data dictionary
+        
+        // script type
+        [dict setObject:self.script.scriptType forKey:@"scriptType"];
+        
+        // input argument properties
+        [dict setObject:@(self.script.inputArgumentName) forKey:@"inputArgumentName"];
+        [dict setObject:@(self.script.inputArgumentCase) forKey:@"inputArgumentCase"];
+        [dict setObject:@(self.script.inputArgumentStyle) forKey:@"inputArgumentStyle"];
+        [dict setObject:self.script.inputArgumentPrefix forKey:@"inputArgumentPrefix"];
+        [dict setObject:self.script.inputArgumentNameExclusions forKey:@"inputArgumentNameExclusions"];
+                
+        // add pasteboatd item with custom data identified by custom UTI
+        NSString *templateUTI = @"com.mugginsoft.kosmictask.codeassistant.template";
+        NSPasteboardItem *pbItem = [[NSPasteboardItem alloc] init];
+        if ([pbItem setPropertyList:dict forType:templateUTI]) {
+            [representations addObject:pbItem];
+        } else {
+            NSLog(@"NSPasteboardItem property list not set for UTI: %@", templateUTI);
+        }
+    }
     
-#endif
-    
+    // write objects to the pasteboard
+    [pasteboard writeObjects:representations];
 }
 
 #pragma mark -
