@@ -25,6 +25,12 @@ enum {
 };
 typedef NSInteger MGSCodeAssistantSheetReturnValue;
 
+enum {
+    MGSCodeAssistantSelectionTaskBody = 0,
+    MGSCodeAssistantSelectionTaskInputs = 1,
+};
+typedef NSInteger MGSCodeAssistantCodeSelection;
+
 @interface MGSCodeAssistantSheetController : NSWindowController
 {
     IBOutlet NSPopUpButton *_scriptTypePopupButton;
@@ -46,6 +52,7 @@ typedef NSInteger MGSCodeAssistantSheetReturnValue;
     NSArray *_scriptTypes;
     BOOL _showInfoTextImage;
     NSString *_infoText;
+    MGSCodeAssistantCodeSelection _codeSelection;
 }
 
 - (IBAction)ok:(id)sender;
@@ -58,4 +65,5 @@ typedef NSInteger MGSCodeAssistantSheetReturnValue;
 @property (copy, readonly) NSArray *scriptTypes;
 @property MGSScript *script;
 @property (copy) NSString *infoText;
+@property MGSCodeAssistantCodeSelection codeSelection;
 @end

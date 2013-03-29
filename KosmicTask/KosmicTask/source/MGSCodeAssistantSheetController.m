@@ -41,6 +41,7 @@ char MGSScriptTypeContext;
 @synthesize script = _script;
 @synthesize showInfoTextImage = _showInfoTextImage;
 @synthesize infoText = _infoText;
+@synthesize codeSelection = _codeSelection;
 
 /*
  
@@ -161,17 +162,40 @@ char MGSScriptTypeContext;
  */
 - (void)tabView:(NSTabView *)aTabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {
-    NSInteger tabIndex = [aTabView indexOfTabViewItem:tabViewItem];
+    self.codeSelection = [aTabView indexOfTabViewItem:tabViewItem];
     
-    if (tabIndex == 0) {
-        self.languageCodeDescriptor.descriptorCodeStyle = kMGSCodeDescriptorTaskBody;
-    } else {
-        self.languageCodeDescriptor.descriptorCodeStyle = kMGSCodeDescriptorTaskInputs;
-    }
 }
 #pragma mark -
 #pragma mark Accessors
 
+/*
+ 
+ - setCodeSelection:
+ 
+ */
+- (void)setCodeSelection:(MGSCodeAssistantCodeSelection)value
+{
+    switch (value) {
+        case MGSCodeAssistantSelectionTaskInputs:
+            self.languageCodeDescriptor.descriptorCodeStyle = kMGSCodeDescriptorTaskInputs;
+            break;
+        
+        case MGSCodeAssistantSelectionTaskBody:
+            self.languageCodeDescriptor.descriptorCodeStyle = kMGSCodeDescriptorTaskBody;
+            break;
+            
+        default:
+            MLogInfo(@"Invalid index: %i", value);
+            return;
+    }
+ 
+    _codeSelection = value;
+
+    NSInteger idx = [tabBar.tabView indexOfTabViewItem:[tabBar.tabView selectedTabViewItem]];
+    if (_codeSelection != idx) {
+        [tabBar.tabView selectTabViewItemAtIndex:_codeSelection];
+    }
+}
 /*
  
  - setScript:

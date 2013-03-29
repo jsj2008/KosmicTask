@@ -63,6 +63,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 
 - (void)codeAssistantSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)inputConfigurationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)showCodeAssistantSheet:(id)sender options:(NSDictionary *)options;
 @end
 
 @interface MGSEditWindowController(Private)
@@ -471,11 +472,22 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 
 /*
  
- - showFunctionSheet:
+ - showCodeAssistantSheet:
  
  */
 - (IBAction)showCodeAssistantSheet:(id)sender
 {
+    [self showCodeAssistantSheet:sender options:nil];
+}
+
+/*
+ 
+ - showCodeAssistantSheet:options:
+ 
+ */
+- (void)showCodeAssistantSheet:(id)sender options:(NSDictionary *)options
+{
+
 #pragma unused(sender)
     
 	// load the resource sheet controller.
@@ -487,6 +499,17 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     
     // we require to preselect the default template for the current script type
 	codeAssistantSheetController.script = [_taskSpec script];
+    
+    NSString *infoString = @"";
+    MGSCodeAssistantCodeSelection codeSelection = MGSCodeAssistantSelectionTaskBody;
+    
+    if (options) {
+        infoString = [options objectForKey:@"info"];
+        codeSelection = [[options objectForKey:@"selection"] integerValue];
+    }
+    
+    codeAssistantSheetController.infoText = infoString;
+    codeAssistantSheetController.codeSelection = codeSelection;
     
 	// show the sheet
 	[NSApp beginSheet:[codeAssistantSheetController window]
@@ -1494,7 +1517,12 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             break;
             
         case kMGSScriptHelperCodeAssistant:
-            [self showCodeAssistantSheet:self];
+            {
+                NSString *changeString = [self stringForParameterViewConfigurationFlags:actionEditViewController.parameterViewConfigurationFlags];
+                NSString *infoString = [NSString stringWithFormat:@"Task inputs have changed:\n%@", changeString];
+                NSDictionary *options = @{@"info":infoString, @"selection":@(MGSCodeAssistantSelectionTaskInputs)};
+                [self showCodeAssistantSheet:self options:options];
+            }
             break;
             
         default:

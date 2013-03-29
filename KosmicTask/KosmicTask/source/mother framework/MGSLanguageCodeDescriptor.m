@@ -28,6 +28,7 @@ char MGSScriptTypeContext;
 - (NSString *)templateErrorString:(NSError *)error;
 - (id)normalizeTemplateVariable:(id)inputObject;
 - (void)addDefaultTemplateVariables:(NSMutableDictionary *)templateVariables;
+- (NSMutableDictionary *)templateTaskInfo;
 
 @property (assign) MGSLanguage *scriptLanguage;
 @end
@@ -125,7 +126,7 @@ char MGSScriptTypeContext;
     if (self.scriptLanguage) {
         
         // look for function template
-        NSString *templateName = [self.scriptLanguage taskFunctionCodeTemplateName:nil];
+        NSString *templateName = [self.scriptLanguage taskFunctionCodeTemplateName:self.templateTaskInfo];
         
         // if no function template available then use input variables 
         if (![self templateNameExists:templateName]) {            
@@ -155,7 +156,7 @@ char MGSScriptTypeContext;
         
         // script must support function inputs
         if ([inputStyle isEqualToString:@"function"]) {
-            NSString *codeTemplate = [self.scriptLanguage taskFunctionCodeTemplateName:nil];
+            NSString *codeTemplate = [self.scriptLanguage taskFunctionCodeTemplateName:self.templateTaskInfo];
             codeString = [self generateCodeStringFromTemplateName:codeTemplate];
         }
     }
@@ -173,7 +174,7 @@ char MGSScriptTypeContext;
     NSString *codeString = nil;
 
     if (self.scriptLanguage) {
-        NSString *codeTemplate = [self.scriptLanguage taskInputsCodeTemplateName:nil];
+        NSString *codeTemplate = [self.scriptLanguage taskInputsCodeTemplateName:self.templateTaskInfo];
         codeString = [self generateCodeStringFromTemplateName:codeTemplate];
     }
     
@@ -190,7 +191,13 @@ char MGSScriptTypeContext;
     NSString *codeString = nil;
 
     if (self.scriptLanguage) {
-        NSString *codeTemplate = [self.scriptLanguage taskBodyCodeTemplateName:nil];
+        
+        // build the task info
+        NSMutableDictionary *taskInfo = [NSMutableDictionary dictionaryWithCapacity:5];
+        if (self.script.onRun) {
+            [taskInfo setObject:self.script.onRun forKey:@"onRun"];
+        }
+        NSString *codeTemplate = [self.scriptLanguage taskBodyCodeTemplateName:self.templateTaskInfo];
         codeString = [self generateCodeStringFromTemplateName:codeTemplate];        
     }
 
@@ -218,6 +225,22 @@ char MGSScriptTypeContext;
     }
 
     return codeString;
+}
+
+/*
+ 
+ - templateTaskInfo
+ 
+ */
+- (NSMutableDictionary *)templateTaskInfo
+{
+    // build the task info
+    NSMutableDictionary *taskInfo = [NSMutableDictionary dictionaryWithCapacity:5];
+    if (self.script.onRun) {
+        [taskInfo setObject:self.script.onRun forKey:@"onRun"];
+    }
+
+    return taskInfo;
 }
 
 #pragma mark
@@ -269,7 +292,7 @@ char MGSScriptTypeContext;
     [self addDefaultTemplateVariables:templateVariables];
 
     // add task input result key
-    NSString *templateName = [self.scriptLanguage taskInputResultCodeTemplateName:nil];
+    NSString *templateName = [self.scriptLanguage taskInputResultCodeTemplateName:self.templateTaskInfo];
     if ([self templateNameExists:templateName]) {
         NSString *taskInputResult = [self processTemplateName:templateName object:templateVariables error:&error];
         if (error) {
@@ -280,7 +303,7 @@ char MGSScriptTypeContext;
     }
 
     // add task header key
-    templateName = [self.scriptLanguage taskHeaderCodeTemplateName:nil];
+    templateName = [self.scriptLanguage taskHeaderCodeTemplateName:self.templateTaskInfo];
     if ([self templateNameExists:templateName]) {
         NSString *taskHeader = [self processTemplateName:templateName object:templateVariables error:&error];
         if (error) {
@@ -291,7 +314,7 @@ char MGSScriptTypeContext;
     }
 
     // add task input conditional key
-    templateName = [self.scriptLanguage taskInputConditionalCodeTemplateName:nil];
+    templateName = [self.scriptLanguage taskInputConditionalCodeTemplateName:self.templateTaskInfo];
     if ([self templateNameExists:templateName]) {
         NSString *taskHeader = [self processTemplateName:templateName object:templateVariables error:&error];
         if (error) {
@@ -301,7 +324,7 @@ char MGSScriptTypeContext;
     }
 
     // add task class function key
-    templateName = [self.scriptLanguage taskClassFunctionCodeTemplateName:nil];
+    templateName = [self.scriptLanguage taskClassFunctionCodeTemplateName:self.templateTaskInfo];
     if ([self templateNameExists:templateName]) {
         NSString *taskHeader = [self processTemplateName:templateName object:templateVariables error:&error];
         if (error) {
@@ -450,7 +473,7 @@ char MGSScriptTypeContext;
     // index the inputs
     if ([[options objectForKey:@"index"] boolValue] == YES) {
 
-        NSString *templateName = [self.scriptLanguage taskInputCodeTemplateName:nil];
+        NSString *templateName = [self.scriptLanguage taskInputCodeTemplateName:self.templateTaskInfo];
 
         // format inputs using template
         for (NSUInteger idx = 0; idx < [normalisedNames count]; idx++) {
@@ -486,7 +509,7 @@ char MGSScriptTypeContext;
 {
     // get dictionary of object indexes
     NSDictionary *indexDict = [parameterNames mgs_objectIndexes];
-    NSString *inputTemplateName = [self.scriptLanguage taskInputNameCodeTemplateName:nil];
+    NSString *inputTemplateName = [self.scriptLanguage taskInputNameCodeTemplateName:self.templateTaskInfo];
     
     // make the names unique by adding an integer identifier if name non unique
     for (NSString *key in [indexDict allKeys]) {
@@ -546,7 +569,7 @@ char MGSScriptTypeContext;
         taskInputs = [self normalizeTemplateVariable:taskInputsList];
     }
     
-    NSString *templateName = [self.scriptLanguage taskInputsCodeTemplateName:nil];
+    NSString *templateName = [self.scriptLanguage taskInputsCodeTemplateName:self.templateTaskInfo];
 
     NSError *error = nil;
     

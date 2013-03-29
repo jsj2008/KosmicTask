@@ -499,9 +499,36 @@ initInputArgumentStyleAllowedFlags;
  */
 - (NSString *)taskBodyCodeTemplateName:(NSDictionary *)taskInfo
 {
-#pragma unused(taskInfo)
+    NSString *templateName = nil;  
+    NSNumber *onRun = [taskInfo objectForKey:@"onRun"];
     
-    return @"task-body";
+    if (!onRun) {
+        onRun = @(kMGSOnRunCallScript);
+    }
+    
+    NSAssert([onRun isKindOfClass:[NSNumber class]], @"Expected NSNumber");
+    
+    switch ([onRun integerValue]) {
+            
+        case kMGSOnRunCallScript:
+            templateName = @"task-body";
+            break;
+            
+        case kMGSOnRunCallScriptFunction:
+            templateName = @"task-function-body";
+            break;
+            
+        case kMGSOnRunCallClassFunction:
+            templateName = @"task-class-body";
+            break;
+
+        case kMGSOnRunCallNone:
+        default:
+            break;
+
+    }
+    
+    return templateName;
 }
 
 /*

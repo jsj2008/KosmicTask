@@ -58,4 +58,36 @@
 	return self;
 }
 
+/*
+ 
+ - taskFunctionCodeTemplateName:
+ 
+ */
+- (NSString *)taskFunctionCodeTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    NSString *templateName = nil;
+    NSNumber *onRun = [taskInfo objectForKey:@"onRun"];
+    if (onRun) {
+        switch ([onRun integerValue]) {
+                
+            case kMGSOnRunCallScript:
+                templateName = @"task-run-handler";
+                break;
+                
+            default:
+                break;
+
+        }
+    }
+
+    if (!templateName) {
+        templateName = [super taskFunctionCodeTemplateName:taskInfo];
+    }
+    
+    return templateName;
+
+}
+
 @end
