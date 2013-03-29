@@ -1,0 +1,18 @@
+(*
+
+{{ task-function-name }}
+
+*)
+{{> task-function }}
+	
+	try
+	
+{{> task-input-result }}
+
+	on error errorMessage number errorNumber
+
+		return {kosmicError:errorMessage}
+
+	end try
+	
+end {{ task-function-name }}

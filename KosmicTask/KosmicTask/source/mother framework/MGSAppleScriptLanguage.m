@@ -72,6 +72,8 @@
     if (onRun) {
         switch ([onRun integerValue]) {
                 
+            // if just calling the script them always
+            // use the run handler so that arguments can be passed if required.
             case kMGSOnRunCallScript:
                 templateName = @"task-run-handler";
                 break;
