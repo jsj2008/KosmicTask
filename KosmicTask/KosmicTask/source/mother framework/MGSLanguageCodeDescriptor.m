@@ -125,10 +125,30 @@ char MGSScriptTypeContext;
     
     if (self.scriptLanguage) {
         
-        // look for function template
-        NSString *templateName = [self.scriptLanguage taskFunctionCodeTemplateName:self.templateTaskInfo];
+        NSString *templateName = nil;
         
-        // if no function template available then use input variables 
+        eMGSOnRunTask onRun = [self.script.onRun integerValue];
+
+        switch(onRun) {
+                
+            // look for class function template
+            case kMGSOnRunCallClassFunction:
+                templateName = [self.scriptLanguage taskClassFunctionCodeTemplateName:self.templateTaskInfo];
+                if (templateName) {
+                    break;
+                }
+                // fall through
+                
+            // look for function template
+            case kMGSOnRunCallScriptFunction:
+                templateName = [self.scriptLanguage taskFunctionCodeTemplateName:self.templateTaskInfo];
+                break;
+
+            default:
+                break;
+        }
+        
+        // if no function template available then use input variables
         if (![self templateNameExists:templateName]) {            
             NSMutableDictionary *templateVariables = [self templateVariables];
             codeString = [templateVariables objectForKey:@"task-input-variables"];
@@ -192,11 +212,6 @@ char MGSScriptTypeContext;
 
     if (self.scriptLanguage) {
         
-        // build the task info
-        NSMutableDictionary *taskInfo = [NSMutableDictionary dictionaryWithCapacity:5];
-        if (self.script.onRun) {
-            [taskInfo setObject:self.script.onRun forKey:@"onRun"];
-        }
         NSString *codeTemplate = [self.scriptLanguage taskBodyCodeTemplateName:self.templateTaskInfo];
         codeString = [self generateCodeStringFromTemplateName:codeTemplate];        
     }

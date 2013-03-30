@@ -58,7 +58,7 @@ enum _eMGSExecutableFormat {
 };
 typedef NSInteger eMGSExecutableFormat;
 
- enum _eMGSOnRunTask {
+enum _eMGSOnRunTask {
 	kMGSOnRunCallNone = 0,
 	kMGSOnRunCallScript = 1,
 	kMGSOnRunCallScriptFunction = 2,

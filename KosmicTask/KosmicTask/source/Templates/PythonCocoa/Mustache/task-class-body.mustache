@@ -1,0 +1,10 @@
+import Foundation
+
+# KosmicTask controller
+taskController = Foundation.NSClassFromString("KosmicTaskController")
+
+class {{ task-class-name }} (Foundation.NSObject):
+    
+{{> task-class-function }}
+
+{{> task-class-input-result }}
