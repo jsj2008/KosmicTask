@@ -64,6 +64,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (void)codeAssistantSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)inputConfigurationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)showCodeAssistantSheet:(id)sender options:(NSDictionary *)options;
+- (void)showCodeAssistantSheetForConfigurationChange:(id)sender;
 @end
 
 @interface MGSEditWindowController(Private)
@@ -519,6 +520,21 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 		  contextInfo:NULL];
 
     return;
+}
+
+/*
+ 
+ - showCodeAssistantSheetForConfigurationChange:
+ 
+ */
+- (void)showCodeAssistantSheetForConfigurationChange:(id)sender
+{
+
+    NSString *changeString = [self stringForParameterViewConfigurationFlags:actionEditViewController.parameterViewConfigurationFlags];
+    NSString *infoString = [NSString stringWithFormat:@"Task inputs have changed:\n%@", changeString];
+    NSDictionary *options = @{@"info":infoString, @"selection":@(MGSCodeAssistantSelectionTaskInputs)};
+    
+    [self showCodeAssistantSheet:sender options:options];
 }
 
 /*
@@ -1389,7 +1405,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             [self requestEditTask:self];
             
             // show the code assistant
-            [self showCodeAssistantSheet:self];
+            [self showCodeAssistantSheetForConfigurationChange:self];
             
             break;
             
@@ -1518,10 +1534,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             
         case kMGSScriptHelperCodeAssistant:
             {
-                NSString *changeString = [self stringForParameterViewConfigurationFlags:actionEditViewController.parameterViewConfigurationFlags];
-                NSString *infoString = [NSString stringWithFormat:@"Task inputs have changed:\n%@", changeString];
-                NSDictionary *options = @{@"info":infoString, @"selection":@(MGSCodeAssistantSelectionTaskInputs)};
-                [self showCodeAssistantSheet:self options:options];
+                [self showCodeAssistantSheetForConfigurationChange:self ];
             }
             break;
             
