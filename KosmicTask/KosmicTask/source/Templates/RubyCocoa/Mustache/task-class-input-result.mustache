@@ -1,0 +1,5 @@
+{{tab2}}# {{ task-form-result-message }}
+{{tab2}}taskResult = {{# task-input-variables }}Array[{{.}}]{{^}}"{{ task-inputs-undefined-message }}"{{/}}
+	
+{{tab2}}# {{ task-input-result-message }}
+{{tab2}}return taskResult

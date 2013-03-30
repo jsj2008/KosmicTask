@@ -1,0 +1,11 @@
+require 'osx/cocoa'
+
+# KosmicTask controller
+$taskController = OSX.NSClassFromString("KosmicTaskController")
+
+class {{ task-class-name }}
+{{> task-class-function }}
+
+{{> task-class-input-result }}
+    end
+end
