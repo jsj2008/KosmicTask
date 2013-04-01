@@ -1667,7 +1667,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 #pragma unused(notification)
 
     NSString *key = nil;
-    NSString *logMsg = @"Missing data for key %@ in UTI %@";
+    NSString *logMsg = @"Missing/bad data for key %@ in UTI %@";
     
     // text has been pasted into the script view.
     // if custom data representing the language settings is present then retrieve it and use it.
@@ -1690,8 +1690,11 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                     // update script type if it has changed
                     key = @"scriptType";
                     NSString *scriptType = [plist objectForKey:key];
-                    if ([scriptType isKindOfClass:[NSString class]] && ![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
-                        [_taskSpec.script setScriptType:scriptType];
+                    if ([scriptType isKindOfClass:[NSString class]]) {
+                        
+                        if (![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
+                            [_taskSpec.script setScriptType:scriptType];
+                        }
                     } else {
                         MLogInfo(logMsg, key, customUTI);
                     }
@@ -1723,8 +1726,12 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                     // update script type if it has changed
                     key = @"scriptType";
                     NSString *scriptType = [plist objectForKey:key];
-                    if ([scriptType isKindOfClass:[NSString class]] && ![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
-                        [_taskSpec.script setScriptType:scriptType];
+                                        
+                    if ([scriptType isKindOfClass:[NSString class]]) {
+                            
+                        if (![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
+                            [_taskSpec.script setScriptType:scriptType];
+                        }
                     } else {
                         MLogInfo(logMsg, key, customUTI);
                     }

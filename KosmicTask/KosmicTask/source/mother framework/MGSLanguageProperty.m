@@ -277,7 +277,10 @@ infoText, canReset, hasInitialValue, isList, defaultOptionKey, initialValue, del
     if (newValue) {
         [self updateValue:newValue];
     } else {
-        NSLog(@"Missing value for key %@", newKey);
+        
+        // this can be triggered when loading an old task history dict
+        // that doesn't contain a particular key
+        MLogInfo(@"%@ : Missing value for key %@", self.name, newKey);
     }
 }
 

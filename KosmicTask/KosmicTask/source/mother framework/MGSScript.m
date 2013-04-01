@@ -1062,48 +1062,48 @@ errorExit:;
         NSString *languagePropertyKey = [options objectForKey:@"languagePropertyKey"];
         if (languagePropertyKey) {
             
-            // get language property
+            // get language property.
+            // the language property may be nil if the language does not support this property.
             MGSLanguageProperty *langProp = [self.languagePropertyManager propertyForKey:languagePropertyKey];
             
             // validate the language property
-            if (!langProp) {
-                MLogInfo(@"No language property for key %@", languagePropertyKey);
-            }
-            
-            // if property is a list then validate it.
-            // our value is a key into the option list
-            else if (langProp.isList) {
-                NSArray *values = [[langProp optionValues] allKeys];    // keys are index values
+            if (langProp) {
                 
-                if ([values containsObject:obj]) {
+                // if property is a list then validate it.
+                // our value is a key into the option list
+                 if (langProp.isList) {
+                    NSArray *values = [[langProp optionValues] allKeys];    // keys are index values
+                    
+                    if ([values containsObject:obj]) {
+                        
+                        // update this object
+                        [self setObject:obj forKey:key];
+                        updateRequired = NO;
+                        
+                        // update the language property option value if required.
+                        // to prevent the possibility of infinite recursion only update if required.
+                        if (![obj isEqual:[langProp keyForOptionValue]]) {
+                            [langProp updateOptionKey:obj];
+                        }
+                        
+                    } else {
+                        MLogInfo(@"Invalid object %@ for key %@", obj, key);
+                        
+                        // we don't want to update this object as the value is invalid.
+                        // perhaps we should set it to a known good value though?
+                        updateRequired = NO;
+                    }
+                } else {
                     
                     // update this object
                     [self setObject:obj forKey:key];
                     updateRequired = NO;
                     
-                    // update the language property option value if required.
+                    // update the language property value if required
                     // to prevent the possibility of infinite recursion only update if required.
-                    if (![obj isEqual:[langProp keyForOptionValue]]) {
-                        [langProp updateOptionKey:obj];
+                    if (![obj isEqual:[langProp value]]) {
+                        [langProp setValue:obj];
                     }
-                    
-                } else {
-                    MLogInfo(@"Invalid object %@ for key %@", obj, key);
-                    
-                    // we don't want to update this object as the value is invalid.
-                    // perhaps we should set it to a known good value though?
-                    updateRequired = NO;
-                }
-            } else {
-                
-                // update this object
-                [self setObject:obj forKey:key];
-                updateRequired = NO;
-                
-                // update the language property value if required
-                // to prevent the possibility of infinite recursion only update if required.
-                if (![obj isEqual:[langProp value]]) {
-                    [langProp setValue:obj];
                 }
             }
         }
@@ -1342,7 +1342,7 @@ errorExit:;
 	// onRun is mandatory.
 	MGSLanguageProperty *langProp = [languagePropertyManager propertyForKey:MGS_LP_OnRunTask];
 	valueKey = [langProp keyForOptionValue];
-    if (![self.onRun isEqual:valueKey]) {
+    if (langProp && ![self.onRun isEqual:valueKey]) {
         self.onRun = valueKey;
     }
     
@@ -1352,35 +1352,42 @@ errorExit:;
 		MLogInfo(@"script onRun property is nil - the script is not properly initialised.");
 	}
 	
+    /*
+    
+     the language property may be nil if the language does not support
+     that property
+     
+     */
+    
 	// update script with property values
 	// absent script values cause settings to retain their default values
     langProp = [languagePropertyManager propertyForKey:MGS_LP_RunFunction];
-    if (![langProp.value isEqual:self.subroutine]) {
+    if (langProp && ![langProp.value isEqual:self.subroutine]) {
         self.subroutine = langProp.value;
     }
           
     langProp = [languagePropertyManager propertyForKey:MGS_LP_RunClass];
-    if (![langProp.value isEqual:self.runClass]) {
+    if (langProp && ![langProp.value isEqual:self.runClass]) {
         self.runClass = langProp.value;
     }
 	
     langProp = [languagePropertyManager propertyForKey:MGS_LP_ExternalBuildPath];
-    if (![langProp.value isEqual:self.externalBuildPath]) {
+    if (langProp && ![langProp.value isEqual:self.externalBuildPath]) {
         self.externalBuildPath = langProp.value;
     }
 	
     langProp = [languagePropertyManager propertyForKey:MGS_LP_BuildOptions];
-    if (![langProp.value isEqual:self.buildOptions]) {
+    if (langProp && ![langProp.value isEqual:self.buildOptions]) {
         self.buildOptions = langProp.value;
     }
 
     langProp = [languagePropertyManager propertyForKey:MGS_LP_ExternalExecutorPath];
-    if (![langProp.value isEqual:self.externalExecutorPath]) {
+    if (langProp && ![langProp.value isEqual:self.externalExecutorPath]) {
         self.externalExecutorPath = langProp.value;
     }
 	
     langProp = [languagePropertyManager propertyForKey:MGS_LP_ExecutorOptions];
-    if (![langProp.value isEqual:self.executorOptions]) {
+    if (langProp && ![langProp.value isEqual:self.executorOptions]) {
         self.executorOptions = langProp.value;
     }
 
@@ -2669,6 +2676,21 @@ errorExit:;
 - (void)setOnRun:(NSNumber *)runMode
 {
 	[self setObject:runMode forKey:MGSScriptKeyOnRun options:@{@"languagePropertyKey":MGS_LP_OnRunTask}];
+    
+    switch ([runMode integerValue]) {
+        case kMGSOnRunCallNone:
+        case kMGSOnRunCallScript:
+            [self setSubroutine:nil];
+            [self setRunClass:nil];
+            break;
+            
+        case kMGSOnRunCallScriptFunction:
+            [self setRunClass:nil];
+            break;
+            
+        case kMGSOnRunCallClassFunction:
+            break;
+    }
 }
 
 /*
