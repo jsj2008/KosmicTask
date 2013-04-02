@@ -24,6 +24,8 @@ typedef NSInteger MGSResourceDocumentMode;
 	IBOutlet NSPopUpButton *docType;
 	IBOutlet WebView *webView;
 	IBOutlet NSView *editorHostView;
+    IBOutlet NSTextView *resourceTextView;
+
 	MGSResourceDocumentMode mode;
 	BOOL editModeActive;
 	MGSResourceItem *selectedResource;

@@ -59,6 +59,7 @@
 {
 	//_initialViewFrame = [[self view] frame];
 	[self layoutViewForMode];
+    
 }
 
 /*

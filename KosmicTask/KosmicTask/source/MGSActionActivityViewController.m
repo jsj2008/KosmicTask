@@ -67,6 +67,12 @@
         NSRect documentVisibleRect = [_scrollView documentVisibleRect];
         [_activityView setFrame:documentVisibleRect];
         [_textView addSubview:_activityView];
+        
+        if ([_textView respondsToSelector:@selector(setUsesFindBar:)]) {
+            [_textView setUsesFindBar:YES];
+        } else {
+            [_textView setUsesFindPanel:YES];
+        }
     }        
 }
 

@@ -100,6 +100,11 @@ char MGSScriptTypeContext;
     // configure tab bar
     [self configureTabBar];
     
+    if ([_argumentNameExclusions respondsToSelector:@selector(setUsesFindBar:)]) {
+        [_argumentNameExclusions setUsesFindBar:NO];
+    }
+    [_argumentNameExclusions setUsesFindPanel:NO];
+    
 }
 
 #pragma mark -

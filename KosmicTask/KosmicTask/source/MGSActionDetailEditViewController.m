@@ -63,8 +63,12 @@
 	[created setLocale:[NSLocale currentLocale]];
 	[modified setLocale:[NSLocale currentLocale]];
 	
-	//[longDescription setFont: [[description font] copy]];
-	
+    if ([longDescription respondsToSelector:@selector(setUsesFindBar:)]) {
+        [longDescription setUsesFindBar:YES];
+    } else {
+        [longDescription setUsesFindPanel:YES];
+    }
+    
 	[(MGSCapsuleTextCell *)[definitionCapsule cell] setSizeCapsuleToFit:NO];
 	[(MGSCapsuleTextCell *)[descriptionCapsule cell] setSizeCapsuleToFit:NO];
 	[(MGSCapsuleTextCell *)[optionsCapsule cell] setSizeCapsuleToFit:NO];

@@ -44,6 +44,12 @@
 	[[textView layoutManager] setBackgroundLayoutEnabled:YES];
 	[[textView layoutManager] setAllowsNonContiguousLayout:YES];
 	
+    if ([textView respondsToSelector:@selector(setUsesFindBar:)]) {
+        [textView setUsesFindBar:YES];
+    } else {
+        [textView setUsesFindPanel:YES];
+    }
+
 	_errorController = [[NSArrayController alloc] init];
 	[_errorController setContent:[NSMutableArray arrayWithCapacity:2]];
 	

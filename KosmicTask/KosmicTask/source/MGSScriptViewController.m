@@ -123,7 +123,7 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
     // as it can cause certain scripts to fail to build e.g: Python
     [_fragariaTextView setAutomaticDataDetectionEnabled:NO];
 	[_fragariaTextView setAutomaticTextReplacementEnabled:NO];
-     
+    
 	if (_delegate && [_delegate respondsToSelector:@selector(scriptViewLoaded:)]) {
 		[_delegate scriptViewLoaded:self];
 	}

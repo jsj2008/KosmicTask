@@ -137,6 +137,11 @@ static BOOL applicationMenuConfigured = NO;
 		withKeyPath:@"resultString" 
 			options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], NSConditionallySetsEditableBindingOption, nil]];
 	
+    if ([_textView respondsToSelector:@selector(setUsesFindBar:)]) {
+        [_textView setUsesFindBar:YES];
+    } else {
+        [_textView setUsesFindPanel:YES];        
+    }
     //=======================================================================================
     //
     // bind logtext view to result log string
@@ -150,6 +155,12 @@ static BOOL applicationMenuConfigured = NO;
 		   toObject:self 
 		withKeyPath:@"resultLogString" 
 			options:[NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:NO], NSConditionallySetsEditableBindingOption, nil]];
+    
+    if ([_logTextView respondsToSelector:@selector(setUsesFindBar:)]) {
+        [_logTextView setUsesFindBar:YES];
+    } else {
+        [_logTextView setUsesFindPanel:YES];
+    }
     
 	//=======================================================================================
 	// bind treecontroller to outline view

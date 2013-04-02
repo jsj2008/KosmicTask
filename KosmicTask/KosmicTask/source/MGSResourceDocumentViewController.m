@@ -66,10 +66,39 @@ const char MGSContextResourceDocFileType;
 	NSTextView *editorTextView = [fragaria objectForKey:ro_MGSFOTextView];
 	[editorTextView bind:NSValueBinding toObject:resourceController withKeyPath:@"selection.markdownResource" options:nil];
     
+    // enable text view searchiing
+    if ([resourceTextView respondsToSelector:@selector(setUsesFindBar:)]) {
+        [resourceTextView setUsesFindBar:YES];
+    } else {
+        [resourceTextView setUsesFindPanel:YES];
+    }
+    
+    // enable web view searching
+    // not so trivial to implement.
+    // WebView search method is -searchFor:direction:caseSensitive:wrap:
+    // see https://github.com/Kapeli/HighlightedWebView
+    /*
+     I provide some app documentation in both RTF and MarkDown and switch in an NSTextView or WebView for display as required.
+     Text view searching works well using the NSTextFinder find bar.
+     However, implementing a WebView find panel/bar seems difficult.
+     
+     - (void)performFindPanelAction:(id)sender is still not implemented - ref: https://bugs.webkit.org/show_bug.cgi?id=3640
+     Current WebKit source still documents this as unimplemented - ref: https://trac.webkit.org/browser/trunk/Source/WebKit/mac/WebView/WebHTMLView.mm
+     
+     Some swizzling however can be effective - ref : http://www.taffysoft.com/pages/20120908-01.html
+     So this can be investigated.
+     
+     But I don't see much in way of integrating NSTextFinder and WebView. The NSTextFinderClient protocol is quite extensive, which might explain why.
+     
+     Does anyone have any further insight into this?
+
+     */
+    
     // turn off auto text replacement for items such as ...
     // as it can cause certain scripts to fail to build e.g: Python
     [editorTextView setAutomaticDataDetectionEnabled:NO];
 	[editorTextView setAutomaticTextReplacementEnabled:NO];
+
 }
 
 /*

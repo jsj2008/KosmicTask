@@ -87,7 +87,7 @@ char MGSTextViewEditableContext;
     // as it can cause certain scripts to fail to build e.g: Python
     [editorTextView setAutomaticDataDetectionEnabled:NO];
 	[editorTextView setAutomaticTextReplacementEnabled:NO];
-    
+
 	// bindings    
     [editorTextView bind:NSEditableBinding toObject:self withKeyPath:@"textViewEditable" options:nil];
     [codeSegmentedControl bind:NSSelectedIndexBinding toObject:self withKeyPath:@"selectedCodeSegmentIndex" options:nil];

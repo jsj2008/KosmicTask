@@ -143,6 +143,13 @@ selectedLanguageProperty, editedLanguageProperty, resourceEditable;
 			   [NSNumber numberWithBool:YES], NSValidatesImmediatelyBindingOption, nil];
 	[settingsTextView setRichText:NO];	// must be NO NSValueBinding to be respected
 	[settingsTextView bind:NSValueBinding toObject:self withKeyPath:@"selectedLanguageProperty.infoText" options:options];
+    
+    if ([settingsTextView respondsToSelector:@selector(setUsesFindBar:)]) {
+        [settingsTextView setUsesFindBar:YES];
+    } else {
+        [settingsTextView setUsesFindPanel:YES];
+    }
+    
 }
 
 #pragma mark -
