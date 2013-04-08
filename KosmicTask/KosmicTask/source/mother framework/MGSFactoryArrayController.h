@@ -20,6 +20,7 @@
 
 @property BOOL useFactorySelector;
 
+// note that this appoach is not compatible with bindings
 - (void)addItem:(id)item;  
 - (id)itemAtIndex:(NSUInteger)index;
 - (NSInteger)count;
@@ -31,4 +32,5 @@
 - (void)moveItemAtIndex:(NSUInteger)sourceIdx toIndex:(NSUInteger)targetIdx;
 - (void)insertItem:(id)item atIndex:(NSUInteger)idx;
 - (void)replaceItemAtIndex:(NSUInteger)idx withItem:(id)item;
+- (NSArray *)factoryArray;
 @end

@@ -16,6 +16,8 @@
 #import "MGSKosmicCardTabStyle.h"
 #import "MGSKosmicUnityTabStyle2.h"
 #import "MGSBorderView.h"
+#import "NSView_Mugginsoft.h"
+#import "MGSTaskVariablesViewController.h"
 
 char MGSInputArgumentContext;
 char MGSScriptTypeContext;
@@ -42,6 +44,7 @@ char MGSScriptTypeContext;
 @synthesize showInfoTextImage = _showInfoTextImage;
 @synthesize infoText = _infoText;
 @synthesize codeSelection = _codeSelection;
+@synthesize canInsert = _canInsert;
 
 /*
  
@@ -50,9 +53,8 @@ char MGSScriptTypeContext;
  */
 - (id)init
 {
-	self = [super init];
+    self = [super initWithWindowNibName:@"CodeAssistant"];
 	if (self) {
-		self = [super initWithWindowNibName:@"CodeAssistant"];
 	}
 	
 	return self;
@@ -80,7 +82,15 @@ char MGSScriptTypeContext;
 	// embed in out host view
 	[_fragaria embedInView:_fragariaHostView];
 	_fragariaTextView = [_fragaria objectForKey:ro_MGSFOTextView];
+    
+    // we don't wnat to enable editing as we want to force usage
+    // of the defined input variables
+    [_fragariaTextView setEditable:NO];
+    
+    // make first responder
 	self.window.initialFirstResponder = _fragariaTextView;
+    
+    _selectedTabView = _fragariaHostView;
     
     // turn off auto text replacement for items such as ...
     // as it can cause certain scripts to fail to build e.g: Python
@@ -97,13 +107,21 @@ char MGSScriptTypeContext;
     // add observers
     [self addObserver:self forKeyPath:@"languageCodeDescriptor.descriptorCodeStyle" options:0 context:&MGSInputArgumentContext];
     
-    // configure tab bar
-    [self configureTabBar];
-    
     if ([_argumentNameExclusions respondsToSelector:@selector(setUsesFindBar:)]) {
         [_argumentNameExclusions setUsesFindBar:NO];
     }
     [_argumentNameExclusions setUsesFindPanel:NO];
+    
+    // allocate the task variables view controller
+    _taskVariablesViewController = [[MGSTaskVariablesViewController alloc] init];;
+    [_taskVariablesViewController view];    // load it
+    
+    // configure tab bar
+    [self configureTabBar];
+    
+    // button bindings
+    [_insertButton bind:NSEnabledBinding toObject:self withKeyPath:@"canInsert" options:nil];
+    [_copyButton bind:NSEnabledBinding toObject:self withKeyPath:@"canInsert" options:nil];
     
 }
 
@@ -140,7 +158,12 @@ char MGSScriptTypeContext;
 	newItem = [(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:newModel];
 	[newItem setLabel:@"Task Inputs"];
 	[tabBar.tabView addTabViewItem:newItem];
-    
+
+    newModel = [[MGSTabViewItemModel alloc] init];
+	newItem = [(NSTabViewItem*)[NSTabViewItem alloc] initWithIdentifier:newModel];
+	[newItem setLabel:@"Input Variables"];
+	[tabBar.tabView addTabViewItem:newItem];
+
     [tabBar setStyleNamed:[MGSKosmicUnityTabStyle2 name]];
     [tabBar setDisableTabClose:YES];
     [tabBar setCellMinWidth:80];
@@ -180,13 +203,24 @@ char MGSScriptTypeContext;
  */
 - (void)setCodeSelection:(MGSCodeAssistantCodeSelection)value
 {
+    NSView *requiredView = nil;
+    
     switch (value) {
         case MGSCodeAssistantSelectionTaskInputs:
             self.languageCodeDescriptor.descriptorCodeStyle = kMGSCodeDescriptorTaskInputs;
+            self.canInsert = YES;
+            requiredView = _fragariaHostView;
             break;
         
         case MGSCodeAssistantSelectionTaskBody:
             self.languageCodeDescriptor.descriptorCodeStyle = kMGSCodeDescriptorTaskBody;
+            self.canInsert = YES;
+            requiredView = _fragariaHostView;
+            break;
+
+        case MGSCodeAssistantSelectionTaskVariables:
+            self.canInsert = NO;
+            requiredView = _taskVariablesViewController.view;
             break;
             
         default:
@@ -194,6 +228,11 @@ char MGSScriptTypeContext;
             return;
     }
  
+    // swap in required view
+    if (_selectedTabView != requiredView) {
+        [_borderView replaceSubview:_selectedTabView withViewSizedAsOld:requiredView];
+        _selectedTabView = requiredView;
+    }
     _codeSelection = value;
 
     NSInteger idx = [tabBar.tabView indexOfTabViewItem:[tabBar.tabView selectedTabViewItem]];
@@ -247,7 +286,10 @@ char MGSScriptTypeContext;
     [_script addObserver:self forKeyPath:@"inputArgumentStyle" options:0 context:&MGSInputArgumentContext];
     [_script addObserver:self forKeyPath:@"inputArgumentPrefix" options:0 context:&MGSInputArgumentContext];
     [_script addObserver:self forKeyPath:@"inputArgumentNameExclusions" options:0 context:&MGSInputArgumentContext];
-    
+
+    // inform task variables view controller of script change
+    _taskVariablesViewController.script = _script;
+
     [self scriptTypeChanged];
     [self generateCodeString];
 }

@@ -20,6 +20,8 @@
 
 
 @synthesize modelDataModified = _modelDataModified;
+@synthesize index = _index;
+@synthesize typeDescription = _typeDescription;
 
 + (NSString *)defaultDescription
 {
@@ -228,6 +230,104 @@
 	[self setObject:value forKey:MGSScriptKeyUUID];
 }
 
+/*
+ 
+ - variableName
+ 
+ */
+- (NSString *)variableName
+{
+    return [self objectForKey:MGSScriptKeyVariableName];
+}
+
+/*
+ 
+ - setVariableName
+ 
+ */
+- (void)setVariableName:(NSString *)value
+{
+    [self setObject:value forKey:MGSScriptKeyVariableName];
+}
+/*
+ 
+ - validateVariableName:error:
+ 
+ */
+-(BOOL)validateVariableName:(id *)ioValue error:(NSError **)outError
+{
+    NSString *errorString = nil;
+    NSString *value = (NSString *)*ioValue;
+    
+    // disallow empty string
+    if (!value || [value length] == 0) {
+        errorString = NSLocalizedString(@"Variable name is empty", @"validation: VariableName, empty");
+    } else {
+    
+        // languages may have complex variable validation.
+        // we keep it simple here
+        NSRange range = [value rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+        if (range.location != NSNotFound) {
+            errorString = NSLocalizedString(@"Variable name contains invalid character", @"validation: VariableName, invalid");
+        }
+    }
+    
+    // deal with error
+    if (errorString) {
+        if (outError != NULL) {
+            NSDictionary *userInfoDict = @{ NSLocalizedDescriptionKey : errorString };
+            *outError = [[NSError alloc] initWithDomain:MGSErrorDomainMotherFramework
+                                               code:0
+                                           userInfo:userInfoDict];
+        }
+        return NO;
+    }
+
+    return YES;
+}
+
+/*
+ 
+ - variableStatus
+ 
+ */
+- (MGSScriptParameterVariableStatus)variableStatus
+{
+    return [self integerForKey:MGSScriptKeyVariableStatus];
+}
+
+/*
+ 
+ - setVariableStatus
+ 
+ */
+- (void)setVariableStatus:(MGSScriptParameterVariableStatus)value
+{
+    [self setInteger:value forKey:MGSScriptKeyVariableStatus];
+}
+
+/*
+ 
+ - variableNameUpdating
+ 
+ */
+- (MGSScriptParameterVariableNameUpdating)variableNameUpdating
+{
+    return [self integerForKey:MGSScriptKeyVariableNameUpdating];
+}
+
+/*
+ 
+ - setVariableNameUpdating:
+ 
+ */
+- (void)setVariableNameUpdating:(MGSScriptParameterVariableNameUpdating)value
+{
+    [self setInteger:value forKey:MGSScriptKeyVariableNameUpdating];
+}
+
+#pragma mark -
+#pragma mark Copying
 /*
  
  mutable copy with zone

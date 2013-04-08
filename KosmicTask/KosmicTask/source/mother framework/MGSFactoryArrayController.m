@@ -126,6 +126,22 @@
 
 /*
  
+ - factoryArray
+ 
+ we don't want to mutate this
+ 
+ */
+- (NSArray *)factoryArray
+{
+    NSMutableArray *factoryArray = [NSMutableArray arrayWithCapacity:[_array count]];
+    for (NSUInteger i = 0; i < [_array count]; i++) {
+        [factoryArray addObject:[self itemAtIndex:i]];
+    }
+    
+    return factoryArray;
+}
+/*
+ 
  item at index
  
  */

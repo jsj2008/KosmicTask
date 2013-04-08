@@ -17,8 +17,22 @@ enum _MGSScriptParameterRepresentation {
 };
 typedef NSInteger MGSScriptParameterRepresentation;
 
+enum {
+    MGSScriptParameterVariableStatusNew = 0,
+    MGSScriptParameterVariableStatusUsed = 1,
+};
+typedef NSInteger MGSScriptParameterVariableStatus;
+
+enum {
+    MGSScriptParameterVariableNameUpdatingAuto = 0,
+    MGSScriptParameterVariableNameUpdatingManual = 1,
+};
+typedef NSInteger MGSScriptParameterVariableNameUpdating;
+
 @interface MGSScriptParameter : MGSDictionary {
-	BOOL _modelDataModified;
+	BOOL _modelDataModified;    // not persisted
+    NSUInteger _index;          // not persisted
+    NSString *_typeDescription;
 }
 + (NSString *)defaultDescription;
 + (id)new;
@@ -48,6 +62,18 @@ typedef NSInteger MGSScriptParameterRepresentation;
 - (NSString *)UUID;
 - (void)setUUID:(NSString *)value;
 
+// variable name
+- (NSString *)variableName;
+- (void)setVariableName:(NSString *)value;
+
+// variable status
+- (MGSScriptParameterVariableStatus)variableStatus;
+- (void)setVariableStatus:(MGSScriptParameterVariableStatus)value;
+
+// variable name updating
+- (MGSScriptParameterVariableNameUpdating)variableNameUpdating;
+- (void)setVariableNameUpdating:(MGSScriptParameterVariableNameUpdating)value;
+
 - (void)setRepresentation:(MGSScriptParameterRepresentation)value;
 - (MGSScriptParameterRepresentation)representation;
 - (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation;
@@ -55,4 +81,7 @@ typedef NSInteger MGSScriptParameterRepresentation;
 - (void)removeRepresentation;
 
 @property BOOL modelDataModified;
+@property NSUInteger index;
+@property (copy) NSString *typeDescription;
+
 @end

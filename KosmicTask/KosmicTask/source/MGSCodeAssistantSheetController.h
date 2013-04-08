@@ -14,6 +14,7 @@
 @class MGSScript;
 @class PSMTabBarControl;
 @class MGSBorderView;
+@class MGSTaskVariablesViewController;
 
 enum {
   kMGSCodeAssistantSheetReturnOk,
@@ -28,6 +29,7 @@ typedef NSInteger MGSCodeAssistantSheetReturnValue;
 enum {
     MGSCodeAssistantSelectionTaskBody = 0,
     MGSCodeAssistantSelectionTaskInputs = 1,
+    MGSCodeAssistantSelectionTaskVariables = 2,
 };
 typedef NSInteger MGSCodeAssistantCodeSelection;
 
@@ -41,8 +43,14 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
     IBOutlet PSMTabBarControl *tabBar;
     IBOutlet NSTextField *_argumentPrefix;
     IBOutlet NSTextView *_argumentNameExclusions;
+    IBOutlet NSButton *_copyButton;
+    IBOutlet NSButton *_insertButton;
+
+    
+    NSView *_selectedTabView;
     
     MGSLanguageCodeDescriptor *_languageCodeDescriptor;
+    MGSTaskVariablesViewController *_taskVariablesViewController;
     
     MGSScript *_script;
     MGSFragaria *_fragaria;
@@ -53,6 +61,7 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
     BOOL _showInfoTextImage;
     NSString *_infoText;
     MGSCodeAssistantCodeSelection _codeSelection;
+    BOOL _canInsert;
 }
 
 - (IBAction)ok:(id)sender;
@@ -66,4 +75,5 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
 @property MGSScript *script;
 @property (copy) NSString *infoText;
 @property MGSCodeAssistantCodeSelection codeSelection;
+@property BOOL canInsert;
 @end

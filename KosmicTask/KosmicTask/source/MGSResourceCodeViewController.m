@@ -145,9 +145,8 @@ char MGSTextViewEditableContext;
     // PSMUnifiedTabStyle, PSMAdiumTabStyle, PSMAquaTabStyle, PSMMetalTabStyle, PSMLiveChatTabStyle, PSMCardTabStyle
     // MGSKosmicCardTabStyle, MGSKosmicUnityTabStyle
     [tabBar setDisableTabClose:YES];
-    [tabBar setCellMinWidth:80];
     [tabBar setCellOptimumWidth:100];
-
+    
     BOOL useAdium = YES;
     if (useAdium) {
         [tabBar setStyleNamed:[MGSKosmicUnityTabStyle2 name]];
@@ -278,7 +277,7 @@ char MGSTextViewEditableContext;
             stringResource = @"\n[template could not be rendered - see log for details]";
             
             MGSLanguageCodeDescriptor *descriptor = [[MGSLanguageCodeDescriptor alloc] initWithScript:self.script];
-            NSMutableDictionary *templateVariables = [descriptor templateVariables];
+            NSMutableDictionary *templateVariables = [descriptor generateTemplateVariables];
             
             NSString *entryCodeString = [descriptor generateTaskFunctionCodeString];
             if (entryCodeString) {

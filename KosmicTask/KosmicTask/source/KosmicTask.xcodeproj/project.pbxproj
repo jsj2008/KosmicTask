@@ -734,6 +734,11 @@
 		AB8FC24F0D5BA24500583172 /* MGSNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8FC24E0D5BA24500583172 /* MGSNotifications.m */; };
 		AB9029DB0D44A4170077ADE4 /* MGSPath.h in Headers */ = {isa = PBXBuildFile; fileRef = AB9029D90D44A4170077ADE4 /* MGSPath.h */; };
 		AB9029DC0D44A4170077ADE4 /* MGSPath.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9029DA0D44A4170077ADE4 /* MGSPath.m */; };
+		AB9094ED1710AD3800AAB103 /* MGSEditAwareTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9094EC1710AD3800AAB103 /* MGSEditAwareTableView.m */; };
+		AB90958F1710CBBB00AAB103 /* MGSScriptParameterVariableStatusTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB90958E1710CBBB00AAB103 /* MGSScriptParameterVariableStatusTransformer.m */; };
+		AB9095931710D09E00AAB103 /* MGSTaskVariablesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9095911710D09D00AAB103 /* MGSTaskVariablesViewController.m */; };
+		AB9095941710D09E00AAB103 /* TaskVariablesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9095921710D09D00AAB103 /* TaskVariablesView.xib */; };
+		AB90959717117A4500AAB103 /* MGSScriptParameterVariableNameUpdatingTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB90959617117A4500AAB103 /* MGSScriptParameterVariableNameUpdatingTransformer.m */; };
 		AB9132F91620469100B4B032 /* MGSNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = AB9132F71620469100B4B032 /* MGSNetwork.h */; };
 		AB9132FA1620469100B4B032 /* MGSNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9132F81620469100B4B032 /* MGSNetwork.m */; };
 		AB9132FB1620518100B4B032 /* MGSNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9132F81620469100B4B032 /* MGSNetwork.m */; };
@@ -4281,6 +4286,15 @@
 		AB9029D90D44A4170077ADE4 /* MGSPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPath.h; sourceTree = "<group>"; };
 		AB9029DA0D44A4170077ADE4 /* MGSPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSPath.m; sourceTree = "<group>"; };
 		AB907C4E106545DB00FF43CE /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
+		AB9094EB1710AD3800AAB103 /* MGSEditAwareTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSEditAwareTableView.h; sourceTree = "<group>"; };
+		AB9094EC1710AD3800AAB103 /* MGSEditAwareTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSEditAwareTableView.m; sourceTree = "<group>"; };
+		AB90958D1710CBBB00AAB103 /* MGSScriptParameterVariableStatusTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptParameterVariableStatusTransformer.h; sourceTree = "<group>"; };
+		AB90958E1710CBBB00AAB103 /* MGSScriptParameterVariableStatusTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSScriptParameterVariableStatusTransformer.m; sourceTree = "<group>"; };
+		AB9095901710D09D00AAB103 /* MGSTaskVariablesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTaskVariablesViewController.h; sourceTree = "<group>"; };
+		AB9095911710D09D00AAB103 /* MGSTaskVariablesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSTaskVariablesViewController.m; sourceTree = "<group>"; };
+		AB9095921710D09D00AAB103 /* TaskVariablesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskVariablesView.xib; sourceTree = "<group>"; };
+		AB90959517117A4400AAB103 /* MGSScriptParameterVariableNameUpdatingTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptParameterVariableNameUpdatingTransformer.h; sourceTree = "<group>"; };
+		AB90959617117A4500AAB103 /* MGSScriptParameterVariableNameUpdatingTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSScriptParameterVariableNameUpdatingTransformer.m; sourceTree = "<group>"; };
 		AB9132F71620469100B4B032 /* MGSNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNetwork.h; sourceTree = "<group>"; };
 		AB9132F81620469100B4B032 /* MGSNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNetwork.m; sourceTree = "<group>"; };
 		AB91F7240D8C18A300ECE09E /* AlertTriangle.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AlertTriangle.icns; sourceTree = "<group>"; };
@@ -6668,6 +6682,7 @@
 				AB8C0B7F0D57156700904607 /* Toolbar.xib */,
 				AB92C8AC0D38D138007FB152 /* WaitView.xib */,
 				AB81FF1D1699C10A003FB984 /* CodeAssistant.xib */,
+				AB9095921710D09D00AAB103 /* TaskVariablesView.xib */,
 			);
 			name = "Application resources";
 			sourceTree = "<group>";
@@ -7696,6 +7711,8 @@
 		AB7812DF0D58873100C19FAB /* Value transformers */ = {
 			isa = PBXGroup;
 			children = (
+				AB90959517117A4400AAB103 /* MGSScriptParameterVariableNameUpdatingTransformer.h */,
+				AB90959617117A4500AAB103 /* MGSScriptParameterVariableNameUpdatingTransformer.m */,
 				AB7812E00D58875B00C19FAB /* MGSTimeIntervalTransformer.h */,
 				AB7812E10D58875B00C19FAB /* MGSTimeIntervalTransformer.m */,
 				ABDEE1070DD9AC060044ECE9 /* MGSNumberTransformer.h */,
@@ -7706,6 +7723,8 @@
 				ABF664DD11D9F69B004F9939 /* MGSOriginTransformer.m */,
 				AB34188B1276E769007965BA /* MGSLanguageSettingsTransformer.h */,
 				AB34188C1276E769007965BA /* MGSLanguageSettingsTransformer.m */,
+				AB90958D1710CBBB00AAB103 /* MGSScriptParameterVariableStatusTransformer.h */,
+				AB90958E1710CBBB00AAB103 /* MGSScriptParameterVariableStatusTransformer.m */,
 			);
 			name = "Value transformers";
 			sourceTree = "<group>";
@@ -7965,6 +7984,8 @@
 				AB9F5F870DDF72ED00242721 /* PlacardScrollView.m */,
 				AB77742C159A4EA2002BE674 /* MGSChildScrollView.h */,
 				AB77742D159A4EA2002BE674 /* MGSChildScrollView.m */,
+				AB9094EB1710AD3800AAB103 /* MGSEditAwareTableView.h */,
+				AB9094EC1710AD3800AAB103 /* MGSEditAwareTableView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -7972,6 +7993,8 @@
 		AB92C85E0D38CD28007FB152 /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
+				AB9095901710D09D00AAB103 /* MGSTaskVariablesViewController.h */,
+				AB9095911710D09D00AAB103 /* MGSTaskVariablesViewController.m */,
 				AB9EE41F0E03D995004AF953 /* Edit window views */,
 				AB9EE3DB0E03D8A2004AF953 /* Attached view */,
 				AB9EE3DA0E03D85D004AF953 /* Wait view */,
@@ -11508,6 +11531,7 @@
 				AB81FF171699BBA6003FB984 /* TaskFunctionToolbar.tif in Resources */,
 				AB81FF181699BBA6003FB984 /* TaskFunctionToolbarAlt.tif in Resources */,
 				AB81FF1E1699C10A003FB984 /* CodeAssistant.xib in Resources */,
+				AB9095941710D09E00AAB103 /* TaskVariablesView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12375,6 +12399,10 @@
 				ABA56B6516D29E7300B509D8 /* MGSTabViewItemModel.m in Sources */,
 				ABA56B6816D2AF5C00B509D8 /* MGSKosmicCardTabStyle.m in Sources */,
 				ABA56B6F16D39B7600B509D8 /* MGSKosmicUnityTabStyle2.m in Sources */,
+				AB9094ED1710AD3800AAB103 /* MGSEditAwareTableView.m in Sources */,
+				AB90958F1710CBBB00AAB103 /* MGSScriptParameterVariableStatusTransformer.m in Sources */,
+				AB9095931710D09E00AAB103 /* MGSTaskVariablesViewController.m in Sources */,
+				AB90959717117A4500AAB103 /* MGSScriptParameterVariableNameUpdatingTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

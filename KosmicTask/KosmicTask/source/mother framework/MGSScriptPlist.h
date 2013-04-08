@@ -84,6 +84,9 @@ extern NSString *MGSScriptKeyExternalBuildPath;
 extern NSString *MGSScriptKeyBuildOptions;
 extern NSString *MGSScriptKeyExternalExecutorPath;
 extern NSString *MGSScriptKeyExecutorOptions;
+extern NSString *MGSScriptKeyVariableName;
+extern NSString *MGSScriptKeyVariableStatus;
+extern NSString *MGSScriptKeyVariableNameUpdating;
 
 extern NSString *MGSScriptInputArgumentName;
 extern NSString *MGSScriptInputArgumentCase;

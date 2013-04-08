@@ -150,7 +150,7 @@ char MGSScriptTypeContext;
         
         // if no function template available then use input variables
         if (![self templateNameExists:templateName]) {            
-            NSMutableDictionary *templateVariables = [self templateVariables];
+            NSMutableDictionary *templateVariables = [self generateTemplateVariables];
             codeString = [templateVariables objectForKey:@"task-input-variables"];
         } else {
             codeString = [self generateCodeStringFromTemplateName:templateName];
@@ -228,7 +228,7 @@ char MGSScriptTypeContext;
 {
     NSString *codeString = nil;
 
-    NSMutableDictionary *templateVariables = [self templateVariables];
+    NSMutableDictionary *templateVariables = [self generateTemplateVariables];
 
     // run the template
     if (templateVariables) {
@@ -262,10 +262,10 @@ char MGSScriptTypeContext;
 #pragma mark Template variables
 /*
  
- - templateVariables
+ - generateTemplateVariables
  
  */
-- (NSMutableDictionary *)templateVariables
+- (NSMutableDictionary *)generateTemplateVariables
 {
     NSError *error = nil;
     
@@ -348,6 +348,21 @@ char MGSScriptTypeContext;
         if (taskHeader) [templateVariables setObject:taskHeader forKey:@"task-class-function"];
     }
 
+    // update script parameters with input values
+    for (NSUInteger i = 0; i < [taskInputs count]; i++) {
+        NSDictionary *taskInput = [taskInputs objectAtIndex:i];
+        NSString *inputName = [taskInput objectForKey:@"name"];
+        if (!inputName) inputName = @"missing";
+        
+        if (i < (NSUInteger)_script.parameterHandler.count) {
+            MGSScriptParameter *scriptParameter = [_script.parameterHandler itemAtIndex:i];
+            
+            // update the script variable name in auto mode
+            if (scriptParameter.variableNameUpdating == MGSScriptParameterVariableNameUpdatingAuto) {
+                scriptParameter.variableName = inputName;
+            }
+        }
+    }
     
     return templateVariables;
 }

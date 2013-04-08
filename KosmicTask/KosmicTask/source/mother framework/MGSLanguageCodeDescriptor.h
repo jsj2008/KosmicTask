@@ -51,6 +51,6 @@
 - (void)makeObjectsUnique:(NSMutableArray *)parameterNames;
 //- (NSString *)processTemplate:(NSString *)inputTemplate object:(NSDictionary *)variables error:(NSError **)error;
 - (NSString *)processTemplateName:(NSString *)templateName object:(NSDictionary *)variables error:(NSError **)error;
-- (NSMutableDictionary *)templateVariables;
+- (NSMutableDictionary *)generateTemplateVariables;
 - (BOOL)templateNameExists:(NSString *)name;
 @end
