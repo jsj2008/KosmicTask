@@ -567,19 +567,13 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             {
                 MGSScript *assistantScript = codeAssistantSheetController.script;
                 
-                // update script properties
-                if (assistantScript.scriptType != _taskSpec.script.scriptType) {
-                    _taskSpec.script.scriptType = assistantScript.scriptType;
-                }
-                _taskSpec.script.inputArgumentName = assistantScript.inputArgumentName;
-                _taskSpec.script.inputArgumentCase = assistantScript.inputArgumentCase;
-                _taskSpec.script.inputArgumentStyle = assistantScript.inputArgumentStyle;
-                _taskSpec.script.inputArgumentPrefix = assistantScript.inputArgumentPrefix;
-                _taskSpec.script.inputArgumentNameExclusions = assistantScript.inputArgumentNameExclusions;
+                // update script from code assistant
+                // perhaps we can just copy the entire parameter structure here
+                // rather than just the parameter variables?
+                [_taskSpec.script updateFromScript:assistantScript options:@{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]}];
                 
-                // get data to be inserted
-                NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-                NSString *codeString = [pasteboard stringForType:NSStringPboardType];
+                // get code to be inserted
+                NSString *codeString = [codeAssistantSheetController codeString];
                 
                 // insert at current selection point
                 [scriptEditViewController insertText:codeString];
@@ -1782,6 +1776,22 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
         }
     }
 
+    // mark script parameters as used regardless of how code was inserted as
+    // any insertion includes task inputs.
+    //
+    // used parameters are not auto generated unless the user requests this
+    // in order to prevent input title and type changes from breaking scripts.
+    //
+    MGSScriptParameterManager *parameterManager = _taskSpec.script.parameterHandler;
+    NSUInteger parameterCount = [parameterManager count];
+    for (NSUInteger i = 0; i < parameterCount; i++) {
+        
+        // get current parameter
+        MGSScriptParameter *parameter = [parameterManager itemAtIndex:i];
+        
+        // mark as manual name updating.
+        parameter.variableNameUpdating = MGSScriptParameterVariableNameUpdatingManual;
+    }
 
 }
 

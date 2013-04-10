@@ -372,7 +372,10 @@ char MGSScriptTypeContext;
         [dict setObject:@(self.script.inputArgumentStyle) forKey:@"inputArgumentStyle"];
         [dict setObject:self.script.inputArgumentPrefix forKey:@"inputArgumentPrefix"];
         [dict setObject:self.script.inputArgumentNameExclusions forKey:@"inputArgumentNameExclusions"];
-                
+        
+        // script dict is a property list, so why not use it
+        //dict = [self.script dict];
+        
         // add pasteboatd item with custom data identified by custom UTI
         NSString *templateUTI = @"com.mugginsoft.kosmictask.codeassistant.template";
         NSPasteboardItem *pbItem = [[NSPasteboardItem alloc] init];
@@ -407,6 +410,15 @@ char MGSScriptTypeContext;
     _fragaria.string = functionString;
 }
 
+/*
+ 
+ - codeString
+ 
+ */
+- (NSString *)codeString
+{
+    return _fragaria.string;
+}
 /*
  
  - scriptTypeChanged
@@ -473,6 +485,15 @@ char MGSScriptTypeContext;
  */
 - (void)closeSheet:(NSInteger)returnCode
 {
+    switch (returnCode) {
+        case kMGSCodeAssistantSheetReturnInsert:
+        case kMGSCodeAssistantSheetReturnCopy:
+            
+            // once inserted or copied the variable name updating becomes manual
+            [_script.parameterHandler setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingManual];
+            break;
+    }
+    
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window] returnCode:returnCode];
 }
@@ -521,7 +542,7 @@ char MGSScriptTypeContext;
 - (IBAction)insertCodeAction:(id)sender
 {
 #pragma unused(sender)
-    [self copySelectionToPasteBoard];
+    
 	[self closeSheet:kMGSCodeAssistantSheetReturnInsert];
 }
 @end

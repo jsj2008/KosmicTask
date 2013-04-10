@@ -168,6 +168,8 @@
     // variable changed by hand, we don't want to overwrite this so set variable name updating to manual
     MGSScriptParameter *scriptParameter = [[_taskVariablesArrayController arrangedObjects] objectAtIndex:(NSUInteger)row];
     scriptParameter.variableNameUpdating = MGSScriptParameterVariableNameUpdatingManual;
+    
+    // update row for modified data
     [_taskVariablesTableView setNeedsDisplayInRect:[_taskVariablesTableView rectOfRow:row]];
 }
 #pragma mark -
@@ -192,22 +194,6 @@
 }
 
 
-/*
- 
- - variableNameChanged:
- 
- */
-- (IBAction)variableNameChanged:(id)sender
-{
-#pragma unused(sender)
-    NSInteger row = [_taskVariablesTableView clickedRow];
-    if (row == -1) return;
-    
-    // variable changed by hand, we don't want to overwrite this so set to manual
-    MGSScriptParameter *scriptParameter = [[_taskVariablesArrayController arrangedObjects] objectAtIndex:(NSUInteger)row];
-    scriptParameter.variableNameUpdating = MGSScriptParameterVariableNameUpdatingManual;
-    [_taskVariablesTableView setNeedsDisplayInRect:[_taskVariablesTableView rectOfRow:row]];
-}
 @end
 
 

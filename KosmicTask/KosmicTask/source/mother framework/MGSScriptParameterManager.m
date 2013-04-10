@@ -109,6 +109,29 @@
 }
 
 
+/*
+ 
+ - setVariableNameUpdating:
+ 
+ */
+- (void)setVariableNameUpdating:(MGSScriptParameterVariableNameUpdating)value
+{
+	for (NSInteger i = 0; i < [self count]; i++) {
+		MGSScriptParameter *parameter = [self itemAtIndex:i];
+		[parameter setVariableNameUpdating:value];
+        
+        switch (value) {
+            case MGSScriptParameterVariableNameUpdatingAuto:
+            default:
+                break;
+                
+            case MGSScriptParameterVariableNameUpdatingManual:
+                [parameter setVariableStatus:MGSScriptParameterVariableStatusUsed];
+                break;
+        }
+	}
+}
+
 #pragma mark Representation
 
 /*

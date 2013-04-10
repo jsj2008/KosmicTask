@@ -17,6 +17,7 @@
 }
 - (void)setHandlerFromDict:(NSMutableDictionary *)dict;
 - (NSString *)shortStringValue;
+- (void)setVariableNameUpdating:(MGSScriptParameterVariableNameUpdating)value;
 
 - (void)setRepresentation:(MGSScriptParameterRepresentation)value;
 - (MGSScriptParameterRepresentation)representation;

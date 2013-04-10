@@ -79,6 +79,7 @@ typedef NSInteger MGSScriptParameterVariableNameUpdating;
 - (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation;
 - (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation options:(NSDictionary *)options;
 - (void)removeRepresentation;
+- (void)updateFromScriptParameter:(MGSScriptParameter *)scriptParameter options:(NSDictionary *)options;
 
 @property BOOL modelDataModified;
 @property NSUInteger index;

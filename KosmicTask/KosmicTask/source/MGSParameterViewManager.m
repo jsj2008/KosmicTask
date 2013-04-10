@@ -1604,6 +1604,8 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
     // value during edits
     scriptParameter = [scriptParameter mutableDeepCopy];
     scriptParameter.UUID = [NSString mgs_stringWithNewUUID];
+    [scriptParameter setVariableStatus:MGSScriptParameterVariableStatusNew];
+    [scriptParameter setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingAuto];
     
     NSUInteger sourceIndex = [_viewControllers indexOfObject:self.selectedParameterViewController];
     

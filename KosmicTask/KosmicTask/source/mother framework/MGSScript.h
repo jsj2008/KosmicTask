@@ -205,6 +205,7 @@ typedef NSInteger MGSScriptRepresentation;
 - (void)updateFromTaskDictionary:(NSMutableDictionary *)localTaskDictionary;
 - (void)updateFromCopy:(MGSScript *)script;
 - (void)updateFromScript:(MGSScript *)script;
+- (void)updateFromScript:(MGSScript *)script options:(NSDictionary *)options;
 - (NSMutableDictionary *)searchRepresentationDictionary;
 - (BOOL)conformToRepresentation:(MGSScriptRepresentation)representation;
 - (MGSScriptRepresentation)representation;

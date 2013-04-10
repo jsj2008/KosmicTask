@@ -76,4 +76,6 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
 @property (copy) NSString *infoText;
 @property MGSCodeAssistantCodeSelection codeSelection;
 @property BOOL canInsert;
+- (NSString *)codeString;
+
 @end

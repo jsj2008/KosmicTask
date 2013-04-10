@@ -2106,7 +2106,52 @@ errorExit:;
 {
 	[self copyDictFrom:script];
 }
+/*
+ 
+ - updateFromScript:options:
+ 
+ */
+- (void)updateFromScript:(MGSScript *)script options:(NSDictionary *)options
+{
+    NSArray * updates = [options objectForKey:@"updates"];
+    
+    // find and apply updates
+    if (updates && [updates isKindOfClass:[NSArray class]]) {
+        
+        // script type
+        if ([updates containsObject:@"scriptType"]) {
+            if (script.scriptType != self.scriptType) {
+                self.scriptType = script.scriptType;
+            }
+        }
+        
+        // all input arguments
+        if ([updates containsObject:@"allInputArguments"]) {
+            self.inputArgumentName = script.inputArgumentName;
+            self.inputArgumentCase = script.inputArgumentCase;
+            self.inputArgumentStyle = script.inputArgumentStyle;
+            self.inputArgumentPrefix = script.inputArgumentPrefix;
+            self.inputArgumentNameExclusions = script.inputArgumentNameExclusions;
+        }
+        
+        // all parameter variables
+        if ([updates containsObject:@"allScriptParameterVariables"]) {
+            if (self.parameterHandler.count == script.parameterHandler.count) {
+                for (NSInteger i = 0; i < self.parameterHandler.count; i++) {
+                    MGSScriptParameter *scriptParameter = [self.parameterHandler itemAtIndex:i];
+                    MGSScriptParameter *scriptParameter2 = [script.parameterHandler itemAtIndex:i];
+                    
+                    // update
+                    [scriptParameter updateFromScriptParameter:scriptParameter2 options:options];
+                }
+            } else {
+                NSLog(@"Cannot update parameter variables from script. Parameter counts differ.");
+            }
+        }
+        
+    }
 
+}
 #pragma mark -
 #pragma mark Timeout
 /*

@@ -39,7 +39,9 @@
 	[parameter setName:NSLocalizedString(@"Task Input", @"New input parameter name")];
 	[parameter setDescription:[self defaultDescription]];
 	[parameter setUUID:[NSString mgs_stringWithNewUUID]];
-    
+    [parameter setVariableStatus:MGSScriptParameterVariableStatusNew];
+    [parameter setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingAuto];
+
 	// set default plugin class name
 	MGSParameterPluginController *parameterPluginController = [[NSApp delegate] parameterPluginController];
 	NSString *pluginClassName = [parameterPluginController defaultPluginName];
@@ -324,6 +326,30 @@
 - (void)setVariableNameUpdating:(MGSScriptParameterVariableNameUpdating)value
 {
     [self setInteger:value forKey:MGSScriptKeyVariableNameUpdating];
+}
+
+#pragma mark -
+#pragma mark Updating
+/*
+ 
+ - updateFromScript:options:
+ 
+ */
+- (void)updateFromScriptParameter:(MGSScriptParameter *)scriptParameter options:(NSDictionary *)options
+{
+
+    NSArray * updates = [options objectForKey:@"updates"];
+
+    // find and apply updates
+    if (updates && [updates isKindOfClass:[NSArray class]]) {
+        
+        // all parameter variables
+        if ([updates containsObject:@"allScriptParameterVariables"]) {
+            self.variableName = scriptParameter.variableName;
+            self.variableNameUpdating = scriptParameter.variableNameUpdating;
+            self.variableStatus = scriptParameter.variableStatus;
+        }
+    }
 }
 
 #pragma mark -
