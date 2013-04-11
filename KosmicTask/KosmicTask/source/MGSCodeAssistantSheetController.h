@@ -45,7 +45,10 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
     IBOutlet NSTextView *_argumentNameExclusions;
     IBOutlet NSButton *_copyButton;
     IBOutlet NSButton *_insertButton;
-
+    IBOutlet NSTextField *_inputTotalTextField;
+    IBOutlet NSTextField *_inputAutoTextField;
+    IBOutlet NSTextField *_inputManualTextField;
+    IBOutlet NSButton *_inputAutoAllButton;
     
     NSView *_selectedTabView;
     
@@ -62,6 +65,11 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
     NSString *_infoText;
     MGSCodeAssistantCodeSelection _codeSelection;
     BOOL _canInsert;
+    BOOL _autoAllEnabled;
+    
+    NSInteger _inputVariableTotal;
+    NSInteger _inputVariableAuto;
+    NSInteger _inputVariableManual;
 }
 
 - (IBAction)ok:(id)sender;
@@ -70,6 +78,7 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
 - (IBAction)openTemplateSheetAction:(id)sender;
 - (IBAction)insertCodeAction:(id)sender;
 - (IBAction)openFileSheetAction:(id)sender;
+- (IBAction)autoAllInputVariablesAction:(id)sender;
 
 @property (copy, readonly) NSArray *scriptTypes;
 @property MGSScript *script;
@@ -77,5 +86,9 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
 @property MGSCodeAssistantCodeSelection codeSelection;
 @property BOOL canInsert;
 - (NSString *)codeString;
+@property NSInteger inputVariableTotal;
+@property NSInteger inputVariableAuto;
+@property NSInteger inputVariableManual;
+@property BOOL autoAllEnabled;
 
 @end

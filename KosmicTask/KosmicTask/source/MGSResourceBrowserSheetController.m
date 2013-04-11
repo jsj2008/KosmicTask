@@ -139,8 +139,8 @@ const char MGSContextResourcesChanged;
         
         // build custom data dictionary
         
-        // script type
-        [dict setObject:self.script.scriptType forKey:@"scriptType"];
+        // script dict
+        [dict setObject:[self.script dict] forKey:@"script"];
         
         // dictionary of modified language properties
         NSDictionary *propertyManagerDict = [self.script.languagePropertyManager dictionaryOfModifiedProperties];
@@ -170,7 +170,9 @@ const char MGSContextResourcesChanged;
 - (IBAction)insertTemplateAction:(id)sender
 {
 #pragma unused(sender)
-    //[self copySelectionToPasteBoard];
+    // once inserted the variable name updating becomes manual
+    [self.script.parameterHandler setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingManual];
+
     resourceText = self.resourceBrowserViewController.scriptString;
 	[self closeSheet:kMGSResourceBrowserSheetReturnInsert];
 }
@@ -203,6 +205,9 @@ const char MGSContextResourcesChanged;
 - (IBAction)copyToPasteboardAction:(id)sender
 {
 #pragma unused(sender)
+    // once copied the variable name updating becomes manual
+    [self.script.parameterHandler setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingManual];
+
     [self copySelectionToPasteBoard];
 	[self closeSheet:kMGSResourceBrowserSheetReturnCopy];    
 }

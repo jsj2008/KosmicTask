@@ -132,6 +132,24 @@
 	}
 }
 
+/*
+ 
+ - numberOfParametersWithVariableNameUpdating:
+ 
+ */
+- (NSUInteger)numberOfParametersWithVariableNameUpdating:(MGSScriptParameterVariableNameUpdating)value
+{
+    NSUInteger count = 0;
+    
+    for (NSInteger i = 0; i < [self count]; i++) {
+		MGSScriptParameter *parameter = [self itemAtIndex:i];
+		if (parameter.variableNameUpdating == value) {
+            count++;
+        }
+	}
+    return count;
+}
+
 #pragma mark Representation
 
 /*

@@ -419,24 +419,14 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			// insert template
 		case kMGSResourceBrowserSheetReturnInsert:
             {
-                // update script type if it has changed
-                NSString *scriptType = resourceSheetController.script.scriptType;
-                if (![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
-                    [_taskSpec.script setScriptType:scriptType];
-                }
+                MGSScript *browserScript = resourceSheetController.script;
+                
+                // update script using selected properties from resource browser
+                [_taskSpec.script updateFromScript:browserScript options:@{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]}];
 
                 // get a copy of the language property for the selected template resource
                 MGSLanguagePropertyManager *languagePropertyManager = resourceSheetController.languagePropertyManager;
                 NSAssert(languagePropertyManager, @"language property manager is nil");
-                
-                // sanity check
-                if (NO) {
-                    MGSLanguageProperty *langProp = [languagePropertyManager propertyForKey:MGS_LP_OnRunTask];
-                    id propertyValue = [langProp value];
-                    languagePropertyManager = [languagePropertyManager copy];
-                    langProp = [languagePropertyManager propertyForKey:MGS_LP_OnRunTask];
-                    propertyValue = [langProp value];
-                }
                 
                 // update the language property manager
                 [_taskSpec.script updateLanguagePropertyManager:languagePropertyManager];
@@ -1682,13 +1672,16 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 if ([plist isKindOfClass:[NSDictionary class]]) {
 
                     // update script type if it has changed
-                    key = @"scriptType";
-                    NSString *scriptType = [plist objectForKey:key];
-                    if ([scriptType isKindOfClass:[NSString class]]) {
+                    key = @"script";
+                    NSDictionary *scriptDict = [plist objectForKey:key];
+                    if ([scriptDict isKindOfClass:[NSDictionary class]]) {
                         
-                        if (![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
-                            [_taskSpec.script setScriptType:scriptType];
-                        }
+                        // allocate script object
+                        MGSScript *assistantScript = [MGSScript scriptWithDictionary:[NSMutableDictionary dictionaryWithDictionary:scriptDict]];
+                        
+                        // copy required properties
+                        [_taskSpec.script updateFromScript:assistantScript options:@{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]}];
+                        
                     } else {
                         MLogInfo(logMsg, key, customUTI);
                     }
@@ -1717,82 +1710,24 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 NSDictionary *plist = [pbItem propertyListForType:customUTI];
                 if ([plist isKindOfClass:[NSDictionary class]]) {
                     
-                    // update script type if it has changed
-                    key = @"scriptType";
-                    NSString *scriptType = [plist objectForKey:key];
-                                        
-                    if ([scriptType isKindOfClass:[NSString class]]) {
-                            
-                        if (![scriptType isEqualToString:[_taskSpec.script scriptType]]) {
-                            [_taskSpec.script setScriptType:scriptType];
-                        }
+                    // update script data
+                    key = @"script";
+                    NSDictionary *scriptDict = [plist objectForKey:key];
+                    if ([scriptDict isKindOfClass:[NSDictionary class]]) {
+                        
+                        // allocate script object
+                        MGSScript *assistantScript = [MGSScript scriptWithDictionary:[NSMutableDictionary dictionaryWithDictionary:scriptDict]];
+                        
+                        // copy required properties
+                        [_taskSpec.script updateFromScript:assistantScript options:@{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]}];
+                       
                     } else {
                         MLogInfo(logMsg, key, customUTI);
                     }
-                    
-                    // update language properties using dictionary delta
-                    key = @"inputArgumentName";
-                    id plistValue = [plist objectForKey:key];
-                    if (plistValue && [plistValue isKindOfClass:[NSNumber class]]) {
-                        _taskSpec.script.inputArgumentName = [plistValue unsignedIntegerValue];
-                    } else {
-                        MLogInfo(logMsg, key, customUTI);                        
-                    }
-                    
-                    key = @"inputArgumentCase";
-                    plistValue = [plist objectForKey:key];
-                    if (plistValue && [plistValue isKindOfClass:[NSNumber class]]) {
-                        _taskSpec.script.inputArgumentCase = [plistValue unsignedIntegerValue];
-                    } else {
-                        MLogInfo(logMsg, key, customUTI);
-                    }
-                    
-                    key = @"inputArgumentStyle";
-                    plistValue = [plist objectForKey:key];
-                    if (plistValue && [plistValue isKindOfClass:[NSNumber class]]) {
-                        _taskSpec.script.inputArgumentStyle = [plistValue unsignedIntegerValue];
-                    } else {
-                        MLogInfo(logMsg, key, customUTI);
-                    }
-                    
-                    key = @"inputArgumentPrefix";
-                    plistValue = [plist objectForKey:key];
-                    if (plistValue && [plistValue isKindOfClass:[NSString class]]) {
-                        _taskSpec.script.inputArgumentPrefix = plistValue;
-                    } else {
-                        MLogInfo(logMsg, key, customUTI);
-                    }
-                    
-                    key = @"inputArgumentNameExclusions";
-                    plistValue = [plist objectForKey:key];
-                    if (plistValue && [plistValue isKindOfClass:[NSString class]]) {
-                        _taskSpec.script.inputArgumentNameExclusions = plistValue;
-                    } else {
-                        MLogInfo(logMsg, key, customUTI);
-                    }
-                    
                 }
             }
         }
     }
-
-    // mark script parameters as used regardless of how code was inserted as
-    // any insertion includes task inputs.
-    //
-    // used parameters are not auto generated unless the user requests this
-    // in order to prevent input title and type changes from breaking scripts.
-    //
-    MGSScriptParameterManager *parameterManager = _taskSpec.script.parameterHandler;
-    NSUInteger parameterCount = [parameterManager count];
-    for (NSUInteger i = 0; i < parameterCount; i++) {
-        
-        // get current parameter
-        MGSScriptParameter *parameter = [parameterManager itemAtIndex:i];
-        
-        // mark as manual name updating.
-        parameter.variableNameUpdating = MGSScriptParameterVariableNameUpdatingManual;
-    }
-
 }
 
 

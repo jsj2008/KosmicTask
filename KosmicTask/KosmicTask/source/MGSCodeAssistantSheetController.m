@@ -18,6 +18,7 @@
 #import "MGSBorderView.h"
 #import "NSView_Mugginsoft.h"
 #import "MGSTaskVariablesViewController.h"
+#import "MGSImageAndTextCell.h"
 
 char MGSInputArgumentContext;
 char MGSScriptTypeContext;
@@ -29,6 +30,7 @@ char MGSScriptTypeContext;
 - (void)copySelectionToPasteBoard;
 - (void)configureTabBar;
 - (void)scriptTypeChanged;
+- (void)updateInputVariableTotals;
 
 @property (copy, readwrite) NSArray *scriptTypes;
 @property MGSLanguageCodeDescriptor *languageCodeDescriptor;
@@ -45,6 +47,10 @@ char MGSScriptTypeContext;
 @synthesize infoText = _infoText;
 @synthesize codeSelection = _codeSelection;
 @synthesize canInsert = _canInsert;
+@synthesize inputVariableTotal = _inputVariableTotal;
+@synthesize inputVariableAuto = _inputVariableAuto;
+@synthesize inputVariableManual = _inputVariableManual;
+@synthesize autoAllEnabled = _autoAllEnabled;
 
 /*
  
@@ -123,6 +129,21 @@ char MGSScriptTypeContext;
     [_insertButton bind:NSEnabledBinding toObject:self withKeyPath:@"canInsert" options:nil];
     [_copyButton bind:NSEnabledBinding toObject:self withKeyPath:@"canInsert" options:nil];
     
+    // input variable bindings
+    [_inputTotalTextField bind:NSValueBinding toObject:self withKeyPath:@"inputVariableTotal" options:nil];
+    [_inputAutoTextField bind:NSValueBinding toObject:self withKeyPath:@"inputVariableAuto" options:nil];
+    [_inputManualTextField bind:NSValueBinding toObject:self withKeyPath:@"inputVariableManual" options:nil];
+    [_inputAutoAllButton bind:NSEnabledBinding toObject:self withKeyPath:@"autoAllEnabled" options:nil];
+    
+    //[[_inputTotalTextField cell] setBackgroundColor:[MGSImageAndTextCell countColor]];
+    //[[_inputAutoTextField cell] setBackgroundColor:[MGSImageAndTextCell countColorGreen]];
+    //[[_inputManualTextField cell] setBackgroundColor:[MGSImageAndTextCell countColorDarkRed]];
+    
+    
+    self.inputVariableTotal = 0;
+    self.inputVariableAuto = 0;
+    self.inputVariableManual = 0;
+    self.autoAllEnabled = NO;
 }
 
 #pragma mark -
@@ -290,8 +311,24 @@ char MGSScriptTypeContext;
     // inform task variables view controller of script change
     _taskVariablesViewController.script = _script;
 
+    [self updateInputVariableTotals];
+    
     [self scriptTypeChanged];
     [self generateCodeString];
+}
+
+/*
+ 
+ - updateInputVariableTotals
+ 
+ */
+- (void)updateInputVariableTotals
+{
+    self.inputVariableTotal = _script.parameterHandler.count;
+    self.inputVariableAuto = [_script.parameterHandler numberOfParametersWithVariableNameUpdating:MGSScriptParameterVariableNameUpdatingAuto];
+    self.inputVariableManual = [_script.parameterHandler numberOfParametersWithVariableNameUpdating:MGSScriptParameterVariableNameUpdatingManual];
+    
+    self.autoAllEnabled = (self.inputVariableManual > 0 ? YES : NO);
 }
 
 /*
@@ -361,22 +398,10 @@ char MGSScriptTypeContext;
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:10];
     if (dict && text) {
         
-        // build custom data dictionary
+        // script dict is a property list, so why not use it as is?
+        [dict setObject:[self.script dict] forKey:@"script"];
         
-        // script type
-        [dict setObject:self.script.scriptType forKey:@"scriptType"];
-        
-        // input argument properties
-        [dict setObject:@(self.script.inputArgumentName) forKey:@"inputArgumentName"];
-        [dict setObject:@(self.script.inputArgumentCase) forKey:@"inputArgumentCase"];
-        [dict setObject:@(self.script.inputArgumentStyle) forKey:@"inputArgumentStyle"];
-        [dict setObject:self.script.inputArgumentPrefix forKey:@"inputArgumentPrefix"];
-        [dict setObject:self.script.inputArgumentNameExclusions forKey:@"inputArgumentNameExclusions"];
-        
-        // script dict is a property list, so why not use it
-        //dict = [self.script dict];
-        
-        // add pasteboatd item with custom data identified by custom UTI
+        // add pasteboard item with custom data identified by custom UTI
         NSString *templateUTI = @"com.mugginsoft.kosmictask.codeassistant.template";
         NSPasteboardItem *pbItem = [[NSPasteboardItem alloc] init];
         if ([pbItem setPropertyList:dict forType:templateUTI]) {
@@ -474,6 +499,9 @@ char MGSScriptTypeContext;
 - (IBAction)copyToPasteBoardAction:(id)sender
 {
 #pragma unused(sender)
+    // once copied the variable name updating becomes manual
+    [_script.parameterHandler setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingManual];
+
     [self copySelectionToPasteBoard];
     [self closeSheet:kMGSCodeAssistantSheetReturnCopy];
 }
@@ -484,16 +512,7 @@ char MGSScriptTypeContext;
  
  */
 - (void)closeSheet:(NSInteger)returnCode
-{
-    switch (returnCode) {
-        case kMGSCodeAssistantSheetReturnInsert:
-        case kMGSCodeAssistantSheetReturnCopy:
-            
-            // once inserted or copied the variable name updating becomes manual
-            [_script.parameterHandler setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingManual];
-            break;
-    }
-    
+{    
 	[[self window] orderOut:self];
 	[NSApp endSheet:[self window] returnCode:returnCode];
 }
@@ -543,7 +562,23 @@ char MGSScriptTypeContext;
 {
 #pragma unused(sender)
     
+    // once inserted the variable name updating becomes manual
+    [_script.parameterHandler setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingManual];
+    
 	[self closeSheet:kMGSCodeAssistantSheetReturnInsert];
+}
+
+/*
+ 
+ - autoAllInputVariablesAction:
+ 
+ */
+- (IBAction)autoAllInputVariablesAction:(id)sender
+{
+    #pragma unused(sender)
+    
+    [_script.parameterHandler setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingAuto];
+    [self updateInputVariableTotals];
 }
 @end
 
