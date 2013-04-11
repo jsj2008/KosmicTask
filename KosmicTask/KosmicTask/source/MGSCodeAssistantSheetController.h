@@ -66,6 +66,7 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
     MGSCodeAssistantCodeSelection _codeSelection;
     BOOL _canInsert;
     BOOL _autoAllEnabled;
+    BOOL _dataConfigured;
     
     NSInteger _inputVariableTotal;
     NSInteger _inputVariableAuto;
@@ -90,5 +91,6 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
 @property NSInteger inputVariableAuto;
 @property NSInteger inputVariableManual;
 @property BOOL autoAllEnabled;
+@property BOOL dataConfigured;
 
 @end

@@ -495,8 +495,10 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     MGSCodeAssistantCodeSelection codeSelection = MGSCodeAssistantSelectionTaskBody;
     
     if (options) {
-        infoString = [options objectForKey:@"info"];
-        codeSelection = [[options objectForKey:@"selection"] integerValue];
+        id object = [options objectForKey:@"info"];
+        if (object) infoString = object;
+        object = [options objectForKey:@"selection"] ;
+        if (object) codeSelection = [object integerValue];
     }
     
     codeAssistantSheetController.infoText = infoString;
@@ -519,10 +521,14 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
  */
 - (void)showCodeAssistantSheetForConfigurationChange:(id)sender
 {
-
+    NSDictionary *options = nil;
     NSString *changeString = [self stringForParameterViewConfigurationFlags:actionEditViewController.parameterViewConfigurationFlags];
-    NSString *infoString = [NSString stringWithFormat:@"Task inputs have changed:\n%@", changeString];
-    NSDictionary *options = @{@"info":infoString, @"selection":@(MGSCodeAssistantSelectionTaskInputs)};
+    if (changeString && [changeString length] > 0) {
+        NSString *infoString = [NSString stringWithFormat:@"Task inputs have changed:\n%@", changeString];
+        options = @{@"info":infoString, @"selection":@(MGSCodeAssistantSelectionTaskInputs)};
+    } else {
+        options = @{@"selection":@(MGSCodeAssistantSelectionTaskBody)};
+    }
     
     [self showCodeAssistantSheet:sender options:options];
 }
@@ -1467,6 +1473,9 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     
 	NSAssert(mode >=0 && mode < [tabView numberOfTabViewItems], @"tabview invalid edit mode");
 	
+    NSString *scriptSource = [[[_taskSpec script] scriptCode] source];
+    scriptSource = [scriptSource stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
 	// select tabview item for mode
 	[tabView selectTabViewItemAtIndex:mode];
 
@@ -1477,10 +1486,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			break;
 			
 		case kMGSMotherEditModeScript:;
-            {
-                NSString *scriptSource = [[[_taskSpec script] scriptCode] source];			
-                scriptSource = [scriptSource stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                
+            {                
                 // show helper sheet if no source
                 if (!scriptSource || [scriptSource length] == 0) {
                     
@@ -1518,7 +1524,11 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             
         case kMGSScriptHelperCodeAssistant:
             {
-                [self showCodeAssistantSheetForConfigurationChange:self ];
+                if (!scriptSource || [scriptSource length] == 0) {
+                    [self showCodeAssistantSheet:self options:@{@"selection":@(MGSCodeAssistantSelectionTaskBody)}];
+                } else {
+                    [self showCodeAssistantSheetForConfigurationChange:self];
+                }
             }
             break;
             

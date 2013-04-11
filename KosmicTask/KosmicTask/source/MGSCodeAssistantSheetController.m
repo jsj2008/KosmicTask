@@ -22,6 +22,7 @@
 
 char MGSInputArgumentContext;
 char MGSScriptTypeContext;
+char MGSInputCodeStyleContext;
 
 // class extension
 @interface MGSCodeAssistantSheetController ()
@@ -31,6 +32,7 @@ char MGSScriptTypeContext;
 - (void)configureTabBar;
 - (void)scriptTypeChanged;
 - (void)updateInputVariableTotals;
+- (void)displayVariableUpdateInfo;
 
 @property (copy, readwrite) NSArray *scriptTypes;
 @property MGSLanguageCodeDescriptor *languageCodeDescriptor;
@@ -111,7 +113,7 @@ char MGSScriptTypeContext;
     _languageCodeDescriptor = [[MGSLanguageCodeDescriptor alloc] init];
 
     // add observers
-    [self addObserver:self forKeyPath:@"languageCodeDescriptor.descriptorCodeStyle" options:0 context:&MGSInputArgumentContext];
+    [self addObserver:self forKeyPath:@"languageCodeDescriptor.descriptorCodeStyle" options:0 context:&MGSInputCodeStyleContext];
     
     if ([_argumentNameExclusions respondsToSelector:@selector(setUsesFindBar:)]) {
         [_argumentNameExclusions setUsesFindBar:NO];
@@ -268,6 +270,8 @@ char MGSScriptTypeContext;
  */
 - (void)setScript:(MGSScript *)script
 {
+    self.dataConfigured = NO;
+    
     if (_script) {
 
         // unbind the argument tags
@@ -288,33 +292,36 @@ char MGSScriptTypeContext;
         
         _script = nil;
     }
-    if (!script) return;
-    
-    _script = [script mutableDeepCopy];
+    if (script) {
+        
+        _script = [script mutableDeepCopy];
 
-    // bind the argument tags
-    [_scriptTypePopupButton bind:NSSelectedValueBinding toObject:_script withKeyPath:@"scriptType" options:nil];
-    [_argumentNamePopupButton bind:NSSelectedTagBinding toObject:_script withKeyPath:@"inputArgumentName" options:nil];
-    [_argumentCasePopupButton bind:NSSelectedTagBinding toObject:_script withKeyPath:@"inputArgumentCase" options:nil];
-    [_argumentStylePopupButton bind:NSSelectedTagBinding toObject:_script withKeyPath:@"inputArgumentStyle" options:nil];
-    [_argumentPrefix bind:NSValueBinding toObject:_script withKeyPath:@"inputArgumentPrefix" options:@{ NSContinuouslyUpdatesValueBindingOption : @(YES)}];
-    [_argumentNameExclusions bind:NSValueBinding toObject:_script withKeyPath:@"inputArgumentNameExclusions" options:@{NSContinuouslyUpdatesValueBindingOption : @(YES)}];
-    
-    // add observers
-    [_script addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSScriptTypeContext];
-    [_script addObserver:self forKeyPath:@"inputArgumentName" options:0 context:&MGSInputArgumentContext];
-    [_script addObserver:self forKeyPath:@"inputArgumentCase" options:0 context:&MGSInputArgumentContext];
-    [_script addObserver:self forKeyPath:@"inputArgumentStyle" options:0 context:&MGSInputArgumentContext];
-    [_script addObserver:self forKeyPath:@"inputArgumentPrefix" options:0 context:&MGSInputArgumentContext];
-    [_script addObserver:self forKeyPath:@"inputArgumentNameExclusions" options:0 context:&MGSInputArgumentContext];
+        // bind the argument tags
+        [_scriptTypePopupButton bind:NSSelectedValueBinding toObject:_script withKeyPath:@"scriptType" options:nil];
+        [_argumentNamePopupButton bind:NSSelectedTagBinding toObject:_script withKeyPath:@"inputArgumentName" options:nil];
+        [_argumentCasePopupButton bind:NSSelectedTagBinding toObject:_script withKeyPath:@"inputArgumentCase" options:nil];
+        [_argumentStylePopupButton bind:NSSelectedTagBinding toObject:_script withKeyPath:@"inputArgumentStyle" options:nil];
+        [_argumentPrefix bind:NSValueBinding toObject:_script withKeyPath:@"inputArgumentPrefix" options:@{ NSContinuouslyUpdatesValueBindingOption : @(YES)}];
+        [_argumentNameExclusions bind:NSValueBinding toObject:_script withKeyPath:@"inputArgumentNameExclusions" options:@{NSContinuouslyUpdatesValueBindingOption : @(YES)}];
+        
+        // add observers
+        [_script addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSScriptTypeContext];
+        [_script addObserver:self forKeyPath:@"inputArgumentName" options:0 context:&MGSInputArgumentContext];
+        [_script addObserver:self forKeyPath:@"inputArgumentCase" options:0 context:&MGSInputArgumentContext];
+        [_script addObserver:self forKeyPath:@"inputArgumentStyle" options:0 context:&MGSInputArgumentContext];
+        [_script addObserver:self forKeyPath:@"inputArgumentPrefix" options:0 context:&MGSInputArgumentContext];
+        [_script addObserver:self forKeyPath:@"inputArgumentNameExclusions" options:0 context:&MGSInputArgumentContext];
 
-    // inform task variables view controller of script change
-    _taskVariablesViewController.script = _script;
+        // inform task variables view controller of script change
+        _taskVariablesViewController.script = _script;
 
-    [self updateInputVariableTotals];
+        [self updateInputVariableTotals];
+        
+        [self scriptTypeChanged];
+        [self generateCodeString];
+    }
     
-    [self scriptTypeChanged];
-    [self generateCodeString];
+    self.dataConfigured = YES;
 }
 
 /*
@@ -360,14 +367,48 @@ char MGSScriptTypeContext;
 #pragma unused(keyPath)
 #pragma unused(object)
 #pragma unused(change)
+    BOOL showAutoVariableInfo = NO;
     
 	if (context == &MGSInputArgumentContext) {
+        [self generateCodeString];
+        showAutoVariableInfo = YES;
+    } else if (context == &MGSInputCodeStyleContext) {
         [self generateCodeString];
     } else if (context == &MGSScriptTypeContext) {
         [self scriptTypeChanged];
         [self generateCodeString];
+        showAutoVariableInfo = YES;
     }
-    
+   
+    if (showAutoVariableInfo && self.dataConfigured) {
+        [self displayVariableUpdateInfo];
+    }
+
+}
+
+/*
+ 
+ - displayVariableUpdateInfo
+ 
+ */
+- (void)displayVariableUpdateInfo
+{
+    NSUInteger autoVariables = [self.script.parameterHandler numberOfParametersWithVariableNameUpdating:MGSScriptParameterVariableNameUpdatingAuto];
+    switch (autoVariables) {
+            
+        case 0:
+            self.infoText = NSLocalizedString(@"No auto variables to update.\nSelect Auto to update all variable names.", @"No auto variables: variable update info message");
+            break;
+
+        case 1:
+            self.infoText = [NSString stringWithFormat:NSLocalizedString(@"%i auto variable updated.", @"1 auto variable updated: variable update info message"), autoVariables];
+            break;
+            
+        default:
+            self.infoText = [NSString stringWithFormat:NSLocalizedString(@"%i auto variables updated.", @"Auto variables updated: variable update info message"), autoVariables];
+            break;
+            
+    }
 }
 
 #pragma mark -
@@ -579,6 +620,8 @@ char MGSScriptTypeContext;
     
     [_script.parameterHandler setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingAuto];
     [self updateInputVariableTotals];
+    [self displayVariableUpdateInfo];
+    [self generateCodeString];
 }
 @end
 
