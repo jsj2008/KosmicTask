@@ -171,6 +171,9 @@
     
     // update row for modified data
     [_taskVariablesTableView setNeedsDisplayInRect:[_taskVariablesTableView rectOfRow:row]];
+    
+    // tell delegate about the edit
+    [self.delegate taskVariablesController:self modifiedParameterAtIndex:row];
 }
 #pragma mark -
 #pragma mark Actions
@@ -190,6 +193,9 @@
 		
         MGSScriptParameter *scriptParameter = [[_taskVariablesArrayController arrangedObjects] objectAtIndex:(NSUInteger)row];
         scriptParameter.variableNameUpdating = [(NSMenuItem *)sender tag];
+        
+        // tell delegate about the edit
+        [self.delegate taskVariablesController:self modifiedParameterAtIndex:row];
 	}
 }
 

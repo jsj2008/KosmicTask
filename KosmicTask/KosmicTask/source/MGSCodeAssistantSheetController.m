@@ -17,7 +17,6 @@
 #import "MGSKosmicUnityTabStyle2.h"
 #import "MGSBorderView.h"
 #import "NSView_Mugginsoft.h"
-#import "MGSTaskVariablesViewController.h"
 #import "MGSImageAndTextCell.h"
 
 char MGSInputArgumentContext;
@@ -123,6 +122,7 @@ char MGSInputCodeStyleContext;
     // allocate the task variables view controller
     _taskVariablesViewController = [[MGSTaskVariablesViewController alloc] init];;
     [_taskVariablesViewController view];    // load it
+    _taskVariablesViewController.delegate = self;
     
     // configure tab bar
     [self configureTabBar];
@@ -623,5 +623,26 @@ char MGSInputCodeStyleContext;
     [self displayVariableUpdateInfo];
     [self generateCodeString];
 }
+
+#pragma mark -
+#pragma mark MGSTaskVariablesViewControllerDelegateProtocol
+
+/*
+ 
+ - taskVariablesController:modifiedParameterAtIndex:
+ 
+ */
+- (void)taskVariablesController:(id)sender modifiedParameterAtIndex:(NSInteger)index
+{
+#pragma unused(sender)
+#pragma unused(index)
+    
+    [self updateInputVariableTotals];
+    [self displayVariableUpdateInfo];
+    [self generateCodeString];
+}
+
 @end
+
+
 

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import  "MGSLanguageCodeDescriptor.h"
+#import "MGSTaskVariablesViewController.h"
 
 @class MGSFragaria;
 @class MGSLanguageCodeDescriptor;
@@ -15,6 +16,7 @@
 @class PSMTabBarControl;
 @class MGSBorderView;
 @class MGSTaskVariablesViewController;
+
 
 enum {
   kMGSCodeAssistantSheetReturnOk,
@@ -33,7 +35,7 @@ enum {
 };
 typedef NSInteger MGSCodeAssistantCodeSelection;
 
-@interface MGSCodeAssistantSheetController : NSWindowController
+@interface MGSCodeAssistantSheetController  : NSWindowController <MGSTaskVariablesViewControllerDelegateProtocol>
 {
     IBOutlet NSPopUpButton *_scriptTypePopupButton;
     IBOutlet NSPopUpButton *_argumentNamePopupButton;
