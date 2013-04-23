@@ -14304,7 +14304,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
 				FRAMEWORK_VERSION = A;
-				HEADER_SEARCH_PATHS = "./include/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "MGSKosmicTask-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -17286,7 +17286,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB4F92851039AD9F005EF329 /* beta-expiring.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 70;
@@ -17315,7 +17315,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"./include/**",
-					"\"$(SRCROOT)/../../../GRMustache/src/classes\"",
+					"\"$(SRCROOT)/../../../GRMustache/src/classes\"/**",
 				);
 				IBC_WARNINGS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
@@ -17348,7 +17348,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 70;
@@ -17377,7 +17377,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"./include/**",
-					"\"$(SRCROOT)/../../../GRMustache/src/classes\"",
+					"\"$(SRCROOT)/../../../GRMustache/src/classes\"/**",
 				);
 				IBC_WARNINGS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;

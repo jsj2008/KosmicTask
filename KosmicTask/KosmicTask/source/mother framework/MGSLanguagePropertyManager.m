@@ -923,6 +923,24 @@ NSString * const MGSOptionKeySuffix = @"-key";
 
 /*
  
+ - dictionaryWithProperties:
+ 
+ */
+- (NSDictionary *)dictionaryWithProperties:(NSArray *)propertyKeys
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:10];
+    
+    for (NSString *key in propertyKeys) {
+        MGSLanguageProperty *langProp = [self propertyForKey:key];
+        if (langProp.value) {
+            [dictionary setObject:langProp.value forKey:key];
+        }
+    }
+    
+    return dictionary;
+}
+/*
+ 
  - dictWithPropertyType:requestType:
  
  */

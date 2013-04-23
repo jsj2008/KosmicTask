@@ -92,6 +92,7 @@ extern NSString * const MGSNoteKeyLanguageProperty;
 - (NSMutableArray *)treeForPropertyType:(MGSLanguagePropertyType)propertyType;
 - (void)updatePropertiesFromDictionary:(NSDictionary *)dict;
 - (NSDictionary *)dictionaryOfModifiedProperties;
+- (NSDictionary *)dictionaryWithProperties:(NSArray *)propertyKeys;
 - (void)languagePropertyDidChangeValue:(MGSLanguageProperty *)langProperty;
 - (void)logPropertiesAction:(id)sender;
 - (void)log;

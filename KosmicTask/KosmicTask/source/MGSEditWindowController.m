@@ -421,6 +421,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             {
                 MGSScript *browserScript = resourceSheetController.script;
                 
+                
                 // update script using selected properties from resource browser
                 [_taskSpec.script updateFromScript:browserScript options:@{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]}];
 
@@ -1663,6 +1664,12 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     NSString *key = nil;
     NSString *logMsg = @"Missing/bad data for key %@ in UTI %@";
     
+    NSTextView *textView = [notification.userInfo objectForKey:@"NSTextView"];
+    if (![textView isKindOfClass:[NSTextView class]]) {
+        MLogInfo(@"NSTextView object not found : %@", textView);
+        return;
+    }
+    
     // text has been pasted into the script view.
     // if custom data representing the language settings is present then retrieve it and use it.
     
@@ -1670,46 +1677,46 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
     NSArray *classes = [[NSArray alloc] initWithObjects:[NSPasteboardItem class], nil];
     
+    NSDictionary *scriptDict = nil;
+    NSDictionary *propertyDict = nil;
+    
+    //
     // look for resource browser data
+    //
     NSString *customUTI = @"com.mugginsoft.kosmictask.resourcebrowser.template";
     NSDictionary *options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[customUTI]};
     NSArray *copiedItems = [pasteboard readObjectsForClasses:classes options:options];
     if (copiedItems != nil) {
+        
         for (NSPasteboardItem *pbItem in copiedItems) {
             if ([[pbItem types] containsObject:customUTI]) {
                 
                 NSDictionary *plist = [pbItem propertyListForType:customUTI];
                 if ([plist isKindOfClass:[NSDictionary class]]) {
 
-                    // update script type if it has changed
+                    // get script dict
                     key = @"script";
-                    NSDictionary *scriptDict = [plist objectForKey:key];
-                    if ([scriptDict isKindOfClass:[NSDictionary class]]) {
-                        
-                        // allocate script object
-                        MGSScript *assistantScript = [MGSScript scriptWithDictionary:[NSMutableDictionary dictionaryWithDictionary:scriptDict]];
-                        
-                        // copy required properties
-                        [_taskSpec.script updateFromScript:assistantScript options:@{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]}];
-                        
-                    } else {
+                    scriptDict = [plist objectForKey:key];
+                    if (![scriptDict isKindOfClass:[NSDictionary class]]) {
                         MLogInfo(logMsg, key, customUTI);
+                        scriptDict = nil;
                     }
-                    
-                    // update language properties using dictionary delta
+ 
+                    // get property dict
                     key = @"languagePropertyManagerDelta";
-                    NSDictionary *propertyDict = [plist objectForKey:key];
-                    if ([propertyDict isKindOfClass:[NSDictionary class]]) {
-                        [_taskSpec.script.languagePropertyManager updatePropertiesFromDictionary:propertyDict];
-                    } else {
+                    propertyDict = [plist objectForKey:key];
+                    if (![propertyDict isKindOfClass:[NSDictionary class]]) {
                         MLogInfo(logMsg, key, customUTI);
+                        propertyDict = nil;
                     }
-                 }
+                }                    
             }
         }
     }
     
+    //
     // look for code assistant data
+    //
     customUTI = @"com.mugginsoft.kosmictask.codeassistant.template";
     options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[customUTI]};
     copiedItems = [pasteboard readObjectsForClasses:classes options:options];
@@ -1720,23 +1727,76 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 NSDictionary *plist = [pbItem propertyListForType:customUTI];
                 if ([plist isKindOfClass:[NSDictionary class]]) {
                     
-                    // update script data
+                    // get script dict
                     key = @"script";
-                    NSDictionary *scriptDict = [plist objectForKey:key];
-                    if ([scriptDict isKindOfClass:[NSDictionary class]]) {
-                        
-                        // allocate script object
-                        MGSScript *assistantScript = [MGSScript scriptWithDictionary:[NSMutableDictionary dictionaryWithDictionary:scriptDict]];
-                        
-                        // copy required properties
-                        [_taskSpec.script updateFromScript:assistantScript options:@{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]}];
-                       
-                    } else {
+                    scriptDict = [plist objectForKey:key];
+                    if (![scriptDict isKindOfClass:[NSDictionary class]]) {
                         MLogInfo(logMsg, key, customUTI);
+                        scriptDict = nil;
                     }
                 }
             }
         }
+    }
+    
+    //////////////////////////////////
+    // register undo actions
+    //////////////////////////////////
+    
+    // define dictionary of properties to update
+    NSDictionary *updateOptions = @{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]};
+    
+    /*
+     
+     it seems prudent to gather all the undo information first.
+     this should ensure that the undo will always restore our script to its correct state.
+     
+     */
+    if (scriptDict ) {
+
+        // prepare for undo
+        MGSScript *scriptCopy = [_taskSpec.script mutableDeepCopy];
+
+        // create undo invocation.
+        // this method should be in the same run loop as the paste operation
+        // should be automatically grouped with NSTextView's paste undo.
+        // for this to work we need to target the relevant NSTextView undo manager.
+        [[textView.undoManager prepareWithInvocationTarget:_taskSpec.script]
+         updateFromScript:scriptCopy options:updateOptions];
+    }
+    
+    if (propertyDict) {
+        
+        // create undo invocation.
+        // copy the preoperties we are about to mutate.
+        NSDictionary *propertyUndoDict = [_taskSpec.script.languagePropertyManager dictionaryWithProperties:[propertyDict allKeys]];
+        [[textView.undoManager prepareWithInvocationTarget:_taskSpec.script.languagePropertyManager]
+         updatePropertiesFromDictionary:propertyUndoDict];
+        
+    }
+
+    //////////////////////////////////
+    // do actions
+    //////////////////////////////////
+    
+    // update script type if it has changed
+    if (scriptDict) {
+        
+        // allocate script object
+        MGSScript *assistantScript = [MGSScript scriptWithDictionary:[NSMutableDictionary dictionaryWithDictionary:scriptDict]];
+        
+        // copy required properties.
+        // it might be possible to simply replace the script rather than updating individual properties.
+        // but this would entail rebuilding all the view bindings etc.
+        [_taskSpec.script updateFromScript:assistantScript options:updateOptions];
+        
+    }
+        
+    // update language properties using dictionary delta
+    if (propertyDict) {
+        
+        // do property update
+        [_taskSpec.script.languagePropertyManager updatePropertiesFromDictionary:propertyDict];
     }
 }
 

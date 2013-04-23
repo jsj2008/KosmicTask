@@ -42,7 +42,7 @@ typedef NSUInteger MGSParameterViewConfigurationFlags;
     MGSParameterViewConfigurationFlags _parameterViewConfigurationFlags;
 }
 @property NSInteger inputCount;
-@property MGSTaskSpecifier *action;
+@property (assign) MGSTaskSpecifier *action;
 @property NSView *parameterView;
 @property (readwrite) MGSParameterViewConfigurationFlags parameterViewConfigurationFlags;
 

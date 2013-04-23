@@ -20,7 +20,7 @@
 
 @implementation MGSTaskVariablesViewController
 
-@synthesize script = _script;
+@synthesize script = _script, delegate = _delegate;
 
 #pragma mark -
 #pragma mark Instance methods

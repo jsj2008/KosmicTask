@@ -845,8 +845,9 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 - (void)mgsTextDidPaste:(NSNotification *)aNotification
 {
     #pragma unused(aNotification)
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteScriptTextPasted object:[[self view] window] userInfo:nil];
+    
+    // send out applciation level notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:MGSNoteScriptTextPasted object:[[self view] window] userInfo:aNotification.userInfo];
 }
 
 #pragma mark -
