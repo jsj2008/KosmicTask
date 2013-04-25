@@ -397,15 +397,15 @@ char MGSInputCodeStyleContext;
     switch (autoVariables) {
             
         case 0:
-            self.infoText = NSLocalizedString(@"No auto variables to update.\nSelect Auto to update all variable names.", @"No auto variables: variable update info message");
+            self.infoText = NSLocalizedString(@"Input variables have not been updated.\nSelect Auto to update all input variable names.", @"No auto variables: variable update info message");
             break;
 
         case 1:
-            self.infoText = [NSString stringWithFormat:NSLocalizedString(@"%i auto variable updated.", @"1 auto variable updated: variable update info message"), autoVariables];
+            self.infoText = [NSString stringWithFormat:NSLocalizedString(@"%i input variable name updated.", @"1 auto variable updated: variable update info message"), autoVariables];
             break;
             
         default:
-            self.infoText = [NSString stringWithFormat:NSLocalizedString(@"%i auto variables updated.", @"Auto variables updated: variable update info message"), autoVariables];
+            self.infoText = [NSString stringWithFormat:NSLocalizedString(@"%i input variable names updated.", @"Auto variables updated: variable update info message"), autoVariables];
             break;
             
     }
@@ -440,7 +440,8 @@ char MGSInputCodeStyleContext;
     if (dict && text) {
         
         // script dict is a property list, so why not use it as is?
-        [dict setObject:[self.script dict] forKey:@"script"];
+        [dict setObject:[self.script dict] forKey:@"scriptDict"];
+        [dict setObject:@"scriptTemplateUpdate" forKey:@"operation"];
         
         // add pasteboard item with custom data identified by custom UTI
         NSString *templateUTI = @"com.mugginsoft.kosmictask.codeassistant.template";

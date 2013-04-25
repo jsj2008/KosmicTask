@@ -65,6 +65,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (void)inputConfigurationAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
 - (void)showCodeAssistantSheet:(id)sender options:(NSDictionary *)options;
 - (void)showCodeAssistantSheetForConfigurationChange:(id)sender;
+- (void)textView:(NSTextView *)textView performUndoableOperation:(NSString *)operationName info:(NSDictionary *)info;
 @end
 
 @interface MGSEditWindowController(Private)
@@ -419,19 +420,14 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			// insert template
 		case kMGSResourceBrowserSheetReturnInsert:
             {
-                MGSScript *browserScript = resourceSheetController.script;
                 
-                
-                // update script using selected properties from resource browser
-                [_taskSpec.script updateFromScript:browserScript options:@{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]}];
-
                 // get a copy of the language property for the selected template resource
                 MGSLanguagePropertyManager *languagePropertyManager = resourceSheetController.languagePropertyManager;
                 NSAssert(languagePropertyManager, @"language property manager is nil");
-                
-                // update the language property manager
-                [_taskSpec.script updateLanguagePropertyManager:languagePropertyManager];
 
+                // perform operation
+                [self textView:scriptEditViewController.scriptTextView performUndoableOperation:@"scriptTemplateUpdate" info:@{@"scriptDict" : [resourceSheetController.script dict], @"languagePropertyManager" : languagePropertyManager}];
+                
                 // get the template text
                 NSString *templateText = resourceSheetController.resourceText;
                 
@@ -562,13 +558,9 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             // insert selected data
 		case kMGSCodeAssistantSheetReturnInsert:
             {
-                MGSScript *assistantScript = codeAssistantSheetController.script;
-                
-                // update script from code assistant
-                // perhaps we can just copy the entire parameter structure here
-                // rather than just the parameter variables?
-                [_taskSpec.script updateFromScript:assistantScript options:@{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]}];
-                
+                // do script template update
+                [self textView:scriptEditViewController.scriptTextView performUndoableOperation:@"scriptTemplateUpdate" info:@{@"scriptDict" : [codeAssistantSheetController.script dict]}];
+
                 // get code to be inserted
                 NSString *codeString = [codeAssistantSheetController codeString];
                 
@@ -1679,6 +1671,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     
     NSDictionary *scriptDict = nil;
     NSDictionary *propertyDict = nil;
+    NSString *operation = nil;
     
     //
     // look for resource browser data
@@ -1694,22 +1687,36 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 NSDictionary *plist = [pbItem propertyListForType:customUTI];
                 if ([plist isKindOfClass:[NSDictionary class]]) {
 
-                    // get script dict
-                    key = @"script";
+                    // validate script dict
+                    key = @"scriptDict";
                     scriptDict = [plist objectForKey:key];
                     if (![scriptDict isKindOfClass:[NSDictionary class]]) {
                         MLogInfo(logMsg, key, customUTI);
                         scriptDict = nil;
                     }
  
-                    // get property dict
-                    key = @"languagePropertyManagerDelta";
+                    // validate property dict
+                    key = @"languagePropertyManagerDeltaDict";
                     propertyDict = [plist objectForKey:key];
                     if (![propertyDict isKindOfClass:[NSDictionary class]]) {
                         MLogInfo(logMsg, key, customUTI);
                         propertyDict = nil;
                     }
-                }                    
+                    
+                    // validate operation
+                    key = @"operation";
+                    operation = [plist objectForKey:@"operation"];
+                    if (![operation isKindOfClass:[NSString class]]) {
+                        MLogInfo(logMsg, key, customUTI);
+                        operation = nil;
+                    }
+                    
+                    // perform operation
+                    if (scriptDict && propertyDict && operation) {
+                        [self textView:textView performUndoableOperation:operation info:plist];
+                    }
+
+                }
             }
         }
     }
@@ -1727,76 +1734,127 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 NSDictionary *plist = [pbItem propertyListForType:customUTI];
                 if ([plist isKindOfClass:[NSDictionary class]]) {
                     
-                    // get script dict
-                    key = @"script";
+                    // validate script dict
+                    key = @"scriptDict";
                     scriptDict = [plist objectForKey:key];
                     if (![scriptDict isKindOfClass:[NSDictionary class]]) {
                         MLogInfo(logMsg, key, customUTI);
                         scriptDict = nil;
                     }
+                    
+                    // validate operation
+                    key = @"operation";
+                    operation = [plist objectForKey:@"operation"];
+                    if (![operation isKindOfClass:[NSString class]]) {
+                        MLogInfo(logMsg, key, customUTI);
+                        operation = nil;
+                    }
+
+                    // perform operation
+                    if (scriptDict && operation) {
+                        [self textView:textView performUndoableOperation:operation info:plist];
+                    }
+                    
                 }
             }
         }
     }
     
-    //////////////////////////////////
-    // register undo actions
-    //////////////////////////////////
-    
-    // define dictionary of properties to update
-    NSDictionary *updateOptions = @{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]};
-    
-    /*
-     
-     it seems prudent to gather all the undo information first.
-     this should ensure that the undo will always restore our script to its correct state.
-     
-     */
-    if (scriptDict ) {
+}
 
-        // prepare for undo
-        MGSScript *scriptCopy = [_taskSpec.script mutableDeepCopy];
-
-        // create undo invocation.
-        // this method should be in the same run loop as the paste operation
-        // should be automatically grouped with NSTextView's paste undo.
-        // for this to work we need to target the relevant NSTextView undo manager.
-        [[textView.undoManager prepareWithInvocationTarget:_taskSpec.script]
-         updateFromScript:scriptCopy options:updateOptions];
-    }
+/*
+ 
+ - textView:performUndoableAction:
+ 
+ */
+- (void)textView:(NSTextView *)textView performUndoableOperation:(NSString *)operationName info:(NSDictionary *)info
+{
+    NSDictionary *scriptDict = [info objectForKey:@"scriptDict"];
+    NSDictionary *languagePropertyManagerDelta = [info objectForKey:@"languagePropertyManagerDeltaDict"];
+    MGSLanguagePropertyManager *languagePropertyManager = [info objectForKey:@"languagePropertyManager"];
     
-    if (propertyDict) {
-        
-        // create undo invocation.
-        // copy the preoperties we are about to mutate.
-        NSDictionary *propertyUndoDict = [_taskSpec.script.languagePropertyManager dictionaryWithProperties:[propertyDict allKeys]];
-        [[textView.undoManager prepareWithInvocationTarget:_taskSpec.script.languagePropertyManager]
-         updatePropertiesFromDictionary:propertyUndoDict];
-        
-    }
-
-    //////////////////////////////////
-    // do actions
-    //////////////////////////////////
-    
-    // update script type if it has changed
+    NSAssert(textView, @"textView not defined");
+    NSAssert(operationName, @"operationName not defined");
     if (scriptDict) {
-        
-        // allocate script object
-        MGSScript *assistantScript = [MGSScript scriptWithDictionary:[NSMutableDictionary dictionaryWithDictionary:scriptDict]];
-        
-        // copy required properties.
-        // it might be possible to simply replace the script rather than updating individual properties.
-        // but this would entail rebuilding all the view bindings etc.
-        [_taskSpec.script updateFromScript:assistantScript options:updateOptions];
-        
+        NSAssert([scriptDict isKindOfClass:[NSDictionary class]], @"NSDictionary expected");
     }
+              
+    // script update operation
+    if ([operationName isEqualTo:@"scriptTemplateUpdate"]) {
+    
+        //////////////////////////////////
+        // register undo actions
+        //////////////////////////////////
         
-    // update language properties using dictionary delta
-    if (propertyDict) {
+        // define dictionary of properties to update
+        NSDictionary *updateOptions = @{@"updates":@[@"scriptType", @"allInputArguments", @"allScriptParameterVariables"]};
         
-        // do property update
-        [_taskSpec.script.languagePropertyManager updatePropertiesFromDictionary:propertyDict];
+        /*
+         
+         it seems prudent to gather all the undo information first.
+         this should ensure that the undo will always restore our script to its correct state.
+         
+         */
+        if (scriptDict) {
+
+            // prepare for undo
+            MGSScript *scriptCopy = [_taskSpec.script mutableDeepCopy];
+
+            // create undo invocation.
+            // this method should be in the same run loop as the paste operation
+            // should be automatically grouped with NSTextView's paste undo.
+            // for this to work we need to target the relevant NSTextView undo manager.
+            [[textView.undoManager prepareWithInvocationTarget:_taskSpec.script]
+             updateFromScript:scriptCopy options:updateOptions];
+        }
+        
+        if (languagePropertyManagerDelta) {
+            
+            // create undo invocation.
+            // copy the preoperties we are about to mutate.
+            NSDictionary *propertyUndoDict = [_taskSpec.script.languagePropertyManager dictionaryWithProperties:[languagePropertyManagerDelta allKeys]];
+            [[textView.undoManager prepareWithInvocationTarget:_taskSpec.script.languagePropertyManager]
+             updatePropertiesFromDictionary:propertyUndoDict];
+            
+        }
+
+        if (languagePropertyManager) {
+            MGSLanguagePropertyManager *languagePropertyManagerCopy = [languagePropertyManager copy];
+            
+            [[textView.undoManager prepareWithInvocationTarget:_taskSpec.script]
+             updateLanguagePropertyManager:languagePropertyManagerCopy];
+        }
+        
+        //////////////////////////////////
+        // do actions
+        //////////////////////////////////
+        
+        // update script type if it has changed
+        if (scriptDict) {
+            
+            // allocate script object
+            MGSScript *assistantScript = [MGSScript scriptWithDictionary:[NSMutableDictionary dictionaryWithDictionary:scriptDict]];
+            
+            // copy required properties.
+            // it might be possible to simply replace the script rather than updating individual properties.
+            // but this would entail rebuilding all the view bindings etc.
+            [_taskSpec.script updateFromScript:assistantScript options:updateOptions];
+            
+        }
+            
+        // update language properties using dictionary delta
+        if (languagePropertyManagerDelta) {
+            [_taskSpec.script.languagePropertyManager updatePropertiesFromDictionary:languagePropertyManagerDelta];
+        }
+
+        // update the language property manager
+        // TODO: do we really need both this and the languagePropertyManagerDelta?
+        if (languagePropertyManager) {
+            [_taskSpec.script updateLanguagePropertyManager:languagePropertyManager];
+        }
+
+    } else {
+       NSAssert(NO, @"Invalid operation name %@", operationName);
     }
 }
 

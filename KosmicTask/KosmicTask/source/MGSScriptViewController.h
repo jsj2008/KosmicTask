@@ -78,5 +78,6 @@
 - (void)textDidEndEditing:(NSNotification *)aNotification;
 - (void)applyDefaultFormatting:(NSMutableAttributedString *)attributedString;
 - (void)insertText:(NSString *)text;
+- (NSTextView *)scriptTextView;
 
 @end

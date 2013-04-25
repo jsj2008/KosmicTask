@@ -140,11 +140,12 @@ const char MGSContextResourcesChanged;
         // build custom data dictionary
         
         // script dict
-        [dict setObject:[self.script dict] forKey:@"script"];
+        [dict setObject:[self.script dict] forKey:@"scriptDict"];
+        [dict setObject:@"scriptTemplateUpdate" forKey:@"operation"];
         
         // dictionary of modified language properties
         NSDictionary *propertyManagerDict = [self.script.languagePropertyManager dictionaryOfModifiedProperties];
-        [dict setObject:propertyManagerDict forKey:@"languagePropertyManagerDelta"];
+        [dict setObject:propertyManagerDict forKey:@"languagePropertyManagerDeltaDict"];
         
         // add pasteboatd item with custom data identified by custom UTI
         NSString *templateUTI = @"com.mugginsoft.kosmictask.resourcebrowser.template";

@@ -608,6 +608,15 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	return YES;
 }
 
+/*
+ 
+ - scriptTextView
+ 
+ */
+- (NSTextView *)scriptTextView
+{
+    return scriptViewController.scriptTextView;
+}
 #pragma mark -
 #pragma mark Actions
 

@@ -748,6 +748,15 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 
 /*
  
+ - scriptTextView
+ 
+ */
+- (NSTextView *)scriptTextView
+{
+    return _currentTextView;
+}
+/*
+ 
  - updateEditorSyntaxDefinition
  
  */

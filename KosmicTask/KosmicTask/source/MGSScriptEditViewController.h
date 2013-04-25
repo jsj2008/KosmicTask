@@ -109,6 +109,7 @@ extern NSString * const MGSIgnoreBuildError;
 - (NSUndoManager *)undoManager;
 - (void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload options:(NSDictionary *)options;
 - (void)insertText:(NSString *)text;
+- (NSTextView *)scriptTextView;
 
 @property(assign) MGSTaskSpecifier *taskSpec;
 
