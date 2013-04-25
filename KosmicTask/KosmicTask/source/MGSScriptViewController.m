@@ -35,7 +35,6 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 @interface MGSScriptViewController()
 - (void)configureEditorForScript;
 - (void)updateEditorSyntaxDefinition;
-- (void)setString:(NSString *)text;
 - (void)textDidChange:(NSNotification *)aNotification;
 - (void)setAttributedString:(NSAttributedString *)source;
 
@@ -579,10 +578,10 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 
 /*
  
- - insertText:
+ - insertString:
  
  */
-- (void)insertText:(NSString *)newText
+- (void)insertString:(NSString *)newText
 {
     NSString *text = [_fragaria string];
     NSRange selectedRange = [_fragariaTextView selectedRange];

@@ -77,7 +77,8 @@
 - (NSUndoManager *)undoManager;
 - (void)textDidEndEditing:(NSNotification *)aNotification;
 - (void)applyDefaultFormatting:(NSMutableAttributedString *)attributedString;
-- (void)insertText:(NSString *)text;
+- (void)insertString:(NSString *)text;
+- (void)setString:(NSString *)value;
 - (NSTextView *)scriptTextView;
 
 @end

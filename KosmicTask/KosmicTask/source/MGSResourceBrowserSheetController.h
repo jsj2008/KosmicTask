@@ -25,6 +25,7 @@ typedef NSInteger MGSResourceBrowserSheetReturnValue;
 	MGSResourceBrowserViewController *resourceBrowserViewController;
 	IBOutlet NSView *templateView;
 	IBOutlet NSButton *okButton;
+    IBOutlet NSButton *copyButton;
 	NSString *resourceText;
     MGSScript *script;
 	BOOL resourcesChanged;

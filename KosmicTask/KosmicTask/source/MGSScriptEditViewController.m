@@ -1414,11 +1414,20 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 
 /*
  
- - insertText:
+ - insertString:
  
  */
-- (void)insertText:(NSString *)text
+- (void)insertString:(NSString *)text
 {
-    [scriptViewController insertText:text];
+    [scriptViewController insertString:text];
+}
+/*
+ 
+ - setString:
+ 
+ */
+- (void)setString:(NSString *)value
+{
+    [scriptViewController setString:value];
 }
 @end

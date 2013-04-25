@@ -55,6 +55,7 @@ const char MGSContextResourcesChanged;
 
 	// bindings
 	[okButton bind:NSEnabledBinding toObject:self withKeyPath:@"resourceBrowserViewController.requiredResourceSelected" options:nil];
+	[copyButton bind:NSEnabledBinding toObject:self withKeyPath:@"resourceBrowserViewController.requiredResourceSelected" options:nil];
 	 
 	// update the templateView
 	[[resourceBrowserViewController view] setFrame:[templateView frame]];

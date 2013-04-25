@@ -420,7 +420,6 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 			// insert template
 		case kMGSResourceBrowserSheetReturnInsert:
             {
-                
                 // get a copy of the language property for the selected template resource
                 MGSLanguagePropertyManager *languagePropertyManager = resourceSheetController.languagePropertyManager;
                 NSAssert(languagePropertyManager, @"language property manager is nil");
@@ -432,8 +431,11 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 NSString *templateText = resourceSheetController.resourceText;
                 
                 // insert at current selection point
-                [scriptEditViewController insertText:templateText];
-
+                if (YES) {
+                    [scriptEditViewController setString:templateText];
+                } else {
+                    [scriptEditViewController insertString:templateText];
+                }
                 makeEditorFirstResponder = YES;
             }
 			break;
@@ -564,9 +566,17 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 // get code to be inserted
                 NSString *codeString = [codeAssistantSheetController codeString];
                 
-                // insert at current selection point
-                [scriptEditViewController insertText:codeString];
-                
+                // what code is being inserted
+                switch (codeAssistantSheetController.codeSelection) {
+                    case MGSCodeAssistantSelectionTaskBody:
+                        [scriptEditViewController setString:codeString];
+                        break;
+                        
+                    case MGSCodeAssistantSelectionTaskInputs:
+                        [scriptEditViewController insertString:codeString];
+                        break;
+                }
+                 
                 makeEditorFirstResponder = YES;
             }
             break;
