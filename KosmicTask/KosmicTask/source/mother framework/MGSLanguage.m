@@ -11,6 +11,7 @@
 
 NSString *MGSInputStyle = @"InputStyle";
 NSString *MGSLanguageCodeTemplateResourcePath = @"Mustache";
+NSString *MGSTemplatePattern = @".pattern";
 
 #define MGS_PROP_COPY(METHOD) self.METHOD = copy.METHOD
 
@@ -455,6 +456,17 @@ initInputArgumentStyleAllowedFlags;
     
     return @"task-input-variables";
 }
+/*
+ 
+ - taskInputsPatternTemplateName:
+ 
+ */
+- (NSString *)taskInputsPatternTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    return [[self taskInputsCodeTemplateName:taskInfo] stringByAppendingString:MGSTemplatePattern];
+}
 
 /*
  
@@ -469,6 +481,17 @@ initInputArgumentStyleAllowedFlags;
     
      
 }
+/*
+ 
+ - taskFunctionPatternTemplateName:
+ 
+ */
+- (NSString *)taskFunctionPatternTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    return [[self taskFunctionCodeTemplateName:taskInfo] stringByAppendingString:MGSTemplatePattern];
+}
 
 /*
  
@@ -480,6 +503,17 @@ initInputArgumentStyleAllowedFlags;
 #pragma unused(taskInfo)
     
     return @"task-class-function";
+}
+/*
+ 
+ - taskClassFunctionPatternTemplateName:
+ 
+ */
+- (NSString *)taskClassFunctionPatternTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    return [[self taskClassFunctionCodeTemplateName:taskInfo] stringByAppendingString:MGSTemplatePattern];
 }
 
 /*

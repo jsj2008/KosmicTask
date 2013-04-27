@@ -66,6 +66,11 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (void)showCodeAssistantSheet:(id)sender options:(NSDictionary *)options;
 - (void)showCodeAssistantSheetForConfigurationChange:(id)sender;
 - (void)textView:(NSTextView *)textView performUndoableOperation:(NSString *)operationName info:(NSDictionary *)info;
+- (void)doTaskInputsPatternMatch;
+
+@property (assign) NSTextCheckingResult *taskInputsPatternMatch;
+@property (assign) NSRegularExpression *taskInputsPatternRegex;
+
 @end
 
 @interface MGSEditWindowController(Private)
@@ -76,6 +81,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 @implementation MGSEditWindowController
 
 @synthesize taskSpec = _taskSpec;
+@synthesize taskInputsPatternMatch;
+@synthesize taskInputsPatternRegex;
 
 #pragma mark -
 #pragma mark Instance control
@@ -491,17 +498,25 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	codeAssistantSheetController.script = [_taskSpec script];
     
     NSString *infoString = @"";
-    MGSCodeAssistantCodeSelection codeSelection = MGSCodeAssistantSelectionTaskBody;
     
     if (options) {
+        MGSCodeAssistantCodeSelection codeSelection = MGSCodeAssistantSelectionTaskBody;
+
         id object = [options objectForKey:@"info"];
         if (object) infoString = object;
         object = [options objectForKey:@"selection"] ;
         if (object) codeSelection = [object integerValue];
+        
+        codeAssistantSheetController.codeSelection = codeSelection;
     }
     
     codeAssistantSheetController.infoText = infoString;
-    codeAssistantSheetController.codeSelection = codeSelection;
+    
+    // try and match the inputs pattern
+    [self doTaskInputsPatternMatch];
+    
+    // task inputs can be inserted if match found
+    codeAssistantSheetController.allowInsertTaskInputs = (self.taskInputsPatternMatch ? YES : NO);
     
 	// show the sheet
 	[NSApp beginSheet:[codeAssistantSheetController window]
@@ -573,8 +588,24 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                         break;
                         
                     case MGSCodeAssistantSelectionTaskInputs:
-                        [scriptEditViewController insertString:codeString];
-                        break;
+                        if (self.taskInputsPatternMatch) {
+                            BOOL usePattern = YES;
+                            if (usePattern) {
+                                // replace characters in range
+                                [scriptEditViewController.scriptViewController
+                                    replaceCharactersInRange:self.taskInputsPatternMatch.range
+                                    withString:codeString
+                                    options:nil];
+                            } else {
+                                // perform a simple insert
+                                [scriptEditViewController.scriptViewController insertString:codeString];
+                            }
+                            self.taskInputsPatternMatch = nil;
+                            self.taskInputsPatternRegex = nil;
+                       } else {
+                            MLogInfo(@"Trying to insert task inputs but no pattern match available.");
+                        }
+                         break;
                 }
                  
                 makeEditorFirstResponder = YES;
@@ -602,6 +633,39 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     if (makeEditorFirstResponder) {
         [self.window makeFirstResponder:[scriptEditViewController initialFirstResponder]];
     }
+}
+
+#pragma mark -
+#pragma mark Pattern matching
+
+/*
+ 
+ - doTaskInputsPatternMatch
+ 
+ */     
+- (void)doTaskInputsPatternMatch
+{
+    // setup the language code descriptor
+    MGSLanguageCodeDescriptor *languageCodeDescriptor = [[MGSLanguageCodeDescriptor alloc] init];
+    [languageCodeDescriptor setScript:[_taskSpec script]];
+    
+    
+    // if task inputs can be identified within the code via regex pattern then
+    // insertion will be allowed. if not, then the user will have to copy and
+    // paste the input
+    NSString *taskEntryPattern = languageCodeDescriptor.generateTaskEntryPatternString;
+    NSError *error = NULL;
+    
+    // configure regex to match anchors ^, $ at start of line
+    self.taskInputsPatternRegex = [NSRegularExpression regularExpressionWithPattern:taskEntryPattern
+                                                                           options:NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines
+                                                                             error:&error];
+    // the script source gets updated only when the editor resigns as first responder.
+    // this will occur when the sheet is shown.
+    // so we can either force termination of first responder status or access
+    // the script string directly
+    NSString *source = scriptEditViewController.string;
+    self.taskInputsPatternMatch = [self.taskInputsPatternRegex firstMatchInString:source options:0 range:NSMakeRange(0, [source length])];
 }
 
 #pragma mark -

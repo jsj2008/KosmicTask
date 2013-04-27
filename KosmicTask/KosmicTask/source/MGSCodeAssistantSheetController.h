@@ -67,8 +67,10 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
     NSString *_infoText;
     MGSCodeAssistantCodeSelection _codeSelection;
     BOOL _canInsert;
+    BOOL _canCopy;
     BOOL _autoAllEnabled;
     BOOL _dataConfigured;
+    BOOL _allowInsertTaskInputs;
     
     NSInteger _inputVariableTotal;
     NSInteger _inputVariableAuto;
@@ -83,16 +85,19 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
 - (IBAction)openFileSheetAction:(id)sender;
 - (IBAction)autoAllInputVariablesAction:(id)sender;
 
+- (NSString *)codeString;
+
 @property (copy, readonly) NSArray *scriptTypes;
 @property MGSScript *script;
 @property (copy) NSString *infoText;
 @property MGSCodeAssistantCodeSelection codeSelection;
-@property BOOL canInsert;
-- (NSString *)codeString;
-@property NSInteger inputVariableTotal;
-@property NSInteger inputVariableAuto;
-@property NSInteger inputVariableManual;
-@property BOOL autoAllEnabled;
-@property BOOL dataConfigured;
+@property (assign) BOOL canInsert;
+@property (assign) BOOL canCopy;
+@property (assign) NSInteger inputVariableTotal;
+@property (assign) NSInteger inputVariableAuto;
+@property (assign) NSInteger inputVariableManual;
+@property (assign) BOOL autoAllEnabled;
+@property (assign) BOOL dataConfigured;
+@property (assign) BOOL allowInsertTaskInputs;
 
 @end

@@ -162,6 +162,52 @@ char MGSScriptTypeContext;
 
 /*
  
+ - generateTaskEntryPatternString
+ 
+ */
+- (NSString *)generateTaskEntryPatternString
+{
+    NSString *codeString = nil;
+    
+    if (self.scriptLanguage) {
+        
+        NSString *templateName = nil;
+        
+        eMGSOnRunTask onRun = [self.script.onRun integerValue];
+        
+        switch(onRun) {
+                
+                // look for class function pattern template
+            case kMGSOnRunCallClassFunction:
+                templateName = [self.scriptLanguage taskClassFunctionPatternTemplateName:self.templateTaskInfo];
+                if (templateName) {
+                    break;
+                }
+                // fall through
+                
+                // look for function pattern template
+            case kMGSOnRunCallScriptFunction:
+                templateName = [self.scriptLanguage taskFunctionPatternTemplateName:self.templateTaskInfo];
+                break;
+                
+            default:
+                break;
+        }
+        
+        // if no function template available then use input variables
+        if (![self templateNameExists:templateName]) {
+            NSMutableDictionary *templateVariables = [self generateTemplateVariables];
+            codeString = [templateVariables objectForKey:@"task-input-variables"];
+        } else {
+            codeString = [self generateCodeStringFromTemplateName:templateName];
+        }
+    }
+    
+    return codeString;
+}
+
+/*
+ 
  - generateTaskFuctionCodeString
  
  */

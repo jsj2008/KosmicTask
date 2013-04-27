@@ -53,4 +53,5 @@
 - (NSString *)processTemplateName:(NSString *)templateName object:(NSDictionary *)variables error:(NSError **)error;
 - (NSMutableDictionary *)generateTemplateVariables;
 - (BOOL)templateNameExists:(NSString *)name;
+- (NSString *)generateTaskEntryPatternString;
 @end

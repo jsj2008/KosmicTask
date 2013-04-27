@@ -80,5 +80,6 @@
 - (void)insertString:(NSString *)text;
 - (void)setString:(NSString *)value;
 - (NSTextView *)scriptTextView;
+- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string options:(NSDictionary *)options;
 
 @end

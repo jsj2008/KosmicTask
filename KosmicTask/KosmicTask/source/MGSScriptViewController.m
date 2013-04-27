@@ -583,6 +583,7 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
  */
 - (void)insertString:(NSString *)newText
 {
+    // this is very far from efficient !
     NSString *text = [_fragaria string];
     NSRange selectedRange = [_fragariaTextView selectedRange];
     if (selectedRange.location != NSNotFound && selectedRange.length > 0 && NO) {
@@ -597,6 +598,23 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
     [[[_taskSpec script] scriptCode] setSource:text];
     
     [_fragariaTextView scrollRangeToVisible:selectedRange];
+}
+
+/*
+ 
+ - replaceCharactersInRange:withString:options:
+ 
+ */
+- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string options:(NSDictionary *)options
+{
+    // this is very far from efficient !
+    [_fragariaTextView replaceCharactersInRange:range withString:string];
+    [[[_taskSpec script] scriptCode] setSource:[_fragaria string]];
+    
+    // select our new range and scroll it visible
+    NSRange newRange  = [[_fragaria string] rangeOfString:string];
+    [_fragariaTextView setSelectedRanges:@[[NSValue valueWithRange:newRange]]];
+    [_fragariaTextView scrollRangeToVisible:newRange];
 }
 #pragma mark -
 #pragma mark Font handling
@@ -892,7 +910,10 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	generally this notification is sent but
 	if the text is edited and the view is swapped for another subview
 	then it may not get sent!
-	 
+	
+    the task source does not get updated on every text did change event
+    but only when the textview resigns as first responder.
+     
 	*/
 	
 	if (self.scriptTextChanged) {

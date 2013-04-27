@@ -111,6 +111,7 @@ extern NSString * const MGSIgnoreBuildError;
 - (void)insertString:(NSString *)text;
 - (void)setString:(NSString *)value;
 - (NSTextView *)scriptTextView;
+- (NSString *)string;
 
 @property(assign) MGSTaskSpecifier *taskSpec;
 

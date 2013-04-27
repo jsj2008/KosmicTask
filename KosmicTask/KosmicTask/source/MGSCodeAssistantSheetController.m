@@ -31,7 +31,6 @@ char MGSInputCodeStyleContext;
 - (void)configureTabBar;
 - (void)scriptTypeChanged;
 - (void)updateInputVariableTotals;
-- (void)displayVariableUpdateInfo;
 
 @property (copy, readwrite) NSArray *scriptTypes;
 @property MGSLanguageCodeDescriptor *languageCodeDescriptor;
@@ -48,10 +47,12 @@ char MGSInputCodeStyleContext;
 @synthesize infoText = _infoText;
 @synthesize codeSelection = _codeSelection;
 @synthesize canInsert = _canInsert;
+@synthesize canCopy = _canCopy;
 @synthesize inputVariableTotal = _inputVariableTotal;
 @synthesize inputVariableAuto = _inputVariableAuto;
 @synthesize inputVariableManual = _inputVariableManual;
 @synthesize autoAllEnabled = _autoAllEnabled;
+@synthesize allowInsertTaskInputs = _allowInsertTaskInputs;
 
 /*
  
@@ -129,7 +130,7 @@ char MGSInputCodeStyleContext;
     
     // button bindings
     [_insertButton bind:NSEnabledBinding toObject:self withKeyPath:@"canInsert" options:nil];
-    [_copyButton bind:NSEnabledBinding toObject:self withKeyPath:@"canInsert" options:nil];
+    [_copyButton bind:NSEnabledBinding toObject:self withKeyPath:@"canCopy" options:nil];
     
     // input variable bindings
     [_inputTotalTextField bind:NSValueBinding toObject:self withKeyPath:@"inputVariableTotal" options:nil];
@@ -218,7 +219,30 @@ char MGSInputCodeStyleContext;
 }
 #pragma mark -
 #pragma mark Accessors
-
+/*
+ 
+ - setAllowInsertTaskInputs:
+ 
+ */
+- (void)setAllowInsertTaskInputs:(BOOL)value
+{
+    _allowInsertTaskInputs = value;
+    bool allowInsert = YES;
+    switch (_codeSelection) {
+        case MGSCodeAssistantSelectionTaskInputs:
+            allowInsert = self.allowInsertTaskInputs;
+            break;
+            
+        case MGSCodeAssistantSelectionTaskBody:
+         case MGSCodeAssistantSelectionTaskVariables:
+             break;
+            
+        default:
+            MLogInfo(@"Invalid index: %i", value);
+            return;
+    }
+    self.canInsert = allowInsert;
+}
 /*
  
  - setCodeSelection:
@@ -231,18 +255,21 @@ char MGSInputCodeStyleContext;
     switch (value) {
         case MGSCodeAssistantSelectionTaskInputs:
             self.languageCodeDescriptor.descriptorCodeStyle = kMGSCodeDescriptorTaskInputs;
-            self.canInsert = YES;
+            self.canInsert = self.allowInsertTaskInputs;
+            self.canCopy = YES;
             requiredView = _fragariaHostView;
             break;
         
         case MGSCodeAssistantSelectionTaskBody:
             self.languageCodeDescriptor.descriptorCodeStyle = kMGSCodeDescriptorTaskBody;
             self.canInsert = YES;
+            self.canCopy = YES;
             requiredView = _fragariaHostView;
             break;
 
         case MGSCodeAssistantSelectionTaskVariables:
             self.canInsert = NO;
+            self.canCopy = NO;
             requiredView = _taskVariablesViewController.view;
             break;
             

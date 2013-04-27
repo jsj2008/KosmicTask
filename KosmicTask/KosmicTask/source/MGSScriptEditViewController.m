@@ -1430,4 +1430,14 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 {
     [scriptViewController setString:value];
 }
+
+/*
+ 
+ - string
+ 
+ */
+- (NSString *)string
+{
+    return scriptViewController.scriptSource;
+}
 @end

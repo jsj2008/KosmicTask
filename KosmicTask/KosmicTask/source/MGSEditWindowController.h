@@ -53,6 +53,8 @@ typedef NSInteger MGSScriptHelper;
 	MGSTaskSpecifier *_taskSpec;
 	MGSSaveActionSheetController *_saveActionSheetController;
     MGSCodeAssistantSheetController *codeAssistantSheetController;
+    NSTextCheckingResult *taskInputsPatternMatch;
+    NSRegularExpression *taskInputsPatternRegex;
     
 	BOOL _closeWindowAfterSave;
 	BOOL _silentClose;
