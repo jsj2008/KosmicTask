@@ -108,10 +108,8 @@ extern NSString * const MGSIgnoreBuildError;
 - (BOOL)canSaveScript;
 - (NSUndoManager *)undoManager;
 - (void)netRequestResponse:(MGSClientNetRequest *)netRequest payload:(MGSNetRequestPayload *)payload options:(NSDictionary *)options;
-- (void)insertString:(NSString *)text;
-- (void)setString:(NSString *)value;
 - (NSTextView *)scriptTextView;
-- (NSString *)string;
+
 
 @property(assign) MGSTaskSpecifier *taskSpec;
 

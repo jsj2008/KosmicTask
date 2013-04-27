@@ -26,5 +26,4 @@
 @property id <MGSTaskVariablesViewControllerDelegateProtocol> delegate;
 
 - (IBAction)popUpButtonMenuItemSelected:(id)sender;
-- (IBAction)variableNameChanged:(id)sender;
 @end

@@ -1168,6 +1168,11 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
  */
 - (BOOL)commitPendingEdits
 {
+    // the script source gets updated only when the editor resigns as first responder.
+    // this will occur when the sheet is shown.
+    // so we can  force updating by sending - textDidEndEditing
+    [scriptViewController textDidEndEditing:nil];
+    
 	return YES;
 }
 
@@ -1409,35 +1414,4 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 	
 }
 
-#pragma mark -
-#pragma mark text handling
-
-/*
- 
- - insertString:
- 
- */
-- (void)insertString:(NSString *)text
-{
-    [scriptViewController insertString:text];
-}
-/*
- 
- - setString:
- 
- */
-- (void)setString:(NSString *)value
-{
-    [scriptViewController setString:value];
-}
-
-/*
- 
- - string
- 
- */
-- (NSString *)string
-{
-    return scriptViewController.scriptSource;
-}
 @end

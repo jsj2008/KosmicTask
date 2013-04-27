@@ -431,18 +431,15 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 MGSLanguagePropertyManager *languagePropertyManager = resourceSheetController.languagePropertyManager;
                 NSAssert(languagePropertyManager, @"language property manager is nil");
 
-                // perform operation
+                // perform undoable operation using textview undo manager
                 [self textView:scriptEditViewController.scriptTextView performUndoableOperation:@"scriptTemplateUpdate" info:@{@"scriptDict" : [resourceSheetController.script dict], @"languagePropertyManager" : languagePropertyManager}];
                 
                 // get the template text
                 NSString *templateText = resourceSheetController.resourceText;
                 
-                // insert at current selection point
-                if (YES) {
-                    [scriptEditViewController setString:templateText];
-                } else {
-                    [scriptEditViewController insertString:templateText];
-                }
+                // update script
+                _taskSpec.script.scriptCode.source = templateText;
+                
                 makeEditorFirstResponder = YES;
             }
 			break;
@@ -584,22 +581,17 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 // what code is being inserted
                 switch (codeAssistantSheetController.codeSelection) {
                     case MGSCodeAssistantSelectionTaskBody:
-                        [scriptEditViewController setString:codeString];
+                        _taskSpec.script.scriptCode.source = codeString;
                         break;
                         
                     case MGSCodeAssistantSelectionTaskInputs:
                         if (self.taskInputsPatternMatch) {
-                            BOOL usePattern = YES;
-                            if (usePattern) {
-                                // replace characters in range
-                                [scriptEditViewController.scriptViewController
-                                    replaceCharactersInRange:self.taskInputsPatternMatch.range
-                                    withString:codeString
-                                    options:nil];
-                            } else {
-                                // perform a simple insert
-                                [scriptEditViewController.scriptViewController insertString:codeString];
-                            }
+                            // replace characters in range with undo.
+                            // in this case, for efficiency, we update the editor text in place rather than modifying the script source.
+                            [scriptEditViewController.scriptViewController
+                                replaceCharactersInRange:self.taskInputsPatternMatch.range
+                                withString:codeString
+                                options:@{@"undo" : @(YES)}];
                             self.taskInputsPatternMatch = nil;
                             self.taskInputsPatternRegex = nil;
                        } else {
@@ -645,10 +637,15 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
  */     
 - (void)doTaskInputsPatternMatch
 {
+    // end the script editing session, which will udpate the task script source
+    [scriptEditViewController commitPendingEdits];
+    
+    // get the source from the task
+    NSString *source = _taskSpec.script.scriptCode.source;
+    
     // setup the language code descriptor
     MGSLanguageCodeDescriptor *languageCodeDescriptor = [[MGSLanguageCodeDescriptor alloc] init];
     [languageCodeDescriptor setScript:[_taskSpec script]];
-    
     
     // if task inputs can be identified within the code via regex pattern then
     // insertion will be allowed. if not, then the user will have to copy and
@@ -660,13 +657,16 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     self.taskInputsPatternRegex = [NSRegularExpression regularExpressionWithPattern:taskEntryPattern
                                                                            options:NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines
                                                                              error:&error];
-    // the script source gets updated only when the editor resigns as first responder.
-    // this will occur when the sheet is shown.
-    // so we can either force termination of first responder status or access
-    // the script string directly
-    NSString *source = scriptEditViewController.string;
-    self.taskInputsPatternMatch = [self.taskInputsPatternRegex firstMatchInString:source options:0 range:NSMakeRange(0, [source length])];
+    self.taskInputsPatternMatch = nil;
+    
+    // get the match
+    if (!error) {
+        self.taskInputsPatternMatch = [self.taskInputsPatternRegex firstMatchInString:source options:0 range:NSMakeRange(0, [source length])];
+    } else {
+        MLogInfo(@"Regex error: %@ %@", error.localizedFailureReason, error.localizedDescription);
+    }
 }
+
 
 #pragma mark -
 #pragma mark View handling

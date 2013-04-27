@@ -607,9 +607,8 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
  */
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string options:(NSDictionary *)options
 {
-    // this is very far from efficient !
-    [_fragariaTextView replaceCharactersInRange:range withString:string];
-    [[[_taskSpec script] scriptCode] setSource:[_fragaria string]];
+    // update textview
+    [_fragaria replaceCharactersInRange:range withString:string options:options];
     
     // select our new range and scroll it visible
     NSRange newRange  = [[_fragaria string] rangeOfString:string];
