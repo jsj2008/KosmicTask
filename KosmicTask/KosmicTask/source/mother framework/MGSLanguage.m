@@ -527,6 +527,17 @@ initInputArgumentStyleAllowedFlags;
     
     return @"task-input-variables";
 }
+/*
+ 
+ - taskClassFunctionPatternTemplateName:
+ 
+ */
+- (NSString *)taskInputVariablesPatternTemplateName:(NSDictionary *)taskInfo
+{
+#pragma unused(taskInfo)
+    
+    return [[self taskInputVariablesCodeTemplateName:taskInfo] stringByAppendingString:MGSTemplatePattern];
+}
 
 /*
  

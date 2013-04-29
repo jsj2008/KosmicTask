@@ -8,13 +8,18 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSLanguage.h"
+#import "GRMustache.h"  // a static library, not a framework
+
+enum {
+    MGSTemplateObjectRenderingDefault = 0,
+    MGSTemplateObjectRenderingRegexPattern = 1,
+};
+typedef NSUInteger MGSTemplateObjectRendering;
 
 @class MGSScript;
-
 @class GRMustacheTemplateRepository;
 
-
-@interface MGSLanguageCodeDescriptor : NSObject {
+@interface MGSLanguageCodeDescriptor : NSObject <GRMustacheTagDelegate> {
     MGSInputArgumentName _inputArgumentName;
     MGSInputArgumentCase _inputArgumentCase;
     MGSInputArgumentStyle _inputArgumentStyle;
@@ -23,6 +28,7 @@
     GRMustacheTemplateRepository *_templateRepository;
     NSString *_inputArgumentPrefix;
     NSString *_inputArgumentNameExclusions;
+    MGSTemplateObjectRendering _templateObjectRendering;
     
 #ifdef MGS_USE_MGTemplateEngine    
     id _templateEngine;
@@ -45,7 +51,7 @@
 - (NSString *)generateTaskFunctionCodeString;
 - (NSString *)generateTaskEntryCodeString;
 - (NSArray *)normalisedParameterNames:(NSDictionary *)options;
-- (NSString *)normalisedParameterNamesString;
+- (NSString *)normalisedParameterNamesStringWithTemplateName:(NSString *)templateName;
 - (NSString *)normalisedParameterName:(NSString *)name typeName:(NSString *)typeName;
 - (NSString *)normalisedParameterName:(NSString *)name;
 - (void)makeObjectsUnique:(NSMutableArray *)parameterNames;

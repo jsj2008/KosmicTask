@@ -12,7 +12,6 @@
 #import "MGSParameterPluginController.h"
 #import "MGSAppController.h"
 #import "MGSParameterPlugin.h"
-#import "GRMustache.h"
 
 #ifdef MGS_USE_MGTemplateEngine
 #import "MGTemplateEngine/ICUTemplateMatcher.h"
@@ -31,6 +30,7 @@ char MGSScriptTypeContext;
 - (NSMutableDictionary *)templateTaskInfo;
 
 @property (assign) MGSLanguage *scriptLanguage;
+@property (assign) MGSTemplateObjectRendering templateObjectRendering;
 @end
 
 @implementation MGSLanguageCodeDescriptor
@@ -43,6 +43,7 @@ char MGSScriptTypeContext;
 @synthesize scriptLanguage = _scriptLanguage;
 @synthesize inputArgumentPrefix = _inputArgumentPrefix;
 @synthesize inputArgumentNameExclusions = _inputArgumentNameExclusions;
+@synthesize templateObjectRendering = _templateObjectRendering;
 
 /*
  
@@ -70,6 +71,7 @@ char MGSScriptTypeContext;
         _descriptorCodeStyle = kMGSCodeDescriptorTaskInputs;
         _inputArgumentPrefix = @"";
         _inputArgumentNameExclusions = @"";
+        _templateObjectRendering = MGSTemplateObjectRenderingDefault;
         
         if (script) {
             self.script = script;
@@ -167,43 +169,91 @@ char MGSScriptTypeContext;
  */
 - (NSString *)generateTaskEntryPatternString
 {
-    NSString *codeString = nil;
+    NSString *patternString = nil;
     
     if (self.scriptLanguage) {
         
         NSString *templateName = nil;
+        BOOL codeTemplateLoaded = NO;
+        
+        // set the template object rendering mode to regex pattern
+        MGSTemplateObjectRendering templateObjectRenderingTemp = self.templateObjectRendering;
+        self.templateObjectRendering = MGSTemplateObjectRenderingRegexPattern;
         
         eMGSOnRunTask onRun = [self.script.onRun integerValue];
         
+        // logic
+        // use a pattern template if if exists.
+        // if not use a code template and refactor into a simple pattern.
+        // this should give default task entry matching.
+        // for better matching performance (eg: better whitespace tolerance) custom
+        // patterns can be defined.
         switch(onRun) {
                 
                 // look for class function pattern template
             case kMGSOnRunCallClassFunction:
+                
+                // get valid pattern template
                 templateName = [self.scriptLanguage taskClassFunctionPatternTemplateName:self.templateTaskInfo];
-                if (templateName) {
+                if (![self templateNameExists:templateName]) break;
+                
+                // get valid code template
+                templateName = [self.scriptLanguage taskClassFunctionCodeTemplateName:self.templateTaskInfo];
+                if ([self templateNameExists:templateName]) {
+                    codeTemplateLoaded = YES;
                     break;
                 }
+                
                 // fall through
                 
                 // look for function pattern template
             case kMGSOnRunCallScriptFunction:
+                
+                // pattern
                 templateName = [self.scriptLanguage taskFunctionPatternTemplateName:self.templateTaskInfo];
+                if ([self templateNameExists:templateName]) break;
+                
+                // code
+                templateName = [self.scriptLanguage taskFunctionCodeTemplateName:self.templateTaskInfo];
+                if ([self templateNameExists:templateName]) {
+                    codeTemplateLoaded = YES;
+                }
                 break;
                 
             default:
+                // generate task inputs pattern
+                templateName = [self.scriptLanguage taskInputsPatternTemplateName:self.templateTaskInfo];
+                
+                // code
+                if (![self templateNameExists:templateName]) {
+                    templateName = [self.scriptLanguage taskInputsCodeTemplateName:self.templateTaskInfo];
+                    codeTemplateLoaded = YES;
+                }
+                patternString = [self normalisedParameterNamesStringWithTemplateName:templateName];
+                
                 break;
         }
         
-        // if no function template available then use input variables
-        if (![self templateNameExists:templateName]) {
-            NSMutableDictionary *templateVariables = [self generateTemplateVariables];
-            codeString = [templateVariables objectForKey:@"task-input-variables"];
-        } else {
-            codeString = [self generateCodeStringFromTemplateName:templateName];
+        // generate pattern from template
+        if ([self templateNameExists:templateName] && !patternString) {
+            patternString = [self generateCodeStringFromTemplateName:templateName];
         }
+
+        self.templateObjectRendering = templateObjectRenderingTemp;
+
+        // use code template to build a simple pattern
+        if (codeTemplateLoaded) {
+            // escape the code to disable pattern metacharaters
+            patternString = [NSRegularExpression escapedPatternForString:patternString];
+            
+            // the idea was to add ^ and $ to the pattern but there are cases,
+            // such as F-script, where a match to the beginning and end of the line is perhaps not desired.
+            patternString = [NSString stringWithFormat:@"%@", patternString];
+        }
+        
+        MLogInfo(@"patternString = %@", patternString);
     }
-    
-    return codeString;
+    return patternString;
 }
 
 /*
@@ -317,7 +367,9 @@ char MGSScriptTypeContext;
     
     // generate task inputs
     NSArray *taskInputs = [self normalisedParameterNames:@{@"index":@(NO)}];
-    NSString *taskInputsString = [self normalisedParameterNamesString];
+    NSString *templateName = [self.scriptLanguage taskInputsCodeTemplateName:self.templateTaskInfo];
+    NSString *taskInputsString = [self normalisedParameterNamesStringWithTemplateName:templateName];
+
     if ([taskInputs count] == 0) {
         taskInputs = nil;
     } else {
@@ -370,7 +422,7 @@ char MGSScriptTypeContext;
     [self addDefaultTemplateVariables:templateVariables];
 
     // add task input result key
-    NSString *templateName = [self.scriptLanguage taskInputResultCodeTemplateName:self.templateTaskInfo];
+    templateName = [self.scriptLanguage taskInputResultCodeTemplateName:self.templateTaskInfo];
     if ([self templateNameExists:templateName]) {
         NSString *taskInputResult = [self processTemplateName:templateName object:templateVariables error:&error];
         if (error) {
@@ -421,13 +473,15 @@ char MGSScriptTypeContext;
  */
 - (void)addDefaultTemplateVariables:(NSMutableDictionary *)templateVariables
 {
+    // string sthat will be matched as aprt of a replacement pattern must begin
+    // and end with _
     NSString *taskEntryMessage = NSLocalizedString(@"Task entry point", @"Task entry point message");
     NSString *taskCodeMessage = NSLocalizedString(@"Enter task code here", @"Task code message");
     NSString *taskInputResultMessage = NSLocalizedString(@"Return inputs as task result", @"Task input result message");
     NSString *taskFormResultMessage = NSLocalizedString(@"Form task result", @"Task form result message");
     NSString *taskDefaultResult = NSLocalizedString(@"Default task result", @"Task default result");
-    NSString *taskInputVariablesMessage = NSLocalizedString(@"Task input variables", @"Task input variables message");
-    NSString *taskInputsMissingMessage = NSLocalizedString(@"No task inputs defined", @"No task inputs defined message");
+    NSString *taskInputVariablesMessage = NSLocalizedString(@"_Task input variables_", @"Task input variables message");    // mark pattern
+    NSString *taskInputsMissingMessage = NSLocalizedString(@"_No task inputs defined_", @"No task inputs defined message"); // mark pattern
     NSString *taskNewLine = NSLocalizedString(@"\n", @"Task new line");
     NSString *taskNewLineX2 = NSLocalizedString(@"\n\n", @"Task new line x 2");
     NSString *taskTab = NSLocalizedString(@"\t", @"Task tab");
@@ -650,10 +704,10 @@ char MGSScriptTypeContext;
 }
 /*
  
- - normalisedParameterNamesString
+ - normalisedParameterNamesStringWithTemplateName:
  
  */
-- (NSString *)normalisedParameterNamesString
+- (NSString *)normalisedParameterNamesStringWithTemplateName:(NSString *)templateName
 {
     NSArray *taskInputsList = [self normalisedParameterNames:@{@"index":@(YES)}];
 
@@ -662,8 +716,6 @@ char MGSScriptTypeContext;
     if ([taskInputsList count] > 0) {
         taskInputs = [self normalizeTemplateVariable:taskInputsList];
     }
-    
-    NSString *templateName = [self.scriptLanguage taskInputsCodeTemplateName:self.templateTaskInfo];
 
     NSError *error = nil;
     
@@ -969,6 +1021,9 @@ char MGSScriptTypeContext;
         return output;
     }
     
+    // become the tag render delegate
+    template.baseContext = [template.baseContext contextByAddingTagDelegate:self];
+    
     // render object
     output = [template renderObject:variables error:error];
     
@@ -1013,4 +1068,37 @@ char MGSScriptTypeContext;
     
     return exists;
 }
+
+#pragma mark -
+#pragma mark GRMustacheTagDelegate
+/*
+ 
+ - mustacheTag:willRenderObject:
+ 
+ */
+- (id)mustacheTag:(GRMustacheTag *)tag willRenderObject:(id)object
+{
+#pragma unused(tag)
+    
+    // render the tag
+    switch (self.templateObjectRendering) {
+            
+        // use regex pattern rendering
+        case MGSTemplateObjectRenderingRegexPattern:
+            
+            // if our object is going into a pattern string then escape it
+            if ([object isKindOfClass:[NSString class]]) {
+                object = [NSRegularExpression escapedPatternForString:object];
+                MLogInfo(@"replaced key = %@", object);
+            }
+            break;
+            
+        // use default rendering
+        default:
+        case MGSTemplateObjectRenderingDefault:
+            break;
+    }
+    return object;
+}
+
 @end
