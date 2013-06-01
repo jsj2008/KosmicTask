@@ -14,6 +14,8 @@
 @interface MGSResourceBrowserSheetController()
 - (void)closeSheet:(NSInteger)returnCode;
 - (void)copySelectionToPasteBoard;
+- (void)codeInsertSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)closeSheetAndPerformInsert;
 @end
 
 const char MGSContextRequiredResourceDoubleClicked;
@@ -172,9 +174,59 @@ const char MGSContextResourcesChanged;
 - (IBAction)insertTemplateAction:(id)sender
 {
 #pragma unused(sender)
+    
+    BOOL canClose = YES;
+    
+    NSString *existingSource = [self.script.scriptCode.source stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    // if source exists then prompt
+    if ([existingSource length] > 0) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];   // first button
+        [alert addButtonWithTitle:@"Cancel"];   // second button
+        [alert setMessageText:@"Replace all existing task code?"];
+        [alert setInformativeText:@"The task code and script type will be replaced.\n\nUndo will reverse this operation."];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert beginSheetModalForWindow:self.window modalDelegate:self didEndSelector:@selector(codeInsertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+        canClose = NO;
+    }
+    
+    if (canClose) {
+        [self closeSheetAndPerformInsert];
+    }
+}
+/*
+ 
+ - codeInsertSheetDidEnd:returnCode:contextInfo:
+ 
+ */
+- (void)codeInsertSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+#pragma unused(sheet)
+#pragma unused(contextInfo)
+    switch (returnCode) {
+            
+            // overwrite
+        case NSAlertFirstButtonReturn:
+            [self closeSheetAndPerformInsert];
+            break;
+            
+            // cancel
+        default:
+            break;
+    }
+}
+
+/*
+ 
+ - closeSheetAndPerformInsert
+ 
+ */
+- (void)closeSheetAndPerformInsert
+{
     // once inserted the variable name updating becomes manual
     [self.script.parameterHandler setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingManual];
-
+    
     resourceText = self.resourceBrowserViewController.scriptString;
 	[self closeSheet:kMGSResourceBrowserSheetReturnInsert];
 }

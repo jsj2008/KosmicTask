@@ -31,6 +31,8 @@ char MGSInputCodeStyleContext;
 - (void)configureTabBar;
 - (void)scriptTypeChanged;
 - (void)updateInputVariableTotals;
+- (void)codeInsertSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)closeSheetAndPerformInsert;
 
 @property (copy, readwrite) NSArray *scriptTypes;
 @property MGSLanguageCodeDescriptor *languageCodeDescriptor;
@@ -641,10 +643,59 @@ char MGSInputCodeStyleContext;
 {
 #pragma unused(sender)
     
+    BOOL canClose = YES;
+    
+    NSString *existingSource = [_script.scriptCode.source stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    // if source exists and will be replaced with a new task body then prompt
+    if ([existingSource length] > 0 && self.codeSelection == MGSCodeAssistantSelectionTaskBody) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];   // first button
+        [alert addButtonWithTitle:@"Cancel"];   // second button
+        [alert setMessageText:@"Replace all existing task code?"];
+        [alert setInformativeText:@"The task code and script type will be replaced.\n\nUndo will reverse this operation."];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert beginSheetModalForWindow:self.window modalDelegate:self didEndSelector:@selector(codeInsertSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+        canClose = NO;       
+    }
+    
+    if (canClose) {
+        [self closeSheetAndPerformInsert];
+    }
+}
+/*
+ 
+ - codeInsertSheetDidEnd:returnCode:contextInfo:
+ 
+ */
+- (void)codeInsertSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+#pragma unused(sheet)
+#pragma unused(contextInfo)
+    switch (returnCode) {
+        
+        // overwrite
+        case NSAlertFirstButtonReturn:
+            [self closeSheetAndPerformInsert];
+            break;
+            
+        // cancel
+        default:
+            break;
+    }
+}
+
+/*
+ 
+ - closeSheetAndPerformInsert
+ 
+ */
+- (void)closeSheetAndPerformInsert
+{
     // once inserted the variable name updating becomes manual
     [_script.parameterHandler setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingManual];
-    
-	[self closeSheet:kMGSCodeAssistantSheetReturnInsert];
+
+    [self closeSheet:kMGSCodeAssistantSheetReturnInsert];
 }
 
 /*
