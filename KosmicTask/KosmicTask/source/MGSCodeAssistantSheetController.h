@@ -51,6 +51,7 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
     IBOutlet NSTextField *_inputAutoTextField;
     IBOutlet NSTextField *_inputManualTextField;
     IBOutlet NSButton *_inputAutoAllButton;
+    IBOutlet NSTextField *_tabBarInfo;
     
     NSView *_selectedTabView;
     
@@ -65,6 +66,7 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
     NSArray *_scriptTypes;
     BOOL _showInfoTextImage;
     NSString *_infoText;
+    NSString *_selectedTabInfoText;
     MGSCodeAssistantCodeSelection _codeSelection;
     BOOL _canInsert;
     BOOL _canCopy;
@@ -90,6 +92,7 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
 @property (copy, readonly) NSArray *scriptTypes;
 @property MGSScript *script;
 @property (copy) NSString *infoText;
+@property (copy) NSString *selectedTabInfoText;
 @property MGSCodeAssistantCodeSelection codeSelection;
 @property (assign) BOOL canInsert;
 @property (assign) BOOL canCopy;

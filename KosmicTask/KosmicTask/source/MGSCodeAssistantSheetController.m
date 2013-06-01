@@ -53,6 +53,7 @@ char MGSInputCodeStyleContext;
 @synthesize inputVariableManual = _inputVariableManual;
 @synthesize autoAllEnabled = _autoAllEnabled;
 @synthesize allowInsertTaskInputs = _allowInsertTaskInputs;
+@synthesize selectedTabInfoText = _selectedTabInfoText;
 
 /*
  
@@ -159,6 +160,9 @@ char MGSInputCodeStyleContext;
  */
 - (void)configureTabBar
 {
+    [_tabBarInfo bind:NSValueBinding toObject:self withKeyPath:@"selectedTabInfoText" options:nil];
+    self.selectedTabInfoText = @"";
+    
     [[tabBar class] registerTabStyleClass:[MGSKosmicUnityTabStyle2 class]];
     [[tabBar class] registerTabStyleClass:[MGSKosmicCardTabStyle class]];
     
@@ -251,6 +255,7 @@ char MGSInputCodeStyleContext;
 - (void)setCodeSelection:(MGSCodeAssistantCodeSelection)value
 {
     NSView *requiredView = nil;
+    NSString *tabInfoText = nil;
     
     switch (value) {
         case MGSCodeAssistantSelectionTaskInputs:
@@ -258,6 +263,7 @@ char MGSInputCodeStyleContext;
             self.canInsert = self.allowInsertTaskInputs;
             self.canCopy = YES;
             requiredView = _fragariaHostView;
+            tabInfoText = NSLocalizedString(@"Task inputs code only", @"Code assistant tab info");
             break;
         
         case MGSCodeAssistantSelectionTaskBody:
@@ -265,12 +271,14 @@ char MGSInputCodeStyleContext;
             self.canInsert = YES;
             self.canCopy = YES;
             requiredView = _fragariaHostView;
+            tabInfoText = NSLocalizedString(@"Task body code", @"Code assistant tab info");
             break;
 
         case MGSCodeAssistantSelectionTaskVariables:
             self.canInsert = NO;
             self.canCopy = NO;
             requiredView = _taskVariablesViewController.view;
+            tabInfoText = NSLocalizedString(@"Task input variables name editor", @"Code assistant tab info");
             break;
             
         default:
@@ -289,6 +297,8 @@ char MGSInputCodeStyleContext;
     if (_codeSelection != idx) {
         [tabBar.tabView selectTabViewItemAtIndex:_codeSelection];
     }
+    
+    self.selectedTabInfoText = tabInfoText;
 }
 /*
  
