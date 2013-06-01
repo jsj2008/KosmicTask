@@ -271,7 +271,7 @@ char MGSInputCodeStyleContext;
             self.canInsert = YES;
             self.canCopy = YES;
             requiredView = _fragariaHostView;
-            tabInfoText = NSLocalizedString(@"Task body code", @"Code assistant tab info");
+            tabInfoText = NSLocalizedString(@"Minimal code to return all task inputs", @"Code assistant tab info");
             break;
 
         case MGSCodeAssistantSelectionTaskVariables:
