@@ -66,7 +66,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (void)showCodeAssistantSheet:(id)sender options:(NSDictionary *)options;
 - (void)showCodeAssistantSheetForConfigurationChange:(id)sender;
 - (void)textView:(NSTextView *)textView performUndoableOperation:(NSString *)operationName info:(NSDictionary *)info;
-- (void)doTaskInputsPatternMatch;
+- (void)generateTaskInputsPatternMatchFromRegex;
+- (void)generateTaskInputsPatternRegex;
 
 @property (assign) NSTextCheckingResult *taskInputsPatternMatch;
 @property (assign) NSRegularExpression *taskInputsPatternRegex;
@@ -440,6 +441,10 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                 // update script
                 _taskSpec.script.scriptCode.source = templateText;
                 
+                // generate inputs regex now so a match can be found
+                // in the current script if new inputs defined.
+                [self generateTaskInputsPatternRegex];
+
                 makeEditorFirstResponder = YES;
             }
 			break;
@@ -510,8 +515,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     codeAssistantSheetController.infoText = infoString;
     
     // try and match the inputs pattern
-    [self doTaskInputsPatternMatch];
-    
+    [self generateTaskInputsPatternMatchFromRegex];
+        
     // task inputs can be inserted if match found
     codeAssistantSheetController.allowInsertTaskInputs = (self.taskInputsPatternMatch ? YES : NO);
     
@@ -567,6 +572,20 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
             // no further action required
 		case kMGSCodeAssistantSheetReturnCopy:
             makeEditorFirstResponder = YES;
+            
+            // what code is being inserted
+            switch (codeAssistantSheetController.codeSelection) {
+                case MGSCodeAssistantSelectionTaskBody:
+                default:
+                    break;
+                    
+                case MGSCodeAssistantSelectionTaskInputs:
+                    // we have copied the inputs so we shall presume they will be pasted in
+                    // so regenerate based on current inputs
+                    [self generateTaskInputsPatternRegex];
+                    break;
+            }
+
 			break;
             
             // insert selected data
@@ -592,14 +611,18 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
                                 replaceCharactersInRange:self.taskInputsPatternMatch.range
                                 withString:codeString
                                 options:@{@"undo" : @(YES)}];
-                            self.taskInputsPatternMatch = nil;
-                            self.taskInputsPatternRegex = nil;
+                            
+                            // we have utilised the regex based on previous inputs
+                            // so regenerate based on current inputs
+                            [self generateTaskInputsPatternRegex];
                        } else {
                             MLogInfo(@"Trying to insert task inputs but no pattern match available.");
                         }
                          break;
                 }
-                 
+        
+                [self generateTaskInputsPatternRegex];
+                
                 makeEditorFirstResponder = YES;
             }
             break;
@@ -632,17 +655,33 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 
 /*
  
- - doTaskInputsPatternMatch
+ - generateTaskInputsPatternMatchFromRegex
  
  */     
-- (void)doTaskInputsPatternMatch
+- (void)generateTaskInputsPatternMatchFromRegex
 {
-    // end the script editing session, which will udpate the task script source
+    // end the script editing session, which will update the task script source
     [scriptEditViewController commitPendingEdits];
     
     // get the source from the task
     NSString *source = _taskSpec.script.scriptCode.source;
-    
+        
+    // get the match based on the regex
+    if (self.taskInputsPatternRegex) {
+        self.taskInputsPatternMatch = [self.taskInputsPatternRegex firstMatchInString:source options:0 range:NSMakeRange(0, [source length])];
+    } else {
+        self.taskInputsPatternMatch = nil;
+        MLogInfo(@"Cannot match task inputs. taskInputsPatternRegex is nil.");
+    }
+}
+
+/*
+ 
+ - generateTaskInputsPatternRegex
+ 
+ */
+- (void)generateTaskInputsPatternRegex
+{
     // setup the language code descriptor
     MGSLanguageCodeDescriptor *languageCodeDescriptor = [[MGSLanguageCodeDescriptor alloc] init];
     [languageCodeDescriptor setScript:[_taskSpec script]];
@@ -651,20 +690,26 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
     // insertion will be allowed. if not, then the user will have to copy and
     // paste the input
     NSString *taskEntryPattern = languageCodeDescriptor.generateTaskEntryPatternString;
-    NSError *error = NULL;
     
-    // configure regex to match anchors ^, $ at start of line
-    self.taskInputsPatternRegex = [NSRegularExpression regularExpressionWithPattern:taskEntryPattern
-                                                                           options:NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines
-                                                                             error:&error];
-    self.taskInputsPatternMatch = nil;
-    
-    // get the match
-    if (!error) {
-        self.taskInputsPatternMatch = [self.taskInputsPatternRegex firstMatchInString:source options:0 range:NSMakeRange(0, [source length])];
+    if (taskEntryPattern) {
+        NSError *error = NULL;
+        
+        // configure regex to match anchors ^, $ at start of line
+        self.taskInputsPatternRegex = [NSRegularExpression regularExpressionWithPattern:taskEntryPattern
+                                                                                options:NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines
+                                                                                  error:&error];
+        // validate the pattern
+        if (error) {
+            self.taskInputsPatternRegex = nil;
+            MLogInfo(@"Regex allocation error: %@ %@", error.localizedFailureReason, error.localizedDescription);
+        }
     } else {
-        MLogInfo(@"Regex error: %@ %@", error.localizedFailureReason, error.localizedDescription);
+        self.taskInputsPatternRegex = nil;
     }
+
+    // regardless, we don't have a pattern match yet
+    self.taskInputsPatternMatch = nil;
+
 }
 
 
@@ -914,6 +959,10 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	[actionUUIDTextField setStringValue: [NSString stringWithFormat:NSLocalizedString(@"Task ID: %@", @"Task edit window footer text."), [[_taskSpec script] UUID]]];
 
 	[self updateWindowTitle];
+    
+    // generate inputs regex now so a match can be found
+    // in the current script if new inputs defined.
+    [self generateTaskInputsPatternRegex];
 }
 
 /*
@@ -1550,6 +1599,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	switch (mode) {
 			
 		case kMGSMotherEditModeConfigure:
+
 			break;
 			
 		case kMGSMotherEditModeScript:;

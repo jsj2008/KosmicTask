@@ -11,10 +11,10 @@
 		8D576312048677EA00EA77CD /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB77B6FE84183AC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
 		8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */; };
 		8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D5B49A704867FD3000E48DA /* InfoPlist.strings */; };
-		AB335B9410CAF7B3003B44AC /* MGSScriptPlist.m in Sources */ = {isa = PBXBuildFile; fileRef = AB335B9310CAF7B3003B44AC /* MGSScriptPlist.m */; };
 		ABA765280EE9C73500D900A6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA765270EE9C73500D900A6 /* Cocoa.framework */; };
 		ABA766210EE9D62700D900A6 /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = C88FB7D7067446EC006EBB30 /* schema.xml */; };
 		ABA766220EE9D64D00D900A6 /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = C88FB7E30674480E006EBB30 /* schema.strings */; };
+		ABA80001183904090040AC4E /* MGSScriptPlist.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA80000183904090040AC4E /* MGSScriptPlist.m */; };
 		C86B05270671AA6E00DD9006 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C86B05260671AA6E00DD9006 /* CoreServices.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,9 +25,10 @@
 		2C05A19B06CAA52B00D84F6F /* GetMetadataForFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetMetadataForFile.m; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* KosmicTask.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KosmicTask.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		AB335B9310CAF7B3003B44AC /* MGSScriptPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSScriptPlist.m; path = "../KosmicTask/KosmicTask/source/mother framework/MGSScriptPlist.m"; sourceTree = Mugginsoft; };
 		AB5F0B050EDF4B29009DAE17 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		ABA765270EE9C73500D900A6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		ABA80000183904090040AC4E /* MGSScriptPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSScriptPlist.m; path = "../../KosmicTask/source/mother framework/MGSScriptPlist.m"; sourceTree = "<group>"; };
+		ABA8FFFE183903F20040AC4E /* MGSScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSScript.m; path = "../../KosmicTask/source/mother framework/MGSScript.m"; sourceTree = "<group>"; };
 		C86B05260671AA6E00DD9006 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		C88FB7D7067446EC006EBB30 /* schema.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = schema.xml; sourceTree = "<group>"; };
 		C88FB7DB0674470F006EBB30 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/schema.strings; sourceTree = "<group>"; };
@@ -50,7 +51,8 @@
 		089C166AFE841209C02AAC07 /* spotlight importer */ = {
 			isa = PBXGroup;
 			children = (
-				AB335B9310CAF7B3003B44AC /* MGSScriptPlist.m */,
+				ABA80000183904090040AC4E /* MGSScriptPlist.m */,
+				ABA8FFFE183903F20040AC4E /* MGSScript.m */,
 				08FB77AFFE84173DC02AAC07 /* Source */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
@@ -185,7 +187,7 @@
 			files = (
 				8D576312048677EA00EA77CD /* main.c in Sources */,
 				2C05A19C06CAA52B00D84F6F /* GetMetadataForFile.m in Sources */,
-				AB335B9410CAF7B3003B44AC /* MGSScriptPlist.m in Sources */,
+				ABA80001183904090040AC4E /* MGSScriptPlist.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +222,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
 				PRODUCT_NAME = KosmicTask;
-				USER_HEADER_SEARCH_PATHS = "../../mother/trunk/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../KosmicTask/source/mother framework\"/**";
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Debug;
@@ -233,6 +235,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Library/Spotlight;
 				PRODUCT_NAME = KosmicTask;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../KosmicTask/source/mother framework\"/**";
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Release;

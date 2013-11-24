@@ -7,7 +7,7 @@
  *
  */
 
-#define MGS_APP_TRIAL_DAYS 21
+#define MGS_APP_TRIAL_DAYS 42
 
 #define MGS_APP_TRIAL_VALID 1
 #define MGS_APP_TRIAL_EXPIRED 0
@@ -153,14 +153,14 @@ static NSArray *MGSAppTrialDomains()
 	
 	// note that some are hidden files and some are not
 	NSArray *trialDomains = [NSArray arrayWithObjects:			
-			[NSString stringWithFormat:fmt, @"com.", @"18776162715", @".task"], 
+			[NSString stringWithFormat:fmt, @".com.", @"18776162715", @".task"],
 			[NSString stringWithFormat:fmt, @".org.", @"adfsgdrtye123.", @"task.6"],
 			[NSString stringWithFormat:fmt, @".org.", @"w55565_08.", @"updater-1"],
 			[NSString stringWithFormat:fmt, @".net.", @"_jkui_890_.", @"net.task"],
-			[NSString stringWithFormat:fmt, @".MasterPreferences.", @"_0SSFGHF_11.", @"0"],
-			[NSString stringWithFormat:fmt, @"com.", @"156_sdd_133.", @"limits-0"],
+			[NSString stringWithFormat:fmt, @".net.", @"_0SSFGHF_11.", @"0"],
+			[NSString stringWithFormat:fmt, @".com.", @"156_sdd_133.", @"limits-0"],
 			[NSString stringWithFormat:fmt, @".com.", @"jj_00_asd1.", @"status.read"],
-			[NSString stringWithFormat:fmt, @"com.", @"178_sdfg_890.", @"status.2"],
+			[NSString stringWithFormat:fmt, @".com.", @"178_sdfg_890.", @"status.2"],
 			[NSString stringWithFormat:fmt, @".com.", @"as_as1_new.", @"task-19"],
 			[NSString stringWithFormat:fmt, @".org.", @"122_asd_dfg.", @"ftp"],
 			nil];

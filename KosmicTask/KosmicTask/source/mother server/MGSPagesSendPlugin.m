@@ -60,10 +60,15 @@
 		// create document
 		PagesDocument *doc = [[[pages classForScriptingClass:@"document"] alloc] initWithProperties:
 							  [NSDictionary dictionaryWithObjectsAndKeys:  nil]];
-		[[pages documents] addObject:doc];  
-		[doc setBodyText:(PagesText *)[aString string]];	// warning here with NSString
-
-		success =  YES;
+		[[pages documents] addObject:doc];
+        
+        // iWork 13 removes a lot of scripting support
+        SEL selSetBodyText = NSSelectorFromString(@"setBodyText");
+        if ([doc respondsToSelector:selSetBodyText]) {
+            [doc performSelector:selSetBodyText withObject:[aString string]];
+            success =  YES;
+        }
+        
 		
 	} @catch (NSException *e) {
 		[self onException:e];

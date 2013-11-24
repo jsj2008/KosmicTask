@@ -479,6 +479,7 @@
 		AB5CDBA8118AF56E00C545CD /* Language Plugin Ruby.lang-plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = AB5CDABF118AF38200C545CD /* Language Plugin Ruby.lang-plugin */; };
 		AB6193201104EEF600EFC129 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AB6193501104F4E800EFC129 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB473EE20D90167700CB6816 /* Carbon.framework */; };
+		AB65A25218390F31007E3865 /* Pages.app in Sources */ = {isa = PBXBuildFile; fileRef = AB65A25118390F30007E3865 /* Pages.app */; };
 		AB65AC7211CB957E000F5F1B /* NSTreeController-DMExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = AB65AC7011CB957E000F5F1B /* NSTreeController-DMExtensions.h */; };
 		AB65AC7311CB957E000F5F1B /* NSTreeController-DMExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65AC7111CB957E000F5F1B /* NSTreeController-DMExtensions.m */; };
 		AB65AC7411CB957E000F5F1B /* NSTreeController-DMExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = AB65AC7111CB957E000F5F1B /* NSTreeController-DMExtensions.m */; };
@@ -1257,7 +1258,6 @@
 		ABD668D30DE6035000097C1B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9DC2980DE5BF3600B85F5E /* ScriptingBridge.framework */; };
 		ABD668FC0DE6039B00097C1B /* Numbers.app in Sources */ = {isa = PBXBuildFile; fileRef = ABD668910DE6027C00097C1B /* Numbers.app */; };
 		ABD668FD0DE6039B00097C1B /* MGSNumbersSendPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD668950DE602B400097C1B /* MGSNumbersSendPlugin.m */; };
-		ABD669080DE6046600097C1B /* Pages.app in Sources */ = {isa = PBXBuildFile; fileRef = ABD668920DE6027C00097C1B /* Pages.app */; };
 		ABD669090DE6046600097C1B /* MGSPagesSendPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD668970DE602CD00097C1B /* MGSPagesSendPlugin.m */; };
 		ABD69FED0EB7B9C600287D72 /* MGSRequestTabScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD69FEC0EB7B9C600287D72 /* MGSRequestTabScrollView.m */; };
 		ABD6AB4B169EED7A00C97C3A /* NSArray_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5B78301167CD00002A3E6A /* NSArray_Mugginsoft.m */; };
@@ -4056,6 +4056,7 @@
 		AB5CDB04118AF3EF00C545CD /* KosmicTaskRubyRunner */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KosmicTaskRubyRunner; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB622A64104F020E00F4B282 /* build.count */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = build.count; sourceTree = "<group>"; };
 		AB63D43B10C5AF6F009EACC7 /* KosmicTaskServer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = "KosmicTaskServer-Info.plist"; sourceTree = SOURCE_ROOT; };
+		AB65A25118390F30007E3865 /* Pages.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = Pages.app; path = ../../../../../../../../../Applications/Pages.app; sourceTree = "<group>"; };
 		AB65AC7011CB957E000F5F1B /* NSTreeController-DMExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTreeController-DMExtensions.h"; sourceTree = "<group>"; };
 		AB65AC7111CB957E000F5F1B /* NSTreeController-DMExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTreeController-DMExtensions.m"; sourceTree = "<group>"; };
 		AB66758D1205B9DD006763E2 /* Language Plugin JavaScript.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin JavaScript.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -6558,6 +6559,7 @@
 		29B97314FDCFA39411CA2CEA /* mother */ = {
 			isa = PBXGroup;
 			children = (
+				AB65A25118390F30007E3865 /* Pages.app */,
 				AB88214B1669668200072991 /* Foundation.framework */,
 				AB8821491669667200072991 /* OSAKit.framework */,
 				AB8821461669665F00072991 /* Security.framework */,
@@ -9469,10 +9471,12 @@
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				AB72CE8B0E703F0B00E6711C /* Insert subversion rev into info.plist */,
 				09C09ED60CDC82B30048BC79 /* Copy Frameworks */,
+				AB5CD8C01839500E009EED51 /* Codesign Frameworks */,
 				09A68ACF0CDC86630022898B /* Copy Spotlight importers */,
 				ABBBD40D107FD38200613896 /* Copy QuickLook generator */,
 				AB9E90590DE1D24800501378 /* Copy Plugins */,
 				ABB535E40D89389C006BC17D /* Copy Auxiliary executables */,
+				AB5CD8C21839520E009EED51 /* Codesign Auxiliary Executables */,
 				AB9FEEC20E215DC200CA6801 /* Run Script: Index Help */,
 				AB450E0711C0148700550A4E /* Run Script: scripting support */,
 			);
@@ -11896,6 +11900,34 @@
 			shellPath = /bin/sh;
 			shellScript = "#/usr/bin/sdp -fast -o \"$BUILD_DIR/$BUILD_STYLE/$FULL_PRODUCT_NAME/Contents/Resources\" \"$SOURCE_ROOT/KosmicTask.sdef\"";
 		};
+		AB5CD8C01839500E009EED51 /* Codesign Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Codesign Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Developer ID Application: Mugginsoft LLP\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/MGSKosmicTaskServer.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/AppScript.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/TCMPortMapper.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/PSMTabBarControl.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/OpenFeedback.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/OrcDiscount.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/FeedbackReporter.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/YAMLKit.framework/Versions/A/Frameworks/libyaml-0.2.dylib\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/YAMLKit.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/MGSFragaria.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/MGSKosmicTaskRunner.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/NDScript.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/MGSKosmicTask.framework/Versions/A\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A\"";
+		};
+		AB5CD8C21839520E009EED51 /* Codesign Auxiliary Executables */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Codesign Auxiliary Executables";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"/Helpers\nIDENTITY=\"Developer ID Application: Mugginsoft LLP\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/KosmicTaskServer\"";
+		};
 		AB691A8F122327CC00B1EA05 /* Make java package */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -12988,8 +13020,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABD669080DE6046600097C1B /* Pages.app in Sources */,
 				ABD669090DE6046600097C1B /* MGSPagesSendPlugin.m in Sources */,
+				AB65A25218390F31007E3865 /* Pages.app in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17242,6 +17274,7 @@
 					"\"$(SRCROOT)/../../cint/cint/lib\"",
 					"\"$(SRCROOT)\"",
 				);
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--timestamp=none";
 				PRODUCT_NAME = KosmicTask;
 				PROVISIONING_PROFILE = "";
 				SYMROOT = /Users/Shared;
@@ -17275,6 +17308,7 @@
 					"\"$(SRCROOT)/../../cint/cint/lib\"",
 					"\"$(SRCROOT)\"",
 				);
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "";
 				PRODUCT_NAME = KosmicTask;
 				PROVISIONING_PROFILE = "";
 				SYMROOT = /Users/Shared;
@@ -17318,7 +17352,7 @@
 					"\"$(SRCROOT)/../../../GRMustache/src/classes\"/**",
 				);
 				IBC_WARNINGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-D_NO_MGS_DEBUG",
@@ -17380,8 +17414,9 @@
 					"\"$(SRCROOT)/../../../GRMustache/src/classes\"/**",
 				);
 				IBC_WARNINGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CFLAGS = "";
+				OTHER_CODE_SIGN_FLAGS = "";
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = macosx;
 				SEPARATE_STRIP = YES;
