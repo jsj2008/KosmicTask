@@ -15,7 +15,7 @@
 
 // minimum required OS for app
 #define MOTHER_MIN_OS_MAJOR 10
-#define MOTHER_MIN_OS_MINOR 6
+#define MOTHER_MIN_OS_MINOR 7
 #define MOTHER_MIN_OS_BUGFIX 0
 
 void CopySerialNumber(CFStringRef *serialNumber);
