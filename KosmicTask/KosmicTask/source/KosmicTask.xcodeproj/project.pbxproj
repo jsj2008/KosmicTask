@@ -949,10 +949,6 @@
 		ABA381F60E0D074200126D6F /* MGSCapsuleTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA381F50E0D074200126D6F /* MGSCapsuleTextCell.m */; };
 		ABA4ADBF0D9925AC0022D465 /* MGSNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8FC24E0D5BA24500583172 /* MGSNotifications.m */; };
 		ABA4DC920D2E3E2D00696618 /* MGSNetServerSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA4DC900D2E3E2D00696618 /* MGSNetServerSocket.h */; };
-		ABA4F1070EA91C7E00165602 /* NSData-Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA4F1030EA91C7E00165602 /* NSData-Base64Extensions.h */; };
-		ABA4F1080EA91C7E00165602 /* NSData-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA4F1040EA91C7E00165602 /* NSData-Base64Extensions.m */; };
-		ABA4F1090EA91C7E00165602 /* NSString-Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA4F1050EA91C7E00165602 /* NSString-Base64Extensions.h */; };
-		ABA4F10A0EA91C7E00165602 /* NSString-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA4F1060EA91C7E00165602 /* NSString-Base64Extensions.m */; };
 		ABA562B00E2CC74500C5E787 /* NSString_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC34BE30D78562800EC8C13 /* NSString_Mugginsoft.m */; };
 		ABA563200E2CDB3500C5E787 /* MGSStopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA5631F0E2CDB3500C5E787 /* MGSStopButton.m */; };
 		ABA56B6516D29E7300B509D8 /* MGSTabViewItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA56B6416D29E7300B509D8 /* MGSTabViewItemModel.m */; };
@@ -9301,8 +9297,6 @@
 				ABE496740E71C993004F04E8 /* MGSInternetSharing.h in Headers */,
 				ABC14B250E75945D00BA566D /* MGSInternetSharingClient.h in Headers */,
 				ABC14B290E75946F00BA566D /* MGSInternetSharingServer.h in Headers */,
-				ABA4F1070EA91C7E00165602 /* NSData-Base64Extensions.h in Headers */,
-				ABA4F1090EA91C7E00165602 /* NSString-Base64Extensions.h in Headers */,
 				ABA762390EE9782F00D900A6 /* MGSMetaDataHandler.h in Headers */,
 				ABAC7B640EEAA7F500ACFD87 /* MGSBundleToolPath.h in Headers */,
 				AB3C6C77104A9EF600ED6CFE /* AEMCodecs_Mugginsoft.h in Headers */,
@@ -9689,6 +9683,7 @@
 				AB1914C412AFD8A500710031 /* Sources */,
 				AB1914C712AFD8A500710031 /* Frameworks */,
 				AB1914CA12AFD8A500710031 /* Copy auxiliary executables */,
+				AB22060C1882CE5F008B5223 /* Sign */,
 			);
 			buildRules = (
 			);
@@ -9837,6 +9832,7 @@
 				AB3180BA12B2884D001E821B /* Sources */,
 				AB3180BD12B2884D001E821B /* Frameworks */,
 				AB3180C012B2884D001E821B /* Copy auxiliary executables */,
+				AB22060B1882CC13008B5223 /* Sign */,
 			);
 			buildRules = (
 			);
@@ -9901,6 +9897,7 @@
 				AB4A5CBB120D7753006A66CC /* Frameworks */,
 				AB4A5CBE120D7753006A66CC /* Copy auxiliary executables */,
 				AB14962F121861C4009DEC38 /* ShellScript */,
+				AB22060A1882CA76008B5223 /* Sign */,
 			);
 			buildRules = (
 			);
@@ -10097,6 +10094,7 @@
 				AB6675821205B9DD006763E2 /* Sources */,
 				AB6675841205B9DD006763E2 /* Frameworks */,
 				AB6675871205B9DD006763E2 /* Copy auxiliary executables */,
+				AB2206081881CA66008B5223 /* Sign */,
 			);
 			buildRules = (
 			);
@@ -10269,6 +10267,7 @@
 				AB92D09512047BD20025EAEF /* Sources */,
 				AB92D09712047BD20025EAEF /* Frameworks */,
 				AB92D09A12047BD20025EAEF /* Copy auxiliary executables */,
+				AB2206091881CD25008B5223 /* Sign */,
 			);
 			buildRules = (
 			);
@@ -10704,6 +10703,7 @@
 				ABE7824D132516FF00663CBB /* Frameworks */,
 				ABE78250132516FF00663CBB /* Copy auxiliary executables */,
 				AB25B27A132597E700D5B634 /* Copy Frameworks */,
+				AB22060D1882D147008B5223 /* Sign */,
 			);
 			buildRules = (
 			);
@@ -11872,6 +11872,90 @@
 			shellPath = /bin/bash;
 			shellScript = "#cd \"$BUILD_DIR/$BUILD_STYLE/$FULL_PRODUCT_NAME/Contents/Frameworks/Cint.framework\"\n\n# patch the executable so that it knows where to look for the framework\n#cd \"$BUILD_DIR/$BUILD_STYLE/$FULL_PRODUCT_NAME/Contents/MacOS\"\n#install_name_tool -change lib/libCint.so \"@executable_path/../Frameworks/cint/lib/libCint.dylib\" KosmicTaskCINTRunner\n\n# rename the shared object library\n#dylib=\"Cint\"\n#version=\"Versions/A\"\n#soVersion=\"$version/libCint.so\"\n#dylibVersion=\"$version/$dylib\"\n\n#if [ -e $soVersion ]; then\n#\tmv $soVersion $dylibVersion\n#fi\n\n# make root link\n#if [ ! -e $dylib ]; then\n#\tln -s $dylibVersion $dylib\n#fi \n\n# patch the executable so that it knows where to look for the framework\n#cd \"$BUILD_DIR/$BUILD_STYLE/$FULL_PRODUCT_NAME/Contents/MacOS\"\n#install_name_tool -change lib/libCint.so \"@executable_path/../Frameworks/Cint.framework/$dylibVersion\" KosmicTaskCINTRunner";
 		};
+		AB2206081881CA66008B5223 /* Sign */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Sign;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${EXECUTABLE_FOLDER_PATH}\"\nIDENTITY=\"Developer ID Application: Mugginsoft LLP\"\n\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/jsl\"";
+		};
+		AB2206091881CD25008B5223 /* Sign */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Sign;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Developer ID Application: Mugginsoft LLP\"\n\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/FScript.framework/Versions/A\"";
+		};
+		AB22060A1882CA76008B5223 /* Sign */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Sign;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Developer ID Application: Mugginsoft LLP\"\n\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/cint.framework/lib/libCint.so\"";
+		};
+		AB22060B1882CC13008B5223 /* Sign */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Sign;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Developer ID Application: Mugginsoft LLP\"\n\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/JSCocoa.framework/Versions/A\"";
+		};
+		AB22060C1882CE5F008B5223 /* Sign */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Sign;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\nIDENTITY=\"Developer ID Application: Mugginsoft LLP\"\n\n# the version has a number of associated helpers, hence the deep option\ncodesign --verbose --force --deep --sign \"$IDENTITY\" \"$LOCATION/LuaCocoa.framework/Versions/A\"";
+		};
+		AB22060D1882D147008B5223 /* Sign */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Sign;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${EXECUTABLE_FOLDER_PATH}\"\nIDENTITY=\"Developer ID Application: Mugginsoft LLP\"\n\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/lua\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/luac\"\n\nLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\ncodesign --verbose --force --sign \"$IDENTITY\" \"$LOCATION/yaml.so\"\n";
+		};
 		AB316708128D402C0037EF1C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -12138,8 +12222,6 @@
 				ABC14AA10E75842300BA566D /* MGSImageManager.m in Sources */,
 				ABC14B260E75945D00BA566D /* MGSInternetSharingClient.m in Sources */,
 				ABC14B2A0E75946F00BA566D /* MGSInternetSharingServer.m in Sources */,
-				ABA4F1080EA91C7E00165602 /* NSData-Base64Extensions.m in Sources */,
-				ABA4F10A0EA91C7E00165602 /* NSString-Base64Extensions.m in Sources */,
 				AB4535A90EB65770006493E7 /* MGSCodeSigning.m in Sources */,
 				ABAD83310ED036A200003FA4 /* MGSImageAndText.m in Sources */,
 				ABAC7B650EEAA7F500ACFD87 /* MGSBundleToolPath.m in Sources */,
@@ -14662,7 +14744,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -14693,7 +14774,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -15103,7 +15183,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -15131,7 +15210,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -15841,7 +15919,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -15868,7 +15945,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -16303,7 +16379,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -16331,7 +16406,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -17163,7 +17237,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -17192,7 +17265,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -17287,7 +17359,7 @@
 			baseConfigurationReference = AB4F92851039AD9F005EF329 /* beta-expiring.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "Developer ID Application: Mugginsoft LLP";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 70;
@@ -17319,8 +17391,7 @@
 					"\"$(SRCROOT)/../../../GRMustache/src/classes\"/**",
 				);
 				IBC_WARNINGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				ONLY_ACTIVE_ARCH = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = (
 					"-D_NO_MGS_DEBUG",
 					"-D_NO_MGS_LOG_FINALIZE",
@@ -17335,6 +17406,7 @@
 				SEPARATE_STRIP = NO;
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/**";
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"-Wformat",
@@ -17350,7 +17422,7 @@
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "Developer ID Application: Mugginsoft LLP";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 70;
@@ -17382,7 +17454,7 @@
 					"\"$(SRCROOT)/../../../GRMustache/src/classes\"/**",
 				);
 				IBC_WARNINGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CFLAGS = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				RUN_CLANG_STATIC_ANALYZER = NO;
@@ -17390,6 +17462,7 @@
 				SEPARATE_STRIP = YES;
 				SKIP_INSTALL = NO;
 				STRIPFLAGS = "-x";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/**";
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"-Wformat",

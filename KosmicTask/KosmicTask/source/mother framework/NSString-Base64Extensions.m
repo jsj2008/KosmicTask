@@ -41,7 +41,7 @@
     BIO * b64 = BIO_new(BIO_f_base64());
     // MGS linker having problems with libcrypto.0.9.7.dylib
 	// arising because BIO_set_flags is defined as a macro in 0.9.7 but as a function in 0.9.8
-	// hence the liniking roblem when target 0.9.7. OS X 10.6 open ships with the 0.9.8 headers.
+	// hence the liniking problem when target 0.9.7. OS X 10.6 open ships with the 0.9.8 headers.
 	if (!encodedWithNewlines) {
 		BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
 		//BIO_set_flags_097(b64, BIO_FLAGS_BASE64_NO_NL);

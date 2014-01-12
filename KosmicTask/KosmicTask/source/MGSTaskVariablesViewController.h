@@ -19,7 +19,7 @@
     IBOutlet NSTableView *_taskVariablesTableView;
     MGSScript *_script;
     NSArrayController *_taskVariablesArrayController;
-    id <MGSTaskVariablesViewControllerDelegateProtocol> delegate;
+    id <MGSTaskVariablesViewControllerDelegateProtocol> _delegate;
 }
 
 @property MGSScript *script;
