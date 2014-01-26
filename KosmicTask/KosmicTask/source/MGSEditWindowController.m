@@ -37,6 +37,7 @@
 #import "MGSAPLicenceCode.h"
 #import "MGSApplicationMenu.h"
 #import "MGSCodeAssistantSheetController.h"
+#import "MGSScriptParameterManager+Application.h"
 
 #define ACTION_TAB 0
 #define SCRIPT_TAB 1

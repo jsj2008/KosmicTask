@@ -8,7 +8,7 @@
 
 #import "MGSResourceBrowserWindowController.h"
 #import "MGSPreferences.h"
-
+#import "MGSScriptParameter+Application.h"
 
 static id mgs_sharedController = nil;
 
@@ -101,7 +101,7 @@ const char MGSContextDocumentEdited;
     
     // define some default parameters
     for (NSUInteger i = 0; i < 2; i++) {
-        MGSScriptParameter *parameter = [MGSScriptParameter new];
+        MGSScriptParameter *parameter = [MGSScriptParameter newWithDefaultTypeName];
         parameter.name = inputName;
         [script.parameterHandler insertItem:parameter atIndex:i];
     }

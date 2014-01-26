@@ -13,7 +13,7 @@
 #import "MGSParameterViewManager.h"
 #import "MGSRoundedView.h"
 #import "MGSScriptParameterManager.h"
-#import "MGSScriptParameter.h"
+#import "MGSScriptParameter+Application.h"
 #import "NSView_Mugginsoft.h"
 #import "NSSplitView_Mugginsoft.h"
 #import "MGSParameterSplitView.h"
@@ -508,7 +508,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 {
     // create script parameter and add to handler array
     if (!parameter) {
-        parameter = [MGSScriptParameter new];
+        parameter = [MGSScriptParameter newWithDefaultTypeName];
     }
     
 	[_scriptParameterManager insertItem:parameter atIndex:idx];
@@ -1909,7 +1909,7 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
         id plist = [[self cutAndPastePasteBoard] propertyListForType:MGSInputParameterPBoardType];
         
         if (plist && [plist isKindOfClass:[NSDictionary class]]) {
-            scriptParameter = [MGSScriptParameter new];
+            scriptParameter = [MGSScriptParameter newWithDefaultTypeName];
             scriptParameter.dict = [NSMutableDictionary dictionaryWithDictionary:plist];
         }
     }

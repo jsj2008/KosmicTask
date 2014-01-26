@@ -130,6 +130,8 @@
 		AB1562D8118DABA600DC01C7 /* MGSKshLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B43F118B078100903D1D /* MGSKshLanguagePlugin.m */; };
 		AB1562D9118DABB000DC01C7 /* MGSZshLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B442118B079A00903D1D /* MGSZshLanguagePlugin.m */; };
 		AB1562DA118DABBC00DC01C7 /* MGSTclshLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B444118B07B400903D1D /* MGSTclshLanguagePlugin.m */; };
+		AB15D08F1895986600B3F051 /* MGSScriptParameter+Application.m in Sources */ = {isa = PBXBuildFile; fileRef = AB15D08E1895986500B3F051 /* MGSScriptParameter+Application.m */; };
+		AB15D0C51895A70A00B3F051 /* MGSScriptParameterManager+Application.m in Sources */ = {isa = PBXBuildFile; fileRef = AB15D0C41895A70A00B3F051 /* MGSScriptParameterManager+Application.m */; };
 		AB1726F311C6D4B40035B91B /* MGSLanguageTemplateResource.m in Sources */ = {isa = PBXBuildFile; fileRef = AB17266A11C6BA8F0035B91B /* MGSLanguageTemplateResource.m */; };
 		AB182F251278760500B79BA4 /* MGSSendClientNetRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AB182F241278760500B79BA4 /* MGSSendClientNetRequestOperation.m */; };
 		AB182FB91278AB1C00B79BA4 /* MGSNetClientSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0519180D2A6982004EF3FB /* MGSNetClientSocket.m */; };
@@ -230,6 +232,86 @@
 		AB2ECA1014D1F58500B54313 /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB2ECA0714D1F53200B54313 /* TCMPortMapper.framework */; };
 		AB2ECA1114D1F5AE00B54313 /* TCMPortMapper.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB2ECA0714D1F53200B54313 /* TCMPortMapper.framework */; };
 		AB2FB96A0E995C3500BA3246 /* MGSNullBindingProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2FB9690E995C3500BA3246 /* MGSNullBindingProxy.m */; };
+		AB30B55B1883027A00CE653C /* NSString-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA4F1060EA91C7E00165602 /* NSString-Base64Extensions.m */; };
+		AB30B55C1883028300CE653C /* NSString-Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA4F1050EA91C7E00165602 /* NSString-Base64Extensions.h */; };
+		AB30B55D1883028600CE653C /* NSData-Base64Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA4F1040EA91C7E00165602 /* NSData-Base64Extensions.m */; };
+		AB30B55E1883028A00CE653C /* NSData-Base64Extensions.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA4F1030EA91C7E00165602 /* NSData-Base64Extensions.h */; };
+		AB30B601188C6F5000CE653C /* aes.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5B5188C6F4C00CE653C /* aes.h */; };
+		AB30B602188C6F5000CE653C /* asn1.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5B6188C6F4D00CE653C /* asn1.h */; };
+		AB30B603188C6F5000CE653C /* asn1_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5B7188C6F4D00CE653C /* asn1_mac.h */; };
+		AB30B604188C6F5000CE653C /* asn1t.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5B8188C6F4D00CE653C /* asn1t.h */; };
+		AB30B605188C6F5000CE653C /* bio.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5B9188C6F4D00CE653C /* bio.h */; };
+		AB30B606188C6F5000CE653C /* blowfish.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5BA188C6F4D00CE653C /* blowfish.h */; };
+		AB30B607188C6F5000CE653C /* bn.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5BB188C6F4D00CE653C /* bn.h */; };
+		AB30B608188C6F5000CE653C /* buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5BC188C6F4D00CE653C /* buffer.h */; };
+		AB30B609188C6F5000CE653C /* camellia.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5BD188C6F4D00CE653C /* camellia.h */; };
+		AB30B60A188C6F5000CE653C /* cast.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5BE188C6F4D00CE653C /* cast.h */; };
+		AB30B60B188C6F5000CE653C /* cmac.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5BF188C6F4D00CE653C /* cmac.h */; };
+		AB30B60C188C6F5000CE653C /* cms.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5C0188C6F4D00CE653C /* cms.h */; };
+		AB30B60D188C6F5000CE653C /* comp.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5C1188C6F4D00CE653C /* comp.h */; };
+		AB30B60E188C6F5000CE653C /* conf.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5C2188C6F4D00CE653C /* conf.h */; };
+		AB30B60F188C6F5000CE653C /* conf_api.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5C3188C6F4D00CE653C /* conf_api.h */; };
+		AB30B610188C6F5000CE653C /* crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5C4188C6F4D00CE653C /* crypto.h */; };
+		AB30B611188C6F5000CE653C /* des.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5C5188C6F4D00CE653C /* des.h */; };
+		AB30B612188C6F5000CE653C /* des_old.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5C6188C6F4D00CE653C /* des_old.h */; };
+		AB30B613188C6F5000CE653C /* dh.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5C7188C6F4D00CE653C /* dh.h */; };
+		AB30B614188C6F5000CE653C /* dsa.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5C8188C6F4D00CE653C /* dsa.h */; };
+		AB30B615188C6F5000CE653C /* dso.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5C9188C6F4D00CE653C /* dso.h */; };
+		AB30B616188C6F5000CE653C /* dtls1.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5CA188C6F4D00CE653C /* dtls1.h */; };
+		AB30B617188C6F5000CE653C /* e_os2.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5CB188C6F4E00CE653C /* e_os2.h */; };
+		AB30B618188C6F5000CE653C /* ebcdic.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5CC188C6F4E00CE653C /* ebcdic.h */; };
+		AB30B619188C6F5000CE653C /* ec.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5CD188C6F4E00CE653C /* ec.h */; };
+		AB30B61A188C6F5000CE653C /* ecdh.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5CE188C6F4E00CE653C /* ecdh.h */; };
+		AB30B61B188C6F5000CE653C /* ecdsa.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5CF188C6F4E00CE653C /* ecdsa.h */; };
+		AB30B61C188C6F5000CE653C /* engine.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5D0188C6F4E00CE653C /* engine.h */; };
+		AB30B61D188C6F5000CE653C /* err.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5D1188C6F4E00CE653C /* err.h */; };
+		AB30B61E188C6F5000CE653C /* evp.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5D2188C6F4E00CE653C /* evp.h */; };
+		AB30B61F188C6F5000CE653C /* hmac.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5D3188C6F4E00CE653C /* hmac.h */; };
+		AB30B620188C6F5000CE653C /* idea.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5D4188C6F4E00CE653C /* idea.h */; };
+		AB30B621188C6F5000CE653C /* krb5_asn.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5D5188C6F4E00CE653C /* krb5_asn.h */; };
+		AB30B622188C6F5000CE653C /* kssl.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5D6188C6F4E00CE653C /* kssl.h */; };
+		AB30B623188C6F5000CE653C /* lhash.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5D7188C6F4E00CE653C /* lhash.h */; };
+		AB30B624188C6F5000CE653C /* md4.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5D8188C6F4E00CE653C /* md4.h */; };
+		AB30B625188C6F5000CE653C /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5D9188C6F4E00CE653C /* md5.h */; };
+		AB30B626188C6F5000CE653C /* mdc2.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5DA188C6F4E00CE653C /* mdc2.h */; };
+		AB30B627188C6F5000CE653C /* modes.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5DB188C6F4E00CE653C /* modes.h */; };
+		AB30B628188C6F5000CE653C /* obj_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5DC188C6F4E00CE653C /* obj_mac.h */; };
+		AB30B629188C6F5000CE653C /* objects.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5DD188C6F4E00CE653C /* objects.h */; };
+		AB30B62A188C6F5000CE653C /* ocsp.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5DE188C6F4E00CE653C /* ocsp.h */; };
+		AB30B62B188C6F5000CE653C /* opensslconf.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5DF188C6F4E00CE653C /* opensslconf.h */; };
+		AB30B62C188C6F5000CE653C /* opensslv.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5E0188C6F4F00CE653C /* opensslv.h */; };
+		AB30B62D188C6F5000CE653C /* ossl_typ.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5E1188C6F4F00CE653C /* ossl_typ.h */; };
+		AB30B62E188C6F5000CE653C /* pem.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5E2188C6F4F00CE653C /* pem.h */; };
+		AB30B62F188C6F5000CE653C /* pem2.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5E3188C6F4F00CE653C /* pem2.h */; };
+		AB30B630188C6F5000CE653C /* pkcs12.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5E4188C6F4F00CE653C /* pkcs12.h */; };
+		AB30B631188C6F5000CE653C /* pkcs7.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5E5188C6F4F00CE653C /* pkcs7.h */; };
+		AB30B632188C6F5000CE653C /* pqueue.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5E6188C6F4F00CE653C /* pqueue.h */; };
+		AB30B633188C6F5000CE653C /* rand.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5E7188C6F4F00CE653C /* rand.h */; };
+		AB30B634188C6F5000CE653C /* rc2.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5E8188C6F4F00CE653C /* rc2.h */; };
+		AB30B635188C6F5000CE653C /* rc4.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5E9188C6F4F00CE653C /* rc4.h */; };
+		AB30B636188C6F5000CE653C /* ripemd.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5EA188C6F4F00CE653C /* ripemd.h */; };
+		AB30B637188C6F5000CE653C /* rsa.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5EB188C6F4F00CE653C /* rsa.h */; };
+		AB30B638188C6F5000CE653C /* safestack.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5EC188C6F4F00CE653C /* safestack.h */; };
+		AB30B639188C6F5000CE653C /* seed.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5ED188C6F4F00CE653C /* seed.h */; };
+		AB30B63A188C6F5000CE653C /* sha.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5EE188C6F4F00CE653C /* sha.h */; };
+		AB30B63B188C6F5000CE653C /* srp.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5EF188C6F4F00CE653C /* srp.h */; };
+		AB30B63C188C6F5000CE653C /* srtp.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5F0188C6F4F00CE653C /* srtp.h */; };
+		AB30B63D188C6F5000CE653C /* ssl.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5F1188C6F4F00CE653C /* ssl.h */; };
+		AB30B63E188C6F5000CE653C /* ssl2.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5F2188C6F4F00CE653C /* ssl2.h */; };
+		AB30B63F188C6F5000CE653C /* ssl23.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5F3188C6F4F00CE653C /* ssl23.h */; };
+		AB30B640188C6F5000CE653C /* ssl3.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5F4188C6F4F00CE653C /* ssl3.h */; };
+		AB30B641188C6F5000CE653C /* stack.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5F5188C6F5000CE653C /* stack.h */; };
+		AB30B642188C6F5000CE653C /* symhacks.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5F6188C6F5000CE653C /* symhacks.h */; };
+		AB30B643188C6F5000CE653C /* tls1.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5F7188C6F5000CE653C /* tls1.h */; };
+		AB30B644188C6F5000CE653C /* ts.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5F8188C6F5000CE653C /* ts.h */; };
+		AB30B645188C6F5000CE653C /* txt_db.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5F9188C6F5000CE653C /* txt_db.h */; };
+		AB30B646188C6F5000CE653C /* ui.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5FA188C6F5000CE653C /* ui.h */; };
+		AB30B647188C6F5000CE653C /* ui_compat.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5FB188C6F5000CE653C /* ui_compat.h */; };
+		AB30B648188C6F5000CE653C /* whrlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5FC188C6F5000CE653C /* whrlpool.h */; };
+		AB30B649188C6F5000CE653C /* x509.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5FD188C6F5000CE653C /* x509.h */; };
+		AB30B64A188C6F5000CE653C /* x509_vfy.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5FE188C6F5000CE653C /* x509_vfy.h */; };
+		AB30B64B188C6F5000CE653C /* x509v3.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5FF188C6F5000CE653C /* x509v3.h */; };
+		AB30B64C188C6F5000CE653C /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB30B600188C6F5000CE653C /* libcrypto.a */; };
 		AB3167A5128D42280037EF1C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3167A4128D42280037EF1C /* SenTestingKit.framework */; };
 		AB3167C9128D44520037EF1C /* MGSLanguage_test.m in Sources */ = {isa = PBXBuildFile; fileRef = AB316712128D409E0037EF1C /* MGSLanguage_test.m */; };
 		AB3167D8128D463B0037EF1C /* KosmicTask_test.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3167D7128D463B0037EF1C /* KosmicTask_test.m */; };
@@ -1141,7 +1223,6 @@
 		ABB664FE0ED896BC005E9BB0 /* ApplicationTasks.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABB664FD0ED896BC005E9BB0 /* ApplicationTasks.plist */; };
 		ABB6A6E60DE4CB6E00B35855 /* MGSTextEditSendPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA2FCF50DE4C9C700589B2A /* MGSTextEditSendPlugin.m */; };
 		ABB6A72D0DE4CBA000B35855 /* Send Plugin TextEdit.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = ABA2FD0C0DE4CA0C00589B2A /* Send Plugin TextEdit.plugin */; };
-		ABB7335A1056636F0042B4D0 /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABB732F01056625E0042B4D0 /* libcrypto.0.9.7.dylib */; };
 		ABB749330D525C6F004F8A2C /* MGSBonjour.h in Headers */ = {isa = PBXBuildFile; fileRef = ABB749310D525C6F004F8A2C /* MGSBonjour.h */; };
 		ABB749340D525C6F004F8A2C /* MGSBonjour.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB749320D525C6F004F8A2C /* MGSBonjour.m */; };
 		ABB776280E819566009ED93F /* MGSLevelIndicatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB776270E819566009ED93F /* MGSLevelIndicatorCell.m */; };
@@ -3654,6 +3735,10 @@
 		AB156148118DA91300DC01C7 /* Language Plugin Korn Shell.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin Korn Shell.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB156198118DA9AC00DC01C7 /* Language Plugin Z Shell.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin Z Shell.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1561E3118DAA1E00DC01C7 /* Language Plugin Tcl Shell.lang-plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Language Plugin Tcl Shell.lang-plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB15D08D1895986500B3F051 /* MGSScriptParameter+Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MGSScriptParameter+Application.h"; sourceTree = "<group>"; };
+		AB15D08E1895986500B3F051 /* MGSScriptParameter+Application.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MGSScriptParameter+Application.m"; sourceTree = "<group>"; };
+		AB15D0C31895A70A00B3F051 /* MGSScriptParameterManager+Application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MGSScriptParameterManager+Application.h"; sourceTree = "<group>"; };
+		AB15D0C41895A70A00B3F051 /* MGSScriptParameterManager+Application.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MGSScriptParameterManager+Application.m"; sourceTree = "<group>"; };
 		AB17265E11C6B9A90035B91B /* MGSResourceBrowserNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSResourceBrowserNode.h; sourceTree = "<group>"; };
 		AB17265F11C6B9A90035B91B /* MGSResourceBrowserNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSResourceBrowserNode.m; sourceTree = "<group>"; };
 		AB17266911C6BA8F0035B91B /* MGSLanguageTemplateResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLanguageTemplateResource.h; sourceTree = "<group>"; };
@@ -3733,6 +3818,82 @@
 		AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MGTemplateEngine.xcodeproj; path = ../../../MGTemplateEngine/MGTemplateEngine.xcodeproj; sourceTree = "<group>"; };
 		AB2FB9680E995C3500BA3246 /* MGSNullBindingProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNullBindingProxy.h; sourceTree = "<group>"; };
 		AB2FB9690E995C3500BA3246 /* MGSNullBindingProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNullBindingProxy.m; sourceTree = "<group>"; };
+		AB30B5B5188C6F4C00CE653C /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
+		AB30B5B6188C6F4D00CE653C /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1.h; sourceTree = "<group>"; };
+		AB30B5B7188C6F4D00CE653C /* asn1_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1_mac.h; sourceTree = "<group>"; };
+		AB30B5B8188C6F4D00CE653C /* asn1t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1t.h; sourceTree = "<group>"; };
+		AB30B5B9188C6F4D00CE653C /* bio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bio.h; sourceTree = "<group>"; };
+		AB30B5BA188C6F4D00CE653C /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
+		AB30B5BB188C6F4D00CE653C /* bn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bn.h; sourceTree = "<group>"; };
+		AB30B5BC188C6F4D00CE653C /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
+		AB30B5BD188C6F4D00CE653C /* camellia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camellia.h; sourceTree = "<group>"; };
+		AB30B5BE188C6F4D00CE653C /* cast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cast.h; sourceTree = "<group>"; };
+		AB30B5BF188C6F4D00CE653C /* cmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmac.h; sourceTree = "<group>"; };
+		AB30B5C0188C6F4D00CE653C /* cms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cms.h; sourceTree = "<group>"; };
+		AB30B5C1188C6F4D00CE653C /* comp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = comp.h; sourceTree = "<group>"; };
+		AB30B5C2188C6F4D00CE653C /* conf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = conf.h; sourceTree = "<group>"; };
+		AB30B5C3188C6F4D00CE653C /* conf_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = conf_api.h; sourceTree = "<group>"; };
+		AB30B5C4188C6F4D00CE653C /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto.h; sourceTree = "<group>"; };
+		AB30B5C5188C6F4D00CE653C /* des.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = des.h; sourceTree = "<group>"; };
+		AB30B5C6188C6F4D00CE653C /* des_old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = des_old.h; sourceTree = "<group>"; };
+		AB30B5C7188C6F4D00CE653C /* dh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dh.h; sourceTree = "<group>"; };
+		AB30B5C8188C6F4D00CE653C /* dsa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsa.h; sourceTree = "<group>"; };
+		AB30B5C9188C6F4D00CE653C /* dso.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dso.h; sourceTree = "<group>"; };
+		AB30B5CA188C6F4D00CE653C /* dtls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtls1.h; sourceTree = "<group>"; };
+		AB30B5CB188C6F4E00CE653C /* e_os2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = e_os2.h; sourceTree = "<group>"; };
+		AB30B5CC188C6F4E00CE653C /* ebcdic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ebcdic.h; sourceTree = "<group>"; };
+		AB30B5CD188C6F4E00CE653C /* ec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ec.h; sourceTree = "<group>"; };
+		AB30B5CE188C6F4E00CE653C /* ecdh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecdh.h; sourceTree = "<group>"; };
+		AB30B5CF188C6F4E00CE653C /* ecdsa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ecdsa.h; sourceTree = "<group>"; };
+		AB30B5D0188C6F4E00CE653C /* engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = engine.h; sourceTree = "<group>"; };
+		AB30B5D1188C6F4E00CE653C /* err.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = err.h; sourceTree = "<group>"; };
+		AB30B5D2188C6F4E00CE653C /* evp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = evp.h; sourceTree = "<group>"; };
+		AB30B5D3188C6F4E00CE653C /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
+		AB30B5D4188C6F4E00CE653C /* idea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idea.h; sourceTree = "<group>"; };
+		AB30B5D5188C6F4E00CE653C /* krb5_asn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = krb5_asn.h; sourceTree = "<group>"; };
+		AB30B5D6188C6F4E00CE653C /* kssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kssl.h; sourceTree = "<group>"; };
+		AB30B5D7188C6F4E00CE653C /* lhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lhash.h; sourceTree = "<group>"; };
+		AB30B5D8188C6F4E00CE653C /* md4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md4.h; sourceTree = "<group>"; };
+		AB30B5D9188C6F4E00CE653C /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		AB30B5DA188C6F4E00CE653C /* mdc2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mdc2.h; sourceTree = "<group>"; };
+		AB30B5DB188C6F4E00CE653C /* modes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modes.h; sourceTree = "<group>"; };
+		AB30B5DC188C6F4E00CE653C /* obj_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = obj_mac.h; sourceTree = "<group>"; };
+		AB30B5DD188C6F4E00CE653C /* objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = objects.h; sourceTree = "<group>"; };
+		AB30B5DE188C6F4E00CE653C /* ocsp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ocsp.h; sourceTree = "<group>"; };
+		AB30B5DF188C6F4E00CE653C /* opensslconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opensslconf.h; sourceTree = "<group>"; };
+		AB30B5E0188C6F4F00CE653C /* opensslv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opensslv.h; sourceTree = "<group>"; };
+		AB30B5E1188C6F4F00CE653C /* ossl_typ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ossl_typ.h; sourceTree = "<group>"; };
+		AB30B5E2188C6F4F00CE653C /* pem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pem.h; sourceTree = "<group>"; };
+		AB30B5E3188C6F4F00CE653C /* pem2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pem2.h; sourceTree = "<group>"; };
+		AB30B5E4188C6F4F00CE653C /* pkcs12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs12.h; sourceTree = "<group>"; };
+		AB30B5E5188C6F4F00CE653C /* pkcs7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs7.h; sourceTree = "<group>"; };
+		AB30B5E6188C6F4F00CE653C /* pqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pqueue.h; sourceTree = "<group>"; };
+		AB30B5E7188C6F4F00CE653C /* rand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rand.h; sourceTree = "<group>"; };
+		AB30B5E8188C6F4F00CE653C /* rc2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rc2.h; sourceTree = "<group>"; };
+		AB30B5E9188C6F4F00CE653C /* rc4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rc4.h; sourceTree = "<group>"; };
+		AB30B5EA188C6F4F00CE653C /* ripemd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ripemd.h; sourceTree = "<group>"; };
+		AB30B5EB188C6F4F00CE653C /* rsa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rsa.h; sourceTree = "<group>"; };
+		AB30B5EC188C6F4F00CE653C /* safestack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = safestack.h; sourceTree = "<group>"; };
+		AB30B5ED188C6F4F00CE653C /* seed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = seed.h; sourceTree = "<group>"; };
+		AB30B5EE188C6F4F00CE653C /* sha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha.h; sourceTree = "<group>"; };
+		AB30B5EF188C6F4F00CE653C /* srp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srp.h; sourceTree = "<group>"; };
+		AB30B5F0188C6F4F00CE653C /* srtp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = srtp.h; sourceTree = "<group>"; };
+		AB30B5F1188C6F4F00CE653C /* ssl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl.h; sourceTree = "<group>"; };
+		AB30B5F2188C6F4F00CE653C /* ssl2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl2.h; sourceTree = "<group>"; };
+		AB30B5F3188C6F4F00CE653C /* ssl23.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl23.h; sourceTree = "<group>"; };
+		AB30B5F4188C6F4F00CE653C /* ssl3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ssl3.h; sourceTree = "<group>"; };
+		AB30B5F5188C6F5000CE653C /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		AB30B5F6188C6F5000CE653C /* symhacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = symhacks.h; sourceTree = "<group>"; };
+		AB30B5F7188C6F5000CE653C /* tls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tls1.h; sourceTree = "<group>"; };
+		AB30B5F8188C6F5000CE653C /* ts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ts.h; sourceTree = "<group>"; };
+		AB30B5F9188C6F5000CE653C /* txt_db.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = txt_db.h; sourceTree = "<group>"; };
+		AB30B5FA188C6F5000CE653C /* ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui.h; sourceTree = "<group>"; };
+		AB30B5FB188C6F5000CE653C /* ui_compat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui_compat.h; sourceTree = "<group>"; };
+		AB30B5FC188C6F5000CE653C /* whrlpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = whrlpool.h; sourceTree = "<group>"; };
+		AB30B5FD188C6F5000CE653C /* x509.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509.h; sourceTree = "<group>"; };
+		AB30B5FE188C6F5000CE653C /* x509_vfy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509_vfy.h; sourceTree = "<group>"; };
+		AB30B5FF188C6F5000CE653C /* x509v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509v3.h; sourceTree = "<group>"; };
+		AB30B600188C6F5000CE653C /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		AB31670A128D402C0037EF1C /* Test KosmicTask App.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Test KosmicTask App.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB31670B128D402C0037EF1C /* Test KosmicTask App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test KosmicTask App-Info.plist"; sourceTree = "<group>"; };
 		AB316711128D409E0037EF1C /* MGSLanguage_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLanguage_test.h; sourceTree = "<group>"; };
@@ -4265,6 +4426,7 @@
 		AB8C14B11257556C004231E2 /* SettingsOutlineView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsOutlineView.xib; sourceTree = "<group>"; };
 		AB8CB3F81059665D00FFBBAF /* MGSServerTaskConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSServerTaskConfiguration.h; sourceTree = "<group>"; };
 		AB8CB3F91059665D00FFBBAF /* MGSServerTaskConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSServerTaskConfiguration.m; sourceTree = "<group>"; };
+		AB8D2980188C75800059A84A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		AB8D400114D2DF7300FC88A2 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		AB8E7C310D5873C30049E876 /* MGSDisplayToolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSDisplayToolViewController.h; sourceTree = "<group>"; };
 		AB8E7C320D5873C30049E876 /* MGSDisplayToolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSDisplayToolViewController.m; sourceTree = "<group>"; };
@@ -4871,10 +5033,6 @@
 		ABB62F920DED732A00C68736 /* NSBundle_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundle_Mugginsoft.h; sourceTree = "<group>"; };
 		ABB62F930DED732A00C68736 /* NSBundle_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundle_Mugginsoft.m; sourceTree = "<group>"; };
 		ABB664FD0ED896BC005E9BB0 /* ApplicationTasks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ApplicationTasks.plist; sourceTree = "<group>"; };
-		ABB732C310565F0D0042B4D0 /* libcrypto.0.9.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.0.9.7.dylib; path = /usr/lib/libcrypto.0.9.7.dylib; sourceTree = "<absolute>"; };
-		ABB732C710565FCF0042B4D0 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
-		ABB732F01056625E0042B4D0 /* libcrypto.0.9.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libcrypto.0.9.7.dylib; sourceTree = "<group>"; };
-		ABB732F11056625E0042B4D0 /* libcrypto.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = libcrypto.0.9.dylib; sourceTree = "<group>"; };
 		ABB749310D525C6F004F8A2C /* MGSBonjour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBonjour.h; sourceTree = "<group>"; };
 		ABB749320D525C6F004F8A2C /* MGSBonjour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBonjour.m; sourceTree = "<group>"; };
 		ABB776260E819566009ED93F /* MGSLevelIndicatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLevelIndicatorCell.h; sourceTree = "<group>"; };
@@ -5230,11 +5388,11 @@
 				AB2ECA1014D1F58500B54313 /* TCMPortMapper.framework in Frameworks */,
 				AB89EFAE14CA34650077A496 /* ORCDiscount.framework in Frameworks */,
 				AB33582110CABF75003B44AC /* CoreFoundation.framework in Frameworks */,
-				ABB7335A1056636F0042B4D0 /* libcrypto.0.9.7.dylib in Frameworks */,
 				ABB8F9380E69A91F00E42A03 /* Quartz.framework in Frameworks */,
 				AB9D70F90DFBF5CD004A117C /* QuickLook.framework in Frameworks */,
 				AB9AC4D60D95B11200767691 /* DirectoryService.framework in Frameworks */,
 				AB47405C0D90169200CB6816 /* Carbon.framework in Frameworks */,
+				AB30B64C188C6F5000CE653C /* libcrypto.a in Frameworks */,
 				AB9975980D5B589C00DA13B6 /* AppKit.framework in Frameworks */,
 				09C09EAD0CDC7E200048BC79 /* Foundation.framework in Frameworks */,
 				AB9AC5930D95B15100767691 /* Kerberos.framework in Frameworks */,
@@ -6338,6 +6496,8 @@
 				ABD90AB10D33934B00601C00 /* MGSScriptManager.h */,
 				ABE3E97D0D356ED800842E00 /* MGSScriptParameter.h */,
 				ABE3E9830D356FFA00842E00 /* MGSScriptParameterManager.h */,
+				AB15D0C31895A70A00B3F051 /* MGSScriptParameterManager+Application.h */,
+				AB15D0C41895A70A00B3F051 /* MGSScriptParameterManager+Application.m */,
 				ABA62B8D0D297C4B00744BCD /* MGSScriptPlist.h */,
 				AB823AFC0DEF35F7005D07B3 /* MGSSystem.h */,
 				AB50ACA00D2E88BE0058DE6F /* MGSTaskPlist.h */,
@@ -6361,6 +6521,8 @@
 				AB9E82310D86E72F007601C4 /* MGSScriptCode.m */,
 				ABD90AB20D33934B00601C00 /* MGSScriptManager.m */,
 				ABE3E97E0D356ED800842E00 /* MGSScriptParameter.m */,
+				AB15D08D1895986500B3F051 /* MGSScriptParameter+Application.h */,
+				AB15D08E1895986500B3F051 /* MGSScriptParameter+Application.m */,
 				ABE3E9840D356FFA00842E00 /* MGSScriptParameterManager.m */,
 				ABA62B8E0D297C4B00744BCD /* MGSScriptPlist.m */,
 				AB823AFD0DEF35F7005D07B3 /* MGSSystem.m */,
@@ -6573,6 +6735,7 @@
 				29B97317FDCFA39411CA2CEA /* Application resources */,
 				AB37FDD81283678200F97E7C /* Application string resources */,
 				AB1BA93D0CF76EB500F35D8F /* Redundant source */,
+				AB30B5B2188C6F4A00CE653C /* static libraries */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				ABF0D32E120CB37B006ABDB2 /* Auxiliary executables */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -6690,13 +6853,10 @@
 			children = (
 				AB8D400114D2DF7300FC88A2 /* Sparkle.framework */,
 				AB25B3951325995D00D5B634 /* yaml.so */,
-				ABB732F3105662670042B4D0 /* libcrypto linking copy */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				ABB3619616597FDC0010A2AF /* SenTestingKit.framework */,
 				ABB3619816597FDC0010A2AF /* Cocoa.framework */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
-				ABB732C310565F0D0042B4D0 /* libcrypto.0.9.7.dylib */,
-				ABB732C710565FCF0042B4D0 /* libcrypto.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -7131,6 +7291,107 @@
 				AB2ECA0D14D1F53200B54313 /* upnpc-static */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		AB30B5B2188C6F4A00CE653C /* static libraries */ = {
+			isa = PBXGroup;
+			children = (
+				AB8D2980188C75800059A84A /* README.md */,
+				AB30B5B3188C6F4C00CE653C /* include */,
+				AB30B600188C6F5000CE653C /* libcrypto.a */,
+			);
+			name = "static libraries";
+			path = "../static libraries";
+			sourceTree = "<group>";
+		};
+		AB30B5B3188C6F4C00CE653C /* include */ = {
+			isa = PBXGroup;
+			children = (
+				AB30B5B4188C6F4C00CE653C /* openssl */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		AB30B5B4188C6F4C00CE653C /* openssl */ = {
+			isa = PBXGroup;
+			children = (
+				AB30B5B5188C6F4C00CE653C /* aes.h */,
+				AB30B5B6188C6F4D00CE653C /* asn1.h */,
+				AB30B5B7188C6F4D00CE653C /* asn1_mac.h */,
+				AB30B5B8188C6F4D00CE653C /* asn1t.h */,
+				AB30B5B9188C6F4D00CE653C /* bio.h */,
+				AB30B5BA188C6F4D00CE653C /* blowfish.h */,
+				AB30B5BB188C6F4D00CE653C /* bn.h */,
+				AB30B5BC188C6F4D00CE653C /* buffer.h */,
+				AB30B5BD188C6F4D00CE653C /* camellia.h */,
+				AB30B5BE188C6F4D00CE653C /* cast.h */,
+				AB30B5BF188C6F4D00CE653C /* cmac.h */,
+				AB30B5C0188C6F4D00CE653C /* cms.h */,
+				AB30B5C1188C6F4D00CE653C /* comp.h */,
+				AB30B5C2188C6F4D00CE653C /* conf.h */,
+				AB30B5C3188C6F4D00CE653C /* conf_api.h */,
+				AB30B5C4188C6F4D00CE653C /* crypto.h */,
+				AB30B5C5188C6F4D00CE653C /* des.h */,
+				AB30B5C6188C6F4D00CE653C /* des_old.h */,
+				AB30B5C7188C6F4D00CE653C /* dh.h */,
+				AB30B5C8188C6F4D00CE653C /* dsa.h */,
+				AB30B5C9188C6F4D00CE653C /* dso.h */,
+				AB30B5CA188C6F4D00CE653C /* dtls1.h */,
+				AB30B5CB188C6F4E00CE653C /* e_os2.h */,
+				AB30B5CC188C6F4E00CE653C /* ebcdic.h */,
+				AB30B5CD188C6F4E00CE653C /* ec.h */,
+				AB30B5CE188C6F4E00CE653C /* ecdh.h */,
+				AB30B5CF188C6F4E00CE653C /* ecdsa.h */,
+				AB30B5D0188C6F4E00CE653C /* engine.h */,
+				AB30B5D1188C6F4E00CE653C /* err.h */,
+				AB30B5D2188C6F4E00CE653C /* evp.h */,
+				AB30B5D3188C6F4E00CE653C /* hmac.h */,
+				AB30B5D4188C6F4E00CE653C /* idea.h */,
+				AB30B5D5188C6F4E00CE653C /* krb5_asn.h */,
+				AB30B5D6188C6F4E00CE653C /* kssl.h */,
+				AB30B5D7188C6F4E00CE653C /* lhash.h */,
+				AB30B5D8188C6F4E00CE653C /* md4.h */,
+				AB30B5D9188C6F4E00CE653C /* md5.h */,
+				AB30B5DA188C6F4E00CE653C /* mdc2.h */,
+				AB30B5DB188C6F4E00CE653C /* modes.h */,
+				AB30B5DC188C6F4E00CE653C /* obj_mac.h */,
+				AB30B5DD188C6F4E00CE653C /* objects.h */,
+				AB30B5DE188C6F4E00CE653C /* ocsp.h */,
+				AB30B5DF188C6F4E00CE653C /* opensslconf.h */,
+				AB30B5E0188C6F4F00CE653C /* opensslv.h */,
+				AB30B5E1188C6F4F00CE653C /* ossl_typ.h */,
+				AB30B5E2188C6F4F00CE653C /* pem.h */,
+				AB30B5E3188C6F4F00CE653C /* pem2.h */,
+				AB30B5E4188C6F4F00CE653C /* pkcs12.h */,
+				AB30B5E5188C6F4F00CE653C /* pkcs7.h */,
+				AB30B5E6188C6F4F00CE653C /* pqueue.h */,
+				AB30B5E7188C6F4F00CE653C /* rand.h */,
+				AB30B5E8188C6F4F00CE653C /* rc2.h */,
+				AB30B5E9188C6F4F00CE653C /* rc4.h */,
+				AB30B5EA188C6F4F00CE653C /* ripemd.h */,
+				AB30B5EB188C6F4F00CE653C /* rsa.h */,
+				AB30B5EC188C6F4F00CE653C /* safestack.h */,
+				AB30B5ED188C6F4F00CE653C /* seed.h */,
+				AB30B5EE188C6F4F00CE653C /* sha.h */,
+				AB30B5EF188C6F4F00CE653C /* srp.h */,
+				AB30B5F0188C6F4F00CE653C /* srtp.h */,
+				AB30B5F1188C6F4F00CE653C /* ssl.h */,
+				AB30B5F2188C6F4F00CE653C /* ssl2.h */,
+				AB30B5F3188C6F4F00CE653C /* ssl23.h */,
+				AB30B5F4188C6F4F00CE653C /* ssl3.h */,
+				AB30B5F5188C6F5000CE653C /* stack.h */,
+				AB30B5F6188C6F5000CE653C /* symhacks.h */,
+				AB30B5F7188C6F5000CE653C /* tls1.h */,
+				AB30B5F8188C6F5000CE653C /* ts.h */,
+				AB30B5F9188C6F5000CE653C /* txt_db.h */,
+				AB30B5FA188C6F5000CE653C /* ui.h */,
+				AB30B5FB188C6F5000CE653C /* ui_compat.h */,
+				AB30B5FC188C6F5000CE653C /* whrlpool.h */,
+				AB30B5FD188C6F5000CE653C /* x509.h */,
+				AB30B5FE188C6F5000CE653C /* x509_vfy.h */,
+				AB30B5FF188C6F5000CE653C /* x509v3.h */,
+			);
+			path = openssl;
 			sourceTree = "<group>";
 		};
 		AB316710128D40630037EF1C /* OCUnit testing */ = {
@@ -9006,15 +9267,6 @@
 			name = "Image collection window";
 			sourceTree = "<group>";
 		};
-		ABB732F3105662670042B4D0 /* libcrypto linking copy */ = {
-			isa = PBXGroup;
-			children = (
-				ABB732F01056625E0042B4D0 /* libcrypto.0.9.7.dylib */,
-				ABB732F11056625E0042B4D0 /* libcrypto.0.9.dylib */,
-			);
-			name = "libcrypto linking copy";
-			sourceTree = "<group>";
-		};
 		ABBA127C12B28C32005F12A5 /* JSCocoa */ = {
 			isa = PBXGroup;
 			children = (
@@ -9233,16 +9485,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB9477EF0CF6FBED0001A5E4 /* MGSNetServer.h in Headers */,
+				AB30B624188C6F5000CE653C /* md4.h in Headers */,
+				AB30B612188C6F5000CE653C /* des_old.h in Headers */,
+				AB30B60C188C6F5000CE653C /* cms.h in Headers */,
 				AB9477F10CF6FD3B0001A5E4 /* MGSNetServerHandler.h in Headers */,
+				AB30B640188C6F5000CE653C /* ssl3.h in Headers */,
 				AB9478340CF701960001A5E4 /* mlog.h in Headers */,
+				AB30B60A188C6F5000CE653C /* cast.h in Headers */,
 				AB9478360CF702120001A5E4 /* NSNetService_Errors.h in Headers */,
 				AB9478380CF702120001A5E4 /* MGSMother.h in Headers */,
+				AB30B647188C6F5000CE653C /* ui_compat.h in Headers */,
+				AB30B631188C6F5000CE653C /* pkcs7.h in Headers */,
 				AB93B4D70CFE17A900F13240 /* MGSNetClient.h in Headers */,
 				AB8572D20D00B84800E337B8 /* MGSNetRequest.h in Headers */,
 				09DC27000D06014A00017672 /* MGSNetHeader.h in Headers */,
 				09F018F80D0747AC00D5B29F /* MGSNetMessage.h in Headers */,
 				09406EFF0D0B372A00CF403F /* AEDescUtils.h in Headers */,
 				09AAC70D0D0C7B3400D9B17A /* MGSTask.h in Headers */,
+				AB30B62C188C6F5000CE653C /* opensslv.h in Headers */,
 				09923FD50D266FB10033F942 /* MGSScriptTask.h in Headers */,
 				ABA62B8F0D297C4B00744BCD /* MGSScriptPlist.h in Headers */,
 				AB0519190D2A6982004EF3FB /* MGSNetClientSocket.h in Headers */,
@@ -9253,15 +9513,27 @@
 				AB50ACA20D2E88BE0058DE6F /* MGSTaskPlist.h in Headers */,
 				AB874D320D338C22003A752B /* MGSNetMessageDictionary.h in Headers */,
 				ABD90AB30D33934B00601C00 /* MGSScriptManager.h in Headers */,
+				AB30B642188C6F5000CE653C /* symhacks.h in Headers */,
+				AB30B62A188C6F5000CE653C /* ocsp.h in Headers */,
+				AB30B604188C6F5000CE653C /* asn1t.h in Headers */,
+				AB30B609188C6F5000CE653C /* camellia.h in Headers */,
+				AB30B646188C6F5000CE653C /* ui.h in Headers */,
 				ABD90BC90D33B3A400601C00 /* MGSScript.h in Headers */,
+				AB30B618188C6F5000CE653C /* ebcdic.h in Headers */,
 				ABD90BFE0D34075300601C00 /* NSDictionary_Localize.h in Headers */,
+				AB30B637188C6F5000CE653C /* rsa.h in Headers */,
 				ABE201080D355A5700A8EDF3 /* MGSDictionary.h in Headers */,
+				AB30B62E188C6F5000CE653C /* pem.h in Headers */,
 				ABE3E9080D355D8700842E00 /* MGSFactoryArrayController.h in Headers */,
+				AB30B64B188C6F5000CE653C /* x509v3.h in Headers */,
 				ABE3E97F0D356ED800842E00 /* MGSScriptParameter.h in Headers */,
+				AB30B643188C6F5000CE653C /* tls1.h in Headers */,
 				ABE3E9850D356FFA00842E00 /* MGSScriptParameterManager.h in Headers */,
+				AB30B61E188C6F5000CE653C /* evp.h in Headers */,
 				AB7130480D39621300D4FB8D /* NSView_Mugginsoft.h in Headers */,
 				AB9029DB0D44A4170077ADE4 /* MGSPath.h in Headers */,
 				ABB749330D525C6F004F8A2C /* MGSBonjour.h in Headers */,
+				AB30B63C188C6F5000CE653C /* srtp.h in Headers */,
 				AB9AC4C60D95AFFE00767691 /* MGSAuthentication.h in Headers */,
 				AB9B8D610D96F2E80044D4BC /* serverauthenticate.h in Headers */,
 				ABED1B160D97CBFC00A9D464 /* MGSConfigurationAccessWindowController.h in Headers */,
@@ -9269,80 +9541,137 @@
 				AB9F1A720D9BFAE100F0DF68 /* MGSSecurity.h in Headers */,
 				ABA10E920D9CF0FE009FEA12 /* MGSPreferences.h in Headers */,
 				ABA10ECE0D9CFF34009FEA12 /* NSObject_Mugginsoft.h in Headers */,
+				AB30B63D188C6F5000CE653C /* ssl.h in Headers */,
 				ABCA58B00DA0E20200CF2BBF /* MGSKeyChain.h in Headers */,
 				ABCA58FA0DA0E81100CF2BBF /* EMKeychainItem_Mugginsoft.h in Headers */,
 				AB9E64690DD601330022A1E3 /* MGSAppleScriptData.h in Headers */,
 				AB9E65CB0DD650E60022A1E3 /* NSPropertyListSerialization_Mugginsoft.h in Headers */,
 				ABDEE1090DD9AC060044ECE9 /* MGSNumberTransformer.h in Headers */,
 				AB9E8F4D0DE1B71400501378 /* MGSExportPlugin.h in Headers */,
+				AB30B611188C6F5000CE653C /* des.h in Headers */,
+				AB30B610188C6F5000CE653C /* crypto.h in Headers */,
+				AB30B55C1883028300CE653C /* NSString-Base64Extensions.h in Headers */,
 				AB1512A50DE4B840002280E3 /* MGSPlugin.h in Headers */,
+				AB30B626188C6F5000CE653C /* mdc2.h in Headers */,
 				AB1512D30DE4BA18002280E3 /* MGSSendPlugin.h in Headers */,
 				ABF3463E0DEED02500020413 /* MGSLM.h in Headers */,
 				ABF346420DEED05C00020413 /* MGSL.h in Headers */,
 				AB823AF80DEF34AE005D07B3 /* NSApplication_Mugginsoft.h in Headers */,
+				AB30B607188C6F5000CE653C /* bn.h in Headers */,
+				AB30B63F188C6F5000CE653C /* ssl23.h in Headers */,
+				AB30B627188C6F5000CE653C /* modes.h in Headers */,
+				AB30B634188C6F5000CE653C /* rc2.h in Headers */,
 				AB823AFE0DEF35F7005D07B3 /* MGSSystem.h in Headers */,
 				ABDA82A50DF1F0ED009B823F /* MGSUser.h in Headers */,
+				AB30B622188C6F5000CE653C /* kssl.h in Headers */,
 				ABAFC6950DF9A5B200349FC3 /* MGSParameterPlugin.h in Headers */,
 				ABA089330DFA7DB10099755E /* MGSParameterSubInputViewController.h in Headers */,
+				AB30B632188C6F5000CE653C /* pqueue.h in Headers */,
 				ABAAC5060E09633A007609C7 /* MGSParameterPluginViewController.h in Headers */,
+				AB30B648188C6F5000CE653C /* whrlpool.h in Headers */,
 				ABB10D4D0E26240800A93854 /* NSMutableDictionary_Mugginsoft.h in Headers */,
+				AB30B619188C6F5000CE653C /* ec.h in Headers */,
+				AB30B616188C6F5000CE653C /* dtls1.h in Headers */,
+				AB30B638188C6F5000CE653C /* safestack.h in Headers */,
+				AB30B61D188C6F5000CE653C /* err.h in Headers */,
+				AB30B603188C6F5000CE653C /* asn1_mac.h in Headers */,
+				AB30B64A188C6F5000CE653C /* x509_vfy.h in Headers */,
 				ABB1109F0E266DAE00A93854 /* MGSArrayController.h in Headers */,
+				AB30B635188C6F5000CE653C /* rc4.h in Headers */,
+				AB30B644188C6F5000CE653C /* ts.h in Headers */,
 				AB6C96390E485D45005AE567 /* AsyncSocket.h in Headers */,
 				AB6C963E0E485D6B005AE567 /* MGSAsyncSocket.h in Headers */,
+				AB30B62B188C6F5000CE653C /* opensslconf.h in Headers */,
+				AB30B62F188C6F5000CE653C /* pem2.h in Headers */,
 				AB4A47070E491049007204F1 /* NSScanner_Mugginsoft.h in Headers */,
 				AB37D6040E609AE700623E45 /* MGSNetAttachment.h in Headers */,
+				AB30B601188C6F5000CE653C /* aes.h in Headers */,
 				ABAC76E80E62B2C200B76864 /* MGSNetAttachments.h in Headers */,
 				ABDEA2240E6336AA00CE1739 /* MGSNetSocket.h in Headers */,
 				ABBB3A590E7177AE008BA694 /* MySignalHandler.h in Headers */,
 				ABE496740E71C993004F04E8 /* MGSInternetSharing.h in Headers */,
+				AB30B625188C6F5000CE653C /* md5.h in Headers */,
 				ABC14B250E75945D00BA566D /* MGSInternetSharingClient.h in Headers */,
+				AB30B60E188C6F5000CE653C /* conf.h in Headers */,
+				AB30B617188C6F5000CE653C /* e_os2.h in Headers */,
+				AB30B63E188C6F5000CE653C /* ssl2.h in Headers */,
 				ABC14B290E75946F00BA566D /* MGSInternetSharingServer.h in Headers */,
 				ABA762390EE9782F00D900A6 /* MGSMetaDataHandler.h in Headers */,
 				ABAC7B640EEAA7F500ACFD87 /* MGSBundleToolPath.h in Headers */,
 				AB3C6C77104A9EF600ED6CFE /* AEMCodecs_Mugginsoft.h in Headers */,
+				AB30B602188C6F5000CE653C /* asn1.h in Headers */,
+				AB30B649188C6F5000CE653C /* x509.h in Headers */,
 				ABB4A200104D162F00CCC840 /* MGSScriptRunner.h in Headers */,
+				AB30B613188C6F5000CE653C /* dh.h in Headers */,
 				ABB4A205104D164100CCC840 /* MGSAppleScriptRunner.h in Headers */,
 				AB3BD5DB1051B9EE003AAB9C /* MGSNumberInputView.h in Headers */,
 				ABA8076B1062CBDA00B06709 /* MGSKeyValueBinding.h in Headers */,
 				AB98B0EC10C54DDD00C214B3 /* MGSBundleInfo.h in Headers */,
 				ABCDAE6D10C5CEC700C9BC25 /* AquaticPrime.h in Headers */,
+				AB30B606188C6F5000CE653C /* blowfish.h in Headers */,
 				ABCDAEE110C5D61300C9BC25 /* MGSAPLicence.h in Headers */,
 				AB54B8D810C6772A00BCC695 /* MGSAPLicenceCode.h in Headers */,
 				AB33562A10CAA05F003B44AC /* NSString_Bezier_Mugginsoft.h in Headers */,
 				AB33562E10CAA0F0003B44AC /* NSAffineTransform_Mugginsoft.h in Headers */,
 				AB859EF310CD32C40098C8E3 /* MGSMemoryManagement.h in Headers */,
 				AB8934F41168A83700F6177E /* MGSResultFormat.h in Headers */,
+				AB30B630188C6F5000CE653C /* pkcs12.h in Headers */,
+				AB30B61C188C6F5000CE653C /* engine.h in Headers */,
+				AB30B605188C6F5000CE653C /* bio.h in Headers */,
+				AB30B63B188C6F5000CE653C /* srp.h in Headers */,
 				ABA7E587116CE2E7006D0617 /* MGSObjectStyler.h in Headers */,
 				ABA7E63E116D275E006D0617 /* NSColor_Mugginsoft.h in Headers */,
+				AB30B620188C6F5000CE653C /* idea.h in Headers */,
 				AB89F447118620170099785A /* MGSLanguagePlugin.h in Headers */,
+				AB30B60F188C6F5000CE653C /* conf_api.h in Headers */,
 				AB89F44F118620E00099785A /* MGSAppleScriptLanguagePlugin.h in Headers */,
 				AB89F456118621620099785A /* MGSAppleScriptCocoaLanguagePlugin.h in Headers */,
+				AB30B628188C6F5000CE653C /* obj_mac.h in Headers */,
 				ABE33133118629C50070EF32 /* MGSLanguagePluginController.h in Headers */,
 				AB66CF4C11957C9600926541 /* MGSShellLanguagePlugin.h in Headers */,
+				AB30B623188C6F5000CE653C /* lhash.h in Headers */,
 				AB992FB211AFC62300889789 /* MGSLanguageResourcesManager.h in Headers */,
+				AB30B63A188C6F5000CE653C /* sha.h in Headers */,
 				AB01939211C7995E00446FE5 /* MGSLanguageTemplateResourcesManager.h in Headers */,
 				AB01939A11C79A3700446FE5 /* MGSLanguageDocumentResourcesManager.h in Headers */,
 				AB0193C211C7A10100446FE5 /* MGSResourcesManager.h in Headers */,
 				AB3E122B11C8D00300DA5D02 /* MGSImageAndTextCell2.h in Headers */,
 				AB35E69D11CA859000EE90E1 /* MGSLanguageDocumentResource.h in Headers */,
+				AB30B55E1883028A00CE653C /* NSData-Base64Extensions.h in Headers */,
+				AB30B60B188C6F5000CE653C /* cmac.h in Headers */,
 				AB65AC7211CB957E000F5F1B /* NSTreeController-DMExtensions.h in Headers */,
+				AB30B641188C6F5000CE653C /* stack.h in Headers */,
 				AB36DE11120837290059D9C4 /* MGSTempStorage.h in Headers */,
 				AB6AF449122AC0CD00E865E7 /* MGSLanguagePropertyManager.h in Headers */,
 				AB34E49F122C14C200BD8F8A /* MGSLanguageProperty.h in Headers */,
+				AB30B61A188C6F5000CE653C /* ecdh.h in Headers */,
+				AB30B645188C6F5000CE653C /* txt_db.h in Headers */,
 				AB01B351122D934F000D16C8 /* MGSLanguagePropertiesResource.h in Headers */,
+				AB30B615188C6F5000CE653C /* dso.h in Headers */,
 				AB2489A112BFF5F200933E98 /* MGSNetNegotiator.h in Headers */,
 				AB2E6CA012C799790071052D /* MGSNetMessage+KosmicTask.h in Headers */,
 				AB2E6D7C12C7B4BA0071052D /* MGSClientNetRequest+KosmicTask.h in Headers */,
+				AB30B633188C6F5000CE653C /* rand.h in Headers */,
 				ABC5BC70131E674E0020003D /* NSIndexPath+Mugginsoft.h in Headers */,
 				AB1E1AF013E1BBC4003643AC /* EMKeychain.h in Headers */,
 				AB019244150A2EBC00DA7747 /* MGSDisposableObject.h in Headers */,
+				AB30B61B188C6F5000CE653C /* ecdsa.h in Headers */,
+				AB30B61F188C6F5000CE653C /* hmac.h in Headers */,
+				AB30B639188C6F5000CE653C /* seed.h in Headers */,
+				AB30B621188C6F5000CE653C /* krb5_asn.h in Headers */,
 				AB01924E150ABE7200DA7747 /* NSObject+MGSDisposable.h in Headers */,
 				AB0B2A41161D882A00702D0E /* NSNetService+Mugginsoft.h in Headers */,
+				AB30B629188C6F5000CE653C /* objects.h in Headers */,
 				AB9132F91620469100B4B032 /* MGSNetwork.h in Headers */,
 				AB13E4D816388480001A5921 /* MGSPortChecker.h in Headers */,
+				AB30B608188C6F5000CE653C /* buffer.h in Headers */,
 				AB7563A21639C1560067BFC6 /* Reachability.h in Headers */,
+				AB30B636188C6F5000CE653C /* ripemd.h in Headers */,
 				AB978AC0164177B400ED9CE3 /* MGSInstanceTracker.h in Headers */,
 				AB42B88B165D789F004FF139 /* NSImage+Mugginsoft.h in Headers */,
+				AB30B614188C6F5000CE653C /* dsa.h in Headers */,
+				AB30B60D188C6F5000CE653C /* comp.h in Headers */,
+				AB30B62D188C6F5000CE653C /* ossl_typ.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12168,6 +12497,7 @@
 				ABE201090D355A5700A8EDF3 /* MGSDictionary.m in Sources */,
 				ABE3E9090D355D8700842E00 /* MGSFactoryArrayController.m in Sources */,
 				ABE3E9800D356ED800842E00 /* MGSScriptParameter.m in Sources */,
+				AB30B55D1883028600CE653C /* NSData-Base64Extensions.m in Sources */,
 				ABE3E9860D356FFA00842E00 /* MGSScriptParameterManager.m in Sources */,
 				AB9029DC0D44A4170077ADE4 /* MGSPath.m in Sources */,
 				ABB749340D525C6F004F8A2C /* MGSBonjour.m in Sources */,
@@ -12178,6 +12508,7 @@
 				AB9AC4C00D95ABB400767691 /* DSUtility.c in Sources */,
 				AB9AC4C10D95ABBD00767691 /* GSSauthenticate.c in Sources */,
 				AB9AC4C70D95AFFE00767691 /* MGSAuthentication.m in Sources */,
+				AB30B55B1883027A00CE653C /* NSString-Base64Extensions.m in Sources */,
 				AB9AC9A50D95B18C00767691 /* NetworkHelper.c in Sources */,
 				AB02FF080D98379E0015D575 /* NSWindowController_Mugginsoft.m in Sources */,
 				ABA4ADBF0D9925AC0022D465 /* MGSNotifications.m in Sources */,
@@ -12327,6 +12658,7 @@
 				AB9845E10D40C0310072DDA4 /* MGSTaskSpecifierManager.m in Sources */,
 				AB58C61C0D425B690021E247 /* iTableColumnHeaderCell.m in Sources */,
 				AB58C6580D4265920021E247 /* NSTableView_Mugginsoft.m in Sources */,
+				AB15D0C51895A70A00B3F051 /* MGSScriptParameterManager+Application.m in Sources */,
 				AB83D6C50D429C51001CF2B4 /* MGSTableColumn.m in Sources */,
 				AB00FB7D0D43AE9B00F535EE /* MGSHistoryTableView.m in Sources */,
 				AB96E7A00D46121B005814D4 /* AMProgressIndicatorTableColumnController.m in Sources */,
@@ -12362,6 +12694,7 @@
 				ABD132AD0D8407DE00046CAB /* NSMutableDictionary_Localize.m in Sources */,
 				AB2671260D85E31C0027D328 /* MGSApplesScriptDictWindowController.m in Sources */,
 				AB04C5AF0D8E91F000651270 /* MGSErrorWindowController.m in Sources */,
+				AB15D08F1895986600B3F051 /* MGSScriptParameter+Application.m in Sources */,
 				ABED1B4A0D97D8A500A9D464 /* MGSConfigurationAccessWindowController.m in Sources */,
 				AB7C47320DA2DEE90008F562 /* MGSAddServerWindowController.m in Sources */,
 				ABFF56C40DA95E0700762E71 /* MGSRemoveServerWindowController.m in Sources */,
@@ -14316,7 +14649,6 @@
 		091835F30D0C34E0008604BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_ENABLE_OBJC_GC = unsupported;
 				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14334,7 +14666,6 @@
 		091835F40D0C34E0008604BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_ENABLE_OBJC_GC = unsupported;
 				INFOPLIST_FILE = "KosmicTaskRunner-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
@@ -14352,7 +14683,6 @@
 		0953D02E0CD941E000519488 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = /Users/Jonathan/Documents/Computing/source/KosmicTask/yamlkit;
 				INFOPLIST_FILE = "KosmicTaskServer-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
@@ -14371,7 +14701,6 @@
 		0953D02F0CD941E000519488 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = /Users/Jonathan/Documents/Computing/source/KosmicTask/yamlkit;
 				INFOPLIST_FILE = "KosmicTaskServer-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
@@ -14390,7 +14719,6 @@
 		09C09E290CDC7D720048BC79 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
@@ -14399,8 +14727,10 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"/Users/jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/static\\ libraries",
 				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = MGSKosmicTask;
 			};
 			name = Debug;
@@ -14409,7 +14739,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
@@ -14419,8 +14748,10 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"/Users/jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/static\\ libraries",
 				);
+				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = MGSKosmicTask;
 			};
 			name = Release;
@@ -14432,7 +14763,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin Word-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin Word";
@@ -14445,7 +14775,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin Word-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin Word";
@@ -14458,7 +14787,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin Excel-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin Excel";
@@ -14470,7 +14798,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin Excel-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin Excel";
@@ -14482,7 +14809,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -14509,10 +14835,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -14564,7 +14888,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -14616,7 +14939,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -14668,7 +14990,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -14720,7 +15041,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -14776,7 +15096,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/Jonathan/Documents/Computing/bitbucket/luacocoa,
@@ -14804,7 +15123,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -14835,9 +15153,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/Jonathan/Documents/Computing/bitbucket/luacocoa/**",
@@ -14867,7 +15183,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
@@ -14894,7 +15209,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
@@ -14921,7 +15235,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -14947,9 +15260,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -15000,7 +15311,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -15051,7 +15361,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
@@ -15076,7 +15385,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = required;
@@ -15102,9 +15410,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_MODEL_TUNING = G5;
@@ -15138,7 +15444,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Test KosmicTask App-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -15158,13 +15463,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Test KosmicTask App-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -15212,7 +15515,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -15265,7 +15567,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -15317,7 +15618,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -15341,7 +15641,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -15377,11 +15676,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../cint\"",
@@ -15413,7 +15710,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -15444,9 +15740,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -15475,7 +15769,6 @@
 		AB4D190B0DE2D49400D0E517 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Export Plugin PDF-Info.plist";
@@ -15488,7 +15781,6 @@
 		AB4D190C0DE2D49400D0E517 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Export Plugin PDF-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin PDF";
@@ -15500,7 +15792,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -15526,9 +15817,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -15579,7 +15868,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -15604,7 +15892,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -15630,9 +15917,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -15683,7 +15968,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -15734,7 +16018,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -15759,7 +16042,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks/Python.framework/Versions/2.6/Headers;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -15787,9 +16069,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks/Python.framework/Versions/2.6/Headers;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
@@ -15844,7 +16124,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -15894,7 +16173,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -15947,7 +16225,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -15971,7 +16248,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = required;
@@ -15998,9 +16274,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_MODEL_TUNING = G5;
@@ -16054,7 +16328,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -16078,7 +16351,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -16104,9 +16376,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -16159,7 +16429,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -16209,7 +16478,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -16262,7 +16530,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -16312,7 +16579,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
@@ -16336,7 +16602,6 @@
 		AB88213E166964E600072991 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
@@ -16357,7 +16622,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
@@ -16378,7 +16642,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -16405,10 +16668,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -16432,7 +16693,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -16466,7 +16726,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -16501,7 +16760,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Parameter Plugin List-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Parameter Plugin List";
@@ -16513,7 +16771,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Parameter Plugin List-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Parameter Plugin List";
@@ -16553,7 +16810,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -16578,7 +16834,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin Mail-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin Mail";
@@ -16590,7 +16845,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin Mail-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin Mail";
@@ -16629,7 +16883,6 @@
 		ABA247940DE2CEEB00BD2A66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "Export Plugin Plain Text-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -16641,7 +16894,6 @@
 		ABA247950DE2CEEB00BD2A66 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Export Plugin Plain Text-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Export Plugin Plain Text";
@@ -16654,7 +16906,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin TextEdit-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin TextEdit";
@@ -16666,7 +16917,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin TextEdit-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin TextEdit";
@@ -16728,7 +16978,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -16755,10 +17004,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -16782,7 +17029,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -16805,9 +17051,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
 				FRAMEWORK_VERSION = A;
@@ -16828,7 +17072,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Parameter Plugin Number-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Parameter Plugin Number";
@@ -16840,7 +17083,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Parameter Plugin Number-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Parameter Plugin Number";
@@ -16853,7 +17095,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Parameter Plugin Text-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Parameter Plugin Text";
@@ -16865,7 +17106,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Parameter Plugin Text-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Parameter Plugin Text";
@@ -16931,7 +17171,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -16959,9 +17198,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = required;
@@ -16990,7 +17227,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin Numbers-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin Numbers";
@@ -17003,7 +17239,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin Numbers-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin Numbers";
@@ -17016,7 +17251,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin Pages-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin Pages";
@@ -17028,7 +17262,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Send Plugin Pages-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = "Send Plugin Pages";
@@ -17066,7 +17299,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -17093,10 +17325,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -17120,7 +17350,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -17147,10 +17376,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -17174,7 +17401,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -17205,9 +17431,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/Jonathan/Documents/Computing/bitbucket/luacocoa/**",
@@ -17267,7 +17491,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -17292,7 +17515,6 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_RESOURCE_RULES_PATH = ./kosmictask_code_signing_rules.plist;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -17324,7 +17546,6 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CODE_SIGN_RESOURCE_RULES_PATH = ./kosmictask_code_signing_rules.plist;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = NO;
@@ -17361,6 +17582,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "Developer ID Application: Mugginsoft LLP";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 70;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -17406,7 +17628,7 @@
 				SEPARATE_STRIP = NO;
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/** \"$(SRCROOT)/../static\\ libraries/include/**";
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"-Wformat",
@@ -17424,6 +17646,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "Developer ID Application: Mugginsoft LLP";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 70;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -17462,7 +17685,7 @@
 				SEPARATE_STRIP = YES;
 				SKIP_INSTALL = NO;
 				STRIPFLAGS = "-x";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/** \"$(SRCROOT)/../static\\ libraries/include/**";
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"-Wformat",

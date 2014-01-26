@@ -25,8 +25,11 @@
 // OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <CoreFoundation/CoreFoundation.h>
-#include <openssl/rsa.h>
-#include <openssl/sha.h>
+
+// libcypti.dylib is deprecated hence we load a static library version
+// obtained via macports. this explains the user path used here rather than a system path.
+#include "openssl/rsa.h"
+#include "openssl/sha.h"
 
 // Set the key - must be called first
 Boolean APSetKey(CFStringRef key);

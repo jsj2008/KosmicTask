@@ -9,8 +9,6 @@
 #import "MGSMother.h"
 #import "MGSScriptParameter.h"
 #import "MGSScriptPlist.h"
-#import "MGSParameterPluginController.h"
-#import "MGSAppController.h"
 #import "NSString_Mugginsoft.h"
 
 @interface MGSScriptParameter()
@@ -27,12 +25,18 @@
 {
 	return NSLocalizedString(@"Enter input.", @"New parameter description");
 }
+
 /*
  
  create a new parameter
  
  */
 + (id)new
+{
+    return [self newWithTypeName:nil];
+}
+
++ (id)newWithTypeName:(NSString *)pluginClassName
 {
 	MGSScriptParameter *parameter = [self newDict];
 	
@@ -42,9 +46,7 @@
     [parameter setVariableStatus:MGSScriptParameterVariableStatusNew];
     [parameter setVariableNameUpdating:MGSScriptParameterVariableNameUpdatingAuto];
 
-	// set default plugin class name
-	MGSParameterPluginController *parameterPluginController = [[NSApp delegate] parameterPluginController];
-	NSString *pluginClassName = [parameterPluginController defaultPluginName];
+	// set plugin class name
 	[parameter setTypeName:pluginClassName];
 	
 	// create class info mutable dict

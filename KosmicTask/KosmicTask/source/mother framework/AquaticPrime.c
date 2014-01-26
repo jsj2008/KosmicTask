@@ -128,7 +128,7 @@ CFDictionaryRef APCreateDictionaryForLicenseData(CFDataRef data)
         CFRelease(licenseDictionary);
         return NULL;
     }
-    
+
     // Get the license hash
     CFMutableStringRef hashCheck = CFStringCreateMutable(kCFAllocatorDefault,0);
     int hashIndex;

@@ -19,11 +19,19 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "NSString-Base64Extensions.h"
+
+#ifdef USE_OPENSSL
+
 #include <openssl/bio.h>
 #include <openssl/evp.h>
-
 // openssl/bio.h defines BIO_set_flags differently for libcrypto.0.9.8.dylib
 #define BIO_set_flags_097(b,f) ((b)->flags|=(f))
+
+#else
+#include <Security/Security.h>
+#endif
+
+
 
 @implementation NSString (Base64)
 
@@ -34,6 +42,8 @@
 
 - (NSData *) decodeBase64WithNewlines: (BOOL) encodedWithNewlines
 {
+    
+#ifdef USE_OPENSSL
     // Create a memory buffer containing Base64 encoded string data
     BIO * mem = BIO_new_mem_buf((void *) [self cString], (int)[self cStringLength]);
     
@@ -59,6 +69,25 @@
     // Clean up and go home
     BIO_free_all(mem);
     return data;
+#else
+    // create the transform
+    SecTransformRef transform = SecDecodeTransformCreate(kSecBase64Encoding, NULL);
+    
+    // set attributes
+    NSString *input = [self dataUsingEncoding:NSUTF8StringEncoding];
+    SecTransformSetAttribute(transform, kSecTransformInputAttributeName, input, NULL);
+    
+    // execute
+    CFErrorRef err = NULL;
+    NSData *output = (NSData *)SecTransformExecute(transform, &err);
+    CFRelease(transform);
+    
+    if (!output) {
+        NSLog(@"Base64 decode error: %@: data : %@", err, input);
+    }
+
+    return output;
+#endif
 }
 
 @end

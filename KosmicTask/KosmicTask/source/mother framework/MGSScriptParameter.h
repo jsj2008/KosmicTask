@@ -36,6 +36,7 @@ typedef NSInteger MGSScriptParameterVariableNameUpdating;
 }
 + (NSString *)defaultDescription;
 + (id)new;
++ (id)newWithTypeName:(NSString *)pluginClassName;
 - (id)value;
 - (void)setValue:(id)object;
 - (id)valueOrNil;

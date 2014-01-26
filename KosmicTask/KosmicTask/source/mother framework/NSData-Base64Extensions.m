@@ -19,11 +19,18 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "NSData-Base64Extensions.h"
+
+#ifdef USE_OPENSSL
+
 #include <openssl/bio.h>
 #include <openssl/evp.h>
 
 // openssl/bio.h defines BIO_set_flags differently for libcrypto.0.9.8.dylib
 #define BIO_set_flags_097(b,f) ((b)->flags|=(f))
+
+#else
+#include <Security/Security.h>
+#endif
 
 @implementation NSData (Base64)
 
@@ -34,6 +41,7 @@
 
 - (NSString *) encodeBase64WithNewlines: (BOOL) encodeWithNewlines
 {
+#ifdef USE_OPENSSL
     // Create a memory buffer which will contain the Base64 encoded string
     BIO * mem = BIO_new(BIO_s_mem());
     
@@ -60,6 +68,32 @@
     // Clean up and go home
     BIO_free_all(mem);
     return base64String;
+#else
+    // create the transform
+    SecTransformRef transform = SecEncodeTransformCreate(kSecBase64Encoding, NULL);
+    
+    // set attributes
+    if (encodeWithNewlines) {
+        SecTransformSetAttribute(transform, kSecEncodeLineLengthAttribute, kSecLineLength64, NULL);
+    }
+    SecTransformSetAttribute(transform, kSecTransformInputAttributeName, self, NULL);
+    
+    // execute
+    CFErrorRef err = NULL;
+    NSData *data = (NSData *)SecTransformExecute(transform, &err);
+    CFRelease(transform);
+    
+    NSString *output = nil;
+    if (!data) {
+        NSLog(@"Base64 encode error: %@: data : %@", err, self);
+    } else {
+        output = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    }
+
+    return output;
+
+#endif
+    
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  MGSScriptParameterHandler.h
+//  MGSScriptParameterManager.h
 //  Mother
 //
 //  Created by Jonathan on 09/01/2008.
@@ -25,5 +25,5 @@
 - (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation;
 - (BOOL)conformToRepresentation:(MGSScriptParameterRepresentation)representation options:(NSDictionary *)options;
 - (void)removeRepresentation;
-- (void)copyValidValuesWithMatchingUUID:(MGSScriptParameterManager *)parameterManager;
+- (MGSScriptParameter *)scriptParameterWithUUID:(NSString *)value;
 @end
