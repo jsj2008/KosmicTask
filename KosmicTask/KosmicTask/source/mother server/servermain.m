@@ -45,7 +45,7 @@ int main (int argc, const char * argv[])
 	MLog(DEBUGLOG, @"KosmicTaskServer path: %@\n", [MGSPath executablePath]);
 	
 	// print banner
-	printf ("KosmicTaskServer by Mugginsoft 2013.");
+	printf ("KosmicTaskServer by Mugginsoft.");
 	printf ("\nSYNTAX: %s port (if port omitted defaults to %i)", argv[0], MOTHER_IANA_REGISTERED_PORT);
 	printf ("\nAccepts multiple connections from KosmicTask clients.\n");
 	
