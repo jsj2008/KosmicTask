@@ -858,7 +858,6 @@
 		AB9478360CF702120001A5E4 /* NSNetService_Errors.h in Headers */ = {isa = PBXBuildFile; fileRef = AB9FE6790CF222C200E4BCD0 /* NSNetService_Errors.h */; };
 		AB9478370CF702120001A5E4 /* NSNetService_Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9FE67A0CF222C200E4BCD0 /* NSNetService_Errors.m */; };
 		AB9478380CF702120001A5E4 /* MGSMother.h in Headers */ = {isa = PBXBuildFile; fileRef = 09976C5F0CDC9FC300E78D55 /* MGSMother.h */; };
-		AB955F470DE6056B00F7B6D9 /* Send Plugin Pages.plugin in Copy Plugins */ = {isa = PBXBuildFile; fileRef = ABD668D80DE6035000097C1B /* Send Plugin Pages.plugin */; };
 		AB957568122FCD8C00ABA42E /* MGSResourceOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB957566122FCD8C00ABA42E /* MGSResourceOutlineView.m */; };
 		AB96764B16696B8B00AFA3A9 /* MGSKosmicTaskServer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB882140166964E600072991 /* MGSKosmicTaskServer.framework */; };
 		AB96764D166970B900AFA3A9 /* MGSKosmicTaskServer_vers.h in Headers */ = {isa = PBXBuildFile; fileRef = AB96764C166970B900AFA3A9 /* MGSKosmicTaskServer_vers.h */; };
@@ -1333,7 +1332,6 @@
 		ABD668D10DE6035000097C1B /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
 		ABD668D20DE6035000097C1B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		ABD668D30DE6035000097C1B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9DC2980DE5BF3600B85F5E /* ScriptingBridge.framework */; };
-		ABD668FC0DE6039B00097C1B /* Numbers.app in Sources */ = {isa = PBXBuildFile; fileRef = ABD668910DE6027C00097C1B /* Numbers.app */; };
 		ABD668FD0DE6039B00097C1B /* MGSNumbersSendPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD668950DE602B400097C1B /* MGSNumbersSendPlugin.m */; };
 		ABD669090DE6046600097C1B /* MGSPagesSendPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD668970DE602CD00097C1B /* MGSPagesSendPlugin.m */; };
 		ABD69FED0EB7B9C600287D72 /* MGSRequestTabScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD69FEC0EB7B9C600287D72 /* MGSRequestTabScrollView.m */; };
@@ -2598,13 +2596,6 @@
 			remoteGlobalIDString = AB92D08912047BD20025EAEF;
 			remoteInfo = "Language Plugin F-Script";
 		};
-		AB955F420DE6054500F7B6D9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = ABD668CA0DE6035000097C1B;
-			remoteInfo = "Send Plugin Pages";
-		};
 		AB96764916696B4F00AFA3A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3510,7 +3501,6 @@
 				ABB93F620DF9CBB7009A2BFC /* Parameter Plugin Date.plugin in Copy Plugins */,
 				ABB93F630DF9CBB7009A2BFC /* Parameter Plugin File.plugin in Copy Plugins */,
 				ABAFC7520DF9B2E100349FC3 /* Parameter Plugin Number.plugin in Copy Plugins */,
-				AB955F470DE6056B00F7B6D9 /* Send Plugin Pages.plugin in Copy Plugins */,
 				AB9DC3E20DE5CEA900B85F5E /* Send Plugin Mail.plugin in Copy Plugins */,
 				ABB6A72D0DE4CBA000B35855 /* Send Plugin TextEdit.plugin in Copy Plugins */,
 				AB5005800DE4BEC900C67F0D /* Send Plugin Word.plugin in Copy Plugins */,
@@ -5147,9 +5137,9 @@
 		ABD170410DCC9B6C00E57FF3 /* MGSActionWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSActionWindowController.h; sourceTree = "<group>"; };
 		ABD170420DCC9B6C00E57FF3 /* MGSActionWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSActionWindowController.m; sourceTree = "<group>"; };
 		ABD3A7FB0D4FD36A000C58D0 /* Warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Warning.png; sourceTree = "<group>"; };
+		ABD449191917CD8F004591F6 /* README Pages Send Plugin.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = "README Pages Send Plugin.md"; sourceTree = "<group>"; };
+		ABD4491A1917CE08004591F6 /* README Numbers Send Plugin.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = "README Numbers Send Plugin.md"; sourceTree = "<group>"; };
 		ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ParseKit.xcodeproj; path = ../../../parsekit/ParseKit.xcodeproj; sourceTree = SOURCE_ROOT; };
-		ABD668910DE6027C00097C1B /* Numbers.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = Numbers.app; path = "/Applications/iWork '08/Numbers.app"; sourceTree = "<absolute>"; };
-		ABD668920DE6027C00097C1B /* Pages.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = Pages.app; path = "/Applications/iWork '09/Pages.app"; sourceTree = "<absolute>"; };
 		ABD668940DE602B400097C1B /* MGSNumbersSendPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSNumbersSendPlugin.h; sourceTree = "<group>"; };
 		ABD668950DE602B400097C1B /* MGSNumbersSendPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNumbersSendPlugin.m; sourceTree = "<group>"; };
 		ABD668960DE602CD00097C1B /* MGSPagesSendPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPagesSendPlugin.h; sourceTree = "<group>"; };
@@ -9372,9 +9362,9 @@
 		ABD668900DE6025400097C1B /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				ABD668920DE6027C00097C1B /* Pages.app */,
 				ABD668960DE602CD00097C1B /* MGSPagesSendPlugin.h */,
 				ABD668970DE602CD00097C1B /* MGSPagesSendPlugin.m */,
+				ABD449191917CD8F004591F6 /* README Pages Send Plugin.md */,
 			);
 			name = Pages;
 			sourceTree = "<group>";
@@ -9382,9 +9372,9 @@
 		ABD668930DE6028700097C1B /* Numbers */ = {
 			isa = PBXGroup;
 			children = (
-				ABD668910DE6027C00097C1B /* Numbers.app */,
 				ABD668940DE602B400097C1B /* MGSNumbersSendPlugin.h */,
 				ABD668950DE602B400097C1B /* MGSNumbersSendPlugin.m */,
+				ABD4491A1917CE08004591F6 /* README Numbers Send Plugin.md */,
 			);
 			name = Numbers;
 			sourceTree = "<group>";
@@ -9825,7 +9815,6 @@
 				AB5005B50DE4BF0100C67F0D /* PBXTargetDependency */,
 				ABB6A7400DE4CBAE00B35855 /* PBXTargetDependency */,
 				AB9DC3E00DE5CE9D00B85F5E /* PBXTargetDependency */,
-				AB955F430DE6054500F7B6D9 /* PBXTargetDependency */,
 				ABAFC74E0DF9B2AE00349FC3 /* PBXTargetDependency */,
 				ABB93F230DF9CB68009A2BFC /* PBXTargetDependency */,
 				ABB93F250DF9CB68009A2BFC /* PBXTargetDependency */,
@@ -13426,7 +13415,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABD668FC0DE6039B00097C1B /* Numbers.app in Sources */,
 				ABD668FD0DE6039B00097C1B /* MGSNumbersSendPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13974,11 +13962,6 @@
 			isa = PBXTargetDependency;
 			target = AB92D08912047BD20025EAEF /* Language Plugin F-Script */;
 			targetProxy = AB92D17912047EF50025EAEF /* PBXContainerItemProxy */;
-		};
-		AB955F430DE6054500F7B6D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = ABD668CA0DE6035000097C1B /* Send Plugin Pages */;
-			targetProxy = AB955F420DE6054500F7B6D9 /* PBXContainerItemProxy */;
 		};
 		AB96764A16696B4F00AFA3A9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
