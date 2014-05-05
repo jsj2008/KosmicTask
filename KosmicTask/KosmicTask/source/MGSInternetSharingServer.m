@@ -101,7 +101,7 @@
  
  request notification
  
- the sender of this notification will expect for a response and may
+ the sender of this notification will expect a response and may
  be showing a wait state.
  
  */
@@ -285,7 +285,8 @@
     self.portReachabilityStatus = kMGSPortTryingToReach;
     if (!_portChecker) {
         
-        NSString *portCheckerURL = @"http://portcheck.mugginsoft.com";
+        // note: changed url from portcheck.mugginsoft.com as it wasn't resolving correctly
+        NSString *portCheckerURL = @"http://www.mugginsoft.com";
         NSString *portCheckerPath = @"sys";
         
         NSURL *url = [NSURL URLWithString:portCheckerURL];
@@ -293,7 +294,7 @@
         if (!_portChecker) {
              return;
         }
-        _portChecker.portQueryTimeout = 10.0;
+        _portChecker.portQueryTimeout = 5.0;
         _portChecker.delegate = self;
         // set correct checker path
         NSString *path = _portChecker.path;
