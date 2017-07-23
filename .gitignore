@@ -11,8 +11,18 @@
 *.la
 *.a
 
+# Subversion
+.svn
+
 # Xcode
-build/*
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+## Build generated
+build/
+DerivedData/
+
+## Various settings
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -21,7 +31,11 @@ build/*
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-!default.xcworkspace
-profile
+xcuserdata/
+.xcuserdata
+
+## Other
 *.moved-aside
-build
+*.xccheckout
+*.xcscmblueprint
+
