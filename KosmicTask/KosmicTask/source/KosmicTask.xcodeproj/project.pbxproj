@@ -312,7 +312,6 @@
 		AB30B64A188C6F5000CE653C /* x509_vfy.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5FE188C6F5000CE653C /* x509_vfy.h */; };
 		AB30B64B188C6F5000CE653C /* x509v3.h in Headers */ = {isa = PBXBuildFile; fileRef = AB30B5FF188C6F5000CE653C /* x509v3.h */; };
 		AB30B64C188C6F5000CE653C /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB30B600188C6F5000CE653C /* libcrypto.a */; };
-		AB3167A5128D42280037EF1C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3167A4128D42280037EF1C /* SenTestingKit.framework */; };
 		AB3167C9128D44520037EF1C /* MGSLanguage_test.m in Sources */ = {isa = PBXBuildFile; fileRef = AB316712128D409E0037EF1C /* MGSLanguage_test.m */; };
 		AB3167D8128D463B0037EF1C /* KosmicTask_test.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3167D7128D463B0037EF1C /* KosmicTask_test.m */; };
 		AB3167E1128D47260037EF1C /* MGSKosmicTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C09E260CDC7D710048BC79 /* MGSKosmicTask.framework */; };
@@ -3885,7 +3884,6 @@
 		AB31670B128D402C0037EF1C /* Test KosmicTask App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test KosmicTask App-Info.plist"; sourceTree = "<group>"; };
 		AB316711128D409E0037EF1C /* MGSLanguage_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLanguage_test.h; sourceTree = "<group>"; };
 		AB316712128D409E0037EF1C /* MGSLanguage_test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLanguage_test.m; sourceTree = "<group>"; };
-		AB3167A4128D42280037EF1C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = /Developer/Library/Frameworks/SenTestingKit.framework; sourceTree = "<absolute>"; };
 		AB3167B5128D43D50037EF1C /* NSException_SenTestFailure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSException_SenTestFailure.h; path = Library/Frameworks/SenTestingKit.framework/Versions/A/Headers/NSException_SenTestFailure.h; sourceTree = DEVELOPER_DIR; };
 		AB3167B6128D43D50037EF1C /* NSInvocation_SenTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSInvocation_SenTesting.h; path = Library/Frameworks/SenTestingKit.framework/Versions/A/Headers/NSInvocation_SenTesting.h; sourceTree = DEVELOPER_DIR; };
 		AB3167B7128D43D50037EF1C /* SenInterfaceTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SenInterfaceTestCase.h; path = Library/Frameworks/SenTestingKit.framework/Versions/A/Headers/SenInterfaceTestCase.h; sourceTree = DEVELOPER_DIR; };
@@ -4428,7 +4426,6 @@
 		AB8FC24E0D5BA24500583172 /* MGSNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSNotifications.m; sourceTree = "<group>"; };
 		AB9029D90D44A4170077ADE4 /* MGSPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPath.h; sourceTree = "<group>"; };
 		AB9029DA0D44A4170077ADE4 /* MGSPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSPath.m; sourceTree = "<group>"; };
-		AB907C4E106545DB00FF43CE /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
 		AB9094EB1710AD3800AAB103 /* MGSEditAwareTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSEditAwareTableView.h; sourceTree = "<group>"; };
 		AB9094EC1710AD3800AAB103 /* MGSEditAwareTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSEditAwareTableView.m; sourceTree = "<group>"; };
 		AB90958D1710CBBB00AAB103 /* MGSScriptParameterVariableStatusTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSScriptParameterVariableStatusTransformer.h; sourceTree = "<group>"; };
@@ -5615,7 +5612,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABB361AB1659825B0010A2AF /* Cocoa.framework in Frameworks */,
-				AB3167A5128D42280037EF1C /* SenTestingKit.framework in Frameworks */,
 				AB3167E1128D47260037EF1C /* MGSKosmicTask.framework in Frameworks */,
 				AB3167E2128D47260037EF1C /* MGSKosmicTaskRunner.framework in Frameworks */,
 			);
@@ -6210,7 +6206,6 @@
 				AB98AFD510C540FA00C214B3 /* Application */,
 				09A68B230CDC9B110022898B /* Application framework */,
 				AB9E8FB50DE1C8BD00501378 /* Application plugins */,
-				AB907C4E106545DB00FF43CE /* include */,
 				AB98B0AA10C5423B00C214B3 /* info.plist */,
 				AB226F561039B99000CF213D /* Licence */,
 				AB9E63DE0DD5F6AD0022A1E3 /* NDScript framework */,
@@ -6739,7 +6734,6 @@
 				ABF0D012120C227F006ABDB2 /* TWAIN.framework */,
 				ABF0D014120C227F006ABDB2 /* vecLib.framework */,
 				ABF0D016120C227F006ABDB2 /* VideoDecodeAcceleration.framework */,
-				AB3167A4128D42280037EF1C /* SenTestingKit.framework */,
 			);
 			name = mother;
 			sourceTree = "<group>";
