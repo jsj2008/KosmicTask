@@ -12407,7 +12407,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n# http://davedelong.com/blog/2009/04/15/incrementing-build-numbers-xcode\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print MGSBuildNumber\" Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :MGSBuildNumber $buildNumber\" Info.plist";
+			shellScript = "#!/bin/bash\n# http://davedelong.com/blog/2009/04/15/incrementing-build-numbers-xcode\nif [ $BUILD_STYLE = \"Release\" ] ; then\n    buildNumber=$(/usr/libexec/PlistBuddy -c \"Print MGSBuildNumber\" Info.plist)\n    buildNumber=$(($buildNumber + 1))\n    /usr/libexec/PlistBuddy -c \"Set :MGSBuildNumber $buildNumber\" Info.plist\nfi";
 		};
 		ABDB38921175FC8A005A1A66 /* Build configuration script */ = {
 			isa = PBXShellScriptBuildPhase;
