@@ -3678,8 +3678,6 @@
 		AB0B0EC0122EE52600E1B450 /* NSOutlineView_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSOutlineView_Mugginsoft.m; path = "../../../Mugginsoft-shared-source/NSOutlineView_Mugginsoft.m"; sourceTree = SOURCE_ROOT; };
 		AB0B2A3F161D882900702D0E /* NSNetService+Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNetService+Mugginsoft.h"; sourceTree = "<group>"; };
 		AB0B2A40161D882900702D0E /* NSNetService+Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNetService+Mugginsoft.m"; sourceTree = "<group>"; };
-		AB0DC00F130C8CEF000F4673 /* git submodules.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "git submodules.rtf"; sourceTree = "<group>"; };
-		AB0DC012130C8DF5000F4673 /* Hg submodule.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Hg submodule.rtf"; sourceTree = "<group>"; };
 		AB0EE2260EF13CE5008EA368 /* TaskPublishedTemplate.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TaskPublishedTemplate.tif; sourceTree = "<group>"; };
 		AB1089B210F632CC00882FC7 /* NSEvent_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSEvent_Mugginsoft.h; sourceTree = "<group>"; };
 		AB1089B310F632CC00882FC7 /* NSEvent_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSEvent_Mugginsoft.m; sourceTree = "<group>"; };
@@ -4984,7 +4982,6 @@
 		ABB2FD310E40F1C500B3C27A /* MGSActionDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSActionDescriptionViewController.m; sourceTree = "<group>"; };
 		ABB2FD330E40F21500B3C27A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ActionDescriptionView.xib; sourceTree = "<group>"; };
 		ABB3619616597FDC0010A2AF /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		ABB3619816597FDC0010A2AF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		ABB3619A16597FDD0010A2AF /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		ABB3619B16597FDD0010A2AF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		ABB3619C16597FDD0010A2AF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -6535,6 +6532,21 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABF0CFBC120C227E006ABDB2 /* AppleScriptKit.framework */,
+				ABF0CFD3120C227E006ABDB2 /* DrawSprocket.framework */,
+				ABF0CFD9120C227E006ABDB2 /* FWAUserLib.framework */,
+				ABF0CFDF120C227F006ABDB2 /* InstallerPlugins.framework */,
+				ABF0CFE6120C227F006ABDB2 /* JavaFrameEmbedding.framework */,
+				ABF0CFEB120C227F006ABDB2 /* Kernel.framework */,
+				ABF0CFED120C227F006ABDB2 /* LatentSemanticMapping.framework */,
+				ABF0CFEF120C227F006ABDB2 /* Message.framework */,
+				ABF0CFF7120C227F006ABDB2 /* PCSC.framework */,
+				ABF0D001120C227F006ABDB2 /* Ruby.framework */,
+				ABF0D00E120C227F006ABDB2 /* Tcl.framework */,
+				ABF0D010120C227F006ABDB2 /* Tk.framework */,
+				ABF0D012120C227F006ABDB2 /* TWAIN.framework */,
+				ABF0D014120C227F006ABDB2 /* vecLib.framework */,
+				ABF0D016120C227F006ABDB2 /* VideoDecodeAcceleration.framework */,
 				AB3366CF11AAC36A0038A67C /* Accelerate.framework */,
 				ABDB815F0DF7147100F24711 /* AddressBook.framework */,
 				AB3366CD11AAC36A0038A67C /* AGL.framework */,
@@ -6698,16 +6710,8 @@
 		29B97314FDCFA39411CA2CEA /* mother */ = {
 			isa = PBXGroup;
 			children = (
-				AB88214B1669668200072991 /* Foundation.framework */,
-				AB8821491669667200072991 /* OSAKit.framework */,
-				AB8821461669665F00072991 /* Security.framework */,
-				AB88202C1668C7BA00072991 /* KosmicTask.entitlements */,
-				ABB361AA1659825A0010A2AF /* Cocoa.framework */,
-				AB3F6FE5130C86DF00342F11 /* HG submodule project */,
 				AB3F5EEF130C7C5300342F11 /* MGSPythonScriptManager.m */,
-				AB777ED1130C7087000973D4 /* Git submodule projects - do not edit directly */,
-				AB92318511A695E70093EDE3 /* KosmicTask Quick Look Plugin.xcodeproj */,
-				ABCF25AE0EE0A66F00FC0364 /* KosmicTask MDImporter.xcodeproj */,
+				AB6EA21C1F2902DB0095851C /* Sub projects */,
 				AB86986814D73A830002F88E /* Google toolbox for mac */,
 				AB4F64FD10C99DF100229E4E /* Shared Source */,
 				AB4F925D1039AD39005EF329 /* build xcconfigs */,
@@ -6717,23 +6721,7 @@
 				AB1BA93D0CF76EB500F35D8F /* Redundant source */,
 				AB30B5B2188C6F4A00CE653C /* static libraries */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
-				ABF0D32E120CB37B006ABDB2 /* Auxiliary executables */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				ABF0CFBC120C227E006ABDB2 /* AppleScriptKit.framework */,
-				ABF0CFD3120C227E006ABDB2 /* DrawSprocket.framework */,
-				ABF0CFD9120C227E006ABDB2 /* FWAUserLib.framework */,
-				ABF0CFDF120C227F006ABDB2 /* InstallerPlugins.framework */,
-				ABF0CFE6120C227F006ABDB2 /* JavaFrameEmbedding.framework */,
-				ABF0CFEB120C227F006ABDB2 /* Kernel.framework */,
-				ABF0CFED120C227F006ABDB2 /* LatentSemanticMapping.framework */,
-				ABF0CFEF120C227F006ABDB2 /* Message.framework */,
-				ABF0CFF7120C227F006ABDB2 /* PCSC.framework */,
-				ABF0D001120C227F006ABDB2 /* Ruby.framework */,
-				ABF0D00E120C227F006ABDB2 /* Tcl.framework */,
-				ABF0D010120C227F006ABDB2 /* Tk.framework */,
-				ABF0D012120C227F006ABDB2 /* TWAIN.framework */,
-				ABF0D014120C227F006ABDB2 /* vecLib.framework */,
-				ABF0D016120C227F006ABDB2 /* VideoDecodeAcceleration.framework */,
 			);
 			name = mother;
 			sourceTree = "<group>";
@@ -6750,6 +6738,7 @@
 		29B97317FDCFA39411CA2CEA /* Application resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB88202C1668C7BA00072991 /* KosmicTask.entitlements */,
 				AB43FE2016922C5E00E79995 /* MGSUndoTemplate.tif */,
 				AB42B88D165E47C0004FF139 /* MGSUpdating1Template.tif */,
 				AB42B88E165E47C0004FF139 /* MGSUpdating2Template.tif */,
@@ -6830,11 +6819,14 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB88214B1669668200072991 /* Foundation.framework */,
+				AB8821491669667200072991 /* OSAKit.framework */,
+				AB8821461669665F00072991 /* Security.framework */,
+				ABB361AA1659825A0010A2AF /* Cocoa.framework */,
 				AB8D400114D2DF7300FC88A2 /* Sparkle.framework */,
 				AB25B3951325995D00D5B634 /* yaml.so */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				ABB3619616597FDC0010A2AF /* SenTestingKit.framework */,
-				ABB3619816597FDC0010A2AF /* Cocoa.framework */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -7509,14 +7501,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AB3F6FE5130C86DF00342F11 /* HG submodule project */ = {
-			isa = PBXGroup;
-			children = (
-				AB0DC012130C8DF5000F4673 /* Hg submodule.rtf */,
-			);
-			name = "HG submodule project";
-			sourceTree = "<group>";
-		};
 		AB3F9D4D1667EC38003357D9 /* PSMTabBarControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -7906,44 +7890,29 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AB69B66D130EAA8E00171D4F /* Git repo is local */ = {
+		AB6EA21C1F2902DB0095851C /* Sub projects */ = {
 			isa = PBXGroup;
 			children = (
-				AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */,
 				ABAB18811048671D00AA3E9A /* Appscript.xcodeproj */,
+				ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */,
+				AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */,
+				ABA1DE831204916A000B3F00 /* FScript.xcodeproj */,
+				AB19B59916A0C17400CCE1EA /* GRMustache.xcodeproj */,
+				AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */,
+				ABCF25AE0EE0A66F00FC0364 /* KosmicTask MDImporter.xcodeproj */,
+				AB92318511A695E70093EDE3 /* KosmicTask Quick Look Plugin.xcodeproj */,
 				ABD056161325267000A728B8 /* lua.xcodeproj */,
 				AB1BD76212AFFE2900B7733A /* LuaCocoa.xcodeproj */,
-				AB72CE370E703C5500E6711C /* Port Map.xcodeproj */,
+				AB79AF6814CA2F0E00087932 /* MarkdownLive.xcodeproj */,
 				AB2EC82D14D1E22700B54313 /* MGTemplateEngine.xcodeproj */,
 				AB1CBC7014CDCF8F00CCF7DD /* OpenFeedback.xcodeproj */,
-				AB79AF6814CA2F0E00087932 /* MarkdownLive.xcodeproj */,
-				ABADD7E313E5BD030033E038 /* FeedbackReporter.xcodeproj */,
-				ABF6CDB413CF786A000EADD7 /* QLMarkdown.xcodeproj */,
-				ABA1DE831204916A000B3F00 /* FScript.xcodeproj */,
 				ABD644B9128C4ADF0061E567 /* ParseKit.xcodeproj */,
-				AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */,
-				AB31809C12B2881F001E821B /* JSCocoa.xcodeproj */,
-				AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */,
+				AB72CE370E703C5500E6711C /* Port Map.xcodeproj */,
 				ABE014E50D3EB94A00899F73 /* PSMTabBarControl.xcodeproj */,
+				ABF6CDB413CF786A000EADD7 /* QLMarkdown.xcodeproj */,
+				AB7AE35A12898E1E00E38EAC /* YAMLKit.xcodeproj */,
 			);
-			name = "Git repo is local";
-			sourceTree = "<group>";
-		};
-		AB69B67A130EAAA400171D4F /* Git hub */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Git hub";
-			sourceTree = "<group>";
-		};
-		AB777ED1130C7087000973D4 /* Git submodule projects - do not edit directly */ = {
-			isa = PBXGroup;
-			children = (
-				AB69B67A130EAAA400171D4F /* Git hub */,
-				AB69B66D130EAA8E00171D4F /* Git repo is local */,
-				AB0DC00F130C8CEF000F4673 /* git submodules.rtf */,
-			);
-			name = "Git submodule projects - do not edit directly";
+			name = "Sub projects";
 			sourceTree = "<group>";
 		};
 		AB7812DF0D58873100C19FAB /* Value transformers */ = {
@@ -9423,13 +9392,6 @@
 				ABEF5C3A11C1201500FC3C6C /* MGSResultFileScriptCommand.m */,
 			);
 			name = Scriptability;
-			sourceTree = "<group>";
-		};
-		ABF0D32E120CB37B006ABDB2 /* Auxiliary executables */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Auxiliary executables";
 			sourceTree = "<group>";
 		};
 		ABF3463B0DEECFCF00020413 /* Licensing */ = {
