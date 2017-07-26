@@ -9,7 +9,9 @@
 //
 #import "MGSPythonScriptManager.h"
 
-#import <Python/Python.h>
+// python framework no longer in the SDK.
+// must have xcode command line tools installed.
+#import <Python.h>
 
 @interface MGSPythonScriptExecutor : NSObject < MGSScriptExecutor> {
 }

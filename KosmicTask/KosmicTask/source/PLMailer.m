@@ -7,8 +7,6 @@
 //
 
 #import "PLMailer.h"
-#import <Message/NSMailDelivery.h>
-
 
 @implementation PLMailer
 
@@ -130,17 +128,4 @@ NSString *PLMailerMailType = @"PLMailerNSMailDeliveryType";
 	[[NSWorkspace sharedWorkspace] openURL:mailtoURL];
 }
 
-/*
-- (void)sendMailEmail {
-	NSMutableDictionary *headersDict = [NSMutableDictionary dictionary];
-	NSString *theMessage = [[[NSMutableAttributedString alloc] initWithPath:@"/tmp/ExampleDocument.rtfd" documentAttributes:NULL] autorelease];
-	[headersDict setObject:[self to] forKey:@"To"];
-	[headersDict setObject:[self ccArray] forKey:@"Cc"];
-	[headersDict setObject:[self subject] forKey:@"Subject"];
-	BOOL result = [NSMailDelivery deliverMessage:[self body]
-									headers:headersDict
-									 format:NSMIMEMailFormat
-								   protocol:nil];
-}
-*/
 @end

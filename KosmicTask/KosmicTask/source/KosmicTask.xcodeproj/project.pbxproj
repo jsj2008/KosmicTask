@@ -154,6 +154,7 @@
 		AB1CBC7B14CDCFD800CCF7DD /* OpenFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */; };
 		AB1CBC7C14CDCFF000CCF7DD /* OpenFeedback.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = AB1CBC7814CDCF8F00CCF7DD /* OpenFeedback.framework */; };
 		AB1D731713F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1D731613F9B9C40062BC80 /* MGSFilePathParameterEditViewController.m */; };
+		AB1D87311F2951DD00E95ED0 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABE81B0E0D36248500EF303E /* Preferences.xib */; };
 		AB1E1AF013E1BBC4003643AC /* EMKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = AB1E1AED13E1BBC4003643AC /* EMKeychain.h */; };
 		AB1E1AF113E1BBC4003643AC /* EMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E1AEE13E1BBC4003643AC /* EMKeychain.m */; };
 		AB1E1AF213E1BBC4003643AC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AB1E1AEF13E1BBC4003643AC /* README.md */; };
@@ -492,6 +493,7 @@
 		AB54205C11C42644004CB062 /* MGSResourceBrowserSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB54205B11C42644004CB062 /* MGSResourceBrowserSheetController.m */; };
 		AB54B8CF10C6767700BCC695 /* MGSAPLicence.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCDAEE010C5D61300C9BC25 /* MGSAPLicence.m */; };
 		AB54B8D810C6772A00BCC695 /* MGSAPLicenceCode.h in Headers */ = {isa = PBXBuildFile; fileRef = AB54B8D710C6772A00BCC695 /* MGSAPLicenceCode.h */; };
+		AB557DFA1F2955DF0011FA0D /* TaskVariablesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB9095921710D09D00AAB103 /* TaskVariablesView.xib */; };
 		AB562498118DAE9B0012487B /* MGSTcshLanguagePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B43D118B076700903D1D /* MGSTcshLanguagePlugin.m */; };
 		AB5624A4118DAFAD0012487B /* taskmain.m in Sources */ = {isa = PBXBuildFile; fileRef = 09372FDE0D0C301E00A9FAED /* taskmain.m */; };
 		AB5624A7118DAFAD0012487B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97325FDCFA39411CA2CEA /* Foundation.framework */; };
@@ -731,6 +733,7 @@
 		AB88215C1669680400072991 /* MGSTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AAC70C0D0C7B3400D9B17A /* MGSTask.m */; };
 		AB88215D1669680B00072991 /* MGSScriptTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 09923FD40D266FB10033F942 /* MGSScriptTask.m */; };
 		AB88215E1669681300072991 /* MGSServerNetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7C197A1622F52C00E45BD4 /* MGSServerNetRequest.m */; };
+		AB882E9B1F295CB400AF631C /* libpython2.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB882E9A1F295CB400AF631C /* libpython2.7.dylib */; };
 		AB8934F41168A83700F6177E /* MGSResultFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = AB8934F21168A83700F6177E /* MGSResultFormat.h */; };
 		AB8934F51168A83700F6177E /* MGSResultFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8934F31168A83700F6177E /* MGSResultFormat.m */; };
 		AB89EFAE14CA34650077A496 /* ORCDiscount.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB79AF7414CA2F1000087932 /* ORCDiscount.framework */; };
@@ -805,7 +808,6 @@
 		AB8F428412B4D782001D9216 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9B8D590D96EC480044D4BC /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AB8F428512B4D782001D9216 /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB33679011AAC39E0038A67C /* SecurityFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AB8F428612B4D782001D9216 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAD63E90EC4EAAC009EAE2F /* SecurityInterface.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		AB8F428712B4D782001D9216 /* ServerNotification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB33679311AAC39E0038A67C /* ServerNotification.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AB8F428812B4D782001D9216 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB33679511AAC39E0038A67C /* ServiceManagement.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AB8F429312B4D795001D9216 /* SyncServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB33679711AAC39E0038A67C /* SyncServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		AB8F429412B4D795001D9216 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA105D71056E3A100F1CC84 /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -3950,7 +3952,6 @@
 		AB33678A11AAC39E0038A67C /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
 		AB33678C11AAC39E0038A67C /* Scripting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Scripting.framework; path = /System/Library/Frameworks/Scripting.framework; sourceTree = "<absolute>"; };
 		AB33679011AAC39E0038A67C /* SecurityFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityFoundation.framework; path = /System/Library/Frameworks/SecurityFoundation.framework; sourceTree = "<absolute>"; };
-		AB33679311AAC39E0038A67C /* ServerNotification.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServerNotification.framework; path = /System/Library/Frameworks/ServerNotification.framework; sourceTree = "<absolute>"; };
 		AB33679511AAC39E0038A67C /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = /System/Library/Frameworks/ServiceManagement.framework; sourceTree = "<absolute>"; };
 		AB33679711AAC39E0038A67C /* SyncServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SyncServices.framework; path = /System/Library/Frameworks/SyncServices.framework; sourceTree = "<absolute>"; };
 		AB33679A11AAC39E0038A67C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
@@ -4377,6 +4378,7 @@
 		AB8821461669665F00072991 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AB8821491669667200072991 /* OSAKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OSAKit.framework; path = System/Library/Frameworks/OSAKit.framework; sourceTree = SDKROOT; };
 		AB88214B1669668200072991 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AB882E9A1F295CB400AF631C /* libpython2.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpython2.7.dylib; path = ../../../../../../../System/Library/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib; sourceTree = "<group>"; };
 		AB8934F21168A83700F6177E /* MGSResultFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSResultFormat.h; sourceTree = "<group>"; };
 		AB8934F31168A83700F6177E /* MGSResultFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSResultFormat.m; sourceTree = "<group>"; };
 		AB89F097124364130076FBD0 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/MGSLanguageProcess.strings; sourceTree = "<group>"; };
@@ -5268,7 +5270,6 @@
 		ABF0CFE6120C227F006ABDB2 /* JavaFrameEmbedding.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFrameEmbedding.framework; path = /System/Library/Frameworks/JavaFrameEmbedding.framework; sourceTree = "<absolute>"; };
 		ABF0CFEB120C227F006ABDB2 /* Kernel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kernel.framework; path = /System/Library/Frameworks/Kernel.framework; sourceTree = "<absolute>"; };
 		ABF0CFED120C227F006ABDB2 /* LatentSemanticMapping.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LatentSemanticMapping.framework; path = /System/Library/Frameworks/LatentSemanticMapping.framework; sourceTree = "<absolute>"; };
-		ABF0CFEF120C227F006ABDB2 /* Message.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Message.framework; path = /System/Library/Frameworks/Message.framework; sourceTree = "<absolute>"; };
 		ABF0CFF7120C227F006ABDB2 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = /System/Library/Frameworks/PCSC.framework; sourceTree = "<absolute>"; };
 		ABF0D001120C227F006ABDB2 /* Ruby.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ruby.framework; path = /System/Library/Frameworks/Ruby.framework; sourceTree = "<absolute>"; };
 		ABF0D00E120C227F006ABDB2 /* Tcl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tcl.framework; path = /System/Library/Frameworks/Tcl.framework; sourceTree = "<absolute>"; };
@@ -5582,7 +5583,6 @@
 				AB8F428412B4D782001D9216 /* Security.framework in Frameworks */,
 				AB8F428512B4D782001D9216 /* SecurityFoundation.framework in Frameworks */,
 				AB8F428612B4D782001D9216 /* SecurityInterface.framework in Frameworks */,
-				AB8F428712B4D782001D9216 /* ServerNotification.framework in Frameworks */,
 				AB8F428812B4D782001D9216 /* ServiceManagement.framework in Frameworks */,
 				AB8F429312B4D795001D9216 /* SyncServices.framework in Frameworks */,
 				AB8F429412B4D795001D9216 /* SystemConfiguration.framework in Frameworks */,
@@ -5719,6 +5719,7 @@
 				AB5CD94D118AEC4B00C545CD /* Cocoa.framework in Frameworks */,
 				AB5CD94E118AEC4B00C545CD /* Carbon.framework in Frameworks */,
 				AB5CD94F118AEC4B00C545CD /* MGSKosmicTaskRunner.framework in Frameworks */,
+				AB882E9B1F295CB400AF631C /* libpython2.7.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6524,7 +6525,6 @@
 				ABF0CFE6120C227F006ABDB2 /* JavaFrameEmbedding.framework */,
 				ABF0CFEB120C227F006ABDB2 /* Kernel.framework */,
 				ABF0CFED120C227F006ABDB2 /* LatentSemanticMapping.framework */,
-				ABF0CFEF120C227F006ABDB2 /* Message.framework */,
 				ABF0CFF7120C227F006ABDB2 /* PCSC.framework */,
 				ABF0D001120C227F006ABDB2 /* Ruby.framework */,
 				ABF0D00E120C227F006ABDB2 /* Tcl.framework */,
@@ -6598,7 +6598,6 @@
 				AB9B8D590D96EC480044D4BC /* Security.framework */,
 				AB33679011AAC39E0038A67C /* SecurityFoundation.framework */,
 				ABAD63E90EC4EAAC009EAE2F /* SecurityInterface.framework */,
-				AB33679311AAC39E0038A67C /* ServerNotification.framework */,
 				AB33679511AAC39E0038A67C /* ServiceManagement.framework */,
 				AB33679711AAC39E0038A67C /* SyncServices.framework */,
 				ABA105D71056E3A100F1CC84 /* SystemConfiguration.framework */,
@@ -6802,6 +6801,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB882E9A1F295CB400AF631C /* libpython2.7.dylib */,
 				AB88214B1669668200072991 /* Foundation.framework */,
 				AB8821491669667200072991 /* OSAKit.framework */,
 				AB8821461669665F00072991 /* Security.framework */,
@@ -11547,6 +11547,7 @@
 				AB8C0BBA0D5719FF00904607 /* GreenPlay.icns in Resources */,
 				AB8C0C370D57217B00904607 /* GreenPlay16.png in Resources */,
 				AB8C0CE20D5743F400904607 /* MotherDisplayBlue.png in Resources */,
+				AB1D87311F2951DD00E95ED0 /* Preferences.xib in Resources */,
 				ABF35D8F0D5DBFE70082B762 /* WhiteCrossRedCircle16.png in Resources */,
 				ABEB2FA20D5F41FE00F4DB38 /* OnlineStatusHeader.tiff in Resources */,
 				ABC439230D5F92A500FB103E /* DotHeader.tiff in Resources */,
@@ -11640,6 +11641,7 @@
 				ABB2FD360E40F22700B3C27A /* ActionDescriptionView.xib in Resources */,
 				ABCF1F290E41F86E00428EC1 /* TextPanelView.xib in Resources */,
 				ABE6EF060E50A38500FCD92C /* LCD display blue.png in Resources */,
+				AB557DFA1F2955DF0011FA0D /* TaskVariablesView.xib in Resources */,
 				AB6AE4180E5E0AD100B88D0E /* AddDocument24.png in Resources */,
 				AB6AE41B0E5E0B2800B88D0E /* DuplicateDocument24.png in Resources */,
 				AB6AE41C0E5E0B2800B88D0E /* DeleteDocument24.png in Resources */,
@@ -15888,24 +15890,34 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks/Python.framework/Versions/2.6/Headers;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				HEADER_SEARCH_PATHS = (
+					"./include/**",
+					"\"$(SRCROOT)/../../../GRMustache/src/classes\"/**",
+					/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+				);
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Python.framework/Versions/2.7/lib",
+				);
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,
 					__info_plist,
 					"KosmicTaskRunner-Info.plist",
-					/System/Library/Frameworks/Python.framework/Versions/2.6/Python,
+					/System/Library/Frameworks/Python.framework/Versions/2.7/Python,
 				);
 				PRODUCT_NAME = KosmicTaskPythonObjCRunner;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/** \"$(SRCROOT)/../static\\ libraries/include/**";
 			};
 			name = Debug;
 		};
@@ -15914,23 +15926,33 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks/Python.framework/Versions/2.6/Headers;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				HEADER_SEARCH_PATHS = (
+					"./include/**",
+					"\"$(SRCROOT)/../../../GRMustache/src/classes\"/**",
+					/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+				);
 				INFOPLIST_FILE = "../KosmicTaskRunner-Info.plist";
 				INSTALL_PATH = /usr/local/bin;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../../../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/Python.framework/Versions/2.7/lib",
+				);
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,
 					__info_plist,
 					"KosmicTaskRunner-Info.plist",
-					/System/Library/Frameworks/Python.framework/Versions/2.6/Python,
+					/System/Library/Frameworks/Python.framework/Versions/2.7/Python,
 				);
 				PRODUCT_NAME = KosmicTaskPythonObjCRunner;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/** \"$(SRCROOT)/../static\\ libraries/include/**";
 				ZERO_LINK = NO;
 			};
 			name = Release;
