@@ -632,6 +632,7 @@
 		AB6C963F0E485D6B005AE567 /* MGSAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6C963D0E485D6B005AE567 /* MGSAsyncSocket.m */; };
 		AB6E4F2C0D3C1640009700B3 /* MGSSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6E4F2B0D3C1640009700B3 /* MGSSidebarView.m */; };
 		AB6E4F2F0D3C166A009700B3 /* MGSSidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6E4F2E0D3C166A009700B3 /* MGSSidebarViewController.m */; };
+		AB6EA2201F292DCF0095851C /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = AB6EA21F1F292DCF0095851C /* .gitignore */; };
 		AB7130480D39621300D4FB8D /* NSView_Mugginsoft.h in Headers */ = {isa = PBXBuildFile; fileRef = AB7130460D39621300D4FB8D /* NSView_Mugginsoft.h */; };
 		AB734B4811DB463F008C9853 /* MGSBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB734B4711DB463F008C9853 /* MGSBorderView.m */; };
 		AB734E4811DBDA36008C9853 /* MGSUserLanguageResourcesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB734E3D11DBD917008C9853 /* MGSUserLanguageResourcesManager.m */; };
@@ -4261,6 +4262,7 @@
 		AB6E4F2B0D3C1640009700B3 /* MGSSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSidebarView.m; sourceTree = "<group>"; };
 		AB6E4F2D0D3C166A009700B3 /* MGSSidebarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSidebarViewController.h; sourceTree = "<group>"; };
 		AB6E4F2E0D3C166A009700B3 /* MGSSidebarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSidebarViewController.m; sourceTree = "<group>"; };
+		AB6EA21F1F292DCF0095851C /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		AB7130460D39621300D4FB8D /* NSView_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSView_Mugginsoft.h; sourceTree = "<group>"; };
 		AB7130470D39621300D4FB8D /* NSView_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSView_Mugginsoft.m; sourceTree = "<group>"; };
 		AB72CE370E703C5500E6711C /* Port Map.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Port Map.xcodeproj"; path = "../../../TCMPortMapper/Port Map.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -6693,16 +6695,16 @@
 		29B97314FDCFA39411CA2CEA /* mother */ = {
 			isa = PBXGroup;
 			children = (
-				AB6EA21C1F2902DB0095851C /* Sub projects */,
-				AB86986814D73A830002F88E /* Google toolbox for mac */,
-				AB4F64FD10C99DF100229E4E /* Shared Source */,
-				AB4F925D1039AD39005EF329 /* build xcconfigs */,
 				0953D0C00CD942C200519488 /* Application code */,
 				29B97317FDCFA39411CA2CEA /* Application resources */,
 				AB37FDD81283678200F97E7C /* Application string resources */,
-				AB30B5B2188C6F4A00CE653C /* static libraries */,
+				AB4F925D1039AD39005EF329 /* build xcconfigs */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				AB86986814D73A830002F88E /* Google toolbox for mac */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				AB4F64FD10C99DF100229E4E /* Shared Source */,
+				AB30B5B2188C6F4A00CE653C /* static libraries */,
+				AB6EA21C1F2902DB0095851C /* Sub projects */,
 			);
 			name = mother;
 			sourceTree = "<group>";
@@ -7212,6 +7214,7 @@
 				AB8D2980188C75800059A84A /* README.md */,
 				AB30B5B3188C6F4C00CE653C /* include */,
 				AB30B600188C6F5000CE653C /* libcrypto.a */,
+				AB6EA21F1F292DCF0095851C /* .gitignore */,
 			);
 			name = "static libraries";
 			path = "../static libraries";
@@ -11867,6 +11870,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB6EA2201F292DCF0095851C /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
