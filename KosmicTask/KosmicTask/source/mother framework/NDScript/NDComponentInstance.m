@@ -265,8 +265,8 @@ static NDComponentInstance		* sharedComponentInstance = nil;
  */
 - (void)setAppleEventSendTarget:(id<NDScriptDataSendEvent>)aTarget currentProcessOnly:(BOOL)aFlag
 {
-	sendAppleEvent.currentProcessOnly = aFlag;
-	if( aTarget != sendAppleEvent.target )
+	sendAppleEvent_currentProcessOnly = aFlag;
+	if( aTarget != sendAppleEvent_target )
 	{
 		NSParameterAssert( sizeof(long) == sizeof(id) );
 		
@@ -278,13 +278,13 @@ static NDComponentInstance		* sharedComponentInstance = nil;
 				[self setSendProc:NDComponentAppleEventSendProc];
 			}
 
-			[sendAppleEvent.target release];
-			sendAppleEvent.target = [aTarget retain];
+			[sendAppleEvent_target release];
+			sendAppleEvent_target = [aTarget retain];
 		}
 		else
 		{
-			[sendAppleEvent.target release];
-			sendAppleEvent.target = nil;
+			[sendAppleEvent_target release];
+			sendAppleEvent_target = nil;
 
 			[self restoreSendProc];
 		}
@@ -296,7 +296,7 @@ static NDComponentInstance		* sharedComponentInstance = nil;
  */
 - (id<NDScriptDataSendEvent>)appleEventSendTarget
 {
-	return sendAppleEvent.target;
+	return sendAppleEvent_target;
 }
 
 /*
@@ -304,7 +304,7 @@ static NDComponentInstance		* sharedComponentInstance = nil;
  */
 - (BOOL)appleEventSendCurrentProcessOnly
 {
-	return sendAppleEvent.currentProcessOnly;
+	return sendAppleEvent_currentProcessOnly;
 }
 
 /*

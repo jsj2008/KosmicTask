@@ -32,11 +32,8 @@ extern const NSString	* NDAppleScriptOffendingObject,
 {
 @private
 	ComponentInstance							instanceRecord;
-	struct
-	{
-		id<NDScriptDataSendEvent>					target;
-		BOOL										currentProcessOnly;
-	}											sendAppleEvent;
+    id<NDScriptDataSendEvent>					sendAppleEvent_target;
+    BOOL                                        sendAppleEvent_currentProcessOnly;
 	id<NDScriptDataActive>						activeTarget;
 	id<NDScriptDataAppleEventResumeHandler>		appleEventResumeHandler;
 //	id<NDScriptDataAppleEventSpecialHandler>	appleEventSpecialHandler;

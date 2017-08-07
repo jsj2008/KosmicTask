@@ -111,13 +111,7 @@
 	} else if ([object isKindOfClass:[NSDictionary class]]) {
 		return [self resolveDictionary:object];
 		
-	// NDScript: resolve four char event code
-	} else if ([object isKindOfClass:[NDFourCharCodeValue class]]) {
-		eventCode = object;
-		
-		goto processEventCode;
-
-	// coerce NSURL to path.
+    // coerce NSURL to path.
 	// AS file objects will be coerced to NSURL
 	} else if ([object isKindOfClass:[NSURL class]]) {
 		return [(NSURL *)object path];
@@ -127,14 +121,18 @@
 	} else if ([object isKindOfClass:[ASFileBase class]]) {
 		return [(ASFileBase *)object path];
 		
-	// AEMType: resolve four char event code
-	// appscript wraps unknown descriptors in an AEMType
-	} else if ([object isKindOfClass:[AEMType class]]) {
+	} else if ([object isKindOfClass:[NDFourCharCodeValue class]] || [object isKindOfClass:[AEMType class]]) {
 		
-		AEMType *aemObject = object;
-		eventCode = [[NDFourCharCodeValue alloc] initWithFourCharCode:[aemObject fourCharCode]];
-
-	processEventCode:;
+        // NDScript: resolve four char event code
+        if ([object isKindOfClass:[NDFourCharCodeValue class]]) {
+            eventCode = object;
+        }
+        else {
+            // AEMType: resolve four char event code
+            // appscript wraps unknown descriptors in an AEMType
+            AEMType *aemObject = object;
+            eventCode = [[NDFourCharCodeValue alloc] initWithFourCharCode:[aemObject fourCharCode]];
+        }
 		
 		// form default event string
 		NSString *eventString =  [@"Apple Event: " stringByAppendingString:[eventCode stringValue]];
@@ -158,8 +156,6 @@
 		} 
 		
 		// cleanup
-		[eventCode release];
-		[appleScriptObject release];
 		
 		return eventString;
 	} else {

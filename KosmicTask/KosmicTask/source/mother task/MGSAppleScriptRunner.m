@@ -147,7 +147,7 @@ OSErr MGSCustomSendProc( const AppleEvent *anAppleEvent, AppleEvent *aReply, AES
 	//
 	// allocate script context and initialise with compiled script data
 	//
-	NDScriptContext *appleScriptObject = [[[NDScriptContext alloc] initWithData:compiledData] autorelease];
+	NDScriptContext *appleScriptObject = [[NDScriptContext alloc] initWithData:compiledData];
 	
 	//
 	// determine if request origin is the localhost
@@ -314,7 +314,6 @@ OSErr MGSCustomSendProc( const AppleEvent *anAppleEvent, AppleEvent *aReply, AES
 			// especially if it contains event class info such as «class siav» etc
 			NDComponentInstance *componentInstance = [NDComponentInstance findNextComponentInstance];
 			NDScriptContext *resultContext = [[NDScriptContext alloc] initWithSource:[[resultScriptData attributedSource] string] modeFlags:(kOSAModeNeverInteract | kOSAModeCompileIntoContext) componentInstance:componentInstance];
-			[resultContext autorelease];
 			
 			BOOL scriptCompiled = resultContext ? YES : NO;
 			
@@ -334,8 +333,8 @@ OSErr MGSCustomSendProc( const AppleEvent *anAppleEvent, AppleEvent *aReply, AES
 
 		// get default result script source if reqd
 		if (!resultScriptSource) {
-			resultScriptSource = [[[NSAttributedString alloc] initWithString: 
-							  NSLocalizedString(@"No result script available", @"default result script text")] autorelease];
+			resultScriptSource = [[NSAttributedString alloc] initWithString: 
+							  NSLocalizedString(@"No result script available", @"default result script text")];
 		}
 
 		// get result source RTF
