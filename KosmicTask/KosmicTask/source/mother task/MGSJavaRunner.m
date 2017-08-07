@@ -123,6 +123,8 @@
 {
 #pragma unused(resultString)
 	
+    @try {
+
 	// compiler error and warning information written to stderr.
 	// warnings may be generated if we use -verbose.
 	// if stdErr is non nil but the class file exists then we have warnings.
@@ -138,7 +140,7 @@
 		if (!self.error) {
 			self.error = @"Class file not found.";
 		}
-		goto exitHandler;
+		[NSException raise:MGSScriptRunnerBuildException format:@"%@", self.error];
 	}
 	
 	// compressed archive setup
@@ -157,12 +159,18 @@
 	 */
 	NSDictionary *archiveOptions = [NSDictionary dictionaryWithObjectsAndKeys:@"class", @"FileExtension", nil];
 	if (![self createArchive:archivePath options:archiveOptions]) {
-		goto exitHandler;
+		[NSException raise:MGSScriptRunnerBuildException format:@"%@", self.error];
 	}
 	 
 	
-exitHandler:	
-	return [super processBuildResult:@""];
+    }
+    @catch (NSException *exception) {
+        // no-op
+    }
+    @finally {
+        return [super processBuildResult:@""];
+    }
+
 }
 
 /*
