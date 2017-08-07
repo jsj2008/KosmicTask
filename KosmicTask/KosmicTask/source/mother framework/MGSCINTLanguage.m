@@ -22,22 +22,22 @@
 	self = [super init];
 	if (self) {
 		
-		self.initScriptType = @"CINT C and C++";
-		self.initSyntaxDefinition =  @"C++";
+		self.defScriptType = @"CINT C and C++";
+		self.defSyntaxDefinition =  @"C++";
 		self.initExecutorProcessType = kMGSOutOfProcess;
 		self.initExecutorAcceptsOptions = YES;
 		self.initExecutableFormat = kMGSSource;
 		self.initLanguageShipsWithOS = NO;
-		self.initCanBuild = NO;
-		self.initExecutorOptions = @"-E -E";
+		self.defCanBuild = NO;
+		self.defExecutorOptions = @"-E -E";
 		// interface
 		self.initSupportsScriptFunctions = YES;
-		self.initRequiredScriptFunction = @"main";
+		self.defRequiredScriptFunction = @"main";
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects: @"c", @"cpp", @"cxx", @"c++", @"cint", nil];
+		self.defSourceFileExtensions = [NSArray arrayWithObjects: @"c", @"cpp", @"cxx", @"c++", @"cint", nil];
 		
-		self.initTaskRunnerClassName = @"MGSCINTRunner";
-		self.initTaskProcessName = @"KosmicTaskCINTRunner";
+		self.defTaskRunnerClassName = @"MGSCINTRunner";
+		self.defTaskProcessName = @"KosmicTaskCINTRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

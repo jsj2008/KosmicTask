@@ -133,7 +133,7 @@ static NSString *const kSystemVersionPlistPath = @"/System/Library/CoreServices/
     if (!sBuild) {
       NSDictionary *systemVersionPlist 
         = [NSDictionary dictionaryWithContentsOfFile:kSystemVersionPlistPath];
-      sBuild = [[systemVersionPlist objectForKey:@"ProductBuildVersion"] retain];
+      sBuild = [systemVersionPlist objectForKey:@"ProductBuildVersion"];
       GTMNSMakeUncollectable(sBuild);
       _GTMDevAssert(sBuild, @"Unable to get build version");
     }

@@ -26,10 +26,10 @@
 		self.initExecutorAcceptsOptions = YES;
 		self.initBuildAcceptsOptions = NO;
 		self.initExecutableFormat = kMGSSource;
-		self.initExternalExecutorPath = MGS_PERL_LANG_PATH;
-		self.initExternalBuildPath = MGS_PERL_LANG_PATH;
+		self.defExternalExecutorPath = MGS_PERL_LANG_PATH;
+		self.defExternalBuildPath = MGS_PERL_LANG_PATH;
 		self.initLanguageShipsWithOS = YES;
-		self.initBuildOptions = @"-wc";
+		self.defBuildOptions = @"-wc";
 		
 		// interface
 		self.initSupportsDirectParameters = YES;
@@ -41,11 +41,11 @@
 		self.initNativeObjectsAsResults = NO;
 		self.initNativeObjectsAsYamlSupport = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects: @"pl", nil];
+		self.defSourceFileExtensions = [NSArray arrayWithObjects: @"pl", nil];
 		
-		self.initScriptType = @"Perl";
-		self.initTaskRunnerClassName = @"MGSPerlScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskPerlRunner";
+		self.defScriptType = @"Perl";
+		self.defTaskRunnerClassName = @"MGSPerlScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskPerlRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

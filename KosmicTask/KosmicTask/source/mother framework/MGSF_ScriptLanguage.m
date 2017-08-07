@@ -27,7 +27,7 @@
 		self.initBuildAcceptsOptions = NO;
 		self.initExecutableFormat = kMGSSource;
 		self.initLanguageShipsWithOS = NO;
-		self.initCanBuild = YES;
+		self.defCanBuild = YES;
 		
 		// Cocoa
 		self.initIsCocoaBridge = YES;
@@ -38,10 +38,10 @@
 		
 		// interface
 		self.initSupportsDirectParameters = YES;
-		self.initScriptType = @"F-Script Cocoa";
-		self.initScriptTypeFamily = @"F-Script";
-		self.initTaskRunnerClassName = @"MGSFScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskF-ScriptRunner";
+		self.defScriptType = @"F-Script Cocoa";
+		self.defScriptTypeFamily = @"F-Script";
+		self.defTaskRunnerClassName = @"MGSFScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskF-ScriptRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

@@ -22,17 +22,17 @@
 		self.initExecutorProcessType = kMGSOutOfProcess;
 		self.initExecutorAcceptsOptions = YES;
 		self.initExecutableFormat = kMGSSource;
-		self.initExternalExecutorPath = MGS_ZSH_LANG_PATH;
+		self.defExternalExecutorPath = MGS_ZSH_LANG_PATH;
 		self.initLanguageShipsWithOS = YES;
-		self.initCanBuild = NO;
+		self.defCanBuild = NO;
 		
 		// interface
 		self.initSupportsDirectParameters = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"zsh", nil];
-		self.initScriptType = @"Z shell";
-		self.initTaskRunnerClassName = @"MGSZshScriptRunner";
-		self.initTaskProcessName	 = @"KosmicTaskZshRunner";
+		self.defSourceFileExtensions = [NSArray arrayWithObjects:@"zsh", nil];
+		self.defScriptType = @"Z shell";
+		self.defTaskRunnerClassName = @"MGSZshScriptRunner";
+		self.defTaskProcessName	 = @"KosmicTaskZshRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

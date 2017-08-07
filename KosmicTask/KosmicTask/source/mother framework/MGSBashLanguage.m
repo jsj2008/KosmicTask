@@ -21,18 +21,18 @@
 		self.initSeparateSyntaxChecker = NO;
 		self.initExecutorAcceptsOptions = YES;
 		self.initBuildAcceptsOptions = NO;
-		self.initExternalExecutorPath = MGS_BASH_LANG_PATH;
-		self.initExternalBuildPath = MGS_BASH_LANG_PATH;
+		self.defExternalExecutorPath = MGS_BASH_LANG_PATH;
+		self.defExternalBuildPath = MGS_BASH_LANG_PATH;
 		self.initLanguageShipsWithOS = YES;
-		self.initBuildOptions = @"-n";
+		self.defBuildOptions = @"-n";
 		// interface
 		self.initSupportsDirectParameters = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"bash", @"sh", nil];
+		self.defSourceFileExtensions = [NSArray arrayWithObjects:@"bash", @"sh", nil];
 		
-		self.initScriptType = @"Bash shell";
-		self.initTaskRunnerClassName = @"MGSBashScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskBashRunner";
+		self.defScriptType = @"Bash shell";
+		self.defTaskRunnerClassName = @"MGSBashScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskBashRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

@@ -26,8 +26,8 @@
 		self.initExecutableFormat = kMGSSource;
 		
 		// interface
-		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"sh", nil];
-		self.initScriptTypeFamily = @"Shell";
+		self.defSourceFileExtensions = [NSArray arrayWithObjects:@"sh", nil];
+		self.defScriptTypeFamily = @"Shell";
         
         self.initInputArgumentCase = kMGSInputArgumentUpperCase;
         self.initInputArgumentStyle = kMGSInputArgumentUnderscoreSeparated;

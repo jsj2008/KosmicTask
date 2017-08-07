@@ -27,15 +27,15 @@
 		self.initBuildAcceptsOptions = YES;
 		self.initExecutableFormat = kMGSSource;
 		self.initLanguageShipsWithOS = YES;
-		self.initExternalBuildPath = @"/usr/bin/ruby";
+		self.defExternalBuildPath = @"/usr/bin/ruby";
 		
 		// interface
 		self.initSupportsScriptFunctions = YES;
 		self.initSupportsClasses = YES;
 		self.initSupportsClassFunctions = YES;
-		self.initDefaultScriptFunction = @"kosmictask";
-		self.initDefaultClass = @"KosmicTask";
-		self.initDefaultClassFunction = @"kosmictask";
+		self.defDefaultScriptFunction = @"kosmictask";
+		self.defDefaultClass = @"KosmicTask";
+		self.defDefaultClassFunction = @"kosmictask";
 		
 		// Cocoa
 		self.initIsCocoaBridge = YES;
@@ -45,13 +45,13 @@
 		self.initNativeObjectsAsYamlSupport = NO;
 		
 		// extension should default to ruby plugin
-		self.initSourceFileExtensions = [NSArray arrayWithObjects: nil];
+		self.defSourceFileExtensions = [NSArray arrayWithObjects: nil];
 		
-		self.initScriptType = @"Ruby Cocoa";
-		self.initScriptTypeFamily = @"Ruby";
-		self.initSyntaxDefinition = @"Ruby";
-		self.initTaskRunnerClassName = @"MGSRubyCocoaScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskRubyCocoaRunner";
+		self.defScriptType = @"Ruby Cocoa";
+		self.defScriptTypeFamily = @"Ruby";
+		self.defSyntaxDefinition = @"Ruby";
+		self.defTaskRunnerClassName = @"MGSRubyCocoaScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskRubyCocoaRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 		
 	}

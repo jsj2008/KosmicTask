@@ -23,18 +23,18 @@
 #if ( TARGET_CPU_X86 | TARGET_CPU_X86_64 )
 		self.initBuildProcessType = kMGSOutOfProcess;
 		self.initSeparateSyntaxChecker = YES;
-		self.initBuildOptions = @"-nofilelisting -nologo -nosummary -process";
+		self.defBuildOptions = @"-nofilelisting -nologo -nosummary -process";
 #else
 		self.initBuildProcessType = kMGSInProcess;
 		self.initSeparateSyntaxChecker = NO;
-		self.initBuildOptions = @"";
+		self.defBuildOptions = @"";
 #endif
 		self.initExecutorProcessType = kMGSInProcess;
 		self.initExecutorAcceptsOptions = NO;
 		self.initBuildAcceptsOptions = NO;
 		self.initExecutableFormat = kMGSSource;
 		self.initLanguageShipsWithOS = YES;
-		self.initCanBuild = YES;
+		self.defCanBuild = YES;
 		
 		
 		// interface
@@ -47,12 +47,12 @@
 		self.initNativeObjectsAsResults = YES;
 		self.initNativeObjectsAsYamlSupport = NO;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects: @"js", nil];
+		self.defSourceFileExtensions = [NSArray arrayWithObjects: @"js", nil];
 		
-		self.initScriptType = @"JavaScript Cocoa";
-		self.initScriptTypeFamily = @"JavaScript";
-		self.initTaskRunnerClassName = @"MGSJavaScriptCocoaRunner";
-		self.initTaskProcessName = @"KosmicTaskJavaScriptCocoaRunner";
+		self.defScriptType = @"JavaScript Cocoa";
+		self.defScriptTypeFamily = @"JavaScript";
+		self.defTaskRunnerClassName = @"MGSJavaScriptCocoaRunner";
+		self.defTaskProcessName = @"KosmicTaskJavaScriptCocoaRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

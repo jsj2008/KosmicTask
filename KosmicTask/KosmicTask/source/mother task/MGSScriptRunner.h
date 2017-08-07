@@ -10,6 +10,8 @@
 #import "MGSLanguage.h"
 #import "GTMSystemVersion.h"
 
+extern NSString *MGSScriptRunnerBuildException;
+
 @protocol MGSScriptRunner
 @required
 - (void)stopApp:(id)sender;
@@ -30,8 +32,8 @@
 	NSMutableDictionary *errorInfo;
 	NSMutableDictionary *replyDict;
 	int stdoutSaved;
-	id resultObject;
-	id scriptObject;
+	id __strong resultObject;
+	id __strong scriptObject;
 	NSString *scriptExecutableExtension;
 	NSString *scriptSourceExtension;
 	MGSScriptExecutorManager *scriptExecutorManager;
@@ -122,11 +124,11 @@
 @property (copy) NSString *error;
 @property NSInteger errorCode;
 @property (readonly) NSMutableDictionary *replyDict;
-@property (retain) NSMutableDictionary *errorInfo;
+@property (strong) NSMutableDictionary *errorInfo;
 @property int argc;
 @property const char **argv;
-@property (assign) id resultObject;
-@property (assign) id scriptObject;
+@property (strong) id resultObject;
+@property (strong) id scriptObject;
 @property (copy) NSString *scriptExecutableExtension;
 @property (copy) NSString *scriptSourceExtension;
 @property (readonly, copy) NSString *scriptFilePath;
@@ -139,7 +141,7 @@
 @property (readonly, copy) NSString *onRun;
 @property (readonly, copy) NSString *runFunctionName;
 @property (readonly, copy) NSString *runClassName;
-@property (assign) MGSLanguage *language;
+@property  MGSLanguage *language;
 @end
 
 @interface NSMutableData (MGSScriptRunner)

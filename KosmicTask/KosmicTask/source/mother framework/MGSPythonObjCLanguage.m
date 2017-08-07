@@ -27,15 +27,15 @@
 		self.initBuildAcceptsOptions = NO;
 		self.initExecutableFormat = kMGSSource;
 		self.initLanguageShipsWithOS = YES;
-		self.initCanBuild = YES;
+		self.defCanBuild = YES;
 		
 		// interface
 		self.initSupportsScriptFunctions = YES;
 		self.initSupportsClasses = YES;
 		self.initSupportsClassFunctions = YES;
-		self.initDefaultScriptFunction = @"kosmictask";
-		self.initDefaultClass = @"KosmicTask";
-		self.initDefaultClassFunction = @"kosmictask";
+		self.defDefaultScriptFunction = @"kosmictask";
+		self.defDefaultClass = @"KosmicTask";
+		self.defDefaultClassFunction = @"kosmictask";
 		
 		// Cocoa
 		self.initIsCocoaBridge = YES;
@@ -45,12 +45,12 @@
 		self.initNativeObjectsAsYamlSupport = NO;
 		
 		// extension should default to python plugin
-		self.initSourceFileExtensions = [NSArray arrayWithObjects: nil];
+		self.defSourceFileExtensions = [NSArray arrayWithObjects: nil];
 		
-		self.initScriptType = @"Python Cocoa";
-		self.initScriptTypeFamily = @"Python";
-		self.initTaskRunnerClassName = @"MGSPythonObjCScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskPythonObjCRunner";
+		self.defScriptType = @"Python Cocoa";
+		self.defScriptTypeFamily = @"Python";
+		self.defTaskRunnerClassName = @"MGSPythonObjCScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskPythonObjCRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

@@ -178,12 +178,12 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	langProp = [[MGSLanguageProperty alloc] 
 				initWithKey: MGS_LP_CanBuild 
 				name:[self localizedString:@"MGSCanBuildName"]
-				value:[self stringForBool:language.initCanBuild]];
+				value:[self stringForBool:language.defCanBuild]];
 	[langProp setRequestType:kMGSBuildRequest];
 	[langProp setInfoText: [self localizedString:@"MGSCanBuildInfo"]];
 	[langProperties setObject:langProp forKey:langProp.key];
 	
-	if (language.initCanBuild) {
+	if (language.defCanBuild) {
 		
 		// Build Process Type
 		langProp = [[MGSLanguageProperty alloc] 
@@ -214,11 +214,11 @@ NSString * const MGSOptionKeySuffix = @"-key";
 
 		
 		// External Build Path
-		if (language.initBuildProcessType == kMGSOutOfProcess && ![MGSLanguageProperty isMissingProperty:language.initExternalBuildPath]) {
+		if (language.initBuildProcessType == kMGSOutOfProcess && ![MGSLanguageProperty isMissingProperty:language.defExternalBuildPath]) {
 			langProp = [[MGSLanguageProperty alloc] 
 						initWithKey: MGS_LP_ExternalBuildPath 
 						name: [self localizedString:@"MGSExternalBuildPathName"]
-						value:language.initExternalBuildPath];
+						value:language.defExternalBuildPath];
 			[langProp setRequestType:kMGSBuildRequest];
 			langProp.editable = YES;
 			langProp.allowReset = YES;
@@ -231,7 +231,7 @@ NSString * const MGSOptionKeySuffix = @"-key";
 			langProp = [[MGSLanguageProperty alloc] 
 						initWithKey: MGS_LP_BuildOptions 
 						name: [self localizedString:@"MGSBuildOptionsName"]
-						value:language.initBuildOptions];
+						value:language.defBuildOptions];
 			[langProp setRequestType:kMGSBuildRequest];
 			langProp.editable = YES;
 			langProp.allowReset = YES;
@@ -284,11 +284,11 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	[langProperties setObject:langProp forKey:langProp.key];
 	
 	// External Executor Path
-	if (language.initExecutorProcessType == kMGSOutOfProcess && ![MGSLanguageProperty isMissingProperty:language.initExternalExecutorPath]) {
+	if (language.initExecutorProcessType == kMGSOutOfProcess && ![MGSLanguageProperty isMissingProperty:language.defExternalExecutorPath]) {
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_ExternalExecutorPath 
 					name: [self localizedString:@"MGSExternalExecutablePathName"]
-					value:language.initExternalExecutorPath];
+					value:language.defExternalExecutorPath];
 		[langProp setRequestType:kMGSExecuteRequest];
 		langProp.editable = YES;
 		langProp.allowReset = YES;
@@ -301,7 +301,7 @@ NSString * const MGSOptionKeySuffix = @"-key";
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_ExecutorOptions 
 					name: [self localizedString:@"MGSExecutorOptionsName"]
-					value:language.initExecutorOptions];
+					value:language.defExecutorOptions];
 		[langProp setRequestType:kMGSExecuteRequest];
 		langProp.editable = YES;
 		langProp.allowReset = YES;
@@ -336,7 +336,7 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	langProp = [[MGSLanguageProperty alloc] 
 				initWithKey: MGS_LP_ScriptType 
 				name: [self localizedString:@"MGSScriptTypeName"]
-				value:language.initScriptType];
+				value:language.defScriptType];
 	[langProp setInfoText: [self localizedString:@"MGSScriptTypeInfo"]];
 	[langProperties setObject:langProp forKey:langProp.key];
 	
@@ -344,7 +344,7 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	langProp = [[MGSLanguageProperty alloc] 
 				initWithKey: MGS_LP_ScriptTypeFamily 
 				name: [self localizedString:@"MGSScriptTypeFamilyName"]
-				value:language.initScriptTypeFamily];
+				value:language.defScriptTypeFamily];
 	[langProp setInfoText:[self localizedString:@"MGSScriptTypeFamilyInfo"]];
 	[langProperties setObject:langProp forKey:langProp.key];
 
@@ -352,7 +352,7 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	langProp = [[MGSLanguageProperty alloc] 
 				initWithKey: MGS_LP_TaskProcessName 
 				name: [self localizedString:@"MGSTaskRunnerProcessNameName"]
-				value:language.initTaskProcessName];
+				value:language.defTaskProcessName];
 	[langProp setInfoText:[self localizedString:@"MGSTaskRunnerProcessNameInfo"]];
 	[langProperties setObject:langProp forKey:langProp.key];
 
@@ -384,7 +384,7 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	langProp = [[MGSLanguageProperty alloc] 
 				initWithKey: MGS_LP_SourceFileExtensions
 				name: [self localizedString:@"MGSSourceFileExtensionsName"]
-				value:language.initSourceFileExtensions];
+				value:language.defSourceFileExtensions];
 	//langProp.editable = YES;
 	[langProp setInfoText: [self localizedString:@"MGSSourceFileExtensionsInfo"]];
 	[langProperties setObject:langProp forKey:langProp.key];
@@ -471,11 +471,11 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	[langProperties setObject:langProp forKey:langProp.key];
 
 	// default script function name
-	if (language.initSupportsScriptFunctions && !language.initRequiredScriptFunction) {
+	if (language.initSupportsScriptFunctions && !language.defRequiredScriptFunction) {
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_DefaultScriptFunction
 					name: [self localizedString:@"MGSDefaultScriptFunctionName"]
-					value:language.initDefaultScriptFunction];
+					value:language.defDefaultScriptFunction];
 		[langProp setRequestType:kMGSInterfaceRequest];
 		[langProp setInfoText: [self localizedString:@"MGSDefaultScriptFunctionInfo"]];
 		langProp.editable = YES;
@@ -483,11 +483,11 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	}
 	
 	// default class name
-	if (language.initSupportsClasses && !language.initRequiredClass) {
+	if (language.initSupportsClasses && !language.defRequiredClass) {
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_DefaultClass
 					name: [self localizedString:@"MGSDefaultClassName"]
-					value:language.initDefaultClass];
+					value:language.defDefaultClass];
 		[langProp setRequestType:kMGSInterfaceRequest];
 		[langProp setInfoText: [self localizedString:@"MGSDefaultClassInfo"]];
 		langProp.editable = YES;
@@ -495,11 +495,11 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	}
 
 	// default class function
-	if (language.initSupportsClassFunctions && !language.initRequiredClassFunction) {
+	if (language.initSupportsClassFunctions && !language.defRequiredClassFunction) {
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_DefaultClassFunction
 					name: [self localizedString:@"MGSDefaultClassFunctionName"]
-					value:language.initDefaultClassFunction];
+					value:language.defDefaultClassFunction];
 		[langProp setRequestType:kMGSInterfaceRequest];
 		[langProp setInfoText: [self localizedString:@"MGSDefaultClassFunctionInfo"]];
 		langProp.editable = YES;
@@ -507,33 +507,33 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	}
 	
 	// required script function name
-	if (language.initRequiredScriptFunction) {
+	if (language.defRequiredScriptFunction) {
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_RequiredScriptFunction
 					name: [self localizedString:@"MGSRequiredScriptFunctionName"]
-					value:language.initRequiredScriptFunction];
+					value:language.defRequiredScriptFunction];
 		[langProp setRequestType:kMGSInterfaceRequest];
 		[langProp setInfoText: [self localizedString:@"MGSRequiredScriptFunctionInfo"]];
 		[langProperties setObject:langProp forKey:langProp.key];
 	}
 
 	// required class name
-	if (language.initRequiredClass) {
+	if (language.defRequiredClass) {
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_RequiredClass
 					name: [self localizedString:@"MGSRequiredClassName"]
-					value:language.initRequiredClass];
+					value:language.defRequiredClass];
 		[langProp setRequestType:kMGSInterfaceRequest];
 		[langProp setInfoText: [self localizedString:@"MGSRequiredClassInfo"]];
 		[langProperties setObject:langProp forKey:langProp.key];
 	}
 
 	// required class function
-	if (language.initRequiredClassFunction) {
+	if (language.defRequiredClassFunction) {
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_RequiredClassFunction
 					name: [self localizedString:@"MGSRequiredClassFunctionName"]
-					value:language.initRequiredClassFunction];
+					value:language.defRequiredClassFunction];
 		[langProp setRequestType:kMGSInterfaceRequest];
 		[langProp setInfoText: [self localizedString:@"MGSRequiredClassFunctionInfo"]];
 		[langProperties setObject:langProp forKey:langProp.key];
@@ -542,7 +542,7 @@ NSString * const MGSOptionKeySuffix = @"-key";
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_RequiredClassFunctionIsStatic
 					name: [self localizedString:@"MGSRequiredClassFunctionIsStaticName"]
-					value:[self stringForBool:language.initRequiredClassFunctionIsStatic]];
+					value:[self stringForBool:language.defRequiredClassFunctionIsStatic]];
 		[langProp setRequestType:kMGSInterfaceRequest];
 		[langProp setInfoText: [self localizedString:@"MGSRequiredClassFunctionIsStaticInfo"]];
 		[langProperties setObject:langProp forKey:langProp.key];		
@@ -571,18 +571,18 @@ NSString * const MGSOptionKeySuffix = @"-key";
 	switch (language.initOnRunTask) {
 		case kMGSOnRunCallScript:
 		default:
-			language.initRunFunction = @"";
-			language.initRunClass = @"";
+			language.defRunFunction = @"";
+			language.defRunClass = @"";
 			break;
 			
 		case kMGSOnRunCallScriptFunction:
-			language.initRunFunction = language.initDefaultScriptFunction;
-			language.initRunClass = @"";
+			language.defRunFunction = language.defDefaultScriptFunction;
+			language.defRunClass = @"";
 			break;
 			
 		case kMGSOnRunCallClassFunction:
-			language.initRunFunction = language.initDefaultClassFunction;
-			language.initRunClass = language.initDefaultClass;
+			language.defRunFunction = language.defDefaultClassFunction;
+			language.defRunClass = language.defDefaultClass;
 			break;
 	}
 	
@@ -601,7 +601,7 @@ NSString * const MGSOptionKeySuffix = @"-key";
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_RunFunction
 					name: [self localizedString:@"MGSRunFunctionName"]
-					value:language.initRunFunction];
+					value:language.defRunFunction];
 		[langProp setRequestType:kMGSRunRequest];
 		langProp.editable = YES;
 		[langProp setInfoText: [self localizedString:@"MGSRunFunctionInfo"]];
@@ -613,7 +613,7 @@ NSString * const MGSOptionKeySuffix = @"-key";
 		langProp = [[MGSLanguageProperty alloc] 
 					initWithKey: MGS_LP_RunClass
 					name: [self localizedString:@"MGSRunClassName"]
-					value:language.initRunClass];
+					value:language.defRunClass];
 		[langProp setRequestType:kMGSRunRequest];
 		langProp.editable = YES;
 		[langProp setInfoText: [self localizedString:@"MGSRunClassInfo"]];

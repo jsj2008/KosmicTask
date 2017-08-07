@@ -32,20 +32,20 @@
 		self.initSupportsDirectParameters = YES;
 
 		// build
-		self.initCanBuild = YES;
+		self.defCanBuild = YES;
 		self.initBuildProcessType = kMGSOutOfProcess;
 		self.initSeparateSyntaxChecker = YES;
-		self.initBuildOptions = @"-p";		
+		self.defBuildOptions = @"-p";		
 		
 		// Result representation
 		self.initNativeObjectsAsResults = NO;
 		self.initNativeObjectsAsYamlSupport = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects: @"lua", nil];	
-		self.initScriptType = @"Lua";
-		self.initScriptTypeFamily = @"Lua";
-		self.initTaskRunnerClassName = @"MGSLuaScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskLuaRunner";
+		self.defSourceFileExtensions = [NSArray arrayWithObjects: @"lua", nil];	
+		self.defScriptType = @"Lua";
+		self.defScriptTypeFamily = @"Lua";
+		self.defTaskRunnerClassName = @"MGSLuaScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskLuaRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

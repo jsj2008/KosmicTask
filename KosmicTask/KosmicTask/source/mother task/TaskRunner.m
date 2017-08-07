@@ -30,164 +30,163 @@ int MGSTaskRunnerMain (int argc, const char * argv[])
 	// int spin = 1; while (spin) {;}	// spin here to allow debugger attachment
 	// DEBUG only
 	
-	
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-	//
-	// the caller will listen to stderr for this process.
-	// note that NSLog writes to stderr so anything logged
-	// here will end up before the user
-	//
-	
-	NSFileHandle *outputHandle = [NSFileHandle fileHandleWithStandardOutput];
-	NSFileHandle *inputHandle = nil;
-	NSString *error = nil;
-	MGSScriptRunner *scriptRunner = nil;
-	NSDictionary *taskDict = nil;
+    @autoreleasepool {
 
-	// catch all exceptions here
-	@try {
-		NSData *inputData = nil;
-		
-		// read data from stdin
-		inputHandle = [NSFileHandle fileHandleWithStandardInput];
-		inputData = [inputHandle readDataToEndOfFile];
-		
-		// input from stdin is required
-		if (!inputData) {			
-			[NSException raise:MGSTaskRunnerMainException 
-						format:@"no task input supplied"];
-		}
-		
-		// get task dict
-		taskDict = [NSKeyedUnarchiver unarchiveObjectWithData:inputData];
-		if(!taskDict)
-		{
-			[NSException raise:MGSTaskRunnerMainException 
-						format:@"error unarchiving task dictionary"];
-		}
+        //
+        // the caller will listen to stderr for this process.
+        // note that NSLog writes to stderr so anything logged
+        // here will end up before the user
+        //
+        
+        NSFileHandle *outputHandle = [NSFileHandle fileHandleWithStandardOutput];
+        NSFileHandle *inputHandle = nil;
+        NSString *error = nil;
+        MGSScriptRunner *scriptRunner = nil;
+        NSDictionary *taskDict = nil;
 
-		// configure temp storage
-		NSString *storageURL = [taskDict objectForKey:MGSScriptTempStorageReverseURL];
-		if (!storageURL) {
-			[NSException raise:MGSTaskRunnerMainException 
-						format:@"storage URL not found"];
-		}		
-		MGSTempStorage *storage = [MGSTempStorage sharedController];
-		storage.storageFolder = storageURL;
-		
-		// get script runner class name
-		NSString *runnerClassName = [taskDict objectForKey:MGSScriptRunnerClassName];
-		
-		// get class
-		Class klass = NSClassFromString(runnerClassName);
-		if (!klass) {
-			[NSException raise:MGSTaskRunnerMainException 
-						format:@"script runner class not found"];
-		}
-		
-		// validate the class
-		if (![klass isSubclassOfClass:[MGSScriptRunner class]]) {
-			[NSException raise:MGSTaskRunnerMainException 
-						format:@"invalid script runner class"];
-		}
-		
-		// allocate instance
-		scriptRunner = [[klass alloc] initWithDictionary:taskDict];
-		
-		// validate the runner
-		if (!scriptRunner) {
-			[NSException raise:MGSTaskRunnerMainException 
-						format:@"cannot create script runner"];
-		}
-		
-		scriptRunner.argc = argc;
-		scriptRunner.argv = argv;
-		
-		// run the script.
-		// returns YES if runs without errors.
-		// A return value of NO indicates that errors or warnings occurred.
-		[scriptRunner runScript];
-			
-	} @catch (NSException *e) {
-		
-		if (scriptRunner) {
-			[scriptRunner restoreStdOut];	
-		}
-		
-		// exception handling
-		NSLog(@"Script task exception: %@", e);
-		NSString *format = NSLocalizedString(@"An exception occurred: %@", @"Script task process error");
-		error = [NSString stringWithFormat:format, e];
-	}
+        // catch all exceptions here
+        @try {
+            NSData *inputData = nil;
+            
+            // read data from stdin
+            inputHandle = [NSFileHandle fileHandleWithStandardInput];
+            inputData = [inputHandle readDataToEndOfFile];
+            
+            // input from stdin is required
+            if (!inputData) {			
+                [NSException raise:MGSTaskRunnerMainException 
+                            format:@"no task input supplied"];
+            }
+            
+            // get task dict
+            taskDict = [NSKeyedUnarchiver unarchiveObjectWithData:inputData];
+            if(!taskDict)
+            {
+                [NSException raise:MGSTaskRunnerMainException 
+                            format:@"error unarchiving task dictionary"];
+            }
 
-	
-	@try {
-		NSDictionary *errorInfo = nil;
-		NSInteger errorCode = MGSErrorCodeScriptRunner;
+            // configure temp storage
+            NSString *storageURL = [taskDict objectForKey:MGSScriptTempStorageReverseURL];
+            if (!storageURL) {
+                [NSException raise:MGSTaskRunnerMainException 
+                            format:@"storage URL not found"];
+            }		
+            MGSTempStorage *storage = [MGSTempStorage sharedController];
+            storage.storageFolder = storageURL;
+            
+            // get script runner class name
+            NSString *runnerClassName = [taskDict objectForKey:MGSScriptRunnerClassName];
+            
+            // get class
+            Class klass = NSClassFromString(runnerClassName);
+            if (!klass) {
+                [NSException raise:MGSTaskRunnerMainException 
+                            format:@"script runner class not found"];
+            }
+            
+            // validate the class
+            if (![klass isSubclassOfClass:[MGSScriptRunner class]]) {
+                [NSException raise:MGSTaskRunnerMainException 
+                            format:@"invalid script runner class"];
+            }
+            
+            // allocate instance
+            scriptRunner = [[klass alloc] initWithDictionary:taskDict];
+            
+            // validate the runner
+            if (!scriptRunner) {
+                [NSException raise:MGSTaskRunnerMainException 
+                            format:@"cannot create script runner"];
+            }
+            
+            scriptRunner.argc = argc;
+            scriptRunner.argv = argv;
+            
+            // run the script.
+            // returns YES if runs without errors.
+            // A return value of NO indicates that errors or warnings occurred.
+            [scriptRunner runScript];
+                
+        } @catch (NSException *e) {
+            
+            if (scriptRunner) {
+                [scriptRunner restoreStdOut];	
+            }
+            
+            // exception handling
+            NSLog(@"Script task exception: %@", e);
+            NSString *format = NSLocalizedString(@"An exception occurred: %@", @"Script task process error");
+            error = [NSString stringWithFormat:format, e];
+        }
 
-		// get reply dict
-		NSMutableDictionary *replyDict = scriptRunner.replyDict;
-		if (!replyDict) {
-			replyDict = [NSMutableDictionary dictionaryWithCapacity:2];
-		}
-		
-		// if no error defined query the scriptRunner
-		if (!error) {
-			
-			// get runner errors
-			if (scriptRunner && scriptRunner.error) {
-				errorCode = scriptRunner.errorCode;
-				error = scriptRunner.error;
-				errorInfo = scriptRunner.errorInfo;
-			}
-		}
-				
-		// add error to reply dict
-		if (error) {
-			NSMutableDictionary *errorDict = [NSMutableDictionary dictionaryWithCapacity:3];
-			[errorDict setObject:error forKey:MGSScriptError];
-			[errorDict setObject:[NSNumber numberWithInteger:errorCode] forKey:MGSScriptErrorCode];
-			if (errorInfo) {
-				[errorDict setObject:errorInfo forKey:MGSScriptErrorInfo];
-			}
-			[replyDict setObject:errorDict forKey:MGSScriptError];
-		}
-		
-		// serialize the reply dict
-		NSString *plistError = nil;
-		NSData *data = [NSPropertyListSerialization dataFromPropertyList:replyDict format:NSPropertyListXMLFormat_v1_0 errorDescription:&plistError];
+        
+        @try {
+            NSDictionary *errorInfo = nil;
+            NSInteger errorCode = MGSErrorCodeScriptRunner;
 
-		// validate the plist
-		if (!data || plistError) {
-			
-			replyDict = [NSMutableDictionary dictionaryWithCapacity:2];
-			NSMutableDictionary *errorDict = [NSMutableDictionary dictionaryWithCapacity:3];
-			[errorDict setObject:plistError forKey:MGSScriptError];
-			[errorDict setObject:[NSNumber numberWithInteger:errorCode] forKey:MGSScriptErrorCode];
-			[replyDict setObject:errorDict forKey:MGSScriptError];
-			
-			plistError = nil;
-			data = [NSPropertyListSerialization dataFromPropertyList:replyDict format:NSPropertyListXMLFormat_v1_0 errorDescription:&plistError];
-			if (!data) {
-				[NSException raise:MGSTaskRunnerMainException 
-							format:@"Cannot report plist error"];
-			}
-		}
+            // get reply dict
+            NSMutableDictionary *replyDict = scriptRunner.replyDict;
+            if (!replyDict) {
+                replyDict = [NSMutableDictionary dictionaryWithCapacity:2];
+            }
+            
+            // if no error defined query the scriptRunner
+            if (!error) {
+                
+                // get runner errors
+                if (scriptRunner && scriptRunner.error) {
+                    errorCode = scriptRunner.errorCode;
+                    error = scriptRunner.error;
+                    errorInfo = scriptRunner.errorInfo;
+                }
+            }
+                    
+            // add error to reply dict
+            if (error) {
+                NSMutableDictionary *errorDict = [NSMutableDictionary dictionaryWithCapacity:3];
+                [errorDict setObject:error forKey:MGSScriptError];
+                [errorDict setObject:[NSNumber numberWithInteger:errorCode] forKey:MGSScriptErrorCode];
+                if (errorInfo) {
+                    [errorDict setObject:errorInfo forKey:MGSScriptErrorInfo];
+                }
+                [replyDict setObject:errorDict forKey:MGSScriptError];
+            }
+            
+            // serialize the reply dict
+            NSString *plistError = nil;
+            NSData *data = [NSPropertyListSerialization dataFromPropertyList:replyDict format:NSPropertyListXMLFormat_v1_0 errorDescription:&plistError];
 
-		// write to output handle
-		[outputHandle writeData:data];
+            // validate the plist
+            if (!data || plistError) {
+                
+                replyDict = [NSMutableDictionary dictionaryWithCapacity:2];
+                NSMutableDictionary *errorDict = [NSMutableDictionary dictionaryWithCapacity:3];
+                [errorDict setObject:plistError forKey:MGSScriptError];
+                [errorDict setObject:[NSNumber numberWithInteger:errorCode] forKey:MGSScriptErrorCode];
+                [replyDict setObject:errorDict forKey:MGSScriptError];
+                
+                plistError = nil;
+                data = [NSPropertyListSerialization dataFromPropertyList:replyDict format:NSPropertyListXMLFormat_v1_0 errorDescription:&plistError];
+                if (!data) {
+                    [NSException raise:MGSTaskRunnerMainException 
+                                format:@"Cannot report plist error"];
+                }
+            }
 
-	} @catch (NSException *e) {
-		
-		NSLog(@"Script task final exception: %@", e);
-		return -1;
-		
-	} @finally {
-		
-		[outputHandle closeFile];
-		[pool drain];
-	}
+            // write to output handle
+            [outputHandle writeData:data];
 
+        } @catch (NSException *e) {
+            
+            NSLog(@"Script task final exception: %@", e);
+            return -1;
+            
+        } @finally {
+            [outputHandle closeFile];
+        }
+    }
+    
 	return 0;
 }

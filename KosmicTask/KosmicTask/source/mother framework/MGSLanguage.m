@@ -32,16 +32,16 @@ initSeparateSyntaxChecker,
 initExecutableFormat,
 initExecutorAcceptsOptions,
 initBuildAcceptsOptions,
-initExternalExecutorPath,
-initExternalBuildPath,
-initExecutorOptions,
-initBuildOptions,
-initCanBuild,
+defExternalExecutorPath,
+defExternalBuildPath,
+defExecutorOptions,
+defBuildOptions,
+defCanBuild,
 initIsOsaLanguage,
-initScriptType,
-initScriptTypeFamily,
+defScriptType,
+defScriptTypeFamily,
 initCanIgnoreBuildWarnings,
-initTaskProcessName,
+defTaskProcessName,
 initValidForOSVersion,
 initLanguageShipsWithOS,
 initLanguageType,
@@ -49,23 +49,23 @@ initSupportsScriptFunctions,
 initSupportsDirectParameters,
 initSupportsClasses,
 initSupportsClassFunctions,
-initDefaultClass,
-initDefaultScriptFunction,
-initDefaultClassFunction,
-initRequiredClass,
-initRequiredScriptFunction,
-initRequiredClassFunction,
-initRequiredClassFunctionIsStatic,
+defDefaultClass,
+defDefaultScriptFunction,
+defDefaultClassFunction,
+defRequiredClass,
+defRequiredScriptFunction,
+defRequiredClassFunction,
+defRequiredClassFunctionIsStatic,
 initOnRunTask,
-initRunFunction,
-initRunClass,
-initSourceFileExtensions,
+defRunFunction,
+defRunClass,
+defSourceFileExtensions,
 initIsCocoaBridge,
 initNativeObjectsAsResults,
 initNativeObjectsAsYamlSupport,
-initDisplayName,
-initSyntaxDefinition,
-initTaskRunnerClassName,
+defDisplayName,
+defSyntaxDefinition,
+defTaskRunnerClassName,
 initBuildResultFlags,
 initInputArgumentName,
 initInputArgumentCase,
@@ -212,21 +212,21 @@ initInputArgumentStyleAllowedFlags;
 		initLanguageType = kMGSInterpretedLanguage;
 		initExecutorAcceptsOptions = NO;
 		initBuildAcceptsOptions = NO;
-		initCanBuild = YES;
-		initExternalExecutorPath = [self missingProperty];
-		initExternalBuildPath = [self missingProperty];
-		initExecutorOptions = @"";
-		initBuildOptions = @"";
+		defCanBuild = YES;
+		defExternalExecutorPath = [self missingProperty];
+		defExternalBuildPath = [self missingProperty];
+		defExecutorOptions = @"";
+		defBuildOptions = @"";
 		initIsOsaLanguage = NO;
 		
 		// script type
-		initScriptType = [self missingProperty];
-		initScriptTypeFamily = [self missingProperty];
-		initDisplayName = [self missingProperty];
-		initSyntaxDefinition = [self missingProperty];
+		defScriptType = [self missingProperty];
+		defScriptTypeFamily = [self missingProperty];
+		defDisplayName = [self missingProperty];
+		defSyntaxDefinition = [self missingProperty];
 		
-		initTaskRunnerClassName = [self missingProperty];
-		initTaskProcessName = [self missingProperty];
+		defTaskRunnerClassName = [self missingProperty];
+		defTaskProcessName = [self missingProperty];
 
 		initValidForOSVersion = YES;
 		initCanIgnoreBuildWarnings = NO;
@@ -239,18 +239,18 @@ initInputArgumentStyleAllowedFlags;
 		initSupportsScriptFunctions = NO;
 		initSupportsClasses = NO;
 		initSupportsClassFunctions = NO;
-		initRequiredClassFunctionIsStatic = NO;
-		initDefaultClass = @"kosmicTask";
-		initDefaultScriptFunction = @"kosmicTask";
-		initDefaultClassFunction = @"kosmicTask";
-		initRequiredClass = nil;
-		initRequiredScriptFunction = nil;
-		initRequiredClassFunction = nil;
+		defRequiredClassFunctionIsStatic = NO;
+		defDefaultClass = @"kosmicTask";
+		defDefaultScriptFunction = @"kosmicTask";
+		defDefaultClassFunction = @"kosmicTask";
+		defRequiredClass = nil;
+		defRequiredScriptFunction = nil;
+		defRequiredClassFunction = nil;
 		
 		// run configuration
 		initOnRunTask = kMGSOnRunCallNone;
-		initRunFunction = nil;
-		initRunClass = nil;
+		defRunFunction = nil;
+		defRunClass = nil;
 		
 		// Cocoa
 		initIsCocoaBridge = NO;
@@ -260,7 +260,7 @@ initInputArgumentStyleAllowedFlags;
 		initNativeObjectsAsYamlSupport = NO;
 		
 		// source file extensions
-		initSourceFileExtensions = [NSArray new];
+		defSourceFileExtensions = [NSArray new];
         
         // code template processing
         initInputArgumentName = kMGSInputArgumentName;
@@ -317,16 +317,16 @@ initInputArgumentStyleAllowedFlags;
 	MGS_PROP_COPY(initExecutableFormat);
 	MGS_PROP_COPY(initExecutorAcceptsOptions);
 	MGS_PROP_COPY(initBuildAcceptsOptions);
-	MGS_PROP_COPY(initExternalExecutorPath);
-	MGS_PROP_COPY(initExternalBuildPath);
-	MGS_PROP_COPY(initExecutorOptions);
-	MGS_PROP_COPY(initBuildOptions);
-	MGS_PROP_COPY(initCanBuild);
+	MGS_PROP_COPY(defExternalExecutorPath);
+	MGS_PROP_COPY(defExternalBuildPath);
+	MGS_PROP_COPY(defExecutorOptions);
+	MGS_PROP_COPY(defBuildOptions);
+	MGS_PROP_COPY(defCanBuild);
 	MGS_PROP_COPY(initIsOsaLanguage);
-	MGS_PROP_COPY(initScriptType);
-	MGS_PROP_COPY(initScriptTypeFamily);
+	MGS_PROP_COPY(defScriptType);
+	MGS_PROP_COPY(defScriptTypeFamily);
 	MGS_PROP_COPY(initCanIgnoreBuildWarnings);
-	MGS_PROP_COPY(initTaskProcessName);
+	MGS_PROP_COPY(defTaskProcessName);
 	MGS_PROP_COPY(initValidForOSVersion);
 	MGS_PROP_COPY(initLanguageShipsWithOS);
 	MGS_PROP_COPY(initLanguageType);
@@ -334,23 +334,23 @@ initInputArgumentStyleAllowedFlags;
 	MGS_PROP_COPY(initSupportsDirectParameters);
 	MGS_PROP_COPY(initSupportsClasses);
 	MGS_PROP_COPY(initSupportsClassFunctions);
-	MGS_PROP_COPY(initDefaultClass);
-	MGS_PROP_COPY(initDefaultScriptFunction);
-	MGS_PROP_COPY(initDefaultClassFunction);
-	MGS_PROP_COPY(initRequiredClass);
-	MGS_PROP_COPY(initRequiredScriptFunction);
-	MGS_PROP_COPY(initRequiredClassFunction);
-	MGS_PROP_COPY(initRequiredClassFunctionIsStatic);
+	MGS_PROP_COPY(defDefaultClass);
+	MGS_PROP_COPY(defDefaultScriptFunction);
+	MGS_PROP_COPY(defDefaultClassFunction);
+	MGS_PROP_COPY(defRequiredClass);
+	MGS_PROP_COPY(defRequiredScriptFunction);
+	MGS_PROP_COPY(defRequiredClassFunction);
+	MGS_PROP_COPY(defRequiredClassFunctionIsStatic);
 	MGS_PROP_COPY(initOnRunTask);
-	MGS_PROP_COPY(initRunFunction);
-	MGS_PROP_COPY(initRunClass);
-	MGS_PROP_COPY(initSourceFileExtensions);
+	MGS_PROP_COPY(defRunFunction);
+	MGS_PROP_COPY(defRunClass);
+	MGS_PROP_COPY(defSourceFileExtensions);
 	MGS_PROP_COPY(initIsCocoaBridge);
 	MGS_PROP_COPY(initNativeObjectsAsResults);
 	MGS_PROP_COPY(initNativeObjectsAsYamlSupport);
-	MGS_PROP_COPY(initDisplayName);
-	MGS_PROP_COPY(initSyntaxDefinition);
-	MGS_PROP_COPY(initTaskRunnerClassName);
+	MGS_PROP_COPY(defDisplayName);
+	MGS_PROP_COPY(defSyntaxDefinition);
+	MGS_PROP_COPY(defTaskRunnerClassName);
 	MGS_PROP_COPY(initBuildResultFlags);
     MGS_PROP_COPY(initInputArgumentName);
     MGS_PROP_COPY(initInputArgumentCase);
@@ -364,33 +364,33 @@ initInputArgumentStyleAllowedFlags;
 #pragma mark Accessors
 /*
  
- - initScriptTypeFamily
+ - defScriptTypeFamily
  
  */
-- (NSString *)initScriptTypeFamily 
+- (NSString *)defScriptTypeFamily 
 {
-	return [self isMissingProperty:initScriptTypeFamily] ? self.initScriptType  : initScriptTypeFamily;
+	return [self isMissingProperty:defScriptTypeFamily] ? self.defScriptType  : defScriptTypeFamily;
 }
 
 /*
  
- - initDisplayName
+ - defDisplayName
  
  */
-- (NSString *)initDisplayName
+- (NSString *)defDisplayName
 {
-	return [self isMissingProperty:initDisplayName] ? self.initScriptType : initDisplayName;
+	return [self isMissingProperty:defDisplayName] ? self.defScriptType : defDisplayName;
 }
 
 
 /*
  
- - initSyntaxDefinition
+ - defSyntaxDefinition
  
  */
-- (NSString *)initSyntaxDefinition
+- (NSString *)defSyntaxDefinition
 {
-	return [self isMissingProperty: initSyntaxDefinition] ? self.initScriptTypeFamily : initSyntaxDefinition;
+	return [self isMissingProperty: defSyntaxDefinition] ? self.defScriptTypeFamily : defSyntaxDefinition;
 }
 
 #pragma mark -

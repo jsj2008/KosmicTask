@@ -137,7 +137,7 @@
 		[self addPropertyList:aPlist toXMLElement:root withName:nil errorDescription:errorString];
 	}
 	
-	return [xmlDoc autorelease];
+	return xmlDoc;
 }
 
 /* 
@@ -240,7 +240,6 @@
 		return NO;
 	}
 	
-	[element release];
 	
 	return YES;
 }

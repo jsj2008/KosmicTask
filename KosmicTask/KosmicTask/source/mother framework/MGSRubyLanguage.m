@@ -24,10 +24,10 @@
 		self.initExecutorAcceptsOptions = YES;
 		self.initBuildAcceptsOptions = NO;
 		self.initExecutableFormat = kMGSSource;
-		self.initExternalExecutorPath = MGS_RUBY_LANG_PATH;
-		self.initExternalBuildPath = MGS_RUBY_LANG_PATH;
+		self.defExternalExecutorPath = MGS_RUBY_LANG_PATH;
+		self.defExternalBuildPath = MGS_RUBY_LANG_PATH;
 		self.initLanguageShipsWithOS = YES;
-		self.initBuildOptions = @"-c";
+		self.defBuildOptions = @"-c";
 		
 		// interface
 		self.initSupportsDirectParameters = YES;
@@ -39,11 +39,11 @@
 		self.initNativeObjectsAsResults = NO;
 		self.initNativeObjectsAsYamlSupport = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"rb", @"ruby", nil];
+		self.defSourceFileExtensions = [NSArray arrayWithObjects:@"rb", @"ruby", nil];
 		
-		self.initScriptType = @"Ruby";
-		self.initTaskRunnerClassName = @"MGSRubyScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskRubyRunner";
+		self.defScriptType = @"Ruby";
+		self.defTaskRunnerClassName = @"MGSRubyScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskRubyRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 
 	}

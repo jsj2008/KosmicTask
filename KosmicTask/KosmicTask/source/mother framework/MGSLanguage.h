@@ -83,19 +83,19 @@ typedef NSInteger MGSBuildResultFlags;
 	eMGSProcessType initBuildProcessType;
 	
 	// script type
-	NSString *initScriptType;
-	NSString *initScriptTypeFamily;		// defaults to initScriptType
-	NSString *initDisplayName;			// defaults to initScriptType
-	NSString *initSyntaxDefinition;		// defaults to initScriptType
+	NSString *defScriptType;
+	NSString *defScriptTypeFamily;		// defaults to defScriptType
+	NSString *defDisplayName;			// defaults to defScriptType
+	NSString *defSyntaxDefinition;		// defaults to defScriptType
 	
-	BOOL initCanBuild;
+	BOOL defCanBuild;
 	BOOL initSeparateSyntaxChecker;
 	eMGSExecutableFormat initExecutableFormat;
 	BOOL initExecutorAcceptsOptions;
 	BOOL initBuildAcceptsOptions;
 	BOOL initIsOsaLanguage;
 
-	NSString *initTaskProcessName;
+	NSString *defTaskProcessName;
 	BOOL initValidForOSVersion;
 	BOOL initCanIgnoreBuildWarnings;
 	BOOL initLanguageShipsWithOS;
@@ -105,18 +105,18 @@ typedef NSInteger MGSBuildResultFlags;
 	BOOL initSupportsDirectParameters;
 	BOOL initSupportsClasses;
 	BOOL initSupportsClassFunctions;
-	NSString *initDefaultClass;
-	NSString *initDefaultScriptFunction;
-	NSString *initDefaultClassFunction;
-	NSString *initRequiredClass;
-	NSString *initRequiredScriptFunction;
-	NSString *initRequiredClassFunction;
-	BOOL initRequiredClassFunctionIsStatic;
+	NSString *defDefaultClass;
+	NSString *defDefaultScriptFunction;
+	NSString *defDefaultClassFunction;
+	NSString *defRequiredClass;
+	NSString *defRequiredScriptFunction;
+	NSString *defRequiredClassFunction;
+	BOOL defRequiredClassFunctionIsStatic;
 	
 	// run properties
 	eMGSOnRunTask initOnRunTask;
-	NSString *initRunFunction;
-	NSString *initRunClass;
+	NSString *defRunFunction;
+	NSString *defRunClass;
 	
 	// Cocoa properties
 	BOOL initIsCocoaBridge;
@@ -124,14 +124,14 @@ typedef NSInteger MGSBuildResultFlags;
 	BOOL initNativeObjectsAsYamlSupport;
 	
 	// options
-	NSString *initExternalExecutorPath;
-	NSString *initExternalBuildPath;
-	NSString *initExecutorOptions;
-	NSString *initBuildOptions;
+	NSString *defExternalExecutorPath;
+	NSString *defExternalBuildPath;
+	NSString *defExecutorOptions;
+	NSString *defBuildOptions;
 	
-	NSArray *initSourceFileExtensions;
+	NSArray *defSourceFileExtensions;
 	
-	NSString *initTaskRunnerClassName;
+	NSString *defTaskRunnerClassName;
 	MGSBuildResultFlags initBuildResultFlags;
     
     MGSInputArgumentName initInputArgumentName;
@@ -149,27 +149,27 @@ typedef NSInteger MGSBuildResultFlags;
 @property MGSInputArgumentStyle initInputArgumentStyle;
 @property MGSInputArgumentStyle initInputArgumentStyleAllowedFlags;
 
-@property BOOL initCanBuild;
+@property BOOL defCanBuild;
 @property BOOL initSeparateSyntaxChecker;
 @property eMGSExecutableFormat initExecutableFormat;
 @property BOOL initExecutorAcceptsOptions;
 @property BOOL initBuildAcceptsOptions;
 
-@property (copy) NSString *initExternalExecutorPath;
-@property (copy) NSString *initExternalBuildPath;
+@property (copy) NSString *defExternalExecutorPath;
+@property (copy) NSString *defExternalBuildPath;
 
-@property (copy) NSString *initExecutorOptions;
-@property (copy) NSString *initBuildOptions;
+@property (copy) NSString *defExecutorOptions;
+@property (copy) NSString *defBuildOptions;
 
 @property BOOL initIsOsaLanguage;
 
 // script type
-@property (copy) NSString *initScriptType;
-@property (copy) NSString *initScriptTypeFamily;
-@property (copy) NSString *initDisplayName;
-@property (copy) NSString *initSyntaxDefinition;
+@property (copy) NSString *defScriptType;
+@property (copy) NSString *defScriptTypeFamily;
+@property (copy) NSString *defDisplayName;
+@property (copy) NSString *defSyntaxDefinition;
 
-@property (copy) NSString *initTaskProcessName;
+@property (copy) NSString *defTaskProcessName;
 @property BOOL initValidForOSVersion;
 @property BOOL initCanIgnoreBuildWarnings;
 @property BOOL initLanguageShipsWithOS;
@@ -183,22 +183,22 @@ typedef NSInteger MGSBuildResultFlags;
 @property BOOL initSupportsScriptFunctions;
 @property BOOL initSupportsClasses;
 @property BOOL initSupportsClassFunctions;
-@property (copy) NSString *initDefaultClass;
-@property (copy) NSString *initDefaultScriptFunction;
-@property (copy) NSString *initDefaultClassFunction;
-@property (copy) NSString *initRequiredClass;
-@property (copy) NSString *initRequiredScriptFunction;
-@property (copy) NSString *initRequiredClassFunction;
-@property BOOL initRequiredClassFunctionIsStatic;
+@property (copy) NSString *defDefaultClass;
+@property (copy) NSString *defDefaultScriptFunction;
+@property (copy) NSString *defDefaultClassFunction;
+@property (copy) NSString *defRequiredClass;
+@property (copy) NSString *defRequiredScriptFunction;
+@property (copy) NSString *defRequiredClassFunction;
+@property BOOL defRequiredClassFunctionIsStatic;
 
 @property eMGSOnRunTask initOnRunTask;
-@property (copy) NSString *initRunFunction;
-@property (copy) NSString *initRunClass;
+@property (copy) NSString *defRunFunction;
+@property (copy) NSString *defRunClass;
 
-@property (copy) NSArray *initSourceFileExtensions;
+@property (copy) NSArray *defSourceFileExtensions;
 
 
-@property (copy) NSString *initTaskRunnerClassName;
+@property (copy) NSString *defTaskRunnerClassName;
 
 @property MGSBuildResultFlags initBuildResultFlags;
 

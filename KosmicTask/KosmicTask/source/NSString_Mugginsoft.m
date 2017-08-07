@@ -40,10 +40,10 @@
 	//create a new UUID
 	CFUUIDRef	uuidObj = CFUUIDCreate(nil);
 	//get the string representation of the UUID
-	NSString	*newUUID = NSMakeCollectable(CFUUIDCreateString(nil, uuidObj));	// GC env happy
+	NSString	*newUUID = CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));	// GC env happy
 	CFRelease(uuidObj);
 	
-	return [newUUID autorelease];	// ref count env happy
+	return newUUID;	// ref count env happy
 }
 
 /*
@@ -293,7 +293,7 @@
 	
 	NSMutableString *result = [self mutableCopyWithZone:nil];
 	[result mgs_ReplaceCharactersInSet:set withString:string];
-	return [result autorelease];
+	return result;
 }
 
 /*
@@ -339,7 +339,7 @@
     
     // remove empty elements and trim
     NSMutableArray *groupComponents = [NSMutableArray arrayWithCapacity:[rawGroupComponents count]];
-    for (NSString *component in rawGroupComponents) {
+    for (__strong NSString *component in rawGroupComponents) {
         component = [component stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if ([component length] > 0) {
             [groupComponents addObject:component];

@@ -22,9 +22,9 @@
 		self.initExecutorProcessType = kMGSOutOfProcess;
 		self.initExecutorAcceptsOptions = YES;
 		self.initExecutableFormat = kMGSSource;
-		self.initExternalExecutorPath = MGS_TCLSH_LANG_EXECUTE_PATH;
+		self.defExternalExecutorPath = MGS_TCLSH_LANG_EXECUTE_PATH;
 		self.initLanguageShipsWithOS = YES;
-		self.initCanBuild = NO;
+		self.defCanBuild = NO;
 		
 		// interface
 		self.initSupportsDirectParameters = YES;
@@ -36,12 +36,12 @@
 		self.initNativeObjectsAsResults = NO;
 		self.initNativeObjectsAsYamlSupport = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"tclsh", nil];
-		self.initScriptType = @"Tcl";
-		self.initScriptTypeFamily = @"Tcl";
-		self.initSyntaxDefinition = @"Tcl/Tk";
-		self.initTaskRunnerClassName = @"MGSTclshScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskTclshRunner";
+		self.defSourceFileExtensions = [NSArray arrayWithObjects:@"tclsh", nil];
+		self.defScriptType = @"Tcl";
+		self.defScriptTypeFamily = @"Tcl";
+		self.defSyntaxDefinition = @"Tcl/Tk";
+		self.defTaskRunnerClassName = @"MGSTclshScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskTclshRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

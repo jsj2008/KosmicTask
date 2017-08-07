@@ -423,7 +423,7 @@ static NSOperationQueue *operationQueue = nil;
  */
 - (NSString *)syntaxDefinition
 {
-	return self.language.initSyntaxDefinition;
+	return self.language.defSyntaxDefinition;
 }
 
 /*
@@ -671,7 +671,7 @@ errorExit:
  */
 - (NSString *)scriptType
 {
-	return self.language.initScriptType;
+	return self.language.defScriptType;
 }
 
 /*
@@ -681,7 +681,7 @@ errorExit:
  */
 - (NSString *)scriptTypeFamily
 {
-	return self.language.initScriptTypeFamily;
+	return self.language.defScriptTypeFamily;
 }
 
 /*
@@ -691,7 +691,7 @@ errorExit:
  */
 - (NSString *)taskRunnerClassName
 {
-	return self.language.initTaskRunnerClassName;
+	return self.language.defTaskRunnerClassName;
 }
 
 /*
@@ -713,7 +713,7 @@ errorExit:
  */
 - (NSString *)taskProcessName
 {
-	return self.language.initTaskProcessName;
+	return self.language.defTaskProcessName;
 }
 
 #pragma mark -

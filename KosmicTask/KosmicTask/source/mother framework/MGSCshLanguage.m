@@ -22,18 +22,18 @@
 		self.initExecutorProcessType = kMGSOutOfProcess;
 		self.initExecutorAcceptsOptions = YES;
 		self.initExecutableFormat = kMGSSource;
-		self.initExternalExecutorPath = MGS_CSH_LANG_PATH;
+		self.defExternalExecutorPath = MGS_CSH_LANG_PATH;
 		self.initLanguageShipsWithOS = YES;
-		self.initCanBuild = NO;
+		self.defCanBuild = NO;
 		
 		// interface
 		self.initSupportsDirectParameters = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"csh", nil];
+		self.defSourceFileExtensions = [NSArray arrayWithObjects:@"csh", nil];
 		
-		self.initScriptType = @"C shell";
-		self.initTaskRunnerClassName =  @"MGSCshScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskCshRunner";
+		self.defScriptType = @"C shell";
+		self.defTaskRunnerClassName =  @"MGSCshScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskCshRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

@@ -15,7 +15,7 @@
 	NSMutableArray *temporaryPaths;
 }
 @property BOOL keepTaskAlive;
-@property (retain) id resultObject;
+@property (strong) id resultObject;
 
 + (void)stopTask:(id)result;
 + (id)sharedController;

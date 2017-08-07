@@ -25,10 +25,10 @@
 		self.initExecutorAcceptsOptions = YES;
 		self.initBuildAcceptsOptions = NO;
 		self.initExecutableFormat = kMGSSource;
-		self.initExternalExecutorPath = MGS_PHP_LANG_PATH;
-		self.initExternalBuildPath = MGS_PHP_LANG_PATH;
+		self.defExternalExecutorPath = MGS_PHP_LANG_PATH;
+		self.defExternalBuildPath = MGS_PHP_LANG_PATH;
 		self.initLanguageShipsWithOS = YES;
-		self.initBuildOptions = @"--syntax-check";
+		self.defBuildOptions = @"--syntax-check";
 		
 		// interface
 		self.initSupportsDirectParameters = YES;
@@ -40,10 +40,10 @@
 		self.initNativeObjectsAsResults = NO;
 		self.initNativeObjectsAsYamlSupport = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"php", nil];
-		self.initScriptType = @"PHP";
-		self.initTaskRunnerClassName =  @"MGSPhpScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskPhpRunner";
+		self.defSourceFileExtensions = [NSArray arrayWithObjects:@"php", nil];
+		self.defScriptType = @"PHP";
+		self.defTaskRunnerClassName =  @"MGSPhpScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskPhpRunner";
 		self.initCanIgnoreBuildWarnings = YES;
         
         self.initInputArgumentCase = kMGSInputArgumentLowerCase;

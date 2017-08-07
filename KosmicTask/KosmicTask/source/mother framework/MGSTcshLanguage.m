@@ -22,17 +22,17 @@
 		self.initExecutorProcessType = kMGSOutOfProcess;
 		self.initExecutorAcceptsOptions = YES;
 		self.initExecutableFormat = kMGSSource;
-		self.initExternalExecutorPath = MGS_TCSH_LANG_PATH;
+		self.defExternalExecutorPath = MGS_TCSH_LANG_PATH;
 		self.initLanguageShipsWithOS = YES;
-		self.initCanBuild = NO;
+		self.defCanBuild = NO;
 		
 		// interface
 		self.initSupportsDirectParameters = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"tcsh", nil];
-		self.initScriptType = @"Tenex C shell";
-		self.initTaskRunnerClassName = @"MGSTcshScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskTcshRunner";
+		self.defSourceFileExtensions = [NSArray arrayWithObjects:@"tcsh", nil];
+		self.defScriptType = @"Tenex C shell";
+		self.defTaskRunnerClassName = @"MGSTcshScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskTcshRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

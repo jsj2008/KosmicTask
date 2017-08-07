@@ -12,6 +12,7 @@
 #import "MGSTempStorage.h"
 #import "MGSScriptRunnerApplication.h"
 
+NSString *MGSScriptRunnerBuildException = @"MGSScriptRunnerBuildException";
 
 #define OSStatusLog(status) NSLog(@"OSStatus error: %lx - reason: %s", (long)status, GetMacOSStatusErrorString(status))
 
@@ -301,7 +302,7 @@ static BOOL isForegroundApplication = NO;
 	 setup the environment
 	 
 	 */
-	scriptExecutorManager = [manager retain];
+	scriptExecutorManager = manager;
 	if (![scriptExecutorManager setupEnvironment:self]) {
 		self.error = @"script execution environment could not be set up.";
 		return NO;
@@ -329,41 +330,41 @@ static BOOL isForegroundApplication = NO;
 	 */
 	[self redirectStdOutToStdErr];
 	
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
 	// create a shared application object
-	[MGSScriptRunnerApplication sharedApplication];
-	
-	// set our delegate
-	[NSApp setDelegate:self];
-	
-	// run until NSApp - stop: or terminate: sent.
-	// only NSApp - stop: will cause run loop to return here.
-	// But, only checks for stop request after an actual event has been
-	// processed - timers do not count in this regard.
-	//
-	// If an exception occurs in -run it should be raised.
-	// see // see https://github.com/omnigroup/OmniGroup/blob/master/Frameworks/OmniAppKit/OAApplication.m
-	//
-	// also see http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/Exceptions/Tasks/ControllingAppResponse.html
-	// for details on NSExceptionHandler
-	@try {
+		[MGSScriptRunnerApplication sharedApplication];
 		
-		/*
-		 
-		 could we just not run the run loop ?
-		 this would be a possibility but there would be no connection to the window server.
-		 
-		 Using an NSApplication instance ensures that Cocoa tasks are running in as near a standard application 
-		 environment as possible.
-		 
-		 */
-		[NSApp run];
-	} @catch (NSException *e) {
-		[NSApp reportException:e];
-		[self addError:[e reason]];
+		// set our delegate
+		[NSApp setDelegate:self];
+		
+		// run until NSApp - stop: or terminate: sent.
+		// only NSApp - stop: will cause run loop to return here.
+		// But, only checks for stop request after an actual event has been
+		// processed - timers do not count in this regard.
+		//
+		// If an exception occurs in -run it should be raised.
+		// see // see https://github.com/omnigroup/OmniGroup/blob/master/Frameworks/OmniAppKit/OAApplication.m
+		//
+		// also see http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/Exceptions/Tasks/ControllingAppResponse.html
+		// for details on NSExceptionHandler
+		@try {
+			
+			/*
+			 
+			 could we just not run the run loop ?
+			 this would be a possibility but there would be no connection to the window server.
+			 
+			 Using an NSApplication instance ensures that Cocoa tasks are running in as near a standard application 
+			 environment as possible.
+			 
+			 */
+			[NSApp run];
+		} @catch (NSException *e) {
+			[NSApp reportException:e];
+			[self addError:[e reason]];
+		}
 	}
-	[pool drain];
 	
 	// restore stdout
 	[self restoreStdOut];
@@ -478,17 +479,25 @@ static BOOL isForegroundApplication = NO;
 {
 #pragma unused(aNotification)
 	
+    if (![self onDidFinishLaunching]) {
+        // stop the run loop
+        [self stopApp:self];
+    }
+}
+
+- (BOOL)onDidFinishLaunching
+{
 	// get script parameter array
 	NSArray *paramArray = [self ScriptParametersWithError:YES];
-	if (!paramArray) goto errorExit;
+	if (!paramArray) return NO;
 	
 	// get executable script data
 	NSData *executableData = [self scriptExecutableDataWithError:YES];
-	if (!executableData) goto errorExit;
+	if (!executableData) return NO;
 	
 	// write task data to file
 	NSString *scriptPath = [self writeScriptDataToWorkingFile:executableData withExtension:self.scriptExecutableExtension];
-	if (!scriptPath) goto errorExit;
+	if (!scriptPath) return NO;
 	
 	// load  script and execute
 	id object = nil;
@@ -541,18 +550,10 @@ static BOOL isForegroundApplication = NO;
 			[self addError:@"could not launch script."];
 		} 
 		
-		// stop the run loop
-		[self stopApp:self];
+        return NO;
 	}
 	
-	return;
-	
-errorExit:
-	
-	// stop the run loop
-	[self stopApp:self];
-	
-	return;
+	return YES;
 }
 
 #pragma mark -
@@ -784,7 +785,7 @@ errorExit:
 {
 	NSString *optionString = [self.taskDict objectForKey:MGSScriptExecutorOptions];
 	if (!optionString) {
-		optionString = self.language.initExecutorOptions;
+		optionString = self.language.defExecutorOptions;
 	} 
 		
 	NSMutableArray *options = [MGSLanguage tokeniseString:optionString];
@@ -803,7 +804,7 @@ errorExit:
 {
 	NSString *optionString = [self.taskDict objectForKey:MGSScriptBuildOptions];
 	if (!optionString) {
-		optionString = self.language.initBuildOptions;
+		optionString = self.language.defBuildOptions;
 	}  
 	
 	NSMutableArray *options = [MGSLanguage tokeniseString:optionString];
@@ -820,7 +821,7 @@ errorExit:
  */
 - (NSString *)defaultLaunchPath
 {
-	return self.language.initExternalExecutorPath;
+	return self.language.defExternalExecutorPath;
 }	
 
 
@@ -831,7 +832,7 @@ errorExit:
  */
 - (NSString *)defaultBuildPath
 {
-	NSString *buildPath = self.language.initExternalBuildPath;
+	NSString *buildPath = self.language.defExternalBuildPath;
 	if (!buildPath) {
 		buildPath = [self defaultLaunchPath];
 	}

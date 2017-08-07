@@ -25,18 +25,18 @@
 		self.initExecutorAcceptsOptions = YES;
 		self.initBuildAcceptsOptions = NO;
 		self.initExecutableFormat = kMGSSource;
-		self.initExternalExecutorPath = MGS_KSH_LANG_PATH;
-		self.initExternalBuildPath = MGS_KSH_LANG_PATH;
+		self.defExternalExecutorPath = MGS_KSH_LANG_PATH;
+		self.defExternalBuildPath = MGS_KSH_LANG_PATH;
 		self.initLanguageShipsWithOS = YES;
-		self.initBuildOptions = @"-n";
+		self.defBuildOptions = @"-n";
 		
 		// interface
 		self.initSupportsDirectParameters = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"ksh", nil];	
-		self.initScriptType = @"Korn shell";
-		self.initTaskRunnerClassName = @"MGSKshScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskKshRunner";
+		self.defSourceFileExtensions = [NSArray arrayWithObjects:@"ksh", nil];	
+		self.defScriptType = @"Korn shell";
+		self.defTaskRunnerClassName = @"MGSKshScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskKshRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

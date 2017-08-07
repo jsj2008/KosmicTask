@@ -21,11 +21,11 @@
 	self = [super init];
 	if (self) {
 		
-		self.initScriptType = @"Java";
+		self.defScriptType = @"Java";
 		self.initCanIgnoreBuildWarnings = YES;
-		self.initTaskProcessName = @"KosmicTaskJavaRunner";
+		self.defTaskProcessName = @"KosmicTaskJavaRunner";
 		
-		self.initTaskRunnerClassName= @"MGSJavaRunner";
+		self.defTaskRunnerClassName= @"MGSJavaRunner";
 		self.initBuildResultFlags = kMGSCompiledScript;
 		
 		self.initBuildProcessType = kMGSOutOfProcess;
@@ -35,17 +35,17 @@
 		self.initBuildAcceptsOptions = YES;
 		self.initLanguageType = kMGSCompiledLanguage;
 		self.initExecutableFormat = kMGSCompiled;
-		self.initExternalExecutorPath =  @"/usr/bin/java";
-		self.initExecutorOptions = @"";
-		self.initExternalBuildPath = @"/usr/bin/javac";
-		self.initBuildOptions = @"-Xlint";
+		self.defExternalExecutorPath =  @"/usr/bin/java";
+		self.defExecutorOptions = @"";
+		self.defExternalBuildPath = @"/usr/bin/javac";
+		self.defBuildOptions = @"-Xlint";
 		self.initLanguageShipsWithOS = YES;
 		
 		// interface
 		self.initSupportsClasses = YES;
 		self.initSupportsClassFunctions = YES;
-		self.initRequiredClassFunctionIsStatic = YES;
-		self.initRequiredClassFunction = @"main";
+		self.defRequiredClassFunctionIsStatic = YES;
+		self.defRequiredClassFunction = @"main";
 		
 		// Cocoa
 		self.initIsCocoaBridge = NO;
@@ -54,7 +54,7 @@
 		self.initNativeObjectsAsResults = NO;
 		self.initNativeObjectsAsYamlSupport = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects: @"java", nil];
+		self.defSourceFileExtensions = [NSArray arrayWithObjects: @"java", nil];
 	}
 	
 	return self;

@@ -33,7 +33,7 @@
 //#ifdef MGS_LUA_COCOA_BUILD_WITH_LUAC
 		self.initBuildProcessType = kMGSOutOfProcess;
 		self.initSeparateSyntaxChecker = YES;
-		self.initBuildOptions = @"-p";		
+		self.defBuildOptions = @"-p";		
 //#else
 //		self.initCanbuild = NO;
 //#endif
@@ -47,11 +47,11 @@
 		// interface
 		self.initSupportsScriptFunctions = YES;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects: @"lua", nil];	
-		self.initScriptType = @"Lua Cocoa";
-		self.initScriptTypeFamily = @"Lua";
-		self.initTaskRunnerClassName = @"MGSLuaCocoaRunner";
-		self.initTaskProcessName = @"KosmicTaskLuaCocoaRunner";
+		self.defSourceFileExtensions = [NSArray arrayWithObjects: @"lua", nil];	
+		self.defScriptType = @"Lua Cocoa";
+		self.defScriptTypeFamily = @"Lua";
+		self.defTaskRunnerClassName = @"MGSLuaCocoaRunner";
+		self.defTaskProcessName = @"KosmicTaskLuaCocoaRunner";
 		self.initCanIgnoreBuildWarnings = YES;
 	}
 	

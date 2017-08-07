@@ -32,7 +32,7 @@
 		// interface
 		self.initSupportsDirectParameters = YES;
 		self.initSupportsScriptFunctions = YES;
-		self.initDefaultScriptFunction = @"KosmicTask";
+		self.defDefaultScriptFunction = @"KosmicTask";
 		
 		// Cocoa
 		self.initIsCocoaBridge = NO;
@@ -41,12 +41,12 @@
 		self.initNativeObjectsAsResults = YES;
 		self.initNativeObjectsAsYamlSupport = NO;
 		
-		self.initSourceFileExtensions = [NSArray arrayWithObjects:@"applescript", nil];
+		self.defSourceFileExtensions = [NSArray arrayWithObjects:@"applescript", nil];
 		
 		self.initIsOsaLanguage = YES;
-		self.initScriptType = @"AppleScript";
-		self.initTaskRunnerClassName = @"MGSAppleScriptRunner";
-		self.initTaskProcessName = @"KosmicTaskAppleScriptRunner";
+		self.defScriptType = @"AppleScript";
+		self.defTaskRunnerClassName = @"MGSAppleScriptRunner";
+		self.defTaskProcessName = @"KosmicTaskAppleScriptRunner";
 		self.initBuildResultFlags = kMGSScriptSourceRTF | kMGSCompiledScript;
         
         // code template processing
