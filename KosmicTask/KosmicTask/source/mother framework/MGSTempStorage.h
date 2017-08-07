@@ -30,7 +30,7 @@ extern NSString *MGSKosmicTempFileNamePrefix;
 - (NSString *)storagePath;
 - (void)deleteStorageFacility;
 
-@property (copy) NSString *storageFolder;
+@property (copy, nonatomic) NSString *storageFolder;
 @property BOOL alwaysGenerateUniqueFilenames;
 
 @end

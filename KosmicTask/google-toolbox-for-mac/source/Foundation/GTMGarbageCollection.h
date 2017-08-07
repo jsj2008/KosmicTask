@@ -39,6 +39,7 @@
 // GTMNSMakeUncollectable is for global maps, etc. that we don't
 // want released ever. You should still retain these in non-gc code.
 GTM_INLINE void GTMNSMakeUncollectable(id object) {
+#pragma unused(object)
   /* KosmicTask ARC conversion requires a no-op */ //[[NSGarbageCollector defaultCollector] disableCollectorForPointer:object];
 }
 

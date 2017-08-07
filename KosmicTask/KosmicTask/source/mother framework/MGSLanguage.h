@@ -165,9 +165,9 @@ typedef NSInteger MGSBuildResultFlags;
 
 // script type
 @property (copy) NSString *defScriptType;
-@property (copy) NSString *defScriptTypeFamily;
-@property (copy) NSString *defDisplayName;
-@property (copy) NSString *defSyntaxDefinition;
+@property (copy, nonatomic) NSString *defScriptTypeFamily;
+@property (copy, nonatomic) NSString *defDisplayName;
+@property (copy, nonatomic) NSString *defSyntaxDefinition;
 
 @property (copy) NSString *defTaskProcessName;
 @property BOOL initValidForOSVersion;

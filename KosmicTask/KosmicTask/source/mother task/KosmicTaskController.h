@@ -14,7 +14,7 @@
 	id resultObject;
 	NSMutableArray *temporaryPaths;
 }
-@property BOOL keepTaskAlive;
+@property (assign, nonatomic) BOOL keepTaskAlive;
 @property (strong) id resultObject;
 
 + (void)stopTask:(id)result;

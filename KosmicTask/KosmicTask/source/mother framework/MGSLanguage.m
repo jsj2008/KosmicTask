@@ -367,7 +367,7 @@ initInputArgumentStyleAllowedFlags;
  - defScriptTypeFamily
  
  */
-- (NSString *)defScriptTypeFamily 
+- (NSString *)defScriptTypeFamily
 {
 	return [self isMissingProperty:defScriptTypeFamily] ? self.defScriptType  : defScriptTypeFamily;
 }

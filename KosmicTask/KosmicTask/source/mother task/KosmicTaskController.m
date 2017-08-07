@@ -42,7 +42,8 @@ static id mgs_sharedController;
 {
 	@synchronized(self) {
 		if (nil == mgs_sharedController) {
-			[[self alloc] init];  // assignment occurs below
+			id temp = [[self alloc] init];  // assignment occurs below in allocWithZone
+            (void)temp;
 		}
 	}
 	return mgs_sharedController;
