@@ -7,7 +7,8 @@
 //
 
 #import "MGSPagesSendPlugin.h"
-#import "Pages.h"
+#warning broken - pages.h not available
+//#import "Pages.h"
 
 @implementation MGSPagesSendPlugin
 
@@ -52,7 +53,9 @@
 {
 	BOOL success = NO;
 	
-	@try {	 
+	@try {
+        #warning broken
+/*
 		// activate app
 		PagesApplication *pages = [SBApplication applicationWithBundleIdentifier:[self bundleIdentifier]];
 		[pages activate];
@@ -68,7 +71,7 @@
             [doc performSelector:selSetBodyText withObject:[aString string]];
             success =  YES;
         }
-        
+*/
 		
 	} @catch (NSException *e) {
 		[self onException:e];
