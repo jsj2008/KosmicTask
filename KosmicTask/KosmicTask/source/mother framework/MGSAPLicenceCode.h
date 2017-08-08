@@ -77,7 +77,7 @@ static NSString *MGSAPPublicLicenceKey() {
  
  */
 static BOOL MGSAPSetKey() {
-	return APSetKey((CFStringRef)MGSAPPublicLicenceKey());
+	return APSetKey((__bridge CFStringRef)MGSAPPublicLicenceKey());
 }
 
 /*
@@ -106,7 +106,7 @@ static BOOL MGSAPVerifyLicenseFile(NSString *path)
 {	
 	if (!path) return NO;
 	if (!MGSAPSetKey()) return NO;
-	return APVerifyLicenseFile((CFURLRef)[NSURL fileURLWithPath:path]);
+	return APVerifyLicenseFile((__bridge CFURLRef)[NSURL fileURLWithPath:path]);
 }
 /*
  
@@ -117,7 +117,7 @@ static BOOL MGSAPVerifyLicenseData(NSData *data)
 {	
 	if (!data) return NO;
 	if (!MGSAPSetKey()) return NO;
-	return APVerifyLicenseData((CFDataRef)data);
+	return APVerifyLicenseData((__bridge CFDataRef)data);
 }
 /*
  
@@ -132,19 +132,19 @@ static NSDictionary *MGSAPLicenceDictionary(id dataSource, NSString *optionDictP
 	
 	// create dictionary for licence data
 	if ([dataSource isKindOfClass:[NSData class]]) {
-		_dictionary = (NSDictionary *)APCreateDictionaryForLicenseData((CFDataRef)dataSource);
+		_dictionary = (NSDictionary *)CFBridgingRelease(APCreateDictionaryForLicenseData((__bridge CFDataRef)dataSource));
 	}
 	
 	// create dictionary for licence file
 	else if ([dataSource isKindOfClass:[NSString class]]) {
-		_dictionary = (NSDictionary *)APCreateDictionaryForLicenseFile((CFURLRef)[NSURL fileURLWithPath:dataSource]);
+		_dictionary = (NSDictionary *)CFBridgingRelease(APCreateDictionaryForLicenseFile((__bridge CFURLRef)[NSURL fileURLWithPath:dataSource]));
 	} else {
 		return nil;
 	}
 	
 	// add hash to dictionary
 	NSMutableDictionary *mutableDict = [NSMutableDictionary dictionaryWithDictionary:_dictionary];
-	[mutableDict setObject:(NSString *)APHash() forKey:MGSHashLicenceKey];
+	[mutableDict setObject:(__bridge NSString *)APHash() forKey:MGSHashLicenceKey];
 	
 	// get option dictionary
 	NSDictionary *optionDict = nil;

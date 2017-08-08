@@ -313,7 +313,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 - (BOOL)loadDerivedResourceType:(MGSDerivedResourceItemType)derivedType
 {
 	switch (derivedType) {
-		case MGSDerivedResourceItemHTML:;
+		case MGSDerivedResourceItemHTML: {;
 			NSString *html = [ORCDiscount markdown2HTML:self.markdownResource];
 			
 			// default framework cssUrl is at [ORCDiscount cssURL]
@@ -324,6 +324,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 			self.htmlResource = [ORCDiscount HTMLPage:html withCSSFromURL:cssURL];
 			break;
 		
+		}
 		default:
 			return NO;
 		break;
@@ -345,7 +346,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 	}
 	
 	switch (fileType) {
-		case MGSResourceItemTextFile:;
+		case MGSResourceItemTextFile: {;
 			NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
 			if (!text) {
 				text = @"";
@@ -354,7 +355,8 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 			self.stringResource = text;
 			break;
 
-		case MGSResourceItemMarkdownFile:;
+		}
+		case MGSResourceItemMarkdownFile: {;
 			NSString *markdownText = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
 			if (!markdownText) {
 				markdownText = @"";
@@ -366,7 +368,8 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 
 			break;
 			
-		case MGSResourceItemRTFDFile:;
+		}
+		case MGSResourceItemRTFDFile: {;
             NSAttributedString *atext = nil;
             NSError *docError = nil;
 
@@ -432,7 +435,8 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 			self.attributedStringResource = atext;
 			break;
 		
-		case MGSResourceItemPlistFile:;
+		}
+		case MGSResourceItemPlistFile: {;
 			NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 			if (!dict) {
 				dict = [NSDictionary new];
@@ -440,6 +444,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 			self.dictionaryResource = dict;
 			break;
 			
+		}
 		default:
 			return NO;
 	}

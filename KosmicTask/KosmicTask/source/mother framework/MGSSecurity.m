@@ -162,7 +162,7 @@ static NSDictionary *identityOptions = nil;
 		 so just keep this keychain reference around.
 		 
 		 */
-		static __strong SecKeychainRef keychainRef = NULL;
+		static SecKeychainRef keychainRef = NULL;
 
 		
 		// get SSL identity
@@ -180,7 +180,6 @@ static NSDictionary *identityOptions = nil;
 		}
 	
 		// make it collectable but the strong ref above should prevent this.
-		CFMakeCollectable(keychainRef);
 		mySSLIdentity = [MGSSecurity findOrCreateSelfSignedIdentityInKeychain:keychainRef];
 		
 	}
@@ -238,7 +237,7 @@ static NSDictionary *identityOptions = nil;
 			err = SecCertificateCopyCommonName(certificateRef, &commonName);
 			if (err == noErr) {
 				MLog(DEBUGLOG,  @"SSL common name = %@", commonName);
-				if ([(NSString *)commonName isEqual:SSL_COMMON_NAME]) {
+				if ([(__bridge NSString *)commonName isEqual:SSL_COMMON_NAME]) {
 					MLog(DEBUGLOG, @"SSL identity found");
 					// found it
 					CFRelease(commonName);
@@ -292,7 +291,7 @@ static NSDictionary *identityOptions = nil;
 			err = SecCertificateCopyCommonName(certificateRef, &commonName);
 			if (err == noErr) {
 				MLog(DEBUGLOG,  @"SSL common name = %@", commonName);
-				if ([(NSString *)commonName isEqual:SSL_COMMON_NAME]) {
+				if ([(__bridge NSString *)commonName isEqual:SSL_COMMON_NAME]) {
 					MLog(DEBUGLOG, @"SSL certificate found");
 					// found it
 					CFRelease(commonName);
@@ -431,8 +430,8 @@ static NSDictionary *identityOptions = nil;
      
      */
 	err = SecKeychainItemImport(
-										 (CFDataRef) [NSData dataWithContentsOfFile:tmpPath],
-										 (CFStringRef) tmpPath,
+										 (__bridge CFDataRef) [NSData dataWithContentsOfFile:tmpPath],
+										 (__bridge CFStringRef) tmpPath,
 										 &format,
 										 &type,
 										 0,
@@ -457,7 +456,7 @@ static NSDictionary *identityOptions = nil;
 {
     CFStringRef errRef = SecCopyErrorMessageString(err, NULL);
     
-    return NSMakeCollectable(errRef);
+    return CFBridgingRelease(errRef);
 }
 /*
  
@@ -506,7 +505,7 @@ static NSDictionary *identityOptions = nil;
 	
 	// show cert in modal panel
 	SFCertificatePanel *certPanel = [SFCertificatePanel sharedCertificatePanel];
-	[certPanel runModalForCertificates:[NSArray arrayWithObject:(id)mySSLCert] showGroup:NO];
+	[certPanel runModalForCertificates:[NSArray arrayWithObject:(id)CFBridgingRelease(mySSLCert)] showGroup:NO];
 	
 	CFRelease(mySSLCert);
 	return;

@@ -30,7 +30,7 @@ MGS_INSTANCE_TRACKER_DEFINE;
 - (id) initWithDelegate:(id)delegate userData:(long)userData
 {
 	if ((self = [super initWithDelegate:delegate userData:userData])) {
-		disconnectCalled = NO;
+		_disconnectCalled = NO;
 		readSuspended = NO;
 		writeSuspended = NO;
         
@@ -47,7 +47,7 @@ MGS_INSTANCE_TRACKER_DEFINE;
  */
 - (BOOL)disconnectCalled
 {
-	return disconnectCalled;
+	return _disconnectCalled;
 }
 
 /*
@@ -64,12 +64,12 @@ MGS_INSTANCE_TRACKER_DEFINE;
 //
  
  */
-- (void)finalize
+- (void)dealloc
 {
     MGS_INSTANCE_TRACKER_DEALLOCATE;
     
 	// disconnect must be called for all instances
-	if (!disconnectCalled) {
+	if (!self.disconnectCalled) {
 		MLogInfo (@"AsyncSocket finalize without prior disconnect call: %@", self);
 	}
     
@@ -77,7 +77,6 @@ MGS_INSTANCE_TRACKER_DEFINE;
 	MLog(DEBUGLOG, @"MGSAsyncSocket finalized.");
 #endif
     
-	[super finalize];
 }
 
 /*
@@ -87,11 +86,11 @@ MGS_INSTANCE_TRACKER_DEFINE;
  */
 - (void)close
 {
-	if (disconnectCalled == YES) {
+	if (self.disconnectCalled == YES) {
 		MLog(DEBUGLOG, @"MGSAsyncSocket repeat call to close");
 		return;
 	}	
-	disconnectCalled = YES;
+	self.disconnectCalled = YES;
 
 	// the superclass close method is private hence the use of perform selector
 	SEL closeSelector = @selector(close);

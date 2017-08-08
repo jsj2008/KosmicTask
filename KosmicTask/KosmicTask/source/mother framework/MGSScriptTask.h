@@ -13,8 +13,8 @@
 
 
 @interface MGSScriptTask : MGSTask {
-	MGSServerNetRequest *_netRequest;
-    MGSServerNetRequest *_logRequest;
+	MGSServerNetRequest * _netRequest;
+    MGSServerNetRequest * _logRequest;
 }
 - (MGSScriptTask *)initWithNetRequest:(MGSServerNetRequest *)netRequest;
 

@@ -34,10 +34,10 @@ typedef NSInteger MGSLanguageRequestType;
 @interface MGSLanguageProperty : NSObject <NSCopying> {
 	NSString *key;
 	NSString *name;
-	id value;
-	id initialValue;
+	id __strong value;
+	id __strong initialValue;
 	NSDictionary *optionValues;
-	id defaultOptionKey;
+	id __strong defaultOptionKey;
 	MGSLanguagePropertyType propertyType;
 	MGSLanguageRequestType requestType;
 	BOOL editable;
@@ -46,14 +46,14 @@ typedef NSInteger MGSLanguageRequestType;
 	BOOL allowReset;
 	BOOL hasInitialValue;
 	BOOL isList;
-	id delegate;
+	id __weak delegate;
 }
 
 @property (readonly) MGSLanguagePropertyType propertyType;
 @property (copy, readonly) NSString *key;
 @property (copy) NSString *name;
-@property (assign) id value;
-@property (assign) id initialValue;
+@property (strong) id value;
+@property (strong) id initialValue;
 @property (copy) NSDictionary *optionValues;
 @property MGSLanguageRequestType requestType;
 @property BOOL editable;
@@ -62,8 +62,8 @@ typedef NSInteger MGSLanguageRequestType;
 @property (readonly) BOOL hasInitialValue;
 @property (copy) NSString *infoText;
 @property (readonly) BOOL isList;
-@property (assign) id defaultOptionKey;
-@property (assign) id delegate;
+@property (strong) id defaultOptionKey;
+@property (weak) id delegate;
 
 + (NSString *)missingProperty;
 + (BOOL)isMissingProperty:(NSString *)property;

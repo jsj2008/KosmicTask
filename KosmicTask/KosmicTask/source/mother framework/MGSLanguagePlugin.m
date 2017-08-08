@@ -17,6 +17,8 @@ NSString *MGSLangPluginExecutePath = @"MGSLangPluginExecutePath";
 NSString *MGSLangPluginTempPath = @"MGSLangPluginTempPath";
 NSString *MGSLangPluginNetRequest = @"MGSLangPluginNetRequest";
 
+static NSString *MGSLangPluginException = @"MGSLangPluginException";
+
 static unsigned mgs_major = 0, mgs_minor = 0, mgs_bugFix = 0;
 
 // class interface
@@ -24,7 +26,7 @@ static unsigned mgs_major = 0, mgs_minor = 0, mgs_bugFix = 0;
 - (NSMutableDictionary *)standardTaskDictionaryForScript:(MGSScript *)script;
 - (void)exportBundleResources:(NSString *)folderName;
 
-@property (assign) MGSLanguage *language;
+@property MGSLanguage *language;
 @end
 
 static NSOperationQueue *operationQueue = nil;
@@ -472,142 +474,146 @@ static NSOperationQueue *operationQueue = nil;
 	MGSNetRequest *netRequest = [options objectForKey:MGSLangPluginNetRequest];
 	MGSNetMessage *requestMessage = [netRequest requestMessage];
 	
-	/*
-	 
-	 the script representation passed into this method may not contain the executable
-	 data so load a full script representation from disk
-	 
-	 */
-	MGSScript *fullScriptRep = [MGSScript scriptWithContentsOfFile:scriptPath error:mgsError];
-	if (!fullScriptRep) {
-		error = NSLocalizedString(@"cannot load script file", @"Script task process error");
-		goto errorExit;
-	}
+    @try {
+
+        /*
+         
+         the script representation passed into this method may not contain the executable
+         data so load a full script representation from disk
+         
+         */
+        MGSScript *fullScriptRep = [MGSScript scriptWithContentsOfFile:scriptPath error:mgsError];
+        if (!fullScriptRep) {
+            error = NSLocalizedString(@"cannot load script file", @"Script task process error");
+            [NSException raise:MGSLangPluginException format:@"%@", error];
+        }
+        
+        // script executable data.
+        // this may be an NSData object containing compiled code (say AppleScript)
+        // or a UTF8 encoded NSString instance of text to be interpreted
+        NSData *executableData = [fullScriptRep executableData];
+        if (!executableData) {
+            error = NSLocalizedString(@"Task executable code cannot be found", @"Returned by server when task does not contain executable code");
+            [NSException raise:MGSLangPluginException format:@"%@", error];
+        }
+        NSString *executableFormat = [[fullScriptRep scriptCode] compiledDataFormat];
+        fullScriptRep = nil;
+            
+        //
+        // get task dictionary
+        //
+        NSMutableDictionary *taskDict = [self standardTaskDictionaryForScript:script];
+        
+        //
+        // script executable data  - mandatory
+        //
+        [taskDict setObject:executableData forKey:MGSScriptExecutable];
+        if (executableFormat) {
+            [taskDict setObject:executableFormat forKey:MGSScriptExecutableFormat];
+        }
+        
+        //
+        // user interaction mode 
+        //
+        NSNumber *userInteractionMode = [NSNumber numberWithInteger:[script userInteractionMode]];
+        if (userInteractionMode) {
+            [taskDict setObject:userInteractionMode forKey:MGSScriptUserInteraction];
+        }
+        
+        //
+        // origin is local host
+        //
+        BOOL originIsLocalHost = [requestMessage messageOriginIsLocalHost];
+        if (originIsLocalHost) {
+            [taskDict setObject:[NSNumber numberWithBool:originIsLocalHost] forKey:MGSScriptOriginIsLocalHost];
+        }
+        
+        //
+        // copy script parameter array details to task array
+        // these may be any of the supported property list types
+        // which will be coerced into a corresponding event descriptor data type
+        // each item in script parameter array must by an NSDictionary
+        //
+        NSMutableArray *taskParamArray = [NSMutableArray arrayWithCapacity:2];
+        NSArray *scriptParamArray = [script objectForKey: MGSScriptKeyParameters];
+        for (id item in scriptParamArray) {
+            
+            // get individual script parameter dictionary
+            if (![item isKindOfClass:[NSDictionary class]]) {
+                error = NSLocalizedString(@"Script parameter list malformed", @"Returned by server when script parameter data is malformed");
+                [NSException raise:MGSLangPluginException format:@"%@", error];
+            }
+            NSDictionary *params = (NSDictionary *)item;
+            
+            // get parameter value
+            NSString *parameterValue = [params objectForKey:MGSScriptKeyValue];
+            
+            // use default, except default exists in the ClassInfo dict
+            /*if (!parameterValue) {
+                parameterValue = [params objectForKey:MGSScriptKeyDefault];
+                MLog(DEBUGLOG, @"Using default parameter value.");
+            } */
+            
+            // validate
+            if (!parameterValue) {
+                error = NSLocalizedString(@"No value found for parameter", @"Returned by server when script parameter value is missing");
+                [NSException raise:MGSLangPluginException format:@"%@", error];
+            }
+            
+            MLogDebug(@"Parameter class: %@", [parameterValue className]);
+            MLog(DEBUGLOG, @"Parameter value: %@", parameterValue);
+            
+            // look for attachment index.
+            // if an attachment index exists then the parameter value represents a file that has been passed
+            // as an attachment.
+            NSNumber *attachmentNumber = [params objectForKey:MGSScriptKeyAttachmentIndex];
+            if (attachmentNumber && [attachmentNumber isKindOfClass:[NSNumber class]]) {
+                NSUInteger attachmentIndex = [attachmentNumber integerValue]; 
+                
+                // get the attachment
+                MGSNetAttachment *attachment = [netRequest.requestMessage.attachments attachmentAtIndex:attachmentIndex];
+                if (!attachment) {
+                    error = NSLocalizedString(@"Invalid parameter attachment at index: %u", @"Returned by server when script attachment index invalid");
+                    error = [NSString stringWithFormat:error, attachmentIndex];
+                    [NSException raise:MGSLangPluginException format:@"%@", error];
+                }
+                
+                // use attachment filepath as the parameter value.
+                parameterValue = attachment.filePath;
+                MLog(DEBUGLOG, @"Parameter value (updated from attachment): %@", parameterValue);
+            }
+            
+            // add parameter value
+            [taskParamArray addObject:parameterValue];
+        }
+        [taskDict setObject:taskParamArray forKey:MGSScriptParameters];
+        
+        // we want to execute this script
+        [taskDict setObject:MGSScriptActionExecute forKey:MGSScriptAction];
+        
+        // executor path
+        NSString *executorPath = [script externalExecutorPath];
+        if (executorPath) {
+            [taskDict setObject:executorPath forKey:MGSScriptExecutorPath];
+        }
+        
+        // executor options
+        NSString *executorOptions = [script executorOptions];
+        if (executorOptions) {
+            [taskDict setObject:executorOptions forKey:MGSScriptExecutorOptions];
+        }
+        
+        return taskDict;
 	
-	// script executable data.
-	// this may be an NSData object containing compiled code (say AppleScript)
-	// or a UTF8 encoded NSString instance of text to be interpreted
-	NSData *executableData = [fullScriptRep executableData];
-	if (!executableData) {
-		error = NSLocalizedString(@"Task executable code cannot be found", @"Returned by server when task does not contain executable code");
-		goto errorExit;
-	}
-	NSString *executableFormat = [[fullScriptRep scriptCode] compiledDataFormat];
-	fullScriptRep = nil;
-		
-	//
-	// get task dictionary
-	//
-	NSMutableDictionary *taskDict = [self standardTaskDictionaryForScript:script];
-	
-	//
-	// script executable data  - mandatory
-	//
-	[taskDict setObject:executableData forKey:MGSScriptExecutable];
-	if (executableFormat) {
-		[taskDict setObject:executableFormat forKey:MGSScriptExecutableFormat];
-	}
-	
-	//
-	// user interaction mode 
-	//
-	NSNumber *userInteractionMode = [NSNumber numberWithInteger:[script userInteractionMode]];
-	if (userInteractionMode) {
-		[taskDict setObject:userInteractionMode forKey:MGSScriptUserInteraction];
-	}
-	
-	//
-	// origin is local host
-	//
-	BOOL originIsLocalHost = [requestMessage messageOriginIsLocalHost];
-	if (originIsLocalHost) {
-		[taskDict setObject:[NSNumber numberWithBool:originIsLocalHost] forKey:MGSScriptOriginIsLocalHost];
-	}
-	
-	//
-	// copy script parameter array details to task array
-	// these may be any of the supported property list types
-	// which will be coerced into a corresponding event descriptor data type
-	// each item in script parameter array must by an NSDictionary
-	//
-	NSMutableArray *taskParamArray = [NSMutableArray arrayWithCapacity:2];
-	NSArray *scriptParamArray = [script objectForKey: MGSScriptKeyParameters];
-	for (id item in scriptParamArray) {
-		
-		// get individual script parameter dictionary
-		if (![item isKindOfClass:[NSDictionary class]]) {
-			error = NSLocalizedString(@"Script parameter list malformed", @"Returned by server when script parameter data is malformed");
-			goto errorExit;
-		}
-		NSDictionary *params = (NSDictionary *)item;
-		
-		// get parameter value
-		NSString *parameterValue = [params objectForKey:MGSScriptKeyValue];
-		
-		// use default, except default exists in the ClassInfo dict
-		/*if (!parameterValue) {
-			parameterValue = [params objectForKey:MGSScriptKeyDefault];
-			MLog(DEBUGLOG, @"Using default parameter value.");
-		} */
-		
-		// validate
-		if (!parameterValue) {
-			error = NSLocalizedString(@"No value found for parameter", @"Returned by server when script parameter value is missing");
-			goto errorExit;
-		}
-		
-		MLogDebug(@"Parameter class: %@", [parameterValue className]);
-		MLog(DEBUGLOG, @"Parameter value: %@", parameterValue);
-		
-		// look for attachment index.
-		// if an attachment index exists then the parameter value represents a file that has been passed
-		// as an attachment.
-		NSNumber *attachmentNumber = [params objectForKey:MGSScriptKeyAttachmentIndex];
-		if (attachmentNumber && [attachmentNumber isKindOfClass:[NSNumber class]]) {
-			NSUInteger attachmentIndex = [attachmentNumber integerValue]; 
-			
-			// get the attachment
-			MGSNetAttachment *attachment = [netRequest.requestMessage.attachments attachmentAtIndex:attachmentIndex];
-			if (!attachment) {
-				error = NSLocalizedString(@"Invalid parameter attachment at index: %u", @"Returned by server when script attachment index invalid");
-				error = [NSString stringWithFormat:error, attachmentIndex];
-				goto errorExit;
-			}
-			
-			// use attachment filepath as the parameter value.
-			parameterValue = attachment.filePath;
-			MLog(DEBUGLOG, @"Parameter value (updated from attachment): %@", parameterValue);
-		}
-		
-		// add parameter value
-		[taskParamArray addObject:parameterValue];
-	}
-	[taskDict setObject:taskParamArray forKey:MGSScriptParameters];
-	
-	// we want to execute this script
-	[taskDict setObject:MGSScriptActionExecute forKey:MGSScriptAction];
-	
-	// executor path
-	NSString *executorPath = [script externalExecutorPath];
-	if (executorPath) {
-		[taskDict setObject:executorPath forKey:MGSScriptExecutorPath];
-	}
-	
-	// executor options
-	NSString *executorOptions = [script executorOptions];
-	if (executorOptions) {
-		[taskDict setObject:executorOptions forKey:MGSScriptExecutorOptions];
-	}
-	
-	return taskDict;
-	
-errorExit:
-	
-	if (!*mgsError) {
-		*mgsError = [MGSError serverCode:MGSErrorCodeScriptExecute reason:error];
-	}
-	
-	return nil;
+    }
+    @catch (NSException *e) {
+        if (!*mgsError) {
+            *mgsError = [MGSError serverCode:MGSErrorCodeScriptExecute reason:error];
+        }
+        
+        return nil;
+
+    }
 }
 
 /*
@@ -751,47 +757,49 @@ errorExit:
 	
 	NSString *error = nil;
 	
-	//
-	// get task dictionary
-	//
-	NSMutableDictionary *taskDict = [self standardTaskDictionaryForScript:script];
-	if (!taskDict) {
-		error = NSLocalizedString(@"Task dictionary is empty", @"Returned by server when task script dictionary is empty");
-		goto errorExit;	
-	}
-	
-	// script source 
-	NSString *scriptSource = [[script scriptCode] source];
-	if (!scriptSource) {
-		error = NSLocalizedString(@"Task script source is empty", @"Returned by server when task script source is empty");
-		goto errorExit;	
-	}
-	[taskDict setObject:scriptSource forKey:MGSScriptSource];
-	
-	// build path
-	NSString *buildPath = [script externalBuildPath];
-	if (buildPath) {
-		[taskDict setObject:buildPath forKey:MGSScriptBuildPath];
-	}
-	
-	// build options
-	NSString *buildOptions = [script buildOptions];
-	if (buildOptions) {
-		[taskDict setObject:buildOptions forKey:MGSScriptBuildOptions];
-	}
-	
-	// we want to compile this script
-	[taskDict setObject:MGSScriptActionBuild forKey:MGSScriptAction];
+    @try {
 
-	return taskDict;
+        //
+        // get task dictionary
+        //
+        NSMutableDictionary *taskDict = [self standardTaskDictionaryForScript:script];
+        if (!taskDict) {
+            error = NSLocalizedString(@"Task dictionary is empty", @"Returned by server when task script dictionary is empty");
+            [NSException raise:MGSLangPluginException format:@"%@", error];
+        }
+        
+        // script source 
+        NSString *scriptSource = [[script scriptCode] source];
+        if (!scriptSource) {
+            error = NSLocalizedString(@"Task script source is empty", @"Returned by server when task script source is empty");
+            [NSException raise:MGSLangPluginException format:@"%@", error];
+        }
+        [taskDict setObject:scriptSource forKey:MGSScriptSource];
+        
+        // build path
+        NSString *buildPath = [script externalBuildPath];
+        if (buildPath) {
+            [taskDict setObject:buildPath forKey:MGSScriptBuildPath];
+        }
+        
+        // build options
+        NSString *buildOptions = [script buildOptions];
+        if (buildOptions) {
+            [taskDict setObject:buildOptions forKey:MGSScriptBuildOptions];
+        }
+        
+        // we want to compile this script
+        [taskDict setObject:MGSScriptActionBuild forKey:MGSScriptAction];
 
-errorExit:
-	
-	if (!*mgsError) {
-		*mgsError = [MGSError serverCode:MGSErrorCodeScriptBuild reason:error];
-	}
-	
-	return nil;
+        return taskDict;
+    }
+    @catch (NSException *exception) {
+        if (!*mgsError) {
+            *mgsError = [MGSError serverCode:MGSErrorCodeScriptBuild reason:error];
+        }
+        
+        return nil;
+    }
 }
 
 

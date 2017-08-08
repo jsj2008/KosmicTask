@@ -11,15 +11,15 @@
 @class MGSNetRequest;
 
 @interface MGSNetRequestPayload : NSObject {
-	NSDictionary * _dictionary;
+	NSDictionary * __strong _dictionary;
 	unsigned long int _requestID;
-	MGSError *_requestError;
+	MGSError *__strong _requestError;
 }
 
 + (id)payloadForRequest:(MGSNetRequest *)request;
 
-@property (assign) NSDictionary *dictionary;
+@property (strong) NSDictionary *dictionary;
 @property unsigned long int requestID;
-@property (assign) MGSError *requestError;
+@property (strong) MGSError *requestError;
 
 @end

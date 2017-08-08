@@ -10,14 +10,14 @@
 
 
 @interface MGSPluginController : NSObject {
-	Class _pluginClass;
+	//Class _pluginClass;
 	NSArray *_instances;
 	NSMutableArray *_additionalSearchPaths;
 }
 
 
 // base class for our plugin
-@property Class pluginClass;
+@property (strong) Class pluginClass;
 
 // array of plugin instances
 @property (readonly) NSArray *instances;

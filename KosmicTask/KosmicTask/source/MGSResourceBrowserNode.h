@@ -27,8 +27,8 @@
 - (NSComparisonResult)compare:(MGSResourceBrowserNode *)node;
 - (NSString *)subrootDescription;
 
-@property (assign) NSImage *image;
-@property (assign) NSImage *statusImage;
+@property (strong) NSImage *image;
+@property (strong) NSImage *statusImage;
 @property NSInteger counter;
 @property BOOL hasCount;
 @end

@@ -21,11 +21,10 @@
  */
 + (void)collectExhaustivelyAfterDelay:(NSTimeInterval)delay
 {
+#pragma unused(delay)
 	// disable this for now
 	// see MID:572.
 	return;
 	
-	[NSObject cancelPreviousPerformRequestsWithTarget:[NSGarbageCollector defaultCollector]];
-	[[NSGarbageCollector defaultCollector] performSelector:@selector(collectExhaustively) withObject:nil afterDelay:delay];
 }
 @end

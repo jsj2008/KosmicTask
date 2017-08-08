@@ -10,11 +10,10 @@
 #import "MGSNetRequestManager.h"
 #import "MGSServerNetRequest.h"
 
-@class MGSAsyncSocket;
-@class MGSServerScriptRequest;
-@class MGSServerPreferencesRequest;
-@class MGSNetSocket;
-@class MGSError;
+#import "MGSServerScriptRequest.h"
+#import "MGSServerPreferencesRequest.h"
+#import "MGSNetSocket.h"
+#import "MGSError.h"
 
 @interface MGSServerRequestManager : MGSNetRequestManager {
 	MGSServerScriptRequest *_scriptController;

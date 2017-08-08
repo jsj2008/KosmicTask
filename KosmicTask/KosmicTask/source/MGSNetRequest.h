@@ -77,8 +77,8 @@ typedef NSInteger eMGSRequestStatus;
 	MGSNetSocket *_netSocket;			// netsocket
 	eMGSRequestStatus _status;			// request status
 	eMGSRequestStatus _previousStatus;	// previous request status
-	id <MGSNetRequestDelegate> _delegate;// delegate
-	MGSError *_error;					// request error
+	__weak id <MGSNetRequestDelegate> _delegate;// delegate
+    MGSError *_error;					// request error
 	unsigned long int _requestID;		// request sequence counter
 	NSMutableArray *temporaryPaths;		// paths to be removed when the request is finalised
 	NSUInteger _flags;
@@ -93,7 +93,7 @@ typedef NSInteger eMGSRequestStatus;
     NSTimer *_requestTimer;
     BOOL _allowRequestTimeout;
     BOOL _allowWriteConnectionTimeout;
-    MGSNetRequest *_parentRequest;      // parent request
+    __weak MGSNetRequest *_parentRequest;      // parent request
     NSUInteger _timeoutCount;
 }
 
@@ -126,14 +126,14 @@ typedef NSInteger eMGSRequestStatus;
 - (void)startWriteConnectionTimer;
 
 @property (readonly) NSMutableArray *childRequests;		// logging request
-@property (assign) MGSNetRequest *parentRequest;			// parent request
+@property (weak) MGSNetRequest *parentRequest;			// parent request
 @property (readonly) MGSNetSocket *netSocket;
-@property (assign) MGSNetMessage *requestMessage;
+@property (strong) MGSNetMessage *requestMessage;
 @property (readonly) MGSNetMessage *responseMessage;
 @property eMGSRequestStatus status;
 @property eMGSRequestStatus lastStatus;
-@property (assign) id <MGSNetRequestDelegate> delegate;
-@property (assign) MGSError *error;
+@property (weak) id <MGSNetRequestDelegate> delegate;
+@property (strong) MGSError *error;
 @property (readonly) NSInteger readTimeout;
 @property (readonly) NSInteger writeTimeout;
 @property NSInteger timeout;

@@ -7,15 +7,11 @@
 //
 #import "MGSMother.h"
 #import "MGSNetMessage.h"
-#import "MGSNetHeader.h"
-#import "MGSError.h"
 #import "NSMutableDictionary_Mugginsoft.h"
 #import "NSDictionary_Mugginsoft.h"
 #import "NSString_Mugginsoft.h"
-#import "MGSNetAttachments.h"
 #import "MGSLM.h"
 #import "MGSSystem.h"
-#import "MGSNetNegotiator.h"
 
 // message dictionary message keys
 NSString *MGSNetMessageKeyCommand = @"Command";
@@ -61,7 +57,7 @@ static unsigned long int messageSequenceCounter = 0;
 
 // class extension
 @interface MGSNetMessage()
-@property (assign) NSMutableDictionary *messageDict;
+@property (strong, readwrite, nonatomic) NSMutableDictionary *messageDict;
 @end
 
 @interface MGSNetMessage(Private)

@@ -19,7 +19,7 @@ typedef NSInteger MGSAlignment;
 @interface MGSImageAndText : NSObject {
 	id _value;
 	NSInteger _indentation;
-	NSImage *_image;
+	NSImage *__strong _image;
 	NSInteger _count;
 	BOOL _hasCount;
 	NSColor *_countColor;
@@ -31,10 +31,10 @@ typedef NSInteger MGSAlignment;
 
 @property id value;
 @property NSInteger indentation;
-@property (assign) NSImage *image;
+@property (strong) NSImage *image;
 @property NSInteger count;
 @property BOOL hasCount;
-@property (assign) NSColor *countColor;
+@property  NSColor *countColor;
 @property (copy) NSImage *statusImage;
 @property NSInteger countAlignment;
 

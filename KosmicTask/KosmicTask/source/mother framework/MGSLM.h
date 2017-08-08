@@ -19,11 +19,11 @@ enum _MGSLMMode {
 typedef NSInteger MGSLMMode;
 
 @interface MGSLM : NSArrayController {
-	NSString *_lastError;
+	NSString *__strong _lastError;
 	MGSLMMode _mode;
 }
 
-@property (assign) NSString *lastError;
+@property (strong) NSString *lastError;
 @property (readonly) MGSLMMode mode;
 
 + (void)buyLicences;

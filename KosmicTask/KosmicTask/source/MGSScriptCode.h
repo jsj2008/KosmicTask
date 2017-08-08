@@ -18,10 +18,10 @@ enum _MGSScriptCodeRepresentation {
 typedef NSInteger MGSScriptCodeRepresentation;
 
 @interface MGSScriptCode : MGSDictionary {
-    NSAttributedString *_attributedSourceFromBuild;
+    NSAttributedString *__strong _attributedSourceFromBuild;
 }
 
-@property (assign) NSAttributedString *attributedSourceFromBuild;
+@property (strong) NSAttributedString *attributedSourceFromBuild;
 
 - (void)setDict:(NSMutableDictionary *)dict;
 - (void)setRepresentation:(MGSScriptCodeRepresentation)value;

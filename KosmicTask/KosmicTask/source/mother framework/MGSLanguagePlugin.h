@@ -55,7 +55,7 @@ extern NSString *MGSLangPluginTempPath;
 @property (readonly) MGSLanguageResourcesManager *applicationResourcesManager;
 @property (readonly) MGSLanguageResourcesManager *userResourcesManager;
 @property (readonly) MGSLanguagePropertyManager *languagePropertyManager;
-@property (readonly, assign) MGSLanguage *language;
+@property (readonly) MGSLanguage *language;
 
 
 - (BOOL)validateOSVersion;

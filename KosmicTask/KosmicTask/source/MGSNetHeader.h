@@ -34,8 +34,8 @@ extern NSString *MGSNetHeaderAttachmentEncodingBinary;
 	NSInteger _requestTimeout;
 	NSInteger _responseTimeout;
 	NSInteger _headerLength;
-    NSString *_attachmentEncoding;
-    NSString *_attachmentTransferEncoding;
+    NSString *__strong _attachmentEncoding;
+    NSString *__strong _attachmentTransferEncoding;
     NSDate *_date;
     NSString *_userAgent;
     
@@ -60,9 +60,9 @@ extern NSString *MGSNetHeaderAttachmentEncodingBinary;
 @property (readonly) NSString *contentSubtype;
 @property (readonly) BOOL prefixValidated;
 @property (readonly) BOOL headerValidated;
-@property (assign) MGSNetAttachments *attachments;
-@property (assign) NSString *attachmentTransferEncoding;
-@property (assign) NSString *attachmentEncoding;
+@property  MGSNetAttachments *attachments;
+@property (strong) NSString *attachmentTransferEncoding;
+@property (strong) NSString *attachmentEncoding;
 @property (readonly) NSDate *date;
 @property (readonly) NSString *userAgent;
 @end

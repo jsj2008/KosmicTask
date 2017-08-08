@@ -74,12 +74,12 @@
     SecTransformRef transform = SecDecodeTransformCreate(kSecBase64Encoding, NULL);
     
     // set attributes
-    NSString *input = [self dataUsingEncoding:NSUTF8StringEncoding];
-    SecTransformSetAttribute(transform, kSecTransformInputAttributeName, input, NULL);
+    NSData *input = [self dataUsingEncoding:NSUTF8StringEncoding];
+    SecTransformSetAttribute(transform, kSecTransformInputAttributeName, (__bridge CFTypeRef)(input), NULL);
     
     // execute
     CFErrorRef err = NULL;
-    NSData *output = (NSData *)SecTransformExecute(transform, &err);
+    NSData *output = (NSData *)CFBridgingRelease(SecTransformExecute(transform, &err));
     CFRelease(transform);
     
     if (!output) {

@@ -296,22 +296,27 @@ static NSDateFormatter *rfc3339DateFormatter = nil;
     
 	if (!_prefixValidated) return NO;
 	
-	@try {	
+	@try {
+        NSString *content = nil;
+        
         // content type
         NSScanner *scanner = [NSScanner scannerWithString:header];
         if (![scanner scanUpToStringAndOver:MGSNetHeaderTagContentType]) return NO;
-        if (![scanner scanString:MGSNetHeaderContentTypeXml intoString:&_contentType]) return NO;	// only 1 acceptable value
-
+        if (![scanner scanString:MGSNetHeaderContentTypeXml intoString:&content]) return NO;	// only 1 acceptable value
+        _contentType = content;
+        
         // content subtype
         [scanner setScanLocation:0];
         if (![scanner scanUpToStringAndOver:MGSNetHeaderTagContentSubtype]) return NO;
-        if (![scanner scanString:MGSNetHeaderContentSubtypePlist intoString:&_contentSubtype]) return NO;	// only 1 acceptable value
+        if (![scanner scanString:MGSNetHeaderContentSubtypePlist intoString:&content]) return NO;	// only 1 acceptable value
+        content = _contentSubtype;
         
         // content encoding
         [scanner setScanLocation:0];
         if (![scanner scanUpToStringAndOver:MGSNetHeaderTagContentEncoding]) return NO;
-        if (![scanner scanString:MGSNetHeaderContentEncodingUTF8 intoString:&_contentEncoding]) return NO;	// only 1 acceptable value
-
+        if (![scanner scanString:MGSNetHeaderContentEncodingUTF8 intoString:&content]) return NO;	// only 1 acceptable value
+        _contentEncoding = content;
+        
         // date
         NSString *rfc3339Date = nil;
         [scanner setScanLocation:0];
@@ -324,8 +329,9 @@ static NSDateFormatter *rfc3339DateFormatter = nil;
         // user agent
         [scanner setScanLocation:0];
         if (![scanner scanUpToStringAndOver:MGSNetHeaderTagUserAgent]) return NO;
-        if (![scanner scanString:MGSNetHeaderUserAgentKosmicTaskOSX intoString:&_userAgent]) return NO;	// only 1 acceptable value
-
+        if (![scanner scanString:MGSNetHeaderUserAgentKosmicTaskOSX intoString:&content]) return NO;	// only 1 acceptable value
+        _userAgent = content;
+        
         // content length
         [scanner setScanLocation:0];
         if (![scanner scanUpToStringAndOver:MGSNetHeaderTagContentLength]) return NO;

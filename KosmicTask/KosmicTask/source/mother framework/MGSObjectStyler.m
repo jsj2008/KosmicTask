@@ -411,7 +411,7 @@ NSString *MGSArrayOddAttributesStyleName = @"MGSArrayOddAttributesStyleName";
         
 		// iterate over keys in sorted order
         // append to our output string
-		for (id key in keys) {
+		for (__strong id key in keys) {
 			
 			//
 			// apply dictionary filter to remove objects not to be displayed

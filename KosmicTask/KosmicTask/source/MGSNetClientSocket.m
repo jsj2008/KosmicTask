@@ -492,7 +492,7 @@ errorExit:;
 		switch (self.netRequest.status) {
 				
 			// messsage received
-			case kMGSStatusMessageReceived:
+			case kMGSStatusMessageReceived: {
 
 				// log the client response from remote hosts only?
 				if (1) {
@@ -591,6 +591,7 @@ errorExit:;
 				
 				break; 
 				
+			}
 			default:
 				break;
 				

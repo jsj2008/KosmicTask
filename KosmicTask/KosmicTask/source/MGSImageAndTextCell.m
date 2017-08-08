@@ -150,9 +150,7 @@ static NSUInteger updatingImagesArrayCount = 0;
 // -------------------------------------------------------------------------------
 - (void)dealloc
 {
-    [image release];
     image = nil;
-    [super dealloc];
 }
 
 #pragma mark -
@@ -163,7 +161,7 @@ static NSUInteger updatingImagesArrayCount = 0;
 - (id)copyWithZone:(NSZone*)zone
 {
     MGSImageAndTextCell *cell = (MGSImageAndTextCell*)[super copyWithZone:zone];
-    cell->image = [image retain];
+    cell->image = image;
     return cell;
 }
 
@@ -176,8 +174,6 @@ static NSUInteger updatingImagesArrayCount = 0;
  */
 -(void)setCountBackgroundColour:(NSColor *)newColour
 {
-	[newColour retain];
-	[countBackgroundColour release];
 	countBackgroundColour = newColour;
 }
 
@@ -200,8 +196,7 @@ static NSUInteger updatingImagesArrayCount = 0;
 {
     if (anImage != image)
 	{
-        [image release];
-        image = [anImage retain];
+        image = anImage;
 		[image setSize:NSMakeSize(kIconImageSize, kIconImageSize)];
 		
     }
@@ -463,7 +458,6 @@ static NSUInteger updatingImagesArrayCount = 0;
 			// Draw the count in the rounded rectangle we just created.
 			NSPoint point = NSMakePoint(NSMidX(countFrame) - numSize.width / 2.0f,  NSMidY(countFrame) - numSize.height / 2.0f );
 			[number drawAtPoint:point withAttributes:attributes];
-			[attributes release];
 		}
 		
 		cellFrameModified = YES;

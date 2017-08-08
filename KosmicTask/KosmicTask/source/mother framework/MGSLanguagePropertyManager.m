@@ -754,7 +754,7 @@ NSString * const MGSOptionKeySuffix = @"-key";
 		return;
 	}
 	NSArray *allKeys = [dict allKeys];
-	for (id key in allKeys) {
+	for (__strong id key in allKeys) {
         
         // if keyed value exists use it in preference to this value.
         // in v1.0 we erroneously persisted values as opposed to keys.

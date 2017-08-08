@@ -92,9 +92,9 @@ extern NSString *MGSErrorDomainMotherScriptTask;
 #define MGSErrorCodeTaskGroupNotDefined 7001
 
 @interface MGSError : NSError {
-	NSDate *_date;
+	NSDate *__strong _date;
 	NSUInteger flags; 
-    NSString *_machineName;
+    NSString *__strong _machineName;
 }
 
 // class messages
@@ -137,7 +137,7 @@ extern NSString *MGSErrorDomainMotherScriptTask;
 - (void)logToConsole;
 - (void)log;
 
-@property (assign) NSDate *date;
+@property (strong) NSDate *date;
 @property NSUInteger flags; 
-@property (assign)NSString *machineName;
+@property (strong)NSString *machineName;
 @end

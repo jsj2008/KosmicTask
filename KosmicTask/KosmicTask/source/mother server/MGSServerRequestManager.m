@@ -20,6 +20,7 @@
 #import "MGSPath.h"
 
 static MGSServerRequestManager *_sharedController = nil;
+static NSString * MGSServerRequestException = @"MGSServerRequestException";
 
 // class extension
 @interface MGSServerRequestManager ()
@@ -139,128 +140,131 @@ static MGSServerRequestManager *_sharedController = nil;
 	id object = nil;
 	
 	NSAssert(_scriptController, @"no script controller available");	
-			
-	/*
-	 
-	 get the mandatory command string
-	 
-	 */
-	object = netRequest.requestMessage.command;
-	if (![object isKindOfClass:[NSString class]]) {
-		error = NSLocalizedString(@"Bad command class.", @"Error returned by server");
-		goto send_error_reply;
-	}
-	NSString *command = object;
 	
-    
-	//==========================================================
-	// 
-	// parse negotiator
-	//
-	//==========================================================
-	if ([command isEqual:MGSNetMessageCommandNegotiate]) {
-		
-		// build response negotiator
-		MGSNetNegotiator *requestNegotiator = netRequest.requestMessage.negotiator;
-		MGSNetNegotiator *responseNegotiator = [requestNegotiator copy];
-		[netRequest.responseMessage applyNegotiator:responseNegotiator];
-		[netRequest.responseMessage setCommand:command];
+    @try {
+        /*
+         
+         get the mandatory command string
+         
+         */
+        object = netRequest.requestMessage.command;
+        if (![object isKindOfClass:[NSString class]]) {
+            error = NSLocalizedString(@"Bad command class.", @"Error returned by server");
+            [NSException raise:MGSServerRequestException format:@"%@", error];
+        }
+        NSString *command = object;
         
-        // if we return an error in the negotiator we forestall perhaps having to
-        // setup and then teardown TLS
-        if ([[netRequest netServerSocket] connectionApproved] == NO) {
-            [self sendAccessDeniedResponse:netRequest];
-        } else {
-            [self sendResponseOnSocket:netRequest wasValid:YES];
+        
+        //==========================================================
+        // 
+        // parse negotiator
+        //
+        //==========================================================
+        if ([command isEqual:MGSNetMessageCommandNegotiate]) {
+            
+            // build response negotiator
+            MGSNetNegotiator *requestNegotiator = netRequest.requestMessage.negotiator;
+            MGSNetNegotiator *responseNegotiator = [requestNegotiator copy];
+            [netRequest.responseMessage applyNegotiator:responseNegotiator];
+            [netRequest.responseMessage setCommand:command];
+            
+            // if we return an error in the negotiator we forestall perhaps having to
+            // setup and then teardown TLS
+            if ([[netRequest netServerSocket] connectionApproved] == NO) {
+                [self sendAccessDeniedResponse:netRequest];
+            } else {
+                [self sendResponseOnSocket:netRequest wasValid:YES];
+            }
+            
+            return;
         }
         
-		return;
+        // validate if access is allowed.
+        // when the socket first connects we screen the IP and flag
+        // if the connection is approved.
+        //
+        // the socket has the option of dropping the connection there and then
+        // or setting the connectionApproved flag accordingly.
+        //
+        if ([[netRequest netServerSocket] connectionApproved] == NO) {
+            [netRequest.responseMessage setCommand:command];
+            [self sendAccessDeniedResponse:netRequest];
+            return;
+        }
+
+        //==========================================================
+        //
+        // parse request command
+        //
+        //==========================================================
+        // heartbeat
+        if ([command isEqual:MGSNetMessageCommandHeartbeat]) {
+            
+            /*
+             
+             Heartbeats are not required to be negotiated
+             
+             */
+            
+            // send heartbeat reply
+            [netRequest.responseMessage setCommand:command];
+            [self sendResponseOnSocket:netRequest wasValid:YES];
+            
+            return;
+        }
+        
+        // parse script
+        // get script from message and parse
+        else if ([command isEqual:MGSNetMessageCommandParseKosmicTask]) {
+            
+            isScriptCommand = YES;
+            [netRequest.responseMessage setCommand:command];
+            
+            // pass request message to script controller for execution.
+            // do not access net request after this point as the script controller
+            // will initiate the reply		
+            // 
+            // if parseNetRequest returns YES then we may assume that the
+            // request is valid and that a reply has or will be generated.
+            // No further action is therefore required.
+            //
+            // if parseNetRequest returns N0 then the request is invalid
+            // or an error has occurred during processing.
+            // In this case we send an error reply.
+            if ([_scriptController parseNetRequest:netRequest] == YES) {
+                return;
+            }
+            
+            [NSException raise:MGSServerRequestException format:@"%@", error];
+        } 
+
+        // authenticate
+        else if ([command isEqual:MGSNetMessageCommandAuthenticate]) {
+            
+            // if the request does not authenticate it sends its own reply
+            if (![netRequest authenticateWithAutoResponseOnFailure:YES]) {
+                return;
+            }
+            
+            // send authenticate reply
+            [netRequest.responseMessage setCommand:command];
+            [self sendResponseOnSocket:netRequest wasValid:YES];
+            
+            return;
+        }
+        
+        // unrecognised command
+        else {
+            error = NSLocalizedString(@"Unrecognised command.", @"Error returned by server");
+            [NSException raise:MGSServerRequestException format:@"%@", error];
+        }
 	}
-    
-    // validate if access is allowed.
-    // when the socket first connects we screen the IP and flag
-    // if the connection is approved.
-    //
-    // the socket has the option of dropping the connection there and then
-    // or setting the connectionApproved flag accordingly.
-    //
-    if ([[netRequest netServerSocket] connectionApproved] == NO) {
-		[netRequest.responseMessage setCommand:command];
-        [self sendAccessDeniedResponse:netRequest];
+    @catch (NSException *e) {
+	
+        MGSError *mgsError = [MGSError serverCode:errorCode reason:error];
+        [self sendErrorResponse:netRequest error:mgsError isScriptCommand:isScriptCommand];
         return;
     }
-
-	//==========================================================
-	//
-	// parse request command
-	//
-	//==========================================================
-	// heartbeat
-    if ([command isEqual:MGSNetMessageCommandHeartbeat]) {
-		
-		/*
-		 
-		 Heartbeats are not required to be negotiated
-		 
-		 */
-		
-		// send heartbeat reply
-		[netRequest.responseMessage setCommand:command];
-		[self sendResponseOnSocket:netRequest wasValid:YES];
-		
-		return;
-	}
-	
-	// parse script
-	// get script from message and parse
-	else if ([command isEqual:MGSNetMessageCommandParseKosmicTask]) {
-		
-		isScriptCommand = YES;
-		[netRequest.responseMessage setCommand:command];
-		
-		// pass request message to script controller for execution.
-		// do not access net request after this point as the script controller
-		// will initiate the reply		
-		// 
-		// if parseNetRequest returns YES then we may assume that the
-		// request is valid and that a reply has or will be generated.
-		// No further action is therefore required.
-		//
-		// if parseNetRequest returns N0 then the request is invalid
-		// or an error has occurred during processing.
-		// In this case we send an error reply.
-		if ([_scriptController parseNetRequest:netRequest] == YES) {
-			return;
-		}
-		
-		// fall through to error reply
-	} 
-
-	// authenticate
-	else if ([command isEqual:MGSNetMessageCommandAuthenticate]) {
-		
-		// if the request does not authenticate it sends its own reply
-		if (![netRequest authenticateWithAutoResponseOnFailure:YES]) {
-			return;
-		}
-		
-		// send authenticate reply
-		[netRequest.responseMessage setCommand:command];
-		[self sendResponseOnSocket:netRequest wasValid:YES];
-		
-		return;
-	}
-	
-	// unrecognised command
-	else {
-		error = NSLocalizedString(@"Unrecognised command.", @"Error returned by server");
-	}
-	
-send_error_reply:;
-	
-	MGSError *mgsError = [MGSError serverCode:errorCode reason:error];
-	[self sendErrorResponse:netRequest error:mgsError isScriptCommand:isScriptCommand];
-	return;
 }
 
 /*

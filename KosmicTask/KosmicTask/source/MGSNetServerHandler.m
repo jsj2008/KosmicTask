@@ -287,7 +287,7 @@ errorExit:;
         if (index != NSNotFound) {
             resolvedNetService = [_resolvedNetServices objectAtIndex:index];
 
-            NSSet *keyedAddresses = [_addressesForHostName objectForKey:[NSValue valueWithPointer: resolvedNetService]];
+            NSSet *keyedAddresses = [_addressesForHostName objectForKey:[NSValue valueWithPointer: (__bridge const void *)(resolvedNetService)]];
             if (keyedAddresses) {
                 addresses = keyedAddresses;
             }
@@ -306,7 +306,7 @@ errorExit:;
     MLogDebug(@"Remove: Local network addresses:%@", _localNetworkAddresses);
     
     if (resolvedNetService) {
-        [_addressesForHostName removeObjectForKey:[NSValue valueWithPointer: resolvedNetService]];
+        [_addressesForHostName removeObjectForKey:[NSValue valueWithPointer: (__bridge const void *)(resolvedNetService)]];
         [_resolvedNetServices removeObject:resolvedNetService];
     }
 
@@ -337,7 +337,7 @@ errorExit:;
     // key all addresses by service pointer as non copyable.
     // should be okay as we have retained a ref to the sender
     // http://stackoverflow.com/questions/3509118/using-non-copyable-object-as-key-for-nsmutabledictionary
-    [_addressesForHostName setObject:[sender mgs_addressStrings] forKey:[NSValue valueWithPointer:sender]];
+    [_addressesForHostName setObject:[sender mgs_addressStrings] forKey:[NSValue valueWithPointer:(__bridge const void *)(sender)]];
     [_resolvedNetServices addObject:sender];
     
     MLogDebug(@"Resolve: IPv4 Bonjour addresses:%@", _IPv4BonjourAddresses);

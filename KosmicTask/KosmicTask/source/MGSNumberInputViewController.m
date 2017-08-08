@@ -216,7 +216,7 @@ const char MGSIncrementValueBindingContext;
 	// Observe the observableObject for changes -- note, pass binding identifier
 	// as the context, so you get that back in observeValueForKeyPath:...
 	// This way you can easily determine what needs to be updated.
-	void *context = NULL;
+	id context = NULL;
 	if ([binding isEqualToString:NSValueBinding]) {
 		context = NSValueBinding;
 	} else if ([binding isEqualToString:MGSIncrementValueBinding]) {
@@ -244,7 +244,7 @@ const char MGSIncrementValueBindingContext;
 	[observableObject addObserver:self
 					   forKeyPath:keyPath
 						  options:0
-						  context:context];
+						  context:CFBridgingRetain(context)];
 }
 
 /*
@@ -347,7 +347,7 @@ const char MGSIncrementValueBindingContext;
 - (void)observeValueForKeyPath:(NSString *)keyPath
 					  ofObject:(id)object
 						change:(NSDictionary *)change
-					   context:(void *)context
+					   context:(void *)context_
 {
 	#pragma unused(keyPath)
 	#pragma unused(object)
@@ -358,6 +358,8 @@ const char MGSIncrementValueBindingContext;
 	NSString *keySelf = nil;
 	id newValue = nil;
 	
+    id context = (__bridge id)(context_);
+    
 	// if our model has been updated then update ourself
     if (context == NSValueBinding){
 		keySelf = @"value";
@@ -403,27 +405,6 @@ const char MGSIncrementValueBindingContext;
  finalize
  
  */
-- (void)finalize
-{
-	
-// trying to unbbind here requires that we access an ivar.
-// this may get coolected in the same iteration as self leading
-// to the possibility of resurrection.
-#ifdef MGS_UNBIND_IN_FINALIZE
-    // unbind
-	@try {
-		for (NSString *key in [_bindings allKeys]) {
-			NSDictionary *binding = [_bindings objectForKey:key];
-			[[binding objectForKey:MGSObservableObject] removeObserver:self forKeyPath:[binding objectForKey:MGSObservableKeyPath]];
-		}
-	} 
-	@catch (NSException *e) {
-		MLog(RELEASELOG, @"%@", [e reason]);
-	}
-#endif
-	
-	[super finalize];
-}
 
 /*
  

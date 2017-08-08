@@ -628,9 +628,9 @@
 		AB6C389F0D7C30E500B9B34E /* ScriptEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB6C389D0D7C30E500B9B34E /* ScriptEditView.xib */; };
 		AB6C87651610EB4600488AF2 /* PencilAndPaper.icns in Resources */ = {isa = PBXBuildFile; fileRef = AB8C0BB50D5719FF00904607 /* PencilAndPaper.icns */; };
 		AB6C87671610ED3900488AF2 /* FontsAndColours.icns in Resources */ = {isa = PBXBuildFile; fileRef = AB6C87661610ED1E00488AF2 /* FontsAndColours.icns */; };
-		AB6C96390E485D45005AE567 /* AsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AB6C96350E485D45005AE567 /* AsyncSocket.h */; };
+		AB6C96390E485D45005AE567 /* AsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AB6C96350E485D45005AE567 /* AsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB6C963A0E485D45005AE567 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6C96360E485D45005AE567 /* AsyncSocket.m */; };
-		AB6C963E0E485D6B005AE567 /* MGSAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AB6C963C0E485D6B005AE567 /* MGSAsyncSocket.h */; };
+		AB6C963E0E485D6B005AE567 /* MGSAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AB6C963C0E485D6B005AE567 /* MGSAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB6C963F0E485D6B005AE567 /* MGSAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6C963D0E485D6B005AE567 /* MGSAsyncSocket.m */; };
 		AB6E4F2C0D3C1640009700B3 /* MGSSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6E4F2B0D3C1640009700B3 /* MGSSidebarView.m */; };
 		AB6E4F2F0D3C166A009700B3 /* MGSSidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6E4F2E0D3C166A009700B3 /* MGSSidebarViewController.m */; };
@@ -1363,7 +1363,7 @@
 		ABDCDBAE0D7F4EE4003F8A0C /* MGSFlippedView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDCDBAD0D7F4EE4003F8A0C /* MGSFlippedView.m */; };
 		ABDD7D6914D1A5A300CB91F8 /* PSMTabBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDD7CD814D1A49E00CB91F8 /* PSMTabBarControl.framework */; };
 		ABDD7D6A14D1A5C000CB91F8 /* PSMTabBarControl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = ABDD7CD814D1A49E00CB91F8 /* PSMTabBarControl.framework */; };
-		ABDEA2240E6336AA00CE1739 /* MGSNetSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ABDEA2220E6336AA00CE1739 /* MGSNetSocket.h */; };
+		ABDEA2240E6336AA00CE1739 /* MGSNetSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ABDEA2220E6336AA00CE1739 /* MGSNetSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABDEA2250E6336AA00CE1739 /* MGSNetSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDEA2230E6336AA00CE1739 /* MGSNetSocket.m */; };
 		ABDEE1090DD9AC060044ECE9 /* MGSNumberTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = ABDEE1070DD9AC060044ECE9 /* MGSNumberTransformer.h */; };
 		ABDEE10A0DD9AC060044ECE9 /* MGSNumberTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDEE1080DD9AC060044ECE9 /* MGSNumberTransformer.m */; };
@@ -4253,9 +4253,8 @@
 		AB6C38980D7C2FFE00B9B34E /* MGSScriptEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSScriptEditViewController.m; sourceTree = "<group>"; };
 		AB6C389E0D7C30E500B9B34E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/ScriptEditView.xib; sourceTree = "<group>"; };
 		AB6C87661610ED1E00488AF2 /* FontsAndColours.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = FontsAndColours.icns; sourceTree = "<group>"; };
-		AB6C96340E485D45005AE567 /* AsyncSocket Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "AsyncSocket Documentation.html"; sourceTree = "<group>"; };
-		AB6C96350E485D45005AE567 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
-		AB6C96360E485D45005AE567 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
+		AB6C96350E485D45005AE567 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncSocket.h; path = ../../../CocoaAsyncSocket/RunLoop/AsyncSocket.h; sourceTree = SOURCE_ROOT; };
+		AB6C96360E485D45005AE567 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncSocket.m; path = ../../../CocoaAsyncSocket/RunLoop/AsyncSocket.m; sourceTree = SOURCE_ROOT; };
 		AB6C96370E485D45005AE567 /* changes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changes.txt; sourceTree = "<group>"; };
 		AB6C963C0E485D6B005AE567 /* MGSAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSAsyncSocket.h; sourceTree = "<group>"; };
 		AB6C963D0E485D6B005AE567 /* MGSAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSAsyncSocket.m; sourceTree = "<group>"; };
@@ -9303,7 +9302,6 @@
 		ABDEE0450DD989300044ECE9 /* CocoaAsyncSocket */ = {
 			isa = PBXGroup;
 			children = (
-				AB6C96340E485D45005AE567 /* AsyncSocket Documentation.html */,
 				AB6C96350E485D45005AE567 /* AsyncSocket.h */,
 				AB6C96360E485D45005AE567 /* AsyncSocket.m */,
 				AB6C96370E485D45005AE567 /* changes.txt */,
@@ -14590,6 +14588,7 @@
 		09C09E290CDC7D720048BC79 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -14611,6 +14610,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -16493,6 +16493,7 @@
 		AB88213E166964E600072991 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -16514,6 +16515,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -17475,7 +17477,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 70;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
@@ -17517,7 +17518,7 @@
 				SEPARATE_STRIP = NO;
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/** \"$(SRCROOT)/../static\\ libraries/include/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/** \"$(SRCROOT)/../static\\ libraries/include/** $(SRCROOT)/../../../CocoaAsyncSocket/RunLoop";
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"-Wformat",
@@ -17539,7 +17540,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 70;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
@@ -17574,7 +17574,7 @@
 				SEPARATE_STRIP = YES;
 				SKIP_INSTALL = NO;
 				STRIPFLAGS = "-x";
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/** \"$(SRCROOT)/../static\\ libraries/include/**";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/** \"$(SRCROOT)/../static\\ libraries/include/** $(SRCROOT)/../../../CocoaAsyncSocket/RunLoop";
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"-Wformat",

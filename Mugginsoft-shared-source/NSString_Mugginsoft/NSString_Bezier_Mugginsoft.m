@@ -19,17 +19,15 @@
 
 - (void) dealloc {
     [self setTheBezierPath: nil];
-    [super dealloc];
 }
 
 - (NSBezierPath *)theBezierPath {
-    return [[theBezierPath retain] autorelease];
+    return theBezierPath;
 }
 
 - (void)setTheBezierPath:(NSBezierPath *)value {
     if (theBezierPath != value) {
-        [theBezierPath release];
-        theBezierPath = [value retain];
+        theBezierPath = value;
     }
 }
 
@@ -99,15 +97,11 @@
     
 	/* clean up our temporary drawing environment */
     [theImage unlockFocus];
-    [theImage release];
     
 	/* retrieve the glyphs from our BezierNSLayoutManager instance */
     bezier = [myLayout theBezierPath];
     
 	/* clean up our text storage objects */
-    [textStore release];
-    [textContainer release];
-    [myLayout release];
     
 	/* Flip the final NSBezierPath. */
     [bezier transformUsingAffineTransform: 

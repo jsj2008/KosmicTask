@@ -213,56 +213,63 @@ const char MGSLangSettingsOnRunContext;
 {
 	NSString *error = nil;
 
-	// validate the path
-	if (!filePath || ![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-		error = NSLocalizedString(@"Script file does not exist", @"Returned by server when script file not found");
-		goto errorExit;
-	}
-	
-	// validate that filename is a valid UUID
-	NSString *UUID = [[filePath lastPathComponent] stringByDeletingPathExtension];
-	if (![[UUID stringByDeletingPathExtension] mgs_isUUID]) {
-		error = NSLocalizedString(@"Script file invalid filename UUID: %@", @"Returned by server when script filename contains invalid UUID");
-		error = [NSString stringWithFormat:error, UUID];
-		goto errorExit;
-	}
-	
-	// load the dictionary
-	NSMutableDictionary *fileDict = [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
-	if (nil == fileDict) {
-		error = NSLocalizedString(@"Script dictionary load failed", @"Returned by server when script dictionary load fails");
-		goto errorExit;
-	}
-	
-	// add UUID to dictionary
-	[fileDict setObject:UUID forKey:MGSScriptKeyScriptUUID];
+    @try {
 
-	// versionise the dictionary
-	if (![self versioniseDictionary:fileDict]) {
-		error = NSLocalizedString(@"Could not convert script to current version", @"Returned by server when script dictionary load fails");
-		goto errorExit;
-	}
-		
-	// dictionary must be valid
-	if (![[self class] validateDictionary:fileDict atPath:filePath]) {
-		return nil;
-	}
+        // validate the path
+        if (!filePath || ![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+            error = NSLocalizedString(@"Script file does not exist", @"Returned by server when script file not found");
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }
+        
+        // validate that filename is a valid UUID
+        NSString *UUID = [[filePath lastPathComponent] stringByDeletingPathExtension];
+        if (![[UUID stringByDeletingPathExtension] mgs_isUUID]) {
+            error = NSLocalizedString(@"Script file invalid filename UUID: %@", @"Returned by server when script filename contains invalid UUID");
+            error = [NSString stringWithFormat:error, UUID];
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }
+        
+        // load the dictionary
+        NSMutableDictionary *fileDict = [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
+        if (nil == fileDict) {
+            error = NSLocalizedString(@"Script dictionary load failed", @"Returned by server when script dictionary load fails");
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }
+        
+        // add UUID to dictionary
+        [fileDict setObject:UUID forKey:MGSScriptKeyScriptUUID];
 
-	// if we get this far then the script is a complete representation
-	[fileDict setObject:[NSNumber numberWithInteger:MGSScriptRepresentationComplete] forKey:MGSScriptKeyRepresentation];
+        // versionise the dictionary
+        if (![self versioniseDictionary:fileDict]) {
+            error = NSLocalizedString(@"Could not convert script to current version", @"Returned by server when script dictionary load fails");
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }
+            
+        // dictionary must be valid
+        if (![[self class] validateDictionary:fileDict atPath:filePath]) {
+            return nil;
+        }
+
+        // if we get this far then the script is a complete representation
+        [fileDict setObject:[NSNumber numberWithInteger:MGSScriptRepresentationComplete] forKey:MGSScriptKeyRepresentation];
+        
+        // create script from dict dict
+        MGSScript *script = [[self class] scriptWithDictionary:fileDict];
+        
+        // flag that the script exists on the server
+        [script setScriptStatus:MGSScriptStatusExistsOnServer];
+        
+        return script;
 	
-	// create script from dict dict
-	MGSScript *script = [[self class] scriptWithDictionary:fileDict];
-	
-	// flag that the script exists on the server
-	[script setScriptStatus:MGSScriptStatusExistsOnServer];
-	
-	return script;
-	
-errorExit:;
-	MLog(RELEASELOG, error);
-	*mgsError = [MGSError frameworkCode:MGSErrorCodeLoadScriptFromFile reason:error];
-	return nil;
+    }
+    @catch (NSException *e) {
+        MLog(RELEASELOG, error);
+        *mgsError = [MGSError frameworkCode:MGSErrorCodeLoadScriptFromFile reason:error];
+        return nil;
+    }
+
+
+
 }
 
 /*
@@ -731,7 +738,7 @@ errorExit:;
  - finalize
  
  */
-- (void)finalize
+- (void)dealloc
 {
 #ifdef MGS_LOG_FINALIZE
     MLog(DEBUGLOG, @"MGSScript finalized");
@@ -739,7 +746,6 @@ errorExit:;
     
     MGS_INSTANCE_TRACKER_DEALLOCATE;
     
-	[super finalize];
 }
 
 
@@ -2895,108 +2901,112 @@ errorExit:;
 	NSError *errorObj = nil;
 	NSString *UUID = [self UUID];
 	
-	// script must have a UUID
-	if (nil == UUID) {
-		error = NSLocalizedString(@"Script UUID is nil", @"Script UUID is nil");
-		goto errorExit;
-	}
-	
-	// sanity check on the UUID string
-	if (![UUID mgs_isUUID]) {
-		error = NSLocalizedString(@"Script UUID is invalid", @"Script UUID is invalid");
-		goto errorExit;
-	}
-	
-	// script must have a valid script code section
-	if (![self isValidForSave]) { 
-		error = [NSString stringWithFormat:NSLocalizedString(@"Script code is invalid for UUID: %@", @"Script code is invalid"), UUID];
-		goto errorExit;
-	}
+    @try {
 
-	// script must have a complete representation
-	if ([self representation] != MGSScriptRepresentationComplete) { 
-		error = [NSString stringWithFormat:NSLocalizedString(@"Script representation is invalid for UUID: %@", @"Script representation is invalid"), UUID];
-		goto errorExit;
-	}
-    
-	// save path
-	NSString *savePath = [self UUIDWithPath:path];
-	NSString *rollbackPath = [savePath stringByAppendingPathExtension:@"tmp"];
-	
-	// we do not wish to persist certain objects in our file based dictionary.
-	// so we duplicate our script first
-	MGSScript *saveScript = [self mutableDeepCopy];
-	
-	// conform to the save representation
-	if (![saveScript conformToRepresentation:MGSScriptRepresentationSave]) {
-		error = [NSString stringWithFormat:NSLocalizedString(@"Script save representation is invalid for UUID: %@", @"Script representation is invalid"), UUID];
-		goto errorExit;
-	}
-	
-	// remove the representation keys
-	[saveScript removeObjectForKey:MGSScriptKeyRepresentation];	// recreated when script validated on load
-	[[saveScript scriptCode] removeObjectForKey:MGSScriptKeyRepresentation];
-	[[saveScript parameterHandler] removeRepresentation];
-	
-	// get property list representation
-	NSData *xmlData = [saveScript propertyListData];
-	if(!xmlData)
-	{
-		error = [NSString stringWithFormat:NSLocalizedString(@"Cannot serialize script for UUID", @"Error serializing script dict content"), UUID];
+        // script must have a UUID
+        if (nil == UUID) {
+            error = NSLocalizedString(@"Script UUID is nil", @"Script UUID is nil");
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }
+        
+        // sanity check on the UUID string
+        if (![UUID mgs_isUUID]) {
+            error = NSLocalizedString(@"Script UUID is invalid", @"Script UUID is invalid");
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }
+        
+        // script must have a valid script code section
+        if (![self isValidForSave]) { 
+            error = [NSString stringWithFormat:NSLocalizedString(@"Script code is invalid for UUID: %@", @"Script code is invalid"), UUID];
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }
 
-		goto errorExit;
-	}
-	
-	// move existing script file to rollback path
-	// if an error occurs writing the new file we can roll back
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
-	// delete any existing rollback file
-	if ([fileManager fileExistsAtPath:rollbackPath]) {
-		
-		if (![fileManager removeItemAtPath:rollbackPath error:&errorObj]) {
-			error = NSLocalizedString(@"Cannot delete rollback file", @"Error deleting rollback");
-			MLog(DEBUGLOG, @"error deleting rollback file: %@", [errorObj localizedDescription]);
-			goto errorExit;			
-		}
-	}
-	
-	// move existing file to roll back
-	if ([fileManager fileExistsAtPath:savePath]) {
+        // script must have a complete representation
+        if ([self representation] != MGSScriptRepresentationComplete) { 
+            error = [NSString stringWithFormat:NSLocalizedString(@"Script representation is invalid for UUID: %@", @"Script representation is invalid"), UUID];
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }
+        
+        // save path
+        NSString *savePath = [self UUIDWithPath:path];
+        NSString *rollbackPath = [savePath stringByAppendingPathExtension:@"tmp"];
+        
+        // we do not wish to persist certain objects in our file based dictionary.
+        // so we duplicate our script first
+        MGSScript *saveScript = [self mutableDeepCopy];
+        
+        // conform to the save representation
+        if (![saveScript conformToRepresentation:MGSScriptRepresentationSave]) {
+            error = [NSString stringWithFormat:NSLocalizedString(@"Script save representation is invalid for UUID: %@", @"Script representation is invalid"), UUID];
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }
+        
+        // remove the representation keys
+        [saveScript removeObjectForKey:MGSScriptKeyRepresentation];	// recreated when script validated on load
+        [[saveScript scriptCode] removeObjectForKey:MGSScriptKeyRepresentation];
+        [[saveScript parameterHandler] removeRepresentation];
+        
+        // get property list representation
+        NSData *xmlData = [saveScript propertyListData];
+        if(!xmlData)
+        {
+            error = [NSString stringWithFormat:NSLocalizedString(@"Cannot serialize script for UUID", @"Error serializing script dict content"), UUID];
 
-		if (![fileManager moveItemAtPath:savePath toPath:rollbackPath error:NULL]) {
-			error = NSLocalizedString(@"Cannot create rollback file", @"Error creating rollback");
-			goto errorExit;						
-		}
-	}
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }
+        
+        // move existing script file to rollback path
+        // if an error occurs writing the new file we can roll back
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        // delete any existing rollback file
+        if ([fileManager fileExistsAtPath:rollbackPath]) {
+            
+            if (![fileManager removeItemAtPath:rollbackPath error:&errorObj]) {
+                error = NSLocalizedString(@"Cannot delete rollback file", @"Error deleting rollback");
+                MLog(DEBUGLOG, @"error deleting rollback file: %@", [errorObj localizedDescription]);
+                [NSException raise:MGSScriptException format:@"%@", error];
+            }
+        }
+        
+        // move existing file to roll back
+        if ([fileManager fileExistsAtPath:savePath]) {
+
+            if (![fileManager moveItemAtPath:savePath toPath:rollbackPath error:NULL]) {
+                error = NSLocalizedString(@"Cannot create rollback file", @"Error creating rollback");
+                [NSException raise:MGSScriptException format:@"%@", error];
+            }
+        }
+        
+        // save the data
+        if (![xmlData writeToFile:savePath options:NSAtomicWrite error:&errorObj]) {
+            
+            error = NSLocalizedString(@"Cannot write to file", @"Error writing file");
+            MLog(DEBUGLOG, @"error writing script to file: %@", [errorObj localizedDescription]);
+            
+            // rollback
+            NSString *errorAppend;
+            if (![fileManager moveItemAtPath:rollbackPath toPath:savePath error:NULL]) {
+                errorAppend = NSLocalizedString(@" - rollback to previous version succeeded", @"Rollback success");
+            } else {
+                errorAppend = NSLocalizedString(@" - rollback to previous version failed", @"Rollback fail");
+            }
+            
+            error = [error stringByAppendingString:errorAppend];
+            [NSException raise:MGSScriptException format:@"%@", error];
+        }	
+        
+        // delete the rollback file 
+        [fileManager removeItemAtPath:rollbackPath error:&errorObj];
+        
+        *mgsError = nil;
+        return YES;
 	
-	// save the data
-	if (![xmlData writeToFile:savePath options:NSAtomicWrite error:&errorObj]) {
-		
-		error = NSLocalizedString(@"Cannot write to file", @"Error writing file");
-		MLog(DEBUGLOG, @"error writing script to file: %@", [errorObj localizedDescription]);
-		
-		// rollback
-		NSString *errorAppend;
-		if (![fileManager moveItemAtPath:rollbackPath toPath:savePath error:NULL]) {
-			errorAppend = NSLocalizedString(@" - rollback to previous version succeeded", @"Rollback success");
-		} else {
-			errorAppend = NSLocalizedString(@" - rollback to previous version failed", @"Rollback fail");
-		}
-		
-		error = [error stringByAppendingString:errorAppend];
-		goto errorExit;
-	}	
-	
-	// delete the rollback file 
-	[fileManager removeItemAtPath:rollbackPath error:&errorObj];
-	
-	*mgsError = nil;
-	return YES;
-	
-errorExit:;
-	*mgsError = [MGSError frameworkCode:MGSErrorCodeSaveScript reason:error];
-	return NO;	
+    }
+    @catch (NSException *exception) {
+        *mgsError = [MGSError frameworkCode:MGSErrorCodeSaveScript reason:error];
+        return NO;
+    }
 }
 
 /*

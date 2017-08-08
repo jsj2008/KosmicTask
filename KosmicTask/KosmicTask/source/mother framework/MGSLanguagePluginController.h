@@ -11,11 +11,11 @@
 #import "MGSLanguagePlugin.h"
 
 @interface MGSLanguagePluginController : MGSPluginController {
-	NSMutableArray *scriptTypes;
+	NSMutableArray *__strong scriptTypes;
 	BOOL resourcesLoaded;
 }
 
-@property (assign, readonly) NSArray * scriptTypes;
+@property (strong, readonly) NSArray * scriptTypes;
 @property BOOL resourcesLoaded;
 
 + (id)sharedController;

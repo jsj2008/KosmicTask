@@ -17,7 +17,7 @@
 	NSString *_serviceType;
 	NSString *_serviceName;
 	NSString *_domain;
-	id _delegate;
+	__weak id _delegate;
 	NSTimer * _LMTimer;
     NSNetServiceBrowser *_serviceBrowser;
     NSMutableArray *_resolvedNetServices;
@@ -37,7 +37,7 @@
 @property (copy) NSString *serviceType;
 @property (copy) NSString *serviceName;
 @property (copy) NSString *domain;
-@property id delegate;
+@property (weak) id delegate;
 
 
 @end

@@ -18,14 +18,14 @@
 	NSOperationQueue *_operationQueue;
 	NSMutableArray *_attachmentPreviewImages;
 	NSArrayController *_browserImagesController;
-	id delegate;
+	id __weak delegate;
 	MGSTempStorage *_storageFacility;
 
 }
 @property (readonly) NSOperationQueue *operationQueue;
 @property (readonly) NSMutableArray *attachmentPreviewImages;
 @property (readonly) NSArrayController *browserImagesController;
-@property (assign) id delegate;
+@property (weak) id delegate;
 
 
 + (NSString *)defaultHeaderRepresentation;

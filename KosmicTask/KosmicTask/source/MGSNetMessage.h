@@ -9,11 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSNetMessageDictionary.h"
 #import "MGSDisposableObject.h"
-
-@class MGSError;
-@class MGSNetHeader;
-@class MGSNetAttachments;
-@class MGSNetNegotiator;
+#import "MGSNetAttachments.h"
+#import "MGSError.h"
+#import "MGSNetNegotiator.h"
+#import "MGSNetHeader.h"
 
 // message dictionary keys
 extern NSString *MGSMessageKeyVersion;

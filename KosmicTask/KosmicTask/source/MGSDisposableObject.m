@@ -137,12 +137,11 @@
  only access non objects during finalize
  
  */
-- (void)finalize
+- (void)dealloc
 {
     if (!self.disposed) {
         NSLog(@"%@. This object may be leaking disposable resources. -dispose has not been called prior to -finalize.", [self className]);
     }
     
-    [super finalize];
 }
 @end

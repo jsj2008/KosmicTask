@@ -55,7 +55,7 @@ typedef NSInteger MGSScriptRepresentation;
 	// Don't modify this object, modify the dicitonary.
 	//
 	MGSScriptParameterManager *_parameterManager;
-	MGSScriptCode *_scriptCode;
+	MGSScriptCode *__strong _scriptCode;
 	
 	NSString *templateName;
 	BOOL _modelDataKVCModified;
@@ -266,8 +266,8 @@ typedef NSInteger MGSScriptRepresentation;
 - (void)syncScriptWithLanguageProperties;
 
 @property (readonly) MGSScriptParameterManager *parameterHandler;
-@property (assign) MGSScriptCode *scriptCode;
+@property (strong) MGSScriptCode *scriptCode;
 @property BOOL modelDataKVCModified;
 @property (copy) NSString *templateName;
-@property (assign) MGSLanguagePropertyManager *languagePropertyManager;
+@property  MGSLanguagePropertyManager *languagePropertyManager;
 @end

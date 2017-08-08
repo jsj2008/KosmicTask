@@ -29,11 +29,11 @@
 	NSPipe *_errorPipe;
 	id _delegate;
 	NSMutableData * _taskOutputData;
-	NSMutableData * _taskErrorData;
+	NSMutableData *  _taskErrorData;
 	NSMutableArray *_tempFilePaths;
 	BOOL _readTaskDataIncrementally;
 	BOOL _taskComplete;
-	NSString *_currentDirectoryPath;
+	NSString * _currentDirectoryPath;
 }
 
 - (BOOL)start:(NSString *)processName data:(NSData *)dataForStdIn withError:(NSError **)error;
@@ -48,8 +48,8 @@
 - (void)readOutputPipeToEndOfFile;
 
 @property (readonly) NSMutableData *taskOutputData;
-@property (readonly) NSMutableData *taskErrorData;
+@property (strong, readonly) NSMutableData *taskErrorData;
 @property BOOL taskComplete;
-@property (readonly) NSString *workingDirectoryPath;
+@property (strong, readonly) NSString *workingDirectoryPath;
 
 @end

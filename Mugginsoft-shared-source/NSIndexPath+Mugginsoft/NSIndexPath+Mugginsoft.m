@@ -10,7 +10,7 @@
 @implementation NSIndexPath (Mugginsoft)
 + (NSIndexPath *)indexPathWithIndexes:(NSArray *)indexes
 {
-    return [[[NSIndexPath alloc] initWithIndexes:indexes] autorelease];
+    return [[NSIndexPath alloc] initWithIndexes:indexes];
 }
 
 - (NSIndexPath *)initWithIndexes:(NSArray *)indexes
@@ -29,6 +29,6 @@
     for (NSUInteger i=0; i<[self length]; i++) {
         [indexes addObject:[NSNumber numberWithInteger:[self indexAtPosition:i]]];
     }
-    return [[indexes copy] autorelease];
+    return [indexes copy];
 }
 @end

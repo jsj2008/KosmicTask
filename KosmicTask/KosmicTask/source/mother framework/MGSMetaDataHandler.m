@@ -55,7 +55,7 @@
 		status = [task terminationStatus];
 		
 		switch (status) {
-			case 0:
+			case 0: {
 				MLog(DEBUGLOG, @"mdimport %@ returns 0 - success", path);
 				
 				// get bundle task info dictionary
@@ -70,6 +70,7 @@
 				
 				break;
 				
+			}
 			case 1:
 				MLog(RELEASELOG, @"mdimport %@ returned 1 - failed", path);
 				break;

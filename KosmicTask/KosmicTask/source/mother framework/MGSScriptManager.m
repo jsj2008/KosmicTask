@@ -129,7 +129,7 @@
  */
 - (id)initForScriptObjects
 {
-	[self init];
+	if (!(self = [self init])) return nil;
 	[self setArray:[NSMutableArray arrayWithCapacity:2]];
 	self.useFactorySelector = NO;
 	return self;

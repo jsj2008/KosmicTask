@@ -9,8 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSNetSocket.h"
 
-@class MGSNetServerSocket;
-
 @interface MGSNetServerSocket : MGSNetSocket {
 	BOOL _enableSSLSecurity;
     BOOL _connectionApproved;

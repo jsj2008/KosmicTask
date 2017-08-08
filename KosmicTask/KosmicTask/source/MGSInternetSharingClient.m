@@ -272,7 +272,8 @@ static id _sharedInstance = nil;
     // if we have an outstanding request invocation then invoke it
     if (requestInvocation) {
         
-        NSDictionary *dict = nil;
+        __unsafe_unretained NSDictionary *dict = nil;
+        [requestInvocation retainArguments];
         [requestInvocation getArgument:&dict atIndex:2];
         
         // dict must be a property list
@@ -297,7 +298,7 @@ static id _sharedInstance = nil;
  post distributed request notification with dictionary
  
  */
-- (void)postDistributedRequestNotificationWithDict:(NSDictionary *)dict
+- (void)postDistributedRequestNotificationWithDict:(__unsafe_unretained NSDictionary *)dict
 {
     BOOL useInvocation = YES;
     
@@ -311,6 +312,7 @@ static id _sharedInstance = nil;
 
         NSMethodSignature *aSignature = [[self class] instanceMethodSignatureForSelector:_cmd];
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:aSignature];
+        [invocation retainArguments];
         invocation.target = self;
         invocation.selector = _cmd;
         [invocation setArgument:&dict atIndex:2];

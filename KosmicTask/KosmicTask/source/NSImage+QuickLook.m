@@ -35,9 +35,9 @@
 														 forKey:(NSString *)kQLThumbnailOptionIconModeKey];
 		//NSDictionary *dict = nil;
 		CGImageRef ref = QLThumbnailImageCreate(kCFAllocatorDefault, 
-												(CFURLRef)fileURL, 
+												(__bridge CFURLRef)fileURL,
 												CGSizeMake(size.width, size.height),
-												(CFDictionaryRef)dict);
+												(__bridge CFDictionaryRef)dict);
 		
 		if (ref != NULL) {
 			// Take advantage of NSBitmapImageRep's -initWithCGImage: initializer, new in Leopard,
@@ -48,10 +48,9 @@
 			if (bitmapImageRep) {
 				newImage = [[NSImage alloc] initWithSize:[bitmapImageRep size]];
 				[newImage addRepresentation:bitmapImageRep];
-				[bitmapImageRep release];
 				
 				if (newImage) {
-					return [newImage autorelease];
+					return newImage;
 				}
 			}
 			CFRelease(ref);
@@ -113,7 +112,7 @@
 	LSItemInfoRecord	info;
 	CFStringRef			uti = NULL;
 	
-	CFURLRef url = CFMakeCollectable(CFURLCreateWithFileSystemPath(NULL, (CFStringRef)filePath, kCFURLPOSIXPathStyle, FALSE));
+	CFURLRef url = CFURLCreateWithFileSystemPath(NULL, (CFStringRef)filePath, kCFURLPOSIXPathStyle, FALSE);
 	
 	if (LSCopyItemInfoForURL(url, kLSRequestExtension | kLSRequestTypeCreator, &info) == noErr)
 	{
@@ -122,7 +121,7 @@
 		// If there is a file extension, get the UTI.
 		if (info.extension != NULL)
 		{
-			uti = CFMakeCollectable(UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, info.extension, kUTTypeData));
+			uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, info.extension, kUTTypeData);
 			CFRelease(info.extension);
 		}
 		
@@ -133,7 +132,7 @@
 			CFStringRef typeString = UTCreateStringForOSType(info.filetype);
 			if ( typeString != NULL)
 			{
-				uti = CFMakeCollectable(UTTypeCreatePreferredIdentifierForTag(kUTTagClassOSType, typeString, kUTTypeData));
+				uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassOSType, typeString, kUTTypeData);
 				CFRelease(typeString);
 			}
 		}
@@ -141,7 +140,7 @@
 		// Verify that this is a file that the ImageIO framework supports.
 		if (uti != NULL)
 		{
-			CFArrayRef  supportedTypes = CFMakeCollectable(CGImageSourceCopyTypeIdentifiers());
+			CFArrayRef  supportedTypes = CGImageSourceCopyTypeIdentifiers();
 			CFIndex		i, typeCount = CFArrayGetCount(supportedTypes);
 			
 			for (i = 0; i < typeCount; i++)

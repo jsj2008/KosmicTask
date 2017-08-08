@@ -76,11 +76,11 @@
     if (encodeWithNewlines) {
         SecTransformSetAttribute(transform, kSecEncodeLineLengthAttribute, kSecLineLength64, NULL);
     }
-    SecTransformSetAttribute(transform, kSecTransformInputAttributeName, self, NULL);
+    SecTransformSetAttribute(transform, kSecTransformInputAttributeName, (__bridge CFTypeRef)(self), NULL);
     
     // execute
     CFErrorRef err = NULL;
-    NSData *data = (NSData *)SecTransformExecute(transform, &err);
+    NSData *data = (NSData *)CFBridgingRelease(SecTransformExecute(transform, &err));
     CFRelease(transform);
     
     NSString *output = nil;

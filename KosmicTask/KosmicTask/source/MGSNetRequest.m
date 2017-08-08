@@ -609,7 +609,7 @@ MGS_INSTANCE_TRACKER_DEFINE;
  finalize
  
  */
-- (void)finalize
+- (void)dealloc
 {
     
 #ifdef MGS_LOG_FINALIZE
@@ -623,7 +623,6 @@ MGS_INSTANCE_TRACKER_DEFINE;
         return;
     }
     
-	[super finalize];
 }
 
 

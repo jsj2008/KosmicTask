@@ -21,7 +21,7 @@ static NSString *appSupportSubpath = @"Application Support/KosmicTask/PlugIns";
 
 @implementation MGSPluginController
 
-@synthesize pluginClass = _pluginClass;
+//@synthesize pluginClass = _pluginClass;
 @synthesize instances = _instances;
 
 /*
@@ -188,7 +188,7 @@ static NSString *appSupportSubpath = @"Application Support/KosmicTask/PlugIns";
 				// instantiate an instance of our plug in.
                 currInstance = [[currPrincipalClass alloc] init];
                 if (currInstance) {
-                    [plugins addObject:[currInstance autorelease]];
+                    [plugins addObject:currInstance];
                 }
 				
 				// if a selector is defined to allow access other 

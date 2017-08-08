@@ -30,10 +30,11 @@ enum MGSNetSocketReadTags {
 extern NSString *const MGSNetSocketSecurityException;
 extern NSString *const MGSNetSocketException;
 
-@class MGSNetRequest;
-@class MGSAsyncSocket;
+#import "MGSNetRequest.h"
+#import "MGSAsyncSocket.h"
+#import "MGSNetMessage.h"
+
 @class MGSNetSocket;
-@class MGSNetMessage;
 
 // formal delegate protocol
 @protocol MGSNetSocketDelegate <NSObject>
@@ -47,7 +48,7 @@ extern NSString *const MGSNetSocketException;
 
 @interface MGSNetSocket : NSObject {
 	@private
-	MGSNetRequest *_netRequest;
+	MGSNetRequest *__strong _netRequest;
 	MGSAsyncSocket *_socket;
 	id _delegate;
 	NSUInteger _mode;
@@ -56,8 +57,8 @@ extern NSString *const MGSNetSocketException;
 	NSUInteger _flags;
 }
 
-@property (assign) MGSNetRequest *netRequest;
-@property MGSAsyncSocket *socket;
+@property (strong) MGSNetRequest *netRequest;
+@property (strong) MGSAsyncSocket *socket;
 
 
 - (id)initWithMode:(NSUInteger)mode;

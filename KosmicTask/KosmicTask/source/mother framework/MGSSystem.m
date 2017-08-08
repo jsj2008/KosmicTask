@@ -85,7 +85,7 @@ static NSString *sharedInstanceSemaphore = @"sharedInstanceSemaphore";
 	CopySerialNumber(&serialNumber);
 	
 	if (serialNumber != NULL) {
-		serial = [(NSString *)serialNumber copy];
+		serial = [(__bridge NSString *)serialNumber copy];
 		CFRelease(serialNumber);
 	}
 	
@@ -107,7 +107,7 @@ static NSString *sharedInstanceSemaphore = @"sharedInstanceSemaphore";
 	// this omits the .local pseudo domain but seems more modern
 	NSString *name = nil;
 	if (1) {
-		name = NSMakeCollectable(SCDynamicStoreCopyLocalHostName(NULL));
+		name = CFBridgingRelease(SCDynamicStoreCopyLocalHostName(NULL));
 		name = [name stringByAppendingString:@".local"];
 	} else {
 		// or gethostname

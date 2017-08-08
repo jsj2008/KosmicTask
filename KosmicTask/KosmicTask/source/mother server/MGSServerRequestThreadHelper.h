@@ -13,14 +13,14 @@
 @class MGSError;
 
 @interface MGSServerRequestThreadHelper : NSObject {
-	MGSScript *_script;
-	MGSNetRequest *_netRequest;
-	MGSError *_error;
+	MGSScript * _script;
+	MGSNetRequest * _netRequest;
+	MGSError * _error;
 	BOOL _boolValue;
 }
 
-@property (assign) MGSScript *script;
-@property (assign) MGSNetRequest *netRequest;
-@property (assign) MGSError *error;
+@property (strong) MGSScript *script;
+@property (strong) MGSNetRequest *netRequest;
+@property (strong) MGSError *error;
 @property BOOL boolValue;
 @end

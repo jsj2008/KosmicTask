@@ -9,19 +9,17 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSNetServerSocket.h"
 
-@class MGSAsyncSocket;
-
 @interface MGSNetServer : NSObject <MGSNetSocketDelegate> {
 	MGSAsyncSocket *_acceptorSocket;
-	NSNetService *_netService;
+	NSNetService * _netService;
 	NSMutableArray *_serverSockets;
     MGSAsyncSocket *_socketForInvalidAddress;
-    NSSet *_allowedAddresses;
+    NSSet *allowedAddresses;
     NSSet *_bannedAddresses;
 }
-@property NSNetService *netService;
-@property (assign)NSSet *localNetworkAddresses;
-@property (assign)NSSet *bannedAddresses;
+@property (strong) NSNetService *netService;
+@property (strong)NSSet *localNetworkAddresses;
+@property (strong)NSSet *bannedAddresses;
 
 - (BOOL)acceptOnPort:(UInt16)portNumber;
 

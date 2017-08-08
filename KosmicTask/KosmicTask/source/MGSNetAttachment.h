@@ -28,11 +28,11 @@
 	BOOL _permitFileRemoval;
 	BOOL _tempFile;
 	MGSBrowserImage *_browserImage;
-	id _delegate;
+	id __strong _delegate;
 	NSUInteger _index;
 	MGSTempStorage *_tempStorage;
 }
-@property (assign) id delegate;
+@property (strong) id delegate;
 
 @property (readonly) unsigned long long validatedLength;
 @property unsigned long long requiredLength;
@@ -40,7 +40,7 @@
 @property (readonly) NSString *filePath; 
 @property (readonly) BOOL permitFileRemoval;
 @property (readonly) BOOL tempFile;
-@property (assign) MGSBrowserImage *browserImage;
+@property  MGSBrowserImage *browserImage;
 
 - (id)initWithStorageFacility:(MGSTempStorage *)tempStorage;
 + (id)attachmentWithFilePath:(NSString *)filePath;

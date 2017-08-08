@@ -120,7 +120,7 @@ static MGSPreferences *_standardUserDefaults = nil;
 	}
 	
 	// Set up the preference.
-	CFPreferencesSetValue((CFStringRef)key, object, appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
+	CFPreferencesSetValue((__bridge CFStringRef)key, CFBridgingRetain(object), appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
 	//CFPreferencesSetAppValue((CFStringRef)key, object, appID);
 	
 	// sync to save
@@ -150,10 +150,10 @@ static MGSPreferences *_standardUserDefaults = nil;
 		[self synchronize];
 	}
 	
-	CFPropertyListRef plistRef = CFPreferencesCopyValue ((CFStringRef)key, appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
+	CFPropertyListRef plistRef = CFPreferencesCopyValue ((__bridge CFStringRef)key, appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
 	//CFPropertyListRef plistRef = CFPreferencesCopyAppValue ((CFStringRef)key, appID);
 	
-	return NSMakeCollectable(plistRef);
+	return CFBridgingRelease(plistRef);
 }
 
 /*

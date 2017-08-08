@@ -19,8 +19,7 @@
 + (NSURL *)URLWithFSRef:(const FSRef *)aFsRef
 {
 	CFURLRef theURL = CFURLCreateFromFSRef( kCFAllocatorDefault, aFsRef );
-	CFMakeCollectable( theURL );
-	return [(NSURL *)theURL autorelease];
+	return (NSURL *)CFBridgingRelease(theURL);
 }
 
 /*
@@ -29,8 +28,7 @@
 + (NSURL *)nd_URLWithFileSystemPathHFSStyle:(NSString *)aHFSString
 {
 	CFURLRef theURL = CFURLCreateWithFileSystemPath( kCFAllocatorDefault, (CFStringRef)aHFSString, kCFURLHFSPathStyle, [aHFSString hasSuffix:@":"] );
-	CFMakeCollectable( theURL );
-	return [(NSURL *)theURL autorelease];
+	return (NSURL *)CFBridgingRelease(theURL);
 }
 
 /*
@@ -39,8 +37,7 @@
 + (NSURL *)nd_URLWithFileSystemPathPOSIXStyle:(NSString *)aPOSIXString
 {
 	CFURLRef theURL = CFURLCreateWithFileSystemPath( kCFAllocatorDefault, (CFStringRef)aPOSIXString, kCFURLPOSIXPathStyle, [aPOSIXString hasSuffix:@"/"] );
-	CFMakeCollectable( theURL );
-	return [(NSURL *)theURL autorelease];
+	return (NSURL *)CFBridgingRelease(theURL);
 }
 
 /*
@@ -72,8 +69,7 @@
 - (NSURL *)URLByDeletingLastPathComponent
 {
 	CFURLRef theURL = CFURLCreateCopyDeletingLastPathComponent( kCFAllocatorDefault, (CFURLRef)self);
-	CFMakeCollectable( theURL );
-	return [(NSURL *)theURL autorelease];
+	return (NSURL *)CFBridgingRelease(theURL);
 }
 
 /*
@@ -82,8 +78,7 @@
 - (NSString *)fileSystemPathHFSStyle
 {
 	CFStringRef	theString = CFURLCopyFileSystemPath((CFURLRef)self, kCFURLHFSPathStyle);
-	CFMakeCollectable( theString );
-	return [(NSString *)theString autorelease];
+	return (NSString *)CFBridgingRelease(theString);
 }
 
 /*
@@ -92,8 +87,7 @@
 - (NSString *)nd_fileSystemPathPOSIXStyle
 {
 	CFStringRef	theString = CFURLCopyFileSystemPath((CFURLRef)self, kCFURLPOSIXPathStyle);
-	CFMakeCollectable( theString );
-	return [(NSString *)theString autorelease];
+	return (NSString *)CFBridgingRelease(theString);
 }
 
 /*

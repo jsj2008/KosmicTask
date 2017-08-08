@@ -8,8 +8,8 @@
 
 #import "MGSMother.h"
 #import "MGSNetServer.h"
+#import "MGSKosmicTask/MGSAsyncSocket.h"
 #import "MGSNetServerSocket.h"
-#import "MGSAsyncSocket.h"
 #import <netinet/in.h>
 #import "MGSPreferences.h"
 #import "NSString_Mugginsoft.h"

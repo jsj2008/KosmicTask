@@ -10,12 +10,12 @@
 #import "AsyncSocket.h"
 
 @interface MGSAsyncSocket : AsyncSocket {
-	BOOL disconnectCalled;
 	BOOL readSuspended;
 	BOOL writeSuspended;
 }
 
-- (BOOL)disconnectCalled;
+@property (assign) BOOL disconnectCalled;
+
 - (void)doSendBytes;
 - (void)doBytesAvailable;
 

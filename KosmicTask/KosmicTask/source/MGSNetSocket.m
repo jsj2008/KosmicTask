@@ -118,7 +118,7 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
  finalize
  
  */
-- (void)finalize
+- (void)dealloc
 {
 
     MGS_INSTANCE_TRACKER_DEALLOCATE;
@@ -130,7 +130,6 @@ NSString *const MGSNetSocketException = @"MGSNetSocketException";
         MLogInfo(@"disconnect not called on socket");
     }
     
-	[super finalize];
 }
 
 
