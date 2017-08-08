@@ -40,7 +40,7 @@
 	_arrayController = [[NSArrayController alloc] init];
 
 	// observe arraycontroller
-	[_arrayController addObserver:self forKeyPath:@"selectedObjects" options:NSKeyValueObservingOptionNew context:MGSSelectedObjectsContext];
+	[_arrayController addObserver:self forKeyPath:@"selectedObjects" options:NSKeyValueObservingOptionNew context:&MGSSelectedObjectsContext];
 
 	[[_tableView tableColumnWithIdentifier:@"value"] bind:NSValueBinding toObject:_arrayController withKeyPath:@"arrangedObjects" options:nil]; 
 }
@@ -60,7 +60,7 @@
 	#pragma unused(context)
 	#pragma unused(change)
 	
-	if (context == MGSSelectedObjectsContext) {
+	if (context == &MGSSelectedObjectsContext) {
 		NSArray *array = [_arrayController selectedObjects];
 		if ([array count] > 0) {
 			self.parameterValue = [array objectAtIndex:0];

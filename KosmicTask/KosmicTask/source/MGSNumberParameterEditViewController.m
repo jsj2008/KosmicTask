@@ -97,8 +97,8 @@ NSString *MGSIncrementValueContext = @"IncrementValue";
 	[_incrementValueInput bind:MGSNotationBinding toObject:self withKeyPath:@"notation" options:nil];
 	[_incrementValueInput bind:MGSDecimalPlacesBinding toObject:self withKeyPath:@"decimalPlaces" options:nil];
 	
-	[self addObserver:self forKeyPath:@"minValue" options:0 context:MGSMinValueContext];
-	[self addObserver:self forKeyPath:@"maxValue" options:0 context:MGSMaxValueContext];
+	[self addObserver:self forKeyPath:@"minValue" options:0 context:&MGSMinValueContext];
+	[self addObserver:self forKeyPath:@"maxValue" options:0 context:&MGSMaxValueContext];
 	
 }
 
@@ -113,7 +113,7 @@ NSString *MGSIncrementValueContext = @"IncrementValue";
 #pragma unused(object)
 #pragma unused(change)
 	
-	if (context == MGSMinValueContext || context == MGSMaxValueContext ) {
+	if (context == &MGSMinValueContext || context == &MGSMaxValueContext ) {
 		if (self.initialValue < self.minValue) {
 			self.initialValue = self.minValue;
 		}

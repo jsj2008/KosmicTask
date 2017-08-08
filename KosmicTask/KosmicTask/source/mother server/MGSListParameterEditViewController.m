@@ -28,11 +28,11 @@ enum _MGSListMenuItemTag {
 @interface MGSListParameterItem:NSObject {
 	NSString *_value;
 	BOOL _isInitialValue;
-	id _delegate;
+	id __weak _delegate;
 }
 @property (copy) NSString *value;
 @property BOOL isInitialValue;
-@property id delegate;
+@property (weak) id delegate;
 
 
 - (void)updateIsInitialValue:(BOOL)value;
@@ -168,8 +168,8 @@ enum _MGSListMenuItemTag {
 	[super awakeFromNib];
 	
 	// observe arraycontroller
-	[_arrayController addObserver:self forKeyPath:@"selectedObjects" options:NSKeyValueObservingOptionNew context:MGSSelectedObjectsContext];
-	[_arrayController addObserver:self forKeyPath:@"arrangedObjects" options:NSKeyValueObservingOptionNew context:MGSArrangedObjectsContext];
+	[_arrayController addObserver:self forKeyPath:@"selectedObjects" options:NSKeyValueObservingOptionNew context:&MGSSelectedObjectsContext];
+	[_arrayController addObserver:self forKeyPath:@"arrangedObjects" options:NSKeyValueObservingOptionNew context:&MGSArrangedObjectsContext];
 	
 	// bind it
 	// note that we must bind to the array controller as it is observed for changes in arranged objects.
@@ -285,7 +285,7 @@ enum _MGSListMenuItemTag {
 	
 	BOOL enableRemove;
 	
-	if (context == MGSSelectedObjectsContext) {
+	if (context == &MGSSelectedObjectsContext) {
 		if (object == _arrayController) {
 			NSArray *array = [_arrayController selectedObjects];
 			if ([array count] > 0) {
@@ -297,7 +297,7 @@ enum _MGSListMenuItemTag {
 		}
 	}
 	
-	else if (context == MGSArrangedObjectsContext) {
+	else if (context == &MGSArrangedObjectsContext) {
 	}
 }
 
