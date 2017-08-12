@@ -149,7 +149,6 @@
 		// Draw the string in the rounded rectangle we just created.
 		NSPoint point = NSMakePoint(NSMidX(capsuleFrame) - stringSize.width / 2.0f,  NSMidY(capsuleFrame) - stringSize.height / 2.0f );
 		[stringValue drawAtPoint:point withAttributes:attributes];
-		[attributes release];
 	}
 
 }

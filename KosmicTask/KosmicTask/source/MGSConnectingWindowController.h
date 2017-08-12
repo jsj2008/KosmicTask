@@ -16,8 +16,8 @@
 	NSString *_licensedTo;
 }
 
-@property (assign) NSString *version;
-@property (assign) NSString *licensedTo;
+@property (strong) NSString *version;
+@property (strong) NSString *licensedTo;
 
 - (void)hideWindow:(id)sender;
 - (NSString *)version;

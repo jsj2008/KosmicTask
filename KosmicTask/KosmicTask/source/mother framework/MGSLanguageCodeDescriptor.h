@@ -42,7 +42,7 @@ typedef NSUInteger MGSTemplateObjectRendering;
 @property MGSCodeDescriptorCodeStyle descriptorCodeStyle;
 @property (copy) NSString *inputArgumentPrefix;
 @property (copy) NSString *inputArgumentNameExclusions;
-@property (assign) MGSScript *script;
+@property (strong) MGSScript *script;
 
 - (id)initWithScript:(MGSScript *)script;
 - (NSString *)generateCodeString;

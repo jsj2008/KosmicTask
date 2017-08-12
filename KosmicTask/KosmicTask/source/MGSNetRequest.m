@@ -36,7 +36,7 @@ MGS_INSTANCE_TRACKER_DEFINE;
 - (void)_socketDidDisconnect;
 
 @property (readwrite) NSUInteger flags;
-@property (readwrite) MGSNetMessage *responseMessage;
+@property (readwrite, nonatomic) MGSNetMessage *responseMessage;
 @property (readwrite) NSUInteger timeoutCount;
 @end
 

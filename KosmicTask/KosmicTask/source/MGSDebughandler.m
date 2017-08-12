@@ -60,7 +60,6 @@
 	@catch (NSException *e) {
 		MLog(RELEASELOG, @"%@", [e reason]);
 	}
-	[super dealloc];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification

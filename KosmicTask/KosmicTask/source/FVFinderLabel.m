@@ -42,7 +42,7 @@
 //#import "FVUtilities.h"
 // copied from "FVUtilities.h"
 static Boolean __FVIntegerEquality(const void *v1, const void *v2) { return v1 == v2; }
-static CFStringRef __FVIntegerCopyDescription(const void *value) { return (CFStringRef)[[NSString alloc] initWithFormat:@"%ld", (long)value]; }
+static CFStringRef __FVIntegerCopyDescription(const void *value) { return (CFStringRef)CFBridgingRetain([[NSString alloc] initWithFormat:@"%ld", (long)value]); }
 static CFHashCode __FVIntegerHash(const void *value) { return (CFHashCode)value; }
 const CFDictionaryKeyCallBacks FVIntegerKeyDictionaryCallBacks = { 0, NULL, NULL, __FVIntegerCopyDescription, __FVIntegerEquality, __FVIntegerHash };
 //#import "FVIcon.h"

@@ -13,6 +13,7 @@
 #import "MGSActionViewController.h"
 #import "MGSFlippedView.h"
 #import "NSSplitView_Mugginsoft.h"
+#import "MGSActionView.h"
 
 #define MIN_LEFT_SPLITVIEW_WIDTH 390
 #define MIN_RIGHT_SPLITVIEW_WIDTH 390

@@ -72,8 +72,6 @@
  */
 -(void)setCountBackgroundColour:(NSColor *)newColour
 {
-	[newColour retain];
-	[countBackgroundColour release]; 
 	countBackgroundColour = newColour;
 }
 -(NSColor *)countBackgroundColour
@@ -83,12 +81,6 @@
 // -------------------------------------------------------------------------------
 //	dealloc:
 // -------------------------------------------------------------------------------
-- (void)dealloc
-{
-    [image release];
-    image = nil;
-    [super dealloc];
-}
 
 // -------------------------------------------------------------------------------
 //	copyWithZone:zone
@@ -96,7 +88,7 @@
 - (id)copyWithZone:(NSZone*)zone
 {
     id cell = [super copyWithZone:zone];
-    [cell setImage:[image retain]];
+    [cell setImage:image];
     return cell;
 }
 
@@ -107,8 +99,7 @@
 {
     if (anImage != image)
 	{
-        [image release];
-        image = [anImage retain];
+        image = anImage;
 		[image setSize:NSMakeSize(kIconImageSize, kIconImageSize)];
 		
     }
@@ -118,8 +109,7 @@
 {
     if (anImage != statusImage)
 	{
-        [statusImage release];
-        statusImage = [anImage retain];
+        statusImage = anImage;
 		[statusImage setSize:NSMakeSize(kIconImageSize, kIconImageSize)];
 		
 		NSImageCell *imageCell = [[NSImageCell alloc] initImageCell:statusImage];
@@ -306,7 +296,6 @@
 			// Draw the count in the rounded rectangle we just created.
 			NSPoint point = NSMakePoint(NSMidX(countFrame) - numSize.width / 2.0f,  NSMidY(countFrame) - numSize.height / 2.0f );
 			[number drawAtPoint:point withAttributes:attributes];
-			[attributes release];
 		}
 		
 		cellFrameModified = YES;

@@ -33,28 +33,28 @@ typedef NSInteger eMGSRequestProgress;
 @end
 
 @interface MGSRequestProgress : NSObject <NSCopying> {
-	id <MGSRequestProgressDelegate> _delegate;
+	__weak id <MGSRequestProgressDelegate> _delegate;
 	eMGSRequestProgress _value;
 	NSString *_name;
-	id _object;
+	id __unsafe_unretained _object;
 	NSImage *_image;
 	NSTimeInterval _duration;	// duration of current progress
 	NSTimeInterval _totalDuration;   // total duration across multiple progress objects
 	NSTimeInterval _remainingTime;
-	NSString *_remainingTimeString;
+	NSString *__weak _remainingTimeString;
 	NSDate *_totalStartTime;
 	NSDate *_startTime;
 	NSTimer *_durationTimer;
-	NSString *_durationString;
+	NSString *__weak _durationString;
 	double _transferRate;
-	NSString *_transferRateString;
+	NSString *__weak _transferRateString;
 	double _percentageComplete;
 	BOOL _detailVisible;
 	unsigned long long _requestSizeTransferred;
 	unsigned long long _requestSizeTotal;
-	NSString *_requestSizeTotalString;
-	NSString *_requestSizeTransferredString;
-	NSString *_progressString;
+	NSString *__weak _requestSizeTotalString;
+	NSString *__weak _requestSizeTransferredString;
+	NSString *__weak _progressString;
 	NSString *_overviewString;
 	NSString *_resultString;
 	double _maxProgress;
@@ -67,30 +67,30 @@ typedef NSInteger eMGSRequestProgress;
 	int _waitCount;
 }
 
-@property id <MGSRequestProgressDelegate> delegate;
+@property (weak) id <MGSRequestProgressDelegate> delegate;
 @property (copy) NSString *name;
-@property (assign) NSImage *image;
+@property (strong) NSImage *image;
 @property eMGSRequestProgress value;
-@property id object;
+@property (unsafe_unretained) id object;
 @property NSTimeInterval duration;
 @property NSTimeInterval totalDuration;
 @property NSTimeInterval remainingTime;
 @property (readonly) double transferRate;
-@property (readonly) NSString *transferRateString;
+@property (weak, readonly) NSString *transferRateString;
 @property double percentageComplete;
 @property BOOL detailVisible;
 @property unsigned long long requestSizeTransferred;
-@property (readonly) NSString *requestSizeTransferredString;
+@property (weak, readonly) NSString *requestSizeTransferredString;
 @property unsigned long long requestSizeTotal;
-@property (readonly) NSString *requestSizeTotalString;
-@property (readonly) NSString *progressString;
+@property (weak, readonly) NSString *requestSizeTotalString;
+@property (weak, readonly) NSString *progressString;
 @property (copy) NSString *overviewString;
 @property (copy) NSString *resultString;
 @property double maxProgress;
 @property double minProgress;
 @property (getter=isComplete) BOOL complete;
-@property (readonly) NSString *durationString;
-@property (readonly) NSString *remainingTimeString;
+@property (weak, readonly) NSString *durationString;
+@property (weak, readonly) NSString *remainingTimeString;
 
 + (id)progressForStatus:(eMGSRequestStatus)status;
 - (void)setValue:(eMGSRequestProgress)value object:(id)object;

@@ -65,7 +65,7 @@ static BOOL trialExpired = NO;
 	[[_licencesTableView tableColumnWithIdentifier:@"owner"] bind:@"value" toObject:_licencesController withKeyPath:@"arrangedObjects.owner" options:nil];
 	[[_licencesTableView tableColumnWithIdentifier:@"seats"] bind:@"value" toObject:_licencesController withKeyPath:@"arrangedObjects.seats" options:nil];
 
-	[_licencesController addObserver:self forKeyPath:@"selectionIndexes" options:NSKeyValueObservingOptionNew context:MGSSelectionIndexesContext];
+	[_licencesController addObserver:self forKeyPath:@"selectionIndexes" options:NSKeyValueObservingOptionNew context:&MGSSelectionIndexesContext];
 
 	// bind detail table view controller o dictionary controller
 	_licenceDictionaryController = [[NSDictionaryController alloc] init];
@@ -169,7 +169,7 @@ static BOOL trialExpired = NO;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	// has the array controller's "selectionIndexes" binding changed?
-	if (context == MGSSelectionIndexesContext)
+	if (context == &MGSSelectionIndexesContext)
 	{
 		[self updateSelectedItem:object];
 	}

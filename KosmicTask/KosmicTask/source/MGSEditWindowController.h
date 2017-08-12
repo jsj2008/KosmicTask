@@ -61,7 +61,7 @@ typedef NSInteger MGSScriptHelper;
 	eMGSMotherEditMode _editMode;
 }
 
-@property (assign) MGSTaskSpecifier *taskSpec;
+@property (strong) MGSTaskSpecifier *taskSpec;
 
 - (IBAction)viewMenuEditModeSelected:(id)sender;
 - (IBAction)showTemplateBrowserSheet:(id)sender;

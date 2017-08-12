@@ -68,7 +68,7 @@ static NSString *MGSContextNetClientUseSSL = @"MGSContextNetClientUseSSL";
 	[[[self window] standardWindowButton:NSWindowDocumentIconButton] setImage:img];
 	
 	// add observers
-	[_netClient addObserver:self forKeyPath:@"useSSL" options:NSKeyValueObservingOptionInitial context:MGSContextNetClientUseSSL];
+	[_netClient addObserver:self forKeyPath:@"useSSL" options:NSKeyValueObservingOptionInitial context:&MGSContextNetClientUseSSL];
 
 	// add context
 	[_netClient addContextForWindow:[self window]];
@@ -88,7 +88,7 @@ static NSString *MGSContextNetClientUseSSL = @"MGSContextNetClientUseSSL";
 	#pragma unused(change)
 	
 	// net client SSL status change
-	if (context == MGSContextNetClientUseSSL) {
+	if (context == &MGSContextNetClientUseSSL) {
 		[self showNetClientSecurityStateInTitleBar];
 	}
 }

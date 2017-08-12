@@ -42,7 +42,7 @@
 
 - (NSData *) decodeBase64WithNewlines: (BOOL) encodedWithNewlines
 {
-    
+#pragma unused(encodedWithNewlines)
 #ifdef USE_OPENSSL
     // Create a memory buffer containing Base64 encoded string data
     BIO * mem = BIO_new_mem_buf((void *) [self cString], (int)[self cStringLength]);

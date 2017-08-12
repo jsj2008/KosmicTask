@@ -17,6 +17,7 @@
 #import "MGSLCDDisplayView.h"
 #import "MGSRequestProgress.h"
 #import "NSEvent_Mugginsoft.h"
+#import "MGSStopButton.h"
 
 #define PLAY_STATE NSOnState
 #define PAUSE_STATE NSOffState
@@ -210,11 +211,11 @@ NSString *MGSActionProgressContext = @"MGSActionProgress";
 	[stopButton setHidden:transportHidden];
 	
 	// add observers
-	[_actionSpecifier addObserver:self forKeyPath:@"runStatus" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionRunStatusContext];
-	[_actionSpecifier addObserver:self forKeyPath:@"script.timeout" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionTimeoutContext];
-	[_actionSpecifier addObserver:self forKeyPath:@"script.timeoutUnits" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionTimeoutContext];
-	[_actionSpecifier addObserver:self forKeyPath:@"script.applyTimeout" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionTimeoutContext];
-    [_actionSpecifier addObserver:self forKeyPath:@"requestProgress.value" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:MGSActionProgressContext];
+	[_actionSpecifier addObserver:self forKeyPath:@"runStatus" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:&MGSActionRunStatusContext];
+	[_actionSpecifier addObserver:self forKeyPath:@"script.timeout" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:&MGSActionTimeoutContext];
+	[_actionSpecifier addObserver:self forKeyPath:@"script.timeoutUnits" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:&MGSActionTimeoutContext];
+	[_actionSpecifier addObserver:self forKeyPath:@"script.applyTimeout" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:&MGSActionTimeoutContext];
+    [_actionSpecifier addObserver:self forKeyPath:@"requestProgress.value" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:&MGSActionProgressContext];
 }
 
 
@@ -230,7 +231,7 @@ NSString *MGSActionProgressContext = @"MGSActionProgress";
 	#pragma unused(change)
 	
 	// action run status changed
-	if (context == MGSActionRunStatusContext) {
+	if (context == &MGSActionRunStatusContext) {
 		
 		BOOL hightlightDisplay = NO;
 		BOOL available = YES;
@@ -288,7 +289,7 @@ NSString *MGSActionProgressContext = @"MGSActionProgress";
 		self.highlight = hightlightDisplay;
 		lcdDisplayView.available = available;
 	
-	} else if (context == MGSActionTimeoutContext) {
+	} else if (context == &MGSActionTimeoutContext) {
 		
 		// action timeout changed 
 		
@@ -297,7 +298,7 @@ NSString *MGSActionProgressContext = @"MGSActionProgress";
         
 		[remainingTime setHidden:![[_actionSpecifier script] applyTimeout]];
 		
-	} else if (context == MGSActionProgressContext) {
+	} else if (context == &MGSActionProgressContext) {
 		
 		// action progress changed
 		switch (_actionSpecifier.requestProgress.value) {

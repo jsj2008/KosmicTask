@@ -128,15 +128,15 @@ typedef NSInteger eMGSRequestStatus;
 @property (readonly) NSMutableArray *childRequests;		// logging request
 @property (weak) MGSNetRequest *parentRequest;			// parent request
 @property (readonly) MGSNetSocket *netSocket;
-@property (strong) MGSNetMessage *requestMessage;
-@property (readonly) MGSNetMessage *responseMessage;
-@property eMGSRequestStatus status;
+@property (strong, nonatomic) MGSNetMessage *requestMessage;
+@property (readonly, nonatomic) MGSNetMessage *responseMessage;
+@property (nonatomic) eMGSRequestStatus status;
 @property eMGSRequestStatus lastStatus;
 @property (weak) id <MGSNetRequestDelegate> delegate;
 @property (strong) MGSError *error;
 @property (readonly) NSInteger readTimeout;
 @property (readonly) NSInteger writeTimeout;
-@property NSInteger timeout;
+@property (nonatomic) NSInteger timeout;
 @property (readonly) unsigned long int requestID;
 @property (readonly) NSUInteger flags;
 @property (readonly) NSMutableArray *chunksReceived;

@@ -32,8 +32,6 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[heartbeatTimer invalidate];
-	[heartbeatTimer release];
-	[super dealloc];
 }
 
 - (NSTimer *)heartbeatTimer
@@ -45,9 +43,8 @@
 {
 	if (heartbeatTimer != value) {
 		id old = heartbeatTimer;
-		heartbeatTimer = [value retain];
+		heartbeatTimer = value;
 		[old invalidate];
-		[old release];
 	}
 }
 

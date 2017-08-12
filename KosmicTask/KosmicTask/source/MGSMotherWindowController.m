@@ -39,6 +39,7 @@
 #import "MGSWaitViewController.h"
 #import "MGSBrowserViewControlStrip.h"
 #import "MGSParameterViewController.h"
+#import "MGSRequestViewController.h"
 
 static NSString *MGSRequestDuplicateAction = @"MGSRequestDuplicateAction";
 static NSString *MGSRequestEditAction = @"MGSRequestEditAction";
@@ -1631,7 +1632,7 @@ const char MGSContextStartupComplete;
 		[[alert suppressionButton] setTitle: NSLocalizedString(@"Do not show in future.", @"application task edit warning suppression button title")];
 		
 		// run dialog
-		[alert beginSheetModalForWindow:[self window] modalDelegate:self didEndSelector:@selector(applicationTaskEditWarningAlertDidEnd:returnCode:contextInfo:) contextInfo:action];
+		[alert beginSheetModalForWindow:[self window] modalDelegate:self didEndSelector:@selector(applicationTaskEditWarningAlertDidEnd:returnCode:contextInfo:) contextInfo:(void *)CFBridgingRetain(action)];
 		
 		return;		
 	}
@@ -1918,9 +1919,10 @@ const char MGSContextStartupComplete;
 	// suppress alert in future
 	_suppressApplicationTaskEditAlertSheet = ([[alert suppressionButton] state] == NSOnState) ? YES : NO;
 	
-	// sanity check the contextinfo
-	if ([(id)contextInfo isKindOfClass:[MGSTaskSpecifier class]]) {
-		[self requestActionEdit:contextInfo];
+    // sanity check the contextinfo
+    id context = CFBridgingRelease(contextInfo);
+	if ([context isKindOfClass:[MGSTaskSpecifier class]]) {
+		[self requestActionEdit:context];
 	}
 }
 

@@ -584,7 +584,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 			
 		case MGSResourceItemTextFile:
 			
-			if (!stringResource) stringResource = [[NSString alloc] initWithString:@""];
+			if (!stringResource) stringResource = @"";
 			
 			// we persist as plain text
 			text = stringResource;
@@ -593,7 +593,7 @@ editable, dictionaryResource, docFileType, markdownResource, htmlResource;
 
 		case MGSResourceItemMarkdownFile:;
 			
-			if (!markdownResource) markdownResource = [[NSString alloc] initWithString:@""];
+			if (!markdownResource) markdownResource = @"";
 			
 			// we persist as plain text
 			text = markdownResource;

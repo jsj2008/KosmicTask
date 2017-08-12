@@ -11,7 +11,7 @@
 @class MGSTaskSpecifier;
 
 @interface MGSActionInfoViewController : NSViewController {
-	MGSTaskSpecifier *_actionSpecifier;
+	MGSTaskSpecifier *__weak _actionSpecifier;
 	
 	IBOutlet NSTextField *_authorName;
 	IBOutlet NSTextField *_scriptType;
@@ -23,6 +23,6 @@
 }
 
 
-@property MGSTaskSpecifier *actionSpecifier;
+@property (weak) MGSTaskSpecifier *actionSpecifier;
 
 @end

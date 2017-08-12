@@ -45,11 +45,11 @@ typedef NSInteger MGSProcessParameterPlist;
 	NSString *_parameterDescription;
 }
 
-@property BOOL canDragHeight;
-@property BOOL canDragMiddleView;
-@property BOOL modelDataModified;
+@property (nonatomic) BOOL canDragHeight;
+@property (nonatomic) BOOL canDragMiddleView;
+@property (nonatomic) BOOL modelDataModified;
 @property MGSParameterPlugin *plugin;
-@property id parameterValue;
+@property (nonatomic) id parameterValue;
 @property BOOL updatesDocumentEdited;
 @property BOOL sendAsAttachment;
 @property (getter=isValid) BOOL valid;

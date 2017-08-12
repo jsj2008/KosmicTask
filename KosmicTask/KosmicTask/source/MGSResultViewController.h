@@ -29,7 +29,7 @@
 
 	BOOL _nibLoaded;
 	NSImage *_titleImage;
-	MGSResult *_result;
+	MGSResult *__weak _result;
 	NSTreeController *_treeController;
 	NSDictionary *_resultDictionary;
 	MGSImageBrowserViewController *_imageBrowserViewController;
@@ -55,7 +55,7 @@
 	IBOutlet NSButton *_viewModeImageButton;
 	IBOutlet NSSegmentedControl *_viewModeSegmentedControl;
     
-	NSView *_dragThumbView;
+	NSView *__weak _dragThumbView;
 	eMGSMotherResultView _viewMode;
 	
 	BOOL _openFileAfterSave;
@@ -83,12 +83,12 @@
 
 //@property NSString *title;
 @property (copy) NSImage *titleImage;
-@property MGSResult *result;
+@property (weak) MGSResult *result;
 @property (copy) NSDictionary *resultDictionary;
 @property (copy) NSArray *resultTreeArray;
-@property NSView *dragThumbView;
+@property (weak) NSView *dragThumbView;
 @property eMGSMotherResultView viewMode;
-@property (assign) NSMenu *resultMenu;
+@property (strong) NSMenu *resultMenu;
 @property (copy) NSAttributedString *resultString;
 @property (copy) NSAttributedString *resultLogString;
 @property BOOL openFileAfterSave;

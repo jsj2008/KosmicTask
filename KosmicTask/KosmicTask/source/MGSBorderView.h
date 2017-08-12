@@ -21,7 +21,7 @@ typedef NSUInteger MGSBorderViewFlags;
     MGSBorderViewFlags _borderFlags;
 }
 
-@property (retain) NSColor *borderColor;
+@property (strong) NSColor *borderColor;
 @property (assign) MGSBorderViewFlags borderFlags;
 
 @end

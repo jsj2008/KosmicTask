@@ -32,17 +32,17 @@
 	MGSMotherServerLocalController *_serverLocalController;
 	MGSMotherWindowController *_motherWindowController;
 	MGSErrorWindowController *_errorWindowController;
-	MGSConnectingWindowController *_connectingWindowController;
-	MGSExportPluginController *_exportPluginController;
-	MGSSendPluginController *_sendPluginController;
-	MGSParameterPluginController *_parameterPluginController;
+	MGSConnectingWindowController * _connectingWindowController;
+	MGSExportPluginController * _exportPluginController;
+	MGSSendPluginController * _sendPluginController;
+	MGSParameterPluginController * _parameterPluginController;
 	MGSLRWindowController *_reminderWindowController;
 	
 	IBOutlet OpenFeedback *_openFeedbackController;
 	IBOutlet SUUpdater *_sparkleUpdater;
 	IBOutlet NSMenu *_taskMenu;
 	IBOutlet NSMenuItem *_sendToMenuItem;
-	ESSTimeTrialClass *_suicideTimeTrial;	// suicide time trial timer
+	ESSTimeTrialClass * _suicideTimeTrial;	// suicide time trial timer
 	
 	MGSStopActionSheetController *_stopActionSheetController;
 	
@@ -104,13 +104,13 @@
 
 - (MGSResultViewController *)activeResultViewController;
 
-@property (readonly) MGSConnectingWindowController *connectingWindowController;
+@property (strong, readonly) MGSConnectingWindowController *connectingWindowController;
 @property BOOL startupComplete;
-@property (readonly) MGSExportPluginController *exportPluginController;
-@property (readonly) MGSSendPluginController *sendPluginController;
-@property (readonly) MGSParameterPluginController *parameterPluginController;
-@property (readonly) ESSTimeTrialClass *suicideTimeTrial;
-@property (readonly) NSOperationQueue *operationQueue;
+@property (strong, readonly) MGSExportPluginController *exportPluginController;
+@property (strong, readonly) MGSSendPluginController *sendPluginController;
+@property (strong, readonly) MGSParameterPluginController *parameterPluginController;
+@property (strong, readonly) ESSTimeTrialClass *suicideTimeTrial;
+@property (strong, readonly) NSOperationQueue *operationQueue;
 @end
 
 // delegate category

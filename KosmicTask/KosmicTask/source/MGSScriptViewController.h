@@ -27,12 +27,12 @@
 	MGSTaskSpecifier *_pendingTaskSpec;
 	NSInteger _editMode;
 	unsigned long int _requestID;
-	id _delegate;
+	id __unsafe_unretained _delegate;
 	BOOL _scriptTextChanged;
     BOOL _stringHasBeenSet;
 	BOOL _editable;
 	
-	NSString *_scriptTemplateSource;
+	NSString *__weak _scriptTemplateSource;
 	NSString *_scriptType;
 	
 	NSView *_currentHostView;
@@ -53,10 +53,10 @@
 	NSTextView *_fragariaTextView;
 }
 
-@property (assign) MGSTaskSpecifier *taskSpec;
-@property id delegate;
+@property (strong) MGSTaskSpecifier *taskSpec;
+@property (unsafe_unretained) id delegate;
 @property (readonly) BOOL scriptTextChanged;
-@property (readonly) NSString *scriptTemplateSource;
+@property (weak, readonly) NSString *scriptTemplateSource;
 
 
 - (NSData *)scriptSourceRTFData;

@@ -117,8 +117,7 @@
     iconFrame.origin.x = NSMinX(rightButtonFrame) - iconFrame.size.width -
 	kIconSpacing;
     
-    NSImageView* iconView = [[[NSImageView alloc] initWithFrame:iconFrame]
-							 autorelease];
+    NSImageView* iconView = [[NSImageView alloc] initWithFrame:iconFrame];
     [iconView setImage:icon];
     [iconView setEditable:NO];
     [iconView setImageFrameStyle:NSImageFrameNone];

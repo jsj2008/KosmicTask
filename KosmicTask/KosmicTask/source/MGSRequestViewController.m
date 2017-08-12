@@ -130,12 +130,12 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 	// this may be modified by passing an action into the controller or by the controller
 	// internally selecting and exiting completed action
 	[_inputViewController addObserver:self forKeyPath:@"action" 
-							  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior) context:MGSInputViewActionContext];
-	[_inputViewController addObserver:self forKeyPath:@"selectedIndex" options:0 context:MGSInputActionSelectionIndexContext];
+							  options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior) context:&MGSInputViewActionContext];
+	[_inputViewController addObserver:self forKeyPath:@"selectedIndex" options:0 context:&MGSInputActionSelectionIndexContext];
 	
 	// observe task result locking in output view
-	[_outputViewController addObserver:self forKeyPath:@"taskResultDisplayLocked" options:0 context:MGSOutputViewTaskResultDisplayLockedContext];
-	[_outputViewController addObserver:self forKeyPath:@"selectedIndex" options:0 context:MGSOutputResultSelectionIndexContext];
+	[_outputViewController addObserver:self forKeyPath:@"taskResultDisplayLocked" options:0 context:&MGSOutputViewTaskResultDisplayLockedContext];
+	[_outputViewController addObserver:self forKeyPath:@"selectedIndex" options:0 context:&MGSOutputResultSelectionIndexContext];
 	
 	// notifications
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionSaved:) name:MGSNoteActionSaved object:nil];
@@ -161,12 +161,11 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
  finalize
  
  */
-- (void)finalize
+- (void)dealloc
 {
     MGS_INSTANCE_TRACKER_DEALLOCATE;
     MGS_INSTANCE_TRACKER_FINALIZE;
     
-	[super finalize];
 }
 
 /*
@@ -211,7 +210,7 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 	#pragma unused(object)
 	
 	// input action has changed
-	if (context == MGSInputViewActionContext) {
+	if (context == &MGSInputViewActionContext) {
 		
 		// action about to change
 		if ([change objectForKey:NSKeyValueChangeNotificationIsPriorKey]) {
@@ -228,22 +227,22 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 	}
 	
 	// input task result display locking follows output
-	else if (context == MGSOutputViewTaskResultDisplayLockedContext) {
+	else if (context == &MGSOutputViewTaskResultDisplayLockedContext) {
 		_inputViewController.taskResultDisplayLocked = _outputViewController.taskResultDisplayLocked;
 	}
 	
 	// input action selection index context
-	else if (context == MGSInputActionSelectionIndexContext) {
+	else if (context == &MGSInputActionSelectionIndexContext) {
 		_outputViewController.selectedPartnerIndex = _inputViewController.selectedIndex;
 	}
 	
 	// output result selection index context
-	else if (context == MGSOutputResultSelectionIndexContext) {
+	else if (context == &MGSOutputResultSelectionIndexContext) {
 		_inputViewController.selectedPartnerIndex = _outputViewController.selectedIndex;
 	}
 	
 	// input view controller is processing
-	else if (context == MGSIsProcessingContext) {
+	else if (context == &MGSIsProcessingContext) {
 		[self willChangeValueForKey:@"isProcessing"];
 		[self didChangeValueForKey:@"isProcessing"];
 	}
@@ -374,7 +373,7 @@ NSString *MGSOutputResultSelectionIndexContext = @"MGSOutputResultSelectionIndex
 	// if the action script is nil then no valid action is available.
 	[_inputViewController setAction:actionSpec];
 	[_outputViewController setAction:actionSpec];
-	[_inputViewController addObserver:self forKeyPath:@"isProcessing" options:NSKeyValueObservingOptionInitial context:MGSIsProcessingContext];
+	[_inputViewController addObserver:self forKeyPath:@"isProcessing" options:NSKeyValueObservingOptionInitial context:&MGSIsProcessingContext];
 	
 	// show new view if reqd
 	if (newView) {
@@ -490,8 +489,6 @@ commonExit:
  */
 - (void)setIcon:(NSImage *)icon
 {
-    [icon retain];
-    [_icon release];
     _icon = icon;
 }
 
@@ -513,8 +510,6 @@ commonExit:
  */
 - (void)setIconName:(NSString *)iconName
 {
-    [iconName retain];
-    [_iconName release];
     _iconName = iconName;
 }
 

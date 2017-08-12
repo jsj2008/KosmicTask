@@ -56,7 +56,7 @@ extern NSString *MGSRunStatusContext;
 	
 	NSString * _resultPositionString;
 	
-	id _delegate;
+	id __unsafe_unretained _delegate;
 	MGSTaskSpecifierManager *_actionController;
 	MGSTaskSpecifier *_action;
 	MGSRequestProgress *_suspendedProgress;
@@ -64,14 +64,14 @@ extern NSString *MGSRunStatusContext;
 }
 
 //@property (readonly) NSView *view;
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 //@property (readonly) MGSResultController *resultController;
 @property BOOL showPrevResultEnabled;
 @property BOOL showNextResultEnabled;
 @property BOOL indexMatchesPartnerIndex;
 @property (copy) NSString * resultPositionString;
 @property BOOL resultsAvailableForAction;
-@property (assign) MGSTaskSpecifier *action;
+@property (strong) MGSTaskSpecifier *action;
 @property (copy) NSMutableArray *progressArray;
 @property BOOL taskResultDisplayLocked;
 @property NSInteger selectedPartnerIndex;

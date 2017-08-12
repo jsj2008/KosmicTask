@@ -22,12 +22,12 @@
 
 	NSTimer *_cancellationTimer;
 	NSArrayController *_changesArrayController;
-	NSWindow *_modalForWindow;
+	NSWindow *__weak _modalForWindow;
 	MGSNetClient *_netClient;
 	BOOL _doCallBack;
 }
 
-@property NSWindow *modalForWindow;
+@property (weak) NSWindow *modalForWindow;
 @property BOOL doCallBack;
 
 - (id)initWithNetClient:(MGSNetClient*)netClient;

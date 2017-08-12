@@ -14,7 +14,7 @@
     NSUInteger disposalCount;
 }
 
-@property (readonly) NSUInteger disposalCount;
+@property (readonly, nonatomic) NSUInteger disposalCount;
 @property (readonly, getter=isDisposed) BOOL disposed;
 
 - (void)retainDisposable;

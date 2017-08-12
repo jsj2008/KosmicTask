@@ -61,7 +61,7 @@ char MGSParameterViewManagerUndoContext;
 	parameterViewManager.mode = MGSParameterModeEdit;
 	
 	// observe the input count
-	[self addObserver:self forKeyPath:@"inputCount" options:NSKeyValueObservingOptionNew context:MGSInputCountContext];
+	[self addObserver:self forKeyPath:@"inputCount" options:NSKeyValueObservingOptionNew context:&MGSInputCountContext];
 	self.inputCount = 0;
 
 	// set empty parameter view
@@ -118,7 +118,7 @@ char MGSParameterViewManagerUndoContext;
 	#pragma unused(change)
 	
 	// input count modified
-	if (context == MGSInputCountContext) {
+	if (context == &MGSInputCountContext) {
 		
 		[self updateRemoveInputSegmentEnabledStatus];
 		

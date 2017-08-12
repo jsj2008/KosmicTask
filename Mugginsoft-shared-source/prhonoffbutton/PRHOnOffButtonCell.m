@@ -54,7 +54,7 @@ struct PRHOOBCStuffYouWouldNeedToIncludeCarbonHeadersFor {
 
 - (void) furtherInit {
 	[self setFocusRingType:[[self class] defaultFocusRingType]];
-	stuff = NSZoneMalloc([self zone], sizeof(struct PRHOOBCStuffYouWouldNeedToIncludeCarbonHeadersFor));
+	stuff = NSZoneMalloc(nil, sizeof(struct PRHOOBCStuffYouWouldNeedToIncludeCarbonHeadersFor));
 	OSStatus err = HIMouseTrackingGetParameters(kMouseParamsSticky, &(stuff->clickTimeout), &(stuff->clickMaxDistance));
 	if (err != noErr) {
 		//Values returned by the above function call as of 10.6.3.
@@ -124,14 +124,14 @@ struct PRHOOBCStuffYouWouldNeedToIncludeCarbonHeadersFor {
 	[[NSColor colorWithCalibratedWhite:BORDER_WHITE alpha:1.0f] setStroke];
 	[borderPath stroke];
 
-	NSGradient *background = [[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:BACKGROUND_GRADIENT_MAX_Y_WHITE alpha:1.0f] endingColor:[NSColor colorWithCalibratedWhite:BACKGROUND_GRADIENT_MIN_Y_WHITE alpha:1.0f]] autorelease];
+	NSGradient *background = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:BACKGROUND_GRADIENT_MAX_Y_WHITE alpha:1.0f] endingColor:[NSColor colorWithCalibratedWhite:BACKGROUND_GRADIENT_MIN_Y_WHITE alpha:1.0f]];
 	[background drawInBezierPath:borderPath angle:DOWNWARD_ANGLE_IN_DEGREES_FOR_VIEW(controlView)];
 
 	[context saveGraphicsState];
 
 	[[NSBezierPath bezierPathWithRoundedRect:cellFrame xRadius:FRAME_CORNER_RADIUS yRadius:FRAME_CORNER_RADIUS] addClip];
 
-	NSGradient *backgroundShadow = [[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:BACKGROUND_SHADOW_GRADIENT_WHITE alpha:BACKGROUND_SHADOW_GRADIENT_MAX_Y_ALPHA] endingColor:[NSColor colorWithCalibratedWhite:BACKGROUND_SHADOW_GRADIENT_WHITE alpha:BACKGROUND_SHADOW_GRADIENT_MIN_Y_ALPHA]] autorelease];
+	NSGradient *backgroundShadow = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:BACKGROUND_SHADOW_GRADIENT_WHITE alpha:BACKGROUND_SHADOW_GRADIENT_MAX_Y_ALPHA] endingColor:[NSColor colorWithCalibratedWhite:BACKGROUND_SHADOW_GRADIENT_WHITE alpha:BACKGROUND_SHADOW_GRADIENT_MIN_Y_ALPHA]];
 	NSRect backgroundShadowRect = cellFrame;
 	if (![controlView isFlipped])
 		backgroundShadowRect.origin.y += backgroundShadowRect.size.height - BACKGROUND_SHADOW_GRADIENT_HEIGHT;
@@ -184,7 +184,7 @@ struct PRHOOBCStuffYouWouldNeedToIncludeCarbonHeadersFor {
 	}
 
 	NSBezierPath *thumbPath = [NSBezierPath bezierPathWithRoundedRect:thumbFrame xRadius:THUMB_CORNER_RADIUS yRadius:THUMB_CORNER_RADIUS];
-	NSShadow *thumbShadow = [[[NSShadow alloc] init] autorelease];
+	NSShadow *thumbShadow = [[NSShadow alloc] init];
 	[thumbShadow setShadowColor:[NSColor colorWithCalibratedWhite:THUMB_SHADOW_WHITE alpha:THUMB_SHADOW_ALPHA]];
 	[thumbShadow setShadowBlurRadius:THUMB_SHADOW_BLUR];
 	[thumbShadow setShadowOffset:NSZeroSize];
@@ -193,7 +193,7 @@ struct PRHOOBCStuffYouWouldNeedToIncludeCarbonHeadersFor {
 	if ([self showsFirstResponder] && ([self focusRingType] != NSFocusRingTypeNone))
 		NSSetFocusRingStyle(NSFocusRingBelow);
 	[thumbPath fill];
-	NSGradient *thumbGradient = [[[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:THUMB_GRADIENT_MAX_Y_WHITE alpha:1.0f] endingColor:[NSColor colorWithCalibratedWhite:THUMB_GRADIENT_MIN_Y_WHITE alpha:1.0f]] autorelease];
+	NSGradient *thumbGradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithCalibratedWhite:THUMB_GRADIENT_MAX_Y_WHITE alpha:1.0f] endingColor:[NSColor colorWithCalibratedWhite:THUMB_GRADIENT_MIN_Y_WHITE alpha:1.0f]];
 	[thumbGradient drawInBezierPath:thumbPath angle:DOWNWARD_ANGLE_IN_DEGREES_FOR_VIEW(controlView)];
 
 	[context restoreGraphicsState];

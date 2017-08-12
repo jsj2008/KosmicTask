@@ -14,7 +14,7 @@ NSString *PLMailerUrlType = @"PLMailerURLType";
 NSString *PLMailerMailType = @"PLMailerNSMailDeliveryType";
 
 + (PLMailer *)mailer {
-	return [[[PLMailer alloc] init] autorelease];
+	return [[PLMailer alloc] init];
 }
 
 - (id)init {
@@ -27,23 +27,12 @@ NSString *PLMailerMailType = @"PLMailerNSMailDeliveryType";
 	return self;
 }
 
-- (void)dealloc {
-	[type release];
-	[to release];
-	[cc release];
-	[subject release];
-	[body release];
-	[from release];
-	[super dealloc];
-}
 
 // accessors
 - (NSString *)type {
 	return type;
 }
 - (void)setType:(NSString *)value {
-	[value retain];
-	[type release];
 	type = value;
 }
 
@@ -51,8 +40,6 @@ NSString *PLMailerMailType = @"PLMailerNSMailDeliveryType";
 	return to;
 }
 - (void)setTo:(NSString *)value {
-	[value retain];
-	[to release];
 	to = value;
 }
 
@@ -60,8 +47,6 @@ NSString *PLMailerMailType = @"PLMailerNSMailDeliveryType";
 	return cc;
 }
 - (void)setCc:(NSString *)value {
-	[value retain];
-	[cc release];
 	cc = value;
 }
 
@@ -69,8 +54,6 @@ NSString *PLMailerMailType = @"PLMailerNSMailDeliveryType";
 	return subject;
 }
 - (void)setSubject:(NSString *)value {
-	[value retain];
-	[subject release];
 	subject = value;
 }
 
@@ -81,8 +64,6 @@ NSString *PLMailerMailType = @"PLMailerNSMailDeliveryType";
 	return [body string];
 }
 - (void)setBody:(NSAttributedString *)value {
-	[value retain];
-	[body release];
 	body = value;
 }
 
@@ -90,8 +71,6 @@ NSString *PLMailerMailType = @"PLMailerNSMailDeliveryType";
 	return from;
 }
 - (void)setFrom:(NSString *)value {
-	[value retain];
-	[from release];
 	from = value;
 }
 

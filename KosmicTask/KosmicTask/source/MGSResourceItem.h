@@ -58,7 +58,7 @@ typedef NSInteger MGSDerivedResourceItemType;
 }
 @property id delegate;
 @property (copy) NSString *name;
-@property (copy) NSString *origin;
+@property (copy, nonatomic) NSString *origin;
 @property (copy) NSString *author;
 @property (copy) NSDate *date;
 @property (copy) NSString *info;

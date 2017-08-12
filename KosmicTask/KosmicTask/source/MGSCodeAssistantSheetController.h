@@ -58,7 +58,7 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
     MGSLanguageCodeDescriptor *_languageCodeDescriptor;
     MGSTaskVariablesViewController *_taskVariablesViewController;
     
-    MGSScript *_script;
+    MGSScript *__weak _script;
     MGSFragaria *_fragaria;
     IBOutlet MGSBorderView *_borderView;
 	IBOutlet NSView *_fragariaHostView; // fragria host view
@@ -90,7 +90,7 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
 - (NSString *)codeString;
 
 @property (copy, readonly) NSArray *scriptTypes;
-@property MGSScript *script;
+@property (weak) MGSScript *script;
 @property (copy) NSString *infoText;
 @property (copy) NSString *selectedTabInfoText;
 @property MGSCodeAssistantCodeSelection codeSelection;

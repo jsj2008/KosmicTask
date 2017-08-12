@@ -18,14 +18,14 @@
     
     NSObjectController *_scriptController;
     
-	MGSTaskSpecifier *_actionSpecifier;
+	MGSTaskSpecifier *__weak _actionSpecifier;
 	BOOL _useTimeout;
     NSUInteger _timeout;
     NSUInteger _timeoutUnits;
 }
 
 
-@property MGSTaskSpecifier *actionSpecifier;
+@property (weak) MGSTaskSpecifier *actionSpecifier;
 @property BOOL useTimeout;
 @property NSUInteger timeout;
 @property NSUInteger timeoutUnits;

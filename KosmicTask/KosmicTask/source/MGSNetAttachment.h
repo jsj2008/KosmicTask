@@ -40,7 +40,7 @@
 @property (readonly) NSString *filePath; 
 @property (readonly) BOOL permitFileRemoval;
 @property (readonly) BOOL tempFile;
-@property  MGSBrowserImage *browserImage;
+@property (nonatomic) MGSBrowserImage *browserImage;
 
 - (id)initWithStorageFacility:(MGSTempStorage *)tempStorage;
 + (id)attachmentWithFilePath:(NSString *)filePath;

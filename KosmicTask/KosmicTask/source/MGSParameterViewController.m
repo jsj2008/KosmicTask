@@ -613,17 +613,17 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 	#pragma unused(keyPath)
 	#pragma unused(object)
 	
-	if (context == MGSParameterValueContext) {
+	if (context == &MGSParameterValueContext) {
 		
 		// set script parameter value
 		[_scriptParameter setValue: _typeInputViewController.parameterValue];
 		
-	} else if (context == MGSParameterSendAsAttachmentContext) {	
+	} else if (context == &MGSParameterSendAsAttachmentContext) {
 		
 		// send parameter as attachment
 		[_scriptParameter setSendAsAttachment:_typeInputViewController.sendAsAttachment];
 		
-	} else if (context == MGSResetEnabledContext) {
+	} else if (context == &MGSResetEnabledContext) {
 		[self willChangeValueForKey:@"resetEnabled"];
 		_resetEnabled = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
 		[self didChangeValueForKey:@"resetEnabled"];
@@ -1168,8 +1168,8 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		typeViewController = _typeInputViewController;
 		
 		// observe the input view controller
-		[_typeInputViewController addObserver:self forKeyPath:@"parameterValue" options:0 context:MGSParameterValueContext];
-		[_typeInputViewController addObserver:self forKeyPath:@"sendAsAttachment" options:NSKeyValueObservingOptionInitial context:MGSParameterSendAsAttachmentContext];
+		[_typeInputViewController addObserver:self forKeyPath:@"parameterValue" options:0 context:&MGSParameterValueContext];
+		[_typeInputViewController addObserver:self forKeyPath:@"sendAsAttachment" options:NSKeyValueObservingOptionInitial context:&MGSParameterSendAsAttachmentContext];
 		
 		// load the view
 		[typeViewController view];
@@ -1207,7 +1207,7 @@ NSString *MGSResetEnabledContext = @"MGSResetEnabledContext";
 		[newMiddleView replaceSubview:pluginViewPlaceHolder withViewFrameAsOld:[typeViewController view]];
 		_pluginInputViewController.pluginView = [typeViewController view];
 		_pluginInputViewController.parameterPluginViewController = _typeInputViewController;
-		[_pluginInputViewController addObserver:self forKeyPath:@"resetEnabled" options:NSKeyValueObservingOptionNew context:MGSResetEnabledContext];
+		[_pluginInputViewController addObserver:self forKeyPath:@"resetEnabled" options:NSKeyValueObservingOptionNew context:&MGSResetEnabledContext];
 		
 		// size the wrapper so that the embedded type view plugin is present at the same
 		// size as in its nib

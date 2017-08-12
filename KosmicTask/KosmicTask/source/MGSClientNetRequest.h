@@ -41,7 +41,7 @@
 
 
 @interface MGSClientNetRequest : MGSNetRequest {
-    MGSNetClient *_netClient;			// netclient defining service to use to connect to server
+    MGSNetClient *__weak _netClient;			// netclient defining service to use to connect to server
     MGSClientNetRequest *_prevRequest;		// previous request
 	MGSClientNetRequest *_nextRequest;		// next request
     id _owner;							// the request's owner - they will receive status updates only
@@ -50,14 +50,14 @@
 	BOOL _sendUpdatesToOwner;			// flag send updates to owner
     BOOL _allowUserToAuthenticate;		// allow user to authenticate the request  
 }
-@property (assign) id owner;
-@property (assign) id tagObject;
+@property (strong) id owner;
+@property (strong) id tagObject;
 @property (copy)NSString *ownerString;
 @property BOOL sendUpdatesToOwner;
-@property (readonly) MGSNetClient *netClient;
+@property (weak, readonly) MGSNetClient *netClient;
 @property BOOL allowUserToAuthenticate;
-@property (assign) MGSClientNetRequest *prevRequest;			// previous request
-@property (assign) MGSClientNetRequest *nextRequest;			// next request
+@property (strong) MGSClientNetRequest *prevRequest;			// previous request
+@property (strong) MGSClientNetRequest *nextRequest;			// next request
 
 + (id)requestWithClient:(MGSNetClient *)netClient;
 + (id)requestWithClient:(MGSNetClient *)netClient command:(NSString *)command;

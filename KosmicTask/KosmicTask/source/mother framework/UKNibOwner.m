@@ -43,11 +43,11 @@
 									nil];
 		NSBundle*		mainB = [NSBundle mainBundle];
 		[mainB loadNibFile: [self nibFilename]
-							externalNameTable: ent withZone: [self zone]];	// We're responsible for releasing the top-level objects in the NIB (our view, right now).
+							externalNameTable: ent withZone: nil];	// We're responsible for releasing the top-level objects in the NIB (our view, right now).
 		if( [topLevelObjects count] == 0 )
 		{
 			NSLog(@"%@: Couldn't find NIB file \"%@.nib\".", NSStringFromClass([self class]),[self nibFilename]);
-			[self autorelease];
+			//[self autorelease];
 			return nil;
 		}
 	}
@@ -58,10 +58,8 @@
 
 -(void)	dealloc
 {
-	[topLevelObjects release];
 	topLevelObjects = nil;
 	
-	[super dealloc];
 }
 
 

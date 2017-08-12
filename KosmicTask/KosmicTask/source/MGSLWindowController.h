@@ -18,13 +18,13 @@
 	
 	MGSLM *_licencesController;
 	NSDictionaryController *_licenceDictionaryController;
-	id _selectedItem;
+	id __unsafe_unretained _selectedItem;
 	BOOL _allowRemoveLicence;
 	
 	MGSLAddWindowController *_addController;
 }
 
-@property id selectedItem;
+@property (unsafe_unretained) id selectedItem;
 @property BOOL allowRemoveLicence;
 
 + (MGSLWindowController *)sharedController;

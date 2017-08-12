@@ -34,14 +34,14 @@ typedef NSInteger MGSNumberInputViewNotation;
 }
 
 
-@property double value;
-@property double increment;
-@property double minValue;
-@property double maxValue;
+@property (nonatomic) double value;
+@property (nonatomic) double increment;
+@property (nonatomic) double minValue;
+@property (nonatomic) double maxValue;
 @property NSTextField *textField;
 @property NSStepper *stepper;
-@property MGSNumberInputViewNotation notation;
-@property NSInteger decimalPlaces;
+@property (nonatomic) MGSNumberInputViewNotation notation;
+@property (nonatomic) NSInteger decimalPlaces;
 
 - (NSNumber *)numberValue;
 - (void)setNumberValue:(NSNumber *)number;

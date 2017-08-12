@@ -52,7 +52,7 @@ extern NSString *MGSIsProcessingContext;
 	
 	NSString * _actionPositionString;
 	
-	id _delegate;
+	id __unsafe_unretained _delegate;
 	MGSTaskSpecifierManager *_actionController;	// action history controller
 	MGSTaskSpecifier *_action;
 	NSInteger _selectedPartnerIndex;
@@ -81,11 +81,11 @@ extern NSString *MGSIsProcessingContext;
 @property (readonly) NSInteger selectedIndex;
 
 //@property (readonly) MGSScript *script;
-@property (assign) MGSTaskSpecifier *action;
+@property (strong) MGSTaskSpecifier *action;
 @property (readonly) MGSActionViewController *actionViewController;
 
 //@property (readonly) NSView *view;
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 - (IBAction)executeScript:(id)sender;
 - (IBAction)detachActionAsWindow:(id)sender;
 - (void)actionInputModified;

@@ -14,6 +14,7 @@
 #import "MGSOutputRequestViewController.h"
 #import "MGSNetClient.h"
 #import "MGSNetClientContext.h"
+#import "MGSTaskSpecifier.h"
 
 static int toolbarID = 0;
 

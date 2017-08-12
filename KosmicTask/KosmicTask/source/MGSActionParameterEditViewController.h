@@ -29,7 +29,7 @@ typedef NSUInteger MGSParameterViewConfigurationFlags;
 	IBOutlet NSSegmentedControl *inputSegmentedControl;			// input segment control
 	IBOutlet MGSParameterViewManager *parameterViewManager;		// parameter view handler
 	IBOutlet MGSParameterEndViewController *emptyParameterViewController;	// view to be displayed when zero parameters are defined
-	IBOutlet NSView *parameterView;								// view containing parameters
+	IBOutlet NSView *__weak parameterView;								// view containing parameters
 	IBOutlet NSScrollView *parameterScrollView;					// parameter scrollview
 	
 	IBOutlet NSButton *_copyHandlerTemplateButton;				// copy handler template button
@@ -42,8 +42,8 @@ typedef NSUInteger MGSParameterViewConfigurationFlags;
     MGSParameterViewConfigurationFlags _parameterViewConfigurationFlags;
 }
 @property NSInteger inputCount;
-@property (assign) MGSTaskSpecifier *action;
-@property NSView *parameterView;
+@property (strong) MGSTaskSpecifier *action;
+@property (weak) NSView *parameterView;
 @property (readwrite) MGSParameterViewConfigurationFlags parameterViewConfigurationFlags;
 
 - (IBAction)segmentClick:(id)sender;

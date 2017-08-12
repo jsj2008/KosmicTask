@@ -33,7 +33,7 @@ extern NSString *MGSDefaultResourceIDChanged;
 	NSMutableArray *resourcesManagers;
 	NSMutableArray *__strong resources;
 	NSArray *__strong resourceNames;
-	id <MGSResourcesManagerDelegate> delegate;
+	__weak id <MGSResourcesManagerDelegate> delegate;
 	NSString *resourceName;
 	NSString *managerPath;
 	NSString *resourceFolder;
@@ -47,19 +47,19 @@ extern NSString *MGSDefaultResourceIDChanged;
 }
 
 @property (readonly) NSMutableArray *resourcesManagers;
-@property id <MGSResourcesManagerDelegate> delegate;
+@property (weak, nonatomic) id <MGSResourcesManagerDelegate> delegate;
 @property (copy, readonly) NSString *resourcePath;
 @property (copy, readonly) NSString *managerPath;
 @property (copy, readonly) NSString *resourceName;
 @property (copy, readonly) NSString *resourceFolder;
 @property (strong) NSMutableArray *resources;
 @property (copy)NSImage *nodeImage;
-@property Class resourceClass;
-@property (copy) NSString *resourcesPlistKey;
+@property (nonatomic) Class resourceClass;
+@property (copy, nonatomic) NSString *resourcesPlistKey;
 @property (strong) MGSResourceBrowserNode *managerNode;
 @property (strong) NSArray *resourceNames;
-@property (copy) NSNumber *defaultResourceID;;
-@property (copy) NSString *origin;
+@property (copy, nonatomic) NSNumber *defaultResourceID;;
+@property (copy, nonatomic) NSString *origin;
 @property BOOL canMutate;
 
 - (id)newResource;

@@ -11,13 +11,13 @@
 @class MGSTaskSpecifier;
 
 @interface MGSActionDescriptionViewController : NSViewController {
-	MGSTaskSpecifier *_actionSpecifier;
+	MGSTaskSpecifier *__weak _actionSpecifier;
 	
 	IBOutlet NSTextView *_description;
 	IBOutlet NSScrollView *_scrollView;
 }
 
 
-@property MGSTaskSpecifier *actionSpecifier;
+@property (weak) MGSTaskSpecifier *actionSpecifier;
 
 @end

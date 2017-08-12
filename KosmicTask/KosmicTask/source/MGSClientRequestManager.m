@@ -24,6 +24,8 @@
 #import "MGSNetMessage+KosmicTask.h"
 #import "MGSPreferences.h"
 
+static NSString *MGSClientRequestManagerException = @"MGSClientRequestManagerException";
+
 static MGSClientRequestManager *_sharedController = nil;
 
 @interface MGSClientRequestManager()
@@ -908,210 +910,214 @@ static MGSClientRequestManager *_sharedController = nil;
 	// create the payload for the request
 	MGSNetRequestPayload *payload = [MGSNetRequestPayload payloadForRequest:netRequest];
 
-	// obtain the request command.
-	// the reply must be validated against the nature of the request command
-	NSString *requestCommand = [requestMessage command];
-	if (![requestCommand isKindOfClass:[NSString class]]) {
-		error = NSLocalizedString(@"Request command not found", "request message parse error");
-		goto invalid_message;
-	}
-	
-	//=================================================================
-	//
-	// process reply message errors
-	//
-	//=================================================================
-	mgsError = replyMessage.error;
-	if (mgsError) {
-		
-        [netRequest tagError:mgsError];
+    @try {
+
+        // obtain the request command.
+        // the reply must be validated against the nature of the request command
+        NSString *requestCommand = [requestMessage command];
+        if (![requestCommand isKindOfClass:[NSString class]]) {
+            error = NSLocalizedString(@"Request command not found", "request message parse error");
+            [NSException raise:MGSClientRequestManagerException format:@"%@", error];
+        }
         
-		//=================================================================
-		// Has authentication failure occured?
-		// 
-		// In this case we retrieve the challenge dictionary from the reply,
-		// formulate our response and resend the request
-		//
-		//==================================================================	
-		//if ([mgsError code] == MGSErrorCodeAuthenticationFailure) {
+        //=================================================================
+        //
+        // process reply message errors
+        //
+        //=================================================================
+        mgsError = replyMessage.error;
+        if (mgsError) {
+            
+            [netRequest tagError:mgsError];
+            
+            //=================================================================
+            // Has authentication failure occured?
+            // 
+            // In this case we retrieve the challenge dictionary from the reply,
+            // formulate our response and resend the request
+            //
+            //==================================================================	
+            //if ([mgsError code] == MGSErrorCodeAuthenticationFailure) {
 
-			// if we are authenticating then prompt user
-			if ([requestCommand isEqualToString:MGSNetMessageCommandAuthenticate]) {
+                // if we are authenticating then prompt user
+                if ([requestCommand isEqualToString:MGSNetMessageCommandAuthenticate]) {
 
-                MGSAuthenticateWindowController *authenticateController = [MGSAuthenticateWindowController sharedController];
+                    MGSAuthenticateWindowController *authenticateController = [MGSAuthenticateWindowController sharedController];
 
-                if ([mgsError code] == MGSErrorCodeAuthenticationFailure) {
-                    
-                    // request net client not authenticated
-                    [netRequest.netClient setAuthenticationDictionary:nil];
-                                    
-                    // look for the challenge dict.
-                    // if none found then clear text authentication will be used
-                    NSDictionary *challengeDict = [replyMessage messageObjectForKey:MGSNetMessageKeyChallenge];
-                    
-                    // ask authenticate window controller to accept request.
-                    // the controller will prompt the user for authentication details.
-                    // note that the authentication controller may not be able to accept the request
-                    // if it is active with another request.
-                    if ([authenticateController authenticateRequest:netRequest challenge:challengeDict]) {
-                        return;
-                    }
+                    if ([mgsError code] == MGSErrorCodeAuthenticationFailure) {
                         
+                        // request net client not authenticated
+                        [netRequest.netClient setAuthenticationDictionary:nil];
+                                        
+                        // look for the challenge dict.
+                        // if none found then clear text authentication will be used
+                        NSDictionary *challengeDict = [replyMessage messageObjectForKey:MGSNetMessageKeyChallenge];
+                        
+                        // ask authenticate window controller to accept request.
+                        // the controller will prompt the user for authentication details.
+                        // note that the authentication controller may not be able to accept the request
+                        // if it is active with another request.
+                        if ([authenticateController authenticateRequest:netRequest challenge:challengeDict]) {
+                            return;
+                        }
+                            
+                    }
+                    
+                    // we may see MGSErrorCodeServerAccessDenied
+                    else {
+                        [authenticateController closeWindow];
+                    }
                 }
                 
-                // we may see MGSErrorCodeServerAccessDenied
-                else {
-                    [authenticateController closeWindow];
-                }
-			}
-			
-		//}
-		
-		netRequest.error = mgsError;
-		
-	}
-	
-	//==================================
-	// are there errors in the request
-	//==================================
-	if (netRequest.error) {		
-		
-		// ERROR in request
+            //}
+            
+            netRequest.error = mgsError;
+            
+        }
+        
+        //==================================
+        // are there errors in the request
+        //==================================
+        if (netRequest.error) {		
+            
+            // ERROR in request
 
-		// The request contains a top level error.
-		// This means there is something structural wrong with the message or a network/socket error has occurred.
-		// However, the request owners still need a reply.
-		//
-	
-        [netRequest tagError:netRequest.error];
-	}
-		
-	//=================================================================
-	//  Has authentication success occurred?
-	//
-	// If the request contains an authentication dict and no error
-	// occured then the dict must be valid for the client
-	//=================================================================
-	NSDictionary *authDict = nil;
-	if (!netRequest.error) {
-		authDict = [requestMessage authenticationDictionary];
-		if (authDict) {
-			[netRequest.netClient setAuthenticationDictionary:authDict];
-		}
-	}
-	
-	//===================================================
-	//
-	// Process the application dict if present
-	//
-	// Normally only present when first retrieve the 
-	// script dict.
-	//===================================================
-	NSDictionary *appDict = [replyMessage messageObjectForKey:MGSNetMessageKeyApplication];
-	if (appDict){
-		
-		// only need to update for non bonjour host
-		if (NO == [netRequest.netClient hostViaBonjour]) {
-			NSString *username = [appDict objectForKey:MGSApplicationKeyUsername];
-			if (username) {
-				[netRequest.netClient setHostUserName:username];
-				
-				// local clients obtain info via the mDNS TXTRecord mechanism.
-				// remote clients use the application data.
-				[netRequest.netClient TXTRecordUpdate];
-			}
-		}
-	}
-			
-	//====================================================
-	// 
-	// Process the request command
-	//
-	//====================================================
-    
-	// a negotiate request
-	if ([requestCommand isEqualToString:MGSNetMessageCommandNegotiate]) {
-
-		/*
-		 
-		 if a network or socket error occurs it can manifest itself here.
-		 
-		 set the error on the next request (which will have initiated the
-		 sending of the negotiate request) and call completion
-		 
-		 */
-		if (netRequest.error) {
-            if (netRequest.nextRequest) {
-                netRequest.nextRequest.error = netRequest.error;
-                [self requestDidComplete:(MGSClientNetRequest *)netRequest.nextRequest];
-            } else {
-                MLogInfo(@"Error in negotiator and no next request found.");
+            // The request contains a top level error.
+            // This means there is something structural wrong with the message or a network/socket error has occurred.
+            // However, the request owners still need a reply.
+            //
+        
+            [netRequest tagError:netRequest.error];
+        }
+            
+        //=================================================================
+        //  Has authentication success occurred?
+        //
+        // If the request contains an authentication dict and no error
+        // occured then the dict must be valid for the client
+        //=================================================================
+        NSDictionary *authDict = nil;
+        if (!netRequest.error) {
+            authDict = [requestMessage authenticationDictionary];
+            if (authDict) {
+                [netRequest.netClient setAuthenticationDictionary:authDict];
             }
-		}
-		
-		return;
-	}
-	
-	// a heartbeat request
-	if ([requestCommand isEqualToString:MGSNetMessageCommandHeartbeat]) {
-		
-		if ([requestMessage isNegotiateMessage]) {
-			return;
-		}
-		
-		// tell the owner that the heartbeat reply was received
-		if (sendReply) {
-			[owner netRequestResponse:netRequest payload:payload];
-		}		
-		
-	}
-	
-	// an authentication request
-	else if ([requestCommand isEqualToString:MGSNetMessageCommandAuthenticate]) {
-	
-		// a negotiate request message will be found here if command based negotiation is enabled
-		if ([requestMessage isNegotiateMessage]) {
-			return;
-		}
-		
-		// add payload dictionary
-		payload.dictionary = [requestMessage authenticationDictionary];
-		
-		// tell the owner that the authenticate reply was received
-		if (sendReply) {
-			[owner netRequestResponse:netRequest payload:payload];
-		}
-	}
-	
-	// a KosmicTask command
-	else if ([requestCommand isEqual:MGSNetMessageCommandParseKosmicTask]) {
-		
-		[self parseTaskCommandReponse:netRequest];
+        }
+        
+        //===================================================
+        //
+        // Process the application dict if present
+        //
+        // Normally only present when first retrieve the 
+        // script dict.
+        //===================================================
+        NSDictionary *appDict = [replyMessage messageObjectForKey:MGSNetMessageKeyApplication];
+        if (appDict){
+            
+            // only need to update for non bonjour host
+            if (NO == [netRequest.netClient hostViaBonjour]) {
+                NSString *username = [appDict objectForKey:MGSApplicationKeyUsername];
+                if (username) {
+                    [netRequest.netClient setHostUserName:username];
+                    
+                    // local clients obtain info via the mDNS TXTRecord mechanism.
+                    // remote clients use the application data.
+                    [netRequest.netClient TXTRecordUpdate];
+                }
+            }
+        }
+                
+        //====================================================
+        // 
+        // Process the request command
+        //
+        //====================================================
+        
+        // a negotiate request
+        if ([requestCommand isEqualToString:MGSNetMessageCommandNegotiate]) {
 
-	// ERROR
-	} else {
-		error = NSLocalizedString(@"Unrecognised request command: %@", "reply message parse error");
-		error = [NSString stringWithFormat: error, requestCommand];
-		goto invalid_message;
-	}
-		
-	return;
+            /*
+             
+             if a network or socket error occurs it can manifest itself here.
+             
+             set the error on the next request (which will have initiated the
+             sending of the negotiate request) and call completion
+             
+             */
+            if (netRequest.error) {
+                if (netRequest.nextRequest) {
+                    netRequest.nextRequest.error = netRequest.error;
+                    [self requestDidComplete:(MGSClientNetRequest *)netRequest.nextRequest];
+                } else {
+                    MLogInfo(@"Error in negotiator and no next request found.");
+                }
+            }
+            
+            return;
+        }
+        
+        // a heartbeat request
+        if ([requestCommand isEqualToString:MGSNetMessageCommandHeartbeat]) {
+            
+            if ([requestMessage isNegotiateMessage]) {
+                return;
+            }
+            
+            // tell the owner that the heartbeat reply was received
+            if (sendReply) {
+                [owner netRequestResponse:netRequest payload:payload];
+            }		
+            
+        }
+        
+        // an authentication request
+        else if ([requestCommand isEqualToString:MGSNetMessageCommandAuthenticate]) {
+        
+            // a negotiate request message will be found here if command based negotiation is enabled
+            if ([requestMessage isNegotiateMessage]) {
+                return;
+            }
+            
+            // add payload dictionary
+            payload.dictionary = [requestMessage authenticationDictionary];
+            
+            // tell the owner that the authenticate reply was received
+            if (sendReply) {
+                [owner netRequestResponse:netRequest payload:payload];
+            }
+        }
+        
+        // a KosmicTask command
+        else if ([requestCommand isEqual:MGSNetMessageCommandParseKosmicTask]) {
+            
+            [self parseTaskCommandReponse:netRequest];
 
-invalid_message:
+        // ERROR
+        } else {
+            error = NSLocalizedString(@"Unrecognised request command: %@", "reply message parse error");
+            error = [NSString stringWithFormat: error, requestCommand];
+            [NSException raise:MGSClientRequestManagerException format:@"%@", error];
+        }
+            
+        return;
+    }
+    @catch (NSException *exception) {
+        if (!mgsError) {
+            mgsError = [MGSError clientCode:errorCode reason:error];	// log error
+            [netRequest tagError:mgsError];
+        }
+        
+        payload.requestError = mgsError;
+        
+        // send response to owner
+        if (sendReply) {
+            [owner netRequestResponse:netRequest payload:payload];
+        }
+        
+        return;
+    }
 	
-	if (!mgsError) {
-		mgsError = [MGSError clientCode:errorCode reason:error];	// log error
-        [netRequest tagError:mgsError];
-	}
-	
-	payload.requestError = mgsError;
 
-	// send response to owner
-	if (sendReply) {
-		[owner netRequestResponse:netRequest payload:payload];
-	}
-	
-	return;
 }
 
 //================================================

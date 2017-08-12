@@ -66,8 +66,8 @@
 @property NSInteger indentation;
 @property NSInteger countAlignment;
 @property NSInteger countMarginVertical;
-@property (getter=isUpdating) BOOL updating;
-@property NSUInteger updatingImageIndex;;
+@property (nonatomic, getter=isUpdating) BOOL updating;
+@property (nonatomic) NSUInteger updatingImageIndex;;
 
 + (NSColor *)countColor;
 + (NSColor *)countColorGreen;

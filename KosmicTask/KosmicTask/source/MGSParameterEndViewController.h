@@ -12,17 +12,17 @@
 
 @interface MGSParameterEndViewController : NSViewController {
 	IBOutlet NSTextField *_textField;
-    IBOutlet NSSegmentedControl *inputSegmentedControl;
-    IBOutlet MGSPopupButton *contextPopupButton;
-    IBOutlet id delegate;
+    IBOutlet NSSegmentedControl *__weak inputSegmentedControl;
+    IBOutlet MGSPopupButton *__unsafe_unretained contextPopupButton;
+    IBOutlet id __unsafe_unretained delegate;
     NSColor *_capsuleBackgroundColor;
     NSColor *_capsuleDragBackgroundColor;
 }
 
 - (void)setIsDragTarget:(BOOL)isDragTarget;
 
-@property (readonly) NSSegmentedControl *inputSegmentedControl;
-@property (readonly) MGSPopupButton *contextPopupButton;
-@property id delegate;
+@property (weak, readonly) NSSegmentedControl *inputSegmentedControl;
+@property (unsafe_unretained, readonly) MGSPopupButton *contextPopupButton;
+@property (unsafe_unretained) id delegate;
 
 @end

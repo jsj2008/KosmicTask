@@ -34,6 +34,7 @@
 #import "MGSPreferences.h"
 #import "MGSScriptViewController.h"
 #import "NSView_Mugginsoft.h"
+#import "MGSPopupButton.h"
 
 #import <ORCDiscount/ORCDiscount.h>
 
@@ -95,14 +96,6 @@ static BOOL applicationMenuConfigured = NO;
  finalize
  
  */
-- (void)finalize
-{
-#ifdef MGS_LOG_FINALIZE
-	MLog(MEMORYLOG, @"finalized");
-#endif
-    
-	[super finalize];
-}
 
 /*
  

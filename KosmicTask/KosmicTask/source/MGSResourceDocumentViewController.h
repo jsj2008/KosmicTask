@@ -39,7 +39,7 @@ typedef NSInteger MGSResourceDocumentMode;
 
 @property MGSResourceDocumentMode mode;
 @property BOOL editModeActive;
-@property (assign) MGSResourceItem *selectedResource;
+@property (strong) MGSResourceItem *selectedResource;
 @property BOOL documentEdited;
 
 @end

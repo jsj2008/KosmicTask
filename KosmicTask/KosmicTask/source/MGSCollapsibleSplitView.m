@@ -80,7 +80,7 @@
 	NSView * tempView = [[NSView alloc] initWithFrame:NSZeroRect];
 	
 	// Swap out subview
-	id key = [NSValue valueWithPointer:tempView];
+	id key = tempView; // pre ARC was [NSValue valueWithPointer:tempView];
 	[_collapsedSubviewsDict setObject:subview forKey:key];
 	[self replaceSubview:subview with:tempView];
 	[self adjustSubviews];
@@ -97,7 +97,7 @@
 	NSView * tempView = [[NSView alloc] initWithFrame:NSZeroRect];
 	
 	// Swap out subview
-	id key = [NSValue valueWithPointer:tempView];
+	id key = tempView; // pre ARC was [NSValue valueWithPointer:tempView];
 	[_collapsedSubviewsDict setObject:subview forKey:key];
 	[self replaceSubview:subview with:tempView];
 	[self adjustSubviews];

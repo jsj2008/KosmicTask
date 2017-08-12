@@ -11,7 +11,7 @@
 @interface MGSLAddWindowController : NSWindowController {
 	IBOutlet NSTableView *_detailTableView;
 	IBOutlet NSPopUpButton *_licenceTypePopup;
-	NSString *_path;
+	NSString *__weak _path;
 	NSDictionaryController *_licenceDictionaryController;
 	NSInteger _licenceType;
 	
@@ -19,7 +19,7 @@
 	IBOutlet NSMenu *userLicenceTypeMenu;
 }
 
-@property (readonly) NSString *path;
+@property (weak, readonly) NSString *path;
 @property NSInteger licenceType;
 
 

@@ -60,7 +60,7 @@ static MGSLanguagePluginController *mgs_sharedController = nil;
 {
 	@synchronized(self) {
 		if (nil == mgs_sharedController) {
-			[[self alloc] init];  // assignment occurs below
+			(void)[[self alloc] init];  // assignment occurs below
 		}
 	}
 	return mgs_sharedController;

@@ -40,12 +40,6 @@
 /*"	Release all the objects held by self, then call superclass.
  "*/
 
-- (void) dealloc
-{
-	[placard release];
-	[_leftPlacard release];
-	[super dealloc];
-}
 
 /*"	Set the side (!{PlacardLeft} or !{PlacardRight}) that the placard will appear on.
  "*/
@@ -60,11 +54,9 @@
 
 - (void) setPlacard:(NSView *)inView
 {
-	[inView retain];
 	if (nil != placard)
 	{
 		[placard removeFromSuperview];
-		[placard release];
 	}
 	placard = inView;
 	[self addSubview:placard];
@@ -73,11 +65,9 @@
 
 - (void) setLeftPlacard:(NSView *)inView
 {
-	[inView retain];
 	if (nil != _leftPlacard)
 	{
 		[_leftPlacard removeFromSuperview];
-		[_leftPlacard release];
 	}
 	_leftPlacard = inView;
 	[self addSubview:_leftPlacard];

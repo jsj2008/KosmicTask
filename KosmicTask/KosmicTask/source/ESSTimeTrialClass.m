@@ -48,14 +48,12 @@ static ESSTimeTrialClass *myClass = nil;
 
 - (void)setEndDate:(NSDate *)date
 {
-	[endDate release];
-	endDate = [date retain];
+	endDate = date;
 }
 
 - (void)setEndMessage:(NSString *)aString
 {
 	aString = [aString copy];
-	[endMessage release];
 	endMessage = aString;
 }
 
@@ -69,7 +67,7 @@ static ESSTimeTrialClass *myClass = nil;
 	{
 		if (!timerIsRunning)
 		{
-			timer = [[NSTimer scheduledTimerWithTimeInterval:[endDate timeIntervalSinceNow] target:self selector:@selector(quit:) userInfo:nil repeats:NO] retain];
+			timer = [NSTimer scheduledTimerWithTimeInterval:[endDate timeIntervalSinceNow] target:self selector:@selector(quit:) userInfo:nil repeats:NO];
 			timerIsRunning = YES;
 		}
 	}
@@ -80,7 +78,6 @@ static ESSTimeTrialClass *myClass = nil;
 	if (timerIsRunning)
 	{
 		[timer invalidate];
-		[timer release];
 		timer = nil;
 		timerIsRunning = NO;
 	}
@@ -118,14 +115,10 @@ static ESSTimeTrialClass *myClass = nil;
 - (void)dealloc
 {
 	//NSLog(@"aha");
-	[endMessage release];
-	[endDate release];
 	if (timerIsRunning)
 	{
 		[timer invalidate];
-		[timer release];
 	}
-	[super dealloc];
 }
 
 #endif

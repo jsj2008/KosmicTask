@@ -134,11 +134,12 @@
 				suffix = NSLocalizedString(@" First Result File", @"Quick look menu result suffix - first result file");
 				break;
 				
-			case 1:;
+			case 1: {;
 				id browserImage = [[self delegate] imageBrowser:self itemAtIndex:[indexSet firstIndex]];
 				suffix = [NSString stringWithFormat:NSLocalizedString(@" \"%@\"", @"Quick look menu result suffix - named result"), [browserImage imageTitle]];
 				break;
 				
+			}
 			default:
 				suffix = [NSString stringWithFormat:NSLocalizedString(@" %i Result Files", @"Quick look menu result suffix - n results"), [indexSet count]];
 				break;
@@ -168,11 +169,12 @@
 				suffix = NSLocalizedString(@" Result Files As...", @"Save menu item suffix - save results");
 				break;
 				
-			case 1:;
+			case 1: {;
 				id browserImage = [[self delegate] imageBrowser:self itemAtIndex:[indexSet firstIndex]];
 				suffix = [NSString stringWithFormat:NSLocalizedString(@" \"%@\" As...", @"Save result item suffix - named result"), [browserImage imageTitle]];
 				break;
 				
+			}
 			default:
 				suffix = [NSString stringWithFormat:NSLocalizedString(@" %i Result Files As...", @"save result menu item suffix - n items"), [indexSet count]];
 				break;

@@ -11,8 +11,8 @@
 
 @interface MGSOutputRequestView : NSView {
 	@private
-	id delegate;
+	__weak id delegate;
 }
 
-@property (assign) id <MGSViewDelegateProtocol> delegate;
+@property (weak) id <MGSViewDelegateProtocol> delegate;
 @end

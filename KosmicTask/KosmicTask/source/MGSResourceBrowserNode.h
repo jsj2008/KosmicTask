@@ -29,6 +29,6 @@
 
 @property (strong) NSImage *image;
 @property (strong) NSImage *statusImage;
-@property NSInteger counter;
+@property (nonatomic) NSInteger counter;
 @property BOOL hasCount;
 @end

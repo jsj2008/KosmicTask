@@ -34,7 +34,6 @@
 		iHeaderCell = [[iTableColumnHeaderCell alloc] 
 					   initTextCell:[[col headerCell] stringValue]];
 		[col setHeaderCell:iHeaderCell];
-		[iHeaderCell release];
 	}
 }
 

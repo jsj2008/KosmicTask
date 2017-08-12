@@ -920,7 +920,6 @@
 		AB9D8FCC0DAE1CDF00D8443D /* NSTextView_Mugginsoft.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9D8FCB0DAE1CDF00D8443D /* NSTextView_Mugginsoft.m */; };
 		AB9D90040DAE2C7E00D8443D /* UKFileWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9D8FFC0DAE2C7E00D8443D /* UKFileWatcher.m */; };
 		AB9D90050DAE2C7E00D8443D /* UKFNSubscribeFileWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9D8FFE0DAE2C7E00D8443D /* UKFNSubscribeFileWatcher.m */; };
-		AB9D90060DAE2C7E00D8443D /* UKKQueue Readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = AB9D8FFF0DAE2C7E00D8443D /* UKKQueue Readme.txt */; };
 		AB9D90070DAE2C7E00D8443D /* UKKQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9D90010DAE2C7E00D8443D /* UKKQueue.m */; };
 		AB9D90080DAE2C7E00D8443D /* UKMainThreadProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9D90030DAE2C7E00D8443D /* UKMainThreadProxy.m */; };
 		AB9DC2990DE5BF3600B85F5E /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB9DC2980DE5BF3600B85F5E /* ScriptingBridge.framework */; };
@@ -2650,13 +2649,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = AB9E8FD30DE1CA0C00501378;
 			remoteInfo = "Export Plugin RTF";
-		};
-		ABA1C0EE161442A200C8723F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB5C65DB128963EC00526B27 /* Fragaria.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = ABCA4DAF16137FC000E4849B;
-			remoteInfo = Fragaria;
 		};
 		ABA1EFA6120D78250079E65B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -4550,15 +4542,15 @@
 		AB9D5EA90DD109AB006FD249 /* MGSGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSGradientView.m; sourceTree = "<group>"; };
 		AB9D8FCA0DAE1CDF00D8443D /* NSTextView_Mugginsoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTextView_Mugginsoft.h; sourceTree = "<group>"; };
 		AB9D8FCB0DAE1CDF00D8443D /* NSTextView_Mugginsoft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTextView_Mugginsoft.m; sourceTree = "<group>"; };
-		AB9D8FFB0DAE2C7E00D8443D /* UKFileWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKFileWatcher.h; sourceTree = "<group>"; };
-		AB9D8FFC0DAE2C7E00D8443D /* UKFileWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKFileWatcher.m; sourceTree = "<group>"; };
-		AB9D8FFD0DAE2C7E00D8443D /* UKFNSubscribeFileWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKFNSubscribeFileWatcher.h; sourceTree = "<group>"; };
-		AB9D8FFE0DAE2C7E00D8443D /* UKFNSubscribeFileWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKFNSubscribeFileWatcher.m; sourceTree = "<group>"; };
-		AB9D8FFF0DAE2C7E00D8443D /* UKKQueue Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "UKKQueue Readme.txt"; sourceTree = "<group>"; };
-		AB9D90000DAE2C7E00D8443D /* UKKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKKQueue.h; sourceTree = "<group>"; };
-		AB9D90010DAE2C7E00D8443D /* UKKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKKQueue.m; sourceTree = "<group>"; };
-		AB9D90020DAE2C7E00D8443D /* UKMainThreadProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKMainThreadProxy.h; sourceTree = "<group>"; };
-		AB9D90030DAE2C7E00D8443D /* UKMainThreadProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKMainThreadProxy.m; sourceTree = "<group>"; };
+		AB9D8FFB0DAE2C7E00D8443D /* UKFileWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UKFileWatcher.h; path = ../../../UKKQueue/UKFileWatcher.h; sourceTree = SOURCE_ROOT; };
+		AB9D8FFC0DAE2C7E00D8443D /* UKFileWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UKFileWatcher.m; path = ../../../UKKQueue/UKFileWatcher.m; sourceTree = SOURCE_ROOT; };
+		AB9D8FFD0DAE2C7E00D8443D /* UKFNSubscribeFileWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UKFNSubscribeFileWatcher.h; path = ../../../UKKQueue/UKFNSubscribeFileWatcher.h; sourceTree = SOURCE_ROOT; };
+		AB9D8FFE0DAE2C7E00D8443D /* UKFNSubscribeFileWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UKFNSubscribeFileWatcher.m; path = ../../../UKKQueue/UKFNSubscribeFileWatcher.m; sourceTree = SOURCE_ROOT; };
+		AB9D8FFF0DAE2C7E00D8443D /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Readme.md; path = ../../../UKKQueue/Readme.md; sourceTree = "<group>"; };
+		AB9D90000DAE2C7E00D8443D /* UKKQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UKKQueue.h; path = ../../../UKKQueue/UKKQueue.h; sourceTree = SOURCE_ROOT; };
+		AB9D90010DAE2C7E00D8443D /* UKKQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UKKQueue.m; path = ../../../UKKQueue/UKKQueue.m; sourceTree = SOURCE_ROOT; };
+		AB9D90020DAE2C7E00D8443D /* UKMainThreadProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UKMainThreadProxy.h; path = ../../../UKKQueue/UKMainThreadProxy.h; sourceTree = SOURCE_ROOT; };
+		AB9D90030DAE2C7E00D8443D /* UKMainThreadProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UKMainThreadProxy.m; path = ../../../UKKQueue/UKMainThreadProxy.m; sourceTree = SOURCE_ROOT; };
 		AB9DC2980DE5BF3600B85F5E /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = /System/Library/Frameworks/ScriptingBridge.framework; sourceTree = "<absolute>"; };
 		AB9DC3200DE5CA3200B85F5E /* TextEdit.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = TextEdit.app; path = /Applications/TextEdit.app; sourceTree = "<absolute>"; };
 		AB9DC38A0DE5CC7600B85F5E /* MGSMailSendPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSMailSendPlugin.h; sourceTree = "<group>"; };
@@ -6137,7 +6129,7 @@
 				AB9D8FFC0DAE2C7E00D8443D /* UKFileWatcher.m */,
 				AB9D8FFD0DAE2C7E00D8443D /* UKFNSubscribeFileWatcher.h */,
 				AB9D8FFE0DAE2C7E00D8443D /* UKFNSubscribeFileWatcher.m */,
-				AB9D8FFF0DAE2C7E00D8443D /* UKKQueue Readme.txt */,
+				AB9D8FFF0DAE2C7E00D8443D /* Readme.md */,
 				AB9D90000DAE2C7E00D8443D /* UKKQueue.h */,
 				AB9D90010DAE2C7E00D8443D /* UKKQueue.m */,
 				AB9D90020DAE2C7E00D8443D /* UKMainThreadProxy.h */,
@@ -7407,8 +7399,7 @@
 			isa = PBXGroup;
 			children = (
 				AB3F662D130C845F00342F11 /* Fragaria Doc.app */,
-				AB3F662F130C845F00342F11 /* Fragaria GC.app */,
-				ABA1C0EF161442A200C8723F /* Fragaria.app */,
+				AB3F662F130C845F00342F11 /* Fragaria.app */,
 				AB3F6631130C845F00342F11 /* MGSFragaria.framework */,
 			);
 			name = Products;
@@ -10930,7 +10921,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "KosmicTask" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -11257,10 +11248,10 @@
 			remoteRef = AB3F662C130C845F00342F11 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AB3F662F130C845F00342F11 /* Fragaria GC.app */ = {
+		AB3F662F130C845F00342F11 /* Fragaria.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = "Fragaria GC.app";
+			path = Fragaria.app;
 			remoteRef = AB3F662E130C845F00342F11 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -11409,13 +11400,6 @@
 			fileType = wrapper.cfbundle;
 			path = KosmicTask.qlgenerator;
 			remoteRef = AB92318C11A695E70093EDE3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		ABA1C0EF161442A200C8723F /* Fragaria.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = Fragaria.app;
-			remoteRef = ABA1C0EE161442A200C8723F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ABADD7EE13E5BD040033E038 /* FeedbackReporter.framework */ = {
@@ -11575,7 +11559,6 @@
 				ABB978F40DA953460092680D /* HomeGrey.icns in Resources */,
 				ABFF56C80DA95EC700762E71 /* DisconnectServer.xib in Resources */,
 				ABA8DE140DAA4D7B00AB61FB /* com.mugginsoft.kosmictasklaunchd.plist in Resources */,
-				AB9D90060DAE2C7E00D8443D /* UKKQueue Readme.txt in Resources */,
 				ABA031540DC474E500EC69BD /* ConnectingWindow.xib in Resources */,
 				ABFBC56C0DCA7CAE000BD40E /* GoDownTemplate.tif in Resources */,
 				ABFBC56D0DCA7CAE000BD40E /* GoUpTemplate.tif in Resources */,
@@ -14599,10 +14582,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"/Users/jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/static\\ libraries",
 				);
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = MGSKosmicTask;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -14622,10 +14605,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					"/Users/jonathan/Documents/Computing/source/KosmicTask/KosmicTask/KosmicTask/static\\ libraries",
 				);
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = MGSKosmicTask;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -15073,8 +15056,6 @@
 				DYLIB_CURRENT_VERSION = 70;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "MGSKosmicTaskRunner-Info.plist";
@@ -15100,8 +15081,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "MGSKosmicTaskRunner-Info.plist";
@@ -15114,7 +15093,6 @@
 					AppKit,
 				);
 				PRODUCT_NAME = MGSKosmicTaskRunner;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -16979,8 +16957,6 @@
 				DYLIB_CURRENT_VERSION = 70;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
@@ -17000,15 +16976,12 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 70;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_OBJC_GC = supported;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = "NDScript-Info.plist";
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = ../../../Frameworks;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = NDScript;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -17480,6 +17453,7 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_RESOURCE_RULES_PATH = ./kosmictask_code_signing_rules.plist;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -17512,6 +17486,7 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_RESOURCE_RULES_PATH = ./kosmictask_code_signing_rules.plist;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -17547,7 +17522,6 @@
 			baseConfigurationReference = AB4F92851039AD9F005EF329 /* beta-expiring.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -17580,6 +17554,7 @@
 				);
 				IBC_WARNINGS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-D_NO_MGS_DEBUG",
 					"-D_NO_MGS_LOG_FINALIZE",
@@ -17595,6 +17570,7 @@
 				SKIP_INSTALL = NO;
 				STRIP_INSTALLED_PRODUCT = NO;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/** \"$(SRCROOT)/../static\\ libraries/include/** $(SRCROOT)/../../../CocoaAsyncSocket/RunLoop";
+				VALID_ARCHS = x86_64;
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"-Wformat",
@@ -17610,7 +17586,6 @@
 			baseConfigurationReference = AB4F92621039AD9A005EF329 /* deployment.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -17651,6 +17626,7 @@
 				SKIP_INSTALL = NO;
 				STRIPFLAGS = "-x";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../GRMustache/src/classes\"/** \"$(SRCROOT)/../static\\ libraries/include/** $(SRCROOT)/../../../CocoaAsyncSocket/RunLoop";
+				VALID_ARCHS = x86_64;
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"-Wformat",

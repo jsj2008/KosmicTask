@@ -25,15 +25,15 @@
 	NSInteger _state;
 }
 
-@property (assign) NSImage *onStateImage;
-@property (assign) NSImage *onStateAltImage;
-@property (assign) NSImage *onStateDisabledImage;
-@property (assign) NSImage *offStateImage;
-@property (assign) NSImage *offStateAltImage;
-@property (assign) NSImage *offStateDisabledImage;
-@property (assign) NSImage *mixedStateImage;
-@property (assign) NSImage *mixedStateAltImage;
-@property (assign) NSImage *mixedStateDisabledImage;
+@property (strong) NSImage *onStateImage;
+@property (strong) NSImage *onStateAltImage;
+@property (strong) NSImage *onStateDisabledImage;
+@property (strong) NSImage *offStateImage;
+@property (strong) NSImage *offStateAltImage;
+@property (strong) NSImage *offStateDisabledImage;
+@property (strong) NSImage *mixedStateImage;
+@property (strong) NSImage *mixedStateAltImage;
+@property (strong) NSImage *mixedStateDisabledImage;
 
 @property NSInteger state;
 

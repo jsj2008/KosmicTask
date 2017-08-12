@@ -1479,7 +1479,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 		
 		switch (_runMode) {
 				
-			case kMGSMotherRunModeConfigure:;
+			case kMGSMotherRunModeConfigure: {;
 				gradient = _centreGradient;
 				glossyColor = [self alphaColor:_centreColorGradientStart];
 				
@@ -1528,6 +1528,7 @@ NSPoint MGSMakePointWithPolarOffset(NSPoint pt0, CGFloat radius, CGFloat radians
 				
 			break;
 			
+			}
 			default:
 				pathDefined = NO;
 				break;

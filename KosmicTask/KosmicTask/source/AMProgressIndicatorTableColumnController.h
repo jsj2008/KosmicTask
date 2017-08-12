@@ -11,11 +11,11 @@
 // making this a subclass of NSTableColumn seemed to muck up
 // dragging of table columns
 @interface AMProgressIndicatorTableColumnController : NSObject {
-	NSTableColumn *tableColumn;
+	NSTableColumn *__weak tableColumn;
 	NSTimer *heartbeatTimer;
 }
 
-@property (readonly) NSTableColumn *tableColumn;
+@property (weak, readonly) NSTableColumn *tableColumn;
 - (id)initWithTableColumn:(NSTableColumn *)column;
 
 - (void)startAnimation;

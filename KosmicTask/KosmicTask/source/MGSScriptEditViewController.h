@@ -84,7 +84,7 @@ extern NSString * const MGSIgnoreBuildError;
 	BOOL requestExecuteOnSuccessfulBuild;
 	
 	id _osaDict;
-	NSWindow *_pendingWindow;
+	NSWindow *__weak _pendingWindow;
 	MGSBuildTaskSheetController *_buildTaskSheetController;
 	NSString *_buildConsoleResult;
 	NSDictionary *consoleAttributes;
@@ -111,16 +111,16 @@ extern NSString * const MGSIgnoreBuildError;
 - (NSTextView *)scriptTextView;
 
 
-@property(assign) MGSTaskSpecifier *taskSpec;
+@property(strong) MGSTaskSpecifier *taskSpec;
 
-@property NSWindow *pendingWindow;
+@property (weak) NSWindow *pendingWindow;
 @property (copy) NSString *buildConsoleResult;
 @property (readonly) MGSScriptViewController *scriptViewController;
 @property (readonly) NSInteger buildStatusFlags;
 @property NSInteger buildResultIndex;
 @property (copy) NSString *buildSheetMessage;
 @property (copy) NSString *buildStderrResult;
-@property (assign) NSString *buildResult;
+@property (strong) NSString *buildResult;
 @property (copy, readonly) NSString *buildStatus;
 @property (readonly) BOOL languageRequiresBuild;
 @property (readonly) BOOL languageSupportsBuild;

@@ -64,8 +64,7 @@ static NSString * const FVColorNameUpdateNotification = @"FVColorNameUpdateNotif
 	
     id target = [self target];
     SEL action = [self action];
-    [self release];
-    self = [[FVColorMenuView menuView] retain];
+    self = [FVColorMenuView menuView];
     [self setAction:action];
     [self setTarget:target];
     return self;
@@ -106,7 +105,6 @@ static NSString * const FVColorNameUpdateNotification = @"FVColorNameUpdateNotif
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 // notification posted in response to a mouseover so we can update the label name
@@ -161,10 +159,9 @@ static NSString * const FVColorNameUpdateNotification = @"FVColorNameUpdateNotif
         NSUInteger i = [objects count];
         while (i--) {
             if ([objects objectAtIndex:i] != NSApp)
-                menuView = [[[objects objectAtIndex:i] retain] autorelease];
+                menuView = [objects objectAtIndex:i];
         }
     }
-    [nib release];
     return menuView;
 }
 
@@ -221,7 +218,6 @@ static NSRect __FVSquareRectCenteredInRect(const NSRect iconRect)
         [labelShadow setShadowBlurRadius:2.0f];
         [labelShadow set];
         [FVFinderLabel drawFinderLabel:tag inRect:interiorFrame roundEnds:NO];
-        [labelShadow release];
     }
     
     [NSGraphicsContext restoreGraphicsState];
@@ -253,7 +249,6 @@ static NSRect __FVSquareRectCenteredInRect(const NSRect iconRect)
             NSRect cellFrame = [self cellFrameAtRow:r column:c];
             NSTrackingArea *area = [[NSTrackingArea alloc] initWithRect:cellFrame options:options owner:self userInfo:nil];
             [self addTrackingArea:area];
-            [area release];
         }
     }
 }

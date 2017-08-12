@@ -83,7 +83,7 @@ typedef NSInteger MGSClientActivityFlags;
 
 @interface MGSNetClient : NSObject 
 	<MGSNetSocketDelegate, MGSNetRequestOwner, NSNetServiceDelegate> {
-	NSNetService *_netService;						// host service - valid for Bonjour discovered clients only
+	NSNetService *__weak _netService;						// host service - valid for Bonjour discovered clients only
 	BOOL _visible;
 	NSMutableArray *_pendingRequests;						// requests waiting to be sent
 	NSMutableArray *_executingRequests;				// running request threads
@@ -115,7 +115,7 @@ typedef NSInteger MGSClientActivityFlags;
 	NSUInteger _initialRequestRetryCount;	// initial request retry count
 	BOOL _validatedConnection;			// connection has a valid licence
 	NSTimeInterval _bonjourResolveTimeout;
-	id _delegate;
+	id __unsafe_unretained _delegate;
     NSString *_UUID;
 	NSOperationQueue *_operationQueue;
     MGSClientActivityFlags _activityFlags;
@@ -159,17 +159,17 @@ typedef NSInteger MGSClientActivityFlags;
 
 @property (copy) NSString *serviceShortName;
 @property (copy) NSString *serviceName;
-@property (assign) NSImage *hostIcon;
+@property (strong) NSImage *hostIcon;
 @property MGSHostStatus hostStatus;
 @property MGSClientActivityFlags activityFlags;
 @property (readonly, copy) NSString *UUID;
-@property (readonly) NSNetService *netService;
+@property (weak, readonly) NSNetService *netService;
 @property BOOL visible;
 @property BOOL sendExecuteValidation;
 @property MGSHostType hostType;
-@property (assign) NSImage *hostImage;
-@property (assign) NSString *hostUserName;
-@property id delegate;
+@property (strong) NSImage *hostImage;
+@property (strong) NSString *hostUserName;
+@property (unsafe_unretained) id delegate;
 @property BOOL useSSL;
 @property (copy) NSDictionary *authenticationDictionary;
 @property BOOL hostViaBonjour;

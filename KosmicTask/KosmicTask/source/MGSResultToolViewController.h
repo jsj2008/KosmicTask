@@ -13,10 +13,10 @@
 
 @interface MGSResultToolViewController : MGSToolViewController {
 	IBOutlet NSSegmentedControl *segmentedButtons;
-	IBOutlet MGSPopupButton *actionPopupButton;
+	IBOutlet MGSPopupButton *__unsafe_unretained actionPopupButton;
 }
 
-@property (readonly) MGSPopupButton *actionPopupButton;
+@property (unsafe_unretained, readonly) MGSPopupButton *actionPopupButton;
 
 - (IBAction)segControlClicked:(id)sender;
 - (void)segmentClick:(NSInteger)selectedSegment;

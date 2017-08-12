@@ -86,7 +86,7 @@
 {
 	#pragma unused(sender)
 	
-	[[NSGarbageCollector defaultCollector] collectExhaustively];
+	//[[NSGarbageCollector defaultCollector] collectExhaustively];
 }
 
 @end

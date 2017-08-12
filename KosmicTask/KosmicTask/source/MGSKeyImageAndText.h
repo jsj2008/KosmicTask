@@ -10,9 +10,9 @@
 #import "MGSImageAndText.h"
 
 @interface MGSKeyImageAndText : MGSImageAndText {
-	id _key;
+	id __unsafe_unretained _key;
 }
 
-@property id key;
+@property (unsafe_unretained) id key;
 
 @end

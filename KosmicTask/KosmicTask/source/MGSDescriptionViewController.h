@@ -31,12 +31,12 @@
 	MGSParameterMode _mode;
 	
 	//NSRect _initialViewFrame;
-	IBOutlet id _delegate;
+	IBOutlet id __unsafe_unretained _delegate;
 	BOOL _layoutHasOccurred;
 }
 
 @property (readonly) MGSParameterMode mode;
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 
 -(id)initWithMode:(MGSParameterMode)mode;
 - (IBAction)disclosureButtonClick:(id)sender;

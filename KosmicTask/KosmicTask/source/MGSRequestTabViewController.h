@@ -28,7 +28,7 @@ typedef NSInteger MGSActionTabSelected;
 @class MGSTaskSpecifier;
 
 @interface MGSRequestTabViewController : NSViewController {
-	id _delegate;
+	id __unsafe_unretained _delegate;
 	IBOutlet    NSTabView           *tabView;
     IBOutlet    NSTextField         *tabField;
     IBOutlet    NSDrawer            *drawer;
@@ -63,7 +63,7 @@ typedef NSInteger MGSActionTabSelected;
 	
 }
 
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 @property CGFloat minViewHeight;
 
 - (MGSTaskSpecifier *)actionSpecifierForSelectedTab;

@@ -27,7 +27,7 @@
 		*negRep = [[[self representations] objectAtIndex:0] negativeImageRep];
 		
 	[newImage addRepresentation:negRep];
-	return [newImage autorelease];
+	return newImage;
 	}
 
 @end
@@ -39,16 +39,16 @@
 	switch ( [self samplesPerPixel])
 		{
 		case 4: //RGBA
-			return [[[self copy] invertRGBA] autorelease];
+			return [[self copy] invertRGBA];
 			
 		case 3: 	// RGB
-			return [[[self copy] invertRGB] autorelease];
+			return [[self copy] invertRGB];
 			
 		case 2: // grey scale with alpha
-			return [[[self copy] invertGreyAlpha] autorelease];
+			return [[self copy] invertGreyAlpha];
 			
 		case 1:  // grey scale
-		  return [[[self copy] invertGrey] autorelease];
+		  return [[self copy] invertGrey];
 			
 		default: 
 			return nil;		

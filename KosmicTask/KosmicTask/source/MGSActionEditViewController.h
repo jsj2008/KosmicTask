@@ -30,7 +30,7 @@
 	BOOL _nibLoaded;
 }
 
-@property (assign) MGSTaskSpecifier *action;
+@property (strong) MGSTaskSpecifier *action;
 
 - (BOOL)commitPendingEdits;
 - (void)dispose;

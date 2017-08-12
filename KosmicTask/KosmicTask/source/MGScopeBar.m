@@ -96,12 +96,7 @@
 		[_accessoryView removeFromSuperview];
 		_accessoryView = nil; // weak ref
 	}
-	[_separatorPositions release];
-	[_groups release];
-	[_identifiers release];
-	[_selectedItems release];
 	
-	[super dealloc];
 }
 
 
@@ -121,13 +116,9 @@
 	NSArray *subviews = [[self subviews] copy];	// MGS - crash fixer
 	[subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
 	
-	[_separatorPositions release];
 	_separatorPositions = nil;
-	[_groups release];
 	_groups = nil;
-	[_identifiers release];
 	_identifiers = nil;
-	[_selectedItems release];
 	_selectedItems = nil;
 	_firstCollapsedGroup = NSNotFound;
 	_lastWidth = NSNotFound;
@@ -182,7 +173,6 @@
 					ctrlRect.size = [labelField frame].size;
 					[labelField setFrame:ctrlRect];
 					[self addSubview:labelField];
-					[labelField release];
 					
 					xCoord += ctrlRect.size.width + SCOPE_BAR_ITEM_SPACING;
 					
@@ -722,7 +712,7 @@ check_proceed:
 	
 	[self setControl:button forIdentifier:identifier inGroup:groupNumber];
 	
-	return [button autorelease];
+	return button;
 }
 
 
@@ -737,7 +727,7 @@ check_proceed:
 	
 	[self setControl:menuItem forIdentifier:identifier inGroup:groupNumber];
 	
-	return [menuItem autorelease];
+	return menuItem;
 }
 
 
@@ -752,12 +742,10 @@ check_proceed:
 	if (multiSelect) {
 		MGRecessedPopUpButtonCell *cell = [[MGRecessedPopUpButtonCell alloc] initTextCell:@"" pullsDown:NO];
 		[popup setCell:cell];
-		[cell release];
 		
 		[[popup cell] setUsesItemFromMenu:NO];
 		NSMenuItem *titleItem = [[NSMenuItem alloc] init];
 		[[popup cell] setMenuItem:titleItem];
-		[titleItem release];
 	}
 	
 	// Configure appearance and behaviour.
@@ -792,7 +780,7 @@ check_proceed:
 	popFrame.origin.y = ceilf(([self frame].size.height - popFrame.size.height) / 2.0f);
 	[popup setFrame:popFrame];
 	
-	return [popup autorelease];
+	return popup;
 }
 
 
@@ -884,8 +872,8 @@ check_proceed:
 	#pragma unused(rect)
 	
     // Draw gradient background.
-	NSGradient *gradient = [[[NSGradient alloc] initWithStartingColor:SCOPE_BAR_START_COLOR_GRAY 
-														  endingColor:SCOPE_BAR_END_COLOR_GRAY] autorelease];
+	NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:SCOPE_BAR_START_COLOR_GRAY 
+														  endingColor:SCOPE_BAR_END_COLOR_GRAY];
 	[gradient drawInRect:[self bounds] angle:90];
 	
 	// Draw border
@@ -966,7 +954,6 @@ check_proceed:
 						informDelegate = NO;
 					}
 				}
-				[groupSelections release];	
 			}
 			
 			// Change selected state of this item.
@@ -1021,7 +1008,7 @@ check_proceed:
 
 - (NSArray *)selectedItems
 {
-	return [[_selectedItems copy] autorelease];
+	return [_selectedItems copy];
 }
 
 

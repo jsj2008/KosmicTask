@@ -31,19 +31,19 @@
 	IBOutlet MGScopeBar *scopeBar;
 	IBOutlet NSView *accessoryView;
 	NSMutableArray *groups;
-	IBOutlet id _delegate;
+	IBOutlet id __unsafe_unretained _delegate;
 	NSInteger _searchTarget;
 	NSInteger _searchAttribute;
-	NSString *_searchTargetIdentifier;
+	NSString *__weak _searchTargetIdentifier;
 }
 
 - (void)setNetClient:(MGSNetClient * )netClient;
 
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 
-@property (retain) NSMutableArray *groups;
+@property (strong) NSMutableArray *groups;
 @property (readonly) NSInteger searchTarget;
 @property (readonly) NSInteger searchAttribute;
-@property (readonly) NSString *searchTargetIdentifier;
+@property (weak, readonly) NSString *searchTargetIdentifier;
 
 @end

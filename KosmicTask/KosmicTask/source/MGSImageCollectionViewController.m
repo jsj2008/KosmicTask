@@ -106,11 +106,6 @@ const char MGSPluginSelectionIndexContext;
 // -------------------------------------------------------------------------------
 //	dealloc:
 // -------------------------------------------------------------------------------
-- (void)dealloc
-{
-	[backgroundGradient release];
-	[super dealloc];
-}
 
 @end
 
@@ -129,7 +124,7 @@ const char MGSPluginSelectionIndexContext;
 -(void)awakeFromNib
 {
 	// save this for later when toggling between alternate colors
-	savedAlternateColors = [[collectionView backgroundColors] retain];
+	savedAlternateColors = [collectionView backgroundColors];
 	_postSelectionChangeNotification = NO;
 	
 	[self setSortingMode:0];		// icon collection in ascending sort order
@@ -239,7 +234,6 @@ const char MGSPluginSelectionIndexContext;
 	*/
 	
 	[self setImages:tempArray];
-	[tempArray release];
 }
 
 /*
@@ -327,11 +321,6 @@ const char MGSPluginSelectionIndexContext;
 // -------------------------------------------------------------------------------
 //	dealloc:
 // -------------------------------------------------------------------------------
-- (void)dealloc
-{
-	[savedAlternateColors release];
-	[super dealloc];
-}
 
 // -------------------------------------------------------------------------------
 //	setAlternateColors
@@ -355,10 +344,10 @@ const char MGSPluginSelectionIndexContext;
 - (void)setSortingMode:(NSUInteger)newMode
 {
 	sortingMode = newMode;
-	NSSortDescriptor *sort = [[[NSSortDescriptor alloc]
+	NSSortDescriptor *sort = [[NSSortDescriptor alloc]
 								initWithKey:MGSImageCollectionKeyName
 								ascending:(sortingMode == 0)
-								selector:@selector(caseInsensitiveCompare:)] autorelease];
+								selector:@selector(caseInsensitiveCompare:)];
 	[arrayController setSortDescriptors:[NSArray arrayWithObject:sort]];
 }
 

@@ -17,12 +17,12 @@ enum {
 
 @interface PlacardScrollView : NSScrollView {
     IBOutlet NSView *placard;
-	IBOutlet NSView *_leftPlacard;
+	IBOutlet NSView *__weak _leftPlacard;
 	int	_side;
 	BOOL _placardVisible;
 }
 
-@property NSView *leftPlacard;
+@property (weak) NSView *leftPlacard;
 @property BOOL placardVisible;
 
 - (void) setPlacard:(NSView *)inView;

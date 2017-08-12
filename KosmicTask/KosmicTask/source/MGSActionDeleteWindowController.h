@@ -19,12 +19,12 @@
 	IBOutlet NSTextField *mainLabel;
 	IBOutlet NSButton *deleteButton;
 	IBOutlet NSButton *cancelButton;
-	id _delegate;
-	NSWindow *_modalForWindow;
+	id __unsafe_unretained _delegate;
+	NSWindow *__weak _modalForWindow;
 }
 
-@property NSWindow *modalForWindow;
-@property id <MGSActionDeleteWindowControllerDelegate> delegate;
+@property (weak) NSWindow *modalForWindow;
+@property (unsafe_unretained) id <MGSActionDeleteWindowControllerDelegate> delegate;
 
 - (void)promptToDeleteAction:(NSString *)actionName onService:(NSString *)serviceName;
 - (IBAction)confirmDelete:(id)sender;

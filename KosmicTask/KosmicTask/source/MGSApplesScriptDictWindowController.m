@@ -13,7 +13,7 @@
 
 - (id)init
 {
-	[super initWithWindowNibName:@"AppleScriptDictWindow"];
+	if (!(self = [super initWithWindowNibName:@"AppleScriptDictWindow"])) return nil;
 	return self;
 }
 

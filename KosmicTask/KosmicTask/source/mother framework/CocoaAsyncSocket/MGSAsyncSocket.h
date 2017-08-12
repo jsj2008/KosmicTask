@@ -14,7 +14,7 @@
 	BOOL writeSuspended;
 }
 
-@property (assign) BOOL disconnectCalled;
+@property (assign, nonatomic) BOOL disconnectCalled;
 
 - (void)doSendBytes;
 - (void)doBytesAvailable;

@@ -33,7 +33,7 @@
     NSColor *_parameterCountLabelColourEnabled;
 }
 
-@property (assign) MGSTaskSpecifier *action;
+@property (strong) MGSTaskSpecifier *action;
 @property BOOL invertedLeftBannerImage;
 
 -(id)initWithMode:(MGSParameterMode)mode ;

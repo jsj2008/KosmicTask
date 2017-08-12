@@ -29,8 +29,8 @@ char MGSScriptTypeContext;
 - (void)addDefaultTemplateVariables:(NSMutableDictionary *)templateVariables;
 - (NSMutableDictionary *)templateTaskInfo;
 
-@property (assign) MGSLanguage *scriptLanguage;
-@property (assign) MGSTemplateObjectRendering templateObjectRendering;
+@property (strong) MGSLanguage *scriptLanguage;
+@property MGSTemplateObjectRendering templateObjectRendering;
 @end
 
 @implementation MGSLanguageCodeDescriptor

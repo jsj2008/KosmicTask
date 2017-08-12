@@ -35,17 +35,17 @@ typedef NSInteger MGSToolbarStyle;
 
 @interface MGSToolbarController : NSObject <NSToolbarDelegate> {
 	IBOutlet NSToolbar *toolbar;
-	IBOutlet NSWindow *window;
+	IBOutlet NSWindow *__weak window;
 	IBOutlet NSView *searchView;
 	IBOutlet NSSearchField *searchField;
 	
-	IBOutlet MGSDisplayToolViewController *displayPanelController;
-	IBOutlet MGSModeToolViewController *modeViewController;
-	IBOutlet MGSActionToolViewController *actionViewController;
-	IBOutlet MGSEditModeToolViewController *editModeViewController;
-	IBOutlet MGSScriptToolViewController *scriptViewController;
-	IBOutlet MGSResultToolViewController *resultViewController;
-	IBOutlet MGSMinimalViewToolViewController *minimalViewController;
+	IBOutlet MGSDisplayToolViewController *__weak displayPanelController;
+	IBOutlet MGSModeToolViewController *__weak modeViewController;
+	IBOutlet MGSActionToolViewController *__weak actionViewController;
+	IBOutlet MGSEditModeToolViewController *__weak editModeViewController;
+	IBOutlet MGSScriptToolViewController *__weak scriptViewController;
+	IBOutlet MGSResultToolViewController *__weak resultViewController;
+	IBOutlet MGSMinimalViewToolViewController *__weak minimalViewController;
 	
 	NSMutableDictionary *toolbarItems; //The dictionary that holds all our "master" copies of the NSToolbarItems
 	
@@ -54,7 +54,7 @@ typedef NSInteger MGSToolbarStyle;
 	MGSToolbarStyle _style;
 	NSString *_identifier;
 	NSArray *_utilisedControllers;
-	MGSNetClient *_netClient;
+	MGSNetClient *__weak _netClient;
 }
 
 - (void)loadNib;
@@ -64,18 +64,18 @@ typedef NSInteger MGSToolbarStyle;
 - (void)discardUnutilisedController:(id *)controller;
 - (IBAction)updateSearchFilter:(id)sender;
 
-@property NSWindow *window;
-@property (assign) MGSTaskSpecifier *actionSpecifier;
+@property (weak) NSWindow *window;
+@property (strong) MGSTaskSpecifier *actionSpecifier;
 @property MGSToolbarStyle style;
 @property (copy) NSString *identifier;
 
-@property (readonly) MGSDisplayToolViewController *displayPanelController;
-@property (readonly) MGSModeToolViewController *modeViewController;
-@property (readonly) MGSActionToolViewController *actionViewController;
-@property (readonly) MGSEditModeToolViewController *editModeViewController;
-@property (readonly) MGSScriptToolViewController *scriptViewController;
-@property (readonly) MGSResultToolViewController *resultViewController;
-@property (readonly) MGSMinimalViewToolViewController *minimalViewController;
-@property MGSNetClient *netClient;
+@property (weak, readonly) MGSDisplayToolViewController *displayPanelController;
+@property (weak, readonly) MGSModeToolViewController *modeViewController;
+@property (weak, readonly) MGSActionToolViewController *actionViewController;
+@property (weak, readonly) MGSEditModeToolViewController *editModeViewController;
+@property (weak, readonly) MGSScriptToolViewController *scriptViewController;
+@property (weak, readonly) MGSResultToolViewController *resultViewController;
+@property (weak, readonly) MGSMinimalViewToolViewController *minimalViewController;
+@property (weak) MGSNetClient *netClient;
 
 @end

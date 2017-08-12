@@ -33,7 +33,7 @@ static int toolbarID = 0;
  */
 - (id)init
 {
-	[super initWithWindowNibName:@"ResultWindow"];
+	if (!(self = [super initWithWindowNibName:@"ResultWindow"])) return nil;
 	return self;
 }
 /* 

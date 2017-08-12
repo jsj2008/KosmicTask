@@ -36,11 +36,11 @@ typedef NSInteger MGSPortMapperProtocol;
 
 @interface MGSPortMapper : NSObject {
 	TCMPortMapping *_mapping;
-	id _delegate;
+	__weak id _delegate;
     MGSPortMapperRouter _routerStatus;
 }
 
-@property id <MGSPortMapperDelegate> delegate;
+@property (weak, nonatomic) id <MGSPortMapperDelegate> delegate;
 @property (readonly) MGSPortMapperRouter routerStatus;
 
 - (id)initWithExternalPort:(int)externalPort listeningPort:(int)listeningPort;

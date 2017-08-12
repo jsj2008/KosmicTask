@@ -52,7 +52,7 @@
 	
 	NSView *_currentSubview;
 	BOOL _detailSegmentHidden;
-	MGSNetClient *_netClient;
+	MGSNetClient *__weak _netClient;
 	NSInteger _detailSegmentToSelectWhenNotHidden;
 	//NSInteger _detailPrevClickedSegment;
 	bool _detailViewVisible;
@@ -65,7 +65,7 @@
 
 @property (readonly) MGSBrowserViewController *browserViewController;
 @property (readonly) MGSScriptViewController *scriptViewController;
-@property MGSNetClient *netClient;
+@property (weak) MGSNetClient *netClient;
 @property (readonly) MGSRequestTabViewController *tabViewController;
 @property (readonly) BOOL netClientIsChanging;
 

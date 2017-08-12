@@ -28,11 +28,11 @@ typedef NSUInteger MGSCodeSegmentIndex;
     BOOL editable;
     BOOL resourceEditable;
     MGSLanguageTemplateResource *languageTemplateResource;
-    MGSScript *script;
+    MGSScript *__weak script;
     BOOL documentEdited;
     MGSCodeSegmentIndex selectedCodeSegmentIndex;
     IBOutlet NSSegmentedControl *codeSegmentedControl;
-    IBOutlet id delegate;
+    IBOutlet id __unsafe_unretained delegate;
     BOOL textViewEditable;
     BOOL textEditable;
     IBOutlet PSMTabBarControl *tabBar;
@@ -40,11 +40,11 @@ typedef NSUInteger MGSCodeSegmentIndex;
 
 @property BOOL editable;
 @property BOOL resourceEditable;
-@property (retain) MGSLanguageTemplateResource *languageTemplateResource;
-@property MGSScript *script;
+@property (strong) MGSLanguageTemplateResource *languageTemplateResource;
+@property (weak) MGSScript *script;
 @property BOOL documentEdited;
 @property MGSCodeSegmentIndex selectedCodeSegmentIndex;
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 
 
 - (NSString *)scriptString;

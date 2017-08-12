@@ -172,7 +172,6 @@ NSString *MGSKosmicTaskAgentName = @"KosmicTaskServer";
 		}
 		@catch (NSException *exception) {
 			MLog(DEBUGLOG, @"Exception launching server with agent path: %@\nLaunch path: %@\n Exception: %@", agentPath, launchPath, exception);
-			[_serverTask release];
 			_serverTask = nil;
 			return NO;
 		}

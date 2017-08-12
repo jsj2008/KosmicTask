@@ -21,13 +21,13 @@
 	MGSTaskSpecifier *_action;
 	BOOL _saveButtonQuits;
 	BOOL _windowHasQuit;
-	id _delegate;
+	id __unsafe_unretained _delegate;
 	BOOL _modalWindowWillCloseOnSave;
 	BOOL _saveCompleted;
 }
 
-@property (assign) MGSTaskSpecifier *action;
-@property id delegate;
+@property (strong) MGSTaskSpecifier *action;
+@property (unsafe_unretained) id delegate;
 @property BOOL modalWindowWillCloseOnSave;
 @property BOOL saveCompleted;
 

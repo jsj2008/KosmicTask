@@ -39,7 +39,7 @@ typedef NSInteger MGSRequestResponsePending;
 - (void)enablePortMapping;
 - (void)request:(NSNotification *)note;
 
-@property (readonly) BOOL portMapperIsWorking;
-@property (readonly) BOOL portCheckerIsWorking;
+@property (readonly, nonatomic) BOOL portMapperIsWorking;
+@property (readonly, nonatomic) BOOL portCheckerIsWorking;
 @property BOOL doPortCheckWhenPortMapperFinishes;
 @end

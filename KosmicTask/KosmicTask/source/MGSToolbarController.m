@@ -128,12 +128,12 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	// therefore, each tool bar needs its own identifier
 	//
 	NSAssert(_identifier, @"toolbar identifier is nil");
-	toolbar=[[[NSToolbar alloc] initWithIdentifier:_identifier] autorelease];
+	toolbar=[[NSToolbar alloc] initWithIdentifier:_identifier];
     [toolbar setShowsBaselineSeparator:YES];
 	[toolbar setSizeMode:NSToolbarSizeModeRegular];
 	
     // Here we create the dictionary to hold all of our "master" NSToolbarItems.
-    toolbarItems=[[NSMutableDictionary dictionary] retain];
+    toolbarItems=[NSMutableDictionary dictionary];
 	
 	//
 	// This implementation is complex and does not make us of the normal target-action pattern.
@@ -288,7 +288,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
 	
     // We create and autorelease a new NSToolbarItem, and then go through the process of setting up its
     // attributes from the master toolbar item matching that identifier in our dictionary of items.
-    NSToolbarItem *newItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+    NSToolbarItem *newItem = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
     NSToolbarItem *item=[toolbarItems objectForKey:itemIdentifier];
     
     [newItem setLabel:[item label]];
@@ -697,7 +697,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
     NSMenuItem *mItem;
 	
     // here we create the NSToolbarItem and setup its attributes in line with the parameters
-    MGSToolbarItem *item = [[[MGSToolbarItem alloc] initWithItemIdentifier:identifier] autorelease];
+    MGSToolbarItem *item = [[MGSToolbarItem alloc] initWithItemIdentifier:identifier];
 	item.delegate = delegate;
 	
 	// label is used for text only menu representation and for overflow menu
@@ -721,7 +721,7 @@ static void addToolbarItem(NSMutableDictionary *theDict,NSString *identifier,NSS
     if (menu!=NULL)
     {
 		// we actually need an NSMenuItem here, so we construct one
-		mItem=[[[NSMenuItem alloc] init] autorelease];
+		mItem=[[NSMenuItem alloc] init];
 		[mItem setSubmenu: menu];
 		[mItem setTitle: [menu title]];
 		[item setMenuFormRepresentation:mItem];

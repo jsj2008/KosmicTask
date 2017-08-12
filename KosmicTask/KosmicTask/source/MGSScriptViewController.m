@@ -263,8 +263,8 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	
 	// observe script properties
 	_taskScript = [_taskSpec script];
-	[_taskScript addObserver:self forKeyPath:@"scriptType" options:0 context:MGSScriptTypeContext];
-	[_taskScript addObserver:self forKeyPath:@"scriptCode.source" options:0 context:MGSScriptSourceContext];
+	[_taskScript addObserver:self forKeyPath:@"scriptType" options:0 context:&MGSScriptTypeContext];
+	[_taskScript addObserver:self forKeyPath:@"scriptCode.source" options:0 context:&MGSScriptSourceContext];
 }
 
 
@@ -282,11 +282,11 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 	#pragma unused(object)
 	#pragma unused(change)
 	
-	if (context == MGSScriptTypeContext) {
+	if (context == &MGSScriptTypeContext) {
 		
 		[self configureEditorForScript];
 				
-	} else if (context == MGSScriptSourceContext) {
+	} else if (context == &MGSScriptSourceContext) {
 		
 		if (!ignoreScriptSourceChange) {
 		
@@ -710,7 +710,7 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 			
 			// retrieve and display source
 		case kMGSMotherRunModeConfigure:
-		case kMGSMotherRunModeAuthenticatedUser:;	
+		case kMGSMotherRunModeAuthenticatedUser: {;	
 			NSTextView *prevTextView = _currentTextView;
 			
 			// select appropriate NSTextView
@@ -741,6 +741,7 @@ NSString *MGSScriptSourceContext = @"MGSScriptSourceContext";
 			
 			break;
 			
+		}
 		default:
 			NSAssert(NO, @"invalid edit mode");
 			break;

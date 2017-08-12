@@ -111,7 +111,7 @@ typedef enum _MGSParameterType {
     BOOL _canIncreaseDisplayIndex;
 }
 
-@property (assign) MGSScriptParameter *scriptParameter;
+@property (strong) MGSScriptParameter *scriptParameter;
 @property NSInteger displayIndex;
 @property MGSParameterType parameterType;
 @property (readonly)MGSParameterMode mode;

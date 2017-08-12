@@ -65,7 +65,6 @@
             NSColor *endColor = [NSColor colorWithDeviceWhite:0.650 alpha:0.5];
             NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:startColor endingColor:endColor];
             [gradient drawInBezierPath:bezier angle:90.0];
-            [gradient release];
         }
         
     } else {
@@ -91,7 +90,6 @@
     if (YES) {
         NSGradient *gradient = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithDeviceWhite:0.85 alpha:1.0] endingColor:[NSColor colorWithDeviceWhite:0.75 alpha:1.0]];
         [gradient drawInRect:gradientRect angle:90.0];
-        [gradient release];
     }
     
     

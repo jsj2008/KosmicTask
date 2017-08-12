@@ -27,7 +27,7 @@ typedef NSInteger MGSResourceBrowserSheetReturnValue;
 	IBOutlet NSButton *okButton;
     IBOutlet NSButton *copyButton;
 	NSString *resourceText;
-    MGSScript *script;
+    MGSScript *__weak script;
 	BOOL resourcesChanged;
 
 }
@@ -35,7 +35,7 @@ typedef NSInteger MGSResourceBrowserSheetReturnValue;
 @property (readonly) MGSResourceBrowserViewController *resourceBrowserViewController;
 @property (readonly, copy) NSString *resourceText;
 @property BOOL resourcesChanged;
-@property (assign) MGSScript *script;
+@property (weak) MGSScript *script;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)copyToPasteboardAction:(id)sender;

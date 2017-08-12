@@ -22,7 +22,7 @@
 	IBOutlet NSView *_infoView;
 	MGSTaskSpecifier *_taskSpec;
 	BOOL _windowHasQuit;
-	id _delegate;
+	id __unsafe_unretained _delegate;
 	BOOL _modalWindowWillCloseOnSave;
 	BOOL _responseReceived;
 	
@@ -30,8 +30,8 @@
     NSSize _minFrameSize;
 }
 
-@property (assign) MGSTaskSpecifier *taskSpecifier;
-@property id delegate;
+@property (strong) MGSTaskSpecifier *taskSpecifier;
+@property (unsafe_unretained) id delegate;
 @property BOOL modalWindowWillCloseOnSave;
 
 + (NSInteger)buildWarningsCheckBoxState;

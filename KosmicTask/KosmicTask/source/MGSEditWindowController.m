@@ -20,6 +20,7 @@
 #import "MGSScriptViewController.h"
 #import "MGSRequestViewController.h"
 #import "MGSOutputRequestViewController.h"
+#import "MGSClientTaskController.h"
 #import "MGSScript.h"
 #import "MGSScriptPlist.h"
 #import "MGSNetClient.h"
@@ -70,8 +71,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 - (void)generateTaskInputsPatternMatchFromRegex;
 - (void)generateTaskInputsPatternRegex;
 
-@property (assign) NSTextCheckingResult *taskInputsPatternMatch;
-@property (assign) NSRegularExpression *taskInputsPatternRegex;
+@property (strong) NSTextCheckingResult *taskInputsPatternMatch;
+@property (strong) NSRegularExpression *taskInputsPatternRegex;
 
 @end
 
@@ -150,7 +151,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	scriptEditViewController.pendingWindow = [self window];	// view will become active in this window when tab selected
 	
 	// observe script compilation status
-	[scriptEditViewController addObserver:self forKeyPath:@"canExecuteScript" options:0 context:MGSScriptCompiledContext];
+	[scriptEditViewController addObserver:self forKeyPath:@"canExecuteScript" options:0 context:&MGSScriptCompiledContext];
 
 	// note that assigning a tabs view does not add the view to the hierarchy until displayed.
 	// so the views window will remain nil.
@@ -332,11 +333,12 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	
 	// update the source
 	switch (textHandlingMode) {
-		case MGS_AV_APPEND_TEXT:;
+		case MGS_AV_APPEND_TEXT: {;
 			NSString *existingSource = [[[_taskSpec script] scriptCode] source];
 			source = [NSString stringWithFormat:@"%@\n%@", existingSource, source];
 			break;
 			
+		}
 		case MGS_AV_REPLACE_TEXT:
 			break;
 			
@@ -949,8 +951,8 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	scriptEditViewController.taskSpec = _taskSpec;
 	
 	// observe changes to the script data
-	[_taskSpec addObserver:self forKeyPath:@"script.modelDataKVCModified" options:0 context:MGSModelChangedContext];
-	[_taskSpec addObserver:self forKeyPath:@"script.name" options:0 context:MGSScriptNameChangedContext];
+	[_taskSpec addObserver:self forKeyPath:@"script.modelDataKVCModified" options:0 context:&MGSModelChangedContext];
+	[_taskSpec addObserver:self forKeyPath:@"script.name" options:0 context:&MGSScriptNameChangedContext];
 	
 	// set net client
 	self.netClient = [_taskSpec netClient];
@@ -2056,12 +2058,12 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	
 	// model changed
-	if (context == MGSModelChangedContext) {
+	if (context == &MGSModelChangedContext) {
 		[[self window] setDocumentEdited:YES];
 	}
 	
 	// script compiled
-	else if (context == MGSScriptCompiledContext) {
+	else if (context == &MGSScriptCompiledContext) {
 		// note on multiple methods named xxxx
 		// see http://www.cocoabuilder.com/archive/message/cocoa/2007/10/5/190367
 		// this warning will appear when a message that is defined in two classes is send to an id.
@@ -2074,7 +2076,7 @@ NSString *MGSScriptNameChangedContext = @"MGSScriptNameChanged";
 	}
 	
 	// script name changed
-	else if (context == MGSScriptNameChangedContext) {
+	else if (context == &MGSScriptNameChangedContext) {
 		[self updateWindowTitle];
 	}
 }

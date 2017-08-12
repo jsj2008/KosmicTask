@@ -21,16 +21,16 @@
 
 @interface MGSHistoryViewController : NSViewController {
 	IBOutlet NSTableView *historyTable;
-	id _delegate;
-	MGSTaskSpecifierManager *_actionHistory;
+	id __unsafe_unretained _delegate;
+	MGSTaskSpecifierManager *__weak _actionHistory;
 	NSInteger _maxHistoryCount;
 	//AMProgressIndicatorTableColumnController *_progressColumnController;
 	MGSTaskSpecifier *_delegatedAction;
 	BOOL _ignoreTableSelectionChange;
 }
 
-@property id delegate;
-@property IBOutlet MGSTaskSpecifierManager *actionHistory;
+@property (unsafe_unretained) id delegate;
+@property (weak) IBOutlet MGSTaskSpecifierManager *actionHistory;
 @property NSInteger maxHistoryCount;
 
 - (void)loadSavedHistory;

@@ -19,8 +19,8 @@
 	MGSClientScriptManager *_trustedScriptManager;	// trusted user script manager
 	MGSScriptAccess _scriptAccess;						// current script access
 	NSInteger _scriptAccessModes;						// supported access modes
-	id _delegate;
-	MGSNetClient *_netClient;
+	id __unsafe_unretained _delegate;
+	MGSNetClient *__weak _netClient;
 	BOOL _localScriptPropertiesLoaded;
 	NSString *_activeScriptUUID;
 	NSString *_activeGroupName;
@@ -28,8 +28,8 @@
 }
 
 @property (readonly) MGSClientScriptManager *scriptManager;	// active script controller
-@property id delegate;
-@property (readonly) MGSNetClient *netClient;
+@property (unsafe_unretained) id delegate;
+@property (weak, readonly) MGSNetClient *netClient;
 @property MGSScriptAccess scriptAccess;
 @property (readonly) NSInteger scriptAccessModes;
 @property BOOL localScriptPropertiesLoaded;

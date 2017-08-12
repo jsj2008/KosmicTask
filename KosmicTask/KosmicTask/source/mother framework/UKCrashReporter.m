@@ -46,28 +46,27 @@ BOOL UKValidateCrashLogFolder(NSString *crashLogsFolder);
 
 void	UKCrashReporterCheckForCrash(NSString *crashedAppName, NSString *appLogFilePath)
 {
-	NSAutoreleasePool*	pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
-	NS_DURING
-		// Try whether the classes we need to talk to the CGI are present:
-		Class			NSMutableURLRequestClass = NSClassFromString( @"NSMutableURLRequest" );
-		Class			NSURLConnectionClass = NSClassFromString( @"NSURLConnection" );
-		if( NSMutableURLRequestClass == Nil || NSURLConnectionClass == Nil )
-		{
-			[pool release];
-			NS_VOIDRETURN;
-		}
-		
-		SInt32	sysvMajor = 0, sysvMinor = 0, sysvBugfix = 0;
-		UKGetSystemVersionComponents( &sysvMajor, &sysvMinor, &sysvBugfix );
-		BOOL	isTenFiveOrBetter = sysvMajor >= 10 && sysvMinor >= 5;
-		BOOL	isTenSixOrBetter = sysvMajor >= 10 && sysvMinor >= 6;
+		NS_DURING
+			// Try whether the classes we need to talk to the CGI are present:
+			Class			NSMutableURLRequestClass = NSClassFromString( @"NSMutableURLRequest" );
+			Class			NSURLConnectionClass = NSClassFromString( @"NSURLConnection" );
+			if( NSMutableURLRequestClass == Nil || NSURLConnectionClass == Nil )
+			{
+				NS_VOIDRETURN;
+			}
+			
+			SInt32	sysvMajor = 0, sysvMinor = 0, sysvBugfix = 0;
+			UKGetSystemVersionComponents( &sysvMajor, &sysvMinor, &sysvBugfix );
+			BOOL	isTenFiveOrBetter = sysvMajor >= 10 && sysvMinor >= 5;
+			BOOL	isTenSixOrBetter = sysvMajor >= 10 && sysvMinor >= 6;
     
-		// Get the crash log file, its last change date and last report date:
-		NSString *		appName = crashedAppName;
-		if (!appName) {
-			appName = [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleExecutable"];
-		}
+			// Get the crash log file, its last change date and last report date:
+			NSString *		appName = crashedAppName;
+			if (!appName) {
+				appName = [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleExecutable"];
+			}
         NSString* crashLogsFolder = nil;
  
         // 10.6 +
@@ -88,56 +87,56 @@ void	UKCrashReporterCheckForCrash(NSString *crashedAppName, NSString *appLogFile
             }
         }
     
-		NSString*		crashLogName = [appName stringByAppendingString: @".crash.log"];
-		NSString*		crashLogPath = nil;
-		if( !isTenFiveOrBetter )
-			crashLogPath = [crashLogsFolder stringByAppendingPathComponent: crashLogName];
-		else
-			crashLogPath = UKCrashReporterFindTenFiveCrashReportPath( appName, crashLogsFolder );
+			NSString*		crashLogName = [appName stringByAppendingString: @".crash.log"];
+			NSString*		crashLogPath = nil;
+			if( !isTenFiveOrBetter )
+				crashLogPath = [crashLogsFolder stringByAppendingPathComponent: crashLogName];
+			else
+				crashLogPath = UKCrashReporterFindTenFiveCrashReportPath( appName, crashLogsFolder );
     
-	NSDictionary*	fileAttrs = [[NSFileManager defaultManager] attributesOfItemAtPath:crashLogPath error:NULL];
-		NSDate*			lastTimeCrashLogged = (fileAttrs == nil) ? nil : [fileAttrs fileModificationDate];
-		NSTimeInterval	lastCrashReportInterval = [[NSUserDefaults standardUserDefaults] floatForKey: @"UKCrashReporterLastCrashReportDate"];
-		NSDate*			lastTimeCrashReported = [NSDate dateWithTimeIntervalSince1970: lastCrashReportInterval];
-		
-		if( lastTimeCrashLogged )	// We have a crash log file and its mod date? Means we crashed sometime in the past.
-		{
-			// If we never before reported a crash or the last report lies before the last crash:
-			if( [lastTimeCrashReported compare: lastTimeCrashLogged] == NSOrderedAscending )
+		NSDictionary*	fileAttrs = [[NSFileManager defaultManager] attributesOfItemAtPath:crashLogPath error:NULL];
+			NSDate*			lastTimeCrashLogged = (fileAttrs == nil) ? nil : [fileAttrs fileModificationDate];
+			NSTimeInterval	lastCrashReportInterval = [[NSUserDefaults standardUserDefaults] floatForKey: @"UKCrashReporterLastCrashReportDate"];
+			NSDate*			lastTimeCrashReported = [NSDate dateWithTimeIntervalSince1970: lastCrashReportInterval];
+			
+			if( lastTimeCrashLogged )	// We have a crash log file and its mod date? Means we crashed sometime in the past.
 			{
-				// Fetch the newest report from the log:
-				NSString*			crashLog = [NSString stringWithContentsOfFile: crashLogPath];
-				NSArray*			separateReports = [crashLog componentsSeparatedByString: @"\n\n**********\n\n"];
-				NSString*			currentReport = [separateReports count] > 0 ? [separateReports objectAtIndex: [separateReports count] -1] : @"*** Couldn't read Report ***";	// 1 since report 0 is empty (file has a delimiter at the top).
-				unsigned			numCores = UKCountCores();
-				NSString*			numCPUsString = (numCores == 1) ? @"" : [NSString stringWithFormat: @"%dx ",numCores];
-				
-				// Create a string containing Mac and CPU info, crash log and prefs:
-				currentReport = [NSString stringWithFormat:
-									@"Model: %@\nCPU Speed: %@%.2f GHz\n%@\n\nPreferences:\n%@",
-									UKMachineName(), numCPUsString, ((float)UKClockSpeed()) / 1000.0f,
-									currentReport,
-									[[NSUserDefaults standardUserDefaults] persistentDomainForName: [[NSBundle mainBundle] bundleIdentifier]]];
-				
-				// Mugginsoft
-				// append application log file
-				if (appLogFilePath) {
-					NSString *appLogText = [NSString stringWithContentsOfFile:appLogFilePath encoding:NSUTF8StringEncoding error:NULL];
-					if (appLogText) {
-						NSString *appendage = [NSString stringWithFormat:@"\n\nApplication Log: %@\n\n %@ \n\n", appLogFilePath, appLogText];
-						currentReport = [currentReport stringByAppendingString:appendage];
+				// If we never before reported a crash or the last report lies before the last crash:
+				if( [lastTimeCrashReported compare: lastTimeCrashLogged] == NSOrderedAscending )
+				{
+					// Fetch the newest report from the log:
+					NSString*			crashLog = [NSString stringWithContentsOfFile: crashLogPath];
+					NSArray*			separateReports = [crashLog componentsSeparatedByString: @"\n\n**********\n\n"];
+					NSString*			currentReport = [separateReports count] > 0 ? [separateReports objectAtIndex: [separateReports count] -1] : @"*** Couldn't read Report ***";	// 1 since report 0 is empty (file has a delimiter at the top).
+					unsigned			numCores = UKCountCores();
+					NSString*			numCPUsString = (numCores == 1) ? @"" : [NSString stringWithFormat: @"%dx ",numCores];
+					
+					// Create a string containing Mac and CPU info, crash log and prefs:
+					currentReport = [NSString stringWithFormat:
+										@"Model: %@\nCPU Speed: %@%.2f GHz\n%@\n\nPreferences:\n%@",
+										UKMachineName(), numCPUsString, ((float)UKClockSpeed()) / 1000.0f,
+										currentReport,
+										[[NSUserDefaults standardUserDefaults] persistentDomainForName: [[NSBundle mainBundle] bundleIdentifier]]];
+					
+					// Mugginsoft
+					// append application log file
+					if (appLogFilePath) {
+						NSString *appLogText = [NSString stringWithContentsOfFile:appLogFilePath encoding:NSUTF8StringEncoding error:NULL];
+						if (appLogText) {
+							NSString *appendage = [NSString stringWithFormat:@"\n\nApplication Log: %@\n\n %@ \n\n", appLogFilePath, appLogText];
+							currentReport = [currentReport stringByAppendingString:appendage];
+						}
 					}
+					
+					// Now show a crash reporter window so the user can edit the info to send:
+					[[UKCrashReporter alloc] initWithLogString: currentReport];
 				}
-				
-				// Now show a crash reporter window so the user can edit the info to send:
-				[[UKCrashReporter alloc] initWithLogString: currentReport];
 			}
-		}
-	NS_HANDLER
-		NSLog(@"Error during check for crash: %@",localException);
-	NS_ENDHANDLER
+		NS_HANDLER
+			NSLog(@"Error during check for crash: %@",localException);
+		NS_ENDHANDLER
 	
-	[pool release];
+	}
 }
 
 /*
@@ -210,7 +209,7 @@ NSString*	gCrashLogString = nil;
 {
 	// In super init the awakeFromNib method gets called, so we can not
 	//	use ivars to transfer the log, and use a global instead:
-	gCrashLogString = [theLog retain];
+	gCrashLogString = theLog;
 	
 	self = [super init];
 	return self;
@@ -230,10 +229,8 @@ NSString*	gCrashLogString = nil;
 
 -(void) dealloc
 {
-	[connection release];
 	connection = nil;
 	
-	[super dealloc];
 }
 
 
@@ -243,9 +240,9 @@ NSString*	gCrashLogString = nil;
 	NSString*			appName = [[NSFileManager defaultManager] displayNameAtPath: [[NSBundle mainBundle] bundlePath]];
 	NSMutableString*	expln = nil;
 	if( gCrashLogString )
-		expln = [[[explanationField stringValue] mutableCopy] autorelease];
+		expln = [[explanationField stringValue] mutableCopy];
 	else
-		expln = [[NSLocalizedStringFromTable(@"FEEDBACK_EXPLANATION_TEXT",@"UKCrashReporter",@"") mutableCopy] autorelease];
+		expln = [NSLocalizedStringFromTable(@"FEEDBACK_EXPLANATION_TEXT",@"UKCrashReporter",@"") mutableCopy];
 	[expln replaceOccurrencesOfString: @"%%APPNAME" withString: appName
 				options: 0 range: NSMakeRange(0, [expln length])];
 	[explanationField setStringValue: expln];
@@ -253,9 +250,9 @@ NSString*	gCrashLogString = nil;
 	// Insert user name and e-mail address into the information field:
 	NSMutableString*	userMessage = nil;
 	if( gCrashLogString )
-		userMessage = [[[informationField string] mutableCopy] autorelease];
+		userMessage = [[informationField string] mutableCopy];
 	else
-		userMessage = [[NSLocalizedStringFromTable(@"FEEDBACK_MESSAGE_TEXT",@"UKCrashReporter",@"") mutableCopy] autorelease];
+		userMessage = [NSLocalizedStringFromTable(@"FEEDBACK_MESSAGE_TEXT",@"UKCrashReporter",@"") mutableCopy];
 	[userMessage replaceOccurrencesOfString: @"%%LONGUSERNAME" withString: NSFullUserName()
 				options: 0 range: NSMakeRange(0, [userMessage length])];
 	ABMultiValue*	emailAddresses = [[[ABAddressBook sharedAddressBook] me] valueForProperty: kABEmailProperty];
@@ -278,7 +275,7 @@ NSString*	gCrashLogString = nil;
 	if( gCrashLogString )
 	{
 		[crashLogField setString: gCrashLogString];
-		[gCrashLogString release];
+		//[gCrashLogString release];
 		gCrashLogString = nil;
 	}
 	else
@@ -323,7 +320,7 @@ NSString*	gCrashLogString = nil;
 	
 	// Add form trappings to crashReport:
 	NSData*			header = [[NSString stringWithFormat:@"--%@\r\nContent-Disposition: form-data; name=\"crashlog\"\r\n\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding];
-	NSMutableData*	formData = [[header mutableCopy] autorelease];
+	NSMutableData*	formData = [header mutableCopy];
 	[formData appendData: crashReport];
 	[formData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
 	
@@ -341,7 +338,7 @@ NSString*	gCrashLogString = nil;
 	[remindButton setEnabled: NO];
 	[discardButton setEnabled: NO];
 	
-	connection = [[NSURLConnection connectionWithRequest: postRequest delegate: self] retain];
+	connection = [NSURLConnection connectionWithRequest: postRequest delegate: self];
 }
 
 
@@ -383,7 +380,7 @@ NSString*	gCrashLogString = nil;
 	}
 	
 	[reportWindow orderOut: self];
-	[self autorelease];
+	//[self autorelease];
 }
 
 
@@ -391,7 +388,6 @@ NSString*	gCrashLogString = nil;
 {
 	#pragma unused(conn)
 	
-	[connection release];
 	connection = nil;
 	
 	// Now that we successfully sent this crash, don't report it again:
@@ -409,7 +405,6 @@ NSString*	gCrashLogString = nil;
 {
 	#pragma unused(conn)
 	
-	[connection release];
 	connection = nil;
 	
 	[self performSelectorOnMainThread: @selector(showFinishedMessage:) withObject: error waitUntilDone: NO];

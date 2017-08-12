@@ -36,7 +36,7 @@
 			break;
 		
 			// gradient fill row
-		case 1:
+		case 1: {
 		
 			[NSGraphicsContext saveGraphicsState];
 					
@@ -65,6 +65,7 @@
 			break;
 			
 			// fill row
+		}
 		case 2:;
 			rect = [self rectOfRow:row];
 		

@@ -12,6 +12,7 @@
 #import "FakeModel.h"
 #import <PSMTabBarControl/PSMTabBarControl.h>
 #import <PSMTabBarControl/PSMTabStyle.h>
+#import <PSMTabBarControl/PSMRolloverButton.h>
 #import "MGSRequestViewController.h"
 #import "MGSInputRequestViewController.h"
 #import "MGSActionViewController.h"
@@ -1098,7 +1099,7 @@ NSString *MGSDefaultTabAutomaticallyAnimates =  @"PSMTabBarControl.Automatically
         [item setAction:@selector(toggle:)];
     }
     
-    return [item autorelease];
+    return item;
 }
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar 

@@ -204,12 +204,12 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	[taskResultLockButton bind:NSValueBinding toObject:self withKeyPath:@"taskResultDisplayLocked" options:nil];
     
 	// result observing
-	[_resultController addObserver:self forKeyPath:@"selectionIndex" options:NSKeyValueObservingOptionNew context:MGSResultSelectionIndexContext]; 
+	[_resultController addObserver:self forKeyPath:@"selectionIndex" options:NSKeyValueObservingOptionNew context:&MGSResultSelectionIndexContext];
 	
 	// result view observing
 	//[_resultViewController addObserver:self forKeyPath:@"showNextViewModeToggle" options:0 context:MGSShowNextViewModeContext]; 
 	//[_resultViewController addObserver:self forKeyPath:@"showPrevViewModeToggle" options:0 context:MGSShowPrevViewModeContext]; 
-	[_resultViewController addObserver:self forKeyPath:@"viewMode" options:0 context:MGSViewModeContext]; 
+	[_resultViewController addObserver:self forKeyPath:@"viewMode" options:0 context:&MGSViewModeContext];
 	
 	// image view to use for drag thumb
 	[_resultViewController setDragThumbView:[[MGSImageManager sharedManager] imageView:[[[MGSImageManager sharedManager] splitDragThumbVert] copy]]];
@@ -226,14 +226,6 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
  finalize
  
  */
-- (void)finalize
-{
-#ifdef MGS_LOG_FINALIZE
-	MLog(DEBUGLOG, @"finalized");
-#endif
-    
-	[super finalize];
-}
 
 #pragma mark -
 #pragma mark Action
@@ -270,12 +262,12 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 		[_action addObserver:self 
 			forKeyPath:@"runStatus" 
 			options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld 
-			context:MGSRunStatusContext];
+			context:&MGSRunStatusContext];
 		
 		[_action addObserver:self 
 			forKeyPath:@"requestProgress.value" 
 			options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld 
-			context:MGSActionProgressContext];
+			context:&MGSActionProgressContext];
 	}
 	
 	[self reset];
@@ -618,7 +610,7 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	#pragma unused(object)
 	
 	// result selection index changed
-	if (context == MGSResultSelectionIndexContext) {
+	if (context == &MGSResultSelectionIndexContext) {
 		
 		NSInteger resultCount = [[_resultController arrangedObjects] count];
 		NSInteger resultIndex = [_resultController selectionIndex];
@@ -687,7 +679,7 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	}
 	
 	// run status context
-	else if (context == MGSRunStatusContext) {
+	else if (context == &MGSRunStatusContext) {
 		
 		NSAssert(change, @"change dictionary not defined");
 		NSNumber *prevNumber = [change objectForKey:NSKeyValueChangeOldKey];
@@ -741,20 +733,20 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	}
 	
 	// acion progress context
-	else if (context == MGSActionProgressContext) {
+	else if (context == &MGSActionProgressContext) {
 		
 		// action progress has changed.
 		[self setRequestProgress:[self action].requestProgress.value];
 	}
 	
 	// progress context
-	else if (context == MGSProgressDurationContext) {
+	else if (context == &MGSProgressDurationContext) {
 		
 		// progress duration updated
 		[_action.netRequest updateProgress:[self progress]];
 
 	// view mode
-	} else if (context == MGSViewModeContext) {
+	} else if (context == &MGSViewModeContext) {
 		
 		// set view mode selected segment to match result view mode
 		[viewModeSegmentedControl setSelectedSegment:[_resultViewController viewMode]];
@@ -1117,7 +1109,7 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	
     // observe the progress duration
     _observedProgress = progress;
-	[_observedProgress addObserver:self forKeyPath:@"duration" options:0 context:MGSProgressDurationContext];
+	[_observedProgress addObserver:self forKeyPath:@"duration" options:0 context:&MGSProgressDurationContext];
 	
 	switch (progress.value) {
 		

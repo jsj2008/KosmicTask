@@ -823,8 +823,28 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
 {
 	// use of NSCopyObject is not recommended.
 	// see Cocoa Design Patterns for more
-	id copy = NSCopyObject(self, 0, zone);
-
+    // under arc need to copy properties
+	//id copy = NSCopyObject(self, 0, zone); // not supported under ARC
+    MGSRequestProgress *copy = [[self.class alloc] init];
+    
+    copy.delegate = self.delegate;
+    copy.name = self.name;
+    copy.image = self.image;
+    copy.value = self.value;
+    copy.object = self.object;
+    copy.duration = self.duration;
+    copy.totalDuration = self.totalDuration;
+    copy.remainingTime = self.remainingTime;
+    copy.percentageComplete = self.percentageComplete;
+    copy.detailVisible = self.detailVisible;
+    copy.requestSizeTransferred = self.requestSizeTransferred;
+    copy.requestSizeTotal = self.requestSizeTotal;
+    copy.overviewString = self.overviewString;
+    copy.resultString = self.resultString;
+    copy.maxProgress = self.maxProgress;
+    copy.minProgress = self.minProgress;
+    copy.complete = self.complete;
+    
 	return copy; 
 }
 @end

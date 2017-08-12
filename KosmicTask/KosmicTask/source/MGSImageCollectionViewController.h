@@ -72,7 +72,7 @@
 	BOOL						_postSelectionChangeNotification;
 }
 
-@property(retain) NSMutableArray *images;
+@property(strong) NSMutableArray *images;
 @property(assign) NSUInteger sortingMode;
 @property(assign) BOOL alternateColors;
 

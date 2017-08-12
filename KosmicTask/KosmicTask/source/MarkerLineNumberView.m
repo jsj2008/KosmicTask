@@ -35,12 +35,6 @@
 
 @implementation MarkerLineNumberView
 
-- (void)dealloc
-{
-	[markerImage release];
-	
-	[super dealloc];
-}
 
 - (void)setRuleThickness:(CGFloat)thickness
 {
@@ -88,7 +82,6 @@
 		rep = [[NSCustomImageRep alloc] initWithDrawSelector:@selector(drawMarkerImageIntoRep:) delegate:self];
 		[rep setSize:size];
 		[markerImage addRepresentation:rep];
-		[rep release];
 	}
 	return markerImage;
 }
@@ -118,7 +111,6 @@
 																  image:[self markerImageWithSize:NSMakeSize([self ruleThickness], MARKER_HEIGHT)]
 														   imageOrigin:NSMakePoint(0, MARKER_HEIGHT / 2)];
 			[self addMarker:marker];
-			[marker release];
 		}
 		[self setNeedsDisplay:YES];
 	}

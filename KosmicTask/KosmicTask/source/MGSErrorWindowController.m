@@ -24,7 +24,7 @@
  */
 - (id)init
 {
-	[super initWithWindowNibName:@"ErrorWindow"];
+	if (!(self = [super initWithWindowNibName:@"ErrorWindow"])) return nil;
 	_logRetrieved = NO;
 	return self; 
 }

@@ -41,12 +41,6 @@
 }
 
 
-- (void)dealloc
-{
-    //[metalBg release];
-    [attrs release];
-    [super dealloc];
-}
 
 - (void)highlight:(BOOL)flag withFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {

@@ -10,7 +10,7 @@
 #import "MGSViewDelegateProtocol.h"
 
 @interface MGSView : NSView {
-	IBOutlet id delegate;
+	IBOutlet __weak id delegate;
 }
-@property (assign) id <MGSViewDelegateProtocol> delegate;
+@property (weak) id <MGSViewDelegateProtocol> delegate;
 @end

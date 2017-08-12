@@ -11,17 +11,17 @@
 #import "MGSParameterPluginViewController.h"
 
 @interface MGSParameterPluginInputViewController : NSViewController <MGSParameterPluginViewControllerDelegate> {
-	IBOutlet NSView *pluginView;
-	MGSParameterPluginViewController *_parameterPluginViewController;
+	IBOutlet NSView *__weak pluginView;
+	MGSParameterPluginViewController *__weak _parameterPluginViewController;
 	IBOutlet NSButton *resetButton;
 	BOOL _resetEnabled;
-	id delegate;
+	id __unsafe_unretained delegate;
 	IBOutlet NSTextField *label;
 }
-@property NSView *pluginView;
-@property MGSParameterPluginViewController *parameterPluginViewController;
+@property (weak) NSView *pluginView;
+@property (weak) MGSParameterPluginViewController *parameterPluginViewController;
 @property (readonly) BOOL resetEnabled;
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 
 - (IBAction)resetToDefaultValue:(id)sender;
 

@@ -15,7 +15,7 @@
 @class MGSTaskSpecifier;
 
 @interface MGSTaskSearchViewController : NSViewController <MGSNetRequestOwner, MGSViewDelegateProtocol> {
-	id _delegate;
+	id __unsafe_unretained _delegate;
 	NSUInteger _searchID;
 	MGSTaskSpecifierManager *_taskSpecManager;
 	NSArray *_resultActionArray;
@@ -33,8 +33,8 @@
 	MGSTaskSpecifier *_delegatedAction;
 }
 
-@property id delegate;
-@property (assign) NSArray *resultActionArray;
+@property (unsafe_unretained) id delegate;
+@property (strong) NSArray *resultActionArray;
 @property BOOL searchInProgress;
 @property (copy) NSString *searchActivity;
 @property NSInteger searchTargetsQueried;

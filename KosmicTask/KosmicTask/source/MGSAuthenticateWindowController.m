@@ -122,7 +122,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 	// this will search in file's owner class bundle and in main app bundle.
 	// so should locate the nib within the framework bundle okay.
 	// note that this differs from NSViewController behaviour
-	[super initWithWindowNibName:@"AuthenticateWindow"];
+	if (!(self = [super initWithWindowNibName:@"AuthenticateWindow"])) return nil;
 
     _canConnect = NO;
 	_modalSession = nil;

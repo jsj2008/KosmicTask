@@ -15,7 +15,7 @@ static NSString *appSupportSubpath = @"Application Support/KosmicTask/PlugIns";
 @interface MGSPluginController()
 - (id)initWithPlugInClass:(Class)aClass;
 
-@property (assign) NSArray *instances;
+@property (strong) NSArray *instances;
 @end
 
 

@@ -84,11 +84,6 @@ NSString *MGSContentsItemIdentifier = @"Contents";
  dealloc
  
  */
-- (void)dealloc
-{
-	self.groups = nil;
-	[super dealloc];
-}
 
 /*
  

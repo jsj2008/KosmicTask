@@ -201,7 +201,7 @@
 	[rightBannerImageView setEnabled:executableRepresentation];
 	
 	if (_task.script) {
-		[_task addObserver:self forKeyPath:@"runStatus" options:NSKeyValueObservingOptionNew context:MGSRunStatusContext];
+		[_task addObserver:self forKeyPath:@"runStatus" options:NSKeyValueObservingOptionNew context:&MGSRunStatusContext];
 	}
 }
 
@@ -219,7 +219,7 @@
 	#pragma unused(change)
 	
 	// action run status changed
-	if (context == MGSRunStatusContext) {
+	if (context == &MGSRunStatusContext) {
 		[_descriptionViewController setActivity:_task.activity];
 	}
 }

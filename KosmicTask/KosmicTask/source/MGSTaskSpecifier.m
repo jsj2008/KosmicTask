@@ -146,15 +146,6 @@ static BOOL permitExecution = YES;
  finalize
  
  */
-- (void)finalize
-{	
-
-#ifdef MGS_LOG_FINALIZE 
-	MLog(MEMORYLOG, @"%@ finalized", [[self class] description]);
-#endif
-    
-	[super finalize];
-}
 
 /*
  
@@ -364,8 +355,23 @@ static BOOL permitExecution = YES;
 	#pragma unused(zone)
 	
 	// create
-	id copy = NSCopyObject(self, 0, NULL);
-	
+	//id copy = NSCopyObject(self, 0, NULL); // pre ARC
+    
+#warning check that this ARC friendly copy looks kosher for all the properties below
+	MGSTaskSpecifier *copy = [[MGSTaskSpecifier alloc] init];
+    copy.netClient = self.netClient;
+    copy.scriptIndex = self.scriptIndex;
+    copy.script = self.script;
+    copy.displayType = self.displayType;
+    copy.identifier = self.identifier;
+    copy.representedNetClient = self.representedNetClient;
+    copy.elapsedTime = self.elapsedTime;
+    copy.remainingTime = self.remainingTime;
+    copy.netRequest = self.netRequest;
+    copy.requestProgress = self.requestProgress;
+    copy.taskStatus = self.taskStatus;
+    copy.result = self.result;
+    
 	// register for notifications as original
 	[copy registerForNotifications];
 	

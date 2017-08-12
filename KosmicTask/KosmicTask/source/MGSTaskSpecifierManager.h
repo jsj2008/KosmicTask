@@ -27,7 +27,7 @@
 	BOOL _keepHistory;	// keep a history for this object
 	BOOL _isHistory;	// this object is a history
 	NSUInteger _maxHistoryCount;
-	id _delegate;
+	id __unsafe_unretained _delegate;
 }
 
 @property BOOL keepHistory;
@@ -42,5 +42,5 @@
 - (id)newTaskSpecForNetClient:(MGSNetClient *)netClient script:(MGSScript *)script;
 
 @property (readonly) MGSTaskSpecifierManager *history;
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 @end

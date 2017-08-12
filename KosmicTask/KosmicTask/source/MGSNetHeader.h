@@ -61,8 +61,8 @@ extern NSString *MGSNetHeaderAttachmentEncodingBinary;
 @property (readonly) BOOL prefixValidated;
 @property (readonly) BOOL headerValidated;
 @property  MGSNetAttachments *attachments;
-@property (strong) NSString *attachmentTransferEncoding;
-@property (strong) NSString *attachmentEncoding;
+@property (strong, nonatomic) NSString *attachmentTransferEncoding;
+@property (strong, nonatomic) NSString *attachmentEncoding;
 @property (readonly) NSDate *date;
 @property (readonly) NSString *userAgent;
 @end

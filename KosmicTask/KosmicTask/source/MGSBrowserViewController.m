@@ -41,6 +41,7 @@
 #import "MGSCapsuleTextCell.h"
 #import "MGSLabelTextCell.h"
 #import "MGSPreferences.h"
+#import "MGSImageCollectionWindowController.h"
 
 #define LMTestInterval 5 * 60	// licence manager test interval
 
@@ -1147,7 +1148,7 @@ errorExit:;
 		 toggle the group list visibility
 		 
 		 */
-		case kMGSMotherViewConfigGroupList:;
+		case kMGSMotherViewConfigGroupList: {;
 			NSView *taskView = [[splitView subviews] objectAtIndex:1];
 			NSView *parentView = [_browserView superview];
 			
@@ -1177,6 +1178,7 @@ errorExit:;
 			
 			break;
 			
+		}
 		default:
 			return;
 	}

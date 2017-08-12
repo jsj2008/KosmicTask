@@ -25,6 +25,7 @@
 #import "MGSTaskSpecifierManager.h"
 #import "NSIndexPath+Mugginsoft.h"
 #import "NSString_Mugginsoft.h"
+#import "MGSImageAndText.h"
 
 #include <sys/time.h>
 
@@ -80,9 +81,9 @@ char MGSScriptDictContext;
 - (MGSOutlineViewNode *)nodeForNetClient:(MGSNetClient *)netClient;
 - (MGSOutlineViewNode *)_newGroupTreeNodeWithObject:(id)object netClient:(MGSNetClient *)netClient;
 
-@property MGSNetClient *selectedNetClient;
-@property id selectedObject;
-@property MGSOutlineViewNode *selectedObjectNode;
+@property (weak) MGSNetClient *selectedNetClient;
+@property (unsafe_unretained) id selectedObject;
+@property (weak) MGSOutlineViewNode *selectedObjectNode;
 @end
 
 @implementation MGSSidebarViewController

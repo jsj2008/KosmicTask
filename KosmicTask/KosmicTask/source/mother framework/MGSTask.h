@@ -49,7 +49,7 @@
 
 @property (readonly) NSMutableData *taskOutputData;
 @property (strong, readonly) NSMutableData *taskErrorData;
-@property BOOL taskComplete;
+@property (nonatomic) BOOL taskComplete;
 @property (strong, readonly) NSString *workingDirectoryPath;
 
 @end

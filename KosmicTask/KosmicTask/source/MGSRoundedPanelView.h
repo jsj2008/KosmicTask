@@ -19,7 +19,7 @@ typedef NSUInteger MGSRoundedPanelViewStyle;
 
 @interface MGSRoundedPanelView : MGSRoundedView <MGSSubviewClicking> {
 @private
-	IBOutlet id delegate;
+	IBOutlet id __unsafe_unretained delegate;
 	BOOL _isHighlighted;
     BOOL _isDragTarget;
 	BOOL _drawFooter;
@@ -52,7 +52,7 @@ typedef NSUInteger MGSRoundedPanelViewStyle;
 }
 
 @property MGSRoundedPanelViewStyle panelStyle;
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 @property BOOL isHighlighted;
 @property BOOL isDragTarget;
 @property BOOL drawFooter;

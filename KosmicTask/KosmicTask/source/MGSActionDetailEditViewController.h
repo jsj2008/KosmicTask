@@ -11,11 +11,11 @@
 
 
 @interface MGSActionDetailEditViewController : NSViewController {
-	IBOutlet NSView *infoView;
+	IBOutlet NSView *__weak infoView;
 	IBOutlet NSView *actionDetailView;
 	IBOutlet NSScrollView *scrollView;
 	IBOutlet NSPopUpButton *scriptType;
-	IBOutlet NSTextField *name;
+	IBOutlet NSTextField *__weak name;
 	IBOutlet NSComboBox *group;
 	IBOutlet NSButton *published;
 	IBOutlet NSTextField *description;
@@ -48,7 +48,7 @@
     
 	IBOutlet NSPopUpButton *userInteractionMode;
 	
-	MGSTaskSpecifier *_action;
+	MGSTaskSpecifier *__weak _action;
     NSObjectController *_objectController;
 }
 
@@ -60,8 +60,8 @@
 - (IBAction)refreshModifiedDate:(id)sender;
 - (IBAction)defaultScriptType:(id)sender;
 
-@property MGSTaskSpecifier *action;
-@property NSTextField *nameTextField;
-@property (readonly) NSView *infoView;
+@property (weak) MGSTaskSpecifier *action;
+@property (weak) NSTextField *nameTextField;
+@property (weak, readonly) NSView *infoView;
 
 @end

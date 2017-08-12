@@ -19,7 +19,7 @@
 @end
 
 @interface MGSActionInputFooterViewController : NSViewController {
-	id _delegate;
+	id __unsafe_unretained _delegate;
 	IBOutlet NSButton *descriptionButton;
 	IBOutlet NSButton *optionsButton;
 	IBOutlet NSButton *infoButton;
@@ -36,8 +36,8 @@
 	MGSTaskSpecifier *_actionSpecifier;
 }
 
-@property id delegate;
-@property (assign) MGSTaskSpecifier *actionSpecifier;
+@property (unsafe_unretained) id delegate;
+@property (strong) MGSTaskSpecifier *actionSpecifier;
 
 - (IBAction)optionsClick:(id)sender;
 - (IBAction)infoClick:(id)sender;

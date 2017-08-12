@@ -18,7 +18,7 @@
 
 @property (copy) NSString *serviceShortName;
 @property (copy) NSString *serviceName;
-@property (assign) NSImage *hostIcon;
+@property (strong) NSImage *hostIcon;
 @property MGSHostStatus hostStatus;
 
 @end

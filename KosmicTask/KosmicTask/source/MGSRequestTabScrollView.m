@@ -54,13 +54,13 @@
 		
 		// our request view is the document view
 		// our document no longer auto resizes its width
-		if ([[self documentView] autoresizingMask] != NSViewHeightSizable) {
+		if ([(NSView *)[self documentView] autoresizingMask] != NSViewHeightSizable) {
 			
 			// make sure that document is at minimum width
 			NSSize sizeDocument = [[self documentView] frame].size;
 			sizeDocument.width = [requestViewController minViewWidth];
 			
-			[[self documentView] setAutoresizingMask:NSViewHeightSizable];
+			[(NSView *)[self documentView] setAutoresizingMask:NSViewHeightSizable];
 			[[self documentView] setFrameSize:sizeDocument];
 			[[self documentView] setNeedsDisplay:YES];
 			
@@ -81,7 +81,7 @@
 	if (!requestViewController) return;
 	
 	// if resizing only height then check if need to reset width autosizing
-	if ([[self documentView] autoresizingMask] == NSViewHeightSizable) {
+	if ([(NSView *)[self documentView] autoresizingMask] == NSViewHeightSizable) {
 		
 		// if the content is wider than then document then size the document to the content
 		NSSize documentSize = [[self documentView] frame].size;
@@ -90,7 +90,7 @@
 			
 			// make our document view fit our content
 			[[self documentView] setFrameSize: NSMakeSize(contentSize.width, documentSize.height)];
-			[[self documentView] setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
+			[(NSView *)[self documentView] setAutoresizingMask:NSViewHeightSizable | NSViewWidthSizable];
 		}
 		
 	}

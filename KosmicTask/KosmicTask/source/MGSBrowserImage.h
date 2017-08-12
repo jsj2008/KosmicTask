@@ -23,8 +23,8 @@
 }
 
 // implement the IKImageBrowserItem informal protocol
-@property (copy) NSString *imageRepresentationType;
-@property (copy) NSString * imageRepresentation;
+@property (copy, nonatomic) NSString *imageRepresentationType;
+@property (copy, nonatomic) NSString * imageRepresentation;
 @property (copy) NSString *imageUID;
 @property NSUInteger imageVersion;
 @property BOOL isSelectable;

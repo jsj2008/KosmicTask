@@ -75,7 +75,7 @@
         
         if (gradient != nil) {
             [gradient drawInBezierPath:bezier angle:90.0f];
-            [gradient release], gradient = nil;
+            gradient = nil;
         } else {
             [[NSColor textBackgroundColor] set];
             [bezier fill];

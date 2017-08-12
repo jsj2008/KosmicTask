@@ -31,22 +31,22 @@
 @interface MGSImageBrowserViewController : NSViewController <NSOpenSavePanelDelegate> {
 	IBOutlet PlacardScrollView *scrollView;
 	NSMutableArray *_images;
-	IBOutlet MGSImageBrowserView *_imageBrowser;
-	MGSNetAttachments *_attachments;
+	IBOutlet MGSImageBrowserView *__weak _imageBrowser;
+	MGSNetAttachments *__weak _attachments;
 	IBOutlet NSSlider *_slider;
 	IBOutlet NSTextField *fileCountTextField;
 	IBOutlet NSButton *_save;
 	IBOutlet NSButton *_quicklook;
-	NSString *_fileCountString;
+	NSString *__weak _fileCountString;
 	IBOutlet MGSSaveImageSelectionAccessoryViewController *_accessoryViewController;
 	NSMenu *_menu;
-	IBOutlet NSView *_splitViewAdditionalView;
+	IBOutlet NSView *__weak _splitViewAdditionalView;
 }
-@property MGSNetAttachments *attachments;
-@property (readonly) NSString *fileCountString;
-@property (readonly) MGSImageBrowserView *imageBrowser;
-@property (assign) NSMenu *menu;
-@property (readonly) NSView *splitViewAdditionalView;
+@property (weak) MGSNetAttachments *attachments;
+@property (weak, readonly) NSString *fileCountString;
+@property (weak, readonly) MGSImageBrowserView *imageBrowser;
+@property (strong) NSMenu *menu;
+@property (weak, readonly) NSView *splitViewAdditionalView;
 
 - (IBAction)zoomChange:(id)sender;
 - (void)reloadData;

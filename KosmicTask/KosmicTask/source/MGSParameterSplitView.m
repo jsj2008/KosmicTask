@@ -21,16 +21,16 @@
  
  */
 @interface MGSResizableParameter : NSObject {
-	MGSParameterViewController *_parameterViewController;	// view controller of draggable parameter
+	MGSParameterViewController *__weak _parameterViewController;	// view controller of draggable parameter
 	NSRect _dragRect;		// drag rect
-	NSView *_subViewToResize;	// subview to resize
+	NSView *__weak _subViewToResize;	// subview to resize
 	NSInteger _dragLocation;
 }
 
 
-@property MGSParameterViewController *parameterViewController;
+@property (weak) MGSParameterViewController *parameterViewController;
 @property NSRect dragRect;
-@property NSView *subViewToResize;
+@property (weak) NSView *subViewToResize;
 @property NSInteger dragLocation;
 @end
 

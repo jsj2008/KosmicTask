@@ -418,7 +418,7 @@ const char MGSContextFirstResponder;
 	switch (selectedSegment) {
 			
             // add favorite
-		case MGSAddFavorite:;
+		case MGSAddFavorite: {;
 			NSMutableDictionary *connection = [self selectedConnection];
 			if (!connection) {
 				return;
@@ -431,13 +431,15 @@ const char MGSContextFirstResponder;
 			break;
             
             // remove favorite
-		case MGSRemoveFavorite:;
+		}
+		case MGSRemoveFavorite: {;
 			NSArray *selectedObjects = [arrayController selectedObjects];
 			if ([selectedObjects count] > 0) {
 				[arrayController removeObjects:selectedObjects];
 			}
 			break;
             
+		}
 		default:
 			return;
 	}

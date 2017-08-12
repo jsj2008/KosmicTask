@@ -12,11 +12,11 @@
 
 @interface MGSToolViewController :  NSObject {
 	@private
-	id delegate;
-	IBOutlet NSView *view;
+	__weak id delegate;
+	IBOutlet NSView *__weak view;
 }
 
-@property (assign) id <MGSToolbarDelegate, MGSToolbarItemDelegate> delegate;
-@property NSView *view;
+@property (weak) id <MGSToolbarDelegate, MGSToolbarItemDelegate> delegate;
+@property (weak) NSView *view;
 
 @end

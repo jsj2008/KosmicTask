@@ -19,5 +19,5 @@
 - (MGSScriptTask *)initWithNetRequest:(MGSServerNetRequest *)netRequest;
 
 @property MGSServerNetRequest *netRequest;
-@property MGSServerNetRequest *logRequest;
+@property (nonatomic) MGSServerNetRequest *logRequest;
 @end

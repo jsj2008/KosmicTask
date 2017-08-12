@@ -17,13 +17,13 @@
 @interface MGSTaskVariablesViewController : NSViewController
 {
     IBOutlet NSTableView *_taskVariablesTableView;
-    MGSScript *_script;
+    MGSScript *__weak _script;
     NSArrayController *_taskVariablesArrayController;
-    id <MGSTaskVariablesViewControllerDelegateProtocol> _delegate;
+    id <MGSTaskVariablesViewControllerDelegateProtocol> __unsafe_unretained _delegate;
 }
 
-@property MGSScript *script;
-@property id <MGSTaskVariablesViewControllerDelegateProtocol> delegate;
+@property (weak) MGSScript *script;
+@property (unsafe_unretained) id <MGSTaskVariablesViewControllerDelegateProtocol> delegate;
 
 - (IBAction)popUpButtonMenuItemSelected:(id)sender;
 @end

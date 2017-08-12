@@ -61,8 +61,8 @@
 	MGSResourceBrowserNode *languageRootNode;
 	
 	// classes
-	Class requiredResourceClass;
-	Class newResourceClass;
+	__strong Class requiredResourceClass;
+	__strong Class neuResourceClass;
 	
 	BOOL tableCanDeleteResource;
 	BOOL tableCanAddResource;
@@ -95,27 +95,27 @@
 @property (readonly) BOOL requiredResourceSelected;
 @property (copy) NSString *title;
 
-@property (assign) NSMutableArray *resourceTree;
-@property (assign) NSMutableArray *resourceArray;
+@property (strong) NSMutableArray *resourceTree;
+@property (strong) NSMutableArray *resourceArray;
 
 @property NSInteger resourceTabIndex;
 @property NSInteger resourceChildTabIndex;
 
-@property Class requiredResourceClass;
-@property Class newResourceClass;
+@property (strong )Class requiredResourceClass;
+@property (strong) Class neuResourceClass;
 
-@property (assign) MGSLanguageDocumentResource *infoResource;
-@property (assign) MGSResourceItem *selectedResource;
-@property (assign) MGSResourcesManager *selectedResourcesManager;
-@property (assign) NSString *resourceName;
+@property (strong) MGSLanguageDocumentResource *infoResource;
+@property (strong) MGSResourceItem *selectedResource;
+@property (strong) MGSResourcesManager *selectedResourcesManager;
+@property (strong) NSString *resourceName;
 //@property (assign) NSDictionary *languageProperties;
 
-@property (assign) MGSLanguageProperty *selectedLanguageProperty;
+@property (strong) MGSLanguageProperty *selectedLanguageProperty;
 
 @property (copy) NSArray *languagePlugins;
-@property (assign) MGSLanguagePlugin *languagePlugin;
+@property (strong) MGSLanguagePlugin *languagePlugin;
 @property (copy) NSString *defaultScriptType;
-@property (assign) MGSScript *script;
+@property (strong) MGSScript *script;
 
 @property (copy) NSString *addResourceMenuTitle;
 @property (copy) NSString *deleteResourceMenuTitle;
@@ -135,7 +135,7 @@
 @property (getter=isEditable)BOOL editable;
 
 @property (assign) BOOL documentEdited;
-@property (assign) NSDictionary *viewFrameDefaults;
+@property (strong) NSDictionary *viewFrameDefaults;
 @property BOOL requiredResourceDoubleClicked;
 
 - (MGSLanguageTemplateResource *)selectedTemplate;

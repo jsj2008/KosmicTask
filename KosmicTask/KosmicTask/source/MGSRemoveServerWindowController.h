@@ -13,12 +13,12 @@
 	IBOutlet NSArrayController *arrayController;
 	IBOutlet NSButton *disconnectButton;
 	
-	id _delegate;
+	id __unsafe_unretained _delegate;
 }
 
 - (void)closeWindow;
 - (IBAction)cancel:(id)sender;
 - (IBAction)disconnect:(id)sender;
 
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 @end

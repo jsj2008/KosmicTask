@@ -13,20 +13,20 @@
 
 +(NSArray*)	allLoginItems
 {
-	NSArray*	itemsList = nil;
-	OSStatus	err = LIAECopyLoginItems( (CFArrayRef*) &itemsList );	// Take advantage of toll-free bridging.
+	CFArrayRef itemsList = nil;
+	OSStatus	err = LIAECopyLoginItems(&itemsList);	// Take advantage of toll-free bridging.
 	if( err != noErr )
 	{
 		NSLog(@"Couldn't list login items error %ld", (long)err);
 		return nil;
 	}
 	
-	return [itemsList autorelease];
+	return (NSArray *)CFBridgingRelease(itemsList);
 }
 
 +(BOOL)		addLoginItemWithURL: (NSURL*)url hideIt: (BOOL)hide			// Main bottleneck for adding a login item.
 {
-	OSStatus err = LIAEAddURLAtEnd( (CFURLRef) url, hide );	// CFURLRef is toll-free bridged to NSURL.
+	OSStatus err = LIAEAddURLAtEnd( (__bridge CFURLRef) url, hide );	// CFURLRef is toll-free bridged to NSURL.
 	
 	if( err != noErr )
 		NSLog(@"Couldn't add login item error %ld", (long)err);

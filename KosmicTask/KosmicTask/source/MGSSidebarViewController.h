@@ -16,9 +16,9 @@
 	NSTreeController *clientTreeController;
 	MGSOutlineViewNode *_homeNode;
 	MGSOutlineViewNode *_sharedNode;
-	MGSNetClient *selectedNetClient;
-	id selectedObject;
-	MGSOutlineViewNode *selectedObjectNode;
+	MGSNetClient *__weak selectedNetClient;
+	id __unsafe_unretained selectedObject;
+	MGSOutlineViewNode *__weak selectedObjectNode;
 	
 	NSArray *_selectionIndexPaths;
 	NSTreeNode *_selectionGroupNode;
@@ -32,10 +32,10 @@
 	NSMutableDictionary *outlineNodeCache;
 }
 
-@property (assign) NSMutableArray *clientTree;
-@property (readonly) MGSNetClient *selectedNetClient;
-@property (readonly) id selectedObject;
-@property (readonly) MGSOutlineViewNode *selectedObjectNode;
+@property (strong) NSMutableArray *clientTree;
+@property (weak, readonly) MGSNetClient *selectedNetClient;
+@property (unsafe_unretained, readonly) id selectedObject;
+@property (weak, readonly) MGSOutlineViewNode *selectedObjectNode;
 
 - (IBAction)openTaskInNewTab:(id)sender;
 - (IBAction)openTaskInNewWindow:(id)sender;

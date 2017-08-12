@@ -30,7 +30,7 @@ typedef NSInteger mgsFadeType;
 	MGSTaskActivity _activity;
 	eMGSMotherRunMode _runMode;
 	BOOL _respectRunMode;
-	id <MGSActionActivityViewDelegate> _delegate;
+	id <MGSActionActivityViewDelegate> __unsafe_unretained _delegate;
 	double doubleValue;
 	NSTimeInterval animationDelay;
 	BOOL displayedWhenStopped;
@@ -84,7 +84,7 @@ typedef NSInteger mgsFadeType;
 	
 	BOOL _hasDropShadow;
 	NSTrackingArea *_trackingArea;
-	id target;
+	id __unsafe_unretained target;
 	SEL action;
     
     MGSTextView *_textView;
@@ -125,9 +125,9 @@ typedef NSInteger mgsFadeType;
 @property (copy) NSColor *foregroundColor;
 @property BOOL hasDropShadow;
 @property BOOL respectRunMode;
-@property id <MGSActionActivityViewDelegate> delegate;
+@property (unsafe_unretained) id <MGSActionActivityViewDelegate> delegate;
 
-@property id target;
+@property (unsafe_unretained) id target;
 @property SEL action;
 
 @end

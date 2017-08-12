@@ -14,8 +14,8 @@
 @end
 
 @interface MGSToolbarItem : NSToolbarItem {
-	id delegate;
+	__weak id delegate;
 }
 
-@property (assign) id <MGSToolbarItemDelegate> delegate;
+@property (weak) id <MGSToolbarItemDelegate> delegate;
 @end

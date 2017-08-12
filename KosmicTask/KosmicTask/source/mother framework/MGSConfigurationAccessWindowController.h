@@ -19,7 +19,7 @@
     IBOutlet NSTextField *label;
 	IBOutlet NSButton *cancelButton;
 	IBOutlet NSProgressIndicator *progressIndicator;
-	NSWindow *_modalForWindow;
+	NSWindow *__weak _modalForWindow;
 	MGSNetClient *_netClient;
 	
 	NSTimer *_displayTimer;
@@ -29,7 +29,7 @@
 	NSUInteger _accessType;
 }
 
-@property NSWindow *modalForWindow;
+@property (weak) NSWindow *modalForWindow;
 
 - (void)authenticateNetClient:(MGSNetClient *)netClient forAccess:(NSUInteger)access;
 - (void)closeWindow;

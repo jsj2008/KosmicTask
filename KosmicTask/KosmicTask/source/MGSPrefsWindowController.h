@@ -76,7 +76,7 @@ extern NSString * MGSDefaultStartAtLogin;
 - (IBAction)revertToStandardSettings:(id)sender;
 - (IBAction)autoMappingAction:(id)sender;
 
-@property (assign) NSString *selectedNetworkTabIdentifier;
+@property (strong) NSString *selectedNetworkTabIdentifier;
 
 @property BOOL applyTimeoutToMachineTasks;
 @property NSInteger machineTaskTimeout;

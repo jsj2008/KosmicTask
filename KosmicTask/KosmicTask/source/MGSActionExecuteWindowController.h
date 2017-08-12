@@ -22,13 +22,13 @@
 																MGSOpenPanelControllerDelegate
 																> {
 	@private
-	IBOutlet MGSActionExecuteWindow *_actionExecuteWindow;
-	MGSNetClient *_netClient;
+	IBOutlet MGSActionExecuteWindow *__weak _actionExecuteWindow;
+	MGSNetClient *__weak _netClient;
 	MGSOpenPanelController *_openPanelController;
 }
 
-@property MGSActionExecuteWindow *actionExecuteWindow;
-@property MGSNetClient *netClient;
+@property (weak) MGSActionExecuteWindow *actionExecuteWindow;
+@property (weak) MGSNetClient *netClient;
 @property (readonly) MGSOpenPanelController *openPanelController;
 
 - (MGSTaskSpecifier *)selectedActionSpecifier;

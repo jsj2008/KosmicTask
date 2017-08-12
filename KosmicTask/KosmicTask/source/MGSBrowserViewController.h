@@ -35,7 +35,7 @@
 @interface MGSBrowserViewController : NSViewController 
 	<MGSNetRequestOwner, MGSNetClientManagerDelegate, NSSplitViewDelegate>  {
 	MGSNetClientManager *_netClientHandler;
-	IBOutlet NSTableView *machineTable;
+	IBOutlet NSTableView *__weak machineTable;
 	IBOutlet NSTableView *groupTable;
 	IBOutlet NSTableView *actionTable;
 	//IBOutlet NSTextField *machineTableCaption;
@@ -48,7 +48,7 @@
 	IBOutlet NSScrollView *groupScrollView;
 		
 	NSView *_browserView;
-	IBOutlet NSView *_sharingView;
+	IBOutlet NSView *__weak _sharingView;
 	id _delegate;
 	NSInteger _viewEffect;		   // effect to use when showing views
 	BOOL _showActionInNewTab;
@@ -87,9 +87,9 @@
 - (void)startupTimerExpired:(NSTimer*)theTimer;
 - (void)setSelectedActionSchedulePublished:(BOOL)aBool;
 
-@property NSTableView *machineTable;
+@property (weak) NSTableView *machineTable;
 @property (readonly) NSInteger viewEffect;
-@property (readonly) NSView *sharingView;
+@property (weak, readonly) NSView *sharingView;
 @end
 
 @interface MGSBrowserViewController (NetControllerDelegate)

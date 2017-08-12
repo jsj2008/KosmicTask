@@ -75,7 +75,7 @@ const char MGSResourceArrangedObjectsContext;
 
 @synthesize languagePlugins, languagePlugin, selectedResource, resourceName , documentEdited, 
  resourceTree, resourceArray, resourceTabIndex, requiredResourceSelected, requiredResourceClass, 
-resourceChildTabIndex, infoResource, newResourceClass, addResourceMenuTitle, deleteResourceMenuTitle,
+resourceChildTabIndex, infoResource, neuResourceClass, addResourceMenuTitle, deleteResourceMenuTitle,
 selectedResourcesManager, title, editable, resourceEditable, viewFrameDefaults, defaultScriptType,
 requiredResourceDoubleClicked, selectedLanguageProperty, script;
 
@@ -1068,13 +1068,13 @@ clearTree:
 {
 	selectedResourcesManager = manager;
 	if (selectedResourcesManager) {
-		self.newResourceClass = [selectedResourcesManager resourceClass];
+		self.neuResourceClass = [selectedResourcesManager resourceClass];
 		
 		NSAssert([[selectedResourcesManager rootManagerDelegate] isKindOfClass:[MGSLanguagePlugin class]], @"bad delegate class");
 		
 		self.languagePlugin = (MGSLanguagePlugin *)[selectedResourcesManager rootManagerDelegate];
 	} else {
-		self.newResourceClass = nil;
+		self.neuResourceClass = nil;
 		self.languagePlugin = nil;
 	}
 }
@@ -1109,11 +1109,11 @@ clearTree:
  - setNewResourceClass:
  
  */
-- (void)setNewResourceClass:(Class)klass
+- (void)setNeuResourceClass:(Class)klass
 {
 	//NSAssert([klass isMemberOfClass:[MGSResourceItem class]], @"bad resource class");
 	
-	newResourceClass = klass;
+	neuResourceClass = klass;
 	
 	/*
 	NSString *resourceTitle = [MGSResourceItem title];

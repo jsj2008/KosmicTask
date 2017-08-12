@@ -23,7 +23,7 @@
 #import "MGSAttachedWindowController.h"
 #import "MGSScriptParameterManager.h"
 
-NSString *MGSIsProcessingContext =@"IsProcessing";
+NSString *MGSIsProcessingContext = @"IsProcessing";
 static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexContext";
 
 // class extension
@@ -140,7 +140,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	[syncActionButton bind:NSEnabledBinding toObject:self withKeyPath:@"indexMatchesPartnerIndex" options:bindingOptions];
 	
 	// observing
-	[_actionController addObserver:self forKeyPath:@"selectionIndex" options:NSKeyValueObservingOptionNew context:MGSActionSelectionIndexContext]; 
+	[_actionController addObserver:self forKeyPath:@"selectionIndex" options:NSKeyValueObservingOptionNew context:&MGSActionSelectionIndexContext];
 	
 	// set the parameter view handler to input mode
 	[_parameterViewManager setMode:MGSParameterModeInput];
@@ -165,7 +165,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	#pragma unused(change)
 	
 	// action selection index
-	if (context == MGSActionSelectionIndexContext) {
+	if (context == &MGSActionSelectionIndexContext) {
 		
 		NSInteger actionIndex = [_actionController selectionIndex];
 		NSInteger actionCount = [[_actionController arrangedObjects] count];
@@ -226,7 +226,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 	}
 	
 	// action is processing
-	else if (context == MGSIsProcessingContext) {
+	else if (context == &MGSIsProcessingContext) {
 		
 		// disable controls while processing
 		[[self view] setControlsEnabled:!_action.isProcessing];
@@ -343,7 +343,7 @@ static NSString *MGSActionSelectionIndexContext = @"MGSActiontSelectionIndexCont
 		_parameterViewManager.actionViewController = _actionViewController;
 		
 		// setting NSKeyValueObservingOptionInitial causes view enabling override bug
-		[_action addObserver:self forKeyPath:@"isProcessing" options:0 context:MGSIsProcessingContext];
+		[_action addObserver:self forKeyPath:@"isProcessing" options:0 context:&MGSIsProcessingContext];
 		
 		[self markAsReadyIfNoResults];
 		

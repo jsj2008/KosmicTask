@@ -31,7 +31,7 @@ static MGSNetClientManager *_sharedController = nil;
 
 // class extension
 @interface MGSNetClientManager()
-@property (readwrite) MGSNetClient *selectedNetClient;
+@property (weak, readwrite) MGSNetClient *selectedNetClient;
 
 - (void)sendHeartbeats:(NSTimer*)theTimer;
 - (void)mgsAddClient:(MGSNetClient *)netClient;

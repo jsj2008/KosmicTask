@@ -34,7 +34,7 @@
 	IBOutlet NSView *rightView;
 	IBOutlet MGSInputRequestViewController *_inputViewController;
 	IBOutlet MGSOutputRequestViewController *_outputViewController;
-	IBOutlet NSView *_emptyRequestView;
+	IBOutlet NSView *__weak _emptyRequestView;
 	IBOutlet MGSActionActivityView *_actionActivityView;
 	IBOutlet NSTextField *_emptyRequestViewTextField;
 	
@@ -42,7 +42,7 @@
 	BOOL _sendCompletedActionSpecifierToHistory;
 	
 	MGSWaitViewController *_waitViewController;
-	id _delegate;
+	id __unsafe_unretained _delegate;
 	NSInteger _viewEffect;	// effect to use when showing views
 	
 	NSImage                 *_icon;			// icon
@@ -80,9 +80,9 @@
 - (void)toggleViewMode:(eMGSMotherViewConfig)mode;
 
 // properties
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 @property (readonly) NSInteger viewEffect;
-@property (readonly) NSView *emptyRequestView;
+@property (weak, readonly) NSView *emptyRequestView;
 @property (readonly) MGSInputRequestViewController *inputViewController;
 @property (readonly) MGSOutputRequestViewController *outputViewController;
 @property BOOL observesInputModifications;

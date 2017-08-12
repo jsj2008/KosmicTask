@@ -40,7 +40,7 @@ typedef NSInteger MGSAddServerStatusID;
 	BOOL _keepConnected;		// YES to keep connected between restarts 
 	//BOOL _tableRowSelected;
 	NSInteger _portNumber;		// port number
-	id <MGSAddServerDelegate, NSObject> _delegate;
+	id <MGSAddServerDelegate, NSObject> __unsafe_unretained _delegate;
 	id _selectedObject;
     BOOL _selectedConnectionIsValid;
     NSResponder *_responder;
@@ -75,7 +75,7 @@ typedef NSInteger MGSAddServerStatusID;
 @property BOOL keepConnected;
 @property BOOL secureConnection;
 @property NSInteger portNumber;
-@property id delegate;
+@property (unsafe_unretained) id delegate;
 @property BOOL selectedConnectionIsValid;
 @property BOOL canConnect;
 @end

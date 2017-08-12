@@ -37,14 +37,14 @@ extern NSString *MGSDefaultPersistentConnections;
 	NSMutableArray *_netClients;
 	NSMutableArray *_deferredNetClients;
 	NSNetServiceBrowser *_serviceBrowser;
-	NSString *_serviceType;
-	NSString *_domain;
-	id _delegate;
+	NSString *__weak _serviceType;
+	NSString *__weak _domain;
+	id __unsafe_unretained _delegate;
 	NSTimer *_heartbeatTimer;	// timer to generate heartbeats
 	MGSNetClient *_saveNetClient;
 	BOOL _terminateAfterReviewChanges;
 	BOOL _deferRemoteClientConnections;	// defer remote client connections until localhost connected
-	MGSNetClient *_selectedNetClient;
+	MGSNetClient *__weak _selectedNetClient;
 }
 + (id)sharedController;
 
@@ -73,11 +73,11 @@ extern NSString *MGSDefaultPersistentConnections;
 - (NSApplicationTerminateReply)checkForUnsavedConfigurationOnClient:(MGSNetClient *)netClient terminating:(BOOL)terminating;
 - (void)validateClients;
 
-@property (readonly) NSString *serviceType;
-@property (readonly) NSString *domain;
-@property id <MGSNetClientManagerDelegate, NSObject> delegate;
+@property (weak, readonly) NSString *serviceType;
+@property (weak, readonly) NSString *domain;
+@property (unsafe_unretained) id <MGSNetClientManagerDelegate, NSObject> delegate;
 @property BOOL deferRemoteClientConnections;
-@property (readonly) MGSNetClient *selectedNetClient;
+@property (weak, readonly) MGSNetClient *selectedNetClient;
 @end
 
 @interface MGSNetClientManager (NetServiceDelegate)

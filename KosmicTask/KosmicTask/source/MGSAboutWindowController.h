@@ -23,11 +23,11 @@
 
 + (MGSAboutWindowController *) sharedInstance;
 
-@property (assign) NSString *version;
-@property (assign) NSString *build;
-@property (assign) NSString *licensedTo;
-@property (assign) NSAttributedString *credits;
-@property (assign) NSString *appCodeSignatureStatus;
-@property (assign) NSString *serverCodeSignatureStatus;
-@property (assign) NSString *taskCodeSignatureStatus;
+@property (strong) NSString *version;
+@property (strong) NSString *build;
+@property (strong) NSString *licensedTo;
+@property (strong) NSAttributedString *credits;
+@property (strong) NSString *appCodeSignatureStatus;
+@property (strong) NSString *serverCodeSignatureStatus;
+@property (strong) NSString *taskCodeSignatureStatus;
 @end

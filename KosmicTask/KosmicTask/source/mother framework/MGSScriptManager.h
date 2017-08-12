@@ -22,9 +22,9 @@
 	MGSImageAndText *_imageAndText;
 }
 
-@property (copy) NSString *name;
+@property (copy, nonatomic) NSString *name;
 @property BOOL hasScripts;
-@property BOOL hasAllScripts;
+@property (nonatomic) BOOL hasAllScripts;
 @property NSInteger groupCount;
 
 + (NSString *)userDocumentPath;

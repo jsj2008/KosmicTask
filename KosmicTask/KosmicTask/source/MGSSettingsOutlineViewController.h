@@ -11,7 +11,7 @@
 @class MGSLanguageProperty;
 
 @interface MGSSettingsOutlineViewController : NSViewController {
-	id delegate;
+	__weak id delegate;
 	NSMutableArray *settingsTree;
 	BOOL documentEdited;
 	BOOL editable;  // view editable
@@ -29,13 +29,13 @@
 	IBOutlet NSTreeController *settingsTreeController;
 }
 
-@property id delegate;
+@property (weak) id delegate;
 @property BOOL documentEdited;
 @property BOOL editable;
 @property BOOL resourceEditable;
 @property (copy) NSMutableArray *settingsTree;
-@property (assign) MGSLanguagePropertyManager *languagePropertyManager;
-@property (assign) MGSLanguageProperty *selectedLanguageProperty;
-@property (assign) MGSLanguageProperty *editedLanguageProperty;
+@property (strong) MGSLanguagePropertyManager *languagePropertyManager;
+@property (strong) MGSLanguageProperty *selectedLanguageProperty;
+@property (strong) MGSLanguageProperty *editedLanguageProperty;
 
 @end

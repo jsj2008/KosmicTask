@@ -42,7 +42,7 @@
 
 @property (copy) NSString *label;
 @property BOOL isDraggable;
-@property (assign) NSImage *image;
+@property (strong) NSImage *image;
 @property (copy) NSImage *statusImage;
 @property NSInteger count;
 @property BOOL hasCount;
