@@ -14,22 +14,22 @@
 @class MGSNetAttachments;
 
 @interface MGSResult : MGSDisposableObject {
-	id __unsafe_unretained _object;										// the result object
+	id _object;										// the result object
 	MGSTaskSpecifier *_action;					// action associated with the result
 	NSAttributedString *_resultScriptString;		// result object string as returned by the script component
 	NSAttributedString *_resultLogString;           // log string
-    MGSNetAttachments *__weak _attachments;				// attachments
+    MGSNetAttachments * _attachments;				// attachments
 	NSMutableArray *_progressArray;					// progress array 
 	eMGSMotherResultView _viewMode;					// view mode
 	NSMutableAttributedString *_resultString;		// make this weak so that it becomes deallocated when no longer reqd
-	NSArray * __weak _resultTree;					// make weak
+	NSArray * _resultTree;
 }
 
-@property (unsafe_unretained) id object;
+@property id object;
 @property (strong) MGSTaskSpecifier *action;
 @property (copy) NSAttributedString *resultScriptString;
 @property (copy) NSAttributedString *resultLogString;
-@property (weak) MGSNetAttachments *attachments;
+@property (nonatomic) MGSNetAttachments *attachments;
 @property (copy) NSMutableArray *progressArray;
 @property eMGSMotherResultView viewMode;
 

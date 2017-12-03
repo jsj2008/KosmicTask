@@ -72,7 +72,7 @@ static MGSNetClientManager *_sharedController = nil;
 {
 	@synchronized(self) {
 		if (!_sharedController) {
-			[[self alloc] init];	// assignment occurs below
+			(void)[[self alloc] init];	// assignment occurs below
 		}
 	}
 	return _sharedController;
@@ -1044,7 +1044,7 @@ remove a static client
 {	
 	if (!aString) return nil;
 	NSString *trimmedString = [aString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-	if (trimmedString == @"") return nil;
+	if ([trimmedString isEqualToString:@""]) return nil;
 	
 	return trimmedString;
 }

@@ -27,7 +27,7 @@
 	BOOL _acceptButtonQuits;
 }
 
-@property NSInteger processingCount;
+@property (nonatomic) NSInteger processingCount;
 
 - (void)closeWindowWithReturnCode:(NSInteger)returnCode;
 - (IBAction)cancel:(id)sender;

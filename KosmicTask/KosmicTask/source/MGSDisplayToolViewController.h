@@ -44,8 +44,8 @@
 - (IBAction)toggleActionExecution:(id)sender;
 - (IBAction)terminateAction:(id)sender;
 
-@property (strong) MGSTaskSpecifier *actionSpecifier;
+@property (strong, nonatomic) MGSTaskSpecifier *actionSpecifier;
 @property (copy) NSColor *textColor;
-@property BOOL highlight;
+@property (nonatomic) BOOL highlight;
 
 @end

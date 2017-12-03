@@ -60,7 +60,7 @@
 - (IBAction)refreshModifiedDate:(id)sender;
 - (IBAction)defaultScriptType:(id)sender;
 
-@property (weak) MGSTaskSpecifier *action;
+@property (weak, nonatomic) MGSTaskSpecifier *action;
 @property (weak) NSTextField *nameTextField;
 @property (weak, readonly) NSView *infoView;
 

@@ -421,7 +421,7 @@ NSString *MGSContentsItemIdentifier = @"Contents";
 				  MGSScriptItemIdentifier, ITEM_IDENTIFIER, 
 				  NSLocalizedString(@"Script", @"Item scope bar text"), ITEM_NAME, 
 				  nil], 
-				 nil];
+				 nil].mutableCopy;
 		
 		// SCOPE_ATTRIBUTE_GROUP_ID
 		[self.groups addObject:[NSDictionary dictionaryWithObjectsAndKeys:

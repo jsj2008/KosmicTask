@@ -68,20 +68,20 @@ extern NSString *MGSIsProcessingContext;
 - (void)dispose;
 
 @property BOOL isProcessing;
-@property BOOL allowDetach;
-@property BOOL allowLock;
+@property (nonatomic) BOOL allowDetach;
+@property (nonatomic) BOOL allowLock;
 @property BOOL keepActionDisplayed;
 @property BOOL showPrevActionEnabled;
 @property BOOL showNextActionEnabled;
 @property BOOL indexMatchesPartnerIndex;
 @property (copy) NSString *actionPositionString;
 @property (readonly) MGSTaskSpecifierManager *actionController;
-@property BOOL taskResultDisplayLocked;
-@property NSInteger selectedPartnerIndex;
+@property (nonatomic) BOOL taskResultDisplayLocked;
+@property (nonatomic) NSInteger selectedPartnerIndex;
 @property (readonly) NSInteger selectedIndex;
 
 //@property (readonly) MGSScript *script;
-@property (strong) MGSTaskSpecifier *action;
+@property (strong, nonatomic) MGSTaskSpecifier *action;
 @property (readonly) MGSActionViewController *actionViewController;
 
 //@property (readonly) NSView *view;

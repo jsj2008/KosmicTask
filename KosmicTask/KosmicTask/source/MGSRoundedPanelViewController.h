@@ -31,7 +31,7 @@
 	
 	NSString *_bannerLeft;								// left banner text
 	NSString *_bannerRight;								// right banner text
-	id __unsafe_unretained _delegate;
+	id __weak _delegate;
 
 	CGFloat _minHeight;									// min view drag height
 	CGFloat _maxHeight;									// max view drag height
@@ -49,7 +49,7 @@
 	CGFloat _middleViewTopYOffset;	// needed to ensure correct view positioning when drag views quickly
 }
 
-@property (unsafe_unretained) id delegate;
+@property (weak) id delegate;
 @property (weak) NSTextField *bannerLeftLabel;				// left banner value
 @property (weak) NSTextField *bannerRightLabel;	
 @property (copy) NSString *bannerLeft;
@@ -65,8 +65,8 @@
 @property CGFloat maxHeight;							// max view drag height
 @property CGFloat minMiddleHeight, maxMiddleHeight;		// middle view height limits
 @property CGFloat minBottomHeight, maxBottomHeight;		// bottom view height limits
-@property BOOL canDragHeight;
-@property BOOL canDragMiddleView;
+@property (nonatomic) BOOL canDragHeight;
+@property (nonatomic) BOOL canDragMiddleView;
 @property BOOL dragThumbHidden;
 @property BOOL middleDragThumbHidden;
 @property BOOL allowHighlight;

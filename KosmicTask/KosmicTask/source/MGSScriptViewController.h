@@ -53,7 +53,7 @@
 	NSTextView *_fragariaTextView;
 }
 
-@property (strong) MGSTaskSpecifier *taskSpec;
+@property (strong, nonatomic) MGSTaskSpecifier *taskSpec;
 @property (unsafe_unretained) id delegate;
 @property (readonly) BOOL scriptTextChanged;
 @property (weak, readonly) NSString *scriptTemplateSource;

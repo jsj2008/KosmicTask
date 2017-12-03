@@ -72,8 +72,8 @@
 	BOOL						_postSelectionChangeNotification;
 }
 
-@property(strong) NSMutableArray *images;
-@property(assign) NSUInteger sortingMode;
-@property(assign) BOOL alternateColors;
+@property (strong) NSMutableArray *images;
+@property (assign, nonatomic) NSUInteger sortingMode;
+@property (assign, nonatomic) BOOL alternateColors;
 
 @end

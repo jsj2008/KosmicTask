@@ -40,14 +40,14 @@
 - (void)removeChildNodeWithRepresentedObject:(id)object;
 - (void)removeFromParent;
 
-@property (copy) NSString *label;
+@property (copy, nonatomic) NSString *label;
 @property BOOL isDraggable;
 @property (strong) NSImage *image;
 @property (copy) NSImage *statusImage;
 @property NSInteger count;
 @property BOOL hasCount;
 @property (copy) NSColor *countColor;
-@property BOOL countChildNodes;
+@property (nonatomic) BOOL countChildNodes;
 @property (copy) NSDictionary *options;
 @property (copy) NSString *type;
 @property (getter=isUpdating) BOOL updating;

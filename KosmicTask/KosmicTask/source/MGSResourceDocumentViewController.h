@@ -37,9 +37,9 @@ typedef NSInteger MGSResourceDocumentMode;
 - (IBAction)docFormatAction:(id)sender;
 - (IBAction)docModeAction:(id)sender;
 
-@property MGSResourceDocumentMode mode;
+@property (nonatomic) MGSResourceDocumentMode mode;
 @property BOOL editModeActive;
-@property (strong) MGSResourceItem *selectedResource;
+@property (strong, nonatomic) MGSResourceItem *selectedResource;
 @property BOOL documentEdited;
 
 @end

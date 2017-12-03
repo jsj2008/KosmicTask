@@ -14,7 +14,7 @@
 @interface MGSAuthenticateWindowController : NSWindowController <NSWindowDelegate> {
 	
 	//MGSNetClient *_netClient;
-	MGSClientNetRequest *__weak _netRequest;
+	MGSClientNetRequest * _netRequest;
 	id _requestOwner;
 	
 	IBOutlet NSTextField *usernameTextField;
@@ -41,14 +41,14 @@
     BOOL _authenticationInProgress;
 }
 
-@property (copy) NSString *username;
+@property (copy, nonatomic) NSString *username;
 @property (copy) NSString *password;
 @property BOOL savePasswordToKeychain;
 @property (copy) NSString *windowText;
 @property (copy) NSString *hostName;
 @property (readonly) NSDictionary *challenge;
 @property (weak) NSWindow *modalForWindow;
-@property (weak, readonly) MGSClientNetRequest *netRequest;
+@property (readonly) MGSClientNetRequest *netRequest;
 @property BOOL canConnect;
 @property BOOL authenticationInProgress;
 

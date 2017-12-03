@@ -35,11 +35,11 @@
 
 @property (unsafe_unretained) id delegate;
 @property (strong) NSArray *resultActionArray;
-@property BOOL searchInProgress;
+@property (nonatomic) BOOL searchInProgress;
 @property (copy) NSString *searchActivity;
-@property NSInteger searchTargetsQueried;
-@property NSInteger searchTargetsResponded;
-@property NSInteger numberOfItemsFound;
+@property (nonatomic) NSInteger searchTargetsQueried;
+@property (nonatomic) NSInteger searchTargetsResponded;
+@property (nonatomic) NSInteger numberOfItemsFound;
 @property NSUInteger numberOfMatches;
 
 - (void)sendSearchQueryToAllClients:(NSDictionary *)searchDict;

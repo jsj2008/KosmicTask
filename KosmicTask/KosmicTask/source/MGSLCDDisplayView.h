@@ -19,7 +19,7 @@
 	BOOL _available;
 }
 
-@property BOOL maxIntensity;
-@property (getter=isActive) BOOL active;
-@property (getter=isAvailable) BOOL available;
+@property (nonatomic) BOOL maxIntensity;
+@property (getter=isActive, nonatomic) BOOL active;
+@property (getter=isAvailable, nonatomic) BOOL available;
 @end

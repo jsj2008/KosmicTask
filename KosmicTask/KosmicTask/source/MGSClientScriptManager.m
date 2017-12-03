@@ -667,8 +667,10 @@ static BOOL _userScriptGroupSaved = NO;
  
  group script type label at index
  
+ may return a dictionary or a string
+ 
  */
-- (NSString *)groupScriptTypeLabelAtIndex:(NSInteger)idx
+- (id)groupScriptTypeLabelAtIndex:(NSInteger)idx
 {
 	MGSScript *script = [self groupScriptAtIndex:idx];
 	

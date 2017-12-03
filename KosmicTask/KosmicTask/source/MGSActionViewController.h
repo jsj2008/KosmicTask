@@ -33,8 +33,8 @@
     NSColor *_parameterCountLabelColourEnabled;
 }
 
-@property (strong) MGSTaskSpecifier *action;
-@property BOOL invertedLeftBannerImage;
+@property (strong, nonatomic) MGSTaskSpecifier *action;
+@property (nonatomic) BOOL invertedLeftBannerImage;
 
 -(id)initWithMode:(MGSParameterMode)mode ;
 - (void)updateParameterCountDisplay;

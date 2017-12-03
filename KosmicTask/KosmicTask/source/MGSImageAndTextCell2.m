@@ -389,9 +389,8 @@
 		NSInteger selectedRow = [hostingOutlineView selectedRow];
 		id node = [[hostingOutlineView itemAtRow:selectedRow] representedObject];
 		
-		SEL dragSelector = @selector(isDraggable);
-		if ([node respondsToSelector:dragSelector]) {
-			if (![node performSelector:dragSelector]) {	// is the node isDraggable (i.e. non-file system based objects)
+		if ([node respondsToSelector:@selector(isDraggable)]) {
+			if (![node performSelector:@selector(isDraggable)]) {	// is the node isDraggable (i.e. non-file system based objects)
 				result = NSCellHitTrackableArea;
 			}
 		}

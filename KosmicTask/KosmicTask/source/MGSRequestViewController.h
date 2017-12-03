@@ -42,7 +42,7 @@
 	BOOL _sendCompletedActionSpecifierToHistory;
 	
 	MGSWaitViewController *_waitViewController;
-	id __unsafe_unretained _delegate;
+	id __weak _delegate;
 	NSInteger _viewEffect;	// effect to use when showing views
 	
 	NSImage                 *_icon;			// icon
@@ -80,11 +80,11 @@
 - (void)toggleViewMode:(eMGSMotherViewConfig)mode;
 
 // properties
-@property (unsafe_unretained) id delegate;
+@property (weak, nonatomic) id delegate;
 @property (readonly) NSInteger viewEffect;
 @property (weak, readonly) NSView *emptyRequestView;
 @property (readonly) MGSInputRequestViewController *inputViewController;
 @property (readonly) MGSOutputRequestViewController *outputViewController;
-@property BOOL observesInputModifications;
+@property (nonatomic) BOOL observesInputModifications;
 @property BOOL sendCompletedActionSpecifierToHistory;
 @end

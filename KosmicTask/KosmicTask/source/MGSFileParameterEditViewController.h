@@ -19,7 +19,7 @@
 }
 
 @property BOOL useFileExtensions;
-@property (copy) NSString *fileExtensions;
+@property (copy, nonatomic) NSString *fileExtensions;
 @property (copy) NSString *filePath;
 
 - (IBAction)selectFile:(id)sender;

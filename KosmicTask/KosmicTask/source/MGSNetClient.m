@@ -743,8 +743,8 @@ NSString *MGSNetClientKeyPathActivityFlags = @"activityFlags";
 {
 	// send heartbeat request to available hosts and those who have been
 	// recently available but are now flagged as not responding.
-	// a host should only get into the MGSHostStatusNotResponding state is a network
-	// comms error occurs of the host crashes.
+	// a host should only get into the MGSHostStatusNotResponding state if a network
+	// comms error occurs or the host crashes.
 	if (_hostStatus == MGSHostStatusAvailable || _hostStatus == MGSHostStatusNotResponding ||
 		(NO == _hostViaBonjour)) {	// manual host not connected
 		

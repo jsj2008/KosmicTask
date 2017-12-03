@@ -68,13 +68,13 @@ extern NSString *MGSRunStatusContext;
 //@property (readonly) MGSResultController *resultController;
 @property BOOL showPrevResultEnabled;
 @property BOOL showNextResultEnabled;
-@property BOOL indexMatchesPartnerIndex;
+@property (nonatomic) BOOL indexMatchesPartnerIndex;
 @property (copy) NSString * resultPositionString;
-@property BOOL resultsAvailableForAction;
-@property (strong) MGSTaskSpecifier *action;
+@property (nonatomic) BOOL resultsAvailableForAction;
+@property (strong, nonatomic) MGSTaskSpecifier *action;
 @property (copy) NSMutableArray *progressArray;
-@property BOOL taskResultDisplayLocked;
-@property NSInteger selectedPartnerIndex;
+@property (nonatomic) BOOL taskResultDisplayLocked;
+@property (nonatomic) NSInteger selectedPartnerIndex;
 @property (readonly)NSInteger selectedIndex;
 @property (readonly)MGSResultViewController *resultViewController;
 

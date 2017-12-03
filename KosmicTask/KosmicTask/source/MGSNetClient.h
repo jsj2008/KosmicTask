@@ -115,7 +115,7 @@ typedef NSInteger MGSClientActivityFlags;
 	NSUInteger _initialRequestRetryCount;	// initial request retry count
 	BOOL _validatedConnection;			// connection has a valid licence
 	NSTimeInterval _bonjourResolveTimeout;
-	id __unsafe_unretained _delegate;
+	id __weak _delegate;
     NSString *_UUID;
 	NSOperationQueue *_operationQueue;
     MGSClientActivityFlags _activityFlags;
@@ -158,18 +158,18 @@ typedef NSInteger MGSClientActivityFlags;
 - (id)key;
 
 @property (copy) NSString *serviceShortName;
-@property (copy) NSString *serviceName;
-@property (strong) NSImage *hostIcon;
-@property MGSHostStatus hostStatus;
+@property (copy, nonatomic) NSString *serviceName;
+@property (strong, nonatomic) NSImage *hostIcon;
+@property (nonatomic) MGSHostStatus hostStatus;
 @property MGSClientActivityFlags activityFlags;
 @property (readonly, copy) NSString *UUID;
 @property (weak, readonly) NSNetService *netService;
-@property BOOL visible;
+@property (nonatomic) BOOL visible;
 @property BOOL sendExecuteValidation;
 @property MGSHostType hostType;
-@property (strong) NSImage *hostImage;
+@property (strong, nonatomic) NSImage *hostImage;
 @property (strong) NSString *hostUserName;
-@property (unsafe_unretained) id delegate;
+@property (weak, nonatomic) id delegate;
 @property BOOL useSSL;
 @property (copy) NSDictionary *authenticationDictionary;
 @property BOOL hostViaBonjour;
@@ -179,7 +179,7 @@ typedef NSInteger MGSClientActivityFlags;
 @property BOOL TXTRecordReceived;
 @property NSUInteger initialRequestRetryCount;
 @property BOOL validatedConnection;
-@property BOOL securePublicTasks;
+@property (nonatomic) BOOL securePublicTasks;
 @end
 
 

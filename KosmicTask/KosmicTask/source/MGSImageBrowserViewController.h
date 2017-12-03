@@ -18,7 +18,7 @@
 	BOOL _openInDefaultAppAfterSave;
 }
 @property (copy) NSString *fileCountString;
-@property NSInteger fileCount;
+@property (nonatomic) NSInteger fileCount;
 @property BOOL openInDefaultAppAfterSave;
 @property NSInteger overwriteOption;
 
@@ -42,10 +42,10 @@
 	NSMenu *_menu;
 	IBOutlet NSView *__weak _splitViewAdditionalView;
 }
-@property (weak) MGSNetAttachments *attachments;
+@property (weak, nonatomic) MGSNetAttachments *attachments;
 @property (weak, readonly) NSString *fileCountString;
 @property (weak, readonly) MGSImageBrowserView *imageBrowser;
-@property (strong) NSMenu *menu;
+@property (strong, nonatomic) NSMenu *menu;
 @property (weak, readonly) NSView *splitViewAdditionalView;
 
 - (IBAction)zoomChange:(id)sender;

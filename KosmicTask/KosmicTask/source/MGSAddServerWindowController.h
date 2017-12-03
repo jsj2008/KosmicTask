@@ -70,12 +70,12 @@ typedef NSInteger MGSAddServerStatusID;
 - (IBAction)checkboxClickAction:(id)sender;
 
 @property (copy) NSString *note;
-@property (copy) NSString *address;
+@property (copy, nonatomic) NSString *address;
 @property (copy) NSString *displayName;
 @property BOOL keepConnected;
 @property BOOL secureConnection;
-@property NSInteger portNumber;
+@property (nonatomic) NSInteger portNumber;
 @property (unsafe_unretained) id delegate;
-@property BOOL selectedConnectionIsValid;
+@property (nonatomic) BOOL selectedConnectionIsValid;
 @property BOOL canConnect;
 @end

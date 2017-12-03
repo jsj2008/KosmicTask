@@ -43,7 +43,7 @@ static BOOL trialExpired = NO;
     if (sharedInstance == nil)
     {
         sharedInstance = [[self alloc] init];
-		[sharedInstance initWithWindowNibName:@"LicenceWindow"];
+		(void)[sharedInstance initWithWindowNibName:@"LicenceWindow"];
     }
 	
     return sharedInstance;

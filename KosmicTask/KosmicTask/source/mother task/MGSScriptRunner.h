@@ -141,7 +141,7 @@ extern NSString *MGSScriptRunnerBuildException;
 @property (readonly, copy) NSString *onRun;
 @property (readonly, copy) NSString *runFunctionName;
 @property (readonly, copy) NSString *runClassName;
-@property  MGSLanguage *language;
+@property (strong) MGSLanguage *language;
 @end
 
 @interface NSMutableData (MGSScriptRunner)

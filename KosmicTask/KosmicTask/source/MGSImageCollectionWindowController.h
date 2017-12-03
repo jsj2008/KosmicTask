@@ -55,5 +55,5 @@
 	IBOutlet NSTextField	*selectionField;
 	NSString *imagePath;
 }
-@property (copy) NSString *imagePath;
+@property (copy, nonatomic) NSString *imagePath;
 @end

@@ -77,7 +77,7 @@ static MGSAuthenticateWindowController *_sharedController = nil;
 {
 	@synchronized(self) {
 		if (nil == _sharedController) {
-			[[self alloc] init];  // assignment occurs below
+			(void)[[self alloc] init];  // assignment occurs below
 		}
 	}
 	return _sharedController;

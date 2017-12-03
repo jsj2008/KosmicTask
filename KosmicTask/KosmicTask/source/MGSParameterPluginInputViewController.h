@@ -15,13 +15,13 @@
 	MGSParameterPluginViewController *__weak _parameterPluginViewController;
 	IBOutlet NSButton *resetButton;
 	BOOL _resetEnabled;
-	id __unsafe_unretained delegate;
+	id __weak delegate;
 	IBOutlet NSTextField *label;
 }
 @property (weak) NSView *pluginView;
-@property (weak) MGSParameterPluginViewController *parameterPluginViewController;
+@property (weak, nonatomic) MGSParameterPluginViewController *parameterPluginViewController;
 @property (readonly) BOOL resetEnabled;
-@property (unsafe_unretained) id delegate;
+@property (weak) id delegate;
 
 - (IBAction)resetToDefaultValue:(id)sender;
 

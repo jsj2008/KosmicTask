@@ -58,7 +58,7 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
     MGSLanguageCodeDescriptor *_languageCodeDescriptor;
     MGSTaskVariablesViewController *_taskVariablesViewController;
     
-    MGSScript *__weak _script;
+    MGSScript * _script;
     MGSFragaria *_fragaria;
     IBOutlet MGSBorderView *_borderView;
 	IBOutlet NSView *_fragariaHostView; // fragria host view
@@ -90,10 +90,10 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
 - (NSString *)codeString;
 
 @property (copy, readonly) NSArray *scriptTypes;
-@property (weak) MGSScript *script;
-@property (copy) NSString *infoText;
+@property (strong, nonatomic) MGSScript *script;
+@property (copy, nonatomic) NSString *infoText;
 @property (copy) NSString *selectedTabInfoText;
-@property MGSCodeAssistantCodeSelection codeSelection;
+@property (nonatomic) MGSCodeAssistantCodeSelection codeSelection;
 @property (assign) BOOL canInsert;
 @property (assign) BOOL canCopy;
 @property (assign) NSInteger inputVariableTotal;
@@ -101,6 +101,6 @@ typedef NSInteger MGSCodeAssistantCodeSelection;
 @property (assign) NSInteger inputVariableManual;
 @property (assign) BOOL autoAllEnabled;
 @property (assign) BOOL dataConfigured;
-@property (assign) BOOL allowInsertTaskInputs;
+@property (assign, nonatomic) BOOL allowInsertTaskInputs;
 
 @end

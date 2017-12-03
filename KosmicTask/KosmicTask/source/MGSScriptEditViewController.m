@@ -170,7 +170,7 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 								nil];
 	consoleErrorOptions = [NSDictionary dictionaryWithObjectsAndKeys:
 										attributes, @"attributes",
-										nil];
+										nil].mutableCopy;
 
 	// console text options
 	attributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -178,7 +178,7 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 								nil];
 	consoleTextOptions = [NSDictionary dictionaryWithObjectsAndKeys:
 												attributes, @"attributes",
-												nil];
+												nil].mutableCopy;
 
 	// console success options
 	attributes = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -186,7 +186,7 @@ buildResult, buildStatus, languageRequiresBuild, canExecuteScript, canBuildScrip
 								nil];
 	consoleSuccessOptions = [NSDictionary dictionaryWithObjectsAndKeys:
 											   attributes, @"attributes",
-											   nil];
+											   nil].mutableCopy;
     
     // initialsie the build result
     self.buildStderrResult = @"";

@@ -111,15 +111,15 @@ typedef enum _MGSParameterType {
     BOOL _canIncreaseDisplayIndex;
 }
 
-@property (strong) MGSScriptParameter *scriptParameter;
+@property (strong, nonatomic) MGSScriptParameter *scriptParameter;
 @property NSInteger displayIndex;
 @property MGSParameterType parameterType;
 @property (readonly)MGSParameterMode mode;
 @property (copy) NSString *parameterName;
 @property (copy) NSString *parameterDescription;
 @property (readonly) BOOL resetEnabled;
-@property BOOL canDecreaseDisplayIndex;
-@property BOOL canIncreaseDisplayIndex;
+@property (nonatomic) BOOL canDecreaseDisplayIndex;
+@property (nonatomic) BOOL canIncreaseDisplayIndex;
 @property BOOL dragging;
 
 + (id)parameterTypeMenuDictionaryWithTarget:(id)target action:(SEL)selector;

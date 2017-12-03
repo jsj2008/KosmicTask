@@ -31,7 +31,7 @@ enum _MGSListMenuItemTag {
 	id __weak _delegate;
 }
 @property (copy) NSString *value;
-@property BOOL isInitialValue;
+@property (nonatomic) BOOL isInitialValue;
 @property (weak) id delegate;
 
 

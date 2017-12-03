@@ -35,8 +35,9 @@
 	
     if (sharedInstance == nil)
     {
+#warning what?
         sharedInstance = [[self alloc] init];
-		[sharedInstance initWithWindowNibName:@"AboutWindow"];
+		sharedInstance = [sharedInstance initWithWindowNibName:@"AboutWindow"];
     }
 	
     return sharedInstance;
@@ -67,7 +68,7 @@
 	self.appCodeSignatureStatus = [NSString stringWithFormat: NSLocalizedString(@"Application code signature: %@", @"About window code signature text"), 
 								codeSign.resultString];
 
-	// validate server code siging
+	// validate server code signing
 	[codeSign validatePath:[MGSPath bundlePathForHelperExecutable:MGSKosmicTaskAgentName]];
 	self.serverCodeSignatureStatus = [NSString stringWithFormat: NSLocalizedString(@"Server code signature: %@", @"About window code signature text"), 
 								codeSign.resultString];

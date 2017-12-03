@@ -20,6 +20,6 @@
 }
 
 @property (copy) NSDate *initialDate;
-@property BOOL initialiseToCurrentDate;
+@property (nonatomic) BOOL initialiseToCurrentDate;
 @property BOOL enableDatePickers;
 @end

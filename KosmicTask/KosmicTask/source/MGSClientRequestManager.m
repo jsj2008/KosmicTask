@@ -605,7 +605,6 @@ static MGSClientRequestManager *_sharedController = nil;
     MLogDebug(@"Time out : Terminating request: %@", [netRequest UUID]);
     
     // terminate the request
-#warning we remove child requests here. will this revive logging GC requests?
     [self terminateRequest:netRequest];
     
     // send error to owner

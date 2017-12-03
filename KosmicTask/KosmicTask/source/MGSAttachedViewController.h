@@ -15,6 +15,6 @@
 	NSColor *_textColor;
 }
 
-@property (copy) NSString *text;
-@property (copy) NSColor *textColor;
+@property (copy, nonatomic) NSString *text;
+@property (strong) NSColor *textColor;
 @end

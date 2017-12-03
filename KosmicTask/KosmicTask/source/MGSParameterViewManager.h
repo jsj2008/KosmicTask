@@ -50,7 +50,7 @@ enum _MGSParameterInputMenuTags {
 	MGSScriptParameterManager * _scriptParameterManager;
 	MGSParameterMode _mode;
 	IBOutlet MGSParameterEndViewController *_endViewController;
-	id __unsafe_unretained _delegate;
+	id __weak _delegate;
 	MGSActionViewController *__weak _actionViewController;
     BOOL _dragging;
     NSPoint _lastDragLocation;
@@ -66,7 +66,6 @@ enum _MGSParameterInputMenuTags {
 }
 
 - (BOOL)commitPendingEdits;
-//- (void)updateViews;
 - (MGSParameterViewController *)appendParameter;
 - (void)selectParameter:(MGSParameterViewController *)controller;
 - (void)setScriptParameterManager:(MGSScriptParameterManager *)aScriptParameterHandler;
@@ -90,10 +89,10 @@ enum _MGSParameterInputMenuTags {
 - (IBAction)undoInputParameterAction:(id)sender;
 
 @property MGSParameterMode mode;
-@property (unsafe_unretained) id delegate;
-@property (weak) MGSActionViewController *actionViewController;
-@property (weak) MGSParameterViewController *selectedParameterViewController;
+@property (weak) id delegate;
+@property (weak, nonatomic) MGSActionViewController *actionViewController;
+@property (weak, nonatomic) MGSParameterViewController *selectedParameterViewController;
 @property BOOL canUndo;
-@property (weak) MGSParameterViewController *draggedParameterViewController;
+@property (weak, nonatomic) MGSParameterViewController *draggedParameterViewController;
 
 @end

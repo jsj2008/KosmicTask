@@ -271,7 +271,7 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
  set value
  
  */
-- (void)setValue:(eMGSRequestProgress)value 
+- (void)setValue:(eMGSRequestProgress)value
 {
 #ifdef MGS_DEBUG_PROGRESS
     MLogInfo(@"%lx %@ %@ eMGSRequestProgress: %lu", self, [self className], NSStringFromSelector(_cmd), (long)value);
@@ -821,6 +821,7 @@ static MGSTimeIntervalTransformer *timeIntervalTransformer;
  */
 - (id)copyWithZone:(NSZone *)zone
 {
+#pragma unused(zone)
 	// use of NSCopyObject is not recommended.
 	// see Cocoa Design Patterns for more
     // under arc need to copy properties

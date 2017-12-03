@@ -15,7 +15,7 @@
 	eMGSMotherRunMode _pendingRunMode;			// pending client run mode
 }
 
-@property eMGSMotherRunMode runMode;
+@property (nonatomic) eMGSMotherRunMode runMode;
 @property eMGSMotherRunMode pendingRunMode;
 
 - (id)initWithWindow:(NSWindow *)window;

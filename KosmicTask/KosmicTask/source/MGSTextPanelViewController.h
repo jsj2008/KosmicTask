@@ -20,7 +20,7 @@
 	BOOL _highlighted;
 }
 
-@property (getter=isHighlighted) BOOL highlighted;
+@property (getter=isHighlighted, nonatomic) BOOL highlighted;
 
 - (void)setStringValue:(NSString *)aString;
 - (void)setActivity:(MGSTaskActivity)activity;

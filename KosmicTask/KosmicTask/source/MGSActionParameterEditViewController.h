@@ -42,8 +42,8 @@ typedef NSUInteger MGSParameterViewConfigurationFlags;
     MGSParameterViewConfigurationFlags _parameterViewConfigurationFlags;
 }
 @property NSInteger inputCount;
-@property (strong) MGSTaskSpecifier *action;
-@property (weak) NSView *parameterView;
+@property (strong, nonatomic) MGSTaskSpecifier *action;
+@property (weak, nonatomic) NSView *parameterView;
 @property (readwrite) MGSParameterViewConfigurationFlags parameterViewConfigurationFlags;
 
 - (IBAction)segmentClick:(id)sender;

@@ -16,10 +16,10 @@
 	NSColor *_endColor;
 }
 
-@property BOOL hasTopBorder;
-@property BOOL hasBottomBorder;
-@property (copy) NSColor *startColor;
-@property (copy) NSColor *endColor;
+@property (nonatomic) BOOL hasTopBorder;
+@property (nonatomic) BOOL hasBottomBorder;
+@property (copy, nonatomic) NSColor *startColor;
+@property (copy, nonatomic) NSColor *endColor;
 
 + (NSColor *)endColor;
 + (NSColor *)startColor;

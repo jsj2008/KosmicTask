@@ -31,10 +31,10 @@
 
 @property (weak) id delegate;
 @property BOOL documentEdited;
-@property BOOL editable;
+@property (nonatomic) BOOL editable;
 @property BOOL resourceEditable;
-@property (copy) NSMutableArray *settingsTree;
-@property (strong) MGSLanguagePropertyManager *languagePropertyManager;
+@property (copy, nonatomic) NSMutableArray *settingsTree;
+@property (strong, nonatomic) MGSLanguagePropertyManager *languagePropertyManager;
 @property (strong) MGSLanguageProperty *selectedLanguageProperty;
 @property (strong) MGSLanguageProperty *editedLanguageProperty;
 

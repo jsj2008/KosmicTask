@@ -26,7 +26,7 @@
 @property NSInteger indentation;
 @property NSInteger countAlignment;
 @property NSInteger countMarginVertical;
-@property (strong) NSImage *image;
+@property (strong, nonatomic) NSImage *image;
 
 + (NSColor *)countColor;
 + (NSColor *)countColorGreen;

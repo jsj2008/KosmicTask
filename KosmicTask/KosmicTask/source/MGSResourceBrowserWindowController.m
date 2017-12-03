@@ -30,7 +30,7 @@ const char MGSContextDocumentEdited;
 {
 	@synchronized(self) {
 		if (nil == mgs_sharedController) {
-			[[self alloc] init];  // assignment occurs below
+			(void)[[self alloc] init];  // assignment occurs below
 			
 			// load the nib
 			[mgs_sharedController window];

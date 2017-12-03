@@ -231,6 +231,7 @@ struct PRHOOBCStuffYouWouldNeedToIncludeCarbonHeadersFor {
 	return [controlView isKindOfClass:[NSControl class]];
 }
 - (BOOL) continueTracking:(NSPoint)lastPoint at:(NSPoint)currentPoint inView:(NSView *)controlView {
+#pragma unused(lastPoint)
 	NSControl *control = [controlView isKindOfClass:[NSControl class]] ? (NSControl *)controlView : nil;
 	if (control) {
 		trackingPoint = currentPoint;
@@ -242,6 +243,8 @@ struct PRHOOBCStuffYouWouldNeedToIncludeCarbonHeadersFor {
 	return NO;
 }
 - (void)stopTracking:(NSPoint)lastPoint at:(NSPoint)stopPoint inView:(NSView *)controlView mouseIsUp:(BOOL)flag {
+    #pragma unused(lastPoint)
+    #pragma unused(flag)
 	tracking = NO;
 	trackingTime = [NSDate timeIntervalSinceReferenceDate];
 

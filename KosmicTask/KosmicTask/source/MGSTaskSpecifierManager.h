@@ -30,7 +30,7 @@
 	id __unsafe_unretained _delegate;
 }
 
-@property BOOL keepHistory;
+@property (nonatomic) BOOL keepHistory;
 
 + (id)sharedController;
 - (id) initAsHistory;

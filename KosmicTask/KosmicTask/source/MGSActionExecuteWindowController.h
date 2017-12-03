@@ -23,12 +23,12 @@
 																> {
 	@private
 	IBOutlet MGSActionExecuteWindow *__weak _actionExecuteWindow;
-	MGSNetClient *__weak _netClient;
+	MGSNetClient * _netClient;
 	MGSOpenPanelController *_openPanelController;
 }
 
 @property (weak) MGSActionExecuteWindow *actionExecuteWindow;
-@property (weak) MGSNetClient *netClient;
+@property (nonatomic) MGSNetClient *netClient;
 @property (readonly) MGSOpenPanelController *openPanelController;
 
 - (MGSTaskSpecifier *)selectedActionSpecifier;

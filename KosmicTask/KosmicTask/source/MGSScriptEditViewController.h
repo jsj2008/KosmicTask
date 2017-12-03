@@ -111,20 +111,20 @@ extern NSString * const MGSIgnoreBuildError;
 - (NSTextView *)scriptTextView;
 
 
-@property(strong) MGSTaskSpecifier *taskSpec;
+@property (strong, nonatomic) MGSTaskSpecifier *taskSpec;
 
 @property (weak) NSWindow *pendingWindow;
-@property (copy) NSString *buildConsoleResult;
+@property (copy, nonatomic) NSString *buildConsoleResult;
 @property (readonly) MGSScriptViewController *scriptViewController;
-@property (readonly) NSInteger buildStatusFlags;
-@property NSInteger buildResultIndex;
+@property (readonly, nonatomic) NSInteger buildStatusFlags;
+@property (nonatomic) NSInteger buildResultIndex;
 @property (copy) NSString *buildSheetMessage;
-@property (copy) NSString *buildStderrResult;
-@property (strong) NSString *buildResult;
+@property (copy, nonatomic) NSString *buildStderrResult;
+@property (strong, nonatomic) NSString *buildResult;
 @property (copy, readonly) NSString *buildStatus;
-@property (readonly) BOOL languageRequiresBuild;
-@property (readonly) BOOL languageSupportsBuild;
-@property (readonly) BOOL scriptBuilt;
+@property (readonly, nonatomic) BOOL languageRequiresBuild;
+@property (readonly, nonatomic) BOOL languageSupportsBuild;
+@property (readonly, nonatomic) BOOL scriptBuilt;
 @property (readonly) BOOL canExecuteScript;
 @property (readonly) BOOL canBuildScript;
 @end

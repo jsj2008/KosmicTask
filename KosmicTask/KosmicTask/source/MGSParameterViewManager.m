@@ -55,8 +55,8 @@ NSString * MGSInputParameterDragException = @"MGSInputParameterDragException";
 - (void)parameterViewController:(MGSParameterViewController *)viewController moveToIndex:(NSUInteger)newIndex;
 
 @property BOOL parameterScrollingEnabled;
-@property (copy) NSString *undoActionName;
-@property (copy) NSString *undoActionOperation;
+@property (copy, nonatomic) NSString *undoActionName;
+@property (copy, nonatomic) NSString *undoActionOperation;
 
 @end
 

@@ -35,6 +35,6 @@
 @property (strong) NSImage *mixedStateAltImage;
 @property (strong) NSImage *mixedStateDisabledImage;
 
-@property NSInteger state;
+@property (nonatomic) NSInteger state;
 
 @end

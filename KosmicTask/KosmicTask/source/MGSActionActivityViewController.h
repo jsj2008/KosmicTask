@@ -23,7 +23,7 @@
 }
 
 
-@property MGSTaskActivity activity;
+@property (nonatomic) MGSTaskActivity activity;
 @property BOOL animateTaskLoading;;
 
 - (void)animate:(NSTimer *)aTimer;

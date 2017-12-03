@@ -37,7 +37,7 @@
 }
 
 @property (unsafe_unretained) id delegate;
-@property (strong) MGSTaskSpecifier *actionSpecifier;
+@property (strong, nonatomic) MGSTaskSpecifier *actionSpecifier;
 
 - (IBAction)optionsClick:(id)sender;
 - (IBAction)infoClick:(id)sender;

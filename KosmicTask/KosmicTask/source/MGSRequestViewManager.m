@@ -25,7 +25,7 @@ static MGSRequestViewManager *_sharedInstance = nil;
 + (id)sharedInstance
 {
 	if (!_sharedInstance) {
-		[[self alloc] init];	// assign in allocWithZone
+		(void)[[self alloc] init];	// assign in allocWithZone
 	}
 	return _sharedInstance;
 }

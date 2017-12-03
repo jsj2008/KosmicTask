@@ -112,10 +112,10 @@ const char MGSContextFirstResponder;
  - commitEditing
  
  */
-- (void)commitEditing
+- (BOOL)commitEditing
 {
 	[objectController commitEditing];
-    [arrayController commitEditing];
+    return [arrayController commitEditing];
 }
 
     #pragma mark -

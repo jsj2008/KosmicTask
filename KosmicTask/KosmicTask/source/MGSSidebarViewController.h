@@ -35,7 +35,7 @@
 @property (strong) NSMutableArray *clientTree;
 @property (weak, readonly) MGSNetClient *selectedNetClient;
 @property (unsafe_unretained, readonly) id selectedObject;
-@property (weak, readonly) MGSOutlineViewNode *selectedObjectNode;
+@property (weak, readonly, nonatomic) MGSOutlineViewNode *selectedObjectNode;
 
 - (IBAction)openTaskInNewTab:(id)sender;
 - (IBAction)openTaskInNewWindow:(id)sender;

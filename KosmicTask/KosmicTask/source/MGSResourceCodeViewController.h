@@ -32,19 +32,19 @@ typedef NSUInteger MGSCodeSegmentIndex;
     BOOL documentEdited;
     MGSCodeSegmentIndex selectedCodeSegmentIndex;
     IBOutlet NSSegmentedControl *codeSegmentedControl;
-    IBOutlet id __unsafe_unretained delegate;
+    IBOutlet id __weak delegate;
     BOOL textViewEditable;
     BOOL textEditable;
     IBOutlet PSMTabBarControl *tabBar;
 }
 
 @property BOOL editable;
-@property BOOL resourceEditable;
-@property (strong) MGSLanguageTemplateResource *languageTemplateResource;
-@property (weak) MGSScript *script;
+@property (nonatomic) BOOL resourceEditable;
+@property (strong, nonatomic) MGSLanguageTemplateResource *languageTemplateResource;
+@property (weak, nonatomic) MGSScript *script;
 @property BOOL documentEdited;
-@property MGSCodeSegmentIndex selectedCodeSegmentIndex;
-@property (unsafe_unretained) id delegate;
+@property (nonatomic) MGSCodeSegmentIndex selectedCodeSegmentIndex;
+@property (weak) id delegate;
 
 
 - (NSString *)scriptString;

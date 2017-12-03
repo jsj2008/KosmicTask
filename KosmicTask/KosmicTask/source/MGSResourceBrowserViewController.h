@@ -93,29 +93,29 @@
 
 
 @property (readonly) BOOL requiredResourceSelected;
-@property (copy) NSString *title;
+@property (copy, nonatomic) NSString *title;
 
 @property (strong) NSMutableArray *resourceTree;
 @property (strong) NSMutableArray *resourceArray;
 
-@property NSInteger resourceTabIndex;
+@property (nonatomic) NSInteger resourceTabIndex;
 @property NSInteger resourceChildTabIndex;
 
 @property (strong )Class requiredResourceClass;
-@property (strong) Class neuResourceClass;
+@property (strong, nonatomic) Class neuResourceClass;
 
 @property (strong) MGSLanguageDocumentResource *infoResource;
-@property (strong) MGSResourceItem *selectedResource;
-@property (strong) MGSResourcesManager *selectedResourcesManager;
+@property (strong, nonatomic) MGSResourceItem *selectedResource;
+@property (strong, nonatomic) MGSResourcesManager *selectedResourcesManager;
 @property (strong) NSString *resourceName;
 //@property (assign) NSDictionary *languageProperties;
 
 @property (strong) MGSLanguageProperty *selectedLanguageProperty;
 
 @property (copy) NSArray *languagePlugins;
-@property (strong) MGSLanguagePlugin *languagePlugin;
-@property (copy) NSString *defaultScriptType;
-@property (strong) MGSScript *script;
+@property (strong, nonatomic) MGSLanguagePlugin *languagePlugin;
+@property (copy, nonatomic) NSString *defaultScriptType;
+@property (strong, nonatomic) MGSScript *script;
 
 @property (copy) NSString *addResourceMenuTitle;
 @property (copy) NSString *deleteResourceMenuTitle;
@@ -130,12 +130,12 @@
 @property BOOL outlineCanDuplicateResource;
 @property BOOL outlineCanDefaultResource;
 
-@property BOOL resourceEditable;
+@property (nonatomic) BOOL resourceEditable;
 
-@property (getter=isEditable)BOOL editable;
+@property (getter=isEditable, nonatomic) BOOL editable;
 
-@property (assign) BOOL documentEdited;
-@property (strong) NSDictionary *viewFrameDefaults;
+@property (assign, nonatomic) BOOL documentEdited;
+@property (strong, nonatomic) NSDictionary *viewFrameDefaults;
 @property BOOL requiredResourceDoubleClicked;
 
 - (MGSLanguageTemplateResource *)selectedTemplate;

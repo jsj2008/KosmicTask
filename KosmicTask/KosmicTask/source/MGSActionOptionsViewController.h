@@ -25,7 +25,7 @@
 }
 
 
-@property (weak) MGSTaskSpecifier *actionSpecifier;
+@property (weak, nonatomic) MGSTaskSpecifier *actionSpecifier;
 @property BOOL useTimeout;
 @property NSUInteger timeout;
 @property NSUInteger timeoutUnits;

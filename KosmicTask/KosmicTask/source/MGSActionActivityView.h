@@ -119,8 +119,8 @@ typedef NSInteger mgsFadeType;
 - (void)clearText;
 - (NSString *)text;
 
-@property MGSTaskActivity activity;
-@property eMGSMotherRunMode runMode;
+@property (nonatomic) MGSTaskActivity activity;
+@property (nonatomic) eMGSMotherRunMode runMode;
 @property (copy) NSColor *backgroundFillColor;
 @property (copy) NSColor *foregroundColor;
 @property BOOL hasDropShadow;

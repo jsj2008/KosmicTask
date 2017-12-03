@@ -171,7 +171,7 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	// define a null placeholder value to go at start of popup list
 	bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:
 						  [NSNumber numberWithBool:YES], NSInsertsNullPlaceholderBindingOption,
-						  NSLocalizedString(@"<None>", @"Result none placeholder - appears in result popup menu"), NSNullPlaceholderBindingOption, nil];
+						  NSLocalizedString(@"<None>", @"Result none placeholder - appears in result popup menu"), NSNullPlaceholderBindingOption, nil].mutableCopy;
 	
 	// action popup bindings
 	[_resultActionPopup bind:NSContentBinding toObject:_resultController withKeyPath:@"arrangedObjects" options:nil];
@@ -183,14 +183,14 @@ static NSString *MGSViewModeContext = @"MGSViewModeContext";
 	[showNextResult bind:NSEnabledBinding toObject:self withKeyPath:@"showNextResultEnabled" options:nil];
 
 	// bind the sync result button
-	bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSValueTransformer valueTransformerForName:NSNegateBooleanTransformerName], NSValueTransformerBindingOption, nil];
+	bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSValueTransformer valueTransformerForName:NSNegateBooleanTransformerName], NSValueTransformerBindingOption, nil].mutableCopy;
 	[syncResultButton bind:NSEnabledBinding toObject:self withKeyPath:@"indexMatchesPartnerIndex" options:bindingOptions];
 	//[syncResultButton bind:@"enabled2" toObject:self withKeyPath:@"taskResultDisplayLocked" options:bindingOptions];
 
 	// position text
 	NSString *format = NSLocalizedString(@"%i of %i", @"Result count format");
 	bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:
-									[NSString stringWithFormat:format, 0, 0], NSNullPlaceholderBindingOption, nil];
+									[NSString stringWithFormat:format, 0, 0], NSNullPlaceholderBindingOption, nil].mutableCopy;
 	[positionTextField bind:NSValueBinding toObject:self withKeyPath:@"resultPositionString" options:bindingOptions];
 	
 	// task result lock button

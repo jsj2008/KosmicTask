@@ -54,7 +54,7 @@ typedef NSInteger MGSToolbarStyle;
 	MGSToolbarStyle _style;
 	NSString *_identifier;
 	NSArray *_utilisedControllers;
-	MGSNetClient *__weak _netClient;
+	MGSNetClient * _netClient;
 }
 
 - (void)loadNib;
@@ -65,7 +65,7 @@ typedef NSInteger MGSToolbarStyle;
 - (IBAction)updateSearchFilter:(id)sender;
 
 @property (weak) NSWindow *window;
-@property (strong) MGSTaskSpecifier *actionSpecifier;
+@property (strong, nonatomic) MGSTaskSpecifier *actionSpecifier;
 @property MGSToolbarStyle style;
 @property (copy) NSString *identifier;
 
@@ -76,6 +76,6 @@ typedef NSInteger MGSToolbarStyle;
 @property (weak, readonly) MGSScriptToolViewController *scriptViewController;
 @property (weak, readonly) MGSResultToolViewController *resultViewController;
 @property (weak, readonly) MGSMinimalViewToolViewController *minimalViewController;
-@property (weak) MGSNetClient *netClient;
+@property (nonatomic) MGSNetClient *netClient;
 
 @end

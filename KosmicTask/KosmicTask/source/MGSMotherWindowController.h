@@ -69,7 +69,7 @@
 }
 
 
-@property eMGSMotherRunMode runMode;
+@property (nonatomic) eMGSMotherRunMode runMode;
 
 - (IBAction)addServer:(id)sender;
 - (IBAction)removeServer:(id)sender;

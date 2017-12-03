@@ -30,7 +30,7 @@
     NSSize _minFrameSize;
 }
 
-@property (strong) MGSTaskSpecifier *taskSpecifier;
+@property (strong, nonatomic) MGSTaskSpecifier *taskSpecifier;
 @property (unsafe_unretained) id delegate;
 @property BOOL modalWindowWillCloseOnSave;
 

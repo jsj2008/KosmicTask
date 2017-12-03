@@ -105,7 +105,7 @@
 - (MGSResultViewController *)activeResultViewController;
 
 @property (strong, readonly) MGSConnectingWindowController *connectingWindowController;
-@property BOOL startupComplete;
+@property (nonatomic) BOOL startupComplete;
 @property (strong, readonly) MGSExportPluginController *exportPluginController;
 @property (strong, readonly) MGSSendPluginController *sendPluginController;
 @property (strong, readonly) MGSParameterPluginController *parameterPluginController;

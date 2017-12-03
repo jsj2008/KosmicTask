@@ -27,7 +27,7 @@
 - (NSString *)stringForCodeSegmentIndex:(MGSCodeSegmentIndex)segmentIndex;
 - (void)configureTabBar;
 
-@property BOOL textViewEditable;
+@property (nonatomic) BOOL textViewEditable;
 @property BOOL textEditable;
 
 @end

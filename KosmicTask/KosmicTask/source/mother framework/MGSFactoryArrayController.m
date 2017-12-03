@@ -106,9 +106,12 @@
 {
 	_array = array;
 	
+    return;
+    
+#warning need to re-enable caching
 	// map table with weak keys to weak objects and no copying
-	_mapTable = [[NSMapTable alloc] initWithKeyOptions: (NSMapTableZeroingWeakMemory | NSPointerFunctionsObjectPersonality)
-										  valueOptions: (NSMapTableZeroingWeakMemory | NSPointerFunctionsObjectPersonality)
+	_mapTable = [[NSMapTable alloc] initWithKeyOptions: (NSMapTableWeakMemory | NSPointerFunctionsObjectPersonality)
+										  valueOptions: (NSMapTableWeakMemory | NSPointerFunctionsObjectPersonality)
 											  capacity:50];
 	return;
 }

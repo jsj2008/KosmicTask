@@ -30,10 +30,10 @@
 @property (readonly) MGSClientScriptManager *scriptManager;	// active script controller
 @property (unsafe_unretained) id delegate;
 @property (weak, readonly) MGSNetClient *netClient;
-@property MGSScriptAccess scriptAccess;
+@property (nonatomic) MGSScriptAccess scriptAccess;
 @property (readonly) NSInteger scriptAccessModes;
 @property BOOL localScriptPropertiesLoaded;
-@property (copy) NSString *activeScriptUUID;
+@property (copy, nonatomic) NSString *activeScriptUUID;
 @property (copy) NSString *activeGroupName;
 @property (copy) NSString *activeGroupDisplayName;
 

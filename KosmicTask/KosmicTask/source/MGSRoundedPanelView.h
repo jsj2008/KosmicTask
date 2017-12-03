@@ -51,12 +51,12 @@ typedef NSUInteger MGSRoundedPanelViewStyle;
     MGSRoundedPanelViewStyle _panelStyle;
 }
 
-@property MGSRoundedPanelViewStyle panelStyle;
+@property (nonatomic) MGSRoundedPanelViewStyle panelStyle;
 @property (unsafe_unretained) id delegate;
-@property BOOL isHighlighted;
-@property BOOL isDragTarget;
-@property BOOL drawFooter;
-@property CGFloat footerHeight;
+@property (nonatomic) BOOL isHighlighted;
+@property (nonatomic) BOOL isDragTarget;
+@property (nonatomic) BOOL drawFooter;
+@property (nonatomic) CGFloat footerHeight;
 @property CGFloat bannerHeight;
 @property CGFloat maxXMargin;
 @property CGFloat minXMargin;

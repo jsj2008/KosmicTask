@@ -26,10 +26,10 @@
 	BOOL _saveCompleted;
 }
 
-@property (strong) MGSTaskSpecifier *action;
+@property (strong, nonatomic) MGSTaskSpecifier *action;
 @property (unsafe_unretained) id delegate;
 @property BOOL modalWindowWillCloseOnSave;
-@property BOOL saveCompleted;
+@property (nonatomic) BOOL saveCompleted;
 
 
 - (IBAction)save:(id)sender;

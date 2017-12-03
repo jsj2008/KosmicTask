@@ -25,15 +25,14 @@ int main (int argc, const char * argv[])
 	//
 	// debugging the server
 	//
-	// 1. enable the wait code below.
-	// 2. Run GUI as a separate exec, ie not in the Xcode environment
-	// 3. attach to the task by ID.
+	// 1. enable MGS_DEBUG_WAIT below.
+	// 2. run app as a separate exec, ie not in the Xcode environment
+	// 3. attach to the server task by ID.
 	// 4. set breakpoints.
-	// 5. set wait to 0 in debugger (right click on variable name in listview. selecte edit value. change and continue)
+	// 5. set waitx var to 0 in debugger (right click on variable name in variable inspector. select edit value. change and continue)
 	//
 	
 //#define MGS_DEBUG_WAIT
-	
 #ifdef MGS_DEBUG_WAIT
 	int waitx = 1; while (waitx);	// spin here to allow debugger attachment
 #endif
@@ -70,7 +69,9 @@ int main (int argc, const char * argv[])
 		exit(1);
 	} 
 	
-	// check code signing
+	// check code signing.
+    // we do this as unsigned apps will propmt to allow incoming connections.
+    // https://support.apple.com/en-nz/HT201642
 	MGSCodeSigning *codeSign = [MGSCodeSigning new];
 	NSString *path = [MGSPath executablePath];
 	if ([codeSign validatePath:path] != CodesignOkay) {
